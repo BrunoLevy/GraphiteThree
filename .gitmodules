@@ -1,0 +1,3 @@
+[submodule "geogram"]
+	path = geogram
+	url = https://github.com/BrunoLevy/geogram
