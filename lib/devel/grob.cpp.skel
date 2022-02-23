@@ -1,0 +1,76 @@
+
+#include <OGF/%package%/%file%.h>
+#include <OGF/scene_graph/types/scene_graph.h>
+#include <OGF/gom/reflection/meta_class.h>
+#include <fstream>
+
+namespace OGF {
+
+    %class_name%::%class_name%(
+        CompositeGrob* parent
+    ) : %base_class_name%(parent) {
+        initialize_name(meta_class()->name());
+    }
+    
+    %class_name%::~%class_name%() {
+    }
+    
+    bool %class_name%::load(const FileName& value) {
+        clear();
+        return append(value);
+    }
+    
+    bool %class_name%::append(const FileName& value) {
+        geo_argused(value);
+        // Load object, code to be inserted here....
+        update();
+        return true;
+    }
+    
+    bool %class_name%::save(const NewFileName& value) {
+        std::ofstream out(std::string(value).c_str());
+        if(!out) {
+            Logger::err("%class_name%")
+                 << "cannot create file:" << value << std::endl;
+            return false;
+        }
+        // Save object, code to be inserted here...
+	return true;
+    }
+    
+    void %class_name%::clear() {
+    }
+    
+    Box3d %class_name%::bbox() const {
+        Box3d result;
+        // compute BBox, code to be inserted here...
+        return result;
+    }
+
+    %class_name%* %class_name%::find_or_create(
+        SceneGraph* sg, const std::string& name
+    ) {
+        %class_name%* result = find(sg, name);
+        if(result == nullptr) {
+            std::string cur_grob_bkp = sg->get_current_object();
+            result = dynamic_cast<%class_name%*>(
+                 sg->create_object(std::string("OGF::")+"%class_name%")
+            );
+            ogf_assert(result != nullptr);
+            result->rename(name);
+            sg->set_current_object(result->name());
+            sg->set_current_object(cur_grob_bkp);
+        }
+        return result;
+    }
+
+    %class_name%* %class_name%::find(SceneGraph* sg, const std::string& name) {
+        %class_name%* result = nullptr;
+        if(sg->is_bound(name)) {
+            result = dynamic_cast<%class_name%*>(sg->resolve(name));
+        }
+        return result;
+    }
+
+}
+

@@ -1,0 +1,37 @@
+
+#include <OGF/%package%/%file%.h>
+
+namespace OGF {
+
+    %class_name%::%class_name%(
+        ToolsManager* parent
+    ) : %base_class_name%(parent) {
+    }
+
+    %class_name%::~%class_name%() { 
+    }
+
+    void %class_name%::grab(const RayPick& p_ndc) {
+       // Insert code here, invoked each time the mouse
+       // button is pressed with this tool active
+       %base_class_name%::grab(p_ndc);       
+    }
+
+    void %class_name%::drag(const RayPick& p_ndc) {
+       // Some tools may also do special actions
+       // behavior when the mouse button is dragged.
+       // If not used, you may remove this function as
+       // well as its declaration in the header.
+       %base_class_name%::drag(p_ndc);
+    }
+
+
+    void %class_name%::release(const RayPick& p_ndc) {
+       // Some tools may also do special actions
+       // behavior when the mouse button is dragged.
+       // If not used, you may remove this function as
+       // well as its declaration in the header.
+       %base_class_name%::release(p_ndc);              
+    }
+
+}

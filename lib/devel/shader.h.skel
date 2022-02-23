@@ -1,0 +1,60 @@
+
+#ifndef %FILE%
+#define %FILE%
+
+#include <OGF/%package%/common/common.h>
+#include <%base_class_header_file%>
+
+namespace OGF {
+
+    gom_class %PACKAGE_API% %class_name% : public %base_class_name% {
+    public:
+        %class_name%(%grob_class_name%* grob);
+        ~%class_name%() override;
+
+        void draw() override;
+        void pick_object(index_t object_id) override;
+
+    gom_properties:
+
+        //   Example of properties that can be modified in the GUI:
+        //   For each property, implement a pair of get_xxx()/set_xxx()
+        // functions. The set_xxx() function should call update().
+        //   The initial values of the properties are set in the
+        // constructor.
+        //   For properties, one can use any type that has operator<< and
+        // operator>> defined, this includes:
+        //   - index_t, int, unsigned int, float, double, bool
+        //   - any enum type (generates a pulldown with the values)
+        //   - std::string
+        //   - Color
+        //   - The types in scene_graph/types/properties.h:
+        //     - PointStyle, EdgeStyle, SurfaceStyle 
+        //     - FileName, ImageFileName (behaves like a std::string)
+        //     - ScalarAttributeStyle
+        //     - ColormapName
+        //   (advanced users can define their own types / widgets to edit
+        //    them, see AutoGUI in skin/gui/auto_gui.h)
+        //
+        //   Doxygen "\brief" commands are parsed and used to generate
+        // the tooltips.
+        
+        /**
+         * \brief Color used to draw the object.
+         */
+        const Color& get_color() const {
+            return color_;
+        }
+        
+        void set_color(const Color& x) {
+            color_ = x;
+            update();
+        }
+
+    private:
+        Color color_;
+    };
+}
+
+#endif
+

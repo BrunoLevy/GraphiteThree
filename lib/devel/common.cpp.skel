@@ -1,0 +1,91 @@
+ 
+#include <OGF/%package%/common/common.h>
+#include <OGF/basic/modules/module.h>
+#include <OGF/gom/types/gom_defs.h>
+#include <OGF/scene_graph/types/scene_graph_library.h>
+
+// [includes insertion point] (do not delete this line)
+
+namespace OGF {
+
+    void %package%_libinit::initialize() {
+
+        Logger::out("Init") << "<%package%>" << std::endl;
+
+        //**************************************************************
+
+        gom_package_initialize(%package%) ;
+
+        // [source insertion point] (do not delete this line)
+
+        // Insert package initialization stuff here ...
+
+        //**************************************************************
+
+        Module* module_info = new Module;
+        module_info->set_name("%package%");
+        module_info->set_vendor("%author%");
+        module_info->set_version("3-1.x");
+        module_info->set_info(
+                "New package, created by Graphite Development Tools"
+        );
+        Module::bind_module("%package%", module_info);
+
+        Logger::out("Init") << "</%package%>" << std::endl;
+    }
+    
+    void %package%_libinit::terminate() {
+        Logger::out("Init") << "<~%package%>" << std::endl;
+	
+        //*************************************************************
+
+        // Insert package termination stuff here ...
+
+        //*************************************************************
+
+        Module::unbind_module("%package%");
+        Logger::out("Init") << "</~%package%>" << std::endl;
+    }
+    
+    %package%_libinit::%package%_libinit() {
+        increment_users();
+    }
+
+    %package%_libinit::~%package%_libinit() {
+        decrement_users();
+    }
+    
+    void %package%_libinit::increment_users() {
+        // Note that count_ is incremented before calling
+        // initialize, else it would still be equal to
+        // zero at module initialization time, which 
+        // may cause duplicate initialization of libraries.
+        count_++;
+        if(count_ == 1) {
+            initialize();
+        }
+    }
+    
+    void %package%_libinit::decrement_users() {
+        count_--;
+        if(count_ == 0) {
+            terminate();
+        }
+    }
+    
+    int %package%_libinit::count_ = 0;
+}
+
+// The initialization and termination functions
+// are also declared using C linkage in order to 
+// enable dynamic linking of modules.
+
+extern "C" void %PACKAGE_API% OGF_%package%_initialize(void);
+extern "C" void %PACKAGE_API% OGF_%package%_initialize() {
+    OGF::%package%_libinit::increment_users();
+}
+
+extern "C" void %PACKAGE_API% OGF_%package%_terminate(void);
+extern "C" void %PACKAGE_API% OGF_%package%_terminate() {
+    OGF::%package%_libinit::decrement_users();
+}

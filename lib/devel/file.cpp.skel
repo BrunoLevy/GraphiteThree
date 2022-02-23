@@ -1,0 +1,6 @@
+
+#include <OGF/%package%/%file%.h>
+
+namespace OGF {
+        
+}

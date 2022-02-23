@@ -1,0 +1,12 @@
+
+#ifndef %FILE%
+#define %FILE%
+
+#include <OGF/%package%/common/common.h>
+
+namespace OGF {
+        
+}
+
+#endif
+

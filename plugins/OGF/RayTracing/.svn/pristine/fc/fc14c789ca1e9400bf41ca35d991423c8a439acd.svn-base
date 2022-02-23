@@ -1,0 +1,287 @@
+
+/*
+ *  OGF/Graphite: Geometry and Graphics Programming Library + Utilities
+ *  Copyright (C) 2000-2015 INRIA - Project ALICE
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *  If you modify this software, you should include a notice giving the
+ *  name of the person performing the modification, the date of modification,
+ *  and the reason for such modification.
+ *
+ *  Contact for Graphite: Bruno Levy - Bruno.Levy@inria.fr
+ *  Contact for this Plugin: Bruno Levy - Bruno.Levy@inria.fr
+ *
+ *     Project ALICE
+ *     LORIA, INRIA Lorraine, 
+ *     Campus Scientifique, BP 239
+ *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     FRANCE
+ *
+ *  Note that the GNU General Public License does not permit incorporating
+ *  the Software into proprietary programs. 
+ *
+ * As an exception to the GPL, Graphite can be linked with the following
+ * (non-GPL) libraries:
+ *     Qt, tetgen, SuperLU, WildMagic and CGAL
+ */
+ 
+
+#ifndef H__OGF_RAYTRACING_SHADERS_MESH_GROB_RAY_TRACING_SHADER__H
+#define H__OGF_RAYTRACING_SHADERS_MESH_GROB_RAY_TRACING_SHADER__H
+
+#include <OGF/RayTracing/common/common.h>
+#include <OGF/mesh/shaders/mesh_grob_shader.h>
+#include <geogram/mesh/mesh_AABB.h>
+
+namespace OGF {
+
+    gom_class RayTracing_API RayTracingMeshGrobShader : public MeshGrobShader {
+    public:
+        RayTracingMeshGrobShader(OGF::MeshGrob* grob);
+        ~RayTracingMeshGrobShader() override;
+        void draw() override;
+
+    gom_properties:
+        /**
+         * \brief Color used to draw the object.
+         */
+        const Color& get_color() const {
+            return color_;
+        }
+        
+        void set_color(const Color& x) {
+            color_ = x;
+            update();
+        }
+
+	/**
+	 * \brief Specular intensity.
+	 */
+	double get_specular() const {
+	    return spec_;
+	}
+
+	void set_specular(double x) {
+	    spec_ = x;
+	    update();
+	}
+	
+	/**
+	 * \brief Specular factor.
+	 */
+	index_t get_specular_factor() const {
+	    return spec_factor_;
+	}
+
+	void set_specular_factor(index_t x) {
+	    spec_factor_ = x;
+	    update();
+	}
+
+	/**
+	 * \brief Smooth shading.
+	 */
+
+	bool get_smooth() const {
+	    return smooth_;
+	}
+
+	void set_smooth(bool x) {
+	    smooth_ = x;
+	    update();
+	}
+
+	/**
+	 * \brief Compute shadows.
+	 */
+	
+	bool get_shadows() const {
+	    return shadows_;
+	}
+
+	void set_shadows(bool x) {
+	    shadows_ = x;
+	    update();
+	}
+
+
+	/**
+	 * \brief Lighting extinction due to fluid thickness.
+	 */
+	index_t get_extinction() const {
+	    return ext_;
+	}
+
+	void set_extinction(index_t x) {
+	    ext_ = x;
+	    update();
+	}
+
+	/**
+	 * \brief Object initial transparency.
+	 */
+	
+	bool get_transparent() const {
+	    return transp_;
+	}
+
+	void set_transparent(bool x) {
+	    transp_ = x;
+	    update();
+	}
+
+	/**
+	 * \brief Raytrace background.
+	 */
+	bool get_raytrace_background() const {
+	    return raytrace_background_;
+	}
+
+	void set_raytrace_background(bool x) {
+	    raytrace_background_ = x;
+	    update();
+	}
+
+    gom_slots:
+	/**
+	 * \brief Copies background colors and depths from OpenGL 
+	 *  into an RGB and a depth image if raytrayce_background_ 
+	 *  is set.
+	 */
+	void copy_background() {
+	    copy_background_queued_ = true;
+	    update();
+	}
+	
+    protected:
+
+	void do_copy_background();
+	
+	struct Ray {
+	    Ray(const vec3& O, const vec3& V) :
+		origin(O),
+		direction(V) {
+	    }
+	    vec3 origin;
+	    vec3 direction;
+	};
+
+	/**
+	 * \brief Launches a primary ray.
+	 * \param[in] X , Y the integer coordinates of the pixel.
+	 */
+	Ray primary_ray(index_t X, index_t Y);
+
+	/**
+	 * \brief Creates the image the first time, then resizes it 
+	 *  if the size of the window changed.
+	 */
+	void create_or_resize_image_if_needed();
+
+	
+	/**
+	 * \brief Gets the viewing parameters from the current GLUP state.
+	 * \details Gets the viewport, modelview and projection matrices.
+	 */
+	void update_viewing_parameters();
+
+	/**
+	 * \brief Raytraces the current image.
+	 */
+	void raytrace();
+
+	/**
+	 * \brief Sets a pixel in the final image.
+	 * \param[in] X , Y the pixel integer coordinates.
+	 * \param[in] color the color with 4 components in [0,1].
+	 */
+	void set_pixel(index_t X, index_t Y, const vec4& color) {
+	    Memory::byte* p = image_->pixel_base(X,Y);
+	    FOR(i,4) {
+		double comp = color[i];
+		ogf_clamp(comp, 0.0, 1.0);
+		p[i] = Memory::byte(comp*255.0);
+	    }
+	}
+	
+	/**
+	 * \brief Draws the raytraced image on the screen.
+	 */
+	void draw_image();
+
+	/**
+	 * \brief Computes the normal vector in a given facet at
+	 *  a given point.
+	 * \details if set_smooth() is set, then normals are interpolated.
+	 * \param[in] f the index of the facet.
+	 * \param[in] p a 3d point in the facet.
+	 * \return the unit normal vector.
+	 */
+	vec3 normal(index_t f, const vec3& p);
+
+
+	static vec3 reflect_vector(
+	    const vec3& I, const vec3& N
+	) {
+	    return -2.0*dot(N,I)*N + I;
+	}
+	
+	static Ray reflect_ray(
+	    const Ray& ray, const vec3& P, const vec3& N
+	) {
+	    return Ray(P, reflect_vector(ray.direction, N));
+	}
+
+	double traversed_dist(const Ray& r);
+
+	vec3 raytrace_background(const Ray& r);
+	
+    private:
+        Color color_;
+	double spec_;
+	index_t spec_factor_;
+	bool shadows_;
+	bool smooth_;
+	index_t ext_;
+	bool transp_;
+	Image_var image_;
+	
+	bool raytrace_background_;
+	Image_var background_image_;
+	Image_var background_depth_;
+	Mesh background_mesh_;
+	Attribute<double> background_mesh_color_;
+	MeshFacetsAABB background_mesh_AABB_;
+	
+	GLuint texture_;
+	MeshFacetsAABB AABB_;
+
+	double viewport_[4];
+	mat4 inv_project_modelview_;
+	vec3 L_; /**< light vector in object space. */
+
+	Attribute<vec3> facet_normal_;
+	Attribute<vec3> vertex_normal_;
+	Attribute<vec3> facet_corner_normal_;
+
+	double bbox_diag_;
+
+	bool copy_background_queued_;
+    };
+}
+
+#endif
+

@@ -1,0 +1,14 @@
+
+#include <OGF/%package%/%file%.h>
+
+namespace OGF {
+
+    %class_name%::%class_name%(
+        ToolsManager* parent
+    ) : %base_class_name%(parent) {
+    }
+      
+    %class_name%::~%class_name%() {
+    }
+
+}

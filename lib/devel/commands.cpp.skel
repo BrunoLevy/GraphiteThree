@@ -1,0 +1,20 @@
+
+
+#include <OGF/%package%/%file%.h>
+
+namespace OGF {
+
+    %class_name%::%class_name%() { 
+    }
+        
+    %class_name%::~%class_name%() { 
+    }        
+
+    void %class_name%::my_function(
+       int my_integer, const std::string& my_string, double my_double
+    ) {
+        Logger::status() << "Called %class_name%::my_function(" 
+            << my_integer << "," << my_string << "," << my_double << ")" << std::endl ;
+    }       
+
+}

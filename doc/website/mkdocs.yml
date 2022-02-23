@@ -1,0 +1,28 @@
+site_name: Geo
+pages:
+  - Graphite / Geogram: index.md
+  - Gallery: gallery.md
+  - Install:
+    - Building Geogram: install_geogram.md
+    - Building Graphite: install_graphite.md
+    - Pre-compiled version: precompiled.md
+    - License: license.md
+  - Usage:
+    - Examples: examples.md
+    - Online demos: online_demos.md
+    - FAQ: faq.md
+  - Dev:
+    - Documentation: doxygen.md
+    - Design principles: design.md
+    - Tutorial: tutorial.md
+    - Pluggable Software Modules: psm.md
+  - About: about.md
+theme: 
+  name: spacelab
+  custom_dir: template
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: false

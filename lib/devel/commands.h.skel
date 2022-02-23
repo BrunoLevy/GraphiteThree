@@ -1,0 +1,48 @@
+
+#ifndef %FILE%
+#define %FILE%
+
+#include <OGF/%package%/common/common.h>
+#include <%base_class_header_file%>
+
+namespace OGF {
+
+    gom_class %PACKAGE_API% %class_name% : public %base_class_name% {
+    public:
+        %class_name%();
+        ~%class_name%() override;
+
+    gom_slots:
+
+        //   Doxygen comments are parsed and used by Gomgen to
+        //     generate tooltips.
+        //   In addition to standard Doxygen tags, the following 
+	//     tags can be used:
+	//
+        //      \menu  indicate a menu relative to current menu
+        //           (%class_name%), or an absolute menu (starting
+        //           with a '/') to insert the command in existing
+        //           menus (for instance /Surface/Remesh)
+	//          
+        //      \advanced  all subsequent parameters are in the
+        //        advanced section of the command (displayed when
+        //        clicking on it)
+
+        /**
+          * \brief Computes the age of the captain.
+          * \param[in] my_integer the length of the ship (in feets)
+          * \param[in] my_string the name of the captain's daughter
+	  * \advanced
+	  * \param[in] my_double the age of the captain's wife
+          * \menu Captain
+          */
+        void my_function(
+            int my_integer = 0,
+            const std::string& my_string = "hello",
+	    double my_double = 42.0
+        ) ;
+    } ;
+}
+
+#endif
+

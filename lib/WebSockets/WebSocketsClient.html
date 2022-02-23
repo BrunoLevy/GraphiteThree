@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<head>
+<meta charset=utf-8>
+<title>Graphite Client</title>
+
+<script>
+
+  var ws = new WebSocket("ws://127.0.0.1:7440/unix");
+
+  function log_message(str) {
+     document.getElementById("message").innerHTML = str;
+  }
+
+  ws.onopen = function (event) {
+     ws.send(JSON.stringify({
+       action:"notify",
+       content:"Browser ready."
+     }));
+  };
+
+  ws.onmessage=function(event) {
+     var args = JSON.parse(event.data);
+     if(args.action == "notify") {
+        log_message(args.content)
+     }
+  };
+
+  function send_command(str) {
+     ws.send(JSON.stringify({
+       action:"execute",
+       content: str
+     }));
+  }
+
+  window.onload=function() {
+     document.getElementById("GP_prev").onclick = function() {
+        send_command("GraphitePoint.prev()");
+     }
+
+     document.getElementById("GP_next").onclick = function() {
+        send_command("GraphitePoint.next()");
+     }
+
+     document.getElementById("GP_home").onclick = function() {
+        send_command("GraphitePoint.goto_slide(1)");
+     }
+
+     document.getElementById("BTN_send_command").onclick = function() {
+        send_command(document.getElementById("cmdline").value);
+     }  
+  }
+  
+</script>
+</head>
+
+<body>
+<h1>Graphite GOM client</h1>
+
+<p>Using WebSocket to remote-control Graphite</p>
+
+<form>
+  <input type="button" id="BTN_send_command" value="Send command"/>
+</form>
+
+<br>
+
+<fieldset><legend>Command prompt</legend> 
+  <input id="cmdline" size="80"/>
+</FieldSet>
+  
+<fieldset><legend>GraphitePoint Remote</legend>
+  <button id="GP_prev"> Prev. slide </button>
+  <button id="GP_next"> Next slide </button>
+  <button id="GP_home"> Home  </button>
+</fieldset>
+
+<fieldset><legend>Message</legend> 
+  <div id="message"></div>
+</fieldset>
+
+</body>
+</html>

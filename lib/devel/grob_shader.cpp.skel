@@ -1,0 +1,52 @@
+
+#include <OGF/%package%/%file%.h>
+
+namespace OGF {
+
+    /*******************************************************/
+
+    %class_name%::%class_name%(
+        %grob_class_name%* grob
+    ) : %base_class_name%(grob) {
+        color_ = Color(1,1,1,1) ;
+    }
+        
+    %class_name%::~%class_name%() { 
+    }        
+
+    void %class_name%::blink() {
+    }
+
+    void %class_name%::draw() {
+    }
+
+    void %class_name%::pick_object(index_t object_id) {
+       geo_argused(object_id);
+    }
+
+    /*******************************************************/
+ 
+    Plain%class_name%::Plain%class_name%(
+        %grob_class_name%* grob
+        ) : %class_name%(grob) {
+    }
+    
+    Plain%class_name%::~Plain%class_name%() {
+    }
+    
+    void Plain%class_name%::draw() {
+       // Draw the object, insert code here...
+    }
+
+    void Plain%class_name%::pick_object(index_t object_id) {
+       geo_argused(object_id);
+       // Insert code here that draws the object and that replaces
+       // all the colors with the encoded object_id
+       // (this is for the selection tool).
+       // If you leave blank, the only consequence will be that the
+       // selection tool will not "see" these objects.
+    }
+
+    /*******************************************************/
+
+}

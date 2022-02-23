@@ -1,0 +1,24 @@
+
+#include <OGF/%package%/%file%.h>
+#include <OGF/renderer/context/rendering_context.h>
+
+namespace OGF {
+
+    %class_name%::%class_name%(
+        %grob_class_name%* grob
+        ):%base_class_name%(grob) {
+        color_ = Color(1.0, 0.0, 0.0);
+    }
+        
+    %class_name%::~%class_name%() { 
+    }        
+
+    void %class_name%::draw() {
+        %base_class_name%::draw() ;
+    }
+
+    void %class_name%::pick_object(index_t object_id) {
+         %base_class_name%::pick_object(object_id);
+    }
+
+}

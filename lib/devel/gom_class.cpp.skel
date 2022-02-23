@@ -1,0 +1,11 @@
+
+#include <OGF/%package%/%file%.h>
+
+namespace OGF {
+
+    %class_name%::%class_name%() { 
+    }
+    
+    %class_name%::~%class_name%() { 
+    }        
+}

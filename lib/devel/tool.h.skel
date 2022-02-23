@@ -1,0 +1,51 @@
+
+#ifndef %FILE%
+#define %FILE%
+
+#include <OGF/%package%/common/common.h>
+#include <%base_class_header_file%>
+#include <OGF/scene_graph/tools/tool.h>
+#include <OGF/scene_graph/tools/tools_manager.h>
+
+namespace OGF {
+
+
+    // specifies in which box this tool will be added 
+    gom_attribute(category,"%package%") 
+
+    //an icon can be specified for this tool
+    //(this example corresponds to GRAPHITE_ROOT/lib/icons/my_icon.xpm)
+    // gom_attribute(icon,"my_icon") 
+
+    // specifies the help bubble associated with this tool 
+    gom_attribute(help,"%tool_name% tool") 
+
+    // the message is displayed in the status bar when this
+    // tool is selected 
+    gom_attribute(message,"insert your message here") 
+
+    gom_class %PACKAGE_API% %class_name% : public %base_class_name% {
+    public:
+        %class_name%( ToolsManager* parent ) ;
+        virtual ~%class_name%() ;
+
+        /**
+         * \copydoc Tool::grab()
+         */
+        void grab(const RayPick& p_ndc) override;
+        
+        /**
+         * \copydoc Tool::drag()
+         */
+        void drag(const RayPick& p_ndc) override;
+
+        /**
+         * \copydoc Tool::release()
+         */
+        void release(const RayPick& p_ndc) override;
+    } ;
+
+}
+
+#endif
+

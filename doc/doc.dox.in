@@ -1,0 +1,93 @@
+# Doxygen configuration file for generating
+# Graphite 3 developper documpentation.
+# This includes all the libraries header files,
+# excluding third parties and license files.
+
+PROJECT_NAME           = "Graphite"
+PROJECT_NUMBER         = "Version 3"
+PROJECT_BRIEF          = "An experimental 3D geometry processing program"
+
+@INCLUDE               = @GEOGRAM_SOURCE_DIR@/doc/common.dox
+WARN_LOGFILE           = @doc_output_dir@/doc.log
+
+# Input files
+
+INPUT                  =  @GRAPHITE_SOURCE_DIR@/src/lib 
+INPUT                  += @GEOGRAM_SOURCE_DIR@/src/lib 
+INPUT                  += @GRAPHITE_SOURCE_DIR@/doc
+
+FILE_PATTERNS          = *.h *.dox
+RECURSIVE              = YES
+TAB_SIZE               = 8
+
+EXCLUDE_PATTERNS       = */.svn/*
+EXCLUDE                += @GEOGRAM_SOURCE_DIR@/src/lib/vorpalib
+EXCLUDE                += @GEOGRAM_SOURCE_DIR@/src/lib/geogram/third_party
+EXCLUDE                += @GEOGRAM_SOURCE_DIR@/src/lib/geogram_gfx/third_party
+EXCLUDE                += @GEOGRAM_SOURCE_DIR@/src/lib/third_party
+EXCLUDE                += @GRAPHITE_SOURCE_DIR@/src/lib/third_party
+EXCLUDE                += @GRAPHITE_SOURCE_DIR@/src/lib/OGF/skin_qt4
+EXCLUDE                += @GRAPHITE_SOURCE_DIR@/src/lib/OGF/gel_python2
+EXCLUDE                += @GRAPHITE_SOURCE_DIR@/src/lib/OGF/skin_qt5/third_party
+
+FULL_PATH_NAMES        = YES
+STRIP_FROM_PATH        += @GRAPHITE_SOURCE_DIR@/src/lib/
+STRIP_FROM_PATH        += @GEOGRAM_SOURCE_DIR@/src/lib/
+STRIP_FROM_INC_PATH    += @GRAPHITE_SOURCE_DIR@/src/lib/
+STRIP_FROM_INC_PATH    += @GEOGRAM_SOURCE_DIR@/src/lib/
+
+OUTPUT_DIRECTORY       = @doc_output_dir@/doc
+GENERATE_TAGFILE       = @doc_output_dir@/doc.tags
+
+# Symbols to extract
+
+INTERNAL_DOCS          = NO
+ENABLED_SECTIONS       =
+EXTRACT_ALL            = NO
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = NO
+EXTRACT_LOCAL_CLASSES  = NO
+EXTRACT_ANON_NSPACES   = NO
+
+# Generation options
+
+HAVE_DOT               = @DOXYGEN_HAVE_DOT@
+DOT_PATH               = @DOXYGEN_DOT_PATH@
+
+SOURCE_BROWSER         = YES
+HTML_TIMESTAMP         = YES
+GENERATE_TREEVIEW      = YES
+HIDE_UNDOC_RELATIONS   = NO
+COLLABORATION_GRAPH    = NO
+TEMPLATE_RELATIONS     = NO
+REFERENCES_RELATION    = NO
+CALL_GRAPH             = NO
+CALLER_GRAPH           = NO
+INCLUDE_GRAPH          = NO
+INCLUDED_BY_GRAPH      = NO
+INTERACTIVE_SVG        = YES
+DOT_MULTI_TARGETS      = YES
+
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = YES
+EXPAND_ONLY_PREDEF     = YES
+PREDEFINED             = "gom_class=class" \
+                         "gom_slots=public:" \
+                         "gom_properties=public:" \
+                         "gom_attribute(x,y)=" \
+                         "GEOGRAM_API=" \
+                         "GEOGRAM_GFX_API=" \
+                         "VORPALIB_API=" \                       
+                         "BASIC_API=" \
+                         "IMAGE_API=" \
+                         "RENDERER_API=" \
+                         "GOM_API=" \
+                         "GOM_BASIC_API=" \
+                         "SCENE_GRAPH_API=" \
+                         "MESH_API=" \
+                         "DEVEL_API=" \                         
+                         "SKIN_API=" \
+                         "SKIN_QT_API=" \
+                         "GEL_PYTHON3_API=" 
+
+                         

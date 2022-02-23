@@ -1,0 +1,22 @@
+#ifndef %FILE%
+#define %FILE%
+
+#include <OGF/%package%/common/common.h>
+#include <OGF/%package%/%grob_file%.h>
+#include <OGF/scene_graph/commands/commands.h>
+
+namespace OGF {
+
+    gom_attribute(abstract,"true") 
+    gom_class %PACKAGE_API% %class_name% : public %base_class_name% {
+    public:
+        %class_name%();
+        ~%class_name%() override;
+        %grob_class_name%* %grob_lowercase%() const {
+            return dynamic_cast<%grob_class_name%*>(grob());
+        }
+    };
+
+}
+
+#endif

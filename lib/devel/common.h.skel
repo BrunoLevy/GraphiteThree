@@ -1,0 +1,28 @@
+
+#ifndef OGF_%PACKAGE%_COMMON_COMMON
+#define OGF_%PACKAGE%_COMMON_COMMON
+
+#include <OGF/basic/common/common.h>
+#ifdef %PACKAGE%_EXPORTS
+#   define %PACKAGE_API% OGF_EXPORT
+#else
+#   define %PACKAGE_API% OGF_IMPORT
+#endif
+
+namespace OGF {
+    static class %PACKAGE_API% %package%_libinit {
+    public:
+        %package%_libinit();
+        ~%package%_libinit();
+        
+        static void increment_users();
+        static void decrement_users();
+        
+    private:
+        static void initialize();
+        static void terminate();
+        static int count_;
+    } %package%_libinit_instance;
+}
+
+#endif

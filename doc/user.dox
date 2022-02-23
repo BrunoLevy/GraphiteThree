@@ -1,0 +1,101 @@
+/*
+ *  Copyright (c) 2012-2014, Bruno Levy
+ *  All rights reserved.
+ *
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice,
+ *  this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright notice,
+ *  this list of conditions and the following disclaimer in the documentation
+ *  and/or other materials provided with the distribution.
+ *  * Neither the name of the ALICE Project-Team nor the names of its
+ *  contributors may be used to endorse or promote products derived from this
+ *  software without specific prior written permission.
+ * 
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ *  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ *  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ *  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ *  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ *  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ *  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ *  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ *  POSSIBILITY OF SUCH DAMAGE.
+ *
+ *  If you modify this software, you should include a notice giving the
+ *  name of the person performing the modification, the date of modification,
+ *  and the reason for such modification.
+ *
+ *  Contact: Bruno Levy
+ *
+ *     Bruno.Levy@inria.fr
+ *     http://www.loria.fr/~levy
+ *
+ *     ALICE Project
+ *     LORIA, INRIA Lorraine, 
+ *     Campus Scientifique, BP 239
+ *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     FRANCE
+ *
+ */
+
+namespace OGF {
+
+/**
+
+\page graphite_user User guide for Graphite
+
+A] Installing Graphite
+======================
+
+A.1) Installing a pre-compiled version
+--------------------------------------
+
+- Download Graphite [here](http://gforge.inria.fr/frs/?group_id=1465), in the "Graphite /// for users" section.
+- Unpack the zip file (where you want)
+- To start Graphite, double-click on the "graphite.bat" file
+- Alternatively, you may create on the desktop a shortcut to bin/win64/graphite.exe
+
+A.2) Installing Graphite from the sources (for developpers)
+-----------------------------------------------------------
+
+- See \link graphite_compiling How to compile Graphite \endlink
+
+B] Overview of Graphite /// functionalities
+===========================================
+
+
+Graphite /// main data type is a Mesh, that can contain pointsets, polygonal lines, triangulated surfacic meshes,
+polygonal surfacic meshes, tetrahedral volumetric meshes and hybrid volumetric meshes (with tetrahedra, hexahedra, pyramids and prisms).
+
+Different file formats are supported (.mesh, .meshb, .obj, .ply, .off, .STL, .xyz, .pts, .tet)
+
+
+Graphite /// has functions for:
+- pointset smoothing
+- mesh reconstruction from pointsets
+- surfacic mesh repair
+- surfacic mesh remeshing
+- spectral analysis of surfacic meshes
+- tetrahedral mesh generation (through Hang Si'sTetGen)
+- mesh parameterization
+- generation of texture atlas
+- generation of normal maps
+
+Optionally, Graphite /// can be interfaced with the (commercial) Vorpaline library, to support
+- remeshing for CAD models
+- hexahedral-dominant volumetric mesh generation
+
+C] Videos - Tutorials
+=====================
+
+- <a href="https://www.youtube.com/watch?v=m1khabZmlfI"> Reconstruction and remeshing </a>
+- <a href="https://www.youtube.com/watch?v=X7m7iSWuVK4"> Optimal transport (with WarpDrive) </a>
+
+*/
+}
+

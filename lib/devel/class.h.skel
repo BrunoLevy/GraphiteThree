@@ -1,0 +1,19 @@
+
+#ifndef %FILE%
+#define %FILE%
+
+#include <OGF/%package%/common/common.h>
+
+namespace OGF {
+
+    class %PACKAGE_API% %class_name% {
+    public:
+        %class_name%() ;
+        virtual ~%class_name%() ;
+    protected:
+    private:
+    } ;
+}
+
+#endif
+

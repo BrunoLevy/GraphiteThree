@@ -1,0 +1,26 @@
+
+#ifndef %FILE%
+#define %FILE%
+
+#include <OGF/%package%/common/common.h>
+#include <OGF/%package%/%grob_file%.h>
+#include <OGF/scene_graph/tools/tool.h>
+#include <OGF/scene_graph/tools/tools_manager.h>
+
+namespace OGF {
+    
+    gom_attribute(abstract,"true") 
+    gom_class %PACKAGE_API% %class_name% : public %base_class_name% {
+    public:
+        %class_name%(ToolsManager* parent);
+        ~%class_name%() override;
+        %grob_class_name%* %grob_lowercase%() const { 
+            return dynamic_cast<%grob_class_name%*>(object());              
+        }
+
+    private:
+    };
+
+} 
+
+#endif

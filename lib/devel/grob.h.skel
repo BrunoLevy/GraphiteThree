@@ -1,0 +1,31 @@
+
+#ifndef %FILE%
+#define %FILE%
+
+#include <OGF/%package%/common/common.h>
+#include <%base_class_header_file%>
+
+namespace OGF {
+    
+    gom_class %PACKAGE_API% %class_name% : public %base_class_name% {
+    public:
+        %class_name%(CompositeGrob* parent);
+        ~%class_name%() override;
+
+        bool load(const FileName& value) override;
+        bool append(const FileName& value) override;
+        bool save(const NewFileName& value) override;
+        void clear() override;
+        Box3d bbox() const override;
+
+        static %class_name%* find_or_create(
+           SceneGraph* sg, const std::string& name
+        );
+        static %class_name%* find(SceneGraph* sg, const std::string& name);
+
+    private:
+    };    
+
+}
+
+#endif

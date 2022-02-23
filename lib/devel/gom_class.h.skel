@@ -1,0 +1,23 @@
+
+#ifndef %FILE%
+#define %FILE%
+
+#include <OGF/%package%/common/common.h>
+#include <%base_class_header_file%>
+
+namespace OGF {
+
+    gom_class %PACKAGE_API% %class_name% : public %base_class_name% {
+    public:
+        %class_name%();
+        ~%class_name%() override;
+
+    gom_slots:
+    gom_properties:
+    protected:
+    private:
+    };
+}
+
+#endif
+

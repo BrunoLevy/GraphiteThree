@@ -1,0 +1,59 @@
+#ifndef %FILE%
+#define %FILE%
+
+#include <OGF/%package%/common/common.h>
+#include <OGF/%package%/%grob_file%.h>
+#include <OGF/scene_graph/shaders/shader.h>
+
+namespace OGF {
+
+    //________________________________________________________
+
+    class Image;
+    class Texture;
+
+    gom_attribute(abstract, "true")
+    gom_class %PACKAGE_API% %class_name% : public %base_class_name% {
+    public:
+        %class_name%(%grob_class_name%* grob);
+        ~%class_name%() override;
+        void draw() override;
+        void blink() override;
+        void pick_object(index_t object_id) override;
+
+    gom_properties:
+        const Color& get_color() const {
+            return color_;
+        }
+        void set_color(const Color& x) {
+            color_ = x;
+            update();
+        }
+
+    protected:
+        %grob_class_name%* %grob_lowercase%() const {
+             return static_cast<%grob_class_name%*>(grob());
+        }
+
+    protected:
+        Color color_;
+    };
+
+    //________________________________________________________
+
+    gom_class %PACKAGE_API% Plain%class_name% : public %class_name% {
+    public:
+        Plain%class_name%(%grob_class_name%* grob);
+        ~Plain%class_name%() override;
+        void draw() override;
+        void pick_object(index_t object_id) override;
+        
+    gom_properties:
+    protected:    
+    };
+
+    //________________________________________________________    
+
+}
+
+#endif
