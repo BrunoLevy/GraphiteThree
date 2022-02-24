@@ -4,6 +4,21 @@
 # launches CMake and creates configuration for
 # Release and Debug modes.
 
+# Check for the presence of geogram
+
+if [ ! -f geogram/CMakeOptions.txt.graphite ]; then
+   echo "geogram is missing, you need to install it as well with:"
+   echo "git clone https://github.com/BrunoLevy/geogram.git"
+   echo "(or clone Graphite repo with the --recursive option)"
+   exit
+fi
+
+# Use Graphite configuration for geogram
+
+if [ ! -f geogram/CMakeOptions.txt ]; then
+   cp geogram/CMakeOptions.txt.graphite geogram/CMakeOptions.txt
+fi
+
 echo
 echo ============= Checking for CMake ============
 echo
