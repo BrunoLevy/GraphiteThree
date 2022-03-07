@@ -283,7 +283,10 @@ namespace OGF {
 	}
 	index_t nb_voxels = voxel_grob()->nu() * voxel_grob()->nv() * voxel_grob()->nw();
 	float* attr_vals = &attr[0];
-	fread(attr_vals, sizeof(float), nb_voxels, f);
+	if(fread(attr_vals, sizeof(float), nb_voxels, f) != nb_voxels) {
+	    Logger::err("VoxelGrog") << "Error while reading file (file may be truncated)"
+				     << std::endl;
+	}
 	fclose(f);
         voxel_grob()->update();	
     }
