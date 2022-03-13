@@ -159,11 +159,14 @@ namespace OGF {
          * \param[in] attribute the name of the vertex attribute
 	 * \param[in] nb_rays_per_vertex number of rays used to 
 	 *  sample directions. The higher, the more precise.
+	 * \param[in] nb_smoothing_iterations blur the result
+	 *  a little bit to hide sampling noise
          * \menu Vertices
          */
         void compute_ambient_occlusion(
             const std::string& attribute="AO",
-	    index_t nb_rays_per_vertex = 100
+	    index_t nb_rays_per_vertex = 100,
+	    index_t nb_smoothing_iterations = 2
         );
 
 	

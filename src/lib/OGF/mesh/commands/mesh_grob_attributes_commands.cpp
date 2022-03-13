@@ -514,7 +514,8 @@ namespace OGF {
 /************************************************************************/
 
     void MeshGrobAttributesCommands::compute_ambient_occlusion(
-	const std::string& attribute, index_t nb_rays_per_vertex 
+	const std::string& attribute, index_t nb_rays_per_vertex,
+	index_t nb_smoothing_iter
     ) {
 	Attribute<double> AO(mesh_grob()->vertices.attributes(), attribute);
 	MeshFacetsAABB AABB(*mesh_grob());
@@ -525,28 +526,23 @@ namespace OGF {
 		double ao = 0.0;
 		vec3 p(mesh_grob()->vertices.point_ptr(v));
 		for(index_t i=0; i<nb_rays_per_vertex; ++i) {
-
+		    // https://math.stackexchange.com/questions/1585975/
+		    //   how-to-generate-random-points-on-a-sphere	
+		    double u1 = Numeric::random_float64();
+		    double u2 = Numeric::random_float64();
+		    
+		    double theta = 2.0 * M_PI * u2;
+		    double phi = acos(2.0 * u1 - 1.0) - M_PI / 2.0;
+		    
 		    vec3 d(
-			2.0 * (Numeric::random_float64() - 0.5),
-			2.0 * (Numeric::random_float64() - 0.5),
-			2.0 * (Numeric::random_float64() - 0.5)			
+			cos(theta)*cos(phi),
+			sin(theta)*cos(phi),
+			sin(phi)
 		    );
-
-		    d = normalize(d);
 		    
-		    /*
-		    double theta = Numeric::random_float64() * 2.0 * M_PI;
-		    double z = 2.0 * (Numeric::random_float64() - 0.5);
-		    double r = ::sqrt(1.0 - z*z);
-		    vec3 d(r*cos(theta), r*sin(theta), z);
-		    */
-		    
-		    double t;
-		    index_t f;
-
-		    if(!AABB.segment_nearest_intersection(
-			 p + 1e-3*d, p + 1e3*d, t, f
-		    )) {
+		    if(!AABB.ray_intersection(
+			   Ray(p + 1e-3*d, d)
+		       )) {
 			ao += 1.0;
 		    }
 		}
@@ -554,6 +550,32 @@ namespace OGF {
 		AO[v] = ao;
 	    }
 	);
+
+	if(nb_smoothing_iter != 0) {
+	    vector<double> next_val;
+	    vector<index_t> degree;
+	    for(index_t i=0; i<nb_smoothing_iter; ++i) {
+		next_val.assign(mesh_grob()->vertices.nb(),0.0);
+		degree.assign(mesh_grob()->vertices.nb(),1);
+		for(index_t v: mesh_grob()->vertices) {
+		    next_val[v] = AO[v];
+		}
+		for(index_t f: mesh_grob()->facets) {
+		    index_t d = mesh_grob()->facets.nb_vertices(f);
+		    for(index_t lv=0; lv < d; ++lv) {
+			index_t v1 = mesh_grob()->facets.vertex(f,lv);
+			index_t v2 = mesh_grob()->facets.vertex(f,(lv + 1) % d);
+			degree[v1]++;
+			degree[v2]++;
+			next_val[v1] += AO[v2];
+			next_val[v2] += AO[v1];
+		    }
+		}
+		for(index_t v: mesh_grob()->vertices) {
+		    AO[v] = next_val[v] / double(degree[v]);
+		}
+	    }
+	}
 	
 	mesh_grob()->update();
     }
