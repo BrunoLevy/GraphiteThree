@@ -186,6 +186,18 @@ namespace OGF {
             double y,
             double z
         );
+
+
+        /********************************************************/
+	/**
+	 * \brief Detects isolated points.
+	 * \param[in] nb minimum number of points
+	 * \param[in] distance neighborhood size
+	 */
+        void detect_outliers(
+	   index_t nb,
+	   double distance
+	);
     };
         
     /********************************************************/

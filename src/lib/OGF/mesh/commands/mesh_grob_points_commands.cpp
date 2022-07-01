@@ -38,6 +38,7 @@
 
 #include <OGF/mesh/commands/mesh_grob_points_commands.h>
 #include <geogram/points/co3ne.h>
+#include <geogram/points/kd_tree.h>
 #include <geogram/mesh/mesh_geometry.h>
 #include <geogram/mesh/mesh_repair.h>
 #include <geogram/mesh/mesh_AABB.h>
@@ -359,6 +360,41 @@ namespace OGF {
         mesh_grob()->update();
     }
 
+    void MeshGrobPointsCommands::detect_outliers(index_t N, double R) {
+	// Remove duplicated vertices
+	mesh_repair(*mesh_grob(), GEO::MESH_REPAIR_COLOCATE, 0.0);
+
+	// Compute nearest neighbors using a KdTree.
+	NearestNeighborSearch_var NN = new BalancedKdTree(3); // 3 is for 3D
+	NN->set_points(mesh_grob()->vertices.nb(), mesh_grob()->vertices.point_ptr(0));
+        Attribute<bool> is_outlier(
+            mesh_grob()->vertices.attributes(), "selection"
+        );
+	
+	double R2 = R*R; // squared threshold
+	// (KD-tree returns squared distances)
+       
+	// Process all the points in parallel. 
+	// The point sequence [0..mesh_grob()->vertices.nb()-1] is split
+	// into intervals [from,to[ processed by the lambda
+	// function below. There is one interval per processor core,
+	// all processed in parallel.
+	parallel_for_slice(
+	    0,mesh_grob()->vertices.nb(),
+	    [this,N,&NN,R2,&is_outlier](index_t from, index_t to) {
+		vector<index_t> neigh(N);
+		vector<double> neigh_sq_dist(N);
+		for(index_t v=from; v<to; ++v) {
+		    NN->get_nearest_neighbors(
+			N, mesh_grob()->vertices.point_ptr(v),
+			neigh.data(), neigh_sq_dist.data()
+		    );
+		    is_outlier[v] = (neigh_sq_dist[N-1] > R2);
+		}
+	    }
+	);
+	mesh_grob()->update();
+    }
 
     
 }

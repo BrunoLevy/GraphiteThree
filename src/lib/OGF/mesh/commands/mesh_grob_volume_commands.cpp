@@ -809,6 +809,11 @@ namespace OGF {
 			    << Geom::mesh_area(*mesh_grob())
 			    << std::endl;
     }
+
+    void MeshGrobVolumeCommands::compute_borders() {
+	mesh_grob()->cells.compute_borders();
+	mesh_grob()->update();
+    }
     
 }
 

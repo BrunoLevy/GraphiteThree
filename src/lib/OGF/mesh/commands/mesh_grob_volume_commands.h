@@ -138,10 +138,10 @@ namespace OGF {
 	 *  Voronoi diagram
 	 * \param[in] exact if true, all intersection perdicates are 
 	 *  evaluated with exact arithmetics and symbolic perturbations
-	 * \param[in] generate_ids if true, generate ids in attributes. Necessary
-	 *  to output OVM files.
-	 * \param[in] medial_axis if true, generate an approximation of the medial
-	 *  axis (by removing facets from the computed mesh).
+	 * \param[in] generate_ids if true, generate ids in attributes. 
+	 *  Necessary to output OVM files.
+	 * \param[in] medial_axis if true, generate an approximation of 
+	 *  the medial axis (by removing facets from the computed mesh).
 	 */
 	void Voronoi_meshing(
 	    const NewMeshGrobName& voronoi = "voronoi",
@@ -232,6 +232,14 @@ namespace OGF {
 	 * \brief Displays the volume of a mesh.
 	 */
 	void display_volume();
+
+        /*********************************************************************/
+
+	/**
+	 * \brief Copies the border of the volume into the surfacic part
+	 *  of the mesh.
+	 */
+	void compute_borders();
     };
     
 }

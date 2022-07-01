@@ -530,19 +530,14 @@ namespace OGF {
 		    //   how-to-generate-random-points-on-a-sphere	
 		    double u1 = Numeric::random_float64();
 		    double u2 = Numeric::random_float64();
-		    
 		    double theta = 2.0 * M_PI * u2;
 		    double phi = acos(2.0 * u1 - 1.0) - M_PI / 2.0;
-		    
 		    vec3 d(
 			cos(theta)*cos(phi),
 			sin(theta)*cos(phi),
 			sin(phi)
 		    );
-		    
-		    if(!AABB.ray_intersection(
-			   Ray(p + 1e-3*d, d)
-		       )) {
+		    if(!AABB.ray_intersection(Ray(p + 1e-3*d, d))) {
 			ao += 1.0;
 		    }
 		}
@@ -551,29 +546,27 @@ namespace OGF {
 	    }
 	);
 
-	if(nb_smoothing_iter != 0) {
-	    vector<double> next_val;
-	    vector<index_t> degree;
-	    for(index_t i=0; i<nb_smoothing_iter; ++i) {
-		next_val.assign(mesh_grob()->vertices.nb(),0.0);
-		degree.assign(mesh_grob()->vertices.nb(),1);
-		for(index_t v: mesh_grob()->vertices) {
-		    next_val[v] = AO[v];
+	vector<double> next_val;
+	vector<index_t> degree;
+	for(index_t i=0; i<nb_smoothing_iter; ++i) {
+	    next_val.assign(mesh_grob()->vertices.nb(),0.0);
+	    degree.assign(mesh_grob()->vertices.nb(),1);
+	    for(index_t v: mesh_grob()->vertices) {
+		next_val[v] = AO[v];
+	    }
+	    for(index_t f: mesh_grob()->facets) {
+		index_t d = mesh_grob()->facets.nb_vertices(f);
+		for(index_t lv=0; lv < d; ++lv) {
+		    index_t v1 = mesh_grob()->facets.vertex(f,lv);
+		    index_t v2 = mesh_grob()->facets.vertex(f,(lv + 1) % d);
+		    degree[v1]++;
+		    degree[v2]++;
+		    next_val[v1] += AO[v2];
+		    next_val[v2] += AO[v1];
 		}
-		for(index_t f: mesh_grob()->facets) {
-		    index_t d = mesh_grob()->facets.nb_vertices(f);
-		    for(index_t lv=0; lv < d; ++lv) {
-			index_t v1 = mesh_grob()->facets.vertex(f,lv);
-			index_t v2 = mesh_grob()->facets.vertex(f,(lv + 1) % d);
-			degree[v1]++;
-			degree[v2]++;
-			next_val[v1] += AO[v2];
-			next_val[v2] += AO[v1];
-		    }
-		}
-		for(index_t v: mesh_grob()->vertices) {
-		    AO[v] = next_val[v] / double(degree[v]);
-		}
+	    }
+	    for(index_t v: mesh_grob()->vertices) {
+		AO[v] = next_val[v] / double(degree[v]);
 	    }
 	}
 	
