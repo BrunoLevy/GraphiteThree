@@ -1,0 +1,10 @@
+var dir_ccbca33335eae9ff21f0f7d509fc9b66 =
+[
+    [ "ambient_occlusion.h", "src_2lib_2OGF_2scene__graph_2full__screen__effects_2ambient__occlusion_8h.html", [
+      [ "AmbientOcclusion", "classOGF_1_1AmbientOcclusion.html", "classOGF_1_1AmbientOcclusion" ]
+    ] ],
+    [ "full_screen_effect.h", "src_2lib_2OGF_2scene__graph_2full__screen__effects_2full__screen__effect_8h.html", "src_2lib_2OGF_2scene__graph_2full__screen__effects_2full__screen__effect_8h" ],
+    [ "unsharp_masking.h", "src_2lib_2OGF_2scene__graph_2full__screen__effects_2unsharp__masking_8h.html", [
+      [ "UnsharpMasking", "classOGF_1_1UnsharpMasking.html", "classOGF_1_1UnsharpMasking" ]
+    ] ]
+];

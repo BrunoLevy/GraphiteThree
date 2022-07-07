@@ -1,0 +1,28 @@
+var classOGF_1_1TextEditor =
+[
+    [ "TextEditor", "classOGF_1_1TextEditor.html#ac46d343fafdfd36300286aafd79451de", null ],
+    [ "~TextEditor", "classOGF_1_1TextEditor.html#af31e634af48268be85bdfb961800f285", null ],
+    [ "add_breakpoint", "classOGF_1_1TextEditor.html#aa6156a6479f6d130aa7817212452ed49", null ],
+    [ "add_error_marker", "classOGF_1_1TextEditor.html#aa43a391a5b9c8a9cdac3eb1d836fe6a5", null ],
+    [ "clear_breakpoints", "classOGF_1_1TextEditor.html#a35c097d186619a8bba73882c161e1431", null ],
+    [ "clear_error_markers", "classOGF_1_1TextEditor.html#a234de40213183f27c8325d15f45d1af6", null ],
+    [ "completions", "classOGF_1_1TextEditor.html#ae572bab9fecbed8afa885bd3cfb06231", null ],
+    [ "cursor_forward", "classOGF_1_1TextEditor.html#a912b25c1ff731a6de706a2a396023a57", null ],
+    [ "draw", "classOGF_1_1TextEditor.html#a2a337394d8848f67a5f4a39c1f55eaab", null ],
+    [ "find", "classOGF_1_1TextEditor.html#a881a63be704e6a694f966e7bec9f376e", null ],
+    [ "find_request", "classOGF_1_1TextEditor.html#a5b779ec8d0e7c46fc2b10859787d4b25", null ],
+    [ "get_language", "classOGF_1_1TextEditor.html#afd197fbca55306c10afe36410eeaa242", null ],
+    [ "get_selection", "classOGF_1_1TextEditor.html#afbdf6cb8894089feb7fe5ad9773caaab", null ],
+    [ "get_text", "classOGF_1_1TextEditor.html#acab5bd8f89cb57c1f53968a61e1c3c2b", null ],
+    [ "impl", "classOGF_1_1TextEditor.html#a65cebea75393efc36ba91e4754e6a0c1", null ],
+    [ "interpreter", "classOGF_1_1TextEditor.html#a24d2c0cb87548e5f3f44a8772e27e0f7", null ],
+    [ "load", "classOGF_1_1TextEditor.html#a07e8c5a5c1fd139c5b3bb42a5ca8eb03", null ],
+    [ "save", "classOGF_1_1TextEditor.html#aea4251a722eff56aea6606d46ebad605", null ],
+    [ "save_request", "classOGF_1_1TextEditor.html#a7aa429c54ccdc689231192688f9212cf", null ],
+    [ "set_language", "classOGF_1_1TextEditor.html#a750e3c9ae38892bf02c7092c9e980957", null ],
+    [ "stop_request", "classOGF_1_1TextEditor.html#aae04add0a6fac22cf49394bc98de5ffd", null ],
+    [ "tooltip_request", "classOGF_1_1TextEditor.html#aefc437b71a743766567a4149f46a2b43", null ],
+    [ "__pad0__", "classOGF_1_1TextEditor.html#a7cac171b2417adc399faf2b47dc36de2", null ],
+    [ "__pad1__", "classOGF_1_1TextEditor.html#af1273427afbaf4157a0ba2701926320a", null ],
+    [ "__pad2__", "classOGF_1_1TextEditor.html#a074eaad40ae40ee878640d7562435064", null ]
+];
