@@ -24,7 +24,7 @@ jobs:
 
       - name: Configure
         run: |
-          pwd; dir; configure.bat
+          dir; configure.bat
 
       - name: Build
         run: cd GraphiteThree/build/Windows; cmake --build 
