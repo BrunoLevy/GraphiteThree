@@ -1,0 +1,31 @@
+name: WindowsRelease
+
+on:
+  workflow_dispatch
+
+
+jobs:
+  build:
+    name: Windows 
+    runs-on: windows-2022
+    env:
+      CC: cl.exe
+      CXX: cl.exe
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Enable Developer Command Prompt
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Configure
+        run: |
+          configure.bat
+
+      - name: Build
+        run: cd build/Windows; cmake --build 
+
