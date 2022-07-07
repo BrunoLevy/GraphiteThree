@@ -19,13 +19,9 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Enable Developer Command Prompt
-        uses: ilammy/msvc-dev-cmd@v1
-
       - name: Configure
-        run: |
-          ./configure.bat
+        run: ./configure.bat
 
       - name: Build
-        run: cmake --build build/Windows
+        run: cmake --build build/Windows --config Release
 
