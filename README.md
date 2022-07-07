@@ -1,5 +1,7 @@
 # GraphiteThree
 
+[[https://github.com/BrunoLevy/GraphiteThree/wiki/graphite_banner.gif]]
+
 Graphite is an experimental 3D modeler, built around
 [geogram](https://github.com/BrunoLevy/geogram). 
 
