@@ -14,3 +14,4 @@ European Research Council (ERC): GOODSHAPE and VORPALINE.
 Links
 -----
   - Documentation, how to compile, tutorials.... [Graphite Wiki](https://github.com/BrunoLevy/GraphiteThree/wiki)
+  - Programmer's reference manual... [Doxygen](https://brunolevy.github.io/GraphiteThree/)

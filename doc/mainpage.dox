@@ -56,15 +56,9 @@ volumetric meshes (tetrahedra and hybrid meshes). It has state-of-the-art
 mesh repair, remeshing, reconstruction algorithms. It also has an interface
 to the Tetgen tetrahedral mesh generator (by Hang Si).
 
-- [Download](http://gforge.inria.fr/frs/?group_id=1465) Note: geogram is
-  already included (in both binary and sources distributions).
-- \link graphite_user Graphite user guide \endlink  
-- \link graphite_compiling How to compile Graphite \endlink
-- \link graphite_FAQ Frequently Asked Questions \endlink
-- \link graphite_roadmap Roadmap, on-going Graphite/// development projects \endlink
-- \link graphite_design Design principles \endlink
-- \link graphite_license License and bundled third-party software \endlink
-- [Link to Geogram website](http://alice.loria.fr/software/geogram/doc/html/index.html)
+- [Graphite on github](https://github.com/BrunoLevy/GraphiteThree)
+- [Graphite wiki](https://github.com/BrunoLevy/GraphiteThree/wiki)
+- [Projects and presentations with geogram/graphite)[https://github.com/BrunoLevy/geogram/wiki/Publications]
 */
 
 }
