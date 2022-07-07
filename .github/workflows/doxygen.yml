@@ -23,12 +23,10 @@ jobs:
 
       - name: Configure
         run: |
-          mkdir -p build
-          cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release -DVORPALINE_PLATFORM=Linux64-gcc-dynamic
+          ./configure.sh
 
       - name: Build
-        run: cd build; make doc-devkit-full
+        run: cd build/Linux64-gcc-dynamic-Release; make doc-devkit-full
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
