@@ -161,7 +161,7 @@ namespace OGF {
         }
     }
 
-    void MeshGrobTransportCommands::set_density(
+    void MeshGrobTransportCommands::set_density_by_formula(
         double density1,
         double density2,
         const std::string& function,
@@ -727,6 +727,103 @@ namespace OGF {
 	mesh_grob()->update();
     }
 
+
+    //HERE
+    
+    void MeshGrobTransportCommands::get_density(const MeshGrobName& domain) {
+        MeshGrob* M = MeshGrob::find(scene_graph(),domain);
+        if(M == nullptr) {
+            Logger::err("WarpDrive") << domain << ": no such MeshGrob"
+                                     << std::endl;
+            return;
+        }
+
+	double V = GEO::mesh_cells_volume(*M);
+	
+	Attribute<double> mass;
+	mass.bind_if_is_defined(mesh_grob()->vertices.attributes(), "mass");
+
+	if(!mass.is_bound()) {
+	    Attribute<double> pt_density;
+	    pt_density.bind_if_is_defined(
+		mesh_grob()->vertices.attributes(), "density"
+	    );
+	    mass.bind(mesh_grob()->vertices.attributes(), "mass");
+	    if(!pt_density.is_bound()) {
+		for(index_t v:mesh_grob()->vertices) {
+		    mass[v] = 1.0;
+		}
+	    } else {
+		for(index_t v:mesh_grob()->vertices) {
+		    mass[v] = 1.0 / pt_density[v];
+			// V*pt_density[v] / double(mesh_grob()->vertices.nb());
+		}
+	    }
+	}
+
+	double Mtot = 0.0;
+	for(index_t v:mesh_grob()->vertices) {
+	    Mtot += mass[v];
+	}
+	Logger::out("Warpdrive") << "density = " << (Mtot/V) << std::endl;
+	mesh_grob()->update();
+    }
+
+    void MeshGrobTransportCommands::set_density(
+	const MeshGrobName& domain, double density
+    ) {
+        MeshGrob* M = MeshGrob::find(scene_graph(),domain);
+        if(M == nullptr) {
+            Logger::err("WarpDrive") << domain << ": no such MeshGrob"
+                                     << std::endl;
+            return;
+        }
+
+	Attribute<double> mass(mesh_grob()->vertices.attributes(),"mass");
+	double V = GEO::mesh_cells_volume(*M);
+	// N*m/V = rho -> m = rho*V/N
+	double m = density * V / double(mesh_grob()->vertices.nb());
+
+	for(index_t v:mesh_grob()->vertices) {
+	    mass[v] = m;
+	}
+	
+	mesh_grob()->update();	
+    }
+
+    void MeshGrobTransportCommands::append_points(const MeshGrobName& points) {
+        MeshGrob* M = MeshGrob::find(scene_graph(),points);
+        if(M == nullptr) {
+            Logger::err("WarpDrive") << points << ": no such MeshGrob"
+                                     << std::endl;
+            return;
+        }
+
+	Attribute<double> mass;
+	Attribute<double> points_mass;
+	mass.bind_if_is_defined(mesh_grob()->vertices.attributes(),"mass");
+	points_mass.bind_if_is_defined(M->vertices.attributes(),"mass");
+
+	if(!mass.is_bound() || !points_mass.is_bound()) {
+	    Logger::err("WarpDrive") << "Missing mass attribute"
+				     << std::endl;
+	    return;
+	}
+	
+	index_t v_ofs = mesh_grob()->vertices.nb();
+	mesh_grob()->vertices.create_vertices(M->vertices.nb());
+
+	for(index_t i = 0; i < M->vertices.nb()*3; ++i) {
+	    mesh_grob()->vertices.point_ptr(v_ofs)[i] =
+		M->vertices.point_ptr(0)[i];
+	}
+
+	for(index_t v: M->vertices) {
+	    mass[v_ofs+v] = points_mass[v];
+	}
+	
+	mesh_grob()->update();	
+    }
     
     void MeshGrobTransportCommands::Euler2d(
         const MeshGrobName& omega_name,
@@ -1055,7 +1152,8 @@ namespace OGF {
         double inner_density,
         double outer_density_max,
         double outer_density_min,
-        double gamma
+        double gamma,
+	bool shell_only
     ) {
         MeshGrob* shell = MeshGrob::find(scene_graph(), shell_name);
         if(shell == nullptr) {
@@ -1064,6 +1162,40 @@ namespace OGF {
             return;
         }
 
+	if(shell_only) {
+
+	    // Add outer shell and tetrahedralize
+	    {
+		append_surface_mesh(mesh_grob(), shell);
+		mesh_grob()->vertices.remove_isolated();
+		mesh_grob()->facets.connect();
+		mesh_tetrahedralize(*mesh_grob(), false, true, 1.0, true);
+	    }
+	    
+	    // Remove the tets that are inside the inner shell
+	    {
+		Attribute<index_t> region(mesh_grob()->cells.attributes(),"region");
+		vector<index_t> remove_tet(mesh_grob()->cells.nb());
+		index_t shell_id = index_t(-1);
+		for(index_t t : mesh_grob()->cells) {
+		    for(index_t le=0; le<4; ++le) {
+			if(mesh_grob()->cells.adjacent(t,le) == index_t(-1)) {
+			    shell_id = region[t];
+			    break;
+			}
+		    }
+		}
+		for(index_t t : mesh_grob()->cells) {
+		    remove_tet[t] = (region[t] != shell_id);
+		}
+		mesh_grob()->cells.delete_elements(remove_tet);
+	    }
+
+	    mesh_grob()->update();
+	    return;
+	}
+
+	
         if(mesh_grob()->cells.nb() == 0) {
             Logger::out("Shell") << "Tetrahedralizing mesh" << std::endl;
             mesh_tetrahedralize(*mesh_grob(), false, true, 2.0);
@@ -1081,7 +1213,7 @@ namespace OGF {
         append_surface_mesh(&tets, shell);
         tets.vertices.remove_isolated();
         tets.facets.connect();
-        mesh_tetrahedralize(tets, false, true, 1.0);
+        mesh_tetrahedralize(tets, false, true, 1.0, shell_only);
 
         index_t v_offset = mesh_grob()->vertices.nb();
         
@@ -1114,7 +1246,7 @@ namespace OGF {
             d = pow(d,gamma);
             weight[v] = d*outer_density_max + (1.0-d)*outer_density_min;
         }
-            
+
         mesh_grob()->update();
     }
 

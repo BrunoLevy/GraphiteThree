@@ -366,7 +366,9 @@ namespace OGF {
 
 	// Compute nearest neighbors using a KdTree.
 	NearestNeighborSearch_var NN = new BalancedKdTree(3); // 3 is for 3D
-	NN->set_points(mesh_grob()->vertices.nb(), mesh_grob()->vertices.point_ptr(0));
+	NN->set_points(
+	    mesh_grob()->vertices.nb(), mesh_grob()->vertices.point_ptr(0)
+	);
         Attribute<bool> is_outlier(
             mesh_grob()->vertices.attributes(), "selection"
         );
@@ -374,11 +376,6 @@ namespace OGF {
 	double R2 = R*R; // squared threshold
 	// (KD-tree returns squared distances)
        
-	// Process all the points in parallel. 
-	// The point sequence [0..mesh_grob()->vertices.nb()-1] is split
-	// into intervals [from,to[ processed by the lambda
-	// function below. There is one interval per processor core,
-	// all processed in parallel.
 	parallel_for_slice(
 	    0,mesh_grob()->vertices.nb(),
 	    [this,N,&NN,R2,&is_outlier](index_t from, index_t to) {
@@ -396,6 +393,48 @@ namespace OGF {
 	mesh_grob()->update();
     }
 
-    
+
+    void MeshGrobPointsCommands::estimate_density(
+	double R, const std::string& attribute
+    ) {
+	double R2 = R*R;
+	Attribute<double> density(
+	    mesh_grob()->vertices.attributes(), attribute
+	);
+	NearestNeighborSearch_var NN = new BalancedKdTree(3); // 3 is for 3D
+	NN->set_points(
+	    mesh_grob()->vertices.nb(), mesh_grob()->vertices.point_ptr(0)
+	);
+
+	double Bvol = (4.0 / 3.0) * M_PI * R*R*R;
+	
+	parallel_for_slice(
+	    0,mesh_grob()->vertices.nb(),
+	    [this,R2,&NN,&density,Bvol](index_t from, index_t to) {
+		vector<index_t> neigh;
+		vector<double> neigh_sq_dist;
+		for(index_t v=from; v<to; ++v) {
+		    index_t N=0;
+		    while(N == 0 || neigh_sq_dist[N-1] < R2) {
+			N = (N == 0) ? 50 : index_t(double(N)*1.2);
+			N = std::min(N, mesh_grob()->vertices.nb());
+			neigh.resize(N);
+			neigh_sq_dist.resize(N);
+			NN->get_nearest_neighbors(
+			    N, mesh_grob()->vertices.point_ptr(v),
+			    neigh.data(), neigh_sq_dist.data()
+			);
+		    }
+		    index_t nb = 0;
+		    for(nb = 0; neigh_sq_dist[nb] < R2; ++nb);
+		    geo_assert(nb < N);
+		    density[v] = double(nb) / Bvol;
+		}
+	    }
+	);
+	
+	mesh_grob()->update();
+    }
+
 }
 

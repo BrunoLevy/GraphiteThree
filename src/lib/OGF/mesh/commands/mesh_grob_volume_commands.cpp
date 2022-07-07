@@ -188,7 +188,9 @@ namespace OGF {
         CmdLine::set_arg("dbg:tetgen",verbose);        
         mesh_grob()->cells.clear();
         mesh_grob()->vertices.remove_isolated();
-        mesh_tetrahedralize(*mesh_grob(), preprocess, refine, quality, keep_regions);
+        mesh_tetrahedralize(
+	    *mesh_grob(), preprocess, refine, quality, keep_regions
+	);
         if(mesh_grob()->cells.nb() != 0) {
             mesh_grob()->cells.compute_borders();
         }

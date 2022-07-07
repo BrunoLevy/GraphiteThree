@@ -83,7 +83,7 @@ namespace OGF {
          *  distance is computed relative to this surface, else it
          *  is computed relative to the current surface
          */
-        void set_density(
+        void set_density_by_formula(
             double density1 = 1.0,
             double density2 = 10.0,
             const std::string& function = "sin^2",
@@ -147,13 +147,16 @@ namespace OGF {
 	 * \menu Compute
 	 * \brief Computes Early Universe Reconstruction.
 	 * \param[in] points the pointset
-	 * \param[in] scaling_factor multiply all coordinates to improve stability
-         * \param[in] Newton_epsilon maximum relative measure error in a cell	 
+	 * \param[in] scaling_factor multiply all coordinates 
+	 *   to improve stability
+         * \param[in] Newton_epsilon maximum relative measure error in a cell 
 	 * \param[in] max_Newton_iter maximum number of Newton iterations
 	 * \param[in] linesearch_init_iter first iteration for linesearch
-	 * \param[in] max_linesearch_iter maximum number of line search iterations
+	 * \param[in] max_linesearch_iter maximum number of 
+	 *   line search iterations
 	 * \param[in] linsolve_epsilon tolerance for linear solve
-	 * \param[in] max_linsolve_iter maximum number of linear solve iterations
+	 * \param[in] max_linsolve_iter maximum number of 
+	 *   linear solve iterations
 	 * \param[in] regularization (optional) if non-zero, add regularization
 	 */
 	void early_universe_reconstruction(
@@ -229,7 +232,6 @@ namespace OGF {
             index_t nb = 30
         );
 
-
         /**
 	 * \menu Pre-processing
          * \brief Applies a random perturbation to all the vertices
@@ -254,6 +256,25 @@ namespace OGF {
 	);
 
 
+	/**
+	 * \menu Pre-processing
+	 * \brief Computes the density given by mass attribute and domain
+	 *   volume.
+	 */
+	void get_density(const MeshGrobName& domain);
+
+	/**
+	 * \menu Pre-processing
+	 * \brief Sets point masses from specified density and domain volume
+	 */
+	void set_density(const MeshGrobName& domain, double density);
+
+	/**
+	 * \menu Pre-processing
+	 * \brief Append points and mass attribute
+	 */
+	void append_points(const MeshGrobName& points);
+	
         /**
 	 * \menu Compute
          * \brief Performs one step of incompressible Euler simulation in 2d
@@ -378,13 +399,16 @@ namespace OGF {
          * \param[in] outer_density_min density on the part of the generated
          *  mesh that is furthest away from the object
          * \param[in] gamma exponent applied to the density
+	 * \param[in] shell_only if set, do not generate tetrahedra inside
+	 *  the current mesh.
          */
         void shell_mesh(
             const MeshGrobName& shell,
             double inner_density = 1.0,
             double outer_density_max = 1.0,
             double outer_density_min = 0.1,
-            double gamma = 10.0
+            double gamma = 10.0,
+	    bool shell_only = false
         );
 
 

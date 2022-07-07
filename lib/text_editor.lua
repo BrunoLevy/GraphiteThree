@@ -141,6 +141,12 @@ function text_editor_gui.parse_errors()
 end
 
 function text_editor_gui.run()
+   -- Hide histogram window, else it will keep updating
+   -- it even when changing a single vertex position of
+   -- attribute (sloooowwww). TODO: find cleaner way.
+   -- (there is an update loop somewhere, that stacks
+   -- multiple calls *after* this functions returns).
+   Stats.visible = false
    if text_editor.selection ~= '' then
       main.exec_command('text_editor_gui.run_selection()')
       return

@@ -37,8 +37,8 @@ end
 
 function Stats.update_histo()
    if not Stats.visible then
-       Stats.dirty = true
-       return
+      Stats.dirty = true
+      return
    end
    if Stats.attrib == nil then
       Stats.reset()
@@ -81,6 +81,7 @@ function Stats.update_histo()
 end    
 
 function Stats.update()
+
    local changed = false
    local object = scene_graph.current()
    

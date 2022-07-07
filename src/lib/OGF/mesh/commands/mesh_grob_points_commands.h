@@ -189,6 +189,7 @@ namespace OGF {
 
 
         /********************************************************/
+	
 	/**
 	 * \brief Detects isolated points.
 	 * \param[in] nb minimum number of points
@@ -197,6 +198,19 @@ namespace OGF {
         void detect_outliers(
 	   index_t nb,
 	   double distance
+	);
+
+
+	/**
+	 * \brief Estimates the density.
+	 * \param[in] radius estimated density is 
+	 *   one over number of points within radius
+	 * \param[in] attribute name of the attribute
+	 *   where to store the estimated density
+	 */
+	void estimate_density(
+	    double radius,
+	    const std::string& attribute = "density"
 	);
     };
         

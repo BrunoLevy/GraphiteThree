@@ -8,15 +8,15 @@ namespace OGF {
    
    class WarpDrive_API XYZWSerializer : public MeshIOHandler {
     public:
-        virtual bool load(
+       bool load(
             const std::string& filename, Mesh& M,
             const MeshIOFlags& ioflags = MeshIOFlags()
-        );
+        ) override;
 
-        virtual bool save(
+	bool save(
             const Mesh& M, const std::string& filename,
             const MeshIOFlags& ioflags = MeshIOFlags()
-        );
+        ) override;
    };
    
 }
