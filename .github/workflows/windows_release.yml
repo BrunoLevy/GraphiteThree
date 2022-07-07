@@ -27,5 +27,5 @@ jobs:
           ./configure.bat
 
       - name: Build
-        run: cd build/Windows; cmake --build 
+        run: cmake --build build/Windows
 
