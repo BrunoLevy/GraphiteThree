@@ -2,12 +2,6 @@
 # CMake file for WarpDrive
 ##############################################################################
 
-# CMake 2.8.11 is required for 2 reasons:
-# - it is the first version that fully supports the specification of Visual
-# Studio toolsets (v110_xp).
-# - it is the version that supports the command string(TIMESTAMP ...)
-cmake_minimum_required(VERSION 2.8.11)
-
 project(WarpDrive)
 
 if("$ENV{GEOGRAM_SOURCE_DIR}" STREQUAL "")
