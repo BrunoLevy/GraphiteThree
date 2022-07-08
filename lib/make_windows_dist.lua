@@ -197,7 +197,7 @@ function create_binary_distrib()
    gom.out("*** Now creating archive...")
 
    ARCHIVE_SHORTNAME = 'graphite' .. GRAPHITE_VERSION .. '-win64.zip'
-   ARCHIVE_NAME = TARGET_DIR .. '/' .. GRAPHITE_SHORTNAME
+   ARCHIVE_NAME = TARGET_DIR .. '/' .. ARCHIVE_SHORTNAME
 
    gom.out("Archive name = " .. ARCHIVE_NAME)
    make_archive(ARCHIVE_NAME, TARGET_DIR, "GraphiteThree")
