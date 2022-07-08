@@ -30,8 +30,8 @@ jobs:
             dir
             dir ./build
             dir ./build/Windows
-            dir ./build/Windows/Release
-            dir ./build/Windows/Release/bin
+            dir ./build/Windows/bin
+            dir ./build/Windows/bin/Release
 
       - name: Package
-        run: ./build/Windows/Release/bin/graphite.exe lib/make_windows_dist.lua -now
+        run: ./build/Windows/bin/Release/graphite.exe lib/make_windows_dist.lua -now
