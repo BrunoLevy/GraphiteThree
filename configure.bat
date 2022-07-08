@@ -43,6 +43,10 @@ ECHO WHERE_IS_PYTHON_LIB=%WHERE_IS_PYTHON_LIB%
 
 ECHO ----------------------------------------------------------------
 
+if not exist "geogram\CMakeOptions.txt" (
+   copy "geogram\CMakeOptions.txt.graphite" "geogram\CMakeOptions.txt"
+)
+
 REM ----------------------------------------------------------------
 REM Create build directory and run cmake
 REM ----------------------------------------------------------------
