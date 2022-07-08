@@ -246,4 +246,17 @@ end
 
 graphite_main_window.add_module(make_windows_dist_module)
 
+-- Used by the github action:
+-- If one of the arguments of the command line is '-now',
+-- generate the distribution.
+
+for arg in gom.get_environment_value(
+             "command_line"):split("!"
+           ) do
+   if arg == '-now' then
+      create_binary_distrib()
+      main.stop()
+   end
+end
+
 end
