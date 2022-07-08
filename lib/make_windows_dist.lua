@@ -209,7 +209,7 @@ end
 
 -- *****************************************************************************
 
-if(graphite_main_window ~= nil) 
+if graphite_main_window ~= nil then
 
    make_windows_dist_module = {}
    make_windows_dist_module.visible = false

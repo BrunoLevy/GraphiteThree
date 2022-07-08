@@ -25,13 +25,8 @@ jobs:
       - name: Build
         run: cmake --build build/Windows --config Release
 
-      - name: Check
-        run: |
-            dir
-            dir ./build
-            dir ./build/Windows
-            dir ./build/Windows/bin
-            dir ./build/Windows/bin/Release
+      - name: List generated files
+        run: dir ./build/Windows/bin/Release
 
-      - name: Package
+      - name: Make package
         run: ./build/Windows/bin/Release/graphite.exe shell=true lib/make_windows_dist.lua 
