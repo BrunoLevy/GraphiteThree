@@ -35,3 +35,16 @@ jobs:
 
       - name: List generated packages
         run: dir ../../GRAPHITEDIST
+
+      - name: Copy generated packages
+        run: |
+            mkdir Windows
+            copy ../../GRAPHITEDIST/*.zip Windows/
+            copy ../../GRAPHITEDIST/*.html Windows/	    
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./Windows
+          destination_dir: Releases/Windows

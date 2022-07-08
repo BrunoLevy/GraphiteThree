@@ -196,13 +196,20 @@ function create_binary_distrib()
 
    gom.out("*** Now creating archive...")
 
-   ARCHIVE_NAME = TARGET_DIR ..
-         "/graphite" .. GRAPHITE_VERSION .. "-win64" .. ".zip"
+   ARCHIVE_SHORTNAME = 'graphite' .. GRAPHITE_VERSION .. '-win64.zip'
+   ARCHIVE_NAME = TARGET_DIR .. '/' .. GRAPHITE_SHORTNAME
 
    gom.out("Archive name = " .. ARCHIVE_NAME)
    make_archive(ARCHIVE_NAME, TARGET_DIR, "GraphiteThree")
 
-   gom.out("*** DONE ! ***")
+   F = io.open(TARGET_DIR..'/index.html','w')
+   F:write('<H1> Graphite for Windows Release </H1>\n')
+   F:write('<ul>\n')
+   F:write('<li> <a href="' .. ARCHIVE_SHORTNAME .. '">' .. ARCHIVE_SHORTNAME .. '</li>')
+   F:write('<ul>\n')   
+   io.close(F)
+
+   gom.out('*** DONE ! ***')
 
 end
 
