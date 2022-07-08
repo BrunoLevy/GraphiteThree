@@ -15,3 +15,5 @@ Links
 -----
   - Documentation, how to compile, tutorials.... [Graphite Wiki](https://github.com/BrunoLevy/GraphiteThree/wiki)
   - Programmer's reference manual... [Doxygen](https://brunolevy.github.io/GraphiteThree/)
+  - Releases... [Latest](https://brunolevy.github.io/GraphiteThree/Releases/)
+  - The [Geogram](https://github.com/BrunoLevy/geogram) programming library

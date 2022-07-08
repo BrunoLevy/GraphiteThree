@@ -1,0 +1,43 @@
+name: Release
+
+on:
+  workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Dependencies
+        run: |
+            sudo apt-get update
+            sudo apt-get install \
+            doxygen 
+ 
+      - name: Generate release
+        run: |
+          tools/make_graphite_dist.sh -no-doc
+
+      - name: Copy release files
+        run: |
+          mkdir Releases
+          cp /tmp/GRAPHITE/* Releases/
+          cd Releases/
+          ls > /tmp/releases.txt
+          echo "<H1> Graphite Release </H1>" > index.html
+          echo "<ul>"  >> index.html
+          for i in `cat /tmp/releases.txt` ; do echo '<li> <a href="'$i'">' $i '</a> </li>' >> index.html; done
+          echo '<li> <a href="Windows/index.html"> Windows releases </a>' >> index.html
+          echo "</ul>" >> index.html
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./Releases
+          destination_dir: Releases
