@@ -6,7 +6,8 @@
 # - it is the first version that fully supports the specification of Visual
 # Studio toolsets (v110_xp).
 # - it is the version that supports the command string(TIMESTAMP ...)
-cmake_minimum_required(VERSION 2.8.11)
+# ... set to 2.8.12 (< 2.8.12 has been deprecated)
+cmake_minimum_required(VERSION 2.8.12)
 
 project(Graphite)
 include(${CMAKE_SOURCE_DIR}/cmake/graphite.cmake)

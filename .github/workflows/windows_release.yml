@@ -34,4 +34,4 @@ jobs:
             dir ./build/Windows/bin/Release
 
       - name: Package
-        run: ./build/Windows/bin/Release/graphite.exe lib/make_windows_dist.lua -now
+        run: ./build/Windows/bin/Release/graphite.exe shell=true lib/make_windows_dist.lua 
