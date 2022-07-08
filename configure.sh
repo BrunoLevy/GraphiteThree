@@ -13,9 +13,12 @@ if [ ! -f geogram/CMakeOptions.txt.graphite ]; then
    exit
 fi
 
-# Use Graphite configuration for geogram
+# geogram configuration for Graphite
 
-if [ ! -f geogram/CMakeOptions.txt ]; then
+if [ -f geogram/CMakeOptions.txt ]; then
+   echo "Using user-supplied CMakeOptions.txt in geogram"
+else
+   echo "Using Graphite default CMakeOptions.txt in geogram"
    cp geogram/CMakeOptions.txt.graphite geogram/CMakeOptions.txt
 fi
 

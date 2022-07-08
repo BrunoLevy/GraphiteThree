@@ -26,7 +26,12 @@ jobs:
         run: cmake --build build/Windows --config Release
 
       - name: Check
-        run: dir ./build/Windows/Release/bin/
+        run: |
+            dir
+            dir ./build
+            dir ./build/Windows
+            dir ./build/Windows/Release
+            dir ./build/Windows/Release/bin
 
       - name: Package
         run: ./build/Windows/Release/bin/graphite.exe lib/make_windows_dist.lua -now
