@@ -1,0 +1,6 @@
+# Default plugins for Windows distribution
+
+add_subdirectory(WarpDrive)
+add_subdirectory(RayTracing)
+
+
