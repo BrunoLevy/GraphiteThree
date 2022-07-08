@@ -1,6 +1,12 @@
 ##############################################################################
 # CMake file for RayTracing
 ##############################################################################
+# CMake 2.8.11 is required for 2 reasons:
+# - it is the first version that fully supports the specification of Visual
+# Studio toolsets (v110_xp).
+# - it is the version that supports the command string(TIMESTAMP ...)
+# ... set to 2.8.12 (< 2.8.12 has been deprecated)
+cmake_minimum_required(VERSION 2.8.12)
 
 project(RayTracing)
 
