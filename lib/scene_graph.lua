@@ -265,8 +265,8 @@ function scene_graph_gui.about_window()
       )
       imgui.Separator()
       imgui.Text('Websites: ');
-      imgui.Text('   http://alice.loria.fr/software/graphite/doc/html/');      
-      imgui.Text('   http://alice.loria.fr/software/geogram/doc/html/');
+      imgui.Text('   https://github.com/BrunoLevy/GraphiteThree/');      
+      imgui.Text('   https://github.com/BrunoLevy/geogram');
       imgui.Separator()
       imgui.Text('\n')
       imgui.Text('   ')
@@ -303,7 +303,7 @@ function scene_graph_gui.about_window()
 	 main.scaling()*74, main.scaling()*22
       )
       imgui.SameLine()
-      imgui.Text('    Project PIXEL (formerly ALICE)')
+      imgui.Text('  ')
       imgui.Text('\n')
    end
    imgui.End()
