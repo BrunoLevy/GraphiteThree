@@ -668,7 +668,7 @@ namespace OGF {
 
 	/**
 	 * \menu Post-processing
-	 * \details Resizes the warped mesh in such a way it has the same
+	 * \brief Resizes the warped mesh in such a way it has the same
 	 *  volume as the initial condition.
 	 */
 	void normalize_transported_volume();
@@ -676,7 +676,7 @@ namespace OGF {
 
         /**
 	 * \menu Pre-processing
-	 * \details Inflates a mesh to encompass a given pointset
+	 * \brief Inflates a mesh to encompass a given pointset
 	 */
 	void inflate(
 	    const MeshGrobName& points="points",
