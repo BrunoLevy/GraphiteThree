@@ -427,7 +427,7 @@ autogui.handlers['OGF::PointStyle'] = autogui.bool_color_int
 autogui.colormaps = {
   {'french', false},
   {'black_white', false},
-  {'viridis', false},
+  {'viridis', true},
   {'rainbow', false},
   {'turbo', false},  
   {'cei_60757', false},

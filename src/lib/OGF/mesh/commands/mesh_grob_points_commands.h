@@ -66,7 +66,10 @@ namespace OGF {
 	
     gom_slots:
 
+        /********************************************************/
+	
         /**
+	 * \menu Preprocessing
          * \brief Smoothes a pointset by projection onto local planes.
          * \param[in] nb_iterations number of smoothing iterations.
          * \param[in] nb_neighbors number of neighbors for estimating 
@@ -78,48 +81,25 @@ namespace OGF {
         );
 
         /********************************************************/
-
-        /**
-          * \brief Reconstructs a surface from a point set using
-          *  Simple and Scalable Surface Reconstruction.
-          * \param[in] radius search radius for neighborhoods 
-          *  (in % of bbox diagonal)
-          * \advanced
-          * \param[in] nb_iterations number of smoothing iterations
-          * \param[in] nb_neighbors number of neighbors 
-          *  for estimating tangent plane
-          */
-        void reconstruct_surface_SSSR(
-            double radius = 5.0,
-            unsigned int nb_iterations = 0,
-            unsigned int nb_neighbors = 30
-        );
-
-        /********************************************************/
-
-        /**
-         * \brief Reconstructs a surface from points and normals using
-         *  Misha Kahzdan's Screened Poisson Reconstruction.
-         * \param[in] reconstruction the name of the reconstructed surface
-         * \param[in] depth the depth of the octree, 8 is the default value,
-         *  use 10 or 11 for highly detailed models
-         */
-        void reconstruct_surface_Poisson(
-            const NewMeshGrobName& reconstruction = "reconstruction",
-            unsigned int depth = 8
-        );
-        
-        /********************************************************/
-
+	
 	/**
-	 * \brief Reconstructs a surface from points using a 2D Delaunay
-	 *  triangulation. Can be used for Digital Elevation Models.
+	 * \menu Preprocessing
+	 * \brief Marks isolated points as selection.
+	 * \param[in] nb number of points in neighborhood
+	 * \param[in] radius maximum neighborhood size
+	 * \param[in] relative_radius radius is relative to 
+	 *   object bbox diagonal.
 	 */
-	void reconstruct_surface_Delaunay2d();
+        void detect_outliers(
+	   index_t nb = 10,
+	   double radius = 0.01,
+	   bool relative_radius = true
+	);
 
         /********************************************************/
 	
 	/**
+	 * \menu Preprocessing
 	 * \brief Estimates the normal vector to a point-sampled surface
 	 *  using K nearest neighbors. The computed normals are stored
 	 *  in the "normal" attribute.
@@ -136,7 +116,70 @@ namespace OGF {
 	
         /********************************************************/	
 
+	/**
+	 * \menu Preprocessing
+	 * \brief Estimates the density.
+	 * \param[in] radius estimated density is 
+	 *   one over number of points within radius
+	 * \param[in] relative_radius radius is relative to 
+	 *   object bbox diagonal.
+	 * \param[in] attribute name of the attribute
+	 *   where to store the estimated density
+	 */
+	void estimate_density(
+	    double radius = 0.005,
+	    bool relative_radius = true,
+	    const std::string& attribute = "density"
+	);
+
+        /********************************************************/	
+	
         /**
+	 * \menu Reconstruction
+	 * \brief Reconstructs a surface from a point set using
+	 *  Simple and Scalable Surface Reconstruction.
+	 * \param[in] radius search radius for neighborhoods 
+	 *  (in % of bbox diagonal)
+	 * \advanced
+	 * \param[in] nb_smoothing_iterations number of smoothing iterations
+	 * \param[in] nb_neighbors number of neighbors 
+	 *  for estimating tangent plane
+	 */
+        void reconstruct_surface_SSSR(
+            double radius = 5.0,
+            unsigned int nb_smoothing_iterations = 1,
+            unsigned int nb_neighbors = 30
+        );
+
+        /********************************************************/
+
+        /**
+	 * \menu Reconstruction
+         * \brief Reconstructs a surface from points and normals using
+         *  Misha Kahzdan's Screened Poisson Reconstruction.
+         * \param[in] reconstruction the name of the reconstructed surface
+         * \param[in] depth the depth of the octree, 8 is the default value,
+         *  use 10 or 11 for highly detailed models
+         */
+        void reconstruct_surface_Poisson(
+            const NewMeshGrobName& reconstruction = "reconstruction",
+            unsigned int depth = 8
+        );
+        
+        /********************************************************/
+
+	/**
+	 * \menu Reconstruction
+	 * \brief Reconstructs a surface from points using a 2D Delaunay
+	 *  triangulation. Can be used for Digital Elevation Models.
+	 */
+	void reconstruct_surface_Delaunay2d();
+
+        /********************************************************/
+	
+
+        /**
+	 * \menu Sampling
          * \brief Creates a pointset that samples a surface.
          * \param[in] points the created pointset
          * \param[in] nb_points number of points
@@ -159,6 +202,7 @@ namespace OGF {
         /********************************************************/
 
         /**
+	 * \menu Sampling
          * \brief Creates a pointset that samples a volume.
          * \param[in] points the created pointset
          * \param[in] nb_points number of points
@@ -175,43 +219,29 @@ namespace OGF {
             unsigned int Newton_m = 7
 	);
 	
+
+        /********************************************************/
+
+	/**
+	 * \brief Delete all points marked as selection.
+	 */
+	void delete_selected_points();
+
         /********************************************************/
         
         /**
          * \brief Creates a new vertex at given coordinates.
          * \param[in] x , y , z the coordinates of the point
+	 * \param[in] selected if true, mark created vertex as selection
          */
         void create_vertex(
             double x,
             double y,
-            double z
+            double z,
+	    bool selected = false
         );
 
-
-        /********************************************************/
 	
-	/**
-	 * \brief Detects isolated points.
-	 * \param[in] nb minimum number of points
-	 * \param[in] distance neighborhood size
-	 */
-        void detect_outliers(
-	   index_t nb,
-	   double distance
-	);
-
-
-	/**
-	 * \brief Estimates the density.
-	 * \param[in] radius estimated density is 
-	 *   one over number of points within radius
-	 * \param[in] attribute name of the attribute
-	 *   where to store the estimated density
-	 */
-	void estimate_density(
-	    double radius,
-	    const std::string& attribute = "density"
-	);
     };
         
     /********************************************************/

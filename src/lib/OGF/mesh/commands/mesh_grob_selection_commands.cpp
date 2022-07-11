@@ -104,7 +104,9 @@ namespace OGF {
         mesh_grob()->update();        
     }
 
-    void MeshGrobSelectionCommands::delete_selected_vertices(bool remove_isolated) {
+    void MeshGrobSelectionCommands::delete_selected_vertices(
+	bool remove_isolated
+    ) {
         if(!mesh_grob()->vertices.attributes().is_defined("selection")) {
             return;
         }
@@ -166,7 +168,9 @@ namespace OGF {
     }
 
 
-    void MeshGrobSelectionCommands::select_duplicated_vertices(double tolerance) {
+    void MeshGrobSelectionCommands::select_duplicated_vertices(
+	double tolerance
+    ) {
 	vector<index_t> old2new(mesh_grob()->vertices.nb());
 	index_t nb_distinct;
 	if(tolerance == 0.0) {

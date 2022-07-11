@@ -37,6 +37,7 @@
  
 
 #include <OGF/mesh/commands/mesh_grob_points_commands.h>
+#include <OGF/mesh/commands/mesh_grob_selection_commands.h>
 #include <geogram/points/co3ne.h>
 #include <geogram/points/kd_tree.h>
 #include <geogram/mesh/mesh_geometry.h>
@@ -162,12 +163,20 @@ namespace OGF {
 	    pts[2*v+1] = mesh_grob()->vertices.point_ptr(v)[1];	    
 	}
 	delaunay->set_vertices(mesh_grob()->vertices.nb(), pts.data());
-	Logger::out("Delaunay") << "Created " << delaunay->nb_cells() << " triangles" << std::endl;
+	Logger::out("Delaunay") << "Created "
+				<< delaunay->nb_cells() << " triangles"
+				<< std::endl;
 	mesh_grob()->facets.create_triangles(delaunay->nb_cells());
 	FOR(t, delaunay->nb_cells()) {
-	    mesh_grob()->facets.set_vertex(t, 0, index_t(delaunay->cell_vertex(t,0)));
-	    mesh_grob()->facets.set_vertex(t, 1, index_t(delaunay->cell_vertex(t,1)));
-	    mesh_grob()->facets.set_vertex(t, 2, index_t(delaunay->cell_vertex(t,2)));	    
+	    mesh_grob()->facets.set_vertex(
+		t, 0, index_t(delaunay->cell_vertex(t,0))
+	    );
+	    mesh_grob()->facets.set_vertex(
+		t, 1, index_t(delaunay->cell_vertex(t,1))
+	    );
+	    mesh_grob()->facets.set_vertex(
+		t, 2, index_t(delaunay->cell_vertex(t,2))
+	    );	    
 	}
 	mesh_grob()->facets.connect();
 	mesh_grob()->unlock_graphics();
@@ -351,16 +360,26 @@ namespace OGF {
     }
 
     
-    void MeshGrobPointsCommands::create_vertex(double x, double y, double z) {
+    void MeshGrobPointsCommands::create_vertex(
+	double x, double y, double z, bool selected
+    ) {
         index_t v = mesh_grob()->vertices.create_vertex();
         double* p = mesh_grob()->vertices.point_ptr(v);
         p[0] = x;
         p[1] = y;
         p[2] = z;
+	if(selected) {
+	    Attribute<bool> selection(
+		mesh_grob()->vertices.attributes(), "selection"
+	    );
+	    selection[v] = true;
+	}
         mesh_grob()->update();
     }
 
-    void MeshGrobPointsCommands::detect_outliers(index_t N, double R) {
+    void MeshGrobPointsCommands::detect_outliers(
+	index_t N, double R, bool relative_R
+    ) {
 	// Remove duplicated vertices
 	mesh_repair(*mesh_grob(), GEO::MESH_REPAIR_COLOCATE, 0.0);
 
@@ -372,6 +391,10 @@ namespace OGF {
         Attribute<bool> is_outlier(
             mesh_grob()->vertices.attributes(), "selection"
         );
+
+	if(relative_R) {
+	    R *= bbox_diagonal(*mesh_grob());
+	}
 	
 	double R2 = R*R; // squared threshold
 	// (KD-tree returns squared distances)
@@ -395,9 +418,14 @@ namespace OGF {
 
 
     void MeshGrobPointsCommands::estimate_density(
-	double R, const std::string& attribute
+	double R, bool relative_R, const std::string& attribute
     ) {
+	if(relative_R) {
+	    R *= bbox_diagonal(*mesh_grob());
+	}
+	
 	double R2 = R*R;
+	
 	Attribute<double> density(
 	    mesh_grob()->vertices.attributes(), attribute
 	);
@@ -433,8 +461,18 @@ namespace OGF {
 	    }
 	);
 	
+	show_attribute("vertices." + attribute);
 	mesh_grob()->update();
     }
 
+    void MeshGrobPointsCommands::delete_selected_points() {
+	SmartPointer<MeshGrobSelectionCommands> cmd =
+	    dynamic_cast<MeshGrobSelectionCommands*>(
+		mesh_grob()->query_interface(
+		    "OGF::MeshGrobSelectionCommands"
+		)
+	);
+	cmd->delete_selected_vertices(false);
+    }
 }
 

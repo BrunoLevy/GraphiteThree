@@ -150,7 +150,7 @@ namespace OGF {
          * \brief Makes surface borders invisible and triggers a drawing event.
          */
         virtual void hide_borders();
-        
+
     gom_properties:
 
         /**
@@ -337,7 +337,7 @@ namespace OGF {
          * \copydoc MeshGrobShader::hide_borders()
          */
 	 void hide_borders() override;
-        
+
     gom_properties:
 
         /**

@@ -807,7 +807,6 @@ namespace OGF {
         update();
     }
 
-
     void PlainMeshGrobShader::update_glsl_program() {
 	glsl_program_changed_ = true;
 	if(glupCurrentContext() == nullptr) {

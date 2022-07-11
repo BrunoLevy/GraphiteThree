@@ -74,6 +74,15 @@ namespace OGF {
         MeshGrob* mesh_grob() const {
             return dynamic_cast<MeshGrob*>(grob());
         }
+
+    protected:
+	/**
+	 * \brief Shows an attribute.
+	 * \param[in] attribute_name the name of the attribute to be
+	 *  displayed, prefixed by the element (e.g., "vertices.density").
+	 */
+	virtual void show_attribute(const std::string& attribute_name);
+	
     };
 }
 #endif

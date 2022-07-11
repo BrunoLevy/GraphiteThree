@@ -44,5 +44,36 @@ namespace OGF {
         
     MeshGrobCommands::~MeshGrobCommands() { 
     }        
+
+
+    void MeshGrobCommands::show_attribute(
+	const std::string& attribute_name
+    ) {
+	Shader* shader = mesh_grob()->get_shader();
+
+	if(shader == nullptr) {
+	    return;
+	}
+
+	std::string shd_painting;
+	std::string shd_attribute;
+	shader->get_property("painting",shd_painting);
+	shader->get_property("attribute",shd_attribute);
+	
+	bool first_time = (
+	    shd_painting != "ATTRIBUTE" ||
+	    shd_attribute != attribute_name
+	);
+	
+	shader->set_property("painting","ATTRIBUTE");
+	shader->set_property("attribute", attribute_name);
+
+	if(first_time) {
+	    shader->invoke_method("autorange");
+	    shader->set_property("lighting","false");
+	    shader->set_property("colormap","inferno;true;0;false;false;");
+	}
+    }
+    
 }
 
