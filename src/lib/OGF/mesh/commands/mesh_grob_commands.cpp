@@ -71,7 +71,7 @@ namespace OGF {
 	if(first_time) {
 	    shader->invoke_method("autorange");
 	    shader->set_property("lighting","false");
-	    shader->set_property("colormap","inferno;true;0;false;false;");
+	    shader->set_property("colormap","plasma;true;0;false;false;");
 	}
     }
     

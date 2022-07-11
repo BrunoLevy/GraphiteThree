@@ -512,8 +512,14 @@ namespace OGF {
         geo_argused(RVC_centroids);
         geo_argused(refine);
         geo_argused(max_dist);
-        Logger::err("Remesh") << "Needs Vorpaline/Vorpalib, contact authors"
+        Logger::err("Remesh") << "Needs Vorpaline/Vorpalib"
                               << std::endl;
+	Logger::err("Remesh") << "Vorpaline is marked by Tessael"
+			      << std::endl;
+	Logger::err("Remesh") << "See https://www.tessael.com"
+			      << std::endl;
+	Logger::err("Remesh") << "or contact@tessael.com"
+			      << std::endl;
 #endif
     }
 
@@ -568,8 +574,15 @@ namespace OGF {
 	geo_argused(rel_edge_len);
 	geo_argused(optimize_parity);
 	geo_argused(max_scaling_corr);
-        Logger::err("Remesh") << "Needs Vorpaline/Vorpalib, contact authors"
+	geo_argused(sharp_features);
+        Logger::err("Remesh") << "Needs Vorpaline/Vorpalib"
                               << std::endl;
+	Logger::err("Remesh") << "Vorpaline is marked by Tessael"
+			      << std::endl;
+	Logger::err("Remesh") << "See https://www.tessael.com"
+			      << std::endl;
+	Logger::err("Remesh") << "or contact@tessael.com"
+			      << std::endl;
 #endif	
     }
 
@@ -596,8 +609,8 @@ namespace OGF {
     }
 
    /***********************************************************/
-    
-    void MeshGrobSurfaceCommands::project_on_surface(
+
+    void MeshGrobSurfaceCommands::project_vertices_on_surface(
 	const MeshGrobName& surface_name
     ) {
         MeshGrob* surface = MeshGrob::find(scene_graph(), surface_name);
@@ -606,7 +619,18 @@ namespace OGF {
 		<< surface_name << ": no such surface" << std::endl;
             return;
         }
-        
+
+	if(surface == mesh_grob()) {
+	    Logger::out("Surface") << "Cannot project surface onto itself"
+				   << std::endl;
+	}
+	
+	if(surface->facets.nb() == 0) {
+	    Logger::out("Surface") << surface_name << " has no facets"
+				   << std::endl;
+	    return;
+	}
+	
         //   We need to lock the graphics because the AABB will change
         // the order of the surface facets.
         surface->lock_graphics();
@@ -939,42 +963,6 @@ namespace OGF {
 	    shader->set_property("tex_image",image);
 	    shader->set_property("tex_coords","facet_corners." + attribute);
 	    shader->set_property("normal_map","false");
-	}
-
-	mesh_grob()->update();
-    }
-
-    void MeshGrobSurfaceCommands::project_vertices_on_surface(
-	const MeshGrobName& surface_name
-    ) {
-	MeshGrob* surface = MeshGrob::find(scene_graph(), surface_name);
-	if(surface == nullptr) {
-	    Logger::out("Surface") << surface_name << ": no such MeshGrob"
-				   << std::endl;
-	    return;
-	}
-
-	if(surface == mesh_grob()) {
-	    Logger::out("Surface") << "Cannot project surface onto itself"
-				   << std::endl;
-	}
-	
-	if(surface->facets.nb() == 0) {
-	    Logger::out("Surface") << surface_name << " has no facets"
-				   << std::endl;
-	    return;
-	}
-
-	MeshFacetsAABB AABB(*surface);
-
-	for(index_t i=0; i<mesh_grob()->vertices.nb(); ++i) {
-	    vec3 p(mesh_grob()->vertices.point_ptr(i));
-	    vec3 q;
-	    double sq_dist;
-	    AABB.nearest_facet(p,q,sq_dist);
-	    mesh_grob()->vertices.point_ptr(i)[0] = q.x;
-	    mesh_grob()->vertices.point_ptr(i)[1] = q.y;
-	    mesh_grob()->vertices.point_ptr(i)[2] = q.z;		
 	}
 
 	mesh_grob()->update();

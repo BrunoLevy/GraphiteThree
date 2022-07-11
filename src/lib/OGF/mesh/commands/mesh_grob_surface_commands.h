@@ -316,7 +316,7 @@ namespace OGF {
         * \brief Projects a mesh onto a surface
         * \param[in] surface the name of the surface
         */
-       void project_on_surface(const MeshGrobName& surface);
+       void project_vertices_on_surface(const MeshGrobName& surface);
        
        /**********************************************************/
 
@@ -470,12 +470,6 @@ namespace OGF {
 	    index_t nb_dilate=2,
 	    const std::string& attribute="tex_coord"
 	);
-	
-	/**
-	 * \brief Projects the vertices of a mesh onto a surface.
-	 */
-	void project_vertices_on_surface(const MeshGrobName& surface);
-	
     };
 }
 #endif
