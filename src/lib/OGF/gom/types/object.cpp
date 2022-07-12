@@ -130,6 +130,10 @@ namespace OGF {
         return ogf_is_a(*this, type);
     }
 
+    bool Object::has_method(const std::string& method_name) const {
+	return meta_class()->find_method(method_name) != nullptr;	
+    }
+    
     bool Object::invoke_method(
         const std::string& method_name,
         const ArgList& args, Any& ret_val
@@ -184,6 +188,10 @@ namespace OGF {
         return false;
     }
 
+    bool Object::has_property(const std::string& prop_name) const {
+	return (meta_class()->find_property(prop_name) != nullptr);
+    }
+    
     bool Object::get_property(
         const std::string& prop_name, Any& prop_value
     ) const {

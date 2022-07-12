@@ -186,6 +186,7 @@ namespace OGF {
         for(index_t i=0; i<store.nb(); ++i) {
             attribute[i] = i;
         }
+	show_attribute(Mesh::subelements_type_to_name(what)+"."+attribute_name);
         mesh_grob()->update();
     }
     
@@ -241,6 +242,7 @@ namespace OGF {
 	    }
 	);
         surface->unlock_graphics();
+	show_attribute("vertices."+attribute_name);
         mesh_grob()->update();
     }
 
@@ -272,7 +274,7 @@ namespace OGF {
 		);
 	    }
 	);
-        
+	show_attribute("vertices."+attribute_name);
         mesh_grob()->update();
     }
 
@@ -332,7 +334,7 @@ namespace OGF {
                 mat4 M;
                 M.load_identity();
 		rand_rotation(M);
-		M(3,3) = 2.0; // shrink it a little bit (* 0.5) to make it fit in
+		M(3,3) = 2.0; // shrink it a little bit (*0.5) to make it fit in
                               // the screen even when it is rotated.
 		
                 glupTranslated(c.x, c.y, c.z);
@@ -391,6 +393,8 @@ namespace OGF {
         for(index_t f=0; f<mesh_grob()->facets.nb(); ++f) {
             visibility[f] /= vismax;
         }
+
+	show_attribute("facets.visibility");
     }
 
     namespace {
@@ -508,6 +512,7 @@ namespace OGF {
 	);
 	
 	surface->update();
+	show_colors();
 	mesh_grob()->update();
     }
     
@@ -569,7 +574,7 @@ namespace OGF {
 		AO[v] = next_val[v] / double(degree[v]);
 	    }
 	}
-	
+	show_attribute("vertices."+attribute);
 	mesh_grob()->update();
     }
 

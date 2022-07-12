@@ -108,9 +108,8 @@ namespace OGF {
 		print_spectrum
 	    );
 	}
+	show_attribute("vertices.eigen["+String::to_string(nb_eigens-1)+"]");
 	mesh_grob()->update();
     }
-
-    
 }
 

@@ -430,10 +430,8 @@ namespace OGF {
             nb_points, 0,
             nb_Lloyd_iter, nb_Newton_iter, Newton_m
         );
-        
-        if(remesh->get_shader() != nullptr) {
-            remesh->get_shader()->set_property("mesh_style", "true;0 0 0 1;1");
-        }
+
+	show_mesh(remesh);
 
         remesh->unlock_graphics();
         remesh->update();
@@ -496,7 +494,8 @@ namespace OGF {
             normal_anisotropy,
             nb_Lloyd_iter, nb_Newton_iter, nb_LpCVT_iter, Newton_m
         );
-        GEO::CmdLine::set_arg("remesh:RVC_centroids",RVC_centroids_bkp);        
+        GEO::CmdLine::set_arg("remesh:RVC_centroids",RVC_centroids_bkp);
+	show_mesh(remesh);
         remesh->update();
         // Need to update this one as well,
         // since vertices order may have changed        
@@ -564,7 +563,8 @@ namespace OGF {
 	    optimize_parity,
 	    max_scaling_corr
 	);
-	
+
+	show_mesh(remesh);
         remesh->update();
         // Need to update this one as well,
         // since vertices order may have changed        
@@ -605,6 +605,7 @@ namespace OGF {
         if(repair) {
             repair_surface();
         }
+	show_mesh();
         mesh_grob()->update();
     }
 
@@ -659,6 +660,7 @@ namespace OGF {
 	for(index_t i=0; i<nb_times; ++i) {
 	    mesh_split_triangles(*mesh_grob());
 	}
+	show_mesh();
 	mesh_grob()->update();
     }
 
@@ -666,6 +668,7 @@ namespace OGF {
 	for(index_t i=0; i<nb_times; ++i) {
 	    mesh_split_quads(*mesh_grob());
 	}
+	show_mesh();	
 	mesh_grob()->update();
     }
 
@@ -673,6 +676,7 @@ namespace OGF {
 	for(index_t i=0; i<nb_times; ++i) {
 	    mesh_split_catmull_clark(*mesh_grob());
 	}
+	show_mesh();	
 	mesh_grob()->update();
     }
     
@@ -685,6 +689,7 @@ namespace OGF {
 		"mesh_style", "true;0 0 0 1;1"
 	    );
         }
+	show_mesh();	
 	mesh_grob()->update();
     }
     
@@ -696,6 +701,7 @@ namespace OGF {
 		"mesh_style", "true;0 0 0 1;1"
 	    );
         }
+	show_mesh();	
 	mesh_grob()->update();
     }
 
@@ -737,6 +743,7 @@ namespace OGF {
 	    pack,
 	    verbose
 	);
+	show_UV();
 	mesh_grob()->update();
     }
 
@@ -749,6 +756,7 @@ namespace OGF {
 	if(pack == PACK_XATLAS) {
 	    pack_atlas_using_xatlas(*mesh_grob());
 	}
+	show_UV();	
 	mesh_grob()->update();
     }
     
@@ -771,6 +779,7 @@ namespace OGF {
 		mesh_compute_ABF_plus_plus(*mesh_grob(), attribute, verbose);
 		break;
 	}
+	show_UV();	
 	mesh_grob()->update();		
     }
 

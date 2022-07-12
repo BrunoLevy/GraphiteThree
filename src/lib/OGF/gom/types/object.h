@@ -127,6 +127,14 @@ namespace OGF {
 
         // Properties and Dynamic invokation interface
 
+	/**
+	 * \brief Tests whether a method is defined
+         * \param[in] method_name name of the property
+         * \retval true if this Object has the method
+         * \retval false otherwise
+         */
+	bool has_method(const std::string& method_name) const;
+	
         /**
          * \brief Invokes a method by method name and argument list,
          *  and gets the return value.
@@ -171,6 +179,14 @@ namespace OGF {
             return invoke_method(method_name, args, ret_val);
         }
 
+	/**
+	 * \brief Tests whether a property is defined
+         * \param[in] prop_name name of the property
+         * \retval true if this Object has the property
+         * \retval false otherwise
+         */
+	bool has_property(const std::string& prop_name) const;
+	
         /**
          * \brief Gets a property
          * \param[in] prop_name name of the property

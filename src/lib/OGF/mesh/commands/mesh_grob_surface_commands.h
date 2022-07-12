@@ -399,7 +399,7 @@ namespace OGF {
 	    bool unglue_sharp_edges = true,
 	    double sharp_angles_threshold = 45.0,
 	    ChartParameterizer param=PARAM_ABF,
-	    ChartPacker pack=PACK_TETRIS,
+	    ChartPacker pack=PACK_XATLAS,
 	    bool verbose=false
 	);
 
@@ -410,7 +410,7 @@ namespace OGF {
 	 * \param[in] pack one of PACK_TETRIS, PACK_XATLAS
 	 */
 	void pack_texture_space(
-	    ChartPacker pack=PACK_TETRIS
+	    ChartPacker pack=PACK_XATLAS
 	);
 	
 	/**
