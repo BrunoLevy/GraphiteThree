@@ -451,7 +451,7 @@ namespace OGF {
 
 	/**
 	 * \menu Atlas
-	 * \brief Bakes normals from a surface to the texture atlas.
+	 * \brief Bakes colors from a surface to the texture atlas.
 	 * \param[in] surface the name of the mesh with colors to be baked.
 	 *  can be the current mesh or another one with higher-resolution.
 	 * \param[in] color the name of the attribute with the colors to be
@@ -470,6 +470,34 @@ namespace OGF {
 	    index_t nb_dilate=2,
 	    const std::string& attribute="tex_coord"
 	);
+
+
+	/**
+	 * \menu Atlas
+	 * \brief Bakes texture from a textured surface to an atlas.
+	 * \param[in] src_surface the name of the mesh with the 
+	 *   texture to be baked.
+	 *  can be the current mesh or another one with higher-resolution
+	 *  normals
+	 * \param[in] src_texture the texture associated with src_surface
+	 * \param[in] src_tex_coord the source facet corner attribute 
+	 *            with the texture coordinates
+	 * \param[in] size pixel-size of the generated texture
+	 * \param[in] image filename of the generated texture
+	 * \param[in] nb_dilate number of dilations 
+	 * \param[in] tex_coord the name of the facet corner attribute that 
+	 *  stores texture coordinates for the generated texture
+	 */
+	void bake_texture(
+	    const MeshGrobName& src_surface,
+	    const ImageFileName& src_texture,
+	    const std::string& src_tex_coord="tex_coord",
+	    index_t size=1024,
+	    const NewImageFileName& image="texture.png",
+	    index_t nb_dilate=2,
+	    const std::string& tex_coord="tex_coord"
+	);
+	
     };
 }
 #endif

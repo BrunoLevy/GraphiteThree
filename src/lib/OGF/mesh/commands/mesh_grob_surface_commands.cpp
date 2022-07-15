@@ -977,6 +977,163 @@ namespace OGF {
 	mesh_grob()->update();
     }
 
+    void MeshGrobSurfaceCommands::bake_texture(
+	const MeshGrobName& src_surface_name,
+	const ImageFileName& src_texture_name,
+	const std::string& src_tex_coord_name,
+	index_t size,
+	const NewImageFileName& image_name,
+	index_t nb_dilate,
+	const std::string& tex_coord_name
+    ) {
+	Attribute<double> tex_coord;
+	tex_coord.bind_if_is_defined(
+	    mesh_grob()->facet_corners.attributes(), tex_coord_name
+	);
+	if(!tex_coord.is_bound()) {
+	    Logger::err("baking")
+		<< tex_coord_name
+		<< ": no such facet corner attribute" << std::endl;
+	    return;
+	}
+	if(tex_coord.dimension() != 2) {
+	    Logger::err("baking")
+		<< tex_coord_name << ": wrong dimension" << std::endl;
+	    return;
+	}
+
+	MeshGrob* src_surface = MeshGrob::find(scene_graph(),src_surface_name);
+	if(src_surface == nullptr) {
+	    Logger::err("baking") << src_surface_name << ": no such MeshGrob"
+				  << std::endl;
+	    return;
+	}
+
+	Attribute<double> src_tex_coord;
+	src_tex_coord.bind_if_is_defined(
+	    src_surface->facet_corners.attributes(),src_tex_coord_name
+	);
+
+	if(!src_tex_coord.is_bound()) {
+	    Logger::err("baking")
+		<< tex_coord_name
+		<< ": no such facet corner attribute" << std::endl;
+	    return;
+	}
+	if(src_tex_coord.dimension() != 2) {
+	    Logger::err("baking")
+		<< tex_coord_name << ": wrong dimension" << std::endl;
+	    return;
+	}
+
+	Image_var src_texture =
+	    ImageLibrary::instance()->load_image(src_texture_name);
+	
+	/*****************************************/
+
+	// Create pointset with the "geometry" of src_surface's facet
+	// corners (we do not have (yet) functions to directly bake
+	// facet corner attributes)...
+	
+	Mesh points;
+	points.vertices.set_dimension(3);
+	points.vertices.create_vertices(src_surface->facet_corners.nb());
+
+	Attribute<double> points_tex_coords;
+	points_tex_coords.create_vector_attribute(
+	    points.vertices.attributes(),"tex_coord",2
+	);
+
+	for(index_t f: src_surface->facets) {
+	    vec3 g = Geom::mesh_facet_center(*src_surface, f);
+	    for(index_t c = src_surface->facets.corners_begin(f);
+		c < src_surface->facets.corners_end(f); ++c) {
+		index_t v = src_surface->facet_corners.vertex(c);
+		vec3 p(src_surface->vertices.point_ptr(v));
+		vec3 q = 0.5*g + 0.5*p;
+		points.vertices.point_ptr(c)[0] = q.x;
+		points.vertices.point_ptr(c)[1] = q.y;
+		points.vertices.point_ptr(c)[2] = q.z;
+		points_tex_coords[2*c]   = src_tex_coord[2*c];
+		points_tex_coords[2*c+1] = src_tex_coord[2*c+1];		
+	    }
+	}
+
+	/*****************************************/	
+
+	Logger::out("baking") << "Creating geometry image"
+			      << std::endl;
+	    
+	Image_var geometry_image = new Image(
+	    Image::RGB, Image::FLOAT64, size, size
+	);
+
+	bake_mesh_geometry(mesh_grob(),geometry_image);
+
+	Logger::out("baking") << "Creating UV map"
+			      << std::endl;
+
+	Image_var UV_map = new Image(
+	    Image::RGB, Image::FLOAT64, size, size	    
+	);
+
+	bake_mesh_points_attribute_indirect(
+	    geometry_image, UV_map,
+	    &points, points_tex_coords
+	);
+
+	Logger::out("baking") << "Lookup image"
+			      << std::endl;
+	
+	Image_var image = new Image(
+	    Image::RGB, Image::BYTE, size, size
+	);
+
+	for(index_t y=0; y<size; ++y) {
+	    for(index_t x=0; x<size; ++x) {
+		double u = UV_map->pixel_base_float64_ptr(x,y)[0];
+		double v = UV_map->pixel_base_float64_ptr(x,y)[1];
+		int U = int(double(src_texture->width()-1)*u);
+		int V = int(double(src_texture->height()-1)*v);
+		if(
+		    U > 0 && U < int(src_texture->width()) &&
+		    V > 0 && V < int(src_texture->height())
+	        ) {
+		    image->pixel_base_byte_ptr(x,y)[0] =
+			src_texture->pixel_base(index_t(U),index_t(V))[0];
+		    image->pixel_base_byte_ptr(x,y)[1] =
+			src_texture->pixel_base(index_t(U),index_t(V))[1];
+		    image->pixel_base_byte_ptr(x,y)[2] =
+			src_texture->pixel_base(index_t(U),index_t(V))[2];
+		}
+	    }
+	}
+
+	if(nb_dilate != 0) {
+	    Logger::out("baking") << "Dilate"
+				  << std::endl;
+	
+	    MorphoMath mm(image);
+	    mm.dilate(nb_dilate);
+	}
+	
+	ImageLibrary::instance()->save_image(image_name, image);
+	
+	/*****************************************/	
+	
+	Object* shader = mesh_grob()->get_shader();
+	if(shader != nullptr) {
+	    shader->set_property("painting","TEXTURE");
+	    shader->set_property("tex_image",image_name);
+	    shader->set_property(
+		"tex_coords","facet_corners." + tex_coord_name
+	    );
+	    shader->set_property("tex_repeat","1");	    
+	    shader->set_property("normal_map","false");
+	}
+
+	mesh_grob()->update();
+    }
     
 }
 
