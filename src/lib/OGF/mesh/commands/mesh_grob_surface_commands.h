@@ -397,8 +397,8 @@ namespace OGF {
 	 */
 	void make_texture_atlas(
 	    bool unglue_sharp_edges = true,
-	    double sharp_angles_threshold = 45.0,
-	    ChartParameterizer param=PARAM_ABF,
+	    double sharp_angles_threshold = 180.0,
+	    ChartParameterizer param=PARAM_LSCM,
 	    ChartPacker pack=PACK_XATLAS,
 	    bool verbose=false
 	);
