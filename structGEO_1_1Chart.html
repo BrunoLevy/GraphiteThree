@@ -108,6 +108,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a43fe3acafa896f7d920a479d71ec16ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structGEO_1_1Chart.html">Chart</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGEO_1_1Chart.html#a43fe3acafa896f7d920a479d71ec16ed">operator=</a> (const <a class="el" href="structGEO_1_1Chart.html">Chart</a> &amp;rhs)</td></tr>
 <tr class="memdesc:a43fe3acafa896f7d920a479d71ec16ed"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structGEO_1_1Chart.html" title="A piece of a mesh.">Chart</a> affectation.  <a href="structGEO_1_1Chart.html#a43fe3acafa896f7d920a479d71ec16ed">More...</a><br /></td></tr>
 <tr class="separator:a43fe3acafa896f7d920a479d71ec16ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abef22b4b10f4dc5f9284f908aaa77805"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGEO_1_1Chart.html#abef22b4b10f4dc5f9284f908aaa77805">nb_edges_on_border</a> () const</td></tr>
+<tr class="memdesc:abef22b4b10f4dc5f9284f908aaa77805"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of edges on the border of this chart.  <a href="structGEO_1_1Chart.html#abef22b4b10f4dc5f9284f908aaa77805">More...</a><br /></td></tr>
+<tr class="separator:abef22b4b10f4dc5f9284f908aaa77805"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c55d3b70a2c613859196cee34294e84"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbool.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGEO_1_1Chart.html#a0c55d3b70a2c613859196cee34294e84">is_sock</a> (double min_area_ratio=1.0/6.0) const</td></tr>
+<tr class="memdesc:a0c55d3b70a2c613859196cee34294e84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether a chart is shaped like a sock.  <a href="structGEO_1_1Chart.html#a0c55d3b70a2c613859196cee34294e84">More...</a><br /></td></tr>
+<tr class="separator:a0c55d3b70a2c613859196cee34294e84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -212,6 +218,47 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a0c55d3b70a2c613859196cee34294e84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c55d3b70a2c613859196cee34294e84">&#9670;&nbsp;</a></span>is_sock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classbool.html">bool</a> GEO::Chart::is_sock </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>min_area_ratio</em> = <code>1.0/6.0</code></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tests whether a chart is shaped like a sock. </p>
+<p>A chart is shaped like a sock if the area of the holes is smaller than a certain threshold relative to the surface area. </p>
+
+</div>
+</div>
+<a id="abef22b4b10f4dc5f9284f908aaa77805"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abef22b4b10f4dc5f9284f908aaa77805">&#9670;&nbsp;</a></span>nb_edges_on_border()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> GEO::Chart::nb_edges_on_border </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the number of edges on the border of this chart. </p>
+<p>An edge is on the border of a chart if it is on the border of the surface or if the adjacent facet is on a different chart. </p>
+
+</div>
+</div>
 <a id="a43fe3acafa896f7d920a479d71ec16ed"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a43fe3acafa896f7d920a479d71ec16ed">&#9670;&nbsp;</a></span>operator=()</h2>
 
@@ -266,7 +313,7 @@ Public Attributes</h2></td></tr>
 <p>The list of facet indices of this chart. </p>
 <p>The mesh is supposed to have an <a class="el" href="classGEO_1_1Attribute.html">Attribute&lt;index_t&gt;</a> named "chart" attached to the facets, and the list of facets has all the facets f for which chart[f] == id. </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh__segmentation_8h_source.html#l00111">111</a> of file <a class="el" href="mesh__segmentation_8h_source.html">mesh_segmentation.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__segmentation_8h_source.html#l00127">127</a> of file <a class="el" href="mesh__segmentation_8h_source.html">mesh_segmentation.h</a>.</p>
 
 </div>
 </div>
@@ -285,7 +332,7 @@ Public Attributes</h2></td></tr>
 <p>The id of this chart. </p>
 <p>The mesh is supposed to have an <a class="el" href="classGEO_1_1Attribute.html">Attribute&lt;index_t&gt;</a> named "chart" attached to the facets, and the list of facets has all the facets f for which chart[f] == id. </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh__segmentation_8h_source.html#l00119">119</a> of file <a class="el" href="mesh__segmentation_8h_source.html">mesh_segmentation.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__segmentation_8h_source.html#l00135">135</a> of file <a class="el" href="mesh__segmentation_8h_source.html">mesh_segmentation.h</a>.</p>
 
 </div>
 </div>
@@ -298,7 +345,7 @@ Public Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="structGEO_1_1Chart.html">Chart</a></li>
-    <li class="footer">Generated on Mon Jul 11 2022 05:41:41 for Graphite by
+    <li class="footer">Generated on Sun Jul 17 2022 20:33:29 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

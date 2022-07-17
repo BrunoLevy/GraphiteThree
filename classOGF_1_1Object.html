@@ -155,6 +155,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a9aa5f7a58c4f07822a9c2638cc3481c8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Object.html#a9aa5f7a58c4f07822a9c2638cc3481c8">string_id</a> () const</td></tr>
 <tr class="memdesc:a9aa5f7a58c4f07822a9c2638cc3481c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the unique string identifier.  <a href="classOGF_1_1Object.html#a9aa5f7a58c4f07822a9c2638cc3481c8">More...</a><br /></td></tr>
 <tr class="separator:a9aa5f7a58c4f07822a9c2638cc3481c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a010ccc3cb207f83b34bfd0dfb4731ed9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbool.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Object.html#a010ccc3cb207f83b34bfd0dfb4731ed9">has_method</a> (const std::string &amp;method_name) const</td></tr>
+<tr class="memdesc:a010ccc3cb207f83b34bfd0dfb4731ed9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether a method is defined.  <a href="classOGF_1_1Object.html#a010ccc3cb207f83b34bfd0dfb4731ed9">More...</a><br /></td></tr>
+<tr class="separator:a010ccc3cb207f83b34bfd0dfb4731ed9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0d89252c10e8b6f18f9230537694b5d"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classbool.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Object.html#af0d89252c10e8b6f18f9230537694b5d">invoke_method</a> (const std::string &amp;method_name, const <a class="el" href="classOGF_1_1ArgList.html">ArgList</a> &amp;args, <a class="el" href="classOGF_1_1Any.html">Any</a> &amp;ret_val)</td></tr>
 <tr class="memdesc:af0d89252c10e8b6f18f9230537694b5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invokes a method by method name and argument list, and gets the return value.  <a href="classOGF_1_1Object.html#af0d89252c10e8b6f18f9230537694b5d">More...</a><br /></td></tr>
 <tr class="separator:af0d89252c10e8b6f18f9230537694b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,6 +167,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:ad48b60aa3f61b2fc13a811a92d1bf71f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbool.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Object.html#ad48b60aa3f61b2fc13a811a92d1bf71f">invoke_method</a> (const std::string &amp;method_name)</td></tr>
 <tr class="memdesc:ad48b60aa3f61b2fc13a811a92d1bf71f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invokes a method by method name.  <a href="classOGF_1_1Object.html#ad48b60aa3f61b2fc13a811a92d1bf71f">More...</a><br /></td></tr>
 <tr class="separator:ad48b60aa3f61b2fc13a811a92d1bf71f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad58cc021671724423a971443901a4cfc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbool.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Object.html#ad58cc021671724423a971443901a4cfc">has_property</a> (const std::string &amp;prop_name) const</td></tr>
+<tr class="memdesc:ad58cc021671724423a971443901a4cfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether a property is defined.  <a href="classOGF_1_1Object.html#ad58cc021671724423a971443901a4cfc">More...</a><br /></td></tr>
+<tr class="separator:ad58cc021671724423a971443901a4cfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5e389b194a649b1a23c4c2ffff6fe63"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classbool.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Object.html#ad5e389b194a649b1a23c4c2ffff6fe63">get_property</a> (const std::string &amp;prop_name, std::string &amp;prop_value) const</td></tr>
 <tr class="memdesc:ad5e389b194a649b1a23c4c2ffff6fe63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a property.  <a href="classOGF_1_1Object.html#ad5e389b194a649b1a23c4c2ffff6fe63">More...</a><br /></td></tr>
 <tr class="separator:ad5e389b194a649b1a23c4c2ffff6fe63"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -534,7 +540,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>MetaMethod</b></td><
 <p>Gets the meta class. </p>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the <a class="el" href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository.">MetaClass</a> of this object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00291">291</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00307">307</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
 
 </div>
 </div>
@@ -674,7 +680,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>MetaMethod</b></td><
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00256">256</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00272">272</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
 
 </div>
 </div>
@@ -710,7 +716,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>MetaMethod</b></td><
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00274">274</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00290">290</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
 
 </div>
 </div>
@@ -741,7 +747,73 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>MetaMethod</b></td><
 <p>The unique string identifier is composed of the class name and instance id. </p><dl class="section return"><dt>Returns</dt><dd>the unique string identifier </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classOGF_1_1Object.html#a9aa5f7a58c4f07822a9c2638cc3481c8" title="Gets the unique string identifier.">string_id()</a>, <a class="el" href="classOGF_1_1Object.html#aecaf28b5f09834e55f0fa709b15f6242" title="Gets the identifier of this object.">id()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00302">302</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00318">318</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
+
+</div>
+</div>
+<a id="a010ccc3cb207f83b34bfd0dfb4731ed9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a010ccc3cb207f83b34bfd0dfb4731ed9">&#9670;&nbsp;</a></span>has_method()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classbool.html">bool</a> OGF::Object::has_method </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>method_name</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tests whether a method is defined. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">method_name</td><td>name of the property </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>if this <a class="el" href="classOGF_1_1Object.html" title="Base class for all objects in the GOM system.">Object</a> has the method </td></tr>
+    <tr><td class="paramname">false</td><td>otherwise </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad58cc021671724423a971443901a4cfc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad58cc021671724423a971443901a4cfc">&#9670;&nbsp;</a></span>has_property()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classbool.html">bool</a> OGF::Object::has_property </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>prop_name</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tests whether a property is defined. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">prop_name</td><td>name of the property </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>if this <a class="el" href="classOGF_1_1Object.html" title="Base class for all objects in the GOM system.">Object</a> has the property </td></tr>
+    <tr><td class="paramname">false</td><td>otherwise </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -810,7 +882,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>MetaMethod</b></td><
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the object or nullptr if there is no such object. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classOGF_1_1Object.html#aecaf28b5f09834e55f0fa709b15f6242" title="Gets the identifier of this object.">id()</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00212">212</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00228">228</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
 
 </div>
 </div>
@@ -853,7 +925,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>MetaMethod</b></td><
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00168">168</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00176">176</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
 
 </div>
 </div>
@@ -907,7 +979,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>MetaMethod</b></td><
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00153">153</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00161">161</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
 
 </div>
 </div>
@@ -1286,7 +1358,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>MetaMethod</b></td><
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00265">265</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00281">281</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
 
 </div>
 </div>
@@ -1322,7 +1394,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>MetaMethod</b></td><
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00283">283</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="object_8h_source.html#l00299">299</a> of file <a class="el" href="object_8h_source.html">object.h</a>.</p>
 
 </div>
 </div>
@@ -1356,7 +1428,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>MetaMethod</b></td><
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1Object.html">Object</a></li>
-    <li class="footer">Generated on Mon Jul 11 2022 05:41:43 for Graphite by
+    <li class="footer">Generated on Sun Jul 17 2022 20:33:32 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

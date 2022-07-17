@@ -1,5 +1,6 @@
 var nl__ext_8h =
 [
+    [ "NL_AMGCL_EXT", "nl__ext_8h.html#ada7df3b6a7308e18763f493233d43b6e", null ],
     [ "NL_ARPACK_EXT", "nl__ext_8h.html#a5acfe2791b9ad163e10a357d0836c49a", null ],
     [ "NL_CHOLMOD_EXT", "nl__ext_8h.html#a5eec6ea5394a27b271d35a073013893a", null ],
     [ "NL_CUDA_PRECOND_ILU_EXT", "nl__ext_8h.html#acd7a2a39482da9d091e7ecdded35e35a", null ],

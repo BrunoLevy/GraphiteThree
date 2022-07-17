@@ -165,9 +165,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aae53210e49b56a54976b58216cc4faa3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#aae53210e49b56a54976b58216cc4faa3">decimate</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb_bins=100, <a class="el" href="classbool.html">bool</a> remove_deg3_vrtx=true, <a class="el" href="classbool.html">bool</a> keep_borders=true, <a class="el" href="classbool.html">bool</a> repair=true)</td></tr>
 <tr class="memdesc:aae53210e49b56a54976b58216cc4faa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simplifies a surface using vertex clustering.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#aae53210e49b56a54976b58216cc4faa3">More...</a><br /></td></tr>
 <tr class="separator:aae53210e49b56a54976b58216cc4faa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d7b7d089cba099335af96b80a817faa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#a0d7b7d089cba099335af96b80a817faa">project_on_surface</a> (const <a class="el" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a> &amp;surface)</td></tr>
-<tr class="memdesc:a0d7b7d089cba099335af96b80a817faa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Projects a mesh onto a surface.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#a0d7b7d089cba099335af96b80a817faa">More...</a><br /></td></tr>
-<tr class="separator:a0d7b7d089cba099335af96b80a817faa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc20bfbec6e7a067b88ac885350408a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#abc20bfbec6e7a067b88ac885350408a4">project_vertices_on_surface</a> (const <a class="el" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a> &amp;surface)</td></tr>
+<tr class="memdesc:abc20bfbec6e7a067b88ac885350408a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Projects a mesh onto a surface.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#abc20bfbec6e7a067b88ac885350408a4">More...</a><br /></td></tr>
+<tr class="separator:abc20bfbec6e7a067b88ac885350408a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab28e66c9e4075fbaf315edbe5c9b4c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#aab28e66c9e4075fbaf315edbe5c9b4c7">split_triangles</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb_times=1)</td></tr>
 <tr class="memdesc:aab28e66c9e4075fbaf315edbe5c9b4c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Splits all the triangles of a simplicial mesh into four triangles.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#aab28e66c9e4075fbaf315edbe5c9b4c7">More...</a><br /></td></tr>
 <tr class="separator:aab28e66c9e4075fbaf315edbe5c9b4c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -190,12 +190,12 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#aeb8716fe27fed8fd7b5fb8e022ab4f9b">smooth</a> ()</td></tr>
 <tr class="memdesc:aeb8716fe27fed8fd7b5fb8e022ab4f9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smooths the mesh by optimizing the vertices that are not selected. Selected vertices are locked. <br /></td></tr>
 <tr class="separator:aeb8716fe27fed8fd7b5fb8e022ab4f9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6da45fcdf491b18e9758cd17f98bdf4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#ab6da45fcdf491b18e9758cd17f98bdf4">make_texture_atlas</a> (<a class="el" href="classbool.html">bool</a> unglue_sharp_edges=true, double sharp_angles_threshold=45.0, ChartParameterizer param=PARAM_ABF, ChartPacker pack=PACK_TETRIS, <a class="el" href="classbool.html">bool</a> verbose=false)</td></tr>
-<tr class="memdesc:ab6da45fcdf491b18e9758cd17f98bdf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes texture coordinates of a surface.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#ab6da45fcdf491b18e9758cd17f98bdf4">More...</a><br /></td></tr>
-<tr class="separator:ab6da45fcdf491b18e9758cd17f98bdf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad65b384edd2c1322fdc48a5354b9b000"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#ad65b384edd2c1322fdc48a5354b9b000">pack_texture_space</a> (ChartPacker pack=PACK_TETRIS)</td></tr>
-<tr class="memdesc:ad65b384edd2c1322fdc48a5354b9b000"><td class="mdescLeft">&#160;</td><td class="mdescRight">Packs charts in texture space.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#ad65b384edd2c1322fdc48a5354b9b000">More...</a><br /></td></tr>
-<tr class="separator:ad65b384edd2c1322fdc48a5354b9b000"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad45134d3b80e4a5e9919a3893c440059"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#ad45134d3b80e4a5e9919a3893c440059">make_texture_atlas</a> (<a class="el" href="classbool.html">bool</a> unglue_sharp_edges=true, double sharp_angles_threshold=180.0, ChartParameterizer param=PARAM_ABF, ChartPacker pack=PACK_XATLAS, <a class="el" href="classbool.html">bool</a> verbose=false)</td></tr>
+<tr class="memdesc:ad45134d3b80e4a5e9919a3893c440059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes texture coordinates of a surface.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#ad45134d3b80e4a5e9919a3893c440059">More...</a><br /></td></tr>
+<tr class="separator:ad45134d3b80e4a5e9919a3893c440059"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada2238dc14fb29924e784c0487380a9a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#ada2238dc14fb29924e784c0487380a9a">pack_texture_space</a> (ChartPacker pack=PACK_XATLAS)</td></tr>
+<tr class="memdesc:ada2238dc14fb29924e784c0487380a9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Packs charts in texture space.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#ada2238dc14fb29924e784c0487380a9a">More...</a><br /></td></tr>
+<tr class="separator:ada2238dc14fb29924e784c0487380a9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa08b8c4c26f59facce052787b58c1134"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#aa08b8c4c26f59facce052787b58c1134">parameterize_chart</a> (const std::string &amp;attribute=&quot;tex_coord&quot;, ChartParameterizer param=PARAM_LSCM, <a class="el" href="classbool.html">bool</a> verbose=false)</td></tr>
 <tr class="memdesc:aa08b8c4c26f59facce052787b58c1134"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes texture coordinates of a single unfoldable surface.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#aa08b8c4c26f59facce052787b58c1134">More...</a><br /></td></tr>
 <tr class="separator:aa08b8c4c26f59facce052787b58c1134"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -203,12 +203,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:abf22decdb8d177004106d4fe661c88c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bakes normals from a surface to the texture atlas.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#abf22decdb8d177004106d4fe661c88c0">More...</a><br /></td></tr>
 <tr class="separator:abf22decdb8d177004106d4fe661c88c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a787d838101073a31f98f5d967e75dfec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#a787d838101073a31f98f5d967e75dfec">bake_colors</a> (const <a class="el" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a> &amp;surface, const std::string &amp;color=&quot;color&quot;, index_t size=1024, const <a class="el" href="namespaceOGF.html#a2a70a5b4aae205b6302623e1918194b8">NewImageFileName</a> &amp;image=&quot;colors.png&quot;, index_t nb_dilate=2, const std::string &amp;attribute=&quot;tex_coord&quot;)</td></tr>
-<tr class="memdesc:a787d838101073a31f98f5d967e75dfec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bakes normals from a surface to the texture atlas.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#a787d838101073a31f98f5d967e75dfec">More...</a><br /></td></tr>
+<tr class="memdesc:a787d838101073a31f98f5d967e75dfec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bakes colors from a surface to the texture atlas.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#a787d838101073a31f98f5d967e75dfec">More...</a><br /></td></tr>
 <tr class="separator:a787d838101073a31f98f5d967e75dfec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc20bfbec6e7a067b88ac885350408a4"><td class="memItemLeft" align="right" valign="top"><a id="abc20bfbec6e7a067b88ac885350408a4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#abc20bfbec6e7a067b88ac885350408a4">project_vertices_on_surface</a> (const <a class="el" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a> &amp;surface)</td></tr>
-<tr class="memdesc:abc20bfbec6e7a067b88ac885350408a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Projects the vertices of a mesh onto a surface. <br /></td></tr>
-<tr class="separator:abc20bfbec6e7a067b88ac885350408a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d135055fd579ce166e72667d28ef265"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#a7d135055fd579ce166e72667d28ef265">bake_texture</a> (const <a class="el" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a> &amp;src_surface, const <a class="el" href="namespaceOGF.html#adb81dfcef0dbbb9433871ee16692bd45">ImageFileName</a> &amp;src_texture, const std::string &amp;src_tex_coord=&quot;tex_coord&quot;, index_t size=1024, const <a class="el" href="namespaceOGF.html#a2a70a5b4aae205b6302623e1918194b8">NewImageFileName</a> &amp;image=&quot;texture.png&quot;, index_t nb_dilate=2, const std::string &amp;tex_coord=&quot;tex_coord&quot;)</td></tr>
+<tr class="memdesc:a7d135055fd579ce166e72667d28ef265"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bakes texture from a textured surface to an atlas.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#a7d135055fd579ce166e72667d28ef265">More...</a><br /></td></tr>
+<tr class="separator:a7d135055fd579ce166e72667d28ef265"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classOGF_1_1MeshGrobCommands"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classOGF_1_1MeshGrobCommands')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classOGF_1_1MeshGrobCommands.html">OGF::MeshGrobCommands</a></td></tr>
 <tr class="memitem:abc7aa4fd13d8005c946062b8792e3bbc inherit pub_methods_classOGF_1_1MeshGrobCommands"><td class="memItemLeft" align="right" valign="top"><a id="abc7aa4fd13d8005c946062b8792e3bbc"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobCommands.html#abc7aa4fd13d8005c946062b8792e3bbc">MeshGrobCommands</a> ()</td></tr>
@@ -280,12 +279,18 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a9aa5f7a58c4f07822a9c2638cc3481c8 inherit pub_methods_classOGF_1_1Object"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Object.html#a9aa5f7a58c4f07822a9c2638cc3481c8">string_id</a> () const</td></tr>
 <tr class="memdesc:a9aa5f7a58c4f07822a9c2638cc3481c8 inherit pub_methods_classOGF_1_1Object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the unique string identifier.  <a href="classOGF_1_1Object.html#a9aa5f7a58c4f07822a9c2638cc3481c8">More...</a><br /></td></tr>
 <tr class="separator:a9aa5f7a58c4f07822a9c2638cc3481c8 inherit pub_methods_classOGF_1_1Object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a010ccc3cb207f83b34bfd0dfb4731ed9 inherit pub_methods_classOGF_1_1Object"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbool.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Object.html#a010ccc3cb207f83b34bfd0dfb4731ed9">has_method</a> (const std::string &amp;method_name) const</td></tr>
+<tr class="memdesc:a010ccc3cb207f83b34bfd0dfb4731ed9 inherit pub_methods_classOGF_1_1Object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether a method is defined.  <a href="classOGF_1_1Object.html#a010ccc3cb207f83b34bfd0dfb4731ed9">More...</a><br /></td></tr>
+<tr class="separator:a010ccc3cb207f83b34bfd0dfb4731ed9 inherit pub_methods_classOGF_1_1Object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af77846e808d39e30783a43244edcb7a2 inherit pub_methods_classOGF_1_1Object"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbool.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Object.html#af77846e808d39e30783a43244edcb7a2">invoke_method</a> (const std::string &amp;method_name, const <a class="el" href="classOGF_1_1ArgList.html">ArgList</a> &amp;args)</td></tr>
 <tr class="memdesc:af77846e808d39e30783a43244edcb7a2 inherit pub_methods_classOGF_1_1Object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invokes a method by method name and argument list.  <a href="classOGF_1_1Object.html#af77846e808d39e30783a43244edcb7a2">More...</a><br /></td></tr>
 <tr class="separator:af77846e808d39e30783a43244edcb7a2 inherit pub_methods_classOGF_1_1Object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad48b60aa3f61b2fc13a811a92d1bf71f inherit pub_methods_classOGF_1_1Object"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbool.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Object.html#ad48b60aa3f61b2fc13a811a92d1bf71f">invoke_method</a> (const std::string &amp;method_name)</td></tr>
 <tr class="memdesc:ad48b60aa3f61b2fc13a811a92d1bf71f inherit pub_methods_classOGF_1_1Object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invokes a method by method name.  <a href="classOGF_1_1Object.html#ad48b60aa3f61b2fc13a811a92d1bf71f">More...</a><br /></td></tr>
 <tr class="separator:ad48b60aa3f61b2fc13a811a92d1bf71f inherit pub_methods_classOGF_1_1Object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad58cc021671724423a971443901a4cfc inherit pub_methods_classOGF_1_1Object"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbool.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Object.html#ad58cc021671724423a971443901a4cfc">has_property</a> (const std::string &amp;prop_name) const</td></tr>
+<tr class="memdesc:ad58cc021671724423a971443901a4cfc inherit pub_methods_classOGF_1_1Object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether a property is defined.  <a href="classOGF_1_1Object.html#ad58cc021671724423a971443901a4cfc">More...</a><br /></td></tr>
+<tr class="separator:ad58cc021671724423a971443901a4cfc inherit pub_methods_classOGF_1_1Object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5e389b194a649b1a23c4c2ffff6fe63 inherit pub_methods_classOGF_1_1Object"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classbool.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Object.html#ad5e389b194a649b1a23c4c2ffff6fe63">get_property</a> (const std::string &amp;prop_name, std::string &amp;prop_value) const</td></tr>
 <tr class="memdesc:ad5e389b194a649b1a23c4c2ffff6fe63 inherit pub_methods_classOGF_1_1Object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a property.  <a href="classOGF_1_1Object.html#ad5e389b194a649b1a23c4c2ffff6fe63">More...</a><br /></td></tr>
 <tr class="separator:ad5e389b194a649b1a23c4c2ffff6fe63 inherit pub_methods_classOGF_1_1Object"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -414,9 +419,18 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memdesc:ab0d28fa10631fc7dfe9c7b5cdfd1b443 inherit pub_static_methods_classGEO_1_1Counted"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrements the reference count.  <a href="classGEO_1_1Counted.html#ab0d28fa10631fc7dfe9c7b5cdfd1b443">More...</a><br /></td></tr>
 <tr class="separator:ab0d28fa10631fc7dfe9c7b5cdfd1b443 inherit pub_static_methods_classGEO_1_1Counted"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classOGF_1_1MeshGrobCommands"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classOGF_1_1MeshGrobCommands')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classOGF_1_1MeshGrobCommands.html">OGF::MeshGrobCommands</a></td></tr>
-<tr class="memitem:abfb2f8c350f1f9e10878f2d0d8bd7797 inherit pro_methods_classOGF_1_1MeshGrobCommands"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobCommands.html#abfb2f8c350f1f9e10878f2d0d8bd7797">show_attribute</a> (const std::string &amp;attribute_name)</td></tr>
-<tr class="memdesc:abfb2f8c350f1f9e10878f2d0d8bd7797 inherit pro_methods_classOGF_1_1MeshGrobCommands"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows an attribute.  <a href="classOGF_1_1MeshGrobCommands.html#abfb2f8c350f1f9e10878f2d0d8bd7797">More...</a><br /></td></tr>
-<tr class="separator:abfb2f8c350f1f9e10878f2d0d8bd7797 inherit pro_methods_classOGF_1_1MeshGrobCommands"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5653307e7f40c375bec72a7669b5dcc inherit pro_methods_classOGF_1_1MeshGrobCommands"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobCommands.html#aa5653307e7f40c375bec72a7669b5dcc">show_attribute</a> (const std::string &amp;attribute_name, <a class="el" href="classOGF_1_1MeshGrob.html">MeshGrob</a> *M=nullptr)</td></tr>
+<tr class="memdesc:aa5653307e7f40c375bec72a7669b5dcc inherit pro_methods_classOGF_1_1MeshGrobCommands"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows an attribute.  <a href="classOGF_1_1MeshGrobCommands.html#aa5653307e7f40c375bec72a7669b5dcc">More...</a><br /></td></tr>
+<tr class="separator:aa5653307e7f40c375bec72a7669b5dcc inherit pro_methods_classOGF_1_1MeshGrobCommands"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5c891166207b7f9abadb42a5974486d inherit pro_methods_classOGF_1_1MeshGrobCommands"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobCommands.html#af5c891166207b7f9abadb42a5974486d">show_mesh</a> (<a class="el" href="classOGF_1_1MeshGrob.html">MeshGrob</a> *M=nullptr)</td></tr>
+<tr class="memdesc:af5c891166207b7f9abadb42a5974486d inherit pro_methods_classOGF_1_1MeshGrobCommands"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows the mesh.  <a href="classOGF_1_1MeshGrobCommands.html#af5c891166207b7f9abadb42a5974486d">More...</a><br /></td></tr>
+<tr class="separator:af5c891166207b7f9abadb42a5974486d inherit pro_methods_classOGF_1_1MeshGrobCommands"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8b302356d6182ef006070ed269d62e0 inherit pro_methods_classOGF_1_1MeshGrobCommands"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobCommands.html#af8b302356d6182ef006070ed269d62e0">show_UV</a> (const std::string &amp;UV_attribute_name=&quot;facet_corners.tex_coord&quot;, MeshGrob *M=nullptr)</td></tr>
+<tr class="memdesc:af8b302356d6182ef006070ed269d62e0 inherit pro_methods_classOGF_1_1MeshGrobCommands"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows the parameterization of a mesh.  <a href="classOGF_1_1MeshGrobCommands.html#af8b302356d6182ef006070ed269d62e0">More...</a><br /></td></tr>
+<tr class="separator:af8b302356d6182ef006070ed269d62e0 inherit pro_methods_classOGF_1_1MeshGrobCommands"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbbf1ebdb875852ab91545e4f1601b63 inherit pro_methods_classOGF_1_1MeshGrobCommands"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobCommands.html#abbbf1ebdb875852ab91545e4f1601b63">show_colors</a> (const std::string &amp;attribute=&quot;vertices.colors&quot;, MeshGrob *M=nullptr)</td></tr>
+<tr class="memdesc:abbbf1ebdb875852ab91545e4f1601b63 inherit pro_methods_classOGF_1_1MeshGrobCommands"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows the colors of a mesh.  <a href="classOGF_1_1MeshGrobCommands.html#abbbf1ebdb875852ab91545e4f1601b63">More...</a><br /></td></tr>
+<tr class="separator:abbbf1ebdb875852ab91545e4f1601b63 inherit pro_methods_classOGF_1_1MeshGrobCommands"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classOGF_1_1Object"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classOGF_1_1Object')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classOGF_1_1Object.html">OGF::Object</a></td></tr>
 <tr class="memitem:a774ab43f2e022c94c029322829a9f7ce inherit pro_methods_classOGF_1_1Object"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classbool.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Object.html#a774ab43f2e022c94c029322829a9f7ce">emit_signal</a> (const std::string &amp;signal_name, const <a class="el" href="classOGF_1_1ArgList.html">ArgList</a> &amp;args, <a class="el" href="classbool.html">bool</a> called_from_slot=false)</td></tr>
 <tr class="memdesc:a774ab43f2e022c94c029322829a9f7ce inherit pro_methods_classOGF_1_1Object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emits a signal and calls the slots it is connected to.  <a href="classOGF_1_1Object.html#a774ab43f2e022c94c029322829a9f7ce">More...</a><br /></td></tr>
@@ -484,7 +498,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Bakes normals from a surface to the texture atlas. </p>
+<p>Bakes colors from a surface to the texture atlas. </p>
 <p>\menu Atlas </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">surface</td><td>the name of the mesh with colors to be baked. can be the current mesh or another one with higher-resolution. </td></tr>
@@ -551,6 +565,78 @@ Additional Inherited Members</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">image</td><td>filename of the generated normal map. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">nb_dilate</td><td>number of dilations </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">tex_coord</td><td>the name of the facet corner attribute that stores texture coordinates. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7d135055fd579ce166e72667d28ef265"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d135055fd579ce166e72667d28ef265">&#9670;&nbsp;</a></span>bake_texture()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OGF::MeshGrobSurfaceCommands::bake_texture </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a> &amp;&#160;</td>
+          <td class="paramname"><em>src_surface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespaceOGF.html#adb81dfcef0dbbb9433871ee16692bd45">ImageFileName</a> &amp;&#160;</td>
+          <td class="paramname"><em>src_texture</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>src_tex_coord</em> = <code>&quot;tex_coord&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td>
+          <td class="paramname"><em>size</em> = <code>1024</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespaceOGF.html#a2a70a5b4aae205b6302623e1918194b8">NewImageFileName</a> &amp;&#160;</td>
+          <td class="paramname"><em>image</em> = <code>&quot;texture.png&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td>
+          <td class="paramname"><em>nb_dilate</em> = <code>2</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>tex_coord</em> = <code>&quot;tex_coord&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Bakes texture from a textured surface to an atlas. </p>
+<p>\menu Atlas </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">src_surface</td><td>the name of the mesh with the texture to be baked. can be the current mesh or another one with higher-resolution normals </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">src_texture</td><td>the texture associated with src_surface </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">src_tex_coord</td><td>the source facet corner attribute with the texture coordinates </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>pixel-size of the generated texture </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">image</td><td>filename of the generated texture </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nb_dilate</td><td>number of dilations </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tex_coord</td><td>the name of the facet corner attribute that stores texture coordinates for the generated texture </td></tr>
   </table>
   </dd>
 </dl>
@@ -833,8 +919,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ab6da45fcdf491b18e9758cd17f98bdf4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab6da45fcdf491b18e9758cd17f98bdf4">&#9670;&nbsp;</a></span>make_texture_atlas()</h2>
+<a id="ad45134d3b80e4a5e9919a3893c440059"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad45134d3b80e4a5e9919a3893c440059">&#9670;&nbsp;</a></span>make_texture_atlas()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -849,7 +935,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>sharp_angles_threshold</em> = <code>45.0</code>, </td>
+          <td class="paramname"><em>sharp_angles_threshold</em> = <code>180.0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -861,7 +947,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">ChartPacker&#160;</td>
-          <td class="paramname"><em>pack</em> = <code>PACK_TETRIS</code>, </td>
+          <td class="paramname"><em>pack</em> = <code>PACK_XATLAS</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -917,8 +1003,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ad65b384edd2c1322fdc48a5354b9b000"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad65b384edd2c1322fdc48a5354b9b000">&#9670;&nbsp;</a></span>pack_texture_space()</h2>
+<a id="ada2238dc14fb29924e784c0487380a9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada2238dc14fb29924e784c0487380a9a">&#9670;&nbsp;</a></span>pack_texture_space()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -927,7 +1013,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">void OGF::MeshGrobSurfaceCommands::pack_texture_space </td>
           <td>(</td>
           <td class="paramtype">ChartPacker&#160;</td>
-          <td class="paramname"><em>pack</em> = <code>PACK_TETRIS</code></td><td>)</td>
+          <td class="paramname"><em>pack</em> = <code>PACK_XATLAS</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -987,14 +1073,14 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a0d7b7d089cba099335af96b80a817faa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d7b7d089cba099335af96b80a817faa">&#9670;&nbsp;</a></span>project_on_surface()</h2>
+<a id="abc20bfbec6e7a067b88ac885350408a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc20bfbec6e7a067b88ac885350408a4">&#9670;&nbsp;</a></span>project_vertices_on_surface()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void OGF::MeshGrobSurfaceCommands::project_on_surface </td>
+          <td class="memname">void OGF::MeshGrobSurfaceCommands::project_vertices_on_surface </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a> &amp;&#160;</td>
           <td class="paramname"><em>surface</em></td><td>)</td>
@@ -1454,7 +1540,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html">MeshGrobSurfaceCommands</a></li>
-    <li class="footer">Generated on Mon Jul 11 2022 05:41:43 for Graphite by
+    <li class="footer">Generated on Sun Jul 17 2022 20:33:32 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

@@ -2,6 +2,7 @@ var dir_53d5e9858254fface141430feef69984 =
 [
     [ "nl.h", "nl_8h.html", "nl_8h" ],
     [ "nl_64.h", "nl__64_8h_source.html", null ],
+    [ "nl_amgcl.h", "nl__amgcl_8h_source.html", null ],
     [ "nl_arpack.h", "nl__arpack_8h.html", "nl__arpack_8h" ],
     [ "nl_blas.h", "nl__blas_8h.html", "nl__blas_8h" ],
     [ "nl_cholmod.h", "nl__cholmod_8h.html", "nl__cholmod_8h" ],

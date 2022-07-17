@@ -252,7 +252,7 @@ $(document).ready(function(){initNavTree('mesh__grob__surface__commands_8h_sourc
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160; </div>
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;<span class="comment">       /**********************************************************/</span></div>
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;       <span class="keywordtype">void</span> project_on_surface(<span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">MeshGrobName</a>&amp; surface);</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;       <span class="keywordtype">void</span> project_vertices_on_surface(<span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">MeshGrobName</a>&amp; surface);</div>
 <div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;       </div>
 <div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;<span class="comment">       /**********************************************************/</span></div>
 <div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160; </div>
@@ -284,15 +284,15 @@ $(document).ready(function(){initNavTree('mesh__grob__surface__commands_8h_sourc
 <div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160; </div>
 <div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;        <span class="keywordtype">void</span> make_texture_atlas(</div>
 <div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;            <span class="keywordtype">bool</span> unglue_sharp_edges = <span class="keyword">true</span>,</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;            <span class="keywordtype">double</span> sharp_angles_threshold = 45.0,</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;            <span class="keywordtype">double</span> sharp_angles_threshold = 180.0,</div>
 <div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;            ChartParameterizer param=PARAM_ABF,</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;            ChartPacker pack=PACK_TETRIS,</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;            ChartPacker pack=PACK_XATLAS,</div>
 <div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;            <span class="keywordtype">bool</span> verbose=<span class="keyword">false</span></div>
 <div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;        );</div>
 <div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160; </div>
 <div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160; </div>
 <div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;        <span class="keywordtype">void</span> pack_texture_space(</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;            ChartPacker pack=PACK_TETRIS</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;            ChartPacker pack=PACK_XATLAS</div>
 <div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;        );</div>
 <div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;        </div>
 <div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;        <span class="keywordtype">void</span> parameterize_chart(</div>
@@ -318,13 +318,22 @@ $(document).ready(function(){initNavTree('mesh__grob__surface__commands_8h_sourc
 <div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;            <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb_dilate=2,</div>
 <div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;            <span class="keyword">const</span> std::string&amp; attribute=<span class="stringliteral">&quot;tex_coord&quot;</span></div>
 <div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;        );</div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;        </div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;        <span class="keywordtype">void</span> project_vertices_on_surface(<span class="keyword">const</span> <a class="code" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a>&amp; surface);</div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;        </div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;    };</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;}</div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160; </div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160; </div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160; </div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;        <span class="keywordtype">void</span> bake_texture(</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;            <span class="keyword">const</span> <a class="code" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a>&amp; src_surface,</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;            <span class="keyword">const</span> <a class="code" href="namespaceOGF.html#adb81dfcef0dbbb9433871ee16692bd45">ImageFileName</a>&amp; src_texture,</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;            <span class="keyword">const</span> std::string&amp; src_tex_coord=<span class="stringliteral">&quot;tex_coord&quot;</span>,</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;            <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> size=1024,</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;            <span class="keyword">const</span> <a class="code" href="namespaceOGF.html#a2a70a5b4aae205b6302623e1918194b8">NewImageFileName</a>&amp; image=<span class="stringliteral">&quot;texture.png&quot;</span>,</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;            <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb_dilate=2,</div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;            <span class="keyword">const</span> std::string&amp; tex_coord=<span class="stringliteral">&quot;tex_coord&quot;</span></div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;        );</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;        </div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;    };</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;}</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="anamespaceOGF_html_a0ac7de7c0f9799cd5c4405fdf025fac4"><div class="ttname"><a href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">OGF::MeshGrobName</a></div><div class="ttdeci">Name&lt; MeshGrob * &gt; MeshGrobName</div><div class="ttdoc">The name of an existing MeshGrob in the SceneGraph.</div><div class="ttdef"><b>Definition:</b> <a href="mesh__grob_8h_source.html#l00175">mesh_grob.h:175</a></div></div>
@@ -341,12 +350,13 @@ $(document).ready(function(){initNavTree('mesh__grob__surface__commands_8h_sourc
 <div class="ttc" id="anamespaceGEO_html_a0267003812ef890addfcc5d7846bdd99"><div class="ttname"><a href="namespaceGEO.html#a0267003812ef890addfcc5d7846bdd99">GEO::fill_holes</a></div><div class="ttdeci">void fill_holes(Mesh &amp;M, double max_area=0.0, index_t max_edges=max_index_t(), bool repair=true)</div><div class="ttdoc">Fills holes in mesh by generating new triangles.</div></div>
 <div class="ttc" id="aclassOGF_1_1MeshGrobSurfaceCommands_html_a3c71cb571c2cf73b56a07b2ef3c8ab46"><div class="ttname"><a href="classOGF_1_1MeshGrobSurfaceCommands.html#a3c71cb571c2cf73b56a07b2ef3c8ab46">OGF::MeshGrobSurfaceCommands::triangulate</a></div><div class="ttdeci">void triangulate()</div><div class="ttdoc">Triangulates all the facets.</div><div class="ttdef"><b>Definition:</b> <a href="mesh__grob__surface__commands_8h_source.html#l00359">mesh_grob_surface_commands.h:359</a></div></div>
 <div class="ttc" id="asrc_2lib_2OGF_2mesh_2common_2common_8h_html"><div class="ttname"><a href="src_2lib_2OGF_2mesh_2common_2common_8h.html">common.h</a></div><div class="ttdoc">Definitions common to all include files in the mesh library.</div></div>
+<div class="ttc" id="anamespaceOGF_html_adb81dfcef0dbbb9433871ee16692bd45"><div class="ttname"><a href="namespaceOGF.html#adb81dfcef0dbbb9433871ee16692bd45">OGF::ImageFileName</a></div><div class="ttdeci">Name&lt; File&lt; Image * &gt; &gt; ImageFileName</div><div class="ttdoc">The name of an existing file that contains an Image.</div><div class="ttdef"><b>Definition:</b> <a href="scene__graph_2types_2properties_8h_source.html#l00398">properties.h:398</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_a0a394e0c6ded3e03d35e7b5796beef20"><div class="ttname"><a href="namespaceGEO.html#a0a394e0c6ded3e03d35e7b5796beef20">GEO::remesh_smooth</a></div><div class="ttdeci">void remesh_smooth(Mesh &amp;M_in, Mesh &amp;M_out, index_t nb_points, coord_index_t dim=0, index_t nb_Lloyd_iter=5, index_t nb_Newton_iter=30, index_t Newton_m=7)</div><div class="ttdoc">Remeshes a 'smooth' shape (i.e. without management of sharp features).</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_aef77abc1c70517fe3037d0ad81c1d82.html">OGF</a></li><li class="navelem"><a class="el" href="dir_fc9bd745fd3f5b971e94c93398ad7331.html">mesh</a></li><li class="navelem"><a class="el" href="dir_fa4cd75815104451c40304a5ee1ceca5.html">commands</a></li><li class="navelem"><a class="el" href="mesh__grob__surface__commands_8h.html">mesh_grob_surface_commands.h</a></li>
-    <li class="footer">Generated on Mon Jul 11 2022 05:41:40 for Graphite by
+    <li class="footer">Generated on Sun Jul 17 2022 20:33:28 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

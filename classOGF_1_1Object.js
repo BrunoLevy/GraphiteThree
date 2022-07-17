@@ -16,6 +16,8 @@ var classOGF_1_1Object =
     [ "get_signals_enabled", "classOGF_1_1Object.html#a4460383e1bedf49578d977268ceb619c", null ],
     [ "get_slots_enabled", "classOGF_1_1Object.html#ac7b5c69ed3740c5dcd8dc13ed3a9d2a0", null ],
     [ "get_string_id", "classOGF_1_1Object.html#a83c636beb1728e78df6bd9236f07881a", null ],
+    [ "has_method", "classOGF_1_1Object.html#a010ccc3cb207f83b34bfd0dfb4731ed9", null ],
+    [ "has_property", "classOGF_1_1Object.html#ad58cc021671724423a971443901a4cfc", null ],
     [ "id", "classOGF_1_1Object.html#aecaf28b5f09834e55f0fa709b15f6242", null ],
     [ "invoke_method", "classOGF_1_1Object.html#ad48b60aa3f61b2fc13a811a92d1bf71f", null ],
     [ "invoke_method", "classOGF_1_1Object.html#af77846e808d39e30783a43244edcb7a2", null ],

@@ -1,5 +1,10 @@
 var NAVTREEINDEX23 =
 {
+"classOGF_1_1Scope.html#a82c0c3cad62fd28800cdbb45f8b78278":[3,0,3,165,4],
+"classOGF_1_1Scope.html#ab2ac7455e6bdfdda518760edf86d3248":[3,0,3,165,3],
+"classOGF_1_1Serializer.html":[3,0,3,166],
+"classOGF_1_1Serializer.html#a269b632e0c0f7f99013f4e36f8a098dd":[3,0,3,166,1],
+"classOGF_1_1Serializer.html#ab16fa9f3b4bbd69d0bbf48284f24b811":[3,0,3,166,0],
 "classOGF_1_1Serializer.html#ad3318c686ebdd4737970d10ded19f9c3":[3,0,3,166,2],
 "classOGF_1_1Shader.html":[3,0,3,167],
 "classOGF_1_1Shader.html#a1663aee99fcc734ce79f60da2478e797":[3,0,3,167,9],
@@ -244,10 +249,5 @@ var NAVTREEINDEX23 =
 "classOGF_1_1VoxelGrobShader.html":[3,0,3,183],
 "classOGF_1_1VoxelGrobShader.html#a161249c230247f63d05d85a27d5c2034":[3,0,3,183,3],
 "classOGF_1_1VoxelGrobShader.html#a36891af6488dd97af79ba918dd034975":[3,0,3,183,5],
-"classOGF_1_1VoxelGrobShader.html#a5ede5bdef979b98c1cd873eb02e027d8":[3,0,3,183,2],
-"classOGF_1_1VoxelGrobShader.html#abc0bcf49c65cc43d6c84695080512ec5":[3,0,3,183,4],
-"classOGF_1_1VoxelGrobShader.html#ac49a40a47025c6bb2c83f7fa7f6f1a38":[3,0,3,183,1],
-"classOGF_1_1VoxelGrobShader.html#ade57ccbc24db633caf1176dce8ae0651":[3,0,3,183,6],
-"classOGF_1_1VoxelGrobShader.html#af3f00d1896a44855a390b9fb2e88544e":[3,0,3,183,0],
-"classOGF_1_1ogf__declare__abstract__class.html":[3,0,3,126]
+"classOGF_1_1VoxelGrobShader.html#a5ede5bdef979b98c1cd873eb02e027d8":[3,0,3,183,2]
 };
