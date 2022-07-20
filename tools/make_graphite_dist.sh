@@ -12,9 +12,8 @@ copy_graphite_dist() {
     rm -fr $DIST_DIR
     mkdir -p $DIST_DIR
     cp -r ../GraphiteThree $DIST_DIR/
-    rm -fr $DIST_DIR/GraphiteThree/.git*
-    rm -fr $DIST_DIR/GraphiteThree/geogram/.git*
     cp $DIST_DIR/GraphiteThree/README.md $DIST_DIR/
+    find $DIST_DIR -name ".git*" -prune -exec rm -fr {} \;
     unix2dos $DIST_DIR/README.md
 }
 
