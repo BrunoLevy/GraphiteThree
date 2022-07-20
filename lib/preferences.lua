@@ -22,7 +22,7 @@ function preferences_window.edit_list(label, vals_string, extension)
       table.insert(vals,s)
    end
    imgui.PushItemWidth(-1)
-   imgui.ListBoxHeader(label, #vals)
+   imgui.BeginListBox(label, #vals)
    for i = 1,#vals do
       if imgui.Selectable(
             vals[i],
@@ -31,7 +31,7 @@ function preferences_window.edit_list(label, vals_string, extension)
          preferences_window.selected[label] = vals[i]
       end
    end
-   imgui.ListBoxFooter()
+   imgui.EndListBox()
    imgui.PopItemWidth()
    local w = imgui.GetWindowWidth()/2 - main.scaling()*10
    local rem_selected_lbl = 'Remove selected'

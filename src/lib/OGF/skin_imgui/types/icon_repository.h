@@ -38,7 +38,7 @@
 #define H_SKIN_IMGUI_ICON_REPOSITORY_H
 
 #include <OGF/skin_imgui/common/common.h>
-#include <geogram_gfx/third_party/ImGui/imgui.h>
+#include <geogram_gfx/third_party/imgui/imgui.h>
 #include <geogram_gfx/basic/GL.h> 
 
 #include <map>

@@ -37,8 +37,8 @@ function Draw_dialog.draw_window()
      local y = py + 4.0
      local spacing = 10.0
      local corners_none = 0
-     local corners_all = ImDrawCornerFlags_All
-     local corners_tl_br = ImDrawCornerFlags_TopLeft | ImDrawCornerFlags_BotRight
+     local corners_all = ImDrawFlags_RoundCornersAll
+     local corners_tl_br = ImDrawFlags_RoundCornersTopLeft | ImDrawFlags_RoundCornersBottomRight
      local sz = Draw_dialog.sz
      for n=0,1 do
         -- First line uses a thickness of 1.0f, second line uses the configurable thickness
@@ -56,7 +56,7 @@ function Draw_dialog.draw_window()
 	imgui.AddLine(draw_list, x, y, x + sz, y, col, th)                                  x = x + sz + spacing
 	imgui.AddLine(draw_list, x, y, x, y + sz, col, th)                                  x = x + spacing
 	imgui.AddLine(draw_list, x, y, x + sz, y + sz, col, th)                             x = x +  sz + spacing
-	imgui.AddBezierCurve(draw_list, x, y, x + sz*1.3, y + sz*0.3, x + sz - sz*1.3, y + sz - sz*0.3, x + sz, y + sz, col, th,0)
+	imgui.AddBezierCubic(draw_list, x, y, x + sz*1.3, y + sz*0.3, x + sz - sz*1.3, y + sz - sz*0.3, x + sz, y + sz, col, th,0)
 	x = px + 4
         y = y + sz + spacing
      end
