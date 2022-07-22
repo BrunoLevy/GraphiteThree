@@ -10,11 +10,11 @@
 -- Create a mesh with a sphere if not already there
 S = scene_graph.find_or_create_object('OGF::MeshGrob', 'Sphere')
 S.clear()
-S.query_interface('OGF::MeshGrobShapesCommands').create_sphere()
+S.I.Shapes.create_sphere()
  
 -- Create a MeshGrobEditor object, that has low-level access to the 
 -- mesh and its attribute.
-E = S.query_interface('OGF::MeshGrobEditor')
+E = S.I.Editor
 
 -- Create a vertex attribute attached to the vertices of the mesh
 -- and named 'foobar'

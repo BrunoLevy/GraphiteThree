@@ -13,7 +13,7 @@ scene_graph.current().rename('MySurface')
 -- Change current object
 scene_graph.current_object = 'MySurface'
 -- Call a command
-scene_graph.current().query_interface('OGF::MeshGrobShapesCommands').create_sphere()
+scene_graph.current().I.Shapes.create_sphere()
 -- Change graphics attributes
 scene_graph.current().shader.mesh_style='true; 0 0 0 1; 2'
 
@@ -21,7 +21,7 @@ scene_graph.current().shader.mesh_style='true; 0 0 0 1; 2'
 -- Useful for scripts that you wand to execute several times
 C = scene_graph.find_or_create_object('OGF::MeshGrob', 'C')
 C.clear()
-C.query_interface('OGF::MeshGrobShapesCommands').create_cube()
+C.I.Shapes.create_cube()
 
 
 ------------------------------------------------------------------------------------
@@ -50,8 +50,8 @@ C.query_interface('OGF::MeshGrobShapesCommands').create_cube()
 --
 -- * mesh_style is 'on/off; r g b a; width'  (a is supposed to be 1)
 --
--- * Commands are accessible through object.query_interface('command class name')
---   Try this: in the console, type 'scene_graph.current().query_interface(' then
+-- * Commands are accessible through object.I.XXX
+--   Try this: in the console, type 'scene_graph.current().I' then
 --      'tab' for autocompletion
 --   Autocompletion in terminal in a function call gives the parameters names 
 --      and default values

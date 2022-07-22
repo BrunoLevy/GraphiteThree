@@ -34,7 +34,7 @@ function plot_func(S, func, NU, NV)
 -- uncomment to display the vertices
 -- S.shader.vertices_style='true; 0 1 0 1; 1'
   S.shader.mesh_style='true; 0 0 0 1; 1'
-  local E = S.query_interface('OGF::MeshGrobEditor')
+  local E = S.I.Editor
   E.clear()
   for V = 0,NV-1 do
     for U = 0,NU-1 do

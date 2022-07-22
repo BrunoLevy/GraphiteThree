@@ -13,7 +13,7 @@ S.shader.vertices_style='true; 0 1 0 1; 3'
 S.shader.mesh_style='true; 0 0 0 1; 3'
 
 -- Create a MeshEditor object
-E = S.query_interface('OGF::MeshGrobEditor')
+E = S.I.Editor
 
 -- Clear the existing mesh (so that you can
 -- run the program multiple times)

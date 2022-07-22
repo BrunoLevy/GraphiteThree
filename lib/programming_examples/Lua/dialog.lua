@@ -21,6 +21,9 @@ my_dialog.y = 400
 
 function my_dialog.draw_window()
    imgui.Text('Hello, world')
+   if imgui.Button('Click me') then
+     print('button pushed')
+   end
 end
 
 -- Registers the new "module" to the main Graphite window.
@@ -31,5 +34,6 @@ end
 -- Try now to add a button in the draw() function.
 
 graphite_main_window.add_module(my_dialog)
+
 
 
