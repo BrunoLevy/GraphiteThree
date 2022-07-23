@@ -148,15 +148,15 @@ end
 scene_graph.clear()
 Omega = scene_graph.create_object('OGF::MeshGrob')
 Omega.rename('Omega')
-Omega.query_interface('OGF::MeshGrobShapesCommands').create_square()
-Omega.query_interface('OGF::MeshGrobSurfaceCommands').triangulate()
+Omega.I.Shapes.create_square()
+Omega.I.Surface.triangulate()
 
 points = scene_graph.create_object('OGF::MeshGrob')
 points.rename('points')
 scene_graph.current_object = 'points'
 
 
-E = points.query_interface('OGF::MeshGrobEditor')
+E = points.I.Editor
 
 -- Low level access to point coordinates
 point    = E.find_attribute('vertices.point')
@@ -215,7 +215,7 @@ function show_speeds()
    if speeds_display == nil then
       speeds_display = scene_graph.create_object('OGF::MeshGrob')
       speeds_display.rename('speeds')
-      E_speeds_display = speeds_display.query_interface('OGF::MeshGrobEditor')
+      E_speeds_display = speeds_display.I.Editor
       speeds_display_points = E_speeds_display.find_attribute('vertices.point')
 --      if N <= 10 then
 --         speeds_display.shader.vertices_style='true; 0 0 0.5 1; 5'

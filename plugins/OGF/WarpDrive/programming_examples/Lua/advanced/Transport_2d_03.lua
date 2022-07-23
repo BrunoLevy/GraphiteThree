@@ -33,11 +33,11 @@ end
 scene_graph.clear()
 Omega = scene_graph.create_object('OGF::MeshGrob')
 Omega.rename('Omega')
-Omega.query_interface('OGF::MeshGrobShapesCommands').create_square()
-Omega.query_interface('OGF::MeshGrobSurfaceCommands').triangulate()
+Omega.I.Shapes.create_square()
+Omega.I.Surface.triangulate()
 
 -- Create points (random sampling of Omega)
-Omega.query_interface('OGF::MeshGrobPointsCommands').sample_surface(
+Omega.I.Points.sample_surface(
    {nb_points=N,Lloyd_iter=0,Newton_iter=0}
 )
 scene_graph.current_object = 'points'
@@ -46,7 +46,7 @@ points = scene_graph.resolve('points')
 -- -------------------------------------------------
 -- Get access to point coords
 -- -------------------------------------------------
-E = points.query_interface('OGF::MeshGrobEditor')
+E = points.I.Editor
 coords = E.find_attribute('vertices.point')
 
 -- -------------------------------------------------
@@ -66,7 +66,7 @@ RVD.rename('RVD')
 -- -------------------------------------------------
 -- Compute diagram
 -- -------------------------------------------------
-OT = points.query_interface('OGF::MeshGrobTransport')
+OT = points.I.Transport
 Omega.visible=false
 weight   = NL.create_vector(N)
 OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')   

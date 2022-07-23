@@ -211,11 +211,11 @@ namespace OGF {
 				  << std::endl;
 	    return;
 	}
+	
         mesh_grob()->vertices.set_dimension(3);
-        
         MeshGrob* points = MeshGrob::find_or_create(scene_graph(), points_name);
         points->clear();
-
+	
         CentroidalVoronoiTesselation CVT(mesh_grob());
         CVT.compute_initial_sampling(nb_points);
 

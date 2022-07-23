@@ -145,7 +145,9 @@ namespace OGF {
             ogf_assert(result != nullptr);
             result->rename(name);
             sg->set_current_object(result->name());
-            sg->set_current_object(cur_grob_bkp);
+	    if(sg->is_bound(cur_grob_bkp)) { 
+		sg->set_current_object(cur_grob_bkp);
+	    }
         }
         return result;
     }

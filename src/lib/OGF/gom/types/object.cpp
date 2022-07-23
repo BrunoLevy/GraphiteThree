@@ -139,6 +139,20 @@ namespace OGF {
         const ArgList& args, Any& ret_val
     ) {
 
+	/*
+	std::cerr << meta_class_->name() << "::" << method_name << "(";
+	for(index_t i=0; i<args.nb_args(); ++i) {
+	    std::cerr << args.ith_arg_name(i) << "=";
+	    std::string arg_value;
+	    args.ith_arg_value(i).get_value(arg_value);
+	    std::cerr << arg_value;
+	    if(i != args.nb_args()-1) {
+		std::cerr << ";";
+	    }
+	}
+	std::cerr << ")" << std::endl;
+	*/
+	
         if( !slots_enabled_ && 
             method_name != "enable_slots" &&
             method_name != "slots_enabled"

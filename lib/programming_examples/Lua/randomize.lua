@@ -3,7 +3,7 @@
 -- Try it on a sphere (shapes->create sphere)
 
 S = scene_graph.current()
-E = S.query_interface('OGF::MeshGrobEditor')
+E = S.I.Editor
 point  = E.find_attribute('vertices.point')
 
 -- Iterate on all the vertices

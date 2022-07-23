@@ -7,14 +7,12 @@ N = 5000 -- Number of points
 scene_graph.clear()
 Omega = scene_graph.create_object('OGF::MeshGrob')
 Omega.rename('Omega')
-Omega.query_interface('OGF::MeshGrobShapesCommands').create_sphere()  
-Omega.query_interface('OGF::MeshGrobPointsCommands').sample_surface(
-   {nb_points=N}
-)
+Omega.I.Shapes.create_sphere()  
+Omega.I.Points.sample_surface({nb_points=N})
 points = scene_graph.resolve('points')
 scene_graph.current_object = 'points'
 
-E = points.query_interface('OGF::MeshGrobEditor')
+E = points.I.Editor
 
 point = E.find_attribute('vertices.point')
 mass  = E.find_or_create_attribute('vertices.mass')
@@ -36,7 +34,7 @@ points.shader.attribute='vertices.mass'
 points.shader.colormap = 'blue_red;true;0;false;false;;'
 points.shader.autorange()
 
-points.query_interface('OGF::MeshGrobTransportCommands').init_Euler(
+points.I.TransportCommands.init_Euler(
   {omega='Omega', mode='EULER_ON_SURFACE'}
 )
 

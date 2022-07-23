@@ -85,7 +85,12 @@ end
 graphite_gui.frame = 0
 
 -- \brief The function that handles the GUI
+graphite_gui.lock = false
 function graphite_gui.draw()
+    if graphite_gui.lock then
+       return
+    end
+    graphite_gui.lock = true
     if not graphite_gui.presentation_mode() then
        graphite_gui.draw_menu_bar()
        main.draw_dock_space()
@@ -101,6 +106,7 @@ function graphite_gui.draw()
     if graphite_gui.frame % 50 == 0 then
          collectgarbage()
     end
+    graphite_gui.lock = false
 end    
 
 gom.connect(main.redraw_request, graphite_gui.draw)

@@ -9,7 +9,7 @@ N=1000 -- Number of points.
 
 -- Computes one step of Euler simulation
 function Euler_step()
-   local OT = points.query_interface('OGF::MeshGrobTransport')
+   local OT = points.I.Transport
  
    -- Timestep
    local tau = 0.001
@@ -69,17 +69,15 @@ end
 scene_graph.clear()
 Omega = scene_graph.create_object('OGF::MeshGrob')
 Omega.rename('Omega')
-Omega.query_interface('OGF::MeshGrobShapesCommands').create_square()
-Omega.query_interface('OGF::MeshGrobSurfaceCommands').triangulate()
-Omega.query_interface('OGF::MeshGrobPointsCommands').sample_surface(
-   {nb_points=N}
-)
+Omega.I.Shapes.create_square()
+Omega.I.Surface.triangulate()
+Omega.I.Points.sample_surface({nb_points=N})
 scene_graph.current_object = 'points'
 points = scene_graph.resolve('points')
 
 RVD = scene_graph.create_object('OGF::MeshGrob')
 RVD.rename('RVD')
-RVD_E = RVD.query_interface('OGF::MeshGrobEditor')
+RVD_E = RVD.I.Editor
 RVD_chart = RVD_E.find_or_create_attribute(
     'facets.chart',1,gom.resolve_meta_type('OGF::index_t')
 )
@@ -89,7 +87,7 @@ RVD_V     = RVD_E.find_or_create_attribute(
 )
 
 
-E = points.query_interface('OGF::MeshGrobEditor')
+E = points.I.Editor
 
 -- Low level access to point coordinates
 point    = E.find_attribute('vertices.point')
@@ -125,7 +123,7 @@ points.shader.autorange()
 -- Initialize Euler simulation.
 -- Start with points at centroids, and initial speeds at zero.
 function Euler_init()
-   local OT = points.query_interface('OGF::MeshGrobTransport')
+   local OT = points.I.Transport
    OT.compute_optimal_Laguerre_cells_centroids(
       {Omega=Omega,centroids=centroid,weights=weight,mode='EULER_2D'}
    )

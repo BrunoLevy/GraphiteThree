@@ -61,5 +61,7 @@ C.I.Shapes.create_cube()
 --   scene_graph.current_object returns the name of the current object
 --   scene_graph.current_object='titi' sets the current object (note that 'titi'
 --     is the name of the object you want to set)
+--
+-- * Object with name 'XXX' can be directly obtained through scene_graph.objects.XXX
 
 

@@ -8,15 +8,12 @@ N = 3000 -- Number of points
 scene_graph.clear()
 Omega = scene_graph.create_object('OGF::MeshGrob')
 Omega.rename('Omega')
-Omega.query_interface('OGF::MeshGrobShapesCommands').create_square()
-Omega.query_interface('OGF::MeshGrobSurfaceCommands').triangulate()
-Omega.query_interface('OGF::MeshGrobPointsCommands').sample_surface(
-   {nb_points=N}
-)
-points = scene_graph.resolve('points')
-scene_graph.current_object = 'points'
+Omega.I.Shapes.create_square()
+Omega.I.Surface.triangulate()
+Omega.I.Points.sample_surface({nb_points=N})
+points = scene_graph.objects.points
 
-E = points.query_interface('OGF::MeshGrobEditor')
+E = points.I.Editor
 
 -- Low level access to point coordinates
 point    = E.find_attribute('vertices.point')
@@ -45,14 +42,16 @@ points.shader.colormap = 'blue_red;true;0;false;false;;'
 points.shader.autorange()
 
 -- Initialize Euler simulation.
-points.query_interface('OGF::MeshGrobTransportCommands').init_Euler(
+points.I.TransportCommands.init_Euler(
   {omega='Omega', mode='EULER_2D'}
 )
 
 -- Open the dialog that launches the simulation
+scene_graph.current_object = 'points'
 autogui.open_command_dialog_for_current_object(
    'OGF::MeshGrobTransportCommands',
    'Euler2d',
-   {nb_iter=100}
+   {nb_iter=500}
 )
+
 
