@@ -68,6 +68,15 @@ function string.load_file(filename)
     return content
 end
 
+-- \brief Sleeps during a certain time
+-- \param a the time to sleep in seconds
+-- (floating point number)
+
+function sleep(a) 
+    local sec = tonumber(os.clock() + a); 
+    while (os.clock() < sec) do 
+    end 
+end
 
 -- Auto load plugins declared in the sources
 

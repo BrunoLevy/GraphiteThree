@@ -974,7 +974,7 @@ namespace {
         std::string result;
         if(PyUnicode_Check(obj)) {
             Py_ssize_t size;
-            const char* str = _PyUnicode_AsStringAndSize(obj, &size);
+            const char* str = PyUnicode_AsUTF8AndSize(obj, &size);
             result = std::string(str, size_t(size));
         } else if(PyGraphite_Check(obj)) {
             Object* graphite_obj = ((graphite_Object*)obj)->object;
@@ -986,7 +986,7 @@ namespace {
         } else {
             PyObject* s = PyObject_Str(obj); 
             Py_ssize_t size;
-            const char* str = _PyUnicode_AsStringAndSize(s, &size);
+            const char* str = PyUnicode_AsUTF8AndSize(s, &size);
                   // [TODO: check whether this is correct]
             result = std::string(str, size_t(size));
             Py_DECREF(s);

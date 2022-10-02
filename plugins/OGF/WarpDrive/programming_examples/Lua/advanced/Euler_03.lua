@@ -223,13 +223,10 @@ function choc(v1,v2)
 end
 
 scene_graph.clear()
-Omega = scene_graph.create_object('OGF::MeshGrob')
-Omega.rename('Omega')
+Omega = scene_graph.create_object('OGF::MeshGrob','Omega')
 Omega.I.Shapes.create_square()
-Omega.I.Surface.triangulate()
 
-points = scene_graph.create_object('OGF::MeshGrob')
-points.rename('points')
+points = scene_graph.create_object('OGF::MeshGrob','points')
 scene_graph.current_object = 'points'
 
 
@@ -293,15 +290,9 @@ function show_speeds()
        return
    end
    if speeds_display == nil then
-      speeds_display = scene_graph.create_object('OGF::MeshGrob')
-      speeds_display.rename('speeds')
+      speeds_display = scene_graph.create_object('OGF::MeshGrob','speeds')
       E_speeds_display = speeds_display.I.Editor
       speeds_display_points = E_speeds_display.find_attribute('vertices.point')
---      if N <= 10 then
---         speeds_display.shader.vertices_style='true; 0 0 0.5 1; 5'
---      else
---         speeds_display.shader.vertices_style='true; 0 0 0.5 1; 2'
---      end
    end
    speeds_display.clear()
    E_speeds_display.create_vertices(2*N)

@@ -1,10 +1,10 @@
 -- Lua (Keep this comment, this is an indication for editor's 'run' command)
 
--- Euler step 02
+-- Euler step 01
 --   Simple Euler simulator for point masses
 --    (disclaimer: super naive)
 
-N=1 -- Number of points. Try this: N=10, N=100, N=150
+N=10 -- Number of points. Try this: N=10, N=100, N=150
 
 -- Computes one step of Euler simulation
 function Euler_step()
@@ -69,13 +69,10 @@ function bounce_on_borders(v)
 end
 
 scene_graph.clear()
-Omega = scene_graph.create_object('OGF::MeshGrob')
-Omega.rename('Omega')
+Omega = scene_graph.create_object('OGF::MeshGrob','Omega')
 Omega.I.Shapes.create_square()
-Omega.I.Surface.triangulate()
 
-points = scene_graph.create_object('OGF::MeshGrob')
-points.rename('points')
+points = scene_graph.create_object('OGF::MeshGrob','points')
 scene_graph.current_object = 'points'
 
 
@@ -134,15 +131,9 @@ function show_speeds()
        return
    end
    if speeds_display == nil then
-      speeds_display = scene_graph.create_object('OGF::MeshGrob')
-      speeds_display.rename('speeds')
+      speeds_display = scene_graph.create_object('OGF::MeshGrob','speeds')
       E_speeds_display = speeds_display.I.Editor
       speeds_display_points = E_speeds_display.find_attribute('vertices.point')
---      if N <= 10 then
---         speeds_display.shader.vertices_style='true; 0 0 0.5 1; 5'
---      else
---         speeds_display.shader.vertices_style='true; 0 0 0.5 1; 2'
---      end
    end
    speeds_display.clear()
    E_speeds_display.create_vertices(2*N)
@@ -183,6 +174,7 @@ points.shader.autorange()
 function Euler_steps(n)
    for i=1,n do
       Euler_step()
+      sleep(0.01) 
       if Euler_dialog.stopped then
          break
       end
