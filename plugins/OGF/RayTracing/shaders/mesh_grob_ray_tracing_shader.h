@@ -145,6 +145,18 @@ namespace OGF {
 	}
 
 	/**
+	 * \brief XRay mode
+	 */
+	bool get_xray() const {
+	    return xray_ ;
+	}
+
+	void set_xray(bool x) {
+	    xray_ = x;
+	    update();
+	}
+	
+	/**
 	 * \brief Refraction index.
 	 */
 	double get_refract_index() const {
@@ -203,6 +215,7 @@ namespace OGF {
 	void set_show_stats(bool x) {
 	    show_stats_ = x;
 	}
+
 	
     gom_slots:
 	/**
@@ -371,6 +384,8 @@ namespace OGF {
 	Mesh background_mesh_;
 	Attribute<double> background_mesh_color_;
 	MeshFacetsAABB background_mesh_AABB_;
+
+	bool xray_;
 	
 	GLuint texture_;
 	MeshFacetsAABB AABB_;

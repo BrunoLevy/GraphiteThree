@@ -69,6 +69,7 @@ namespace OGF {
 	refract_index_ = 1.0;
 	ext_ = 5.0;
 	nb_layers_ = 4;
+	xray_ = false;
 	raytrace_background_ = false;
 	
 	facet_normal_.bind(
@@ -438,6 +439,34 @@ namespace OGF {
     vec4 RayTracingMeshGrobShader::raytrace_pixel(double x, double y) {
 	vec4 color(0.0, 0.0, 0.0, 0.0);
 	Ray ray = primary_ray(x,y);
+
+	if(xray_) {
+	    vector<MeshFacetsAABB::Intersection> isects;
+	    AABB_.ray_all_intersections(
+		ray,
+		[&isects](const MeshFacetsAABB::Intersection& I) {
+		    isects.push_back(I);
+		}
+	    );
+	    
+	    std::sort(isects.begin(), isects.end(),
+		      [](const MeshFacetsAABB::Intersection& I1,
+			 const MeshFacetsAABB::Intersection& I2) -> bool {
+			  return (I1.t < I2.t);
+		      }
+	    );
+
+	    double traversed_len = 0;
+	    for(index_t i=0; i<isects.size(); i+=2) {
+		traversed_len += (isects[i+1].t - isects[i].t);
+	    }
+	    double d = (
+		traversed_len * ext_ * length(ray.direction)
+	    ) /	bbox_diag_; 
+	    geo_clamp(d, 0.0, 1.0);
+	    return vec4(d, d, d, 1.0);
+	}
+
 	MeshFacetsAABB::Intersection I;
 	if(AABB_.ray_nearest_intersection(ray, I)) {
 	    color = vec4(0.0, 0.0, 0.0, 1.0 - transp_);
