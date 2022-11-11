@@ -62,6 +62,7 @@
 #include <geogram/parameterization/mesh_param_packer.h>
 #include <geogram/parameterization/mesh_LSCM.h>
 #include <geogram/parameterization/mesh_ABF.h>
+#include <geogram/NL/nl.h>
 #include <geogram/basic/command_line.h>
 
 #include <OGF/scene_graph/types/scene_graph.h>
@@ -356,6 +357,8 @@ namespace OGF {
         unsigned int nb_points,
         double tri_shape_adaptation,
         double tri_size_adaptation,
+	bool adjust,
+	double adjust_max_edge_distance,
         unsigned int nb_normal_iter,
         unsigned int nb_Lloyd_iter,
         unsigned int nb_Newton_iter,
@@ -428,7 +431,8 @@ namespace OGF {
         GEO::remesh_smooth(
             *mesh_grob(), *remesh,
             nb_points, 0,
-            nb_Lloyd_iter, nb_Newton_iter, Newton_m
+            nb_Lloyd_iter, nb_Newton_iter, Newton_m,
+	    adjust, adjust_max_edge_distance
         );
 
 	show_mesh(remesh);
@@ -610,7 +614,7 @@ namespace OGF {
     }
 
    /***********************************************************/
-
+    
     void MeshGrobSurfaceCommands::project_vertices_on_surface(
 	const MeshGrobName& surface_name
     ) {
@@ -637,15 +641,15 @@ namespace OGF {
         surface->lock_graphics();
         MeshFacetsAABB AABB(*surface);
 
-        for(index_t i: mesh_grob()->vertices) {
-            vec3 p(mesh_grob()->vertices.point_ptr(i));
-            vec3 q;
-            double sq_dist;
-            AABB.nearest_facet(p,q,sq_dist);
-            for(index_t c=0; c<3; ++c) {
-                mesh_grob()->vertices.point_ptr(i)[c] = q[c];
-            }
-        }
+	for(index_t i: mesh_grob()->vertices) {
+	    vec3 p(mesh_grob()->vertices.point_ptr(i));
+	    vec3 q;
+	    double sq_dist;
+	    AABB.nearest_facet(p,q,sq_dist);
+	    for(index_t c=0; c<3; ++c) {
+		mesh_grob()->vertices.point_ptr(i)[c] = q[c];
+	    }
+	}
         
         surface->unlock_graphics();
         mesh_grob()->update();
@@ -738,7 +742,7 @@ namespace OGF {
 	}
 	mesh_make_atlas(
 	    *mesh_grob(),
-	    sharp_angles_threshold * M_PI / 180.0,
+	    sharp_angles_threshold,
 	    param,
 	    pack,
 	    verbose
@@ -764,6 +768,11 @@ namespace OGF {
 	const std::string& attribute, ChartParameterizer algo, bool verbose
     ) {
 	switch(algo) {
+	    case PARAM_PROJECTION: 
+		Logger::out("Param") << "Not implemented for single chart"
+				     << std::endl;
+		return;
+	    break;
 	    case PARAM_LSCM:
 		mesh_compute_LSCM(*mesh_grob(), attribute, false, "", verbose);
 		break;
@@ -1136,6 +1145,11 @@ namespace OGF {
 
 	mesh_grob()->update();
     }
-    
+
+    void MeshGrobSurfaceCommands::get_charts() {
+	mesh_get_charts(*mesh_grob());
+	show_charts();
+	mesh_grob()->update();
+    }
 }
 

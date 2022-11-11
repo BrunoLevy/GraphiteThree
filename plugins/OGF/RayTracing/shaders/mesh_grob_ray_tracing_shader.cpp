@@ -126,6 +126,8 @@ namespace OGF {
 	copy_background_queued_ = false;
 	save_background_queued_ = false;
 	show_stats_ = false;
+
+	core_color_ = Color(0.0, 0.0, 0.0, 1.0);
     }
         
     RayTracingMeshGrobShader::~RayTracingMeshGrobShader() {
@@ -514,6 +516,9 @@ namespace OGF {
 		    Kt.y *= d;
 		    Kt.z *= d;
 		    d = 1.0 - d;
+		    Kt.x += d * core_color_.r();
+		    Kt.y += d * core_color_.g();
+		    Kt.z += d * core_color_.b();
 		}
 		vec3 K = Ks + fresnel * Kr + (1.0 - fresnel) * Kt;
 		color.x = K.x;

@@ -139,7 +139,7 @@ namespace OGF {
             const MeshGrobName& surface,            
             const std::string& attribute="lfs"
         );
-
+	
 	/**
 	 * \brief Copies colors from a textured surface.
 	 * \param[in] surface the surface mesh

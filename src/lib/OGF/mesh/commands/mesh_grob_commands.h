@@ -88,6 +88,11 @@ namespace OGF {
 
 
 	/**
+	 * \brief Shows the charts, stored in the "chart" facet attribute.
+	 */
+	virtual void show_charts();
+
+	/**
 	 * \brief Shows the mesh.
 	 * \param[in] M an optional pointer to a MeshGrob
 	 */

@@ -160,7 +160,11 @@ namespace OGF {
          *  shape adaptation, ...)
          * \param[in] tri_size_adapt adapt triangle sizes 
          *  (0.0 means no size adaptation, 1.0 for moderate 
-         *  size adaptation, ...)             
+         *  size adaptation, ...)            
+	 * \param[in] adjust if true, adjust the triangles of
+	 *  the remesh to better approximate the input mesh
+	 * \param[in] adjust_max_edge_distance maximum adjustment,
+	 *  relative to local average edge length 
          * \advanced
          * \param[in] normal_iter number of normal 
          *  smoothing iterations (if anisotropy is non-zero).
@@ -175,6 +179,8 @@ namespace OGF {
             unsigned int nb_points = 30000,
             double tri_shape_adapt = 1.0,
             double tri_size_adapt = 0.0,
+	    bool adjust = true,
+	    double adjust_max_edge_distance = 0.5,
             unsigned int normal_iter = 3,
             unsigned int Lloyd_iter = 5,
             unsigned int Newton_iter = 30,
@@ -316,7 +322,9 @@ namespace OGF {
         * \brief Projects a mesh onto a surface
         * \param[in] surface the name of the surface
         */
-       void project_vertices_on_surface(const MeshGrobName& surface);
+       void project_vertices_on_surface(
+	   const MeshGrobName& surface
+       );
        
        /**********************************************************/
 
@@ -497,6 +505,12 @@ namespace OGF {
 	    index_t nb_dilate=2,
 	    const std::string& tex_coord="tex_coord"
 	);
+
+	/**
+	 * \menu Atlas
+	 * \brief Gets the charts attribute from a paramerized mesh.
+	 */
+	void get_charts();
 	
     };
 }
