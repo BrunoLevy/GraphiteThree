@@ -454,7 +454,8 @@ namespace OGF {
 			);
 		    }
 		    index_t nb = 0;
-		    for(nb = 0; neigh_sq_dist[nb] < R2; ++nb);
+		    for(nb = 0; neigh_sq_dist[nb] < R2; ++nb) {
+		    }
 		    geo_assert(nb < N);
 		    density[v] = double(nb) / Bvol;
 		}
@@ -474,5 +475,47 @@ namespace OGF {
 	);
 	cmd->delete_selected_vertices(false);
     }
+
+    void MeshGrobPointsCommands::project_on_surface(
+	const MeshGrobName& surface_name
+    ) {
+        MeshGrob* surface = MeshGrob::find(scene_graph(), surface_name);
+        if(surface == nullptr) {
+            Logger::err("Mesh")
+		<< surface_name << ": no such surface" << std::endl;
+            return;
+        }
+
+	if(surface == mesh_grob()) {
+	    Logger::out("Surface") << "Cannot project surface onto itself"
+				   << std::endl;
+	}
+	
+	if(surface->facets.nb() == 0) {
+	    Logger::out("Surface") << surface_name << " has no facets"
+				   << std::endl;
+	    return;
+	}
+	
+        //   We need to lock the graphics because the AABB will change
+        // the order of the surface facets.
+        surface->lock_graphics();
+        MeshFacetsAABB AABB(*surface);
+
+	for(index_t i: mesh_grob()->vertices) {
+	    vec3 p(mesh_grob()->vertices.point_ptr(i));
+	    vec3 q;
+	    double sq_dist;
+	    AABB.nearest_facet(p,q,sq_dist);
+	    for(index_t c=0; c<3; ++c) {
+		mesh_grob()->vertices.point_ptr(i)[c] = q[c];
+	    }
+	}
+        
+        surface->unlock_graphics();
+        mesh_grob()->update();
+    }
+
+    
 }
 

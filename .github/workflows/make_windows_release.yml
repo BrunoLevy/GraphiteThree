@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Windows 
+    name: Windows
     runs-on: windows-2022
     env:
       CC: cl.exe
@@ -21,8 +21,8 @@ jobs:
 
       - name: Configure
         run: |
-            copy doc/binary_win_dist/Plugins.txt plugins/OGF/Plugins.txt	
-            ./configure.bat	
+            copy doc/binary_win_dist/Plugins.txt plugins/OGF/Plugins.txt
+            ./configure.bat
 
       - name: Build
         run: cmake --build build/Windows --config Release
@@ -40,11 +40,15 @@ jobs:
         run: |
             mkdir Windows
             copy ../../GRAPHITEDIST/*.zip Windows/
-            copy ../../GRAPHITEDIST/*.html Windows/	    
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - 
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        name: "Deploy release files"
+        uses: xresloader/upload-to-github-release@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./Windows
-          destination_dir: Releases/Windows
+          draft: false
+          file: Windows/*
+          overwrite: true
+          update_latest_release: true
+          verbose: true

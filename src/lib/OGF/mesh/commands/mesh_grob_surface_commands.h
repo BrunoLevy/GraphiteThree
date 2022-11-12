@@ -148,7 +148,7 @@ namespace OGF {
         
         
        /**********************************************************/
-
+	
         /**
          * \menu Remesh
          * \brief Remeshes a (smooth) surface.
@@ -316,16 +316,6 @@ namespace OGF {
            bool repair = true
        );
 
-       /**********************************************************/
-
-       /**
-        * \brief Projects a mesh onto a surface
-        * \param[in] surface the name of the surface
-        */
-       void project_vertices_on_surface(
-	   const MeshGrobName& surface
-       );
-       
        /**********************************************************/
 
 	/**
@@ -511,7 +501,15 @@ namespace OGF {
 	 * \brief Gets the charts attribute from a paramerized mesh.
 	 */
 	void get_charts();
-	
+
+
+	/**
+	 * \menu Atlas
+	 * \brief Unglues facet edges based on specified angle
+	 * \param[in] angle_threshold unglue facets along edge 
+	 *  if angle between adjacent facet is larger than threshold
+	 */
+	void unglue_sharp_edges(double angle_threshold=90);
     };
 }
 #endif

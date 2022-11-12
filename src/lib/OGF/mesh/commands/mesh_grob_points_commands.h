@@ -241,7 +241,16 @@ namespace OGF {
 	    bool selected = false
         );
 
-	
+        /********************************************************/
+
+	/**
+	 * \brief Projects a mesh onto a surface
+	 * \param[in] surface the name of the surface
+	 */
+	void project_on_surface(
+	    const MeshGrobName& surface
+	);
+       
     };
         
     /********************************************************/

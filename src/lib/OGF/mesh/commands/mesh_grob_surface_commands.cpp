@@ -39,6 +39,7 @@
 #include <OGF/mesh/commands/mesh_grob_surface_commands.h>
 
 #include <geogram/mesh/mesh_baking.h>
+#include <geogram/mesh/mesh_local_operations.h>
 #include <geogram/image/image_library.h>
 #include <geogram/image/morpho_math.h>
 
@@ -615,46 +616,6 @@ namespace OGF {
 
    /***********************************************************/
     
-    void MeshGrobSurfaceCommands::project_vertices_on_surface(
-	const MeshGrobName& surface_name
-    ) {
-        MeshGrob* surface = MeshGrob::find(scene_graph(), surface_name);
-        if(surface == nullptr) {
-            Logger::err("Mesh")
-		<< surface_name << ": no such surface" << std::endl;
-            return;
-        }
-
-	if(surface == mesh_grob()) {
-	    Logger::out("Surface") << "Cannot project surface onto itself"
-				   << std::endl;
-	}
-	
-	if(surface->facets.nb() == 0) {
-	    Logger::out("Surface") << surface_name << " has no facets"
-				   << std::endl;
-	    return;
-	}
-	
-        //   We need to lock the graphics because the AABB will change
-        // the order of the surface facets.
-        surface->lock_graphics();
-        MeshFacetsAABB AABB(*surface);
-
-	for(index_t i: mesh_grob()->vertices) {
-	    vec3 p(mesh_grob()->vertices.point_ptr(i));
-	    vec3 q;
-	    double sq_dist;
-	    AABB.nearest_facet(p,q,sq_dist);
-	    for(index_t c=0; c<3; ++c) {
-		mesh_grob()->vertices.point_ptr(i)[c] = q[c];
-	    }
-	}
-        
-        surface->unlock_graphics();
-        mesh_grob()->update();
-    }
-
     void MeshGrobSurfaceCommands::split_triangles(index_t nb_times) {
 	if(!mesh_grob()->facets.are_simplices()) {
 	    Logger::err("Split") << "Mesh is not simplicial, cannot split."
@@ -1151,5 +1112,34 @@ namespace OGF {
 	show_charts();
 	mesh_grob()->update();
     }
+
+    void MeshGrobSurfaceCommands::unglue_sharp_edges(double angle_threshold) {
+	angle_threshold *= M_PI / 180.0;
+	vector<index_t> f_to_unglue;
+	vector<index_t> c_to_unglue;
+
+	for(index_t f1: mesh_grob()->facets) {
+	    for(index_t c: mesh_grob()->facets.corners(f1)) {
+		index_t f2 = mesh_grob()->facet_corners.adjacent_facet(c);
+		if(f2 <= index_t(-1) && f2 < f1) {
+		    if(
+			Geom::mesh_unsigned_normal_angle(
+			    *mesh_grob(),f1,f2
+			) > angle_threshold
+		    ) {
+			f_to_unglue.push_back(f1);
+			c_to_unglue.push_back(c);
+		    }
+		}
+	    }
+	}
+
+	for(index_t i=0; i<f_to_unglue.size(); ++i) {
+	    unglue_edges(*mesh_grob(), f_to_unglue[i], c_to_unglue[i]);
+	}
+	
+	mesh_grob()->update();
+    }
+    
 }
 
