@@ -88,7 +88,7 @@ $(document).ready(function(){initNavTree('nl__cholmod_8h_source.html',''); initR
 </div><!--header-->
 <div class="contents">
 <a href="nl__cholmod_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  Copyright (c) 2004-2010, Bruno Levy</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  Copyright (c) 2000-2022 Inria</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *  All rights reserved.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> *  Redistribution and use in source and binary forms, with or without</span></div>
@@ -115,52 +115,47 @@ $(document).ready(function(){initNavTree('nl__cholmod_8h_source.html',''); initR
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"> *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment"> *  POSSIBILITY OF SUCH DAMAGE.</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> *  If you modify this software, you should include a notice giving the</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> *  name of the person performing the modification, the date of modification,</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> *  and the reason for such modification.</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> *  Contact: Bruno Levy</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> *     https://www.inria.fr/fr/bruno-levy</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> *  Contact: Bruno Levy</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"> *     levy@loria.fr</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment"> *     ALICE Project</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> *     LORIA, INRIA Lorraine, </span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"> *     Campus Scientifique, BP 239</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment"> *     54506 VANDOEUVRE LES NANCY CEDEX </span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"> *     FRANCE</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#ifndef OPENNL_CHOLMOD_H</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#define OPENNL_CHOLMOD_H</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="nl__private_8h.html">nl_private.h</a>&quot;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="nl__matrix_8h.html">nl_matrix.h</a>&quot;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;NLAPI <a class="code" href="structNLMatrixStruct.html">NLMatrix</a> NLAPIENTRY <a class="code" href="nl__cholmod_8h.html#abb8c1e130b03044be30301d7acc51663">nlMatrixFactorize_CHOLMOD</a>(</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="structNLMatrixStruct.html">NLMatrix</a> M, <a class="code" href="nl_8h.html#aa0809c67836e3d7add24715f9656924e">NLenum</a> solver</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<a class="code" href="nl_8h.html#ac7d6bf170a83fed9c2e8c97885b0ed88">NLboolean</a> <a class="code" href="nl__cholmod_8h.html#a0b4788645e04c7a8394a4ade811f12b6">nlInitExtension_CHOLMOD</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<a class="code" href="nl_8h.html#ac7d6bf170a83fed9c2e8c97885b0ed88">NLboolean</a> <a class="code" href="nl__cholmod_8h.html#a3247b8229aa0884fd2b127fa003a4aef">nlExtensionIsInitialized_CHOLMOD</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> *     Inria,</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> *     Domaine de Voluceau,</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"> *     78150 Le Chesnay - Rocquencourt</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"> *     FRANCE</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#ifndef OPENNL_CHOLMOD_H</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#define OPENNL_CHOLMOD_H</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="nl__private_8h.html">nl_private.h</a>&quot;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="nl__matrix_8h.html">nl_matrix.h</a>&quot;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;NLAPI <a class="code" href="structNLMatrixStruct.html">NLMatrix</a> NLAPIENTRY <a class="code" href="nl__cholmod_8h.html#abb8c1e130b03044be30301d7acc51663">nlMatrixFactorize_CHOLMOD</a>(</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <a class="code" href="structNLMatrixStruct.html">NLMatrix</a> M, <a class="code" href="nl_8h.html#aa0809c67836e3d7add24715f9656924e">NLenum</a> solver</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<a class="code" href="nl_8h.html#ac7d6bf170a83fed9c2e8c97885b0ed88">NLboolean</a> <a class="code" href="nl__cholmod_8h.html#a0b4788645e04c7a8394a4ade811f12b6">nlInitExtension_CHOLMOD</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<a class="code" href="nl_8h.html#ac7d6bf170a83fed9c2e8c97885b0ed88">NLboolean</a> <a class="code" href="nl__cholmod_8h.html#a3247b8229aa0884fd2b127fa003a4aef">nlExtensionIsInitialized_CHOLMOD</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="anl__cholmod_8h_html_a0b4788645e04c7a8394a4ade811f12b6"><div class="ttname"><a href="nl__cholmod_8h.html#a0b4788645e04c7a8394a4ade811f12b6">nlInitExtension_CHOLMOD</a></div><div class="ttdeci">NLboolean nlInitExtension_CHOLMOD(void)</div><div class="ttdoc">Initializes the CHOLMOD extension.</div></div>
-<div class="ttc" id="astructNLMatrixStruct_html"><div class="ttname"><a href="structNLMatrixStruct.html">NLMatrixStruct</a></div><div class="ttdoc">The base class for abstract matrices.</div><div class="ttdef"><b>Definition:</b> <a href="nl__matrix_8h_source.html#l00085">nl_matrix.h:85</a></div></div>
-<div class="ttc" id="anl_8h_html_ac7d6bf170a83fed9c2e8c97885b0ed88"><div class="ttname"><a href="nl_8h.html#ac7d6bf170a83fed9c2e8c97885b0ed88">NLboolean</a></div><div class="ttdeci">unsigned char NLboolean</div><div class="ttdoc">A truth value (NL_TRUE or NL_FALSE).</div><div class="ttdef"><b>Definition:</b> <a href="nl_8h_source.html#l00226">nl.h:226</a></div></div>
+<div class="ttc" id="astructNLMatrixStruct_html"><div class="ttname"><a href="structNLMatrixStruct.html">NLMatrixStruct</a></div><div class="ttdoc">The base class for abstract matrices.</div><div class="ttdef"><b>Definition:</b> <a href="nl__matrix_8h_source.html#l00080">nl_matrix.h:80</a></div></div>
+<div class="ttc" id="anl_8h_html_ac7d6bf170a83fed9c2e8c97885b0ed88"><div class="ttname"><a href="nl_8h.html#ac7d6bf170a83fed9c2e8c97885b0ed88">NLboolean</a></div><div class="ttdeci">unsigned char NLboolean</div><div class="ttdoc">A truth value (NL_TRUE or NL_FALSE).</div><div class="ttdef"><b>Definition:</b> <a href="nl_8h_source.html#l00220">nl.h:220</a></div></div>
 <div class="ttc" id="anl__cholmod_8h_html_a3247b8229aa0884fd2b127fa003a4aef"><div class="ttname"><a href="nl__cholmod_8h.html#a3247b8229aa0884fd2b127fa003a4aef">nlExtensionIsInitialized_CHOLMOD</a></div><div class="ttdeci">NLboolean nlExtensionIsInitialized_CHOLMOD(void)</div><div class="ttdoc">Tests whether the CHOLMOD extension is initialized.</div></div>
 <div class="ttc" id="anl__matrix_8h_html"><div class="ttname"><a href="nl__matrix_8h.html">nl_matrix.h</a></div><div class="ttdoc">Internal OpenNL functions to manipulate sparse matrices.</div></div>
-<div class="ttc" id="anl_8h_html_aa0809c67836e3d7add24715f9656924e"><div class="ttname"><a href="nl_8h.html#aa0809c67836e3d7add24715f9656924e">NLenum</a></div><div class="ttdeci">unsigned int NLenum</div><div class="ttdoc">A symbolic constant.</div><div class="ttdef"><b>Definition:</b> <a href="nl_8h_source.html#l00220">nl.h:220</a></div></div>
+<div class="ttc" id="anl_8h_html_aa0809c67836e3d7add24715f9656924e"><div class="ttname"><a href="nl_8h.html#aa0809c67836e3d7add24715f9656924e">NLenum</a></div><div class="ttdeci">unsigned int NLenum</div><div class="ttdoc">A symbolic constant.</div><div class="ttdef"><b>Definition:</b> <a href="nl_8h_source.html#l00214">nl.h:214</a></div></div>
 <div class="ttc" id="anl__cholmod_8h_html_abb8c1e130b03044be30301d7acc51663"><div class="ttname"><a href="nl__cholmod_8h.html#abb8c1e130b03044be30301d7acc51663">nlMatrixFactorize_CHOLMOD</a></div><div class="ttdeci">NLAPI NLMatrix NLAPIENTRY nlMatrixFactorize_CHOLMOD(NLMatrix M, NLenum solver)</div><div class="ttdoc">Factorizes a matrix using Cholmod.</div></div>
 <div class="ttc" id="anl__private_8h_html"><div class="ttname"><a href="nl__private_8h.html">nl_private.h</a></div><div class="ttdoc">Some macros and functions used internally by OpenNL.</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_53d5e9858254fface141430feef69984.html">NL</a></li><li class="navelem"><a class="el" href="nl__cholmod_8h.html">nl_cholmod.h</a></li>
-    <li class="footer">Generated on Sun Jul 17 2022 20:33:27 for Graphite by
+    <li class="footer">Generated on Sat Nov 12 2022 14:46:03 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

@@ -8,7 +8,7 @@ var classGEO_1_1Memory_1_1aligned__allocator =
     [ "value_type", "classGEO_1_1Memory_1_1aligned__allocator.html#a6da1b7738cf374f0274554f427619d0c", null ],
     [ "address", "classGEO_1_1Memory_1_1aligned__allocator.html#ac74a74f145dcf1c56bb9ebc2c7c92cbe", null ],
     [ "address", "classGEO_1_1Memory_1_1aligned__allocator.html#a61271f55b295ddb9d3b984f394ca9b14", null ],
-    [ "allocate", "classGEO_1_1Memory_1_1aligned__allocator.html#aa365579552bde32be07e05de7ba9286b", null ],
+    [ "allocate", "classGEO_1_1Memory_1_1aligned__allocator.html#a62f9d1790bfee5db1dbbd8d3e183ae1f", null ],
     [ "construct", "classGEO_1_1Memory_1_1aligned__allocator.html#ae08b98f71d67794099a876a62d36f378", null ],
     [ "deallocate", "classGEO_1_1Memory_1_1aligned__allocator.html#ae68fc025f8b7386e7f0269d23fd5e665", null ],
     [ "destroy", "classGEO_1_1Memory_1_1aligned__allocator.html#a41a6fbffb76148997210e1fcdb533500", null ],

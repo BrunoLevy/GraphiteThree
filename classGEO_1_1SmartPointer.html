@@ -184,7 +184,7 @@ class GEO::SmartPointer&lt; T &gt;</h3>
 </ul>
 <p>More specifically, <a class="el" href="classGEO_1_1SmartPointer.html" title="A smart pointer with reference-counted copy semantics.">SmartPointer</a> can be used with classes inheriting the <a class="el" href="classGEO_1_1Counted.html" title="Base class for reference-counted objects.">Counted</a> class. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="classGEO_1_1Counted.html" title="Base class for reference-counted objects.">Counted</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00082">82</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00076">76</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="adc58b5f0a0dd697f7f28bdd7f6d43860"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adc58b5f0a0dd697f7f28bdd7f6d43860">&#9670;&nbsp;</a></span>SmartPointer() <span class="overload">[1/2]</span></h2>
@@ -220,7 +220,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00097">97</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00091">91</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -258,7 +258,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00108">108</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00102">102</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -290,7 +290,7 @@ template&lt;class T &gt; </div>
 <p>Deletes a smart pointer. </p>
 <p>This calls T::unref() to release ownership on the help pointer. If this smart pointer is the last one owning the pointer, the pointer is deleted. </p>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00119">119</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00113">113</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -323,7 +323,7 @@ template&lt;class T &gt; </div>
 <p>Get pointer. </p>
 <dl class="section return"><dt>Returns</dt><dd>the stored pointer </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00203">203</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00197">197</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -355,7 +355,7 @@ template&lt;class T &gt; </div>
 <p>Check if stored pointer is null. </p>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if the stored pointer is null, <code>false</code> otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00211">211</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00205">205</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -387,7 +387,7 @@ template&lt;class T &gt; </div>
 <p>Conversion operator. </p>
 <dl class="section return"><dt>Returns</dt><dd>the stored pointer </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00195">195</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00189">189</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -419,7 +419,7 @@ template&lt;class T &gt; </div>
 <p>Dereferences object. </p>
 <p>Returns the stored pointer in order to dereference it. This member function shall not be called if the stored pointer is a null pointer. </p><dl class="section return"><dt>Returns</dt><dd>the stored pointer if not null, or aborts otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00186">186</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00180">180</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -451,7 +451,7 @@ template&lt;class T &gt; </div>
 <p>Dereferences object member. </p>
 <p>Returns the stored pointer in order to access one of its members. This member function shall not be called if the stored pointer is a null pointer. </p><dl class="section return"><dt>Returns</dt><dd>the stored pointer if not null, or aborts otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00174">174</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00168">168</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -490,7 +490,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>this smart pointer </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00146">146</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00140">140</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -529,7 +529,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>this smart pointer </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00130">130</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00124">124</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -561,7 +561,7 @@ template&lt;class T &gt; </div>
 <p>Resets pointer. </p>
 <p>Releases ownership on the help pointer and resets it to null. The smart pointer becomes as if it were default-constructed. </p><dl class="section note"><dt>Note</dt><dd>P.reset() is equivalent to assigning a nullptr pointer: p = nullptr </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00162">162</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00156">156</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -612,7 +612,7 @@ template&lt;class T1 , class T2 &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if the pointer stored in <code>lhs</code> is not equal to the pointer stored in <code>rhs</code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00241">241</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00235">235</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -662,7 +662,7 @@ template&lt;class T1 , class T2 &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if the pointer stored in <code>lhs</code> is less than the pointer stored in <code>rhs</code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00254">254</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00248">248</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -712,7 +712,7 @@ template&lt;class T1 , class T2 &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if the pointer stored in <code>lhs</code> is less than or equal to the pointer stored in <code>rhs</code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00267">267</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00261">261</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -762,7 +762,7 @@ template&lt;class T1 , class T2 &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if the pointer stored in <code>lhs</code> is equal to the pointer stored in <code>rhs</code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00228">228</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00222">222</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -812,7 +812,7 @@ template&lt;class T1 , class T2 &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if the pointer stored in <code>lhs</code> is greater than the pointer stored in <code>rhs</code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00280">280</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00274">274</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -862,7 +862,7 @@ template&lt;class T1 , class T2 &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if the pointer stored in <code>lhs</code> is greater than or equal to the pointer stored in <code>rhs</code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00293">293</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="smart__pointer_8h_source.html#l00287">287</a> of file <a class="el" href="smart__pointer_8h_source.html">smart_pointer.h</a>.</p>
 
 </div>
 </div>
@@ -875,7 +875,7 @@ template&lt;class T1 , class T2 &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1SmartPointer.html">SmartPointer</a></li>
-    <li class="footer">Generated on Sun Jul 17 2022 20:33:30 for Graphite by
+    <li class="footer">Generated on Sat Nov 12 2022 14:46:05 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

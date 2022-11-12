@@ -162,7 +162,7 @@ Protected Attributes</h2></td></tr>
 <p>Most Unix machines are big endian, except those having a DEC Alpha processor. Intel processors are little endian. This causes portability problems for binary files to be exchanged between machines of the two types. The classes <a class="el" href="classGEO_1_1BinaryInputStream.html" title="Binary input file.">BinaryInputStream</a> and <a class="el" href="classGEO_1_1BinaryOutputStream.html" title="Binary output file.">BinaryOutputStream</a> make it possible to deal with this problem.</p>
 <p>We have not used XDR because XDR assumes that the external format is always big endian, which would have prevented us to read files from PC softwares (such as 3DS binary files). </p>
 
-<p class="definition">Definition at line <a class="el" href="b__stream_8h_source.html#l00082">82</a> of file <a class="el" href="b__stream_8h_source.html">b_stream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="b__stream_8h_source.html#l00076">76</a> of file <a class="el" href="b__stream_8h_source.html">b_stream.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3ba1e60179ccd76b7f822a22a82ca5b4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3ba1e60179ccd76b7f822a22a82ca5b4">&#9670;&nbsp;</a></span>BinaryStream()</h2>
@@ -229,7 +229,7 @@ Protected Attributes</h2></td></tr>
 <p>Checks support for record markers. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classGEO_1_1BinaryStream.html#a065b4bdcffbcb68e412fd942f34f931f" title="Enables/disables support for record markers.">set_has_record_markers()</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="b__stream_8h_source.html#l00122">122</a> of file <a class="el" href="b__stream_8h_source.html">b_stream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="b__stream_8h_source.html#l00116">116</a> of file <a class="el" href="b__stream_8h_source.html">b_stream.h</a>.</p>
 
 </div>
 </div>
@@ -259,7 +259,7 @@ Protected Attributes</h2></td></tr>
 <p>Gets the current architecture's endianness. </p>
 <dl class="section return"><dt>Returns</dt><dd><code>GEO_LITTLE_ENDIAN</code> if the architecture is little-endian, <code>GEO_BIG_ENDIAN</code> if the architecture is big-endian. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="b__stream_8h_source.html#l00114">114</a> of file <a class="el" href="b__stream_8h_source.html">b_stream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="b__stream_8h_source.html#l00108">108</a> of file <a class="el" href="b__stream_8h_source.html">b_stream.h</a>.</p>
 
 </div>
 </div>
@@ -290,7 +290,7 @@ Protected Attributes</h2></td></tr>
 <p>Enables/disables support for record markers. </p>
 <p>Some FORTRAN files have their records surrounded by two integers and some not. This function enables <a class="el" href="classGEO_1_1BinaryStream.html" title="Binary stream base class.">BinaryStream</a> to read such FORTRAN files. Default value is true. </p>
 
-<p class="definition">Definition at line <a class="el" href="b__stream_8h_source.html#l00133">133</a> of file <a class="el" href="b__stream_8h_source.html">b_stream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="b__stream_8h_source.html#l00127">127</a> of file <a class="el" href="b__stream_8h_source.html">b_stream.h</a>.</p>
 
 </div>
 </div>
@@ -350,7 +350,7 @@ Protected Attributes</h2></td></tr>
 <p>Gets the stream endianness. </p>
 <dl class="section return"><dt>Returns</dt><dd><code>GEO_LITTLE_ENDIAN</code> if the stream is little-endian, <code>GEO_BIG_ENDIAN</code> if the stream is big-endian. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="b__stream_8h_source.html#l00105">105</a> of file <a class="el" href="b__stream_8h_source.html">b_stream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="b__stream_8h_source.html#l00099">99</a> of file <a class="el" href="b__stream_8h_source.html">b_stream.h</a>.</p>
 
 </div>
 </div>
@@ -376,7 +376,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Constant to use to specify big-endian streams </p>
 
-<p class="definition">Definition at line <a class="el" href="b__stream_8h_source.html#l00088">88</a> of file <a class="el" href="b__stream_8h_source.html">b_stream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="b__stream_8h_source.html#l00082">82</a> of file <a class="el" href="b__stream_8h_source.html">b_stream.h</a>.</p>
 
 </div>
 </div>
@@ -401,7 +401,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Constant to use to specify little-endian streams </p>
 
-<p class="definition">Definition at line <a class="el" href="b__stream_8h_source.html#l00085">85</a> of file <a class="el" href="b__stream_8h_source.html">b_stream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="b__stream_8h_source.html#l00079">79</a> of file <a class="el" href="b__stream_8h_source.html">b_stream.h</a>.</p>
 
 </div>
 </div>
@@ -426,7 +426,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>True if stream needs swapping </p>
 
-<p class="definition">Definition at line <a class="el" href="b__stream_8h_source.html#l00165">165</a> of file <a class="el" href="b__stream_8h_source.html">b_stream.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="b__stream_8h_source.html#l00159">159</a> of file <a class="el" href="b__stream_8h_source.html">b_stream.h</a>.</p>
 
 </div>
 </div>
@@ -439,7 +439,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1BinaryStream.html">BinaryStream</a></li>
-    <li class="footer">Generated on Sun Jul 17 2022 20:33:29 for Graphite by
+    <li class="footer">Generated on Sat Nov 12 2022 14:46:04 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

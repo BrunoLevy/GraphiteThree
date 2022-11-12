@@ -311,7 +311,7 @@ typedef <a class="el" href="classGEO_1_1SmartPointer.html">SmartPointer</a>&lt; 
 <div class="textblock"><p>Implements <a class="el" href="classGEO_1_1NearestNeighborSearch.html" title="Abstract interface for nearest neighbor search algorithms.">NearestNeighborSearch</a> using an Adaptive Kd-tree. </p>
 <p>This corresponds to the same algorithm as in the ANN library (by David Mount), but stored in flat arrays (rather than dynamically allocated tree structure). The data structure is more compact, and slightly faster. As compared with <a class="el" href="classGEO_1_1BalancedKdTree.html" title="Implements NearestNeighborSearch using a balanced Kd-tree.">BalancedKdTree</a>, when the distribution of points is heterogeneous, it will be faster, at the expensen of a slightly more requires storage (uses an additional 8 bytes per node), and construction is not parallel, because size of left subtree needs to be known before starting constructing the right subtree. This does not make a big difference since in general Kd-tree query time dominates construction time in most of the algorithms that use a Kd-tree. </p>
 
-<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00576">576</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00570">570</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa6131e93e323fdb2792767258c8bdfe8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa6131e93e323fdb2792767258c8bdfe8">&#9670;&nbsp;</a></span>AdaptiveKdTree()</h2>
@@ -544,7 +544,7 @@ typedef <a class="el" href="classGEO_1_1SmartPointer.html">SmartPointer</a>&lt; 
 <p>Gets the number of nodes. </p>
 <dl class="section return"><dt>Returns</dt><dd>the number of nodes. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00673">673</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00667">667</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
 
 </div>
 </div>
@@ -697,7 +697,7 @@ typedef <a class="el" href="classGEO_1_1SmartPointer.html">SmartPointer</a>&lt; 
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the coordinate of the point, after re-numerotation. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00659">659</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00653">653</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
 
 </div>
 </div>
@@ -805,7 +805,7 @@ typedef <a class="el" href="classGEO_1_1SmartPointer.html">SmartPointer</a>&lt; 
 <li>right child points: node_m_[node_index] .. e-1 </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00700">700</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00694">694</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
 
 </div>
 </div>
@@ -832,7 +832,7 @@ typedef <a class="el" href="classGEO_1_1SmartPointer.html">SmartPointer</a>&lt; 
 <p>One per node, right child index. </p>
 <p>left child is implicit (left_child(n) = n+1). </p>
 
-<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00706">706</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00700">700</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
 
 </div>
 </div>
@@ -845,7 +845,7 @@ typedef <a class="el" href="classGEO_1_1SmartPointer.html">SmartPointer</a>&lt; 
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1AdaptiveKdTree.html">AdaptiveKdTree</a></li>
-    <li class="footer">Generated on Sun Jul 17 2022 20:33:29 for Graphite by
+    <li class="footer">Generated on Sat Nov 12 2022 14:46:04 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

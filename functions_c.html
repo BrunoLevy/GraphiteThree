@@ -450,6 +450,7 @@ $(document).ready(function(){initNavTree('functions_c.html',''); initResizable()
 </li>
 <li>compute_bbox_cell_bbox_intersections()
 : <a class="el" href="classGEO_1_1MeshCellsAABB.html#aa1e4d76e520a15920b6e55fff0546b08">GEO::MeshCellsAABB</a>
+, <a class="el" href="classGEO_1_1MeshFacetsAABB2d.html#a612eab821636b65ac3f517e62cf8928c">GEO::MeshFacetsAABB2d</a>
 </li>
 <li>compute_bbox_facet_bbox_intersections()
 : <a class="el" href="classGEO_1_1MeshFacetsAABB.html#a8c17ebba1ebf32cda52a80c1b4569596">GEO::MeshFacetsAABB</a>
@@ -497,7 +498,8 @@ $(document).ready(function(){initNavTree('functions_c.html',''); initResizable()
 : <a class="el" href="classOGF_1_1MeshGrobAttributesCommands.html#af37db591755bdc62deb31f060ccbee56">OGF::MeshGrobAttributesCommands</a>
 </li>
 <li>compute_facet_bbox_intersections()
-: <a class="el" href="classGEO_1_1MeshFacetsAABB.html#aa6d89f9007099b87860d7d7cfc554955">GEO::MeshFacetsAABB</a>
+: <a class="el" href="classGEO_1_1MeshFacetsAABB2d.html#a03daf22a868dd974f1eaf33d9de0c9f8">GEO::MeshFacetsAABB2d</a>
+, <a class="el" href="classGEO_1_1MeshFacetsAABB.html#aa6d89f9007099b87860d7d7cfc554955">GEO::MeshFacetsAABB</a>
 </li>
 <li>compute_facets_id()
 : <a class="el" href="classOGF_1_1MeshGrobAttributesCommands.html#af0dbd70fe46eb65992f23cd1399be43c">OGF::MeshGrobAttributesCommands</a>
@@ -548,6 +550,7 @@ $(document).ready(function(){initNavTree('functions_c.html',''); initResizable()
 </li>
 <li>compute_other_cell_bbox_intersections()
 : <a class="el" href="classGEO_1_1MeshCellsAABB.html#ac5061a551a2f9eb34f922a9ae359931d">GEO::MeshCellsAABB</a>
+, <a class="el" href="classGEO_1_1MeshFacetsAABB2d.html#a2726b30dcc333bae37cbd20189f9cbf8">GEO::MeshFacetsAABB2d</a>
 </li>
 <li>compute_P1_Laplacian()
 : <a class="el" href="classGEO_1_1OptimalTransportMap.html#a87c7c28861b576bb61723e0a11030317">GEO::OptimalTransportMap</a>
@@ -680,9 +683,11 @@ $(document).ready(function(){initNavTree('functions_c.html',''); initResizable()
 </li>
 <li>containing_bboxes_recursive()
 : <a class="el" href="classGEO_1_1MeshCellsAABB.html#aa8f5483b7fa17ab06ddda7dacae0a6d8">GEO::MeshCellsAABB</a>
+, <a class="el" href="classGEO_1_1MeshFacetsAABB2d.html#a9efdcffbf994ed17a6a370a50ad7e821">GEO::MeshFacetsAABB2d</a>
 </li>
 <li>containing_boxes()
 : <a class="el" href="classGEO_1_1MeshCellsAABB.html#a43bccf9d2bbbb914cacd78c7b02975f9">GEO::MeshCellsAABB</a>
+, <a class="el" href="classGEO_1_1MeshFacetsAABB2d.html#a6d151e402b21c78caa71adad009b295c">GEO::MeshFacetsAABB2d</a>
 </li>
 <li>containing_tet()
 : <a class="el" href="classGEO_1_1MeshCellsAABB.html#a964be7aed4ac754327fa6c27fcb733fe">GEO::MeshCellsAABB</a>
@@ -690,8 +695,15 @@ $(document).ready(function(){initNavTree('functions_c.html',''); initResizable()
 <li>containing_tet_recursive()
 : <a class="el" href="classGEO_1_1MeshCellsAABB.html#a7c2df0de564c3053c943f22095086209">GEO::MeshCellsAABB</a>
 </li>
+<li>containing_triangle()
+: <a class="el" href="classGEO_1_1MeshFacetsAABB2d.html#ade124b15a3a545e26bb4c31be555ece7">GEO::MeshFacetsAABB2d</a>
+</li>
+<li>containing_triangle_recursive()
+: <a class="el" href="classGEO_1_1MeshFacetsAABB2d.html#a30e05edeec41596f0b372194d488f589">GEO::MeshFacetsAABB2d</a>
+</li>
 <li>contains()
-: <a class="el" href="classGEO_1_1Box.html#abb47fa07b2589d44d4546e503500ddaf">GEO::Box</a>
+: <a class="el" href="classGEO_1_1Box2d.html#a992bc6899c4129ec87380ed3363d37df">GEO::Box2d</a>
+, <a class="el" href="classGEO_1_1Box.html#abb47fa07b2589d44d4546e503500ddaf">GEO::Box</a>
 </li>
 <li>contains_picking_image()
 : <a class="el" href="classOGF_1_1RenderingContext.html#ac8457a202e617211d1eea7fcaacc3e04">OGF::RenderingContext</a>
@@ -842,7 +854,7 @@ $(document).ready(function(){initNavTree('functions_c.html',''); initResizable()
 </li>
 <li>create_arg()
 : <a class="el" href="classGEO_1_1Command.html#ac176db0523134a117ed1d4b75706b143">GEO::Command</a>
-, <a class="el" href="classOGF_1_1ArgList.html#a3d92e9186cfe291e0f3ebaebda2d1432">OGF::ArgList</a>
+, <a class="el" href="classOGF_1_1ArgList.html#a41b3abbf3af8562ee2fe9d3f6679a87a">OGF::ArgList</a>
 </li>
 <li>create_attribute()
 : <a class="el" href="classOGF_1_1MeshGrobEditor.html#a46608dc4e8bf4ad2f4e0aa9ed573bd56">OGF::MeshGrobEditor</a>
@@ -937,7 +949,7 @@ $(document).ready(function(){initNavTree('functions_c.html',''); initResizable()
 : <a class="el" href="classGEO_1_1FrameField.html#a2d0638d206c57f9a8678fcae84da9b4a">GEO::FrameField</a>
 </li>
 <li>create_gom_class()
-: <a class="el" href="classOGF_1_1ModuleMaker.html#a59c42b9c82399017a5f947740a253dac">OGF::ModuleMaker</a>
+: <a class="el" href="classOGF_1_1ModuleMaker.html#a0ac0143147c1d3e7b82e429a4f4f3c7a">OGF::ModuleMaker</a>
 </li>
 <li>create_grob()
 : <a class="el" href="classOGF_1_1ModuleMaker.html#a8290c91a37b454f82baf715c7b82577d">OGF::ModuleMaker</a>
@@ -980,7 +992,7 @@ $(document).ready(function(){initNavTree('functions_c.html',''); initResizable()
 : <a class="el" href="classOGF_1_1SceneGraphDevelCommands.html#ade2860b74c3ce5f8d475939fe9185a2d">OGF::SceneGraphDevelCommands</a>
 </li>
 <li>create_polygon()
-: <a class="el" href="classGEO_1_1MeshFacets.html#a33cd32e6bf7b14de6c69a4b7e10bb5c3">GEO::MeshFacets</a>
+: <a class="el" href="classGEO_1_1MeshFacets.html#a7ab5b4e7872da9fb5fc7782fcdde5568">GEO::MeshFacets</a>
 </li>
 <li>create_prism()
 : <a class="el" href="classGEO_1_1MeshCells.html#a6e579f6aeabce1a4182a56dc30cf2b56">GEO::MeshCells</a>
@@ -1044,7 +1056,7 @@ $(document).ready(function(){initNavTree('functions_c.html',''); initResizable()
 </li>
 <li>create_triangle()
 : <a class="el" href="classGEO_1_1MeshFacets.html#a03cea9464ad38d9517ce7caf9e02c829">GEO::MeshFacets</a>
-, <a class="el" href="classGEOGen_1_1ConvexCell.html#a51f43e44575fa0ef4453e091dad5760b">GEOGen::ConvexCell</a>
+, <a class="el" href="classGEOGen_1_1ConvexCell.html#aac60f53679ced7f1f2853120bdae61ef">GEOGen::ConvexCell</a>
 , <a class="el" href="classOGF_1_1MeshGrobEditor.html#ae8dd0025977e0222ad05573b55bd20ea">OGF::MeshGrobEditor</a>
 , <a class="el" href="classVBW_1_1ConvexCell.html#a0bbcc53bec9be0b249f2c4840a921bce">VBW::ConvexCell</a>
 </li>
@@ -1062,11 +1074,11 @@ $(document).ready(function(){initNavTree('functions_c.html',''); initResizable()
 </li>
 <li>create_vertex()
 : <a class="el" href="classGEO_1_1MeshSplitCallbacks.html#ac890b53509be95d9234550fc0e2447d4">GEO::MeshSplitCallbacks</a>
-, <a class="el" href="classGEO_1_1MeshVertices.html#a43ffe187b537de2c4fc29b3d43db6595">GEO::MeshVertices</a>
+, <a class="el" href="classGEO_1_1MeshVertices.html#afff8339aad146373f71c5dbf093715f8">GEO::MeshVertices</a>
 , <a class="el" href="classGEOGen_1_1ConvexCell.html#a26f50f65e4a54964c082b19eb775760e">GEOGen::ConvexCell</a>
 , <a class="el" href="classOGF_1_1MeshGrobEditor.html#a8c8c222f2029b895ba8f093f1b548fe3">OGF::MeshGrobEditor</a>
 , <a class="el" href="classOGF_1_1MeshGrobPointsCommands.html#a8476237349d5a97e77f78e7619c449ca">OGF::MeshGrobPointsCommands</a>
-, <a class="el" href="classVBW_1_1ConvexCell.html#a85ff832a364c8bae9e8b99ec57256f29">VBW::ConvexCell</a>
+, <a class="el" href="classVBW_1_1ConvexCell.html#ae7dc61425659061e914489e4ef15cec7">VBW::ConvexCell</a>
 </li>
 <li>create_vertex_id_VBO()
 : <a class="el" href="classGLUP_1_1Context.html#a66819e23367bc05af506d5a54696730f">GLUP::Context</a>
@@ -1165,7 +1177,7 @@ $(document).ready(function(){initNavTree('functions_c.html',''); initResizable()
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Jul 17 2022 20:33:33 for Graphite by
+    <li class="footer">Generated on Sat Nov 12 2022 14:46:07 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

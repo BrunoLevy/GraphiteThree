@@ -88,7 +88,7 @@ $(document).ready(function(){initNavTree('nl__cuda_8h_source.html',''); initResi
 </div><!--header-->
 <div class="contents">
 <a href="nl__cuda_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  Copyright (c) 2004-2014, Bruno Levy</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  Copyright (c) 2000-2022 Inria</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *  All rights reserved.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> *  Redistribution and use in source and binary forms, with or without</span></div>
@@ -115,55 +115,49 @@ $(document).ready(function(){initNavTree('nl__cuda_8h_source.html',''); initResi
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"> *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment"> *  POSSIBILITY OF SUCH DAMAGE.</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> *  If you modify this software, you should include a notice giving the</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> *  name of the person performing the modification, the date of modification,</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> *  and the reason for such modification.</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> *  Contact: Bruno Levy</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> *     https://www.inria.fr/fr/bruno-levy</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> *  Contact: Bruno Levy</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"> *     Bruno.Levy@inria.fr</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"> *     http://www.loria.fr/~levy</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> *     Inria,</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> *     Domaine de Voluceau,</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"> *     78150 Le Chesnay - Rocquencourt</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"> *     FRANCE</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> *     ALICE Project</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"> *     LORIA, INRIA Lorraine, </span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment"> *     Campus Scientifique, BP 239</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"> *     54506 VANDOEUVRE LES NANCY CEDEX </span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"> *     FRANCE</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#ifndef OPENNL_CUDA_EXT_H</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#define OPENNL_CUDA_EXT_H</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="nl__private_8h.html">nl_private.h</a>&quot;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="nl__matrix_8h.html">nl_matrix.h</a>&quot;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="nl__blas_8h.html">nl_blas.h</a>&quot;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<a class="code" href="nl_8h.html#ac7d6bf170a83fed9c2e8c97885b0ed88">NLboolean</a> <a class="code" href="nl__cuda_8h.html#a9f3b5604c00cc731502a232f9af73375">nlInitExtension_CUDA</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<a class="code" href="nl_8h.html#ac7d6bf170a83fed9c2e8c97885b0ed88">NLboolean</a> <a class="code" href="nl__cuda_8h.html#a848c127b6023a46823078bf9b388ef0a">nlExtensionIsInitialized_CUDA</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="comment">/****************************************************************************/</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<a class="code" href="structNLMatrixStruct.html">NLMatrix</a> <a class="code" href="nl__cuda_8h.html#aa921cba3433e9b85bdc547257f3cfccf">nlCUDAMatrixNewFromCRSMatrix</a>(<a class="code" href="structNLMatrixStruct.html">NLMatrix</a> M);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<a class="code" href="structNLMatrixStruct.html">NLMatrix</a> <a class="code" href="nl__cuda_8h.html#ae771f8da06407c17a864a54d174bb8df">nlCUDAJacobiPreconditionerNewFromCRSMatrix</a>(<a class="code" href="structNLMatrixStruct.html">NLMatrix</a> M);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<a class="code" href="structNLBlas.html">NLBlas_t</a> <a class="code" href="nl__cuda_8h.html#a7fe4e6285bc0171f434a2dcaacf07532">nlCUDABlas</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment">/****************************************************************************/</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#ifndef OPENNL_CUDA_EXT_H</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#define OPENNL_CUDA_EXT_H</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="nl__private_8h.html">nl_private.h</a>&quot;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="nl__matrix_8h.html">nl_matrix.h</a>&quot;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="nl__blas_8h.html">nl_blas.h</a>&quot;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<a class="code" href="nl_8h.html#ac7d6bf170a83fed9c2e8c97885b0ed88">NLboolean</a> <a class="code" href="nl__cuda_8h.html#a9f3b5604c00cc731502a232f9af73375">nlInitExtension_CUDA</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<a class="code" href="nl_8h.html#ac7d6bf170a83fed9c2e8c97885b0ed88">NLboolean</a> <a class="code" href="nl__cuda_8h.html#a848c127b6023a46823078bf9b388ef0a">nlExtensionIsInitialized_CUDA</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment">/****************************************************************************/</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<a class="code" href="structNLMatrixStruct.html">NLMatrix</a> <a class="code" href="nl__cuda_8h.html#aa921cba3433e9b85bdc547257f3cfccf">nlCUDAMatrixNewFromCRSMatrix</a>(<a class="code" href="structNLMatrixStruct.html">NLMatrix</a> M);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<a class="code" href="structNLMatrixStruct.html">NLMatrix</a> <a class="code" href="nl__cuda_8h.html#ae771f8da06407c17a864a54d174bb8df">nlCUDAJacobiPreconditionerNewFromCRSMatrix</a>(<a class="code" href="structNLMatrixStruct.html">NLMatrix</a> M);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<a class="code" href="structNLBlas.html">NLBlas_t</a> <a class="code" href="nl__cuda_8h.html#a7fe4e6285bc0171f434a2dcaacf07532">nlCUDABlas</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="comment">/****************************************************************************/</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="anl__cuda_8h_html_aa921cba3433e9b85bdc547257f3cfccf"><div class="ttname"><a href="nl__cuda_8h.html#aa921cba3433e9b85bdc547257f3cfccf">nlCUDAMatrixNewFromCRSMatrix</a></div><div class="ttdeci">NLMatrix nlCUDAMatrixNewFromCRSMatrix(NLMatrix M)</div><div class="ttdoc">Creates a CUDA on-GPU matrix from an OpenNL CRS matrix.</div></div>
 <div class="ttc" id="anl__cuda_8h_html_a7fe4e6285bc0171f434a2dcaacf07532"><div class="ttname"><a href="nl__cuda_8h.html#a7fe4e6285bc0171f434a2dcaacf07532">nlCUDABlas</a></div><div class="ttdeci">NLBlas_t nlCUDABlas(void)</div><div class="ttdoc">Gets a pointer to the BLAS abstraction layer for BLAS operation on the GPU using CUDA.</div></div>
 <div class="ttc" id="anl__cuda_8h_html_a848c127b6023a46823078bf9b388ef0a"><div class="ttname"><a href="nl__cuda_8h.html#a848c127b6023a46823078bf9b388ef0a">nlExtensionIsInitialized_CUDA</a></div><div class="ttdeci">NLboolean nlExtensionIsInitialized_CUDA(void)</div><div class="ttdoc">Tests whether the CUDA extension is initialized.</div></div>
-<div class="ttc" id="astructNLMatrixStruct_html"><div class="ttname"><a href="structNLMatrixStruct.html">NLMatrixStruct</a></div><div class="ttdoc">The base class for abstract matrices.</div><div class="ttdef"><b>Definition:</b> <a href="nl__matrix_8h_source.html#l00085">nl_matrix.h:85</a></div></div>
+<div class="ttc" id="astructNLMatrixStruct_html"><div class="ttname"><a href="structNLMatrixStruct.html">NLMatrixStruct</a></div><div class="ttdoc">The base class for abstract matrices.</div><div class="ttdef"><b>Definition:</b> <a href="nl__matrix_8h_source.html#l00080">nl_matrix.h:80</a></div></div>
 <div class="ttc" id="anl__blas_8h_html"><div class="ttname"><a href="nl__blas_8h.html">nl_blas.h</a></div><div class="ttdoc">Abstract interface to the basic linear algebra routines used by OpenNL internally.</div></div>
-<div class="ttc" id="astructNLBlas_html"><div class="ttname"><a href="structNLBlas.html">NLBlas</a></div><div class="ttdef"><b>Definition:</b> <a href="nl__blas_8h_source.html#l00313">nl_blas.h:313</a></div></div>
-<div class="ttc" id="anl_8h_html_ac7d6bf170a83fed9c2e8c97885b0ed88"><div class="ttname"><a href="nl_8h.html#ac7d6bf170a83fed9c2e8c97885b0ed88">NLboolean</a></div><div class="ttdeci">unsigned char NLboolean</div><div class="ttdoc">A truth value (NL_TRUE or NL_FALSE).</div><div class="ttdef"><b>Definition:</b> <a href="nl_8h_source.html#l00226">nl.h:226</a></div></div>
+<div class="ttc" id="astructNLBlas_html"><div class="ttname"><a href="structNLBlas.html">NLBlas</a></div><div class="ttdef"><b>Definition:</b> <a href="nl__blas_8h_source.html#l00308">nl_blas.h:308</a></div></div>
+<div class="ttc" id="anl_8h_html_ac7d6bf170a83fed9c2e8c97885b0ed88"><div class="ttname"><a href="nl_8h.html#ac7d6bf170a83fed9c2e8c97885b0ed88">NLboolean</a></div><div class="ttdeci">unsigned char NLboolean</div><div class="ttdoc">A truth value (NL_TRUE or NL_FALSE).</div><div class="ttdef"><b>Definition:</b> <a href="nl_8h_source.html#l00220">nl.h:220</a></div></div>
 <div class="ttc" id="anl__cuda_8h_html_ae771f8da06407c17a864a54d174bb8df"><div class="ttname"><a href="nl__cuda_8h.html#ae771f8da06407c17a864a54d174bb8df">nlCUDAJacobiPreconditionerNewFromCRSMatrix</a></div><div class="ttdeci">NLMatrix nlCUDAJacobiPreconditionerNewFromCRSMatrix(NLMatrix M)</div><div class="ttdoc">Creates a CUDA on-GPU Jacobi preconditioner from an OpenNL CRS matrix.</div></div>
 <div class="ttc" id="anl__cuda_8h_html_a9f3b5604c00cc731502a232f9af73375"><div class="ttname"><a href="nl__cuda_8h.html#a9f3b5604c00cc731502a232f9af73375">nlInitExtension_CUDA</a></div><div class="ttdeci">NLboolean nlInitExtension_CUDA(void)</div><div class="ttdoc">Initializes the CUDA extension.</div></div>
 <div class="ttc" id="anl__matrix_8h_html"><div class="ttname"><a href="nl__matrix_8h.html">nl_matrix.h</a></div><div class="ttdoc">Internal OpenNL functions to manipulate sparse matrices.</div></div>
@@ -172,7 +166,7 @@ $(document).ready(function(){initNavTree('nl__cuda_8h_source.html',''); initResi
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_53d5e9858254fface141430feef69984.html">NL</a></li><li class="navelem"><a class="el" href="nl__cuda_8h.html">nl_cuda.h</a></li>
-    <li class="footer">Generated on Sun Jul 17 2022 20:33:27 for Graphite by
+    <li class="footer">Generated on Sat Nov 12 2022 14:46:03 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

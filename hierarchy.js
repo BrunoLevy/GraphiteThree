@@ -1,7 +1,10 @@
 var hierarchy =
 [
-    [ "GEO::AABB", "classGEO_1_1AABB.html", [
-      [ "GEO::MeshAABB", "classGEO_1_1MeshAABB.html", [
+    [ "GEO::AABB< BOX >", "classGEO_1_1AABB.html", [
+      [ "GEO::MeshAABB2d", "classGEO_1_1MeshAABB2d.html", [
+        [ "GEO::MeshFacetsAABB2d", "classGEO_1_1MeshFacetsAABB2d.html", null ]
+      ] ],
+      [ "GEO::MeshAABB3d", "classGEO_1_1MeshAABB3d.html", [
         [ "GEO::MeshCellsAABB", "classGEO_1_1MeshCellsAABB.html", null ],
         [ "GEO::MeshFacetsAABB", "classGEO_1_1MeshFacetsAABB.html", null ]
       ] ]
@@ -71,6 +74,7 @@ var hierarchy =
       [ "OGF::Box3d", "classOGF_1_1Box3d.html", null ]
     ] ],
     [ "OGF::Box2d", "classOGF_1_1Box2d.html", null ],
+    [ "GEO::Box2d", "classGEO_1_1Box2d.html", null ],
     [ "GEO::OptimalTransportMap::Callback", "classGEO_1_1OptimalTransportMap_1_1Callback.html", null ],
     [ "GEO::Cavity", "classGEO_1_1Cavity.html", null ],
     [ "GEO::CellDescriptor", "structGEO_1_1CellDescriptor.html", null ],
@@ -602,14 +606,14 @@ var hierarchy =
     [ "GEO::TrFan", "structGEO_1_1TrFan.html", null ],
     [ "GEO::TrFan::TrFanElt", "structGEO_1_1TrFan_1_1TrFanElt.html", null ],
     [ "GEO::TrglGradient", "classGEO_1_1TrglGradient.html", null ],
-    [ "GEOGen::ConvexCell::Triangle", "structGEOGen_1_1ConvexCell_1_1Triangle.html", null ],
     [ "VBW::Triangle", "structVBW_1_1Triangle.html", [
       [ "VBW::TriangleWithFlags", "structVBW_1_1TriangleWithFlags.html", null ]
     ] ],
+    [ "GEOGen::ConvexCell::Triangle", "structGEOGen_1_1ConvexCell_1_1Triangle.html", null ],
     [ "GEOGen::RestrictedVoronoiDiagram< DIM >::TriangleAction< ACTION >", "classGEOGen_1_1RestrictedVoronoiDiagram_1_1TriangleAction.html", null ],
     [ "GEO::UncenteredPCA3D", "structGEO_1_1UncenteredPCA3D.html", null ],
-    [ "GLUP::UniformState", "structGLUP_1_1UniformState.html", null ],
     [ "UniformState", "structUniformState.html", null ],
+    [ "GLUP::UniformState", "structGLUP_1_1UniformState.html", null ],
     [ "GEO::VariableObserver", "classGEO_1_1VariableObserver.html", null ],
     [ "GEO::VariableObserverList", "classGEO_1_1VariableObserverList.html", null ],
     [ "GEO::vecng< DIM, T >", "classGEO_1_1vecng.html", null ],
@@ -631,10 +635,10 @@ var hierarchy =
       [ "GEO::vector< bool >", "classGEO_1_1vector_3_01bool_01_4.html", null ],
       [ "OGF::ConnectionList", "classOGF_1_1ConnectionList.html", null ],
       [ "GEO::vector< Arg >", "classGEO_1_1vector.html", null ],
+      [ "GEO::vector< BOX >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< coord_index_t >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< double >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< GEO::BBox >", "classGEO_1_1vector.html", null ],
-      [ "GEO::vector< GEO::Box >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< GEO::Coeff >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< GEO::GeoFile::AttributeInfo >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< GEO::SimpleApplication::ColormapInfo >", "classGEO_1_1vector.html", null ],
@@ -665,8 +669,8 @@ var hierarchy =
       [ "GEO::vector< vec4 >", "classGEO_1_1vector.html", null ]
     ] ],
     [ "GEOGen::VectorStack< T >", "classGEOGen_1_1VectorStack.html", null ],
-    [ "GEOGen::ConvexCell::Vertex", "classGEOGen_1_1ConvexCell_1_1Vertex.html", null ],
     [ "GEOGen::Vertex", "classGEOGen_1_1Vertex.html", null ],
+    [ "GEOGen::ConvexCell::Vertex", "classGEOGen_1_1ConvexCell_1_1Vertex.html", null ],
     [ "GEOGen::RestrictedVoronoiDiagram< DIM >::VolumetricIntegrationSimplexAction< ACTION >", "classGEOGen_1_1RestrictedVoronoiDiagram_1_1VolumetricIntegrationSimplexAction.html", null ],
     [ "GEO::VSDM", "classGEO_1_1VSDM.html", null ],
     [ "VSUniformState", "structVSUniformState.html", null ],

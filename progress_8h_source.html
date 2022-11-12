@@ -88,7 +88,7 @@ $(document).ready(function(){initNavTree('progress_8h_source.html',''); initResi
 </div><!--header-->
 <div class="contents">
 <a href="progress_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  Copyright (c) 2012-2014, Bruno Levy</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  Copyright (c) 2000-2022 Inria</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *  All rights reserved.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> *  Redistribution and use in source and binary forms, with or without</span></div>
@@ -115,163 +115,157 @@ $(document).ready(function(){initNavTree('progress_8h_source.html',''); initResi
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"> *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment"> *  POSSIBILITY OF SUCH DAMAGE.</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> *  If you modify this software, you should include a notice giving the</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> *  name of the person performing the modification, the date of modification,</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> *  and the reason for such modification.</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> *  Contact: Bruno Levy</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> *     https://www.inria.fr/fr/bruno-levy</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> *  Contact: Bruno Levy</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"> *     Bruno.Levy@inria.fr</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"> *     http://www.loria.fr/~levy</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> *     Inria,</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> *     Domaine de Voluceau,</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"> *     78150 Le Chesnay - Rocquencourt</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"> *     FRANCE</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> *     ALICE Project</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"> *     LORIA, INRIA Lorraine, </span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment"> *     Campus Scientifique, BP 239</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"> *     54506 VANDOEUVRE LES NANCY CEDEX </span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"> *     FRANCE</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#ifndef GEOGRAM_BASIC_PROGRESS</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#define GEOGRAM_BASIC_PROGRESS</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">geogram/basic/common.h</a>&gt;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;geogram/basic/logger.h&gt;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="counted_8h.html">geogram/basic/counted.h</a>&gt;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="smart__pointer_8h.html">geogram/basic/smart_pointer.h</a>&gt;</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceGEO.html">GEO</a> {</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="classGEO_1_1ProgressClient.html">   82</a></span>&#160;    <span class="keyword">class </span>GEOGRAM_API <a class="code" href="classGEO_1_1ProgressClient.html">ProgressClient</a> : <span class="keyword">public</span> <a class="code" href="classGEO_1_1Counted.html">Counted</a> {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> begin() = 0;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> progress(<a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> step, <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> percent) = 0;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> end(<span class="keywordtype">bool</span> canceled) = 0;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;         ~<a class="code" href="classGEO_1_1ProgressClient.html">ProgressClient</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    };</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00122"></a><span class="lineno"><a class="line" href="namespaceGEO.html#af21115a3dd60639a9d13188423249081">  122</a></span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classGEO_1_1SmartPointer.html">SmartPointer&lt;ProgressClient&gt;</a> <a class="code" href="namespaceGEO.html#af21115a3dd60639a9d13188423249081">ProgressClient_var</a>;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment">    /************************************************************************/</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
-<div class="line"><a name="l00130"></a><span class="lineno"><a class="line" href="structGEO_1_1TaskCanceled.html">  130</a></span>&#160;    <span class="keyword">struct </span>GEOGRAM_API <a class="code" href="structGEO_1_1TaskCanceled.html">TaskCanceled</a> : std::exception {</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* what() <span class="keyword">const</span> GEO_NOEXCEPT <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    };</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="comment">    /************************************************************************/</span></div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    <span class="keyword">class </span><a class="code" href="classGEO_1_1ProgressTask.html">ProgressTask</a>;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
-<div class="line"><a name="l00144"></a><span class="lineno"><a class="line" href="namespaceGEO_1_1Progress.html">  144</a></span>&#160;    <span class="keyword">namespace </span>Progress {</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO_1_1Progress.html#a5b2df9d0158c1fbd87cef4c6f97f009a">initialize</a>();</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO_1_1Progress.html#a9d4208eab56af06621f2ffdc6d06e0be">terminate</a>();</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO_1_1Progress.html#aa37722f4168daab0480c876db15a02dc">set_client</a>(<a class="code" href="classGEO_1_1ProgressClient.html">ProgressClient</a>* client);</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        GEOGRAM_API <span class="keyword">const</span> <a class="code" href="classGEO_1_1ProgressTask.html">ProgressTask</a>* <a class="code" href="namespaceGEO_1_1Progress.html#a767b0954860c5dfeba7393cfe80bd332">current_task</a>();</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO_1_1Progress.html#a1d4a71de859175500d6d484bfbc0f655">cancel</a>();</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        <span class="keywordtype">bool</span> GEOGRAM_API <a class="code" href="namespaceGEO_1_1Progress.html#aa16f66af807cde262c829fe0418035cf">is_canceled</a>();</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#ifndef GEOGRAM_BASIC_PROGRESS</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#define GEOGRAM_BASIC_PROGRESS</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">geogram/basic/common.h</a>&gt;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;geogram/basic/logger.h&gt;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="counted_8h.html">geogram/basic/counted.h</a>&gt;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="smart__pointer_8h.html">geogram/basic/smart_pointer.h</a>&gt;</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceGEO.html">GEO</a> {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="classGEO_1_1ProgressClient.html">   76</a></span>&#160;    <span class="keyword">class </span>GEOGRAM_API <a class="code" href="classGEO_1_1ProgressClient.html">ProgressClient</a> : <span class="keyword">public</span> <a class="code" href="classGEO_1_1Counted.html">Counted</a> {</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> begin() = 0;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> progress(<a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> step, <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> percent) = 0;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> end(<span class="keywordtype">bool</span> canceled) = 0;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;         ~<a class="code" href="classGEO_1_1ProgressClient.html">ProgressClient</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    };</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="namespaceGEO.html#af21115a3dd60639a9d13188423249081">  116</a></span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classGEO_1_1SmartPointer.html">SmartPointer&lt;ProgressClient&gt;</a> <a class="code" href="namespaceGEO.html#af21115a3dd60639a9d13188423249081">ProgressClient_var</a>;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment">    /************************************************************************/</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno"><a class="line" href="structGEO_1_1TaskCanceled.html">  124</a></span>&#160;    <span class="keyword">struct </span>GEOGRAM_API <a class="code" href="structGEO_1_1TaskCanceled.html">TaskCanceled</a> : std::exception {</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* what() <span class="keyword">const</span> GEO_NOEXCEPT <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    };</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="comment">    /************************************************************************/</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keyword">class </span><a class="code" href="classGEO_1_1ProgressTask.html">ProgressTask</a>;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
+<div class="line"><a name="l00138"></a><span class="lineno"><a class="line" href="namespaceGEO_1_1Progress.html">  138</a></span>&#160;    <span class="keyword">namespace </span>Progress {</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO_1_1Progress.html#a5b2df9d0158c1fbd87cef4c6f97f009a">initialize</a>();</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO_1_1Progress.html#a9d4208eab56af06621f2ffdc6d06e0be">terminate</a>();</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO_1_1Progress.html#aa37722f4168daab0480c876db15a02dc">set_client</a>(<a class="code" href="classGEO_1_1ProgressClient.html">ProgressClient</a>* client);</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        GEOGRAM_API <span class="keyword">const</span> <a class="code" href="classGEO_1_1ProgressTask.html">ProgressTask</a>* <a class="code" href="namespaceGEO_1_1Progress.html#a767b0954860c5dfeba7393cfe80bd332">current_task</a>();</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO_1_1Progress.html#a1d4a71de859175500d6d484bfbc0f655">cancel</a>();</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160; </div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;        <span class="keywordtype">bool</span> GEOGRAM_API <a class="code" href="namespaceGEO_1_1Progress.html#aa16f66af807cde262c829fe0418035cf">is_canceled</a>();</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160; </div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO_1_1Progress.html#a7a13c18ce6aea0050bc9aade10df37a2">clear_canceled</a>();</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    }</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO_1_1Progress.html#a7a13c18ce6aea0050bc9aade10df37a2">clear_canceled</a>();</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    }</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160; </div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="comment">    /************************************************************************/</span></div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
-<div class="line"><a name="l00246"></a><span class="lineno"><a class="line" href="classGEO_1_1ProgressTask.html">  246</a></span>&#160;    <span class="keyword">class </span>GEOGRAM_API <a class="code" href="classGEO_1_1ProgressTask.html">ProgressTask</a> {</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        <a class="code" href="classGEO_1_1ProgressTask.html">ProgressTask</a>(</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;            <span class="keyword">const</span> std::string&amp; task_name, <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> max_steps,</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;            <span class="keywordtype">bool</span> quiet </div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        );</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        <a class="code" href="classGEO_1_1ProgressTask.html">ProgressTask</a>(</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;            <span class="keyword">const</span> std::string&amp; task_name = <span class="stringliteral">&quot;&quot;</span>, <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> max_steps = 100</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        );</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160; </div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        <span class="keyword">virtual</span> ~<a class="code" href="classGEO_1_1ProgressTask.html">ProgressTask</a>();</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160; </div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> progress(<a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> step);</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160; </div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> next();</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160; </div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="namespaceGEO_1_1Progress.html#aa16f66af807cde262c829fe0418035cf">is_canceled</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160; </div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;        <span class="keywordtype">void</span> reset();</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160; </div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;        <span class="keywordtype">void</span> reset(<a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> max_steps);</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160; </div>
-<div class="line"><a name="l00342"></a><span class="lineno"><a class="line" href="classGEO_1_1ProgressTask.html#aaa4ef049a4aa4d830a4779afd5db097e">  342</a></span>&#160;        <span class="keyword">const</span> std::string&amp; <a class="code" href="classGEO_1_1ProgressTask.html#aaa4ef049a4aa4d830a4779afd5db097e">task_name</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;            <span class="keywordflow">return</span> task_name_;</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;        }</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160; </div>
-<div class="line"><a name="l00349"></a><span class="lineno"><a class="line" href="classGEO_1_1ProgressTask.html#a435e53b1cde74fa88727be720386f066">  349</a></span>&#160;        <span class="keywordtype">double</span> <a class="code" href="classGEO_1_1ProgressTask.html#a435e53b1cde74fa88727be720386f066">start_time</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;            <span class="keywordflow">return</span> start_time_;</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;        }</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160; </div>
-<div class="line"><a name="l00356"></a><span class="lineno"><a class="line" href="classGEO_1_1ProgressTask.html#a37b3ea9947674e54b6d61aea0c509ac9">  356</a></span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> <a class="code" href="classGEO_1_1ProgressTask.html#a37b3ea9947674e54b6d61aea0c509ac9">max_steps</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;            <span class="keywordflow">return</span> max_steps_;</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;        }</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160; </div>
-<div class="line"><a name="l00363"></a><span class="lineno"><a class="line" href="classGEO_1_1ProgressTask.html#a401aa551452f71553d5ab9874efb78ae">  363</a></span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> <a class="code" href="classGEO_1_1ProgressTask.html#a401aa551452f71553d5ab9874efb78ae">step</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;            <span class="keywordflow">return</span> step_;</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;        }</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160; </div>
-<div class="line"><a name="l00370"></a><span class="lineno"><a class="line" href="classGEO_1_1ProgressTask.html#a88ac633433fc70691bd6bfaf1e629f87">  370</a></span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> <a class="code" href="classGEO_1_1ProgressTask.html#a88ac633433fc70691bd6bfaf1e629f87">percent</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;            <span class="keywordflow">return</span> percent_;</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;        }</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160; </div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> update();</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160; </div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;        std::string task_name_;</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;        <span class="keywordtype">double</span> start_time_;</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;        <span class="keywordtype">bool</span> quiet_;</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> max_steps_;</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> step_;</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> percent_;</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;    };</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;}</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160; </div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160; </div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="comment">    /************************************************************************/</span></div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
+<div class="line"><a name="l00240"></a><span class="lineno"><a class="line" href="classGEO_1_1ProgressTask.html">  240</a></span>&#160;    <span class="keyword">class </span>GEOGRAM_API <a class="code" href="classGEO_1_1ProgressTask.html">ProgressTask</a> {</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;        <a class="code" href="classGEO_1_1ProgressTask.html">ProgressTask</a>(</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;            <span class="keyword">const</span> std::string&amp; task_name, <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> max_steps,</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;            <span class="keywordtype">bool</span> quiet </div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;        );</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160; </div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        <a class="code" href="classGEO_1_1ProgressTask.html">ProgressTask</a>(</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;            <span class="keyword">const</span> std::string&amp; task_name = <span class="stringliteral">&quot;&quot;</span>, <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> max_steps = 100</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        );</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        <span class="keyword">virtual</span> ~<a class="code" href="classGEO_1_1ProgressTask.html">ProgressTask</a>();</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160; </div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> progress(<a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> step);</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160; </div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> next();</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160; </div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="namespaceGEO_1_1Progress.html#aa16f66af807cde262c829fe0418035cf">is_canceled</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160; </div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        <span class="keywordtype">void</span> reset();</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160; </div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;        <span class="keywordtype">void</span> reset(<a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> max_steps);</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160; </div>
+<div class="line"><a name="l00336"></a><span class="lineno"><a class="line" href="classGEO_1_1ProgressTask.html#aaa4ef049a4aa4d830a4779afd5db097e">  336</a></span>&#160;        <span class="keyword">const</span> std::string&amp; <a class="code" href="classGEO_1_1ProgressTask.html#aaa4ef049a4aa4d830a4779afd5db097e">task_name</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;            <span class="keywordflow">return</span> task_name_;</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;        }</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160; </div>
+<div class="line"><a name="l00343"></a><span class="lineno"><a class="line" href="classGEO_1_1ProgressTask.html#a435e53b1cde74fa88727be720386f066">  343</a></span>&#160;        <span class="keywordtype">double</span> <a class="code" href="classGEO_1_1ProgressTask.html#a435e53b1cde74fa88727be720386f066">start_time</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;            <span class="keywordflow">return</span> start_time_;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;        }</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160; </div>
+<div class="line"><a name="l00350"></a><span class="lineno"><a class="line" href="classGEO_1_1ProgressTask.html#a37b3ea9947674e54b6d61aea0c509ac9">  350</a></span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> <a class="code" href="classGEO_1_1ProgressTask.html#a37b3ea9947674e54b6d61aea0c509ac9">max_steps</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;            <span class="keywordflow">return</span> max_steps_;</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        }</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160; </div>
+<div class="line"><a name="l00357"></a><span class="lineno"><a class="line" href="classGEO_1_1ProgressTask.html#a401aa551452f71553d5ab9874efb78ae">  357</a></span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> <a class="code" href="classGEO_1_1ProgressTask.html#a401aa551452f71553d5ab9874efb78ae">step</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;            <span class="keywordflow">return</span> step_;</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;        }</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160; </div>
+<div class="line"><a name="l00364"></a><span class="lineno"><a class="line" href="classGEO_1_1ProgressTask.html#a88ac633433fc70691bd6bfaf1e629f87">  364</a></span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> <a class="code" href="classGEO_1_1ProgressTask.html#a88ac633433fc70691bd6bfaf1e629f87">percent</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;            <span class="keywordflow">return</span> percent_;</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;        }</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160; </div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> update();</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160; </div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;        std::string task_name_;</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;        <span class="keywordtype">double</span> start_time_;</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;        <span class="keywordtype">bool</span> quiet_;</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> max_steps_;</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> step_;</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> percent_;</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    };</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;}</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160; </div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aclassGEO_1_1ProgressClient_html"><div class="ttname"><a href="classGEO_1_1ProgressClient.html">GEO::ProgressClient</a></div><div class="ttdoc">Task progress listener.</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00082">progress.h:82</a></div></div>
-<div class="ttc" id="aclassGEO_1_1ProgressTask_html_a88ac633433fc70691bd6bfaf1e629f87"><div class="ttname"><a href="classGEO_1_1ProgressTask.html#a88ac633433fc70691bd6bfaf1e629f87">GEO::ProgressTask::percent</a></div><div class="ttdeci">index_t percent() const</div><div class="ttdoc">Gets the percentage of completion of the task.</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00370">progress.h:370</a></div></div>
-<div class="ttc" id="aclassGEO_1_1ProgressTask_html_a37b3ea9947674e54b6d61aea0c509ac9"><div class="ttname"><a href="classGEO_1_1ProgressTask.html#a37b3ea9947674e54b6d61aea0c509ac9">GEO::ProgressTask::max_steps</a></div><div class="ttdeci">index_t max_steps() const</div><div class="ttdoc">Gets the number of steps of the task.</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00356">progress.h:356</a></div></div>
+<div class="ttc" id="aclassGEO_1_1ProgressClient_html"><div class="ttname"><a href="classGEO_1_1ProgressClient.html">GEO::ProgressClient</a></div><div class="ttdoc">Task progress listener.</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00076">progress.h:76</a></div></div>
+<div class="ttc" id="aclassGEO_1_1ProgressTask_html_a88ac633433fc70691bd6bfaf1e629f87"><div class="ttname"><a href="classGEO_1_1ProgressTask.html#a88ac633433fc70691bd6bfaf1e629f87">GEO::ProgressTask::percent</a></div><div class="ttdeci">index_t percent() const</div><div class="ttdoc">Gets the percentage of completion of the task.</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00364">progress.h:364</a></div></div>
+<div class="ttc" id="aclassGEO_1_1ProgressTask_html_a37b3ea9947674e54b6d61aea0c509ac9"><div class="ttname"><a href="classGEO_1_1ProgressTask.html#a37b3ea9947674e54b6d61aea0c509ac9">GEO::ProgressTask::max_steps</a></div><div class="ttdeci">index_t max_steps() const</div><div class="ttdoc">Gets the number of steps of the task.</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00350">progress.h:350</a></div></div>
 <div class="ttc" id="aclassGEO_1_1SmartPointer_html"><div class="ttname"><a href="classGEO_1_1SmartPointer.html">GEO::SmartPointer&lt; ProgressClient &gt;</a></div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
-<div class="ttc" id="anamespaceGEO_html_af21115a3dd60639a9d13188423249081"><div class="ttname"><a href="namespaceGEO.html#af21115a3dd60639a9d13188423249081">GEO::ProgressClient_var</a></div><div class="ttdeci">SmartPointer&lt; ProgressClient &gt; ProgressClient_var</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00122">progress.h:122</a></div></div>
-<div class="ttc" id="aclassGEO_1_1ProgressTask_html_aaa4ef049a4aa4d830a4779afd5db097e"><div class="ttname"><a href="classGEO_1_1ProgressTask.html#aaa4ef049a4aa4d830a4779afd5db097e">GEO::ProgressTask::task_name</a></div><div class="ttdeci">const std::string &amp; task_name() const</div><div class="ttdoc">Gets the name of the task.</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00342">progress.h:342</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00301">numeric.h:301</a></div></div>
-<div class="ttc" id="aclassGEO_1_1ProgressTask_html_a401aa551452f71553d5ab9874efb78ae"><div class="ttname"><a href="classGEO_1_1ProgressTask.html#a401aa551452f71553d5ab9874efb78ae">GEO::ProgressTask::step</a></div><div class="ttdeci">index_t step() const</div><div class="ttdoc">Gets the current step of the task.</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00363">progress.h:363</a></div></div>
-<div class="ttc" id="aclassGEO_1_1ProgressTask_html"><div class="ttname"><a href="classGEO_1_1ProgressTask.html">GEO::ProgressTask</a></div><div class="ttdoc">Tracks the progress of a task.</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00246">progress.h:246</a></div></div>
-<div class="ttc" id="aclassGEO_1_1ProgressTask_html_a435e53b1cde74fa88727be720386f066"><div class="ttname"><a href="classGEO_1_1ProgressTask.html#a435e53b1cde74fa88727be720386f066">GEO::ProgressTask::start_time</a></div><div class="ttdeci">double start_time() const</div><div class="ttdoc">Gets the start time of the task.</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00349">progress.h:349</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_af21115a3dd60639a9d13188423249081"><div class="ttname"><a href="namespaceGEO.html#af21115a3dd60639a9d13188423249081">GEO::ProgressClient_var</a></div><div class="ttdeci">SmartPointer&lt; ProgressClient &gt; ProgressClient_var</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00116">progress.h:116</a></div></div>
+<div class="ttc" id="aclassGEO_1_1ProgressTask_html_aaa4ef049a4aa4d830a4779afd5db097e"><div class="ttname"><a href="classGEO_1_1ProgressTask.html#aaa4ef049a4aa4d830a4779afd5db097e">GEO::ProgressTask::task_name</a></div><div class="ttdeci">const std::string &amp; task_name() const</div><div class="ttdoc">Gets the name of the task.</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00336">progress.h:336</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00295">numeric.h:295</a></div></div>
+<div class="ttc" id="aclassGEO_1_1ProgressTask_html_a401aa551452f71553d5ab9874efb78ae"><div class="ttname"><a href="classGEO_1_1ProgressTask.html#a401aa551452f71553d5ab9874efb78ae">GEO::ProgressTask::step</a></div><div class="ttdeci">index_t step() const</div><div class="ttdoc">Gets the current step of the task.</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00357">progress.h:357</a></div></div>
+<div class="ttc" id="aclassGEO_1_1ProgressTask_html"><div class="ttname"><a href="classGEO_1_1ProgressTask.html">GEO::ProgressTask</a></div><div class="ttdoc">Tracks the progress of a task.</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00240">progress.h:240</a></div></div>
+<div class="ttc" id="aclassGEO_1_1ProgressTask_html_a435e53b1cde74fa88727be720386f066"><div class="ttname"><a href="classGEO_1_1ProgressTask.html#a435e53b1cde74fa88727be720386f066">GEO::ProgressTask::start_time</a></div><div class="ttdeci">double start_time() const</div><div class="ttdoc">Gets the start time of the task.</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00343">progress.h:343</a></div></div>
 <div class="ttc" id="anamespaceGEO_1_1Progress_html_a767b0954860c5dfeba7393cfe80bd332"><div class="ttname"><a href="namespaceGEO_1_1Progress.html#a767b0954860c5dfeba7393cfe80bd332">GEO::Progress::current_task</a></div><div class="ttdeci">const ProgressTask * current_task()</div><div class="ttdoc">Gets the current task.</div></div>
 <div class="ttc" id="anamespaceGEO_1_1Progress_html_aa16f66af807cde262c829fe0418035cf"><div class="ttname"><a href="namespaceGEO_1_1Progress.html#aa16f66af807cde262c829fe0418035cf">GEO::Progress::is_canceled</a></div><div class="ttdeci">bool is_canceled()</div><div class="ttdoc">Checks if the current task is canceled.</div></div>
 <div class="ttc" id="anamespaceGEO_1_1Progress_html_a7a13c18ce6aea0050bc9aade10df37a2"><div class="ttname"><a href="namespaceGEO_1_1Progress.html#a7a13c18ce6aea0050bc9aade10df37a2">GEO::Progress::clear_canceled</a></div><div class="ttdeci">void clear_canceled()</div><div class="ttdoc">Clears the cancellation flag.</div></div>
 <div class="ttc" id="anamespaceGEO_1_1Progress_html_a1d4a71de859175500d6d484bfbc0f655"><div class="ttname"><a href="namespaceGEO_1_1Progress.html#a1d4a71de859175500d6d484bfbc0f655">GEO::Progress::cancel</a></div><div class="ttdeci">void cancel()</div><div class="ttdoc">Cancels the current task.</div></div>
-<div class="ttc" id="astructGEO_1_1TaskCanceled_html"><div class="ttname"><a href="structGEO_1_1TaskCanceled.html">GEO::TaskCanceled</a></div><div class="ttdoc">Exception thrown when a task is canceled.</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00130">progress.h:130</a></div></div>
+<div class="ttc" id="astructGEO_1_1TaskCanceled_html"><div class="ttname"><a href="structGEO_1_1TaskCanceled.html">GEO::TaskCanceled</a></div><div class="ttdoc">Exception thrown when a task is canceled.</div><div class="ttdef"><b>Definition:</b> <a href="progress_8h_source.html#l00124">progress.h:124</a></div></div>
 <div class="ttc" id="acounted_8h_html"><div class="ttname"><a href="counted_8h.html">counted.h</a></div><div class="ttdoc">Base class of reference-counted objects, to be used with smart pointers.</div></div>
 <div class="ttc" id="asmart__pointer_8h_html"><div class="ttname"><a href="smart__pointer_8h.html">smart_pointer.h</a></div><div class="ttdoc">Pointers with automatic reference counting.</div></div>
 <div class="ttc" id="anamespaceGEO_1_1Progress_html_aa37722f4168daab0480c876db15a02dc"><div class="ttname"><a href="namespaceGEO_1_1Progress.html#aa37722f4168daab0480c876db15a02dc">GEO::Progress::set_client</a></div><div class="ttdeci">void set_client(ProgressClient *client)</div><div class="ttdoc">Sets the Progress client.</div></div>
 <div class="ttc" id="anamespaceGEO_html"><div class="ttname"><a href="namespaceGEO.html">GEO</a></div><div class="ttdoc">Global Vorpaline namespace.</div><div class="ttdef"><b>Definition:</b> <a href="lua__grob__shader_8h_source.html#l00053">lua_grob_shader.h:53</a></div></div>
 <div class="ttc" id="anamespaceGEO_1_1Progress_html_a5b2df9d0158c1fbd87cef4c6f97f009a"><div class="ttname"><a href="namespaceGEO_1_1Progress.html#a5b2df9d0158c1fbd87cef4c6f97f009a">GEO::Progress::initialize</a></div><div class="ttdeci">void initialize()</div><div class="ttdoc">Initializes the Progress framework.</div></div>
-<div class="ttc" id="aclassGEO_1_1Counted_html"><div class="ttname"><a href="classGEO_1_1Counted.html">GEO::Counted</a></div><div class="ttdoc">Base class for reference-counted objects.</div><div class="ttdef"><b>Definition:</b> <a href="counted_8h_source.html#l00077">counted.h:77</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Counted_html"><div class="ttname"><a href="classGEO_1_1Counted.html">GEO::Counted</a></div><div class="ttdoc">Base class for reference-counted objects.</div><div class="ttdef"><b>Definition:</b> <a href="counted_8h_source.html#l00071">counted.h:71</a></div></div>
 <div class="ttc" id="anamespaceGEO_1_1Progress_html_a9d4208eab56af06621f2ffdc6d06e0be"><div class="ttname"><a href="namespaceGEO_1_1Progress.html#a9d4208eab56af06621f2ffdc6d06e0be">GEO::Progress::terminate</a></div><div class="ttdeci">void terminate()</div><div class="ttdoc">Cleans up the Progress framework.</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_4586f940cce2020c46fbc4f79c1663fc.html">basic</a></li><li class="navelem"><a class="el" href="progress_8h.html">progress.h</a></li>
-    <li class="footer">Generated on Sun Jul 17 2022 20:33:27 for Graphite by
+    <li class="footer">Generated on Sat Nov 12 2022 14:46:03 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

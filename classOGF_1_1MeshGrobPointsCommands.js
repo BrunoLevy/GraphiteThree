@@ -7,6 +7,7 @@ var classOGF_1_1MeshGrobPointsCommands =
     [ "detect_outliers", "classOGF_1_1MeshGrobPointsCommands.html#a2382a7ad6ae0f5d38efcf6caab3c7992", null ],
     [ "estimate_density", "classOGF_1_1MeshGrobPointsCommands.html#a7c3b189ec94db10019c5c9950323b415", null ],
     [ "estimate_normals", "classOGF_1_1MeshGrobPointsCommands.html#a105aafd5d4ae62a173ade804bfc73ba1", null ],
+    [ "project_on_surface", "classOGF_1_1MeshGrobPointsCommands.html#a71a6394dc4d4e501d2ef96fb4948f34a", null ],
     [ "reconstruct_surface_Delaunay2d", "classOGF_1_1MeshGrobPointsCommands.html#afaf28843868569f23b0fd07326fa0c5e", null ],
     [ "reconstruct_surface_Poisson", "classOGF_1_1MeshGrobPointsCommands.html#a86c578b69c54df4e39828ce28929a2ec", null ],
     [ "reconstruct_surface_SSSR", "classOGF_1_1MeshGrobPointsCommands.html#aadfd10bdb72e56f988122f891ff2b278", null ],

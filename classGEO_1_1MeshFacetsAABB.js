@@ -11,6 +11,8 @@ var classGEO_1_1MeshFacetsAABB =
     [ "nearest_facet", "classGEO_1_1MeshFacetsAABB.html#a8a2590eae93782f5e29828253184c57b", null ],
     [ "nearest_facet_recursive", "classGEO_1_1MeshFacetsAABB.html#ab17f0de66166f56030fba4d5f5966b6a", null ],
     [ "nearest_facet_with_hint", "classGEO_1_1MeshFacetsAABB.html#a3fd9c73ffba3a284280b5013400cc7a9", null ],
+    [ "ray_all_intersections", "classGEO_1_1MeshFacetsAABB.html#a9fb34d69b902c3819413267cdebc5437", null ],
+    [ "ray_all_intersections_recursive", "classGEO_1_1MeshFacetsAABB.html#a982781ee0fa7da5c29ba912e64dccf58", null ],
     [ "ray_intersection", "classGEO_1_1MeshFacetsAABB.html#abe8432e1421a8f7e87ca2aa0e5ccd47f", null ],
     [ "ray_intersection_recursive", "classGEO_1_1MeshFacetsAABB.html#a30c3d339289a4aaa1544c7d1e62ba3f9", null ],
     [ "ray_nearest_intersection", "classGEO_1_1MeshFacetsAABB.html#a55a8cf3bdc3aa6fea1d8bf3d6a04e085", null ],

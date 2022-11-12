@@ -88,7 +88,7 @@ $(document).ready(function(){initNavTree('stopwatch_8h_source.html',''); initRes
 </div><!--header-->
 <div class="contents">
 <a href="stopwatch_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  Copyright (c) 2012-2014, Bruno Levy</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  Copyright (c) 2000-2022 Inria</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *  All rights reserved.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> *  Redistribution and use in source and binary forms, with or without</span></div>
@@ -115,132 +115,126 @@ $(document).ready(function(){initNavTree('stopwatch_8h_source.html',''); initRes
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"> *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment"> *  POSSIBILITY OF SUCH DAMAGE.</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> *  If you modify this software, you should include a notice giving the</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> *  name of the person performing the modification, the date of modification,</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> *  and the reason for such modification.</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> *  Contact: Bruno Levy</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> *     https://www.inria.fr/fr/bruno-levy</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> *  Contact: Bruno Levy</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"> *     Bruno.Levy@inria.fr</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"> *     http://www.loria.fr/~levy</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> *     Inria,</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> *     Domaine de Voluceau,</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"> *     78150 Le Chesnay - Rocquencourt</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"> *     FRANCE</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> *     ALICE Project</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"> *     LORIA, INRIA Lorraine, </span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment"> *     Campus Scientifique, BP 239</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"> *     54506 VANDOEUVRE LES NANCY CEDEX </span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"> *     FRANCE</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#ifndef GEOGRAM_BASIC_STOPWATCH</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#define GEOGRAM_BASIC_STOPWATCH</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#ifndef GEOGRAM_BASIC_STOPWATCH</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#define GEOGRAM_BASIC_STOPWATCH</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">geogram/basic/common.h</a>&gt;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="numeric_8h.html">geogram/basic/numeric.h</a>&gt;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;geogram/basic/logger.h&gt;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">/****************************************************************************/</span></div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">geogram/basic/common.h</a>&gt;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="numeric_8h.html">geogram/basic/numeric.h</a>&gt;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;geogram/basic/logger.h&gt;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment">/****************************************************************************/</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#ifdef GEO_OS_WINDOWS</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;sys/types.h&gt;</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;sys/times.h&gt;</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#ifdef GEO_OS_WINDOWS</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#include &lt;sys/types.h&gt;</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#include &lt;sys/times.h&gt;</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">/****************************************************************************/</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceGEO.html">GEO</a> {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="classGEO_1_1SystemStopwatch.html">   95</a></span>&#160;    <span class="keyword">class </span>GEOGRAM_API <a class="code" href="classGEO_1_1SystemStopwatch.html">SystemStopwatch</a> {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <a class="code" href="classGEO_1_1SystemStopwatch.html">SystemStopwatch</a>();</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordtype">void</span> print_elapsed_time(std::ostream&amp; os) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keywordtype">double</span> elapsed_user_time() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">double</span> now();</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">#if defined(GEO_OS_WINDOWS)</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        <span class="keywordtype">long</span> start_;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor">#elif defined(GEO_OS_EMSCRIPTEN)</span></div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keywordtype">double</span> startf_;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">#else        </span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        tms start_;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        clock_t start_user_;</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    };</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="comment">    /************************************************************************/</span></div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
-<div class="line"><a name="l00141"></a><span class="lineno"><a class="line" href="classGEO_1_1ProcessorStopwatch.html">  141</a></span>&#160;    <span class="keyword">class </span>GEOGRAM_API <a class="code" href="classGEO_1_1ProcessorStopwatch.html">ProcessorStopwatch</a> {</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00148"></a><span class="lineno"><a class="line" href="classGEO_1_1ProcessorStopwatch.html#ade1c8a2bf25af2c0be62c0128697966f">  148</a></span>&#160;        <a class="code" href="classGEO_1_1ProcessorStopwatch.html#ade1c8a2bf25af2c0be62c0128697966f">ProcessorStopwatch</a>() {</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            start_ = now();</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        }</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        <span class="keyword">static</span> <a class="code" href="namespaceGEO_1_1Numeric.html#a22fe0b5f90a7aae0b6b4ece65b6fb08f">Numeric::uint64</a> now();</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
-<div class="line"><a name="l00162"></a><span class="lineno"><a class="line" href="classGEO_1_1ProcessorStopwatch.html#a3e00458b28707f42d6cc85bec3e827f0">  162</a></span>&#160;        <a class="code" href="namespaceGEO_1_1Numeric.html#a22fe0b5f90a7aae0b6b4ece65b6fb08f">Numeric::uint64</a> <a class="code" href="classGEO_1_1ProcessorStopwatch.html#a3e00458b28707f42d6cc85bec3e827f0">elapsed_time</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;            <span class="keywordflow">return</span> now() - start_;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">/****************************************************************************/</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceGEO.html">GEO</a> {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="classGEO_1_1SystemStopwatch.html">   89</a></span>&#160;    <span class="keyword">class </span>GEOGRAM_API <a class="code" href="classGEO_1_1SystemStopwatch.html">SystemStopwatch</a> {</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <a class="code" href="classGEO_1_1SystemStopwatch.html">SystemStopwatch</a>();</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordtype">void</span> print_elapsed_time(std::ostream&amp; os) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordtype">double</span> elapsed_user_time() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">double</span> now();</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="preprocessor">#if defined(GEO_OS_WINDOWS)</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="keywordtype">long</span> start_;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor">#elif defined(GEO_OS_EMSCRIPTEN)</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keywordtype">double</span> startf_;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="preprocessor">#else        </span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        tms start_;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        clock_t start_user_;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    };</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="comment">    /************************************************************************/</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
+<div class="line"><a name="l00135"></a><span class="lineno"><a class="line" href="classGEO_1_1ProcessorStopwatch.html">  135</a></span>&#160;    <span class="keyword">class </span>GEOGRAM_API <a class="code" href="classGEO_1_1ProcessorStopwatch.html">ProcessorStopwatch</a> {</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00142"></a><span class="lineno"><a class="line" href="classGEO_1_1ProcessorStopwatch.html#ade1c8a2bf25af2c0be62c0128697966f">  142</a></span>&#160;        <a class="code" href="classGEO_1_1ProcessorStopwatch.html#ade1c8a2bf25af2c0be62c0128697966f">ProcessorStopwatch</a>() {</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;            start_ = now();</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        }</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        <span class="keyword">static</span> <a class="code" href="namespaceGEO_1_1Numeric.html#a22fe0b5f90a7aae0b6b4ece65b6fb08f">Numeric::uint64</a> now();</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00156"></a><span class="lineno"><a class="line" href="classGEO_1_1ProcessorStopwatch.html#a3e00458b28707f42d6cc85bec3e827f0">  156</a></span>&#160;        <a class="code" href="namespaceGEO_1_1Numeric.html#a22fe0b5f90a7aae0b6b4ece65b6fb08f">Numeric::uint64</a> <a class="code" href="classGEO_1_1ProcessorStopwatch.html#a3e00458b28707f42d6cc85bec3e827f0">elapsed_time</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            <span class="keywordflow">return</span> now() - start_;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        }</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        <a class="code" href="namespaceGEO_1_1Numeric.html#a22fe0b5f90a7aae0b6b4ece65b6fb08f">Numeric::uint64</a> start_;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    };</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="comment">    /************************************************************************/</span></div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        <a class="code" href="namespaceGEO_1_1Numeric.html#a22fe0b5f90a7aae0b6b4ece65b6fb08f">Numeric::uint64</a> start_;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    };</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="comment">    /************************************************************************/</span></div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
-<div class="line"><a name="l00185"></a><span class="lineno"><a class="line" href="classGEO_1_1Stopwatch.html">  185</a></span>&#160;    <span class="keyword">class </span>GEOGRAM_API <a class="code" href="classGEO_1_1Stopwatch.html">Stopwatch</a> {</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00194"></a><span class="lineno"><a class="line" href="classGEO_1_1Stopwatch.html#aba5b5e0f1f50b19c8186db3cdf3e8ab2">  194</a></span>&#160;        <a class="code" href="classGEO_1_1Stopwatch.html#aba5b5e0f1f50b19c8186db3cdf3e8ab2">Stopwatch</a>(<span class="keyword">const</span> std::string&amp; task_name, <span class="keywordtype">bool</span> verbose=<span class="keyword">true</span>) :</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;            task_name_(task_name), verbose_(verbose) {</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        }</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
-<div class="line"><a name="l00203"></a><span class="lineno"><a class="line" href="classGEO_1_1Stopwatch.html#a7e56f857a37c345c2af45f6aed2d3a2a">  203</a></span>&#160;        <span class="keywordtype">double</span> <a class="code" href="classGEO_1_1Stopwatch.html#a7e56f857a37c345c2af45f6aed2d3a2a">elapsed_time</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;            <span class="keywordflow">return</span> W_.elapsed_user_time();</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        }</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160; </div>
-<div class="line"><a name="l00213"></a><span class="lineno"><a class="line" href="classGEO_1_1Stopwatch.html#a158dfe3b9afa1a50d24a55df0dbbcf02">  213</a></span>&#160;        <a class="code" href="classGEO_1_1Stopwatch.html#a158dfe3b9afa1a50d24a55df0dbbcf02">~Stopwatch</a>() {</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;            <span class="keywordflow">if</span>(verbose_) {</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;                Logger::out(task_name_)</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;                    &lt;&lt; <span class="stringliteral">&quot;Elapsed time: &quot;</span> &lt;&lt; W_.elapsed_user_time()</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;                    &lt;&lt; <span class="stringliteral">&quot; s&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;            }</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        }</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        </div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        std::string task_name_;</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        <span class="keywordtype">bool</span> verbose_;</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        <a class="code" href="classGEO_1_1SystemStopwatch.html">SystemStopwatch</a> W_;</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    };</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;}</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160; </div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160; </div>
+<div class="line"><a name="l00179"></a><span class="lineno"><a class="line" href="classGEO_1_1Stopwatch.html">  179</a></span>&#160;    <span class="keyword">class </span>GEOGRAM_API <a class="code" href="classGEO_1_1Stopwatch.html">Stopwatch</a> {</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00188"></a><span class="lineno"><a class="line" href="classGEO_1_1Stopwatch.html#aba5b5e0f1f50b19c8186db3cdf3e8ab2">  188</a></span>&#160;        <a class="code" href="classGEO_1_1Stopwatch.html#aba5b5e0f1f50b19c8186db3cdf3e8ab2">Stopwatch</a>(<span class="keyword">const</span> std::string&amp; task_name, <span class="keywordtype">bool</span> verbose=<span class="keyword">true</span>) :</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;            task_name_(task_name), verbose_(verbose) {</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        }</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160; </div>
+<div class="line"><a name="l00197"></a><span class="lineno"><a class="line" href="classGEO_1_1Stopwatch.html#a7e56f857a37c345c2af45f6aed2d3a2a">  197</a></span>&#160;        <span class="keywordtype">double</span> <a class="code" href="classGEO_1_1Stopwatch.html#a7e56f857a37c345c2af45f6aed2d3a2a">elapsed_time</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;            <span class="keywordflow">return</span> W_.elapsed_user_time();</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;        }</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160; </div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160; </div>
+<div class="line"><a name="l00207"></a><span class="lineno"><a class="line" href="classGEO_1_1Stopwatch.html#a158dfe3b9afa1a50d24a55df0dbbcf02">  207</a></span>&#160;        <a class="code" href="classGEO_1_1Stopwatch.html#a158dfe3b9afa1a50d24a55df0dbbcf02">~Stopwatch</a>() {</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;            <span class="keywordflow">if</span>(verbose_) {</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;                Logger::out(task_name_)</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;                    &lt;&lt; <span class="stringliteral">&quot;Elapsed time: &quot;</span> &lt;&lt; W_.elapsed_user_time()</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;                    &lt;&lt; <span class="stringliteral">&quot; s&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;            }</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        }</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;        </div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160; </div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        std::string task_name_;</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <span class="keywordtype">bool</span> verbose_;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        <a class="code" href="classGEO_1_1SystemStopwatch.html">SystemStopwatch</a> W_;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    };</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;}</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aclassGEO_1_1ProcessorStopwatch_html_a3e00458b28707f42d6cc85bec3e827f0"><div class="ttname"><a href="classGEO_1_1ProcessorStopwatch.html#a3e00458b28707f42d6cc85bec3e827f0">GEO::ProcessorStopwatch::elapsed_time</a></div><div class="ttdeci">Numeric::uint64 elapsed_time() const</div><div class="ttdoc">Get the elapsed time.</div><div class="ttdef"><b>Definition:</b> <a href="stopwatch_8h_source.html#l00162">stopwatch.h:162</a></div></div>
-<div class="ttc" id="aclassGEO_1_1ProcessorStopwatch_html"><div class="ttname"><a href="classGEO_1_1ProcessorStopwatch.html">GEO::ProcessorStopwatch</a></div><div class="ttdoc">A more precise stopwatch.</div><div class="ttdef"><b>Definition:</b> <a href="stopwatch_8h_source.html#l00141">stopwatch.h:141</a></div></div>
-<div class="ttc" id="anamespaceGEO_1_1Numeric_html_a22fe0b5f90a7aae0b6b4ece65b6fb08f"><div class="ttname"><a href="namespaceGEO_1_1Numeric.html#a22fe0b5f90a7aae0b6b4ece65b6fb08f">GEO::Numeric::uint64</a></div><div class="ttdeci">uint64_t uint64</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00113">numeric.h:113</a></div></div>
+<div class="ttc" id="aclassGEO_1_1ProcessorStopwatch_html_a3e00458b28707f42d6cc85bec3e827f0"><div class="ttname"><a href="classGEO_1_1ProcessorStopwatch.html#a3e00458b28707f42d6cc85bec3e827f0">GEO::ProcessorStopwatch::elapsed_time</a></div><div class="ttdeci">Numeric::uint64 elapsed_time() const</div><div class="ttdoc">Get the elapsed time.</div><div class="ttdef"><b>Definition:</b> <a href="stopwatch_8h_source.html#l00156">stopwatch.h:156</a></div></div>
+<div class="ttc" id="aclassGEO_1_1ProcessorStopwatch_html"><div class="ttname"><a href="classGEO_1_1ProcessorStopwatch.html">GEO::ProcessorStopwatch</a></div><div class="ttdoc">A more precise stopwatch.</div><div class="ttdef"><b>Definition:</b> <a href="stopwatch_8h_source.html#l00135">stopwatch.h:135</a></div></div>
+<div class="ttc" id="anamespaceGEO_1_1Numeric_html_a22fe0b5f90a7aae0b6b4ece65b6fb08f"><div class="ttname"><a href="namespaceGEO_1_1Numeric.html#a22fe0b5f90a7aae0b6b4ece65b6fb08f">GEO::Numeric::uint64</a></div><div class="ttdeci">uint64_t uint64</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00107">numeric.h:107</a></div></div>
 <div class="ttc" id="anumeric_8h_html"><div class="ttname"><a href="numeric_8h.html">numeric.h</a></div><div class="ttdoc">Types and functions for numbers manipulation.</div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
-<div class="ttc" id="aclassGEO_1_1Stopwatch_html"><div class="ttname"><a href="classGEO_1_1Stopwatch.html">GEO::Stopwatch</a></div><div class="ttdoc">Scope restricted stopwatch.</div><div class="ttdef"><b>Definition:</b> <a href="stopwatch_8h_source.html#l00185">stopwatch.h:185</a></div></div>
-<div class="ttc" id="aclassGEO_1_1Stopwatch_html_aba5b5e0f1f50b19c8186db3cdf3e8ab2"><div class="ttname"><a href="classGEO_1_1Stopwatch.html#aba5b5e0f1f50b19c8186db3cdf3e8ab2">GEO::Stopwatch::Stopwatch</a></div><div class="ttdeci">Stopwatch(const std::string &amp;task_name, bool verbose=true)</div><div class="ttdoc">Stopwatch constructor.</div><div class="ttdef"><b>Definition:</b> <a href="stopwatch_8h_source.html#l00194">stopwatch.h:194</a></div></div>
-<div class="ttc" id="aclassGEO_1_1SystemStopwatch_html"><div class="ttname"><a href="classGEO_1_1SystemStopwatch.html">GEO::SystemStopwatch</a></div><div class="ttdoc">Measures the time taken by an algorithm.</div><div class="ttdef"><b>Definition:</b> <a href="stopwatch_8h_source.html#l00095">stopwatch.h:95</a></div></div>
-<div class="ttc" id="aclassGEO_1_1ProcessorStopwatch_html_ade1c8a2bf25af2c0be62c0128697966f"><div class="ttname"><a href="classGEO_1_1ProcessorStopwatch.html#ade1c8a2bf25af2c0be62c0128697966f">GEO::ProcessorStopwatch::ProcessorStopwatch</a></div><div class="ttdeci">ProcessorStopwatch()</div><div class="ttdoc">ProcessorStopwatch constructor.</div><div class="ttdef"><b>Definition:</b> <a href="stopwatch_8h_source.html#l00148">stopwatch.h:148</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Stopwatch_html"><div class="ttname"><a href="classGEO_1_1Stopwatch.html">GEO::Stopwatch</a></div><div class="ttdoc">Scope restricted stopwatch.</div><div class="ttdef"><b>Definition:</b> <a href="stopwatch_8h_source.html#l00179">stopwatch.h:179</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Stopwatch_html_aba5b5e0f1f50b19c8186db3cdf3e8ab2"><div class="ttname"><a href="classGEO_1_1Stopwatch.html#aba5b5e0f1f50b19c8186db3cdf3e8ab2">GEO::Stopwatch::Stopwatch</a></div><div class="ttdeci">Stopwatch(const std::string &amp;task_name, bool verbose=true)</div><div class="ttdoc">Stopwatch constructor.</div><div class="ttdef"><b>Definition:</b> <a href="stopwatch_8h_source.html#l00188">stopwatch.h:188</a></div></div>
+<div class="ttc" id="aclassGEO_1_1SystemStopwatch_html"><div class="ttname"><a href="classGEO_1_1SystemStopwatch.html">GEO::SystemStopwatch</a></div><div class="ttdoc">Measures the time taken by an algorithm.</div><div class="ttdef"><b>Definition:</b> <a href="stopwatch_8h_source.html#l00089">stopwatch.h:89</a></div></div>
+<div class="ttc" id="aclassGEO_1_1ProcessorStopwatch_html_ade1c8a2bf25af2c0be62c0128697966f"><div class="ttname"><a href="classGEO_1_1ProcessorStopwatch.html#ade1c8a2bf25af2c0be62c0128697966f">GEO::ProcessorStopwatch::ProcessorStopwatch</a></div><div class="ttdeci">ProcessorStopwatch()</div><div class="ttdoc">ProcessorStopwatch constructor.</div><div class="ttdef"><b>Definition:</b> <a href="stopwatch_8h_source.html#l00142">stopwatch.h:142</a></div></div>
 <div class="ttc" id="anamespaceGEO_html"><div class="ttname"><a href="namespaceGEO.html">GEO</a></div><div class="ttdoc">Global Vorpaline namespace.</div><div class="ttdef"><b>Definition:</b> <a href="lua__grob__shader_8h_source.html#l00053">lua_grob_shader.h:53</a></div></div>
-<div class="ttc" id="aclassGEO_1_1Stopwatch_html_a158dfe3b9afa1a50d24a55df0dbbcf02"><div class="ttname"><a href="classGEO_1_1Stopwatch.html#a158dfe3b9afa1a50d24a55df0dbbcf02">GEO::Stopwatch::~Stopwatch</a></div><div class="ttdeci">~Stopwatch()</div><div class="ttdoc">Stopwatch destructor.</div><div class="ttdef"><b>Definition:</b> <a href="stopwatch_8h_source.html#l00213">stopwatch.h:213</a></div></div>
-<div class="ttc" id="aclassGEO_1_1Stopwatch_html_a7e56f857a37c345c2af45f6aed2d3a2a"><div class="ttname"><a href="classGEO_1_1Stopwatch.html#a7e56f857a37c345c2af45f6aed2d3a2a">GEO::Stopwatch::elapsed_time</a></div><div class="ttdeci">double elapsed_time() const</div><div class="ttdoc">Get the user elapsed time.</div><div class="ttdef"><b>Definition:</b> <a href="stopwatch_8h_source.html#l00203">stopwatch.h:203</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Stopwatch_html_a158dfe3b9afa1a50d24a55df0dbbcf02"><div class="ttname"><a href="classGEO_1_1Stopwatch.html#a158dfe3b9afa1a50d24a55df0dbbcf02">GEO::Stopwatch::~Stopwatch</a></div><div class="ttdeci">~Stopwatch()</div><div class="ttdoc">Stopwatch destructor.</div><div class="ttdef"><b>Definition:</b> <a href="stopwatch_8h_source.html#l00207">stopwatch.h:207</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Stopwatch_html_a7e56f857a37c345c2af45f6aed2d3a2a"><div class="ttname"><a href="classGEO_1_1Stopwatch.html#a7e56f857a37c345c2af45f6aed2d3a2a">GEO::Stopwatch::elapsed_time</a></div><div class="ttdeci">double elapsed_time() const</div><div class="ttdoc">Get the user elapsed time.</div><div class="ttdef"><b>Definition:</b> <a href="stopwatch_8h_source.html#l00197">stopwatch.h:197</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_4586f940cce2020c46fbc4f79c1663fc.html">basic</a></li><li class="navelem"><a class="el" href="stopwatch_8h.html">stopwatch.h</a></li>
-    <li class="footer">Generated on Sun Jul 17 2022 20:33:27 for Graphite by
+    <li class="footer">Generated on Sat Nov 12 2022 14:46:03 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

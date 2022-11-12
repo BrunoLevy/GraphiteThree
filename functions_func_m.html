@@ -147,7 +147,7 @@ $(document).ready(function(){initNavTree('functions_func_m.html',''); initResiza
 : <a class="el" href="classGLUP_1_1ImmediateState.html#aaffd5bca6cb7a0e90f0b3dd3292a2597">GLUP::ImmediateState</a>
 </li>
 <li>max_node_index()
-: <a class="el" href="classGEO_1_1AABB.html#a411063d25ba904d064d348a507c9f023">GEO::AABB</a>
+: <a class="el" href="classGEO_1_1AABB.html#a89943d43c41a6e28b786daab82eed487">GEO::AABB&lt; BOX &gt;</a>
 , <a class="el" href="classGEO_1_1BalancedKdTree.html#af4e40c84e459f91b95e50277207f219b">GEO::BalancedKdTree</a>
 </li>
 <li>max_size()
@@ -189,7 +189,8 @@ $(document).ready(function(){initNavTree('functions_func_m.html',''); initResiza
 : <a class="el" href="classGEO_1_1Mesh.html#a079a79f3b018a28aa1f0cbe8bb93a7fe">GEO::Mesh</a>
 </li>
 <li>mesh()
-: <a class="el" href="classGEO_1_1MeshAABB.html#a47ca0c12ac33c029cd93f6118bbfd401">GEO::MeshAABB</a>
+: <a class="el" href="classGEO_1_1MeshAABB2d.html#a01d14496b6da7453e9d82cb2831bc83a">GEO::MeshAABB2d</a>
+, <a class="el" href="classGEO_1_1MeshAABB3d.html#a62e41d8e14ff7e2f84eb76ed697a4f3a">GEO::MeshAABB3d</a>
 , <a class="el" href="classGEO_1_1MeshGfx.html#abedd671fab0182313f94b80daf5ee7d7">GEO::MeshGfx</a>
 , <a class="el" href="classGEO_1_1MeshHalfedges.html#a2acb43fe28125ab4019689b7f9a8ee79">GEO::MeshHalfedges</a>
 , <a class="el" href="classGEO_1_1OptimalTransportMap.html#ada3bd4431c359ae46ac0be4678dcc866">GEO::OptimalTransportMap</a>
@@ -207,8 +208,11 @@ $(document).ready(function(){initNavTree('functions_func_m.html',''); initResiza
 , <a class="el" href="classOGF_1_1MeshGrobTool.html#a832b4c755b4fbaea93820f8336747c9e">OGF::MeshGrobTool</a>
 , <a class="el" href="classOGF_1_1MeshGrobTransformTool.html#ac89d3854866d130fb6e7f9bf9c6a2896">OGF::MeshGrobTransformTool</a>
 </li>
-<li>MeshAABB()
-: <a class="el" href="classGEO_1_1MeshAABB.html#acbadc82a3fd53d228b88af7b603d6d75">GEO::MeshAABB</a>
+<li>MeshAABB2d()
+: <a class="el" href="classGEO_1_1MeshAABB2d.html#aaae784b528498cb78c29adcac674f6b9">GEO::MeshAABB2d</a>
+</li>
+<li>MeshAABB3d()
+: <a class="el" href="classGEO_1_1MeshAABB3d.html#adb847bd07172f02e07fbf34213893ae2">GEO::MeshAABB3d</a>
 </li>
 <li>MeshCellFacetsStore()
 : <a class="el" href="classGEO_1_1MeshCellFacetsStore.html#adfc094593b570644a8ebc5329c1552c0">GEO::MeshCellFacetsStore</a>
@@ -217,13 +221,16 @@ $(document).ready(function(){initNavTree('functions_func_m.html',''); initResiza
 : <a class="el" href="classGEO_1_1MeshCells.html#a5d82c370dafc633dab66bdbc412def89">GEO::MeshCells</a>
 </li>
 <li>MeshCellsAABB()
-: <a class="el" href="classGEO_1_1MeshCellsAABB.html#a61140bf957bea7f364c2b78192d715c0">GEO::MeshCellsAABB</a>
+: <a class="el" href="classGEO_1_1MeshCellsAABB.html#a6059a3dadde1273a6c6f60636c631677">GEO::MeshCellsAABB</a>
 </li>
 <li>MeshFacets()
 : <a class="el" href="classGEO_1_1MeshFacets.html#a41c84bf1a056b31165af0b60857263a1">GEO::MeshFacets</a>
 </li>
 <li>MeshFacetsAABB()
 : <a class="el" href="classGEO_1_1MeshFacetsAABB.html#a73b3acafd28d085dcfa0f1ddfced17ad">GEO::MeshFacetsAABB</a>
+</li>
+<li>MeshFacetsAABB2d()
+: <a class="el" href="classGEO_1_1MeshFacetsAABB2d.html#a5e2ed7abffeb7560d0794aaddaf1701c">GEO::MeshFacetsAABB2d</a>
 </li>
 <li>MeshGfx()
 : <a class="el" href="classGEO_1_1MeshGfx.html#a5ed86208baf1890231888e78157b86df">GEO::MeshGfx</a>
@@ -393,7 +400,7 @@ $(document).ready(function(){initNavTree('functions_func_m.html',''); initResiza
 : <a class="el" href="classOGF_1_1Meta.html#a09a670391cf69807403acb3dcb131c47">OGF::Meta</a>
 </li>
 <li>MetaArg()
-: <a class="el" href="classOGF_1_1MetaArg.html#a5d9ab22c7562df03ed20bcbcaa9349c7">OGF::MetaArg</a>
+: <a class="el" href="classOGF_1_1MetaArg.html#a51e3e9a0372baf8cdfb47d61d7ce17e9">OGF::MetaArg</a>
 </li>
 <li>MetaBuiltinType()
 : <a class="el" href="classOGF_1_1MetaBuiltinType.html#a43acfd5259e279c56fb53abcb0897b8f">OGF::MetaBuiltinType</a>
@@ -540,7 +547,7 @@ $(document).ready(function(){initNavTree('functions_func_m.html',''); initResiza
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Jul 17 2022 20:33:33 for Graphite by
+    <li class="footer">Generated on Sat Nov 12 2022 14:46:07 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

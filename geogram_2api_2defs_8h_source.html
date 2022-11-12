@@ -88,7 +88,7 @@ $(document).ready(function(){initNavTree('geogram_2api_2defs_8h_source.html','')
 </div><!--header-->
 <div class="contents">
 <a href="geogram_2api_2defs_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  Copyright (c) 2012-2014, Bruno Levy</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  Copyright (c) 2000-2022 Inria</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *  All rights reserved.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> *  Redistribution and use in source and binary forms, with or without</span></div>
@@ -115,110 +115,104 @@ $(document).ready(function(){initNavTree('geogram_2api_2defs_8h_source.html','')
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"> *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment"> *  POSSIBILITY OF SUCH DAMAGE.</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> *  If you modify this software, you should include a notice giving the</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> *  name of the person performing the modification, the date of modification,</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> *  and the reason for such modification.</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> *  Contact: Bruno Levy</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> *     https://www.inria.fr/fr/bruno-levy</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> *  Contact: Bruno Levy</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"> *     Bruno.Levy@inria.fr</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"> *     http://www.loria.fr/~levy</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> *     Inria,</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> *     Domaine de Voluceau,</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"> *     78150 Le Chesnay - Rocquencourt</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"> *     FRANCE</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> *     ALICE Project</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"> *     LORIA, INRIA Lorraine, </span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment"> *     Campus Scientifique, BP 239</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"> *     54506 VANDOEUVRE LES NANCY CEDEX </span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"> *     FRANCE</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#ifndef GEOGRAM_API_DEFS</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#define GEOGRAM_API_DEFS</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment"> * Deactivate warnings about documentation</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment"> * We do that, because CLANG&#39;s doxygen parser does not know</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment"> * some doxygen commands that we use (retval, copydoc) and</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment"> * generates many warnings for them...</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#pragma clang diagnostic ignored &quot;-Wunknown-pragmas&quot;</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#pragma clang diagnostic ignored &quot;-Wdocumentation-unknown-command&quot; </span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">#if defined(GEO_DYNAMIC_LIBS)</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">   #if defined(_MSC_VER)</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">      #define GEO_IMPORT __declspec(dllimport) </span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">      #define GEO_EXPORT __declspec(dllexport) </span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">   #elif defined(__GNUC__)</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">      #define GEO_IMPORT  </span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">      #define GEO_EXPORT __attribute__ ((visibility(&quot;default&quot;)))</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">   #else</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">      #define GEO_IMPORT</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">      #define GEO_EXPORT</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">   #endif</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="geogram_2api_2defs_8h.html#ac8ea9f067db6c73d66f5a51d6bac7f58">   81</a></span>&#160;<span class="preprocessor">   #define GEO_IMPORT</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">   #define GEO_EXPORT</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#ifndef GEOGRAM_API_DEFS</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#define GEOGRAM_API_DEFS</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment"> * Deactivate warnings about documentation</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment"> * We do that, because CLANG&#39;s doxygen parser does not know</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment"> * some doxygen commands that we use (retval, copydoc) and</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment"> * generates many warnings for them...</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#pragma clang diagnostic ignored &quot;-Wunknown-pragmas&quot;</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">#pragma clang diagnostic ignored &quot;-Wdocumentation-unknown-command&quot; </span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#if defined(GEO_DYNAMIC_LIBS)</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">   #if defined(_MSC_VER)</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">      #define GEO_IMPORT __declspec(dllimport) </span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">      #define GEO_EXPORT __declspec(dllexport) </span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">   #elif defined(__GNUC__)</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">      #define GEO_IMPORT  </span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">      #define GEO_EXPORT __attribute__ ((visibility(&quot;default&quot;)))</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">   #else</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">      #define GEO_IMPORT</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">      #define GEO_EXPORT</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">   #endif</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="geogram_2api_2defs_8h.html#ac8ea9f067db6c73d66f5a51d6bac7f58">   75</a></span>&#160;<span class="preprocessor">   #define GEO_IMPORT</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">   #define GEO_EXPORT</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#ifdef geogram_EXPORTS</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#define GEOGRAM_API GEO_EXPORT</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">#define GEOGRAM_API GEO_IMPORT</span></div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#ifdef geogram_EXPORTS</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#define GEOGRAM_API GEO_EXPORT</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#define GEOGRAM_API GEO_IMPORT</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="geogram_2api_2defs_8h.html#a019e575412b10d01f690ede5c4aae91a">   99</a></span>&#160;<span class="preprocessor">#define NO_GEOGRAM_API</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="geogram_2api_2defs_8h.html#a019e575412b10d01f690ede5c4aae91a">   93</a></span>&#160;<span class="preprocessor">#define NO_GEOGRAM_API</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="geogram_2api_2defs_8h.html#a4553a6b588a1bb78178ae394800b469a">   99</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">int</span> <a class="code" href="geogram_2api_2defs_8h.html#a4553a6b588a1bb78178ae394800b469a">GeoMesh</a>;</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="geogram_2api_2defs_8h.html#a4553a6b588a1bb78178ae394800b469a">  105</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">int</span> <a class="code" href="geogram_2api_2defs_8h.html#a4553a6b588a1bb78178ae394800b469a">GeoMesh</a>;</div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="geogram_2api_2defs_8h.html#a9ddf80edf66161a279b30182135ca7df">  105</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="geogram_2api_2defs_8h.html#a9ddf80edf66161a279b30182135ca7df">geo_coord_index_t</a>;</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00111"></a><span class="lineno"><a class="line" href="geogram_2api_2defs_8h.html#a9ddf80edf66161a279b30182135ca7df">  111</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="geogram_2api_2defs_8h.html#a9ddf80edf66161a279b30182135ca7df">geo_coord_index_t</a>;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment">/* </span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="comment"> * If GARGANTUA is defined, then geogram is compiled </span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="comment"> * with 64 bit indices. </span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#ifdef GARGANTUA</span></div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment">/* </span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment"> * If GARGANTUA is defined, then geogram is compiled </span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment"> * with 64 bit indices. </span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor">#ifdef GARGANTUA</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keyword">typedef</span> uint64_t <a class="code" href="geogram_2api_2defs_8h.html#ae5fa4e566065ddd7f5f6ab1ab26ca80d">geo_index_t</a>;</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="keyword">typedef</span> uint64_t <a class="code" href="geogram_2api_2defs_8h.html#ae5fa4e566065ddd7f5f6ab1ab26ca80d">geo_index_t</a>;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="keyword">typedef</span> int64_t <a class="code" href="geogram_2api_2defs_8h.html#aeb0397ead5451c97c9edd1902394cea2">geo_signed_index_t</a>;</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="keyword">typedef</span> int64_t <a class="code" href="geogram_2api_2defs_8h.html#aeb0397ead5451c97c9edd1902394cea2">geo_signed_index_t</a>;</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
+<div class="line"><a name="l00133"></a><span class="lineno"><a class="line" href="geogram_2api_2defs_8h.html#ae5fa4e566065ddd7f5f6ab1ab26ca80d">  133</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="geogram_2api_2defs_8h.html#ae5fa4e566065ddd7f5f6ab1ab26ca80d">geo_index_t</a>;</div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
-<div class="line"><a name="l00139"></a><span class="lineno"><a class="line" href="geogram_2api_2defs_8h.html#ae5fa4e566065ddd7f5f6ab1ab26ca80d">  139</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="geogram_2api_2defs_8h.html#ae5fa4e566065ddd7f5f6ab1ab26ca80d">geo_index_t</a>;</div>
+<div class="line"><a name="l00139"></a><span class="lineno"><a class="line" href="geogram_2api_2defs_8h.html#aeb0397ead5451c97c9edd1902394cea2">  139</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">int</span> <a class="code" href="geogram_2api_2defs_8h.html#aeb0397ead5451c97c9edd1902394cea2">geo_signed_index_t</a>;</div>
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
-<div class="line"><a name="l00145"></a><span class="lineno"><a class="line" href="geogram_2api_2defs_8h.html#aeb0397ead5451c97c9edd1902394cea2">  145</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">int</span> <a class="code" href="geogram_2api_2defs_8h.html#aeb0397ead5451c97c9edd1902394cea2">geo_signed_index_t</a>;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
+<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="geogram_2api_2defs_8h.html#a5fdd474ecf9ca6b2dd53e0232d8023a3">  147</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">double</span> <a class="code" href="geogram_2api_2defs_8h.html#a5fdd474ecf9ca6b2dd53e0232d8023a3">geo_coord_t</a>;</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
-<div class="line"><a name="l00153"></a><span class="lineno"><a class="line" href="geogram_2api_2defs_8h.html#a5fdd474ecf9ca6b2dd53e0232d8023a3">  153</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">double</span> <a class="code" href="geogram_2api_2defs_8h.html#a5fdd474ecf9ca6b2dd53e0232d8023a3">geo_coord_t</a>;</div>
+<div class="line"><a name="l00153"></a><span class="lineno"><a class="line" href="geogram_2api_2defs_8h.html#a59958e50783a62a38bf0ebb437d1e229">  153</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">int</span> <a class="code" href="geogram_2api_2defs_8h.html#a59958e50783a62a38bf0ebb437d1e229">geo_boolean</a>;</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
-<div class="line"><a name="l00159"></a><span class="lineno"><a class="line" href="geogram_2api_2defs_8h.html#a59958e50783a62a38bf0ebb437d1e229">  159</a></span>&#160;<span class="keyword">typedef</span> <span class="keywordtype">int</span> <a class="code" href="geogram_2api_2defs_8h.html#a59958e50783a62a38bf0ebb437d1e229">geo_boolean</a>;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="keyword">enum</span> {</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    GEO_FALSE = 0,</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    GEO_TRUE = 1</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;};</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="keyword">enum</span> {</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    GEO_FALSE = 0,</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    GEO_TRUE = 1</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;};</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="ageogram_2api_2defs_8h_html_a9ddf80edf66161a279b30182135ca7df"><div class="ttname"><a href="geogram_2api_2defs_8h.html#a9ddf80edf66161a279b30182135ca7df">geo_coord_index_t</a></div><div class="ttdeci">unsigned char geo_coord_index_t</div><div class="ttdoc">Represents dimension (e.g. 3 for 3d, 4 for 4d ...).</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2api_2defs_8h_source.html#l00111">defs.h:111</a></div></div>
-<div class="ttc" id="ageogram_2api_2defs_8h_html_a4553a6b588a1bb78178ae394800b469a"><div class="ttname"><a href="geogram_2api_2defs_8h.html#a4553a6b588a1bb78178ae394800b469a">GeoMesh</a></div><div class="ttdeci">int GeoMesh</div><div class="ttdoc">Opaque identifier of a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2api_2defs_8h_source.html#l00105">defs.h:105</a></div></div>
-<div class="ttc" id="ageogram_2api_2defs_8h_html_ae5fa4e566065ddd7f5f6ab1ab26ca80d"><div class="ttname"><a href="geogram_2api_2defs_8h.html#ae5fa4e566065ddd7f5f6ab1ab26ca80d">geo_index_t</a></div><div class="ttdeci">unsigned int geo_index_t</div><div class="ttdoc">Represents indices.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2api_2defs_8h_source.html#l00139">defs.h:139</a></div></div>
-<div class="ttc" id="ageogram_2api_2defs_8h_html_a59958e50783a62a38bf0ebb437d1e229"><div class="ttname"><a href="geogram_2api_2defs_8h.html#a59958e50783a62a38bf0ebb437d1e229">geo_boolean</a></div><div class="ttdeci">int geo_boolean</div><div class="ttdoc">Represents truth values.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2api_2defs_8h_source.html#l00159">defs.h:159</a></div></div>
-<div class="ttc" id="ageogram_2api_2defs_8h_html_a5fdd474ecf9ca6b2dd53e0232d8023a3"><div class="ttname"><a href="geogram_2api_2defs_8h.html#a5fdd474ecf9ca6b2dd53e0232d8023a3">geo_coord_t</a></div><div class="ttdeci">double geo_coord_t</div><div class="ttdoc">Represents floating-point coordinates.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2api_2defs_8h_source.html#l00153">defs.h:153</a></div></div>
-<div class="ttc" id="ageogram_2api_2defs_8h_html_aeb0397ead5451c97c9edd1902394cea2"><div class="ttname"><a href="geogram_2api_2defs_8h.html#aeb0397ead5451c97c9edd1902394cea2">geo_signed_index_t</a></div><div class="ttdeci">int geo_signed_index_t</div><div class="ttdoc">Represents possibly negative indices.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2api_2defs_8h_source.html#l00145">defs.h:145</a></div></div>
+<div class="ttc" id="ageogram_2api_2defs_8h_html_a9ddf80edf66161a279b30182135ca7df"><div class="ttname"><a href="geogram_2api_2defs_8h.html#a9ddf80edf66161a279b30182135ca7df">geo_coord_index_t</a></div><div class="ttdeci">unsigned char geo_coord_index_t</div><div class="ttdoc">Represents dimension (e.g. 3 for 3d, 4 for 4d ...).</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2api_2defs_8h_source.html#l00105">defs.h:105</a></div></div>
+<div class="ttc" id="ageogram_2api_2defs_8h_html_a4553a6b588a1bb78178ae394800b469a"><div class="ttname"><a href="geogram_2api_2defs_8h.html#a4553a6b588a1bb78178ae394800b469a">GeoMesh</a></div><div class="ttdeci">int GeoMesh</div><div class="ttdoc">Opaque identifier of a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2api_2defs_8h_source.html#l00099">defs.h:99</a></div></div>
+<div class="ttc" id="ageogram_2api_2defs_8h_html_ae5fa4e566065ddd7f5f6ab1ab26ca80d"><div class="ttname"><a href="geogram_2api_2defs_8h.html#ae5fa4e566065ddd7f5f6ab1ab26ca80d">geo_index_t</a></div><div class="ttdeci">unsigned int geo_index_t</div><div class="ttdoc">Represents indices.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2api_2defs_8h_source.html#l00133">defs.h:133</a></div></div>
+<div class="ttc" id="ageogram_2api_2defs_8h_html_a59958e50783a62a38bf0ebb437d1e229"><div class="ttname"><a href="geogram_2api_2defs_8h.html#a59958e50783a62a38bf0ebb437d1e229">geo_boolean</a></div><div class="ttdeci">int geo_boolean</div><div class="ttdoc">Represents truth values.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2api_2defs_8h_source.html#l00153">defs.h:153</a></div></div>
+<div class="ttc" id="ageogram_2api_2defs_8h_html_a5fdd474ecf9ca6b2dd53e0232d8023a3"><div class="ttname"><a href="geogram_2api_2defs_8h.html#a5fdd474ecf9ca6b2dd53e0232d8023a3">geo_coord_t</a></div><div class="ttdeci">double geo_coord_t</div><div class="ttdoc">Represents floating-point coordinates.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2api_2defs_8h_source.html#l00147">defs.h:147</a></div></div>
+<div class="ttc" id="ageogram_2api_2defs_8h_html_aeb0397ead5451c97c9edd1902394cea2"><div class="ttname"><a href="geogram_2api_2defs_8h.html#aeb0397ead5451c97c9edd1902394cea2">geo_signed_index_t</a></div><div class="ttdeci">int geo_signed_index_t</div><div class="ttdoc">Represents possibly negative indices.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2api_2defs_8h_source.html#l00139">defs.h:139</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_5b06532315e8739229eb57a42655ff1a.html">api</a></li><li class="navelem"><a class="el" href="geogram_2api_2defs_8h.html">defs.h</a></li>
-    <li class="footer">Generated on Sun Jul 17 2022 20:33:27 for Graphite by
+    <li class="footer">Generated on Sat Nov 12 2022 14:46:03 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

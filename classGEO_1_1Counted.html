@@ -177,7 +177,7 @@ Protected Member Functions</h2></td></tr>
 <p>Objects can benefit reference counted sharing simply by deriving from <a class="el" href="classGEO_1_1Counted.html" title="Base class for reference-counted objects.">Counted</a> and implementing the virtual destructor.</p>
 <p>Reference acquisition and release can be done manually by explicitly calling <a class="el" href="classGEO_1_1Counted.html#ab1adaca35a986f3e3dc34062e50d427b" title="Increments the reference count.">ref()</a> or <a class="el" href="classGEO_1_1Counted.html#a7cc0da6a4f3ca45ea76044bd8f8d682a" title="Decrements the reference count.">unref()</a> on the reference counted objects, or can be done automatically by using SmartPointer&lt;T&gt;. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="classGEO_1_1SmartPointer.html" title="A smart pointer with reference-counted copy semantics.">SmartPointer</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="counted_8h_source.html#l00077">77</a> of file <a class="el" href="counted_8h_source.html">counted.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="counted_8h_source.html#l00071">71</a> of file <a class="el" href="counted_8h_source.html">counted.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a457526cd0949d44317c891075b1af9bc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a457526cd0949d44317c891075b1af9bc">&#9670;&nbsp;</a></span>Counted()</h2>
@@ -205,7 +205,7 @@ Protected Member Functions</h2></td></tr>
 <p>Creates a reference counted object. </p>
 <p>This initializes the reference count to 0 (zero). </p>
 
-<p class="definition">Definition at line <a class="el" href="counted_8h_source.html#l00148">148</a> of file <a class="el" href="counted_8h_source.html">counted.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="counted_8h_source.html#l00142">142</a> of file <a class="el" href="counted_8h_source.html">counted.h</a>.</p>
 
 </div>
 </div>
@@ -264,7 +264,7 @@ Protected Member Functions</h2></td></tr>
 <p>Check if the object is shared. </p>
 <p>An object is considered as shared if at least 2 client objects have called <a class="el" href="classGEO_1_1Counted.html#ab1adaca35a986f3e3dc34062e50d427b" title="Increments the reference count.">ref()</a> on this object. </p><dl class="section return"><dt>Returns</dt><dd><code>true</code> if the object is shared, <code>false</code> otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="counted_8h_source.html#l00109">109</a> of file <a class="el" href="counted_8h_source.html">counted.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="counted_8h_source.html#l00103">103</a> of file <a class="el" href="counted_8h_source.html">counted.h</a>.</p>
 
 </div>
 </div>
@@ -294,7 +294,7 @@ Protected Member Functions</h2></td></tr>
 <p>Gets the number of references that point to this object. </p>
 <dl class="section return"><dt>Returns</dt><dd>the number of references. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="counted_8h_source.html#l00117">117</a> of file <a class="el" href="counted_8h_source.html">counted.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="counted_8h_source.html#l00111">111</a> of file <a class="el" href="counted_8h_source.html">counted.h</a>.</p>
 
 </div>
 </div>
@@ -324,7 +324,7 @@ Protected Member Functions</h2></td></tr>
 <p>Increments the reference count. </p>
 <p>This function must be called to share ownership on this object. Calling <a class="el" href="classGEO_1_1Counted.html#ab1adaca35a986f3e3dc34062e50d427b" title="Increments the reference count.">ref()</a> will prevent this object from being deleted when someone else releases ownership. </p>
 
-<p class="definition">Definition at line <a class="el" href="counted_8h_source.html#l00085">85</a> of file <a class="el" href="counted_8h_source.html">counted.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="counted_8h_source.html#l00079">79</a> of file <a class="el" href="counted_8h_source.html">counted.h</a>.</p>
 
 </div>
 </div>
@@ -360,7 +360,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="counted_8h_source.html#l00126">126</a> of file <a class="el" href="counted_8h_source.html">counted.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="counted_8h_source.html#l00120">120</a> of file <a class="el" href="counted_8h_source.html">counted.h</a>.</p>
 
 </div>
 </div>
@@ -390,7 +390,7 @@ Protected Member Functions</h2></td></tr>
 <p>Decrements the reference count. </p>
 <p>This function must be called to release ownership on this object when it's no longer needed. Whwen the reference count reaches the value of 0 (zero), the object is simply deleted. </p>
 
-<p class="definition">Definition at line <a class="el" href="counted_8h_source.html#l00095">95</a> of file <a class="el" href="counted_8h_source.html">counted.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="counted_8h_source.html#l00089">89</a> of file <a class="el" href="counted_8h_source.html">counted.h</a>.</p>
 
 </div>
 </div>
@@ -426,7 +426,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="counted_8h_source.html#l00137">137</a> of file <a class="el" href="counted_8h_source.html">counted.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="counted_8h_source.html#l00131">131</a> of file <a class="el" href="counted_8h_source.html">counted.h</a>.</p>
 
 </div>
 </div>
@@ -439,7 +439,7 @@ Protected Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1Counted.html">Counted</a></li>
-    <li class="footer">Generated on Sun Jul 17 2022 20:33:29 for Graphite by
+    <li class="footer">Generated on Sat Nov 12 2022 14:46:04 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

@@ -185,7 +185,7 @@ $(document).ready(function(){initNavTree('functions_m.html',''); initResizable()
 : <a class="el" href="classGEO_1_1KdTree.html#a994c57f0abfa2fbb75b171d79151ae29">GEO::KdTree</a>
 </li>
 <li>max_node_index()
-: <a class="el" href="classGEO_1_1AABB.html#a411063d25ba904d064d348a507c9f023">GEO::AABB</a>
+: <a class="el" href="classGEO_1_1AABB.html#a89943d43c41a6e28b786daab82eed487">GEO::AABB&lt; BOX &gt;</a>
 , <a class="el" href="classGEO_1_1BalancedKdTree.html#af4e40c84e459f91b95e50277207f219b">GEO::BalancedKdTree</a>
 </li>
 <li>max_size()
@@ -231,13 +231,14 @@ $(document).ready(function(){initNavTree('functions_m.html',''); initResizable()
 : <a class="el" href="classGEO_1_1Mesh.html#a079a79f3b018a28aa1f0cbe8bb93a7fe">GEO::Mesh</a>
 </li>
 <li>mesh()
-: <a class="el" href="classGEO_1_1MeshAABB.html#a47ca0c12ac33c029cd93f6118bbfd401">GEO::MeshAABB</a>
+: <a class="el" href="classGEO_1_1MeshAABB2d.html#a01d14496b6da7453e9d82cb2831bc83a">GEO::MeshAABB2d</a>
+, <a class="el" href="classGEO_1_1MeshAABB3d.html#a62e41d8e14ff7e2f84eb76ed697a4f3a">GEO::MeshAABB3d</a>
 , <a class="el" href="classGEO_1_1MeshGfx.html#abedd671fab0182313f94b80daf5ee7d7">GEO::MeshGfx</a>
 , <a class="el" href="classGEO_1_1MeshHalfedges.html#a2acb43fe28125ab4019689b7f9a8ee79">GEO::MeshHalfedges</a>
 , <a class="el" href="classGEO_1_1OptimalTransportMap.html#ada3bd4431c359ae46ac0be4678dcc866">GEO::OptimalTransportMap</a>
 , <a class="el" href="classGEO_1_1RestrictedVoronoiDiagram.html#aa9e2ffabb6e4246f40557c7fb7d078bb">GEO::RestrictedVoronoiDiagram</a>
 , <a class="el" href="classGEO_1_1SimpleMeshApplication.html#a500b4a4c0a52aafa03e1323aa05fc3d8">GEO::SimpleMeshApplication</a>
-, <a class="el" href="classGEOGen_1_1RestrictedVoronoiDiagram.html#a1919bb1909874ba9b7b6b72109ff3dac">GEOGen::RestrictedVoronoiDiagram&lt; DIM &gt;</a>
+, <a class="el" href="classGEOGen_1_1RestrictedVoronoiDiagram.html#a3ee5802041191097472e710adad35aeb">GEOGen::RestrictedVoronoiDiagram&lt; DIM &gt;</a>
 </li>
 <li>mesh_gfx()
 : <a class="el" href="classGEO_1_1SimpleMeshApplication.html#ac2e5af282f20b489c0218a6620a852d1">GEO::SimpleMeshApplication</a>
@@ -249,8 +250,11 @@ $(document).ready(function(){initNavTree('functions_m.html',''); initResizable()
 , <a class="el" href="classOGF_1_1MeshGrobTool.html#a832b4c755b4fbaea93820f8336747c9e">OGF::MeshGrobTool</a>
 , <a class="el" href="classOGF_1_1MeshGrobTransformTool.html#ac89d3854866d130fb6e7f9bf9c6a2896">OGF::MeshGrobTransformTool</a>
 </li>
-<li>MeshAABB()
-: <a class="el" href="classGEO_1_1MeshAABB.html#acbadc82a3fd53d228b88af7b603d6d75">GEO::MeshAABB</a>
+<li>MeshAABB2d()
+: <a class="el" href="classGEO_1_1MeshAABB2d.html#aaae784b528498cb78c29adcac674f6b9">GEO::MeshAABB2d</a>
+</li>
+<li>MeshAABB3d()
+: <a class="el" href="classGEO_1_1MeshAABB3d.html#adb847bd07172f02e07fbf34213893ae2">GEO::MeshAABB3d</a>
 </li>
 <li>MeshCellFacetsStore()
 : <a class="el" href="classGEO_1_1MeshCellFacetsStore.html#adfc094593b570644a8ebc5329c1552c0">GEO::MeshCellFacetsStore</a>
@@ -269,6 +273,9 @@ $(document).ready(function(){initNavTree('functions_m.html',''); initResizable()
 </li>
 <li>MeshFacetsAABB()
 : <a class="el" href="classGEO_1_1MeshFacetsAABB.html#a73b3acafd28d085dcfa0f1ddfced17ad">GEO::MeshFacetsAABB</a>
+</li>
+<li>MeshFacetsAABB2d()
+: <a class="el" href="classGEO_1_1MeshFacetsAABB2d.html#a5e2ed7abffeb7560d0794aaddaf1701c">GEO::MeshFacetsAABB2d</a>
 </li>
 <li>MeshGfx()
 : <a class="el" href="classGEO_1_1MeshGfx.html#a5ed86208baf1890231888e78157b86df">GEO::MeshGfx</a>
@@ -596,7 +603,7 @@ $(document).ready(function(){initNavTree('functions_m.html',''); initResizable()
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Jul 17 2022 20:33:33 for Graphite by
+    <li class="footer">Generated on Sat Nov 12 2022 14:46:07 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

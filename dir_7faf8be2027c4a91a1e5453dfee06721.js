@@ -2,13 +2,7 @@ var dir_7faf8be2027c4a91a1e5453dfee06721 =
 [
     [ "index.h", "index_8h.html", "index_8h" ],
     [ "mesh.h", "mesh_8h.html", "mesh_8h" ],
-    [ "mesh_AABB.h", "mesh__AABB_8h.html", [
-      [ "AABB", "classGEO_1_1AABB.html", "classGEO_1_1AABB" ],
-      [ "MeshAABB", "classGEO_1_1MeshAABB.html", "classGEO_1_1MeshAABB" ],
-      [ "MeshFacetsAABB", "classGEO_1_1MeshFacetsAABB.html", "classGEO_1_1MeshFacetsAABB" ],
-      [ "Intersection", "structGEO_1_1MeshFacetsAABB_1_1Intersection.html", "structGEO_1_1MeshFacetsAABB_1_1Intersection" ],
-      [ "MeshCellsAABB", "classGEO_1_1MeshCellsAABB.html", "classGEO_1_1MeshCellsAABB" ]
-    ] ],
+    [ "mesh_AABB.h", "mesh__AABB_8h.html", "mesh__AABB_8h" ],
     [ "mesh_baking.h", "mesh__baking_8h.html", "mesh__baking_8h" ],
     [ "mesh_compare.h", "mesh__compare_8h.html", "mesh__compare_8h" ],
     [ "mesh_decimate.h", "mesh__decimate_8h.html", "mesh__decimate_8h" ],
@@ -22,6 +16,7 @@ var dir_7faf8be2027c4a91a1e5453dfee06721 =
     [ "mesh_halfedges.h", "mesh__halfedges_8h.html", "mesh__halfedges_8h" ],
     [ "mesh_intersection.h", "mesh__intersection_8h.html", "mesh__intersection_8h" ],
     [ "mesh_io.h", "mesh__io_8h.html", "mesh__io_8h" ],
+    [ "mesh_local_operations.h", "mesh__local__operations_8h.html", "mesh__local__operations_8h" ],
     [ "mesh_manifold_harmonics.h", "mesh__manifold__harmonics_8h.html", "mesh__manifold__harmonics_8h" ],
     [ "mesh_partition.h", "mesh__partition_8h.html", "mesh__partition_8h" ],
     [ "mesh_preprocessing.h", "mesh__preprocessing_8h.html", "mesh__preprocessing_8h" ],

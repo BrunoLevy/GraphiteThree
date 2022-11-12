@@ -88,7 +88,7 @@ $(document).ready(function(){initNavTree('mesh__repair_8h_source.html',''); init
 </div><!--header-->
 <div class="contents">
 <a href="mesh__repair_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  Copyright (c) 2012-2014, Bruno Levy</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  Copyright (c) 2000-2022 Inria</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *  All rights reserved.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> *  Redistribution and use in source and binary forms, with or without</span></div>
@@ -115,95 +115,89 @@ $(document).ready(function(){initNavTree('mesh__repair_8h_source.html',''); init
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"> *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment"> *  POSSIBILITY OF SUCH DAMAGE.</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> *  If you modify this software, you should include a notice giving the</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> *  name of the person performing the modification, the date of modification,</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> *  and the reason for such modification.</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> *  Contact: Bruno Levy</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> *     https://www.inria.fr/fr/bruno-levy</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> *  Contact: Bruno Levy</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"> *     Bruno.Levy@inria.fr</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"> *     http://www.loria.fr/~levy</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> *     Inria,</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> *     Domaine de Voluceau,</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"> *     78150 Le Chesnay - Rocquencourt</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"> *     FRANCE</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> *     ALICE Project</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"> *     LORIA, INRIA Lorraine, </span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment"> *     Campus Scientifique, BP 239</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"> *     54506 VANDOEUVRE LES NANCY CEDEX </span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"> *     FRANCE</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#ifndef GEOGRAM_MESH_MESH_REPAIR</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#define GEOGRAM_MESH_MESH_REPAIR</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">geogram/basic/common.h</a>&gt;</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="memory_8h.html">geogram/basic/memory.h</a>&gt;</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceGEO.html">GEO</a> {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">class </span>Mesh;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83">   65</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83">MeshRepairMode</a> {</div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a81910d8e9942f9284f6fd9ec3add2692">   66</a></span>&#160;        <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a81910d8e9942f9284f6fd9ec3add2692">MESH_REPAIR_TOPOLOGY</a> = 0,     </div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a595de9862adb71f8a3d58cfa62463854">   68</a></span>&#160;        <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a595de9862adb71f8a3d58cfa62463854">MESH_REPAIR_COLOCATE</a> = 1,     </div>
-<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a46f8ba38fffb7c51a2f4a31487cb9d51">   69</a></span>&#160;        <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a46f8ba38fffb7c51a2f4a31487cb9d51">MESH_REPAIR_DUP_F</a> = 2,        </div>
-<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a7473f6083d64ffa7456ed0b9b16894c1">   70</a></span>&#160;        <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a7473f6083d64ffa7456ed0b9b16894c1">MESH_REPAIR_TRIANGULATE</a> = 4,  </div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83aee708a4427f52fbd5296f472ebced9c8">   71</a></span>&#160;        <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83aee708a4427f52fbd5296f472ebced9c8">MESH_REPAIR_RECONSTRUCT</a> = 8,  </div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a44834af8947e91516bedee187a5ea48c">   72</a></span>&#160;        <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a44834af8947e91516bedee187a5ea48c">MESH_REPAIR_QUIET</a>       = 16, </div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a56832a30c5f22a4a41fbf2d0ba432339">   73</a></span>&#160;        <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a56832a30c5f22a4a41fbf2d0ba432339">MESH_REPAIR_DEFAULT</a> =</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a595de9862adb71f8a3d58cfa62463854">MESH_REPAIR_COLOCATE</a> |</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a46f8ba38fffb7c51a2f4a31487cb9d51">MESH_REPAIR_DUP_F</a> |</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a7473f6083d64ffa7456ed0b9b16894c1">MESH_REPAIR_TRIANGULATE</a></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    };</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO.html#af10149ff831242b94bf3c92ac233111a">mesh_repair</a>(</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        Mesh&amp; M,</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83">MeshRepairMode</a> mode = <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a56832a30c5f22a4a41fbf2d0ba432339">MESH_REPAIR_DEFAULT</a>,</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordtype">double</span> colocate_epsilon = 0.0</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    );</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO.html#a00380e7b8879dc36cace9ba5bc77c09c">mesh_postprocess_RDT</a>(</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        Mesh&amp; M</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    );</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO.html#a246ee321d6dfc778cc4591e4e536b486">mesh_reorient</a>(</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        Mesh&amp; M, vector&lt;index_t&gt;* moebius_facets=<span class="keyword">nullptr</span></div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    );</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO.html#ad0dc31cd68d7b57c1736740c70879a96">mesh_detect_colocated_vertices</a>(</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        <span class="keyword">const</span> Mesh&amp; M, vector&lt;index_t&gt;&amp; v_colocated_index,</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        <span class="keywordtype">double</span> colocate_epsilon=0.0</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    );</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO.html#a96d50f21e203df04776bb3230f438917">mesh_detect_isolated_vertices</a>(</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        <span class="keyword">const</span> Mesh&amp; M, vector&lt;index_t&gt;&amp; v_is_isolated</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    );</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO.html#a3c3b43383745bbec680747ad0cf6f7e1">mesh_detect_degenerate_facets</a>(</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;        <span class="keyword">const</span> Mesh&amp; M, vector&lt;index_t&gt;&amp; f_is_degenerate</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    );</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160; </div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    </div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;}</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160; </div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#ifndef GEOGRAM_MESH_MESH_REPAIR</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#define GEOGRAM_MESH_MESH_REPAIR</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">geogram/basic/common.h</a>&gt;</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="memory_8h.html">geogram/basic/memory.h</a>&gt;</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceGEO.html">GEO</a> {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">class </span>Mesh;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83">   59</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83">MeshRepairMode</a> {</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a81910d8e9942f9284f6fd9ec3add2692">   60</a></span>&#160;        <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a81910d8e9942f9284f6fd9ec3add2692">MESH_REPAIR_TOPOLOGY</a> = 0,     </div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a595de9862adb71f8a3d58cfa62463854">   62</a></span>&#160;        <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a595de9862adb71f8a3d58cfa62463854">MESH_REPAIR_COLOCATE</a> = 1,     </div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a46f8ba38fffb7c51a2f4a31487cb9d51">   63</a></span>&#160;        <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a46f8ba38fffb7c51a2f4a31487cb9d51">MESH_REPAIR_DUP_F</a> = 2,        </div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a7473f6083d64ffa7456ed0b9b16894c1">   64</a></span>&#160;        <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a7473f6083d64ffa7456ed0b9b16894c1">MESH_REPAIR_TRIANGULATE</a> = 4,  </div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83aee708a4427f52fbd5296f472ebced9c8">   65</a></span>&#160;        <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83aee708a4427f52fbd5296f472ebced9c8">MESH_REPAIR_RECONSTRUCT</a> = 8,  </div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a44834af8947e91516bedee187a5ea48c">   66</a></span>&#160;        <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a44834af8947e91516bedee187a5ea48c">MESH_REPAIR_QUIET</a>       = 16, </div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a56832a30c5f22a4a41fbf2d0ba432339">   67</a></span>&#160;        <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a56832a30c5f22a4a41fbf2d0ba432339">MESH_REPAIR_DEFAULT</a> =</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a595de9862adb71f8a3d58cfa62463854">MESH_REPAIR_COLOCATE</a> |</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a46f8ba38fffb7c51a2f4a31487cb9d51">MESH_REPAIR_DUP_F</a> |</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a7473f6083d64ffa7456ed0b9b16894c1">MESH_REPAIR_TRIANGULATE</a></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    };</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO.html#af10149ff831242b94bf3c92ac233111a">mesh_repair</a>(</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        Mesh&amp; M,</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83">MeshRepairMode</a> mode = <a class="code" href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a56832a30c5f22a4a41fbf2d0ba432339">MESH_REPAIR_DEFAULT</a>,</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordtype">double</span> colocate_epsilon = 0.0</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    );</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO.html#a00380e7b8879dc36cace9ba5bc77c09c">mesh_postprocess_RDT</a>(</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        Mesh&amp; M</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    );</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO.html#a246ee321d6dfc778cc4591e4e536b486">mesh_reorient</a>(</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        Mesh&amp; M, vector&lt;index_t&gt;* moebius_facets=<span class="keyword">nullptr</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    );</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO.html#ad0dc31cd68d7b57c1736740c70879a96">mesh_detect_colocated_vertices</a>(</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        <span class="keyword">const</span> Mesh&amp; M, vector&lt;index_t&gt;&amp; v_colocated_index,</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keywordtype">double</span> colocate_epsilon=0.0</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    );</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO.html#a96d50f21e203df04776bb3230f438917">mesh_detect_isolated_vertices</a>(</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        <span class="keyword">const</span> Mesh&amp; M, vector&lt;index_t&gt;&amp; v_is_isolated</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    );</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160; </div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="namespaceGEO.html#a3c3b43383745bbec680747ad0cf6f7e1">mesh_detect_degenerate_facets</a>(</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        <span class="keyword">const</span> Mesh&amp; M, vector&lt;index_t&gt;&amp; f_is_degenerate</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    );</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160; </div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    </div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;}</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160; </div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="anamespaceGEO_html_a96d50f21e203df04776bb3230f438917"><div class="ttname"><a href="namespaceGEO.html#a96d50f21e203df04776bb3230f438917">GEO::mesh_detect_isolated_vertices</a></div><div class="ttdeci">void mesh_detect_isolated_vertices(const Mesh &amp;M, vector&lt; index_t &gt; &amp;v_is_isolated)</div><div class="ttdoc">Detects isolated vertices in a mesh.</div></div>
-<div class="ttc" id="anamespaceGEO_html_a7506f3f4dd3ea5b155ffe6708cfd6e83a46f8ba38fffb7c51a2f4a31487cb9d51"><div class="ttname"><a href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a46f8ba38fffb7c51a2f4a31487cb9d51">GEO::MESH_REPAIR_DUP_F</a></div><div class="ttdeci">@ MESH_REPAIR_DUP_F</div><div class="ttdef"><b>Definition:</b> <a href="mesh__repair_8h_source.html#l00069">mesh_repair.h:69</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a7506f3f4dd3ea5b155ffe6708cfd6e83a56832a30c5f22a4a41fbf2d0ba432339"><div class="ttname"><a href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a56832a30c5f22a4a41fbf2d0ba432339">GEO::MESH_REPAIR_DEFAULT</a></div><div class="ttdeci">@ MESH_REPAIR_DEFAULT</div><div class="ttdef"><b>Definition:</b> <a href="mesh__repair_8h_source.html#l00073">mesh_repair.h:73</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a7506f3f4dd3ea5b155ffe6708cfd6e83a46f8ba38fffb7c51a2f4a31487cb9d51"><div class="ttname"><a href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a46f8ba38fffb7c51a2f4a31487cb9d51">GEO::MESH_REPAIR_DUP_F</a></div><div class="ttdeci">@ MESH_REPAIR_DUP_F</div><div class="ttdef"><b>Definition:</b> <a href="mesh__repair_8h_source.html#l00063">mesh_repair.h:63</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a7506f3f4dd3ea5b155ffe6708cfd6e83a56832a30c5f22a4a41fbf2d0ba432339"><div class="ttname"><a href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a56832a30c5f22a4a41fbf2d0ba432339">GEO::MESH_REPAIR_DEFAULT</a></div><div class="ttdeci">@ MESH_REPAIR_DEFAULT</div><div class="ttdef"><b>Definition:</b> <a href="mesh__repair_8h_source.html#l00067">mesh_repair.h:67</a></div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
-<div class="ttc" id="anamespaceGEO_html_a7506f3f4dd3ea5b155ffe6708cfd6e83"><div class="ttname"><a href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83">GEO::MeshRepairMode</a></div><div class="ttdeci">MeshRepairMode</div><div class="ttdoc">Determines the operating mode of mesh_repair(). The flags can be combined with the 'bitwise or' (|) o...</div><div class="ttdef"><b>Definition:</b> <a href="mesh__repair_8h_source.html#l00065">mesh_repair.h:65</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a7506f3f4dd3ea5b155ffe6708cfd6e83"><div class="ttname"><a href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83">GEO::MeshRepairMode</a></div><div class="ttdeci">MeshRepairMode</div><div class="ttdoc">Determines the operating mode of mesh_repair(). The flags can be combined with the 'bitwise or' (|) o...</div><div class="ttdef"><b>Definition:</b> <a href="mesh__repair_8h_source.html#l00059">mesh_repair.h:59</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_a00380e7b8879dc36cace9ba5bc77c09c"><div class="ttname"><a href="namespaceGEO.html#a00380e7b8879dc36cace9ba5bc77c09c">GEO::mesh_postprocess_RDT</a></div><div class="ttdeci">void mesh_postprocess_RDT(Mesh &amp;M)</div><div class="ttdoc">Post-processes a Restricted Delaunay Triangulation.</div></div>
-<div class="ttc" id="anamespaceGEO_html_a7506f3f4dd3ea5b155ffe6708cfd6e83a7473f6083d64ffa7456ed0b9b16894c1"><div class="ttname"><a href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a7473f6083d64ffa7456ed0b9b16894c1">GEO::MESH_REPAIR_TRIANGULATE</a></div><div class="ttdeci">@ MESH_REPAIR_TRIANGULATE</div><div class="ttdef"><b>Definition:</b> <a href="mesh__repair_8h_source.html#l00070">mesh_repair.h:70</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a7506f3f4dd3ea5b155ffe6708cfd6e83a44834af8947e91516bedee187a5ea48c"><div class="ttname"><a href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a44834af8947e91516bedee187a5ea48c">GEO::MESH_REPAIR_QUIET</a></div><div class="ttdeci">@ MESH_REPAIR_QUIET</div><div class="ttdef"><b>Definition:</b> <a href="mesh__repair_8h_source.html#l00072">mesh_repair.h:72</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a7506f3f4dd3ea5b155ffe6708cfd6e83a7473f6083d64ffa7456ed0b9b16894c1"><div class="ttname"><a href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a7473f6083d64ffa7456ed0b9b16894c1">GEO::MESH_REPAIR_TRIANGULATE</a></div><div class="ttdeci">@ MESH_REPAIR_TRIANGULATE</div><div class="ttdef"><b>Definition:</b> <a href="mesh__repair_8h_source.html#l00064">mesh_repair.h:64</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a7506f3f4dd3ea5b155ffe6708cfd6e83a44834af8947e91516bedee187a5ea48c"><div class="ttname"><a href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a44834af8947e91516bedee187a5ea48c">GEO::MESH_REPAIR_QUIET</a></div><div class="ttdeci">@ MESH_REPAIR_QUIET</div><div class="ttdef"><b>Definition:</b> <a href="mesh__repair_8h_source.html#l00066">mesh_repair.h:66</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_a3c3b43383745bbec680747ad0cf6f7e1"><div class="ttname"><a href="namespaceGEO.html#a3c3b43383745bbec680747ad0cf6f7e1">GEO::mesh_detect_degenerate_facets</a></div><div class="ttdeci">void mesh_detect_degenerate_facets(const Mesh &amp;M, vector&lt; index_t &gt; &amp;f_is_degenerate)</div><div class="ttdoc">Detects degenerate facets in a mesh.</div></div>
-<div class="ttc" id="anamespaceGEO_html_a7506f3f4dd3ea5b155ffe6708cfd6e83aee708a4427f52fbd5296f472ebced9c8"><div class="ttname"><a href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83aee708a4427f52fbd5296f472ebced9c8">GEO::MESH_REPAIR_RECONSTRUCT</a></div><div class="ttdeci">@ MESH_REPAIR_RECONSTRUCT</div><div class="ttdef"><b>Definition:</b> <a href="mesh__repair_8h_source.html#l00071">mesh_repair.h:71</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a7506f3f4dd3ea5b155ffe6708cfd6e83a595de9862adb71f8a3d58cfa62463854"><div class="ttname"><a href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a595de9862adb71f8a3d58cfa62463854">GEO::MESH_REPAIR_COLOCATE</a></div><div class="ttdeci">@ MESH_REPAIR_COLOCATE</div><div class="ttdef"><b>Definition:</b> <a href="mesh__repair_8h_source.html#l00068">mesh_repair.h:68</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a7506f3f4dd3ea5b155ffe6708cfd6e83aee708a4427f52fbd5296f472ebced9c8"><div class="ttname"><a href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83aee708a4427f52fbd5296f472ebced9c8">GEO::MESH_REPAIR_RECONSTRUCT</a></div><div class="ttdeci">@ MESH_REPAIR_RECONSTRUCT</div><div class="ttdef"><b>Definition:</b> <a href="mesh__repair_8h_source.html#l00065">mesh_repair.h:65</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a7506f3f4dd3ea5b155ffe6708cfd6e83a595de9862adb71f8a3d58cfa62463854"><div class="ttname"><a href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a595de9862adb71f8a3d58cfa62463854">GEO::MESH_REPAIR_COLOCATE</a></div><div class="ttdeci">@ MESH_REPAIR_COLOCATE</div><div class="ttdef"><b>Definition:</b> <a href="mesh__repair_8h_source.html#l00062">mesh_repair.h:62</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_af10149ff831242b94bf3c92ac233111a"><div class="ttname"><a href="namespaceGEO.html#af10149ff831242b94bf3c92ac233111a">GEO::mesh_repair</a></div><div class="ttdeci">void mesh_repair(Mesh &amp;M, MeshRepairMode mode=MESH_REPAIR_DEFAULT, double colocate_epsilon=0.0)</div><div class="ttdoc">Fixes some defaults in a mesh.</div></div>
-<div class="ttc" id="anamespaceGEO_html_a7506f3f4dd3ea5b155ffe6708cfd6e83a81910d8e9942f9284f6fd9ec3add2692"><div class="ttname"><a href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a81910d8e9942f9284f6fd9ec3add2692">GEO::MESH_REPAIR_TOPOLOGY</a></div><div class="ttdeci">@ MESH_REPAIR_TOPOLOGY</div><div class="ttdef"><b>Definition:</b> <a href="mesh__repair_8h_source.html#l00066">mesh_repair.h:66</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a7506f3f4dd3ea5b155ffe6708cfd6e83a81910d8e9942f9284f6fd9ec3add2692"><div class="ttname"><a href="namespaceGEO.html#a7506f3f4dd3ea5b155ffe6708cfd6e83a81910d8e9942f9284f6fd9ec3add2692">GEO::MESH_REPAIR_TOPOLOGY</a></div><div class="ttdeci">@ MESH_REPAIR_TOPOLOGY</div><div class="ttdef"><b>Definition:</b> <a href="mesh__repair_8h_source.html#l00060">mesh_repair.h:60</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_a246ee321d6dfc778cc4591e4e536b486"><div class="ttname"><a href="namespaceGEO.html#a246ee321d6dfc778cc4591e4e536b486">GEO::mesh_reorient</a></div><div class="ttdeci">void mesh_reorient(Mesh &amp;M, vector&lt; index_t &gt; *moebius_facets=nullptr)</div><div class="ttdoc">Reorients the facets of a mesh coherently.</div></div>
 <div class="ttc" id="anamespaceGEO_html_ad0dc31cd68d7b57c1736740c70879a96"><div class="ttname"><a href="namespaceGEO.html#ad0dc31cd68d7b57c1736740c70879a96">GEO::mesh_detect_colocated_vertices</a></div><div class="ttdeci">void mesh_detect_colocated_vertices(const Mesh &amp;M, vector&lt; index_t &gt; &amp;v_colocated_index, double colocate_epsilon=0.0)</div><div class="ttdoc">Detects colocated vertices in a mesh.</div></div>
 <div class="ttc" id="amemory_8h_html"><div class="ttname"><a href="memory_8h.html">memory.h</a></div><div class="ttdoc">Types and functions for memory manipulation.</div></div>
@@ -212,7 +206,7 @@ $(document).ready(function(){initNavTree('mesh__repair_8h_source.html',''); init
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_7faf8be2027c4a91a1e5453dfee06721.html">mesh</a></li><li class="navelem"><a class="el" href="mesh__repair_8h.html">mesh_repair.h</a></li>
-    <li class="footer">Generated on Sun Jul 17 2022 20:33:27 for Graphite by
+    <li class="footer">Generated on Sat Nov 12 2022 14:46:03 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

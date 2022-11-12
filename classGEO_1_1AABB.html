@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Graphite: GEO::AABB Class Reference</title>
+<title>Graphite: GEO::AABB&lt; BOX &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,7 +89,7 @@ $(document).ready(function(){initNavTree('classGEO_1_1AABB.html',''); initResiza
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classGEO_1_1AABB-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">GEO::AABB Class Reference</div>  </div>
+<div class="title">GEO::AABB&lt; BOX &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -98,66 +98,79 @@ $(document).ready(function(){initNavTree('classGEO_1_1AABB.html',''); initResiza
 
 <p><code>#include &lt;<a class="el" href="mesh__AABB_8h_source.html">geogram/mesh/mesh_AABB.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for GEO::AABB:</div>
+Inheritance diagram for GEO::AABB&lt; BOX &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classGEO_1_1AABB.png" usemap="#GEO::AABB_map" alt=""/>
-  <map id="GEO::AABB_map" name="GEO::AABB_map">
-<area href="classGEO_1_1MeshAABB.html" title="Base class for Axis Aligned Bounding Box trees of Mesh cells." alt="GEO::MeshAABB" shape="rect" coords="79,56,227,80"/>
-<area href="classGEO_1_1MeshCellsAABB.html" title="Axis Aligned Bounding Box tree of mesh tetrahedra." alt="GEO::MeshCellsAABB" shape="rect" coords="0,112,148,136"/>
-<area href="classGEO_1_1MeshFacetsAABB.html" title="Axis Aligned Bounding Box tree of mesh facets." alt="GEO::MeshFacetsAABB" shape="rect" coords="158,112,306,136"/>
+  <img src="classGEO_1_1AABB.png" usemap="#GEO::AABB_3C_20BOX_20_3E_map" alt=""/>
+  <map id="GEO::AABB_3C_20BOX_20_3E_map" name="GEO::AABB_3C_20BOX_20_3E_map">
+<area href="classGEO_1_1MeshAABB2d.html" title="Base class for Axis Aligned Bounding Box trees of mesh elements with 2d boxes." alt="GEO::MeshAABB2d" shape="rect" coords="0,56,162,80"/>
+<area href="classGEO_1_1MeshAABB3d.html" title="Base class for Axis Aligned Bounding Box trees of mesh elements with 3d boxes." alt="GEO::MeshAABB3d" shape="rect" coords="258,56,420,80"/>
+<area href="classGEO_1_1MeshFacetsAABB2d.html" title="Axis Aligned Bounding Box tree of mesh facets in 2D." alt="GEO::MeshFacetsAABB2d" shape="rect" coords="0,112,162,136"/>
+<area href="classGEO_1_1MeshCellsAABB.html" title="Axis Aligned Bounding Box tree of mesh cells." alt="GEO::MeshCellsAABB" shape="rect" coords="172,112,334,136"/>
+<area href="classGEO_1_1MeshFacetsAABB.html" title="Axis Aligned Bounding Box tree of mesh facets in 3D." alt="GEO::MeshFacetsAABB" shape="rect" coords="344,112,506,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ae480140ac8b37f61d0123404fe26d3de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1AABB.html#ae480140ac8b37f61d0123404fe26d3de">initialize</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb, std::function&lt; void(<a class="el" href="classGEO_1_1Box.html">Box</a> &amp;, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>)&gt; <a class="el" href="namespaceGEO.html#a256c74306b2a773b6fc1f5177a76ba1a">get_bbox</a>)</td></tr>
-<tr class="memdesc:ae480140ac8b37f61d0123404fe26d3de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes this <a class="el" href="classGEO_1_1AABB.html" title="Base class for Axis Aligned Bounding Box trees.">AABB</a>.  <a href="classGEO_1_1AABB.html#ae480140ac8b37f61d0123404fe26d3de">More...</a><br /></td></tr>
-<tr class="separator:ae480140ac8b37f61d0123404fe26d3de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac21fd7e9b07c841a2b0b597efcb7fb44"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1AABB.html#ac21fd7e9b07c841a2b0b597efcb7fb44">bbox_intersect_recursive</a> (std::function&lt; void(<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>)&gt; action, const <a class="el" href="classGEO_1_1Box.html">Box</a> &amp;box, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> node, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> b, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e) const</td></tr>
-<tr class="memdesc:ac21fd7e9b07c841a2b0b597efcb7fb44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes all the elements that have a bbox that intersects a given bbox in a sub-tree of the <a class="el" href="classGEO_1_1AABB.html" title="Base class for Axis Aligned Bounding Box trees.">AABB</a> tree.  <a href="classGEO_1_1AABB.html#ac21fd7e9b07c841a2b0b597efcb7fb44">More...</a><br /></td></tr>
-<tr class="separator:ac21fd7e9b07c841a2b0b597efcb7fb44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a426cc653a1e58321477a66ddc0036b8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1AABB.html#a426cc653a1e58321477a66ddc0036b8d">self_intersect_recursive</a> (std::function&lt; void(<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>)&gt; action, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> node1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> b1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> node2, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> b2, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e2) const</td></tr>
-<tr class="memdesc:a426cc653a1e58321477a66ddc0036b8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes all the pairs of intersecting elements for two sub-trees of the <a class="el" href="classGEO_1_1AABB.html" title="Base class for Axis Aligned Bounding Box trees.">AABB</a> tree.  <a href="classGEO_1_1AABB.html#a426cc653a1e58321477a66ddc0036b8d">More...</a><br /></td></tr>
-<tr class="separator:a426cc653a1e58321477a66ddc0036b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2727c5f1d2821485f9fd64d57c91920c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1AABB.html#a2727c5f1d2821485f9fd64d57c91920c">other_intersect_recursive</a> (std::function&lt; void(<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>)&gt; action, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> node1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> b1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e1, const <a class="el" href="classGEO_1_1AABB.html">AABB</a> *other, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> node2, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> b2, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e2) const</td></tr>
-<tr class="memdesc:a2727c5f1d2821485f9fd64d57c91920c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes all the pairs of intersecting elements for two sub-trees of two <a class="el" href="classGEO_1_1AABB.html" title="Base class for Axis Aligned Bounding Box trees.">AABB</a> trees.  <a href="classGEO_1_1AABB.html#a2727c5f1d2821485f9fd64d57c91920c">More...</a><br /></td></tr>
-<tr class="separator:a2727c5f1d2821485f9fd64d57c91920c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af14e16a8efb02511b5f3c4b54d49f51a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1AABB.html#af14e16a8efb02511b5f3c4b54d49f51a">init_bboxes_recursive</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> node_index, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> b, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e, std::function&lt; void(<a class="el" href="classGEO_1_1Box.html">Box</a> &amp;, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>)&gt; <a class="el" href="namespaceGEO.html#a256c74306b2a773b6fc1f5177a76ba1a">get_bbox</a>)</td></tr>
-<tr class="memdesc:af14e16a8efb02511b5f3c4b54d49f51a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the hierarchy of bounding boxes recursively.  <a href="classGEO_1_1AABB.html#af14e16a8efb02511b5f3c4b54d49f51a">More...</a><br /></td></tr>
-<tr class="separator:af14e16a8efb02511b5f3c4b54d49f51a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe93bfdefcbdb5723fd4d3f2afaea35f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1AABB.html#abe93bfdefcbdb5723fd4d3f2afaea35f">initialize</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb, std::function&lt; void(BOX &amp;, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>)&gt; <a class="el" href="namespaceGEO.html#a256c74306b2a773b6fc1f5177a76ba1a">get_bbox</a>)</td></tr>
+<tr class="memdesc:abe93bfdefcbdb5723fd4d3f2afaea35f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes this <a class="el" href="classGEO_1_1AABB.html" title="Base class for Axis Aligned Bounding Box trees.">AABB</a>.  <a href="classGEO_1_1AABB.html#abe93bfdefcbdb5723fd4d3f2afaea35f">More...</a><br /></td></tr>
+<tr class="separator:abe93bfdefcbdb5723fd4d3f2afaea35f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28ff63b74591492ecc8afb90763013e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1AABB.html#a28ff63b74591492ecc8afb90763013e7">bbox_intersect_recursive</a> (std::function&lt; void(<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>)&gt; action, const BOX &amp;box, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> node, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> b, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e) const</td></tr>
+<tr class="memdesc:a28ff63b74591492ecc8afb90763013e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes all the elements that have a bbox that intersects a given bbox in a sub-tree of the <a class="el" href="classGEO_1_1AABB.html" title="Base class for Axis Aligned Bounding Box trees.">AABB</a> tree.  <a href="classGEO_1_1AABB.html#a28ff63b74591492ecc8afb90763013e7">More...</a><br /></td></tr>
+<tr class="separator:a28ff63b74591492ecc8afb90763013e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a375e0a3b4558c09553561eeae8c8526e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1AABB.html#a375e0a3b4558c09553561eeae8c8526e">self_intersect_recursive</a> (std::function&lt; void(<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>)&gt; action, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> node1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> b1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> node2, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> b2, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e2) const</td></tr>
+<tr class="memdesc:a375e0a3b4558c09553561eeae8c8526e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes all the pairs of intersecting elements for two sub-trees of the <a class="el" href="classGEO_1_1AABB.html" title="Base class for Axis Aligned Bounding Box trees.">AABB</a> tree.  <a href="classGEO_1_1AABB.html#a375e0a3b4558c09553561eeae8c8526e">More...</a><br /></td></tr>
+<tr class="separator:a375e0a3b4558c09553561eeae8c8526e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dc3f3276570805a77b6165bf59b3eca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1AABB.html#a7dc3f3276570805a77b6165bf59b3eca">other_intersect_recursive</a> (std::function&lt; void(<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>)&gt; action, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> node1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> b1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e1, const <a class="el" href="classGEO_1_1AABB.html">AABB</a>&lt; BOX &gt; *other, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> node2, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> b2, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e2) const</td></tr>
+<tr class="memdesc:a7dc3f3276570805a77b6165bf59b3eca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes all the pairs of intersecting elements for two sub-trees of two <a class="el" href="classGEO_1_1AABB.html" title="Base class for Axis Aligned Bounding Box trees.">AABB</a> trees.  <a href="classGEO_1_1AABB.html#a7dc3f3276570805a77b6165bf59b3eca">More...</a><br /></td></tr>
+<tr class="separator:a7dc3f3276570805a77b6165bf59b3eca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2ce8f4de2fb34466f3b5fb1193bbb23"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1AABB.html#ae2ce8f4de2fb34466f3b5fb1193bbb23">init_bboxes_recursive</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> node_index, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> b, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e, std::function&lt; void(BOX &amp;, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>)&gt; <a class="el" href="namespaceGEO.html#a256c74306b2a773b6fc1f5177a76ba1a">get_bbox</a>)</td></tr>
+<tr class="memdesc:ae2ce8f4de2fb34466f3b5fb1193bbb23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the hierarchy of bounding boxes recursively.  <a href="classGEO_1_1AABB.html#ae2ce8f4de2fb34466f3b5fb1193bbb23">More...</a><br /></td></tr>
+<tr class="separator:ae2ce8f4de2fb34466f3b5fb1193bbb23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
 Static Protected Member Functions</h2></td></tr>
-<tr class="memitem:a411063d25ba904d064d348a507c9f023"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1AABB.html#a411063d25ba904d064d348a507c9f023">max_node_index</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> node_index, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> b, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e)</td></tr>
-<tr class="memdesc:a411063d25ba904d064d348a507c9f023"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the maximum node index in a subtree.  <a href="classGEO_1_1AABB.html#a411063d25ba904d064d348a507c9f023">More...</a><br /></td></tr>
-<tr class="separator:a411063d25ba904d064d348a507c9f023"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89943d43c41a6e28b786daab82eed487"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1AABB.html#a89943d43c41a6e28b786daab82eed487">max_node_index</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> node_index, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> b, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e)</td></tr>
+<tr class="memdesc:a89943d43c41a6e28b786daab82eed487"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the maximum node index in a subtree.  <a href="classGEO_1_1AABB.html#a89943d43c41a6e28b786daab82eed487">More...</a><br /></td></tr>
+<tr class="separator:a89943d43c41a6e28b786daab82eed487"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a2f42e59940159c92d846418d4f80053f"><td class="memItemLeft" align="right" valign="top"><a id="a2f42e59940159c92d846418d4f80053f"></a>
+<tr class="memitem:a1ef9ec92b633f888ce6cd0f4c1c55651"><td class="memItemLeft" align="right" valign="top"><a id="a1ef9ec92b633f888ce6cd0f4c1c55651"></a>
 <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>nb_</b></td></tr>
-<tr class="separator:a2f42e59940159c92d846418d4f80053f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86027913759037061e2f52a8e01d63e9"><td class="memItemLeft" align="right" valign="top"><a id="a86027913759037061e2f52a8e01d63e9"></a>
-<a class="el" href="classGEO_1_1vector.html">vector</a>&lt; <a class="el" href="classGEO_1_1Box.html">Box</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>bboxes_</b></td></tr>
-<tr class="separator:a86027913759037061e2f52a8e01d63e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a1ef9ec92b633f888ce6cd0f4c1c55651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45a39bcc8e3544fc5841c0a34b079edc"><td class="memItemLeft" align="right" valign="top"><a id="a45a39bcc8e3544fc5841c0a34b079edc"></a>
+<a class="el" href="classGEO_1_1vector.html">vector</a>&lt; BOX &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>bboxes_</b></td></tr>
+<tr class="separator:a45a39bcc8e3544fc5841c0a34b079edc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Base class for Axis Aligned Bounding <a class="el" href="classGEO_1_1Box.html" title="Axis-aligned bounding box.">Box</a> trees. </p>
+<div class="textblock"><h3>template&lt;class BOX&gt;<br />
+class GEO::AABB&lt; BOX &gt;</h3>
 
-<p class="definition">Definition at line <a class="el" href="mesh__AABB_8h_source.html#l00065">65</a> of file <a class="el" href="mesh__AABB_8h_source.html">mesh_AABB.h</a>.</p>
+<p>Base class for Axis Aligned Bounding <a class="el" href="classGEO_1_1Box.html" title="Axis-aligned bounding box.">Box</a> trees. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">BOX</td><td>the box class (<a class="el" href="classGEO_1_1Box2d.html" title="Axis-aligned bounding box.">Box2d</a> or Box3d). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="mesh__AABB_8h_source.html#l00060">60</a> of file <a class="el" href="mesh__AABB_8h_source.html">mesh_AABB.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac21fd7e9b07c841a2b0b597efcb7fb44"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac21fd7e9b07c841a2b0b597efcb7fb44">&#9670;&nbsp;</a></span>bbox_intersect_recursive()</h2>
+<a id="a28ff63b74591492ecc8afb90763013e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28ff63b74591492ecc8afb90763013e7">&#9670;&nbsp;</a></span>bbox_intersect_recursive()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class BOX &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void GEO::AABB::bbox_intersect_recursive </td>
+          <td class="memname">void <a class="el" href="classGEO_1_1AABB.html">GEO::AABB</a>&lt; BOX &gt;::bbox_intersect_recursive </td>
           <td>(</td>
           <td class="paramtype">std::function&lt; void(<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>)&gt;&#160;</td>
           <td class="paramname"><em>action</em>, </td>
@@ -165,7 +178,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classGEO_1_1Box.html">Box</a> &amp;&#160;</td>
+          <td class="paramtype">const BOX &amp;&#160;</td>
           <td class="paramname"><em>box</em>, </td>
         </tr>
         <tr>
@@ -212,21 +225,23 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh__AABB_8h_source.html#l00101">101</a> of file <a class="el" href="mesh__AABB_8h_source.html">mesh_AABB.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__AABB_8h_source.html#l00096">96</a> of file <a class="el" href="mesh__AABB_8h_source.html">mesh_AABB.h</a>.</p>
 
 </div>
 </div>
-<a id="af14e16a8efb02511b5f3c4b54d49f51a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af14e16a8efb02511b5f3c4b54d49f51a">&#9670;&nbsp;</a></span>init_bboxes_recursive()</h2>
+<a id="ae2ce8f4de2fb34466f3b5fb1193bbb23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2ce8f4de2fb34466f3b5fb1193bbb23">&#9670;&nbsp;</a></span>init_bboxes_recursive()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class BOX &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void GEO::AABB::init_bboxes_recursive </td>
+          <td class="memname">void <a class="el" href="classGEO_1_1AABB.html">GEO::AABB</a>&lt; BOX &gt;::init_bboxes_recursive </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td>
           <td class="paramname"><em>node_index</em>, </td>
@@ -246,7 +261,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::function&lt; void(<a class="el" href="classGEO_1_1Box.html">Box</a> &amp;, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>)&gt;&#160;</td>
+          <td class="paramtype">std::function&lt; void(BOX &amp;, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>)&gt;&#160;</td>
           <td class="paramname"><em>get_bbox</em>&#160;</td>
         </tr>
         <tr>
@@ -273,21 +288,23 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh__AABB_8h_source.html#l00296">296</a> of file <a class="el" href="mesh__AABB_8h_source.html">mesh_AABB.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__AABB_8h_source.html#l00291">291</a> of file <a class="el" href="mesh__AABB_8h_source.html">mesh_AABB.h</a>.</p>
 
 </div>
 </div>
-<a id="ae480140ac8b37f61d0123404fe26d3de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae480140ac8b37f61d0123404fe26d3de">&#9670;&nbsp;</a></span>initialize()</h2>
+<a id="abe93bfdefcbdb5723fd4d3f2afaea35f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe93bfdefcbdb5723fd4d3f2afaea35f">&#9670;&nbsp;</a></span>initialize()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class BOX &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void GEO::AABB::initialize </td>
+          <td class="memname">void <a class="el" href="classGEO_1_1AABB.html">GEO::AABB</a>&lt; BOX &gt;::initialize </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td>
           <td class="paramname"><em>nb</em>, </td>
@@ -295,7 +312,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::function&lt; void(<a class="el" href="classGEO_1_1Box.html">Box</a> &amp;, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>)&gt;&#160;</td>
+          <td class="paramtype">std::function&lt; void(BOX &amp;, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>)&gt;&#160;</td>
           <td class="paramname"><em>get_bbox</em>&#160;</td>
         </tr>
         <tr>
@@ -320,21 +337,23 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh__AABB_8h_source.html#l00075">75</a> of file <a class="el" href="mesh__AABB_8h_source.html">mesh_AABB.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__AABB_8h_source.html#l00070">70</a> of file <a class="el" href="mesh__AABB_8h_source.html">mesh_AABB.h</a>.</p>
 
 </div>
 </div>
-<a id="a411063d25ba904d064d348a507c9f023"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a411063d25ba904d064d348a507c9f023">&#9670;&nbsp;</a></span>max_node_index()</h2>
+<a id="a89943d43c41a6e28b786daab82eed487"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89943d43c41a6e28b786daab82eed487">&#9670;&nbsp;</a></span>max_node_index()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class BOX &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> GEO::AABB::max_node_index </td>
+          <td class="memname">static <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> <a class="el" href="classGEO_1_1AABB.html">GEO::AABB</a>&lt; BOX &gt;::max_node_index </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td>
           <td class="paramname"><em>node_index</em>, </td>
@@ -375,21 +394,23 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the maximum node index in the subtree rooted at <code>node_index</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh__AABB_8h_source.html#l00272">272</a> of file <a class="el" href="mesh__AABB_8h_source.html">mesh_AABB.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__AABB_8h_source.html#l00267">267</a> of file <a class="el" href="mesh__AABB_8h_source.html">mesh_AABB.h</a>.</p>
 
 </div>
 </div>
-<a id="a2727c5f1d2821485f9fd64d57c91920c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2727c5f1d2821485f9fd64d57c91920c">&#9670;&nbsp;</a></span>other_intersect_recursive()</h2>
+<a id="a7dc3f3276570805a77b6165bf59b3eca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7dc3f3276570805a77b6165bf59b3eca">&#9670;&nbsp;</a></span>other_intersect_recursive()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class BOX &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void GEO::AABB::other_intersect_recursive </td>
+          <td class="memname">void <a class="el" href="classGEO_1_1AABB.html">GEO::AABB</a>&lt; BOX &gt;::other_intersect_recursive </td>
           <td>(</td>
           <td class="paramtype">std::function&lt; void(<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>)&gt;&#160;</td>
           <td class="paramname"><em>action</em>, </td>
@@ -415,7 +436,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classGEO_1_1AABB.html">AABB</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="classGEO_1_1AABB.html">AABB</a>&lt; BOX &gt; *&#160;</td>
           <td class="paramname"><em>other</em>, </td>
         </tr>
         <tr>
@@ -465,21 +486,23 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh__AABB_8h_source.html#l00217">217</a> of file <a class="el" href="mesh__AABB_8h_source.html">mesh_AABB.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__AABB_8h_source.html#l00212">212</a> of file <a class="el" href="mesh__AABB_8h_source.html">mesh_AABB.h</a>.</p>
 
 </div>
 </div>
-<a id="a426cc653a1e58321477a66ddc0036b8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a426cc653a1e58321477a66ddc0036b8d">&#9670;&nbsp;</a></span>self_intersect_recursive()</h2>
+<a id="a375e0a3b4558c09553561eeae8c8526e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a375e0a3b4558c09553561eeae8c8526e">&#9670;&nbsp;</a></span>self_intersect_recursive()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class BOX &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void GEO::AABB::self_intersect_recursive </td>
+          <td class="memname">void <a class="el" href="classGEO_1_1AABB.html">GEO::AABB</a>&lt; BOX &gt;::self_intersect_recursive </td>
           <td>(</td>
           <td class="paramtype">std::function&lt; void(<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>)&gt;&#160;</td>
           <td class="paramname"><em>action</em>, </td>
@@ -548,7 +571,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh__AABB_8h_source.html#l00148">148</a> of file <a class="el" href="mesh__AABB_8h_source.html">mesh_AABB.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__AABB_8h_source.html#l00143">143</a> of file <a class="el" href="mesh__AABB_8h_source.html">mesh_AABB.h</a>.</p>
 
 </div>
 </div>
@@ -561,7 +584,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1AABB.html">AABB</a></li>
-    <li class="footer">Generated on Sun Jul 17 2022 20:33:29 for Graphite by
+    <li class="footer">Generated on Sat Nov 12 2022 14:46:04 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

@@ -108,6 +108,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Box.html">GEO::Box</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Axis-aligned bounding box.  <a href="classGEO_1_1Box.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Box2d.html">GEO::Box2d</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Axis-aligned bounding box.  <a href="classGEO_1_1Box2d.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGEO_1_1Ray.html">GEO::Ray</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A <a class="el" href="structGEO_1_1Ray.html" title="A Ray, in parametric form.">Ray</a>, in parametric form.  <a href="structGEO_1_1Ray.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -156,6 +159,9 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a18708792ceea5d2737ac3b8492aa2b03"><td class="memItemLeft" align="right" valign="top">typedef Matrix&lt; 4, Numeric::float64 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a18708792ceea5d2737ac3b8492aa2b03">GEO::mat4</a></td></tr>
 <tr class="memdesc:a18708792ceea5d2737ac3b8492aa2b03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a 4x4 matrix.  <a href="namespaceGEO.html#a18708792ceea5d2737ac3b8492aa2b03">More...</a><br /></td></tr>
 <tr class="separator:a18708792ceea5d2737ac3b8492aa2b03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4714f51a18e64ff07c88dfff6e0ebd5"><td class="memItemLeft" align="right" valign="top"><a id="ad4714f51a18e64ff07c88dfff6e0ebd5"></a>
+typedef Box&#160;</td><td class="memItemRight" valign="bottom"><b>GEO::Box3d</b></td></tr>
+<tr class="separator:ad4714f51a18e64ff07c88dfff6e0ebd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -228,6 +234,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a3bee3992d9c0506c8e386e513ad0265d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a3bee3992d9c0506c8e386e513ad0265d">GEO::bbox_union</a> (Box &amp;target, const Box &amp;B1, const Box &amp;B2)</td></tr>
 <tr class="memdesc:a3bee3992d9c0506c8e386e513ad0265d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the smallest <a class="el" href="classGEO_1_1Box.html" title="Axis-aligned bounding box.">Box</a> that encloses two Boxes.  <a href="namespaceGEO.html#a3bee3992d9c0506c8e386e513ad0265d">More...</a><br /></td></tr>
 <tr class="separator:a3bee3992d9c0506c8e386e513ad0265d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b5694ba53daded84f48e88fa2c6688f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbool.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a2b5694ba53daded84f48e88fa2c6688f">GEO::bboxes_overlap</a> (const Box2d &amp;B1, const Box2d &amp;B2)</td></tr>
+<tr class="memdesc:a2b5694ba53daded84f48e88fa2c6688f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether two <a class="el" href="classGEO_1_1Box2d.html" title="Axis-aligned bounding box.">Box2d</a> have a non-empty intersection.  <a href="namespaceGEO.html#a2b5694ba53daded84f48e88fa2c6688f">More...</a><br /></td></tr>
+<tr class="separator:a2b5694ba53daded84f48e88fa2c6688f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49a37a06ccfaa88066bd678d11626fae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a49a37a06ccfaa88066bd678d11626fae">GEO::bbox_union</a> (Box2d &amp;target, const Box2d &amp;B1, const Box2d &amp;B2)</td></tr>
+<tr class="memdesc:a49a37a06ccfaa88066bd678d11626fae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the smallest <a class="el" href="classGEO_1_1Box2d.html" title="Axis-aligned bounding box.">Box2d</a> that encloses two <a class="el" href="classGEO_1_1Box2d.html" title="Axis-aligned bounding box.">Box2d</a>.  <a href="namespaceGEO.html#a49a37a06ccfaa88066bd678d11626fae">More...</a><br /></td></tr>
+<tr class="separator:a49a37a06ccfaa88066bd678d11626fae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87dea81e1426f227e57a2a5102b60086"><td class="memTemplParams" colspan="2">template&lt;class FT &gt; </td></tr>
 <tr class="memitem:a87dea81e1426f227e57a2a5102b60086"><td class="memTemplItemLeft" align="right" valign="top">vecng&lt; 3, FT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a87dea81e1426f227e57a2a5102b60086">GEO::transform_vector</a> (const vecng&lt; 3, FT &gt; &amp;v, const Matrix&lt; 4, FT &gt; &amp;m)</td></tr>
 <tr class="memdesc:a87dea81e1426f227e57a2a5102b60086"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies a 3d transform to a 3d vector.  <a href="namespaceGEO.html#a87dea81e1426f227e57a2a5102b60086">More...</a><br /></td></tr>
@@ -257,7 +269,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_4586f940cce2020c46fbc4f79c1663fc.html">basic</a></li><li class="navelem"><a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h.html">geometry.h</a></li>
-    <li class="footer">Generated on Sun Jul 17 2022 20:33:29 for Graphite by
+    <li class="footer">Generated on Sat Nov 12 2022 14:46:04 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

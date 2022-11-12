@@ -88,7 +88,7 @@ $(document).ready(function(){initNavTree('android__utils_8h_source.html',''); in
 </div><!--header-->
 <div class="contents">
 <a href="android__utils_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  Copyright (c) 2012-2014, Bruno Levy</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  Copyright (c) 2000-2022 Inria</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *  All rights reserved.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> *  Redistribution and use in source and binary forms, with or without</span></div>
@@ -115,65 +115,59 @@ $(document).ready(function(){initNavTree('android__utils_8h_source.html',''); in
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"> *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment"> *  POSSIBILITY OF SUCH DAMAGE.</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> *  If you modify this software, you should include a notice giving the</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> *  name of the person performing the modification, the date of modification,</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> *  and the reason for such modification.</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> *  Contact: Bruno Levy</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> *     https://www.inria.fr/fr/bruno-levy</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> *  Contact: Bruno Levy</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"> *     Bruno.Levy@inria.fr</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"> *     http://www.loria.fr/~levy</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> *     Inria,</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"> *     Domaine de Voluceau,</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment"> *     78150 Le Chesnay - Rocquencourt</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"> *     FRANCE</span></div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> *     ALICE Project</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"> *     LORIA, INRIA Lorraine, </span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment"> *     Campus Scientifique, BP 239</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"> *     54506 VANDOEUVRE LES NANCY CEDEX </span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"> *     FRANCE</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#ifndef GEOGRAM_BASIC_ANDROID_UTILS</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#define GEOGRAM_BASIC_ANDROID_UTILS</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">geogram/basic/common.h</a>&gt;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="numeric_8h.html">geogram/basic/numeric.h</a>&gt;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">struct </span>android_app;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceGEO.html">GEO</a> {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">namespace </span>AndroidUtils {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#ifndef GEOGRAM_BASIC_ANDROID_UTILS</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#define GEOGRAM_BASIC_ANDROID_UTILS</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">geogram/basic/common.h</a>&gt;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="numeric_8h.html">geogram/basic/numeric.h</a>&gt;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">struct </span>android_app;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceGEO.html">GEO</a> {</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">namespace </span>AndroidUtils {</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="android__utils_8h.html#aaafd7d3c5cc3667698de79164a6c860b">show_soft_keyboard</a>(android_app* app);</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="android__utils_8h.html#aaafd7d3c5cc3667698de79164a6c860b">show_soft_keyboard</a>(android_app* app);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="android__utils_8h.html#af5897b6d86fa3c132b51e09e0218ecc4">hide_soft_keyboard</a>(android_app* app);</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="android__utils_8h.html#af5897b6d86fa3c132b51e09e0218ecc4">hide_soft_keyboard</a>(android_app* app);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <a class="code" href="namespaceGEO_1_1Numeric.html#a32555b9f4021482b8ba971b6f85bc1e3">Numeric::int32</a> GEOGRAM_API <a class="code" href="android__utils_8h.html#a361e969c21ebb0607937e13645ef1b6b">keycode_to_unicode</a>(</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            android_app* app,</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <a class="code" href="namespaceGEO_1_1Numeric.html#a32555b9f4021482b8ba971b6f85bc1e3">Numeric::int32</a> deviceId,</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <a class="code" href="namespaceGEO_1_1Numeric.html#a32555b9f4021482b8ba971b6f85bc1e3">Numeric::int32</a> keyCode,</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <a class="code" href="namespaceGEO_1_1Numeric.html#a32555b9f4021482b8ba971b6f85bc1e3">Numeric::int32</a> metaState</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        );</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keywordtype">bool</span> GEOGRAM_API <a class="code" href="android__utils_8h.html#ad2ecb7b88d6edf56f6672885fe69285d">has_permission</a>(android_app* app, <span class="keyword">const</span> <span class="keywordtype">char</span>* perm);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="android__utils_8h.html#aebc8e1eb886ca7a6142ae493802e5f6d">request_permissions</a>(</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            android_app* app, <span class="keywordtype">int</span> nb_perms, <span class="keyword">const</span> <span class="keywordtype">char</span>** perms</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        );</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        std::string GEOGRAM_API <a class="code" href="android__utils_8h.html#a7962e31228b115f8039f5950134dc43c">temp_folder</a>(android_app* app);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    }</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="namespaceGEO_1_1Numeric.html#a32555b9f4021482b8ba971b6f85bc1e3">Numeric::int32</a> GEOGRAM_API <a class="code" href="android__utils_8h.html#a361e969c21ebb0607937e13645ef1b6b">keycode_to_unicode</a>(</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            android_app* app,</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <a class="code" href="namespaceGEO_1_1Numeric.html#a32555b9f4021482b8ba971b6f85bc1e3">Numeric::int32</a> deviceId,</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <a class="code" href="namespaceGEO_1_1Numeric.html#a32555b9f4021482b8ba971b6f85bc1e3">Numeric::int32</a> keyCode,</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <a class="code" href="namespaceGEO_1_1Numeric.html#a32555b9f4021482b8ba971b6f85bc1e3">Numeric::int32</a> metaState</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        );</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordtype">bool</span> GEOGRAM_API <a class="code" href="android__utils_8h.html#ad2ecb7b88d6edf56f6672885fe69285d">has_permission</a>(android_app* app, <span class="keyword">const</span> <span class="keywordtype">char</span>* perm);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordtype">void</span> GEOGRAM_API <a class="code" href="android__utils_8h.html#aebc8e1eb886ca7a6142ae493802e5f6d">request_permissions</a>(</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            android_app* app, <span class="keywordtype">int</span> nb_perms, <span class="keyword">const</span> <span class="keywordtype">char</span>** perms</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        );</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        std::string GEOGRAM_API <a class="code" href="android__utils_8h.html#a7962e31228b115f8039f5950134dc43c">temp_folder</a>(android_app* app);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    }</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;}</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="aandroid__utils_8h_html_af5897b6d86fa3c132b51e09e0218ecc4"><div class="ttname"><a href="android__utils_8h.html#af5897b6d86fa3c132b51e09e0218ecc4">GEO::AndroidUtils::hide_soft_keyboard</a></div><div class="ttdeci">void hide_soft_keyboard(android_app *app)</div><div class="ttdoc">Hides the software keyboard on the phone.</div></div>
 <div class="ttc" id="anumeric_8h_html"><div class="ttname"><a href="numeric_8h.html">numeric.h</a></div><div class="ttdoc">Types and functions for numbers manipulation.</div></div>
 <div class="ttc" id="aandroid__utils_8h_html_aaafd7d3c5cc3667698de79164a6c860b"><div class="ttname"><a href="android__utils_8h.html#aaafd7d3c5cc3667698de79164a6c860b">GEO::AndroidUtils::show_soft_keyboard</a></div><div class="ttdeci">void show_soft_keyboard(android_app *app)</div><div class="ttdoc">Shows the software keyboard on the phone.</div></div>
-<div class="ttc" id="anamespaceGEO_1_1Numeric_html_a32555b9f4021482b8ba971b6f85bc1e3"><div class="ttname"><a href="namespaceGEO_1_1Numeric.html#a32555b9f4021482b8ba971b6f85bc1e3">GEO::Numeric::int32</a></div><div class="ttdeci">int32_t int32</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00098">numeric.h:98</a></div></div>
+<div class="ttc" id="anamespaceGEO_1_1Numeric_html_a32555b9f4021482b8ba971b6f85bc1e3"><div class="ttname"><a href="namespaceGEO_1_1Numeric.html#a32555b9f4021482b8ba971b6f85bc1e3">GEO::Numeric::int32</a></div><div class="ttdeci">int32_t int32</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00092">numeric.h:92</a></div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
 <div class="ttc" id="aandroid__utils_8h_html_aebc8e1eb886ca7a6142ae493802e5f6d"><div class="ttname"><a href="android__utils_8h.html#aebc8e1eb886ca7a6142ae493802e5f6d">GEO::AndroidUtils::request_permissions</a></div><div class="ttdeci">void request_permissions(android_app *app, int nb_perms, const char **perms)</div><div class="ttdoc">Request permissions.</div></div>
 <div class="ttc" id="aandroid__utils_8h_html_a361e969c21ebb0607937e13645ef1b6b"><div class="ttname"><a href="android__utils_8h.html#a361e969c21ebb0607937e13645ef1b6b">GEO::AndroidUtils::keycode_to_unicode</a></div><div class="ttdeci">Numeric::int32 keycode_to_unicode(android_app *app, Numeric::int32 deviceId, Numeric::int32 keyCode, Numeric::int32 metaState)</div><div class="ttdoc">Converts a keycode to a Unicode character.</div></div>
@@ -184,7 +178,7 @@ $(document).ready(function(){initNavTree('android__utils_8h_source.html',''); in
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_4586f940cce2020c46fbc4f79c1663fc.html">basic</a></li><li class="navelem"><a class="el" href="android__utils_8h.html">android_utils.h</a></li>
-    <li class="footer">Generated on Sun Jul 17 2022 20:33:27 for Graphite by
+    <li class="footer">Generated on Sat Nov 12 2022 14:46:03 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>

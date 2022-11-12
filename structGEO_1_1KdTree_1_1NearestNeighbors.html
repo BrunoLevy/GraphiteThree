@@ -147,7 +147,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 <div class="textblock"><p>The context for traversing a <a class="el" href="classGEO_1_1KdTree.html" title="Base class for all Kd-tree implementations.">KdTree</a>. </p>
 <p>Stores a sorted sequence of (point,distance) couples. </p>
 
-<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00114">114</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00108">108</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad1c61a054acd77070f5b6e3a2a9a549e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad1c61a054acd77070f5b6e3a2a9a549e">&#9670;&nbsp;</a></span>NearestNeighbors()</h2>
@@ -213,7 +213,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00135">135</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00129">129</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
 
 </div>
 </div>
@@ -244,7 +244,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 <p>Copies the user neighbors and distances into the work zone and initializes nb_neighbors to max_nb_neighbors. </p>
 <p>This function is called by nearest neighbors search when KeepInitialValues is specified, to initialize search from user-provided initial guess. </p>
 
-<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00210">210</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00204">204</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
 
 </div>
 </div>
@@ -274,7 +274,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 <p>Copies the found nearest neighbors from the work zone to the user neighbors and squared distance arrays. </p>
 <p>This function is called by find_nearest_neighbors() after traversal of the tree. </p>
 
-<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00226">226</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00220">220</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
 
 </div>
 </div>
@@ -322,7 +322,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 </dl>
 <dl class="section pre"><dt>Precondition</dt><dd>sq_dist &lt;= <a class="el" href="structGEO_1_1KdTree_1_1NearestNeighbors.html#a480ae52aa60c0c6cdce3783a79168e8f" title="Gets the squared distance to the furthest neighbor.">furthest_neighbor_sq_dist()</a> (needs to be tested by client code before insertion). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00179">179</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00173">173</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
 
 </div>
 </div>
@@ -342,7 +342,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 <p>Internal array of neighbors. </p>
 <p>size = nb_neigbors_max + 1 </p>
 
-<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00243">243</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00237">237</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
 
 </div>
 </div>
@@ -361,7 +361,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 <p>Internal squared distance to neigbors. </p>
 <p>size = nb_neigbors_max + 1 </p>
 
-<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00249">249</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00243">243</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
 
 </div>
 </div>
@@ -380,7 +380,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 <p>User-provided array of neighbors. </p>
 <p>size = nb_neighbors_max </p>
 
-<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00255">255</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00249">249</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
 
 </div>
 </div>
@@ -399,7 +399,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 <p>User-provided array of neighbors squared distances. </p>
 <p>size = nb_neighbors_max </p>
 
-<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00262">262</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="kd__tree_8h_source.html#l00256">256</a> of file <a class="el" href="kd__tree_8h_source.html">kd_tree.h</a>.</p>
 
 </div>
 </div>
@@ -412,7 +412,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1KdTree.html">KdTree</a></li><li class="navelem"><a class="el" href="structGEO_1_1KdTree_1_1NearestNeighbors.html">NearestNeighbors</a></li>
-    <li class="footer">Generated on Sun Jul 17 2022 20:33:29 for Graphite by
+    <li class="footer">Generated on Sat Nov 12 2022 14:46:05 for Graphite by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>
