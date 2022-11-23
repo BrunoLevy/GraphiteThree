@@ -78,7 +78,8 @@ namespace OGF {
 	 *  eigenvectors
 	 * \param[in] shift eigen shift applied to explore a certain part
 	 *  of the spectrum.
-	 * \param[in] nb_eigens_per_band if non-zero, use band-by-band computation.
+	 * \param[in] nb_eigens_per_band if non-zero, 
+	 *   use band-by-band computation.
 	 * \param[in] print_spectrum if true, prints eigenvalue to the terminal.
          */
 	void compute_manifold_harmonics(

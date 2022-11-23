@@ -56,7 +56,8 @@ namespace {
 	geo_argused(eigen_val);
 	MHStruct* MH = static_cast<MHStruct*>(client_data);
 	for(index_t v=0; v<MH->mesh->vertices.nb(); ++v) {
-	    MH->attribute[v*MH->attribute.dimension()+eigen_index] = eigen_vector[v];
+	    MH->attribute[v*MH->attribute.dimension()+eigen_index] =
+		eigen_vector[v];
 	}
     }
     
@@ -84,7 +85,9 @@ namespace OGF {
 	    if(
 		MH.mesh->vertices.attributes().is_defined(attribute)
 	    ) {
-		MH.mesh->vertices.attributes().delete_attribute_store(attribute);
+		MH.mesh->vertices.attributes().delete_attribute_store(
+		    attribute
+		);
 	    }
 	    MH.attribute.create_vector_attribute(
 		MH.mesh->vertices.attributes(), attribute, nb_eigens
