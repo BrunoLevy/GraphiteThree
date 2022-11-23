@@ -81,6 +81,7 @@ function camera_gui.backgrounds()
      local size = 2*autogui.icon_size()
 
      if imgui.ImageButton(
+       'cam_bkgnd_white',
        main.resolve_icon('backgrounds/white'),
        size,size
      ) then
@@ -88,6 +89,7 @@ function camera_gui.backgrounds()
      end
      imgui.SameLine()
      if imgui.ImageButton(
+       'cam_bkgnd_blue-white',
        main.resolve_icon('backgrounds/blue-white'),
        size,size
      ) then
@@ -97,6 +99,7 @@ function camera_gui.backgrounds()
      end
      imgui.SameLine()     
      if imgui.ImageButton(
+       'cam_bkgnd_blue-black',
        main.resolve_icon('backgrounds/blue-black'),
        size,size
      ) then
@@ -106,6 +109,7 @@ function camera_gui.backgrounds()
      end
      imgui.SameLine()     
      if imgui.ImageButton(
+       'cam_bkgnd_black',     
        main.resolve_icon('backgrounds/black'),
        size,size
      ) then

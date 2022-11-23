@@ -453,6 +453,7 @@ function autogui.colormap(label,oldval)
    local sel=false
    local newval=oldval
    if imgui.ImageButton(
+       label..'_choose_colormap',
        main.resolve_icon('colormaps/'..oldval),
        100.0*main.scaling(),
        10.0*main.scaling()
@@ -462,6 +463,7 @@ function autogui.colormap(label,oldval)
    if imgui.BeginPopup(label) then
       for i=1,#autogui.colormaps do
          if imgui.ImageButton(
+	    label..'_'..autogui.colormaps[i][1],
 	    main.resolve_icon('colormaps/'..autogui.colormaps[i][1]),
 	    80.0*main.scaling(),
 	    8.0*main.scaling()

@@ -36,6 +36,7 @@ function toolbox_gui.draw_window()
 	    -- style is used, use a button instead of an image.
 	    if gom.get_environment_value('gui:style') == 'Dark' then
 	       imgui.ImageButton(
+	          'toolbox_showtool',
 	          main.resolve_icon('tools/'..icon_name,true),
 	          size,size
 	       )
@@ -64,6 +65,7 @@ function toolbox_gui.draw_window()
                end		  
 
 	       if imgui.ImageButton(
+	          'toolbox_'..icon_name,
 	          main.resolve_icon('tools/'..icon_name, true),
 		  size,size
 	       ) then
