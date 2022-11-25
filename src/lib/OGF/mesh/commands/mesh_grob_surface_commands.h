@@ -510,6 +510,13 @@ namespace OGF {
 	 *  if angle between adjacent facet is larger than threshold
 	 */
 	void unglue_sharp_edges(double angle_threshold=90);
+
+	/**
+	 * \menu Atlas
+	 * \brief Unglues facet edges adjacent to two different charts
+	 */
+	void unglue_charts();
+	
     };
 }
 #endif

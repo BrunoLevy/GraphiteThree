@@ -1121,12 +1121,42 @@ namespace OGF {
 	for(index_t f1: mesh_grob()->facets) {
 	    for(index_t c: mesh_grob()->facets.corners(f1)) {
 		index_t f2 = mesh_grob()->facet_corners.adjacent_facet(c);
-		if(f2 <= index_t(-1) && f2 < f1) {
+		if(f2 != index_t(-1) && f2 < f1) {
 		    if(
 			Geom::mesh_unsigned_normal_angle(
 			    *mesh_grob(),f1,f2
 			) > angle_threshold
 		    ) {
+			f_to_unglue.push_back(f1);
+			c_to_unglue.push_back(c);
+		    }
+		}
+	    }
+	}
+
+	for(index_t i=0; i<f_to_unglue.size(); ++i) {
+	    unglue_edges(*mesh_grob(), f_to_unglue[i], c_to_unglue[i]);
+	}
+	
+	mesh_grob()->update();
+    }
+
+    void MeshGrobSurfaceCommands::unglue_charts() {
+	Attribute<index_t> chart;
+	chart.bind_if_is_defined(mesh_grob()->facets.attributes(), "chart");
+	if(!chart.is_bound()) {
+	    Logger::err("Unglue") << "chart: no such facet attribute"
+				  << std::endl;
+	    return;
+	}
+	vector<index_t> f_to_unglue;
+	vector<index_t> c_to_unglue;
+
+	for(index_t f1: mesh_grob()->facets) {
+	    for(index_t c: mesh_grob()->facets.corners(f1)) {
+		index_t f2 = mesh_grob()->facet_corners.adjacent_facet(c);
+		if(f2 != index_t(-1) && f2 < f1) {
+		    if( chart[f2] != chart[f1]) {
 			f_to_unglue.push_back(f1);
 			c_to_unglue.push_back(c);
 		    }

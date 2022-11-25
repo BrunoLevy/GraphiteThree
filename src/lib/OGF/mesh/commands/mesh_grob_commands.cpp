@@ -93,7 +93,7 @@ namespace OGF {
 	show_attribute("facets.chart");
 	Shader* shader = mesh_grob()->get_shader();
 	shader->invoke_method("autorange");
-	shader->set_property("colormap","random;true;0;false;false;");
+	shader->set_property("colormap","random;true;111111;false;false;");
     }
     
     void MeshGrobCommands::show_mesh(MeshGrob* M) {
