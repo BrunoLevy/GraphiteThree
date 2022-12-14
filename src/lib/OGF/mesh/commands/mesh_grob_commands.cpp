@@ -90,9 +90,20 @@ namespace OGF {
     }
 
     void MeshGrobCommands::show_charts() {
-	show_attribute("facets.chart");
 	Shader* shader = mesh_grob()->get_shader();
+	if(shader == nullptr) {
+	    return;
+	}
+        
+        Attribute<index_t> chart(mesh_grob()->facets.attributes(),"chart");
+        index_t max_chart = 0;
+        for(index_t f: mesh_grob()->facets) {
+            max_chart = std::max(max_chart, chart[f]);
+        }
+	show_attribute("facets.chart");
 	shader->invoke_method("autorange");
+        shader->set_property("attribute_min","0");
+        shader->set_property("attribute_max",String::to_string(max_chart+1));
 	shader->set_property("colormap","random;true;65537;false;false;");
     }
     

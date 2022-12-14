@@ -698,6 +698,13 @@ namespace OGF {
 	ChartPacker pack,
 	bool verbose
     ) {
+        if(!mesh_grob()->facets.are_simplices()) {
+            Logger::err("MAM")
+                << "For now, only simplicial meshes are supported"
+                << std::endl;
+            return;
+        }
+        
 	if(!detect_sharp_edges) {
 	    sharp_edges_threshold = 360.0;
 	}
@@ -1116,6 +1123,12 @@ namespace OGF {
     void MeshGrobSurfaceCommands::segment(
         MeshSegmenter segmenter, index_t nb_segments
     ) {
+        if(!mesh_grob()->facets.are_simplices()) {
+            Logger::err("MAM")
+                << "For now, only simplicial meshes are supported"
+                << std::endl;
+            return;
+        }
         mesh_segment(*mesh_grob(), segmenter, nb_segments);
         show_charts();
 	mesh_grob()->update();        
