@@ -59,6 +59,7 @@
 #include <OGF/mesh/tools/mesh_grob_border_tools.h>
 #include <OGF/mesh/tools/mesh_grob_selection_tools.h>
 #include <OGF/mesh/tools/mesh_grob_edge_tools.h>
+#include <OGF/mesh/tools/mesh_grob_paint_tool.h>
 
 #include <geogram/basic/command_line.h>
 #include <geogram/basic/command_line_args.h>
@@ -106,7 +107,9 @@ namespace OGF {
         ogf_register_grob_tool<MeshGrob,MeshGrobSelectUnselectVertex>();
 
         ogf_register_grob_tool<MeshGrob,MeshGrobCreateEdge>();	
-	
+
+        ogf_register_grob_tool<MeshGrob,MeshGrobPaint>();
+       
         // [source insertion point] (do not delete this line)
         // Insert package initialization stuff here ...
         //_____________________________________________________________

@@ -73,15 +73,13 @@ function toolbox_gui.draw_window()
 	       end
 	       autogui.tooltip(autogui.help(mclass))
 
-	       if not arcball.grabbed and mclass.nb_properties() > 7 then
+	       if mclass.nb_properties() > 7 then
 	          -- TODO: check whether mouse was clicked-down in render area
 		  -- (because for now, if we rotate 3D view and release over
 		  --  a tool, it activates the tool...)
-		  -- (arcball.grabbed does not completely solve the problem)
 		  -- Note: but there is no problem because for now no tool has
 		  -- properties..
 		  if imgui.BeginPopupContextItem(tool_class_name.."##ops") then
-		     print(mclass.nb_properties())
 	             tools.tool(tool_class_name)
 		     autogui.properties_editor(tools.current())		  
 	             imgui.EndPopup()

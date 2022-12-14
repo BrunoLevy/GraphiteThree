@@ -1,0 +1,37 @@
+/* XPM */
+static char *paint[] = {
+/* width height num_colors chars_per_pixel */
+"    24    25        5            1",
+/* colors */
+". c #000000",
+"# c #929292",
+"a c None",
+"b c #dbdbdb",
+"c c #ffffff",
+/* pixels */
+"aaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaa.bb.#aaaaa",
+"aaaaaaaaaaaaaa.bb.#aaaaa",
+"aaaaaaaaaaaaa.bb.##aaaaa",
+"aaaaaaaaaaaaa.bb.#aaaaaa",
+"aaaaaaaaaaaa.bb.##aaaaaa",
+"aaaaaaaaaaaa.bb.#aaaaaaa",
+"aaaaaaaaaaa.bb.##aaaaaaa",
+"aaaaaaaaaaa.bb.#aaaaaaaa",
+"aaaaaaaaaa....##aaaaaaaa",
+"aaaaaaaaa.bb..#aaaaaaaaa",
+"aaaaaaaa.ccb..#aaaaaaaaa",
+"aaaaaaaa.cb#..#aaaaaaaaa",
+"aaaaaaa.cb#..##aaaaaaaaa",
+"aaaaaaa.b#..##aaaaaaaaaa",
+"aaaaaa.c#..##aaaaaaaaaaa",
+"aaaaa....###aaaaaaaaaaaa",
+"aaaaaa####aaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaa",
+"aaaaaaaaaaaaaaaaaaaaaaaa"
+};
