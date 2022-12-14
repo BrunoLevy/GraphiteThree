@@ -93,7 +93,7 @@ namespace OGF {
 	show_attribute("facets.chart");
 	Shader* shader = mesh_grob()->get_shader();
 	shader->invoke_method("autorange");
-	shader->set_property("colormap","random;true;111111;false;false;");
+	shader->set_property("colormap","random;true;65537;false;false;");
     }
     
     void MeshGrobCommands::show_mesh(MeshGrob* M) {
@@ -145,22 +145,18 @@ namespace OGF {
 
 	if(
 	    !shader->has_property("painting") ||
-	    !shader->has_property("tex_coords")	    
+	    !shader->has_property("tex_coords")	||
+	    !shader->has_property("lighting")	
 	) {
 	    return;
 	}
 
-	std::string shd_painting;
-	shader->get_property("painting",shd_painting);
-	if(shd_painting == "TEXTURE") {
-	    return;
-	}
-	
 	shader->set_property("painting","TEXTURE");
 	shader->set_property("tex_image","");
 	shader->set_property("tex_coords",UV_prop_name);
 	shader->set_property("normal_map","false");
-	shader->set_property("tex_repeat","10");	
+	shader->set_property("tex_repeat","10");
+	shader->set_property("lighting","true");        
     }
 
     void MeshGrobCommands::show_colors(

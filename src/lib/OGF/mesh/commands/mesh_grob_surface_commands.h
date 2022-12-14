@@ -43,6 +43,7 @@
 #include <OGF/mesh/common/common.h>
 #include <OGF/mesh/commands/mesh_grob_commands.h>
 #include <geogram/parameterization/mesh_atlas_maker.h>
+#include <geogram/parameterization/mesh_segmentation.h>
 
 /**
  * \file OGF/mesh/commands/mesh_grob_surface_commands.h
@@ -379,12 +380,47 @@ namespace OGF {
 	    LSCM, SpectralLSCM, ABFplusplus
 	};
 
+        /**
+         * \menu Atlas/Segmentation
+         * \brief Segments a mesh.
+         */
+        void segment(
+            MeshSegmenter segmenter=SEGMENT_GEOMETRIC_VSA_L2,
+            index_t nb_segments=10
+        );
+        
 	/**
-	 * \menu Atlas
+	 * \menu Atlas/Segmentation
+	 * \brief Gets the charts attribute from a parameterized mesh.
+	 */
+	void get_charts();
+
+	/**
+	 * \menu Atlas/Segmentation
+	 * \brief Removes the charts attribute.
+	 */
+        void remove_charts();
+        
+	/**
+	 * \menu Atlas/Segmentation
+	 * \brief Unglues facet edges based on specified angle
+	 * \param[in] angle_threshold unglue facets along edge 
+	 *  if angle between adjacent facet is larger than threshold
+	 */
+	void unglue_sharp_edges(double angle_threshold=90);
+
+	/**
+	 * \menu Atlas/Segmentation
+	 * \brief Unglues facet edges adjacent to two different charts
+	 */
+	void unglue_charts();
+        
+	/**
+	 * \menu Atlas/Parameterization
 	 * \brief Computes texture coordinates of a surface.
-	 * \param[in] unglue_sharp_edges if true, ungle edegs with angle larger
-	 *  than threshold
-	 * \param[in] sharp_angles_threshold if the angle between the normals
+	 * \param[in] detect_sharp_edges if true, generate chart boundary
+         *  on edges with angle is larger than threshold.
+	 * \param[in] sharp_edges_threshold if the angle between the normals
 	 *  of two adjacent facets is larger than this threshold then the edge
 	 *  will be a chart boundary.
 	 * \param[in] param the algorithm used for parameterizing the charts.
@@ -394,8 +430,8 @@ namespace OGF {
 	 * \param[in] pack one of PACK_TETRIS, PACK_XATLAS
 	 */
 	void make_texture_atlas(
-	    bool unglue_sharp_edges = true,
-	    double sharp_angles_threshold = 180.0,
+	    bool detect_sharp_edges = false,
+	    double sharp_edges_threshold = 45.0,
 	    ChartParameterizer param=PARAM_ABF,
 	    ChartPacker pack=PACK_XATLAS,
 	    bool verbose=false
@@ -403,7 +439,7 @@ namespace OGF {
 
 
 	/**
-	 * \menu Atlas
+	 * \menu Atlas/Parameterization
 	 * \brief Packs charts in texture space
 	 * \param[in] pack one of PACK_TETRIS, PACK_XATLAS
 	 */
@@ -412,7 +448,7 @@ namespace OGF {
 	);
 	
 	/**
-	 * \menu Atlas
+	 * \menu Atlas/Parameterization
 	 * \brief Computes texture coordinates of a single unfoldable surface.
 	 * \param[in] attribute the name of the attribute that will store
 	 *  texture coordinates.
@@ -427,7 +463,7 @@ namespace OGF {
 	);
 
 	/**
-	 * \menu Atlas
+	 * \menu Atlas/Baking
 	 * \brief Bakes normals from a surface to the texture atlas.
 	 * \param[in] surface the name of the mesh with normals to be baked.
 	 *  can be the current mesh or another one with higher-resolution
@@ -448,7 +484,7 @@ namespace OGF {
 
 
 	/**
-	 * \menu Atlas
+	 * \menu Atlas/Baking
 	 * \brief Bakes colors from a surface to the texture atlas.
 	 * \param[in] surface the name of the mesh with colors to be baked.
 	 *  can be the current mesh or another one with higher-resolution.
@@ -471,7 +507,7 @@ namespace OGF {
 
 
 	/**
-	 * \menu Atlas
+	 * \menu Atlas/Baking
 	 * \brief Bakes texture from a textured surface to an atlas.
 	 * \param[in] src_surface the name of the mesh with the 
 	 *   texture to be baked.
@@ -496,26 +532,6 @@ namespace OGF {
 	    const std::string& tex_coord="tex_coord"
 	);
 
-	/**
-	 * \menu Atlas
-	 * \brief Gets the charts attribute from a paramerized mesh.
-	 */
-	void get_charts();
-
-
-	/**
-	 * \menu Atlas
-	 * \brief Unglues facet edges based on specified angle
-	 * \param[in] angle_threshold unglue facets along edge 
-	 *  if angle between adjacent facet is larger than threshold
-	 */
-	void unglue_sharp_edges(double angle_threshold=90);
-
-	/**
-	 * \menu Atlas
-	 * \brief Unglues facet edges adjacent to two different charts
-	 */
-	void unglue_charts();
 	
     };
 }

@@ -692,18 +692,18 @@ namespace OGF {
     }
 
     void MeshGrobSurfaceCommands::make_texture_atlas(
-	bool unglue_sharp_edges,
-	double sharp_angles_threshold,
+	bool detect_sharp_edges,
+	double sharp_edges_threshold,
 	ChartParameterizer param,
 	ChartPacker pack,
 	bool verbose
     ) {
-	if(!unglue_sharp_edges) {
-	    sharp_angles_threshold = 360.0;
+	if(!detect_sharp_edges) {
+	    sharp_edges_threshold = 360.0;
 	}
 	mesh_make_atlas(
 	    *mesh_grob(),
-	    sharp_angles_threshold,
+	    sharp_edges_threshold,
 	    param,
 	    pack,
 	    verbose
@@ -716,11 +716,17 @@ namespace OGF {
     void MeshGrobSurfaceCommands::pack_texture_space(
 	ChartPacker pack
     ) {
-	Packer packer;
-	packer.pack_surface(*mesh_grob(), false);
-	if(pack == PACK_XATLAS) {
-	    pack_atlas_using_xatlas(*mesh_grob());
-	}
+        switch(pack) {
+        case PACK_NONE:
+            break;
+        case PACK_TETRIS:
+            pack_atlas_using_tetris_packer(*mesh_grob());
+            break;
+        case PACK_XATLAS:
+            pack_atlas_only_normalize_charts(*mesh_grob());
+            pack_atlas_using_xatlas(*mesh_grob());
+            break;
+        }
 	show_UV();	
 	mesh_grob()->update();
     }
@@ -749,7 +755,7 @@ namespace OGF {
 		mesh_compute_ABF_plus_plus(*mesh_grob(), attribute, verbose);
 		break;
 	}
-	show_UV();	
+	show_UV("vertices." + attribute);	
 	mesh_grob()->update();		
     }
 
@@ -1107,9 +1113,33 @@ namespace OGF {
 	mesh_grob()->update();
     }
 
+    void MeshGrobSurfaceCommands::segment(
+        MeshSegmenter segmenter, index_t nb_segments
+    ) {
+        mesh_segment(*mesh_grob(), segmenter, nb_segments);
+        show_charts();
+	mesh_grob()->update();        
+    }
+    
     void MeshGrobSurfaceCommands::get_charts() {
 	mesh_get_charts(*mesh_grob());
 	show_charts();
+	mesh_grob()->update();
+    }
+
+    void MeshGrobSurfaceCommands::remove_charts() {
+	Attribute<index_t> chart;
+        chart.bind_if_is_defined(mesh_grob()->facets.attributes(), "chart");
+        chart.destroy();
+        Shader* shader = mesh_grob()->get_shader();
+        if(shader != nullptr) {
+            if(shader->has_property("painting")) {
+                shader->set_property("painting","SOLID_COLOR");
+            }
+            if(shader->has_property("lighting")) {
+                shader->set_property("lighting","true");
+            }
+        }
 	mesh_grob()->update();
     }
 
