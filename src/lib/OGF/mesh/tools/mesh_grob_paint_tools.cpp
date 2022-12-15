@@ -382,7 +382,11 @@ namespace OGF {
                 );
             }
         }
-        
+
+        // Directly make the Lua interpreter change the variable
+        // graphite_gui.tooltip.
+        // If it is set, then the function graphite_gui.draw() in
+        // lib/graphite_imgui.lua draws a tooltip.
         Interpreter::instance_by_language("Lua")->execute(
             "graphite_gui.tooltip = '" + message + "'",
             false, false
@@ -391,6 +395,9 @@ namespace OGF {
 
     void MeshGrobProbe::release(const RayPick& p_ndc) {
         geo_argused(p_ndc);
+
+        // Remove the tooltip as soon as the user releases
+        // the mouse button.
         Interpreter::instance_by_language("Lua")->execute(
             "graphite_gui.tooltip = nil",
             false, false
