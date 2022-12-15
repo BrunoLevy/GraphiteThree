@@ -36,14 +36,14 @@
  *  with the following (non-GPL) libraries: Qt, SuperLU, WildMagic and CGAL
  */
 
-#ifndef H_OGF_MESH_TOOLS_MESH_GROB_PAINT_TOOL_H
-#define H_OGF_MESH_TOOLS_MESH_GROB_PAINT_TOOL_H
+#ifndef H_OGF_MESH_TOOLS_MESH_GROB_PAINT_TOOLS_H
+#define H_OGF_MESH_TOOLS_MESH_GROB_PAINT_TOOLS_H
 
 #include <OGF/mesh/common/common.h>
 #include <OGF/mesh/tools/mesh_grob_tool.h>
 
 /**
- * \file OGF/mesh/tools/mesh_grob_paint_tool.h
+ * \file OGF/mesh/tools/mesh_grob_paint_tools.h
  * \brief Tools to paint attributes on meshes
  */
 
@@ -74,12 +74,7 @@ namespace OGF {
          * \copydoc Tool::drag()
          */
         void drag(const RayPick& p_ndc) override;
-       
 
-        /**
-         * \copydoc Tool::reset()
-         */
-	void reset() override;
 
      gom_properties:
 
@@ -141,6 +136,41 @@ namespace OGF {
         bool accumulate_;
         bool autorange_;
         bool pick_vertices_only_;
+    };    
+    
+    /**
+     * \brief A tool that paints attribute values in a mesh
+     */
+    gom_attribute(category, "paint")
+    gom_attribute(icon, "pipette")
+    gom_attribute(help, "probe attributes on a mesh")
+    gom_attribute(message, "btn1: probe attributes")
+    
+    gom_class MESH_API MeshGrobProbe : public MeshGrobTool {
+    public:
+        /**
+         * \brief MeshGrobPaint constructor.
+         * \param[in] parent a pointer to the ToolsManager
+         */
+        MeshGrobProbe(ToolsManager* parent);
+
+        /**
+         * \copydoc Tool::grab()
+         */
+        void grab(const RayPick& p_ndc) override;
+
+        /**
+         * \copydoc Tool::drag()
+         */
+        void drag(const RayPick& p_ndc) override;
+
+        /**
+         * \copydoc Tool::release()
+         */
+        void release(const RayPick& p_ndc) override;
+        
+     protected:
+        void probe(const RayPick& p_ndc);
     };    
     
 }

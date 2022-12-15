@@ -67,7 +67,9 @@ namespace OGF {
 	instance_by_file_extension_[extension] = instance;
     }
 
-    void Interpreter::terminate(const std::string& language, const std::string& extension) {
+    void Interpreter::terminate(
+        const std::string& language, const std::string& extension
+    ) {
 	{
 	    auto it = instance_.find(language);
 	    if(it == instance_.end()) {
