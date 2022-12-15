@@ -123,7 +123,7 @@ function Stats.update()
       changed = true
    end      
 
-   Stats.attrib   = object.I.Editor.find_attribute(container_attrib_name)
+   Stats.attrib = object.I.Editor.find_attribute(container_attrib_name)
 
    local f = shd.colormap:split(';')
    local colormap_name = f()

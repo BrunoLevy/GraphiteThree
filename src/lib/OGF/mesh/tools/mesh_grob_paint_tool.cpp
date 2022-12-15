@@ -40,11 +40,102 @@
 #include <OGF/mesh/shaders/mesh_grob_shader.h>
 #include <geogram/mesh/mesh_geometry.h>
 
+namespace {
+    using namespace OGF;
+
+    /**
+     * \brief A painting operation.
+     */
+    enum PaintOp {
+        PAINT_SET,   /**< sets attribute value */
+        PAINT_RESET, /**< resets attribute value to zero */
+        PAINT_INC,   /**< adds to attribute value */
+        PAINT_DEC    /**< subtracts from attribute value */
+    };
+
+    /**
+     * \brief Paints an attribute value for a given type
+     * \tparam T the type of the attribute
+     * \param[in] mesh_grob a pointer to the MeshGrob
+     * \param[in] where one of MESH_VERTICES, MESH_EDGES, MESH_FACETS or 
+     *  MESH_CELLS
+     * \param[in] name the name of the attribute
+     * \param[in] element_id the element to be painted
+     * \param[in] op one of PAINT_SET, PAINT_RESET, PAINT_INC or PAINT_DEC
+     * \param[in] value the value to be painted
+     * \retval true if an attribute of the specified type was found 
+     * \retval false otherwise
+     */
+    template <class T> bool paint_attribute_generic(
+        MeshGrob* mesh_grob, MeshElementsFlags where, const std::string& name,
+        index_t element_id, PaintOp op, double value
+    ) {
+        MeshSubElementsStore& elts = mesh_grob->get_subelements_by_type(where);
+        if(!Attribute<T>::is_defined(elts.attributes(), name)) {
+            return false;
+        }
+        Attribute<T> attr(elts.attributes(), name);
+        switch(op) {
+        case PAINT_SET:
+            attr[element_id] = T(value);
+            break;
+        case PAINT_RESET:
+            attr[element_id] = T(0);
+            break;            
+        case PAINT_INC:
+            attr[element_id] = attr[element_id] + T(value);
+            break;            
+        case PAINT_DEC:
+            attr[element_id] = attr[element_id] - T(value);
+            break;            
+        }
+        return true;
+    }
+
+    /**
+     * \brief Paints an attribute value independently from the type. Tries
+     *   int32, uint32, float, double
+     * \details The specified value is converted into the type. Floating-point
+     *   values are truncated if the attribute has integer type.
+     * \param[in] mesh_grob a pointer to the MeshGrob
+     * \param[in] where one of MESH_VERTICES, MESH_EDGES, MESH_FACETS or 
+     *  MESH_CELLS
+     * \param[in] name the name of the attribute
+     * \param[in] element_id the element to be painted
+     * \param[in] op one of PAINT_SET, PAINT_RESET, PAINT_INC or PAINT_DEC
+     * \param[in] value the value to be painted
+     * \retval true if an attribute could be painted
+     * \retval false otherwise
+     */
+    bool paint_attribute(
+        MeshGrob* mesh_grob, MeshElementsFlags where, const std::string& name,
+        index_t element_id, PaintOp op, double value
+    ) {
+        return paint_attribute_generic<double>(
+                   mesh_grob, where, name, element_id, op, value
+               ) ||
+               paint_attribute_generic<float>(
+                   mesh_grob, where, name, element_id, op, value
+               ) ||
+               paint_attribute_generic<Numeric::uint32>(
+                   mesh_grob, where, name, element_id, op, value
+               ) ||
+               paint_attribute_generic<Numeric::int32>(
+                   mesh_grob, where, name, element_id, op, value
+               ) ||
+               paint_attribute_generic<bool>(
+                   mesh_grob, where, name, element_id, op, value
+               );            
+    }
+}
+
 namespace OGF {
 
     MeshGrobPaint::MeshGrobPaint(ToolsManager* parent) : MeshGrobTool(parent) {
        value_ = 1.0;
        accumulate_ = false;
+       autorange_ = true;
+       pick_vertices_only_ = false;
     }
    
     void MeshGrobPaint::grab(const RayPick& p_ndc) {
@@ -59,6 +150,7 @@ namespace OGF {
         MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
             mesh_grob()->get_shader()
         );
+        
         if(shd == nullptr) {
             return;
         }
@@ -78,58 +170,73 @@ namespace OGF {
             subelement_name,
             attribute_name
         );
+        
         MeshElementsFlags subelement =
             mesh_grob()->name_to_subelements_type(subelement_name);
 
-        Attribute<double> attr;
-        switch(subelement) {
-        case MESH_VERTICES:
-            attr.bind_if_is_defined(
-                mesh_grob()->vertices.attributes(), attribute_name
-            );
-            break;
-        case MESH_EDGES:
-            attr.bind_if_is_defined(
-                mesh_grob()->edges.attributes(), attribute_name
-            );
-            break;
-        case MESH_FACETS:
-            attr.bind_if_is_defined(
-                mesh_grob()->facets.attributes(), attribute_name
-            );
-            break;
-        case MESH_CELLS:
-            attr.bind_if_is_defined(
-                mesh_grob()->cells.attributes(), attribute_name
-            );
-            break;
-        default:
-            break;
-        }
-
-        if(!attr.is_bound()) {
-            return;
+        PaintOp op = PAINT_SET;
+        if(accumulate_) {
+            op = p_ndc.button == 1 ? PAINT_INC : PAINT_DEC;
+        } else {
+            op = p_ndc.button == 1 ? PAINT_SET : PAINT_RESET;
         }
 
         index_t picked_element = pick(p_ndc,subelement);
-
         if(picked_element != index_t(-1)) {
-            if(accumulate_) {
-                attr[picked_element] += (
-                    p_ndc.button == 1 ? value_ : -value_
-                );
-                mesh_grob()->update();
-                shd->invoke_method("autorange");
+            paint_attribute(
+                mesh_grob(), subelement, attribute_name,
+                picked_element, op, value_
+            );
+        } else if(subelement == MESH_VERTICES && !pick_vertices_only_) {
+            index_t f = pick_facet(p_ndc);
+            if(f != index_t(-1)) {
+                for(index_t lv = 0;
+                    lv<mesh_grob()->facets.nb_vertices(f); ++lv
+                ) {
+                    index_t v = mesh_grob()->facets.vertex(f,lv);
+                    paint_attribute(
+                        mesh_grob(), subelement, attribute_name,
+                        v, op, value_
+                    );
+                }
             } else {
-                attr[picked_element] = (
-                    p_ndc.button == 1 ? value_ : 0.0
-                );
-                mesh_grob()->update();
+                index_t c = pick_cell(p_ndc);
+                if(c != index_t(-1)) {
+                    for(index_t lv = 0;
+                        lv<mesh_grob()->cells.nb_vertices(c); ++lv
+                    ) {
+                        index_t v = mesh_grob()->cells.vertex(c,lv);
+                        paint_attribute(
+                            mesh_grob(), subelement, attribute_name,
+                            v, op, value_
+                        );
+                    }
+                }
             }
         }
+        
+        if(autorange_) {
+            shd->invoke_method("autorange");
+        }
+        
+        mesh_grob()->update();
     }
 
     void MeshGrobPaint::reset() {
     }
-   
+
+    void MeshGrobPaint::set_pick_vertices_only(bool value) {
+        pick_vertices_only_ = value;
+        MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
+            mesh_grob()->get_shader()
+        );
+        if(shd != nullptr) {
+            if(pick_vertices_only_) {
+                shd->show_vertices();
+            } else {
+                shd->hide_vertices();                    
+            }
+        }
+    }
+    
 }

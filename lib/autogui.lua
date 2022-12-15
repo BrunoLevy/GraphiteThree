@@ -655,18 +655,24 @@ autogui.handlers.combo_box = function(
       end
    end
 
-
    local values = values_custom_attribute
+
+   -- if values start with a '$' sign, execute the content
+   -- with object as the context to get the actual list of
+   -- values (used for instance to generate list of attributes
+   -- from "$grob.attributes")
    if values:sub(1,1) == '$' then
      values = values:sub(2,values:len())
      -- evaluate 'values' using object as context
      -- (Lua is so cool !)
      values = load(
-        'return '..values,
-	'gom_attribute: values','bt',
-	object
+        'return '..values,       -- code to be evaluated
+	'gom_attribute: values', -- tag for error messages
+        'bt',                    -- both binary and text
+	object                   -- environment
      )()
    end
+   
    autogui.combo_box(object, property_name, values, tooltip)
 end
 

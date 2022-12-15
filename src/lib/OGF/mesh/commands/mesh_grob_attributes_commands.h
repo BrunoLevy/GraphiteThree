@@ -68,16 +68,23 @@ namespace OGF {
     gom_slots:
 
 
+        /**
+         * \brief Creates an attribute.
+         * \param[in] name name of the attribute, without the localisation.
+         * \param[in] where which mesh elements the attribute should 
+         *  be attached to.
+         * \param[in] type attribute type
+         * \param[in] dimension number of components (1 for scalar)
+         */
 	gom_arg_attribute(where, handler, "combo_box")
-	gom_arg_attribute(where, values, "points;edges;facets;cells")
-            
+	gom_arg_attribute(where, values, "vertices;edges;facets;cells")
 	gom_arg_attribute(type, handler, "combo_box")
-	gom_arg_attribute(type, values, "bool;int32;float64")
-            
+	gom_arg_attribute(type, values, "bool;uint32;int32;float64")
         void create_attribute(
             const std::string& name,
             const std::string& where = "points",
-            const std::string& type  = "float64"
+            const std::string& type  = "float64",
+            index_t dimension = 1
         );
         
         /**

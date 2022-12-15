@@ -133,8 +133,48 @@ namespace OGF {
 
     void MeshGrobAttributesCommands::create_attribute(
         const std::string& name,
-        const std::string& where, const std::string& type
+        const std::string& where,
+        const std::string& type,
+        index_t dimension
     ) {
+        MeshElementsFlags where_id = Mesh::name_to_subelements_type(where);
+        if(where_id == MESH_NONE) {
+            Logger::err("Attributes")
+                << where << ": invalid attribute localization"
+                << std::endl;
+            return;
+        }
+        
+        MeshSubElementsStore& elts =
+            mesh_grob()->get_subelements_by_type(where_id);
+
+        if(elts.attributes().is_defined(name)) {
+            Logger::err("Attributes")
+                << name << ": already bound attribute"
+                << std::endl;
+            return;
+        }
+
+        if(type == "int32") {
+            Attribute<Numeric::int32> attr;
+            attr.create_vector_attribute(elts.attributes(),name,dimension);
+        } else if(type == "uint32") {
+            Attribute<Numeric::uint32> attr;
+            attr.create_vector_attribute(elts.attributes(),name,dimension);
+        } else if(type == "float64") {
+            Attribute<double> attr;
+            attr.create_vector_attribute(elts.attributes(),name,dimension);
+        } else if(type == "bool") {
+            Attribute<bool> attr;
+            attr.create_vector_attribute(elts.attributes(),name,dimension);
+        } else {
+            Logger::err("Attributes")
+                << type << ": invalid attribute type"
+                << std::endl;
+            return;
+        }
+
+        show_attribute(where + "." + name);
     }
     
     void MeshGrobAttributesCommands::delete_attribute(
