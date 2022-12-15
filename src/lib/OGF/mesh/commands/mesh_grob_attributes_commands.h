@@ -67,13 +67,26 @@ namespace OGF {
 	
     gom_slots:
 
+
+	gom_arg_attribute(where, handler, "combo_box")
+	gom_arg_attribute(where, values, "points;edges;facets;cells")
+            
+	gom_arg_attribute(type, handler, "combo_box")
+	gom_arg_attribute(type, values, "bool;int32;float64")
+            
+        void create_attribute(
+            const std::string& name,
+            const std::string& where = "points",
+            const std::string& type  = "float64"
+        );
+        
         /**
          * \brief Deletes an attribute.
          * \param[in] name the name of the attribute, 
          *   for instance "vertices.distance
          */
 	gom_arg_attribute(name, handler, "combo_box")
-	gom_arg_attribute(name, values, "grob.attributes")
+	gom_arg_attribute(name, values, "$grob.attributes")
         void delete_attribute(const std::string& name);
         
         /**

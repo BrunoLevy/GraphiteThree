@@ -202,7 +202,7 @@ namespace OGF {
          * \param[in] value the name of the attribute to be displayed
          */
 	gom_attribute(handler, "combo_box")
-	gom_attribute(values, "displayable_attributes")
+	gom_attribute(values, "$displayable_attributes")
         void set_attribute(const std::string& value);
 
         /**

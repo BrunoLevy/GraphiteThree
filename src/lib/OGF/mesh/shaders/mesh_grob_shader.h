@@ -442,7 +442,7 @@ namespace OGF {
          */
         gom_attribute(visible_if, "attributes")
 	gom_attribute(handler, "combo_box")
-	gom_attribute(values, "scalar_attributes")
+	gom_attribute(values, "$scalar_attributes")
         void set_attribute(const std::string& value);
 
         /**
@@ -514,7 +514,7 @@ namespace OGF {
          */
         gom_attribute(visible_if, "texturing")
 	gom_attribute(handler, "combo_box")
-	gom_attribute(values, "vector_attributes")
+	gom_attribute(values, "$vector_attributes")
         void set_tex_coords(const std::string& value);
 
         /**
@@ -532,7 +532,7 @@ namespace OGF {
          */
         gom_attribute(visible_if, "coloring")
 	gom_attribute(handler, "combo_box")
-	gom_attribute(values, "vector_attributes")
+	gom_attribute(values, "$vector_attributes")
 	void set_colors(const std::string& value) {
 	    // It is an alias of tex_coord, because we use
 	    // 3D texturing internally to display colors

@@ -655,14 +655,18 @@ autogui.handlers.combo_box = function(
       end
    end
 
-   -- evaluate 'values' using object as context
-   -- (Lua is so cool !)
-   local values = load(
-        'return '..values_custom_attribute,
+
+   local values = values_custom_attribute
+   if values:sub(1,1) == '$' then
+     values = values:sub(2,values:len())
+     -- evaluate 'values' using object as context
+     -- (Lua is so cool !)
+     values = load(
+        'return '..values,
 	'gom_attribute: values','bt',
 	object
-   )()
-   
+     )()
+   end
    autogui.combo_box(object, property_name, values, tooltip)
 end
 

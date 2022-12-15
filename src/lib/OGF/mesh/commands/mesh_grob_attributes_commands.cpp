@@ -130,6 +130,12 @@ namespace OGF {
 
     MeshGrobAttributesCommands::~MeshGrobAttributesCommands() { 
     }
+
+    void MeshGrobAttributesCommands::create_attribute(
+        const std::string& name,
+        const std::string& where, const std::string& type
+    ) {
+    }
     
     void MeshGrobAttributesCommands::delete_attribute(
         const std::string& name
