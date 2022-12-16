@@ -90,7 +90,21 @@ namespace OGF {
 	    index_t nb_eigens_per_band = 0,
 	    bool print_spectrum = false
 	);
-	
+
+
+        /**
+         * \brief Computes manifold harmonics (Laplacien eigenfunctions)
+         * \menu /Surface/Spectral
+         * \brief Computes a spectral embedding.
+         * \param[in] x_eigen the eigenfunction to be used for x
+         * \param[in] y_eigen the eigenfunction to be used for y
+         * \param[in] z_eigen the eigenfunction to be used for z
+         */
+        void compute_spectral_embedding(
+            index_t x_eigen=1,
+            index_t y_eigen=2,
+            index_t z_eigen=3
+        );
     };
     
 }

@@ -114,5 +114,39 @@ namespace OGF {
 	show_attribute("vertices.eigen["+String::to_string(nb_eigens-1)+"]");
 	mesh_grob()->update();
     }
+    
+    void MeshGrobSpectralCommands::compute_spectral_embedding(
+        index_t x_eigen,
+        index_t y_eigen,
+        index_t z_eigen
+    ) {
+
+        index_t min_dim = std::max(std::max(x_eigen,y_eigen),z_eigen) + 1;
+        if(min_dim >= 30) {
+            Logger::err("MH") << "Only use the first 30 eigenfunctions for that"
+                              << std::endl;
+        }
+        Attribute<double> eigen;
+        eigen.bind_if_is_defined(mesh_grob()->vertices.attributes(), "eigen");
+        if(eigen.is_bound() && eigen.dimension() < min_dim) {
+            eigen.destroy();
+        }
+        if(!eigen.is_bound()) {
+            compute_manifold_harmonics(30);
+            hide_attribute();
+            eigen.bind(mesh_grob()->vertices.attributes(), "eigen");
+        }
+        
+        index_t dim = eigen.dimension();
+        for(index_t v: mesh_grob()->vertices) {
+            double* p = mesh_grob()->vertices.point_ptr(v);
+            p[0] = eigen[v*dim+x_eigen];
+            p[1] = eigen[v*dim+y_eigen];
+            p[2] = eigen[v*dim+z_eigen];            
+        }
+
+        mesh_grob()->update();
+    }
+    
 }
 

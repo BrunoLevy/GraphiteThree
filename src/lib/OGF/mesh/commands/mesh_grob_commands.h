@@ -76,6 +76,12 @@ namespace OGF {
         }
 
     protected:
+
+        /**
+         * \brief Hides an attribute shown by show_attribute().
+         */
+        virtual void hide_attribute();
+        
 	/**
 	 * \brief Shows an attribute.
 	 * \param[in] attribute_name the name of the attribute to be

@@ -45,7 +45,19 @@ namespace OGF {
     MeshGrobCommands::~MeshGrobCommands() { 
     }        
 
-
+    void MeshGrobCommands::hide_attribute() {
+	Shader* shader = mesh_grob()->get_shader();
+	if(shader == nullptr) {
+	    return;
+	}
+	if(shader->has_property("painting")) {
+            shader->set_property("painting", "SOLID_COLOR");
+	}
+        if(shader->has_property("lighting")) {
+            shader->set_property("lighting", "true");
+        }
+    }
+    
     void MeshGrobCommands::show_attribute(
 	const std::string& attribute_name, MeshGrob* M
     ) {
