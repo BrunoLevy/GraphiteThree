@@ -172,6 +172,46 @@ namespace OGF {
      protected:
         void probe(const RayPick& p_ndc);
     };    
+
+
+    /**
+     * \brief A tool that measures distances.
+     */
+    gom_attribute(category, "paint")
+    gom_attribute(icon, "ruler")
+    gom_attribute(help, "measures distances on a mesh")
+    
+    gom_class MESH_API MeshGrobRuler : public MeshGrobTool {
+    public:
+        /**
+         * \brief MeshGrobPaint constructor.
+         * \param[in] parent a pointer to the ToolsManager
+         */
+        MeshGrobRuler(ToolsManager* parent);
+
+        /**
+         * \copydoc Tool::grab()
+         */
+        void grab(const RayPick& p_ndc) override;
+
+        /**
+         * \copydoc Tool::drag()
+         */
+        void drag(const RayPick& p_ndc) override;
+
+        /**
+         * \copydoc Tool::release()
+         */
+        void release(const RayPick& p_ndc) override;
+        
+     protected:
+        bool pick(const RayPick& p_ndc, vec3& p);
+        void show_distance(const RayPick& p_ndc);
+
+    private:
+        bool p_picked_;
+        vec3 p_;
+    };    
     
 }
 

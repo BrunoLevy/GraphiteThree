@@ -140,10 +140,6 @@ namespace {
         }
         Attribute<T> attr(elts.attributes(), name);
 
-        std::cerr << "dim = " << attr.dimension() << std::endl;
-        std::cerr << "elt = " << element_id       << std::endl;
-        std::cerr << "cmp = " << component        << std::endl;
-        
         switch(op) {
         case PAINT_SET:
             attr[element_id*attr.dimension()+component] = T(value);
@@ -665,5 +661,64 @@ namespace OGF {
         );
     }
 
+/***************************************************************/
+
+    MeshGrobRuler::MeshGrobRuler(
+        ToolsManager* parent
+    ) : MeshGrobTool(parent){
+    }
+   
+    void MeshGrobRuler::grab(const RayPick& p_ndc) {
+        p_picked_ = pick(p_ndc, p_);
+    }
+
+    void MeshGrobRuler::drag(const RayPick& p_ndc) {
+        vec3 q;
+        bool q_picked = pick(p_ndc,q);
+        std::string message;
+        if(p_picked_ && q_picked) {
+            message =
+                "distance: " + String::to_string(length(q-p_));
+        } else {
+            message = "<nothing>";
+        }
+
+        // Directly make the Lua interpreter change the variable
+        // graphite_gui.tooltip.
+        // If it is set, then the function graphite_gui.draw() in
+        // lib/graphite_imgui.lua draws a tooltip.
+        Interpreter::instance_by_language("Lua")->execute(
+            "graphite_gui.tooltip = '" + message + "'",
+            false, false
+        );
+    }
+
+    void MeshGrobRuler::release(const RayPick& p_ndc) {
+        geo_argused(p_ndc);
+
+        // Remove the tooltip as soon as the user releases
+        // the mouse button.
+        Interpreter::instance_by_language("Lua")->execute(
+            "graphite_gui.tooltip = nil",
+            false, false
+        );
+    }
+
+    bool MeshGrobRuler::pick(const RayPick& p_ndc, vec3& p) {
+        bool picked = false;
+        MeshElementsFlags where[4] = {
+            MESH_VERTICES, MESH_EDGES, MESH_FACETS, MESH_CELLS
+        };
+        for(index_t i=0; i<4; ++i) {
+            picked = (MeshGrobTool::pick(p_ndc, where[i]) != index_t(-1));
+            if(picked) {
+                p = picked_point();
+                return true;
+            }
+        }
+        return false;
+    }
     
+/***************************************************************/
+
 }

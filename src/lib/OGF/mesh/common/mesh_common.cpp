@@ -110,6 +110,7 @@ namespace OGF {
 
         ogf_register_grob_tool<MeshGrob,MeshGrobPaint>();
         ogf_register_grob_tool<MeshGrob,MeshGrobProbe>();
+        ogf_register_grob_tool<MeshGrob,MeshGrobRuler>();
        
         // [source insertion point] (do not delete this line)
         // Insert package initialization stuff here ...
