@@ -48,8 +48,9 @@
 #include <geogram/mesh/mesh_geometry.h>
 #include <geogram/mesh/mesh_repair.h>
 #include <geogram/delaunay/LFS.h>
-#include <geogram/basic/stopwatch.h>
 #include <geogram/points/kd_tree.h>
+#include <geogram/points/colocate.h>
+#include <geogram/basic/stopwatch.h>
 
 namespace {
     using namespace GEO;
@@ -221,6 +222,257 @@ namespace OGF {
         mgr.delete_attribute_store(attribute_name);
         mesh_grob()->update();
     }
+
+    /***********************************************************************/
+
+    void MeshGrobAttributesCommands::hide_selection() {
+        hide_attribute();
+    }
+
+    void MeshGrobAttributesCommands::select_all() {
+        MeshElementsFlags where = visible_selection();
+        if(visible_selection() == MESH_NONE) {
+            Logger::err("Selection") << "No visible selection"
+                                     << std::endl;
+            return;
+        }
+        Attribute<bool> selection(
+            mesh_grob()->get_subelements_by_type(where).attributes(),
+            "selection"
+        );
+        for(index_t i=0; i<selection.size(); ++i) {
+            selection[i] = true;
+        }
+        mesh_grob()->update();
+    }
+
+    void MeshGrobAttributesCommands::select_none() {
+        MeshElementsFlags where = visible_selection();
+        if(visible_selection() == MESH_NONE) {
+            Logger::err("Selection") << "No visible selection"
+                                     << std::endl;
+            return;
+        }
+        Attribute<bool> selection(
+            mesh_grob()->get_subelements_by_type(where).attributes(),
+            "selection"
+        );
+        for(index_t i=0; i<selection.size(); ++i) {
+            selection[i] = false;
+        }
+        mesh_grob()->update();
+    }
+
+    void MeshGrobAttributesCommands::invert_selection() {
+        MeshElementsFlags where = visible_selection();
+        if(visible_selection() == MESH_NONE) {
+            Logger::err("Selection") << "No visible selection"
+                                     << std::endl;
+            return;
+        }
+        Attribute<bool> selection(
+            mesh_grob()->get_subelements_by_type(where).attributes(),
+            "selection"
+        );
+        for(index_t i=0; i<selection.size(); ++i) {
+            selection[i] = !selection[i];
+        }
+        mesh_grob()->update();
+    }
+
+    void MeshGrobAttributesCommands::remove_selected_elements(
+        bool remove_isolated
+    ) {
+        MeshElementsFlags where = visible_selection();
+        if(visible_selection() == MESH_NONE) {
+            Logger::err("Selection") << "No visible selection"
+                                     << std::endl;
+            return;
+        }
+        
+        Attribute<bool> selection(
+            mesh_grob()->get_subelements_by_type(where).attributes(),
+            "selection"
+        );
+
+        // Particular case: vertices. Delete all edges, facets, cells 
+        // incident to a vertex to delete.
+        if(where == MESH_VERTICES) {
+            {
+                vector<index_t> delete_e(mesh_grob()->edges.nb(),0);
+                for(index_t e: mesh_grob()->edges) {
+                    if(
+                        selection[mesh_grob()->edges.vertex(e,0)] ||
+                        selection[mesh_grob()->edges.vertex(e,0)]
+                    ) {
+                        delete_e[e] = 1;
+                    }
+                }
+                mesh_grob()->edges.delete_elements(delete_e, remove_isolated);
+            }
+
+            {
+                vector<index_t> delete_f(mesh_grob()->facets.nb(),0);
+                for(index_t f: mesh_grob()->facets) {
+                    for(index_t lv=0;
+                        lv<mesh_grob()->facets.nb_vertices(f); ++lv
+                    ) {
+                        if(selection[mesh_grob()->facets.vertex(f,lv)]) {
+                            delete_f[f] = 1;
+                            break;
+                        }
+                    }
+                }
+                mesh_grob()->facets.delete_elements(delete_f, remove_isolated);
+            }
+
+            {
+                vector<index_t> delete_c(mesh_grob()->cells.nb(),0);
+                for(index_t c: mesh_grob()->cells) {
+                    for(index_t lv=0;
+                        lv<mesh_grob()->cells.nb_vertices(c); ++lv
+                    ) {
+                        if(selection[mesh_grob()->cells.vertex(c,lv)]) {
+                            delete_c[c] = 1;
+                            break;
+                        }
+                    }
+                }
+                mesh_grob()->cells.delete_elements(delete_c, remove_isolated);
+            }
+        }
+
+        vector<index_t> remove_element(selection.size(), 0);
+        for(index_t i=0; i<selection.size(); ++i) {
+            remove_element[i] = index_t(selection[i]);
+        }
+
+        MeshElements& elts = dynamic_cast<MeshElements&>(
+            mesh_grob()->get_subelements_by_type(where)
+        );
+        elts.delete_elements(remove_element, remove_isolated);
+        mesh_grob()->update();
+    }
+
+    
+    void MeshGrobAttributesCommands::show_vertices_selection() {
+        Attribute<bool> sel(mesh_grob()->vertices.attributes(),"selection");
+        show_attribute("vertices.selection");
+    }
+
+    void MeshGrobAttributesCommands::select_vertices_on_surface_border() {
+        Attribute<bool> v_selection(
+            mesh_grob()->vertices.attributes(), "selection"
+        );
+        for(index_t f: mesh_grob()->facets) {
+            for(index_t c: mesh_grob()->facets.corners(f)) {
+                if(mesh_grob()->facet_corners.adjacent_facet(c) == NO_FACET) {
+                    v_selection[mesh_grob()->facet_corners.vertex(c)] = true;
+                }
+            }
+        }
+        show_vertices_selection();
+        mesh_grob()->update();        
+    }
+
+    void MeshGrobAttributesCommands::unselect_vertices_on_surface_border() {
+        Attribute<bool> v_selection(
+            mesh_grob()->vertices.attributes(), "selection"
+        );
+        for(index_t f: mesh_grob()->facets) {
+            for(index_t c: mesh_grob()->facets.corners(f)) {
+                if(mesh_grob()->facet_corners.adjacent_facet(c) == NO_FACET) {
+                    v_selection[mesh_grob()->facet_corners.vertex(c)] = false;
+                }
+            }
+        }
+        show_vertices_selection();        
+        mesh_grob()->update();        
+    }
+
+    void MeshGrobAttributesCommands::select_duplicated_vertices(
+	double tolerance
+    ) {
+	vector<index_t> old2new(mesh_grob()->vertices.nb());
+	index_t nb_distinct;
+	if(tolerance == 0.0) {
+	    nb_distinct = Geom::colocate_by_lexico_sort(
+		mesh_grob()->vertices.point_ptr(0),
+		coord_index_t(mesh_grob()->vertices.dimension()),
+		mesh_grob()->vertices.nb(),
+		old2new,
+		mesh_grob()->vertices.dimension()
+	    );
+	} else {
+	    nb_distinct = Geom::colocate(
+		mesh_grob()->vertices.point_ptr(0),
+		coord_index_t(mesh_grob()->vertices.dimension()),
+		mesh_grob()->vertices.nb(),
+		old2new,
+		tolerance
+	    );
+	}
+
+	Logger::out("Colocate") << mesh_grob()->vertices.nb() - nb_distinct
+				<< " colocated vertices"
+				<< std::endl;
+	
+	vector<index_t> new_count(mesh_grob()->vertices.nb(),0);
+	for(index_t v: mesh_grob()->vertices) {
+	    ++new_count[old2new[v]];
+	}
+        Attribute<bool> v_selection(
+            mesh_grob()->vertices.attributes(), "selection"
+        );
+	for(index_t v: mesh_grob()->vertices) {
+	    if(new_count[old2new[v]] > 1) {
+		v_selection[v] = true;
+	    }
+	}
+        show_vertices_selection();        
+	mesh_grob()->update();
+    }
+
+    void MeshGrobAttributesCommands::show_facets_selection() {
+        Attribute<bool> sel(mesh_grob()->facets.attributes(),"selection");
+        show_attribute("facets.selection");
+    }
+
+    void MeshGrobAttributesCommands::show_cells_selection() {
+        Attribute<bool> sel(mesh_grob()->cells.attributes(),"selection");
+        show_attribute("cells.selection");
+    }
+    
+    MeshElementsFlags MeshGrobAttributesCommands::visible_selection() const {
+        MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
+            mesh_grob()->get_shader()
+        );
+        if(shd == nullptr) {
+            return MESH_NONE;
+        }
+
+        {
+            std::string painting;
+            shd->get_property("painting",painting);
+            if(painting != "ATTRIBUTE") {
+                return MESH_NONE;
+            }
+        }
+        
+        std::string full_attribute_name;
+        MeshElementsFlags where;
+        std::string attribute_name;
+        index_t component;
+        shd->get_property("attribute",full_attribute_name);
+        if(!Mesh::parse_attribute_name(
+               full_attribute_name,where,attribute_name,component)
+          ) {
+            return MESH_NONE;
+        }
+        return where;
+    }
+    
+    /*****************************************************************************/    
     
     void MeshGrobAttributesCommands::compute_sub_elements_id(
         MeshElementsFlags what,

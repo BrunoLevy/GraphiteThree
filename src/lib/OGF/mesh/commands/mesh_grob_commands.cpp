@@ -93,11 +93,52 @@ namespace OGF {
 	shader->set_property("attribute", attribute_name);
 
 	if(first_time) {
+
+            MeshElementsFlags where;
+            std::string attr_name;
+            index_t component;
+            if(
+                !Mesh::parse_attribute_name(
+                    attribute_name, where, attr_name, component
+                )
+            ) {
+                return;
+            }
+
+            MeshSubElementsStore& elts =
+                mesh_grob()->get_subelements_by_type(where);
+
+            AttributeStore* store = elts.attributes().find_attribute_store(
+                attr_name
+            );
+
+            bool is_bool = store->elements_type_matches(
+                typeid(Numeric::uint8).name()
+            );
+
+            bool is_integer = store->elements_type_matches(
+                typeid(Numeric::uint32).name()
+            ) || store->elements_type_matches(
+                typeid(Numeric::int32).name()
+            );
+            
+            
 	    shader->invoke_method("autorange");
-	    if(!String::string_starts_with(attribute_name,"cells.")) {
+	    if(
+                !is_bool && !is_integer && 
+                !String::string_starts_with(attribute_name,"cells.")
+            ) {
 		shader->set_property("lighting","false");
 	    }
-	    shader->set_property("colormap","plasma;true;0;false;false;");
+
+            std::string colormap = is_bool ? "blue_red" : "plasma";
+            std::string smooth   = (is_bool || is_integer) ? "false" : "true";
+            
+            shader->set_property(
+                "colormap",
+                colormap + ";true;0;false;" + smooth
+                // "plasma;true;0;false;false;"
+            );
 	}
     }
 

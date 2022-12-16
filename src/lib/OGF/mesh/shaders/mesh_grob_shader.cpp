@@ -249,11 +249,20 @@ namespace OGF {
                 subelements.attributes(), attribute_name_
             );
             if(attribute.is_bound()) {
-                attribute_min_ = Numeric::max_float64();
-                attribute_max_ = Numeric::min_float64();
-                for(index_t i: subelements) {
-                    attribute_min_ = std::min(attribute_min_, attribute[i]);
-                    attribute_max_ = std::max(attribute_max_, attribute[i]);
+                // If boolean attribute, always use [0,1] range.
+                if(
+                    attribute.element_type() ==
+                                       ReadOnlyScalarAttributeAdapter::ET_UINT8
+                ) {
+                    attribute_min_ = 0.0;
+                    attribute_max_ = 1.0;
+                } else {
+                    attribute_min_ = Numeric::max_float64();
+                    attribute_max_ = Numeric::min_float64();
+                    for(index_t i: subelements) {
+                        attribute_min_ = std::min(attribute_min_, attribute[i]);
+                        attribute_max_ = std::max(attribute_max_, attribute[i]);
+                    }
                 }
             } 
         }

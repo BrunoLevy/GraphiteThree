@@ -37,7 +37,6 @@
  
 
 #include <OGF/mesh/commands/mesh_grob_points_commands.h>
-#include <OGF/mesh/commands/mesh_grob_selection_commands.h>
 #include <geogram/points/co3ne.h>
 #include <geogram/points/kd_tree.h>
 #include <geogram/mesh/mesh_geometry.h>
@@ -467,13 +466,66 @@ namespace OGF {
     }
 
     void MeshGrobPointsCommands::delete_selected_points() {
-	SmartPointer<MeshGrobSelectionCommands> cmd =
-	    dynamic_cast<MeshGrobSelectionCommands*>(
-		mesh_grob()->query_interface(
-		    "OGF::MeshGrobSelectionCommands"
-		)
-	);
-	cmd->delete_selected_vertices(false);
+        Attribute<bool> selection;
+        selection.bind_if_is_defined(
+            mesh_grob()->vertices.attributes(), "selection"
+        );
+        
+        if(!selection.is_bound()) {
+            return;
+        }
+
+        {
+            vector<index_t> delete_e(mesh_grob()->edges.nb(),0);
+            for(index_t e: mesh_grob()->edges) {
+                if(
+                    selection[mesh_grob()->edges.vertex(e,0)] ||
+                    selection[mesh_grob()->edges.vertex(e,0)]
+                ) {
+                    delete_e[e] = 1;
+                }
+            }
+            mesh_grob()->edges.delete_elements(delete_e, false);
+        }
+
+        {
+            vector<index_t> delete_f(mesh_grob()->facets.nb(),0);
+            for(index_t f: mesh_grob()->facets) {
+                for(index_t lv=0;
+                    lv<mesh_grob()->facets.nb_vertices(f); ++lv
+                   ) {
+                    if(selection[mesh_grob()->facets.vertex(f,lv)]) {
+                        delete_f[f] = 1;
+                        break;
+                    }
+                }
+            }
+            mesh_grob()->facets.delete_elements(delete_f, false);
+        }
+
+        {
+            vector<index_t> delete_c(mesh_grob()->cells.nb(),0);
+            for(index_t c: mesh_grob()->cells) {
+                for(index_t lv=0;
+                    lv<mesh_grob()->cells.nb_vertices(c); ++lv
+                   ) {
+                    if(selection[mesh_grob()->cells.vertex(c,lv)]) {
+                        delete_c[c] = 1;
+                        break;
+                    }
+                }
+            }
+            mesh_grob()->cells.delete_elements(delete_c, false);
+        }
+
+        vector<index_t> remove_element(selection.size(), 0);
+        for(index_t i=0; i<selection.size(); ++i) {
+            remove_element[i] = index_t(selection[i]);
+        }
+
+        mesh_grob()->vertices.delete_elements(remove_element, false);
+        
+        mesh_grob()->update();
     }
 
     void MeshGrobPointsCommands::project_on_surface(

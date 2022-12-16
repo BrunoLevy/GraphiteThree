@@ -48,7 +48,6 @@
 #include <OGF/mesh/commands/mesh_grob_shapes_commands.h>
 #include <OGF/mesh/commands/mesh_grob_volume_commands.h>
 #include <OGF/mesh/commands/mesh_grob_mesh_commands.h>
-#include <OGF/mesh/commands/mesh_grob_selection_commands.h>
 #include <OGF/mesh/commands/mesh_grob_attributes_commands.h>
 #include <OGF/mesh/commands/mesh_grob_spectral_commands.h>
 
@@ -83,7 +82,6 @@ namespace OGF {
         ogf_register_grob_commands<MeshGrob,MeshGrobShapesCommands>();       
         ogf_register_grob_commands<MeshGrob,MeshGrobVolumeCommands>();
         ogf_register_grob_commands<MeshGrob,MeshGrobMeshCommands>();
-        ogf_register_grob_commands<MeshGrob,MeshGrobSelectionCommands>();
         ogf_register_grob_commands<MeshGrob,MeshGrobAttributesCommands>();
         ogf_register_grob_commands<MeshGrob,MeshGrobSpectralCommands>();	
 

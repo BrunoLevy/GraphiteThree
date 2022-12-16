@@ -95,6 +95,71 @@ namespace OGF {
 	gom_arg_attribute(name, handler, "combo_box")
 	gom_arg_attribute(name, values, "$grob.attributes")
         void delete_attribute(const std::string& name);
+
+
+        /**
+         * \menu Selection
+         */
+        void select_all();
+
+        /**
+         * \menu Selection
+         */
+        void select_none();
+
+        /**
+         * \menu Selection
+         */
+        void invert_selection();
+
+        /**
+         * \menu Selection
+         */
+        void remove_selected_elements(
+            bool remove_isolated_vertices = true
+        );
+        
+        /**
+         * \menu Selection
+         */
+        void hide_selection();
+        
+        /**
+         * \menu Vertices/Selection
+         */
+        void show_vertices_selection();
+
+        /**
+         * \brief Selects all the vertices on the border of a surface.
+         * \menu Vertices/Selection
+         */
+        void select_vertices_on_surface_border();
+
+        /**
+         * \brief Unselects all the vertices on the border of a surface.
+         * \menu Vertices/Selection
+         */
+        void unselect_vertices_on_surface_border();
+
+	/**
+	 * \brief Selects all the vertices that are duplicated in
+	 *  a mesh.
+	 * \param[in] tolerance maximum distance for considering
+	 *  that two vertices are duplicated.
+         * \menu Vertices/Selection
+	 */
+	void select_duplicated_vertices(double tolerance=0.0);
+
+        
+        /**
+         * \menu Facets/Selection
+         */
+        void show_facets_selection();
+
+        /**
+         * \menu Cells/Selection
+         */
+        void show_cells_selection();
         
         /**
          * \brief Stores the vertices ids in an attribute.
@@ -196,6 +261,12 @@ namespace OGF {
         void compute_sub_elements_id(
             MeshElementsFlags what, const std::string& attribute
         );
+
+        /**
+         * \brief Gets the selection displayed in the current shader, or
+         *  MESH_NONE if no selection is displayed.
+         */
+        MeshElementsFlags visible_selection() const;
     };
     
 }

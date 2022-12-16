@@ -44,66 +44,6 @@
 namespace {
     using namespace OGF;
 
-
-    /**
-     * \brief Extracts localisation, name and optional component from 
-     *   an attribute name.
-     * \param[in] full_attribute_name for instance, facets.density, or
-     *  vertices.normal[0]
-     * \param[out] where one of MESH_VERTICES, MESH_EDGES, MESH_FACETS,
-     *  MESH_FACET_CORNERS, MESH_CELLS, MESH_CELL_FACETS, MESH_CELL_CORNERS
-     * \param[out] attribute_name the name of the attribute, without the
-     *  localisation and without the component
-     * \param[out] component the component (between square brackets in 
-     *  \p full_attribute_name) or 0 if no component was specified
-     * \retval true if the attribute name could be parsed
-     * \retval false if the attribute name has invalid syntax
-     */
-    bool parse_attribute_name(
-        const std::string& full_attribute_name,
-        MeshElementsFlags& where,        
-        std::string& attribute_name,
-        index_t& component
-    ) {
-
-        size_t pos1 = full_attribute_name.find('.');
-        if(pos1 == std::string::npos) {
-            return false;
-        }
-
-        {
-            std::string where_name = full_attribute_name.substr(0,pos1);
-            where = Mesh::name_to_subelements_type(where_name);
-            if(where == MESH_NONE) {
-                return false;
-            }
-        }
-        
-        attribute_name = full_attribute_name.substr(
-            pos1+1, full_attribute_name.length()-pos1-1
-        );
-
-        size_t pos2 = attribute_name.find('[');
-        if(pos2 == std::string::npos) {
-            component = 0;
-        } else {
-            if(attribute_name[attribute_name.length()-1] != ']') {
-                return false;
-            }
-            std::string component_str = attribute_name.substr(
-                pos2+1, attribute_name.length()-pos2-2
-            );
-            attribute_name = attribute_name.substr(0, pos2);
-            try {
-                component = String::to_uint(component_str);
-            } catch(...) {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-        
     /**
      * \brief A painting operation.
      */
@@ -454,7 +394,7 @@ namespace OGF {
         {
             std::string full_attribute_name;
             shd->get_property("attribute",full_attribute_name);
-            if(!parse_attribute_name(
+            if(!Mesh::parse_attribute_name(
                    full_attribute_name,where,attribute_name,component)
             ) {
                 return;
@@ -566,7 +506,7 @@ namespace OGF {
         if(with_attributes) {
             std::string full_attribute_name;
             shd->get_property("attribute",full_attribute_name);
-            if(!parse_attribute_name(
+            if(!Mesh::parse_attribute_name(
                    full_attribute_name,
                    attribute_element_type,attribute_name,component
                )
