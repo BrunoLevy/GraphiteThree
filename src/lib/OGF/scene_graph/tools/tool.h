@@ -147,6 +147,19 @@ namespace OGF {
         Grob* object() const ;
 
     protected:
+        /**
+         * \brief Sets the tooltip to be displayed under the mouse.
+         * \details For multi-line text, use '\\n' (with two backslashes).
+         * \param[in] text the text to be displayed.
+         */
+        void set_tooltip(const std::string& text);
+
+        /**
+         * \brief Removes a tooltip previously created by set_tooltip()
+         */
+        void reset_tooltip();
+        
+    protected:
         ToolsManager* tools_manager_ ;
     } ;
 

@@ -200,8 +200,7 @@ namespace OGF {
          */
         void configure_tool(const std::string& value);
 
-    protected:
-        
+    public:
         /**
          * \brief Finds a Tool by its class name.
          * \details The first time the function is called, the Tool is created

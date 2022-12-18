@@ -94,7 +94,9 @@ namespace OGF {
             ArgList args ;
 	    args.create_arg("parent",this);
             Tool* tool = dynamic_cast<Tool*>(
-                manager()->scene_graph()->interpreter()->create(tool_class_name, args) 
+                manager()->scene_graph()->interpreter()->create(
+                    tool_class_name, args
+                ) 
             );
 	    if(tool == nullptr) {
 		Logger::err("Tool")
@@ -165,5 +167,4 @@ namespace OGF {
 	}
 	return rendering_context_;
     }
-    
 }

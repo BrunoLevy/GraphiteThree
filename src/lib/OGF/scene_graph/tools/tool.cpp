@@ -77,6 +77,24 @@ namespace OGF {
         tools_manager_->status(value) ; 
     }
 
+    void Tool::set_tooltip(const std::string& text) {
+        // Directly make the Lua interpreter change the variable
+        // graphite_gui.tooltip.
+        // If it is set, then the function graphite_gui.draw() in
+        // lib/graphite_imgui.lua draws a tooltip.
+        Interpreter::instance_by_language("Lua")->execute(
+            "graphite_gui.tooltip = '" + text + "'",
+            false, false
+        );
+    }
+
+    void Tool::reset_tooltip() {
+        Interpreter::instance_by_language("Lua")->execute(
+            "graphite_gui.tooltip = nil",
+            false, false
+        );
+    }
+    
     /*******************************************************/
 
     MultiTool::MultiTool(ToolsManager* mgr) : Tool(mgr) {

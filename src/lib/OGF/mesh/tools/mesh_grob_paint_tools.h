@@ -49,6 +49,70 @@
 
 namespace OGF {
 
+    gom_class MESH_API MeshGrobPaintTool : public MeshGrobTool {
+    public:
+        MeshGrobPaintTool(ToolsManager* parent);
+
+        
+    gom_properties:
+         /**
+          * \brief The value to be painted.
+          */
+         void set_value(double value) {
+             value_ = value;
+         }
+         
+         double get_value() const {
+	    return value_;
+	 }
+
+         /**
+          * \brief If set, value is added to
+          *  previous value when painting.
+          */
+         void set_accumulate(bool value) {
+	    accumulate_ = value;
+	 }
+         
+         bool get_accumulate() const {
+	    return accumulate_;
+	 }
+
+         /**
+          * \brief If set, colormap range is
+          *  continuously updated when painting.
+          */
+         void set_autorange(bool value) {
+             autorange_ = value;
+         }
+         
+         bool get_autorange() const {
+             return autorange_;
+         }
+         
+         /**
+          * \brief If set, vertex attributes can be 
+          *  only painted by directly picking vertices,
+          *  else one can pick facets or cells.
+          */
+         void set_pick_vertices_only(bool value);
+         
+         bool get_pick_vertices_only() const {
+             return pick_vertices_only_;
+         }
+
+    protected:
+         void paint(const RayPick& p_ndc);
+         
+    private:
+         double value_;
+         bool accumulate_;
+         bool autorange_;
+         bool pick_vertices_only_;
+    };
+
+    /**********************************************************/
+    
     /**
      * \brief A tool that paints attribute values in a mesh
      */
@@ -57,7 +121,7 @@ namespace OGF {
     gom_attribute(help, "paint attributes on a mesh")
     gom_attribute(message, "btn1: paint; btn3: erase")
 	   
-    gom_class MESH_API MeshGrobPaint : public MeshGrobTool {
+    gom_class MESH_API MeshGrobPaint : public MeshGrobPaintTool {
     public:
         /**
          * \brief MeshGrobPaint constructor.
@@ -75,68 +139,9 @@ namespace OGF {
          */
         void drag(const RayPick& p_ndc) override;
 
-
-     gom_properties:
-
-
-         /**
-          * \brief The value to be painted.
-          */
-         void set_value(double value) {
-	    value_ = value;
-	 }
-         
-         double get_value() const {
-	    return value_;
-	 }
-
-
-         /**
-          * \brief If set, value is added to
-          *  previous value when painting.
-          */
-         void set_accumulate(bool value) {
-	    accumulate_ = value;
-	 }
-         
-         bool get_accumulate() const {
-	    return accumulate_;
-	 }
-       
-
-         /**
-          * \brief If set, colormap range is
-          *  continuously updated when painting.
-          */
-         void set_autorange(bool value) {
-             autorange_ = value;
-         }
-         
-         bool get_autorange() const {
-             return autorange_;
-         }
-         
-
-         /**
-          * \brief If set, vertex attributes can be 
-          *  only painted by directly picking vertices,
-          *  else one can pick facets or cells.
-          */
-         void set_pick_vertices_only(bool value);
-         
-         bool get_pick_vertices_only() const {
-             return pick_vertices_only_;
-         }
-         
-     protected:
-         void paint(const RayPick& p_ndc);
-         
-     private:
-        double value_;
-        bool accumulate_;
-        bool autorange_;
-        bool pick_vertices_only_;
     };    
+
+    /*************************************************************/
     
     /**
      * \brief A tool that paints attribute values in a mesh
@@ -168,12 +173,17 @@ namespace OGF {
          * \copydoc Tool::release()
          */
         void release(const RayPick& p_ndc) override;
-        
+
      protected:
         void probe(const RayPick& p_ndc);
+        
+    private:
+        bool picked_;
+        double value_;
     };    
 
-
+    /********************************************************/
+    
     /**
      * \brief A tool that measures distances.
      */
@@ -212,6 +222,8 @@ namespace OGF {
         bool p_picked_;
         vec3 p_;
     };    
+
+    /*******************************************************/
     
 }
 

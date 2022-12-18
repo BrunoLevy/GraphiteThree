@@ -356,22 +356,16 @@ namespace {
 
 namespace OGF {
 
-    MeshGrobPaint::MeshGrobPaint(ToolsManager* parent) : MeshGrobTool(parent) {
+    MeshGrobPaintTool::MeshGrobPaintTool(
+        ToolsManager* parent
+    ) : MeshGrobTool(parent) {
        value_ = 1.0;
        accumulate_ = false;
        autorange_ = true;
        pick_vertices_only_ = false;
     }
-   
-    void MeshGrobPaint::grab(const RayPick& p_ndc) {
-        paint(p_ndc);
-    }
 
-    void MeshGrobPaint::drag(const RayPick& p_ndc) {
-        paint(p_ndc);
-    }
-
-    void MeshGrobPaint::paint(const RayPick& p_ndc) {
+    void MeshGrobPaintTool::paint(const RayPick& p_ndc) {
         MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
             mesh_grob()->get_shader()
         );
@@ -452,7 +446,7 @@ namespace OGF {
         mesh_grob()->update();
     }
 
-    void MeshGrobPaint::set_pick_vertices_only(bool value) {
+    void MeshGrobPaintTool::set_pick_vertices_only(bool value) {
         pick_vertices_only_ = value;
         MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
             mesh_grob()->get_shader()
@@ -465,12 +459,30 @@ namespace OGF {
             }
         }
     }
+    
+    /**********************************************************************/
+    
+    MeshGrobPaint::MeshGrobPaint(
+        ToolsManager* parent
+    ) : MeshGrobPaintTool(parent) {
+    }
+   
+    void MeshGrobPaint::grab(const RayPick& p_ndc) {
+        paint(p_ndc);
+    }
+
+    void MeshGrobPaint::drag(const RayPick& p_ndc) {
+        paint(p_ndc);
+    }
+
+
 
 /***************************************************************/
 
     MeshGrobProbe::MeshGrobProbe(
         ToolsManager* parent
-    ) : MeshGrobTool(parent){
+    ) : MeshGrobTool(parent) {
+        picked_ = false;
     }
    
     void MeshGrobProbe::grab(const RayPick& p_ndc) {
@@ -482,6 +494,8 @@ namespace OGF {
     }
 
     void MeshGrobProbe::probe(const RayPick& p_ndc) {
+        picked_ = false;
+        
         MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
             mesh_grob()->get_shader()
         );
@@ -584,8 +598,6 @@ namespace OGF {
             );
         }
         
-        
-        
         std::string message = "<nothing>";
 
         if(element_id != index_t(-1) && element_type != MESH_NONE) {
@@ -611,28 +623,25 @@ namespace OGF {
                         + String::to_string(component) + "]";
                 }
                 message += ("\\n" + attribute_name + "=" + value_str);
+                picked_ = true;
+                value_ = value;
             }
         }
-
-        // Directly make the Lua interpreter change the variable
-        // graphite_gui.tooltip.
-        // If it is set, then the function graphite_gui.draw() in
-        // lib/graphite_imgui.lua draws a tooltip.
-        Interpreter::instance_by_language("Lua")->execute(
-            "graphite_gui.tooltip = '" + message + "'",
-            false, false
-        );
+        set_tooltip(message);
     }
 
     void MeshGrobProbe::release(const RayPick& p_ndc) {
         geo_argused(p_ndc);
+        reset_tooltip();
 
-        // Remove the tooltip as soon as the user releases
-        // the mouse button.
-        Interpreter::instance_by_language("Lua")->execute(
-            "graphite_gui.tooltip = nil",
-            false, false
-        );
+        if(picked_) {
+            MeshGrobPaint* paint = dynamic_cast<MeshGrobPaint*>(
+                tools_manager()->resolve_tool("OGF::MeshGrobPaint")
+            );
+            paint->set_value(value_);
+            paint->set_accumulate(false);
+            paint->set_autorange(false);
+        }
     }
 
 /***************************************************************/
@@ -656,26 +665,12 @@ namespace OGF {
         } else {
             message = "<nothing>";
         }
-
-        // Directly make the Lua interpreter change the variable
-        // graphite_gui.tooltip.
-        // If it is set, then the function graphite_gui.draw() in
-        // lib/graphite_imgui.lua draws a tooltip.
-        Interpreter::instance_by_language("Lua")->execute(
-            "graphite_gui.tooltip = '" + message + "'",
-            false, false
-        );
+        set_tooltip(message);
     }
 
     void MeshGrobRuler::release(const RayPick& p_ndc) {
         geo_argused(p_ndc);
-
-        // Remove the tooltip as soon as the user releases
-        // the mouse button.
-        Interpreter::instance_by_language("Lua")->execute(
-            "graphite_gui.tooltip = nil",
-            false, false
-        );
+        reset_tooltip();
     }
 
     bool MeshGrobRuler::pick(const RayPick& p_ndc, vec3& p) {
