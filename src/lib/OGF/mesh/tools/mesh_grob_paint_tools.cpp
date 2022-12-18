@@ -562,6 +562,29 @@ namespace OGF {
                 with_value = true;
             }
         }
+
+        bool is_bool = false;
+        index_t is_integer = false;
+        index_t dim = 1;
+        if(with_value) {
+            AttributeStore* store =
+                mesh_grob()->get_subelements_by_type(attribute_element_type)
+                .attributes().find_attribute_store(attribute_name);
+
+            dim = store->dimension();
+            
+            is_bool = store->elements_type_matches(
+                typeid(Numeric::uint8).name()
+            );
+
+            is_integer = store->elements_type_matches(
+                typeid(Numeric::uint32).name()
+            ) || store->elements_type_matches(
+                typeid(Numeric::int32).name()
+            );
+        }
+        
+        
         
         std::string message = "<nothing>";
 
@@ -574,9 +597,20 @@ namespace OGF {
                 mesh_grob()->subelements_type_to_name(element_type) +
                 ": #" + String::to_string(element_id);
             if(with_value) {
-                message += (
-                    "\\n" + attribute_name + "=" + String::to_string(value)
-                );
+                std::string value_str;
+                if(is_bool) {
+                    value_str = (value > 0.5) ? "true" : "false";
+                } else if(is_integer) {
+                    value_str = String::to_string(int(value));
+                } else {
+                    value_str = String::to_string(value);
+                }
+                if(dim > 1) {
+                    attribute_name =
+                        attribute_name + "["
+                        + String::to_string(component) + "]";
+                }
+                message += ("\\n" + attribute_name + "=" + value_str);
             }
         }
 
