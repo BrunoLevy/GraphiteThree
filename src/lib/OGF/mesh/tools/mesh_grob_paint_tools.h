@@ -109,6 +109,10 @@ namespace OGF {
          bool accumulate_;
          bool autorange_;
          bool pick_vertices_only_;
+         
+         double timestamp_;
+         double update_time_;
+         index_t picked_element_;
     };
 
     /**********************************************************/

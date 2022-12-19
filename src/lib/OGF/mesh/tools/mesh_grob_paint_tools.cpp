@@ -40,6 +40,7 @@
 #include <OGF/mesh/shaders/mesh_grob_shader.h>
 #include <OGF/gom/interpreter/interpreter.h>
 #include <geogram/mesh/mesh_geometry.h>
+#include <geogram/basic/stopwatch.h>
 
 namespace {
     using namespace OGF;
@@ -363,6 +364,9 @@ namespace OGF {
        accumulate_ = false;
        autorange_ = true;
        pick_vertices_only_ = false;
+       timestamp_ = 0.0;
+       update_time_ = 0.0;
+       picked_element_ = index_t(-1);
     }
 
     void MeshGrobPaintTool::paint(const RayPick& p_ndc) {
@@ -412,6 +416,7 @@ namespace OGF {
         } else if(where == MESH_VERTICES && !pick_vertices_only_) {
             index_t f = pick_facet(p_ndc);
             if(f != index_t(-1)) {
+                picked_element_ = f;
                 for(index_t lv = 0;
                     lv<mesh_grob()->facets.nb_vertices(f); ++lv
                 ) {
@@ -424,6 +429,7 @@ namespace OGF {
                 }
             } else {
                 index_t c = pick_cell(p_ndc);
+                picked_element_ = c;
                 if(c != index_t(-1)) {
                     for(index_t lv = 0;
                         lv<mesh_grob()->cells.nb_vertices(c); ++lv
@@ -438,12 +444,14 @@ namespace OGF {
                 }
             }
         }
-        
-        if(autorange_) {
-            shd->invoke_method("autorange");
+
+        if(picked_element != picked_element_) {
+            if(autorange_) {
+                shd->invoke_method("autorange");
+            }
+            mesh_grob()->update();
+            picked_element_ = picked_element;
         }
-        
-        mesh_grob()->update();
     }
 
     void MeshGrobPaintTool::set_pick_vertices_only(bool value) {

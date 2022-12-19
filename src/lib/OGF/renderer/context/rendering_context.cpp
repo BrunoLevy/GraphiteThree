@@ -897,6 +897,7 @@ namespace OGF {
             // actual implementation of OpenGL. This could be done also
             // with glFLush(); glFinish();
             //   Since it is not harmful, I keep it there...
+            
             done_current();
 	    glFlush();
 	    glFinish();

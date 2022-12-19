@@ -144,7 +144,6 @@ namespace OGF {
 
         index_t result = rendering_context()->picked_id();
 
-	
         picked_ndc_ = rp.p_ndc;
         picked_point_ = rendering_context()->picked_point();
         picked_depth_ = rendering_context()->picked_depth();
