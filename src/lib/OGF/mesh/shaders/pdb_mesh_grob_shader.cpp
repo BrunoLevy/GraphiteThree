@@ -70,6 +70,8 @@ namespace OGF {
     }
 
     void PDBMeshGrobShader::draw() {
+        MeshGrobShader::draw();
+        
 	bool slicing_mode = false;
 	
 	if(glupGetClipMode() == GLUP_CLIP_SLICE_CELLS) {

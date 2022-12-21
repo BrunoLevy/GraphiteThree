@@ -56,7 +56,8 @@ namespace OGF {
     }
 
     void ParamMeshGrobShader::draw() {
-
+        MeshGrobShader::draw();
+        
 	Attribute<double> tex_coord;
 	tex_coord.bind_if_is_defined(
 	    mesh_grob()->facet_corners.attributes(), "tex_coord"

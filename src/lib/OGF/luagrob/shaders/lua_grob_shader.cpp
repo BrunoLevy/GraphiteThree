@@ -54,6 +54,7 @@ namespace OGF {
     }
 
     void LuaGrobShader::draw() {
+        Shader::draw();
     }
 
     void LuaGrobShader::pick_object(index_t object_id) {
@@ -80,6 +81,8 @@ namespace OGF {
     }
 
     void PlainLuaGrobShader::draw() {
+        LuaGrobShader::draw();
+        
         GLUPboolean clipping_backup = glupIsEnabled(GLUP_CLIPPING);
         
         if(!clipping_) {

@@ -54,6 +54,7 @@ namespace OGF {
     }
 
     void VoxelGrobShader::draw() {
+        Shader::draw();
     }
 
     void VoxelGrobShader::pick_object(index_t object_id) {
@@ -113,6 +114,9 @@ namespace OGF {
     }
     
     void PlainVoxelGrobShader::draw() {
+
+        VoxelGrobShader::draw();
+        
         GLUPboolean clipping_backup = glupIsEnabled(GLUP_CLIPPING);
         
         if(!clipping_) {

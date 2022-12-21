@@ -68,12 +68,54 @@ namespace OGF {
         /**
          * \brief Adds a segment to the display list.
          * \param[in] p1 , p2 the 2D coordinates of the extremities of the
-         *  segment. One may use Tool::project_point()
+         *  segment. One may use Tool::project_point() to obtain them from
+         *  real-world coordinates.
+         * \param[in] the color, with alpha
+         * \param[in] thickness line thickness (ImGui can draw antialiased 
+         *  thick lines).
          */
         void segment(vec2 p1, vec2 p2, Color color, double thickness=1.0);
+
+        /**
+         * \brief Adds a rectangle to the display list.
+         * \param[in] p1 , p2 the 2D coordinates of two corners of the
+         *  rectangle. One may use Tool::project_point() to obtain them from
+         *  real-world coordinates.
+         * \param[in] the color, with alpha
+         * \param[in] thickness line thickness (ImGui can draw antialiased 
+         *  thick lines).
+         */
         void rect(vec2 p1, vec2 p2, Color color, double thickness=1.0);
+
+        /**
+         * \brief Adds a filled rectangle to the display list.
+         * \param[in] p1 , p2 the 2D coordinates of two corners of the
+         *  rectangle. One may use Tool::project_point() to obtain them from
+         *  real-world coordinates.
+         * \param[in] the color, with alpha
+         */
         void fillrect(vec2 p1, vec2 p2, Color color);
+
+        /**
+         * \brief Adds a circle to the display list.
+         * \param[in] p1 the 2D coordinates of the center of the
+         *  circle. One may use Tool::project_point() to obtain them from
+         *  real-world coordinates.
+         * \param[in] R the radius of the circle
+         * \param[in] the color, with alpha
+         * \param[in] thickness line thickness (ImGui can draw antialiased 
+         *  thick lines).
+         */
         void circle(vec2 p1, double R, Color color, double thickness=1.0);
+
+        /**
+         * \brief Adds a filled circle to the display list.
+         * \param[in] p1 the 2D coordinates of the center of the
+         *  circle. One may use Tool::project_point() to obtain them from
+         *  real-world coordinates.
+         * \param[in] R the radius of the circle
+         * \param[in] the color, with alpha
+         */
         void fillcircle(vec2 p1, double R, Color color);
         
     private:
