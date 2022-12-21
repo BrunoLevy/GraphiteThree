@@ -146,6 +146,43 @@ namespace OGF {
     };    
 
     /*************************************************************/
+
+    /**
+     * \brief A rect selection tool that paints attribute values in a mesh
+     */
+    gom_attribute(category, "paint")
+    gom_attribute(icon, "paint_rect")
+    gom_attribute(help, "paint attributes on a mesh")
+    gom_attribute(message, "btn1: paint; btn3: erase")
+	   
+    gom_class MESH_API MeshGrobPaintRect : public MeshGrobPaintTool {
+    public:
+        /**
+         * \brief MeshGrobPaint constructor.
+         * \param[in] parent a pointer to the ToolsManager
+         */
+        MeshGrobPaintRect(ToolsManager* parent);
+
+        /**
+         * \copydoc Tool::grab()
+         */
+        void grab(const RayPick& p_ndc) override;
+
+        /**
+         * \copydoc Tool::drag()
+         */
+        void drag(const RayPick& p_ndc) override;
+
+        /**
+         * \copydoc Tool::release()
+         */
+        void release(const RayPick& p_ndc) override;
+        
+    private:
+        vec2 p_;
+    };    
+    
+    /*************************************************************/
     
     /**
      * \brief A tool that paints attribute values in a mesh

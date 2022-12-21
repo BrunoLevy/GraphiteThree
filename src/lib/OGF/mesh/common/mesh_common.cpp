@@ -107,6 +107,7 @@ namespace OGF {
         ogf_register_grob_tool<MeshGrob,MeshGrobCreateEdge>();	
 
         ogf_register_grob_tool<MeshGrob,MeshGrobPaint>();
+        ogf_register_grob_tool<MeshGrob,MeshGrobPaintRect>();        
         ogf_register_grob_tool<MeshGrob,MeshGrobProbe>();
         ogf_register_grob_tool<MeshGrob,MeshGrobRuler>();
        

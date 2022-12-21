@@ -155,6 +155,16 @@ namespace OGF {
          *  by the shader that displayed the Grob.
          */
         vec2 project_point(vec3 p) const;
+
+
+        /**
+         * \brief Converts normalized device coordinates to 
+         *  device coordinates.
+         * \details used for instance to send a picked point 
+         *  (in normalized device coordinate) to the overlay
+         *  (that uses device coordinates).
+         */
+        vec2 ndc_to_dc(vec2 p) const;
         
     protected:
         /**

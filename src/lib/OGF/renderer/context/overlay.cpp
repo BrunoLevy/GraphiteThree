@@ -88,6 +88,8 @@ namespace OGF {
                         ImVec2(std::min(P.x1, P.x2), std::min(P.y1, P.y2)),
                         ImVec2(std::max(P.x1, P.x2), std::max(P.y1, P.y2)),
                         ImU32(P.color),
+                        0.0f, // <- rounding
+                        0,    // <- flags
                         P.thickness
                     );
                 }

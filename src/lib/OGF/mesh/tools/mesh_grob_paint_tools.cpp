@@ -488,8 +488,34 @@ namespace OGF {
     }
 
 
+    /**********************************************************************/
+    
+    MeshGrobPaintRect::MeshGrobPaintRect(
+        ToolsManager* parent
+    ) : MeshGrobPaintTool(parent) {
+    }
+   
+    void MeshGrobPaintRect::grab(const RayPick& p_ndc) {
+        p_ = ndc_to_dc(p_ndc.p_ndc);
+    }
 
-/***************************************************************/
+    void MeshGrobPaintRect::drag(const RayPick& p_ndc) {
+        vec2 q = ndc_to_dc(p_ndc.p_ndc);
+        rendering_context()->overlay().clear();
+        rendering_context()->overlay().fillrect(
+            p_,q,Color(1.0, 1.0, 1.0, 0.5)
+        );
+        rendering_context()->overlay().rect(
+            p_,q,Color(1.0, 1.0, 1.0, 1.0),1.5
+        );
+    }
+
+    void MeshGrobPaintRect::release(const RayPick& p_ndc) {
+        geo_argused(p_ndc);
+        rendering_context()->overlay().clear();
+    }
+    
+    /***************************************************************/
 
     MeshGrobProbe::MeshGrobProbe(
         ToolsManager* parent

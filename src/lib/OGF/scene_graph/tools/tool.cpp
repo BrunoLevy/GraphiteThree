@@ -87,6 +87,22 @@ namespace OGF {
         Y = double(viewport[3]) - Y + 2.0*double(viewport[1]);
         return vec2(X,Y);
     }
+
+    vec2 Tool::ndc_to_dc(vec2 p) const {
+        Shader* shd = object()->get_shader();
+        GLint* viewport = shd->latest_viewport();
+        double x = 0.5*(p.x+1);
+        double y = 0.5*(p.y+1);
+
+        double x1 = double(viewport[0]);
+        double y1 = double(viewport[1]);
+        double x2 = double(viewport[2]);
+        double y2 = double(viewport[3]);
+        return vec2(
+            (1.0-x)*x1 + x*x2,
+            (1.0-y)*y1 + y*y2
+        );
+    }
     
     const mat4& Tool::focus() const {
         return tools_manager_->manager()->get_focus() ;
