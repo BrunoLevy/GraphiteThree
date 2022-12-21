@@ -324,8 +324,21 @@ namespace OGF {
 	RenderArea* get_render_area() const {
 	    return render_area_;
 	}
-	
+
+        /**
+         * \brief Sets the gui state
+         * \param[in] x a string that encores the positions of
+         *  all windows, previously obtained through
+         *  get_gui_state()
+         * \see get_gui_state()
+         */
 	void set_gui_state(std::string x);
+
+        /**
+         * \brief Gets the gui state
+         * \return a string that encodes the position of all
+         *  windows.
+         */
 	std::string get_gui_state() const;
 	
 	/**
@@ -382,10 +395,18 @@ namespace OGF {
          */
 	bool get_accept_drops() const;
 
+        /**
+         * \brief Used by the arrow tool, memorizes the picked grob.
+         * \param[in] value the picked grob to memorized
+         */
 	void set_picked_grob(Grob* value) {
 	    picked_grob_ = value;
 	}
 
+        /**
+         * \brief Used by the arrow tool, gets the memorized picked grob.
+         * \return the latest picked grob
+         */
 	Grob* get_picked_grob() const {
 	    return picked_grob_;
 	}

@@ -82,25 +82,31 @@ namespace OGF {
             viewport,
             &X, &Y, &Z
         );
-        // Once again, Y axis is flipped... And for some reason
-        // this is *twice* viewport[1] that needs to be added.
-        Y = double(viewport[3]) - Y + 2.0*double(viewport[1]);
+
+        // Once again, Y axis is flipped... 
+        double y0 = double(viewport[1]);
+        double h  = double(viewport[3]);
+        Y -= y0;
+        Y  = h-Y;
+        Y += y0;
+        
         return vec2(X,Y);
     }
 
     vec2 Tool::ndc_to_dc(vec2 p) const {
         Shader* shd = object()->get_shader();
         GLint* viewport = shd->latest_viewport();
-        double x = 0.5*(p.x+1);
-        double y = 0.5*(p.y+1);
-
-        double x1 = double(viewport[0]);
-        double y1 = double(viewport[1]);
-        double x2 = double(viewport[2]);
-        double y2 = double(viewport[3]);
+        double x = 0.5*(p.x+1.0);
+        double y = 0.5*(p.y+1.0);
+        double x0 = double(viewport[0]);
+        double y0 = double(viewport[1]);
+        double w  = double(viewport[2]);
+        double h  = double(viewport[3]);
+        // Here, Y axis is not flipped (???)
+        // (check convention for GLFW events)
         return vec2(
-            (1.0-x)*x1 + x*x2,
-            (1.0-y)*y1 + y*y2
+            x * w + x0,
+            y * h + y0
         );
     }
     
