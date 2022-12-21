@@ -68,6 +68,25 @@ namespace OGF {
     Grob* Tool::object() const {
         return tools_manager_->object() ;
     }
+
+    vec2 Tool::project_point(vec3 p) const {
+        Shader* shd         = object()->get_shader();
+        GLdouble* modelview = shd->latest_modelview();
+        GLdouble* project   = shd->latest_project();
+        GLint*    viewport  = shd->latest_viewport();
+        double X,Y,Z;
+        glupProject(
+            p.x, p.y, p.z,
+            modelview,
+            project,
+            viewport,
+            &X, &Y, &Z
+        );
+        // Once again, Y axis is flipped... And for some reason
+        // this is *twice* viewport[1] that needs to be added.
+        Y = double(viewport[3]) - Y + 2.0*double(viewport[1]);
+        return vec2(X,Y);
+    }
     
     const mat4& Tool::focus() const {
         return tools_manager_->manager()->get_focus() ;

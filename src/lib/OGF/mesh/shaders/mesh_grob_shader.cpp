@@ -86,6 +86,7 @@ namespace OGF {
     }
 
     void MeshGrobShader::draw() {
+        Shader::draw();
     }
 
     void MeshGrobShader::pick(MeshElementsFlags what) {
@@ -270,7 +271,8 @@ namespace OGF {
     }
     
     void PlainMeshGrobShader::draw() {
-
+        MeshGrobShader::draw();
+        
 	if(glsl_program_changed_) {
 	    update_glsl_program();
 	}

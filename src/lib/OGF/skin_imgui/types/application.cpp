@@ -156,6 +156,10 @@ namespace OGF {
 	 */
 	void draw_gui() override {
 	    application_->redraw_request();
+            Overlay& ovl = application_->get_render_area()
+                                       ->get_rendering_context()
+                                       ->overlay();
+            ovl.playback();
 	}
 
 	/**

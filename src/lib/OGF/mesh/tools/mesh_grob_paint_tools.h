@@ -217,7 +217,7 @@ namespace OGF {
          * \copydoc Tool::release()
          */
         void release(const RayPick& p_ndc) override;
-        
+
      protected:
         bool pick(const RayPick& p_ndc, vec3& p);
         void show_distance(const RayPick& p_ndc);

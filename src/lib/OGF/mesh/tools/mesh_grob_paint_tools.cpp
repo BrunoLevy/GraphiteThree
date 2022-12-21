@@ -38,9 +38,13 @@
 
 #include <OGF/mesh/tools/mesh_grob_paint_tools.h>
 #include <OGF/mesh/shaders/mesh_grob_shader.h>
+#include <OGF/renderer/context/rendering_context.h>
 #include <OGF/gom/interpreter/interpreter.h>
+#include <geogram_gfx/third_party/imgui/imgui.h>
 #include <geogram/mesh/mesh_geometry.h>
 #include <geogram/basic/stopwatch.h>
+
+#include <geogram_gfx/third_party/imgui/imgui.h>
 
 namespace {
     using namespace OGF;
@@ -656,9 +660,9 @@ namespace OGF {
 
     MeshGrobRuler::MeshGrobRuler(
         ToolsManager* parent
-    ) : MeshGrobTool(parent){
+    ) : MeshGrobTool(parent) {
     }
-   
+
     void MeshGrobRuler::grab(const RayPick& p_ndc) {
         p_picked_ = pick(p_ndc, p_);
     }
@@ -674,11 +678,29 @@ namespace OGF {
             message = "<nothing>";
         }
         set_tooltip(message);
+
+        rendering_context()->overlay().clear();
+        if(p_picked_ && q_picked) {
+            rendering_context()->overlay().fillcircle(
+                project_point(p_), 7.0,
+                Color(1.0, 1.0, 1.0, 1.0)                
+            );
+            rendering_context()->overlay().fillcircle(
+                project_point(q), 7.0,
+                Color(1.0, 1.0, 1.0, 1.0)                
+            );
+            rendering_context()->overlay().segment(
+                project_point(p_), project_point(q),
+                Color(1.0, 1.0, 1.0, 1.0),
+                3.0
+            );
+        }
     }
 
     void MeshGrobRuler::release(const RayPick& p_ndc) {
         geo_argused(p_ndc);
         reset_tooltip();
+        rendering_context()->overlay().clear();
     }
 
     bool MeshGrobRuler::pick(const RayPick& p_ndc, vec3& p) {

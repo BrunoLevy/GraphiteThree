@@ -146,6 +146,16 @@ namespace OGF {
          */
         Grob* object() const ;
 
+        /**
+         * \brief Computes screen-coordinates of a 3D point.
+         * \param[in] p the world-space coordinates of the 
+         *  point to be projected.
+         * \details Can be used for highlighting elements on
+         *  the overlay. The 3D transform is the latest one used
+         *  by the shader that displayed the Grob.
+         */
+        vec2 project_point(vec3 p) const;
+        
     protected:
         /**
          * \brief Sets the tooltip to be displayed under the mouse.

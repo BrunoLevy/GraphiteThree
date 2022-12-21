@@ -192,6 +192,7 @@ namespace OGF {
         double picked_depth() const {
             return picked_depth_;
         }
+
         
     protected:
         vec3 picked_point_;

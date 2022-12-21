@@ -158,6 +158,7 @@ namespace OGF {
         shader->set_property("attribute_min","0");
         shader->set_property("attribute_max",String::to_string(max_chart+1));
 	shader->set_property("colormap","random;true;65537;false;false;");
+        shader->set_property("lighting","false");
     }
     
     void MeshGrobCommands::show_mesh(MeshGrob* M) {

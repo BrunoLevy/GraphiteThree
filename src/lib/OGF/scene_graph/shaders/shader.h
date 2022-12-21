@@ -78,9 +78,9 @@ namespace OGF {
         /**
          * \brief Draws the Grob.
          * \details The Grob is the one that was passed to the constructor
-         *  of this Shader.
+         *  of this Shader. 
          */
-        virtual void draw() = 0;
+        virtual void draw();
 
         /**
          * \brief Draws the Grob in picking mode.
@@ -142,7 +142,20 @@ namespace OGF {
 	Grob* get_grob() const {
 	    return grob();
 	}
-	
+
+    public:
+        GLdouble* latest_modelview() {
+            return modelview_;
+        }
+        
+        GLdouble* latest_project() {
+            return project_;
+        }
+        
+        GLint* latest_viewport() {
+            return viewport_;
+        }
+        
     protected:
 
         /**
@@ -178,9 +191,17 @@ namespace OGF {
             return grob_;
         }
 
+
     private:
         Grob* grob_;
         bool multi_;
+
+        // Viewing parameters, queried when this object is drawn.
+        // Useful for picking or for drawing overlays.
+        GLdouble modelview_[16];
+        GLdouble project_[16];
+        GLint viewport_[4];
+        
         friend class ShaderManager;
        
     protected:

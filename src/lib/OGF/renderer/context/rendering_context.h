@@ -40,6 +40,7 @@
 
 #include <OGF/renderer/common/common.h>
 #include <OGF/renderer/context/texture.h>
+#include <OGF/renderer/context/overlay.h>
 #include <geogram/image/image.h>
 #include <geogram_gfx/full_screen_effects/full_screen_effect.h>
 #include <geogram_gfx/basic/GL.h>
@@ -604,7 +605,16 @@ namespace OGF {
 	bool contains_picking_image() const {
 	    return last_frame_was_picking_;
 	}
-	
+
+        /**
+         * \brief Gets the Overlay
+         * \details The Overlay has a couple of basic drawing primitives for
+         *  displaying graphics over the rendering window.
+         */
+        Overlay& overlay() {
+            return overlay_;
+        }
+        
     protected:
 
         /**
@@ -733,7 +743,7 @@ namespace OGF {
          */
         void get_picked_point();
 
-        
+
     protected:
         
         static RenderingContext* current_;
@@ -823,7 +833,9 @@ namespace OGF {
         bool use_ES_profile_;
 
 	bool transparent_;
-	
+
+        Overlay overlay_;
+        
 	friend class RenderArea;
     };
 
