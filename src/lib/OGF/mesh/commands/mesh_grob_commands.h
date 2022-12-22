@@ -105,6 +105,12 @@ namespace OGF {
 	virtual void show_mesh(MeshGrob* M = nullptr);
 
 
+        /**
+         * \nrief Shows the vertices.
+         */
+        virtual void show_vertices();
+        
+
 	/** 
 	 * \brief Shows the parameterization of a mesh.
 	 * \param[in] UV_attribute_name optional name of an attribute with

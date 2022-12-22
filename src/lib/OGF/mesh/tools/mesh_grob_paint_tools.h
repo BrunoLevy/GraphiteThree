@@ -49,6 +49,7 @@
 
 namespace OGF {
 
+    
     gom_class MESH_API MeshGrobPaintTool : public MeshGrobTool {
     public:
         MeshGrobPaintTool(ToolsManager* parent);
@@ -104,7 +105,7 @@ namespace OGF {
     protected:
          void paint(const RayPick& p_ndc);
          
-    private:
+    protected:
          double value_;
          bool accumulate_;
          bool autorange_;
@@ -143,6 +144,13 @@ namespace OGF {
          */
         void drag(const RayPick& p_ndc) override;
 
+        /**
+         * \copydoc Tool::release()
+         */
+        void release(const RayPick& p_ndc) override;
+        
+    protected:
+        vec2 latest_ndc_;
     };    
 
     /*************************************************************/
@@ -152,7 +160,7 @@ namespace OGF {
      */
     gom_attribute(category, "paint")
     gom_attribute(icon, "paint_rect")
-    gom_attribute(help, "paint attributes on a mesh")
+    gom_attribute(help, "paint attributes on a mesh in rectangle")
     gom_attribute(message, "btn1: paint; btn3: erase")
 	   
     gom_class MESH_API MeshGrobPaintRect : public MeshGrobPaintTool {
@@ -177,8 +185,15 @@ namespace OGF {
          * \copydoc Tool::release()
          */
         void release(const RayPick& p_ndc) override;
+
+    protected:
+        void paint_rect(
+            const RayPick& raypick,
+            index_t x0, index_t y0, index_t x1, index_t y1
+        );
         
     private:
+        bool active_;
         vec2 p_;
     };    
     
@@ -221,6 +236,7 @@ namespace OGF {
     private:
         bool picked_;
         double value_;
+        vec2 latest_ndc_;
     };    
 
     /********************************************************/
@@ -262,6 +278,7 @@ namespace OGF {
     private:
         bool p_picked_;
         vec3 p_;
+        vec2 latest_ndc_;
     };    
 
     /*******************************************************/

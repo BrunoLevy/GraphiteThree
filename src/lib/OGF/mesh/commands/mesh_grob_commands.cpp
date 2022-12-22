@@ -195,6 +195,35 @@ namespace OGF {
 	shader->set_property("mesh_style", shd_mesh);
     }
 
+    void MeshGrobCommands::show_vertices() {
+	Shader* shader = mesh_grob()->get_shader();
+	if(shader == nullptr) {
+	    return;
+	}
+	if(!shader->has_property("vertices_style")) {
+	    return;
+	}
+
+	std::string shd_vertices;
+	std::vector<std::string> shd_vertices_fields;
+        
+	shader->get_property("vertices_style",shd_vertices);
+	String::split_string(shd_vertices, ';', shd_vertices_fields, false);
+
+	if(shd_vertices_fields.size() != 3) {
+	    return;
+	}
+
+	if(shd_vertices_fields[0] == "true") {
+	    return;
+	}
+	
+	shd_vertices =
+            "true;"+shd_vertices_fields[1]+";"+shd_vertices_fields[2];
+        
+	shader->set_property("vertices_style", shd_vertices);
+    }
+    
     void MeshGrobCommands::show_UV(
 	const std::string& UV_prop_name, MeshGrob* M 
     ) {

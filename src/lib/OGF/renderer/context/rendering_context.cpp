@@ -354,19 +354,31 @@ namespace OGF {
         glupClipMode(clipping_mode_);
     }
 
-    void RenderingContext::snapshot(Image* image, bool do_make_current) {
+    void RenderingContext::snapshot(
+        Image* image, bool do_make_current,
+        index_t x0, index_t y0, index_t width, index_t height
+    ) {
+
 	if(do_make_current) {
 	    make_current();
 	}
 
+        if(width == 0) {
+            width = get_width();
+        }
+
+        if(height == 0) {
+            height = get_height();
+        }
+        
         if(image->base_mem() == nullptr) {
             image->initialize(
-                Image::RGB, Image::BYTE, get_width(), get_height()
+                Image::RGB, Image::BYTE, width, height
             );
         }
         
-        int w = int(std::min(image->width(),  get_width()));
-        int h = int(std::min(image->height(), get_height()));
+        width  = std::min(image->width(),  get_width()-x0);
+        height = std::min(image->height(), get_height()-y0);
 
         glPixelStorei(GL_PACK_ALIGNMENT, 1); 
         glPixelStorei(GL_PACK_ROW_LENGTH, int(image->width()));
@@ -377,23 +389,26 @@ namespace OGF {
                 << std::endl;
             return;
         }
-        
+
         switch (image->color_encoding()) {
         case Image::RGB:
             glReadPixels(
-                0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, image->base_mem()
+                GLint(x0), GLint(y0), GLsizei(width), GLsizei(height),
+                GL_RGB, GL_UNSIGNED_BYTE, image->base_mem()
             );
             break;
 
         case Image::BGR:
             glReadPixels(
-                0, 0, w, h, GL_BGR, GL_UNSIGNED_BYTE, image->base_mem()
+                GLint(x0), GLint(y0), GLsizei(width), GLsizei(height),
+                GL_BGR, GL_UNSIGNED_BYTE, image->base_mem()
             );
             break;
 
         case Image::RGBA:
             glReadPixels(
-                0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, image->base_mem()
+                GLint(x0), GLint(y0), GLsizei(width), GLsizei(height),
+                GL_RGBA, GL_UNSIGNED_BYTE, image->base_mem()
             );
             break;
 

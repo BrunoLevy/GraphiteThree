@@ -42,6 +42,7 @@
 #include <OGF/gom/interpreter/interpreter.h>
 #include <geogram_gfx/third_party/imgui/imgui.h>
 #include <geogram/mesh/mesh_geometry.h>
+#include <geogram/image/image_library.h>
 #include <geogram/basic/stopwatch.h>
 
 #include <geogram_gfx/third_party/imgui/imgui.h>
@@ -58,7 +59,7 @@ namespace {
         PAINT_INC,   /**< adds to attribute value */
         PAINT_DEC    /**< subtracts from attribute value */
     };
-
+    
     /**
      * \brief Paints an attribute value for a given type
      * \tparam T the type of the attribute
@@ -150,7 +151,7 @@ namespace {
      * \param[in] where one of MESH_VERTICES, MESH_EDGES, MESH_FACETS or 
      *  MESH_CELLS
      * \param[in] name the name of the attribute
-     * \param[in] element_id the element 
+     * \param[in] element_id the element probe
      * \param[in] component the component of a vector attribute 
      *            (0 for a scalar attribute)
      * \param[out] value the probed value
@@ -356,7 +357,23 @@ namespace {
         result /= double(N);
         return result;
     }
-    
+
+    void for_each_picked_element(
+        Image* picking_image, std::function<void(index_t)> doit
+    ) {
+        // Get all the picked ids, by sorting the pixels of the image by
+        // value then using std::unique
+        Numeric::uint32* begin = (Numeric::uint32*)(picking_image->base_mem());
+        Numeric::uint32* end =
+            begin + picking_image->width() * picking_image->height();
+        std::sort(begin, end);
+        end = std::unique(begin,end);
+        for(index_t* p=begin; p!=end; ++p) {
+            if(*p != index_t(-1)) {
+                doit(*p);
+            }
+        }
+    }
 }
 
 namespace OGF {
@@ -430,7 +447,7 @@ namespace OGF {
                         attribute_name, component,
                         v, op, value_
                     );
-                }
+                } 
             } else {
                 index_t c = pick_cell(p_ndc);
                 picked_element_ = c;
@@ -480,26 +497,39 @@ namespace OGF {
     }
    
     void MeshGrobPaint::grab(const RayPick& p_ndc) {
+        latest_ndc_ = p_ndc.p_ndc;
         paint(p_ndc);
     }
 
     void MeshGrobPaint::drag(const RayPick& p_ndc) {
+        if(length(p_ndc.p_ndc - latest_ndc_) <= 10.0/1024.0) {
+            return ;
+        }
+        latest_ndc_ = p_ndc.p_ndc;
         paint(p_ndc);
     }
 
+    void MeshGrobPaint::release(const RayPick& p_ndc) {
+        paint(p_ndc);
+    }
 
     /**********************************************************************/
     
     MeshGrobPaintRect::MeshGrobPaintRect(
         ToolsManager* parent
     ) : MeshGrobPaintTool(parent) {
+        active_ = false;
     }
    
     void MeshGrobPaintRect::grab(const RayPick& p_ndc) {
         p_ = ndc_to_dc(p_ndc.p_ndc);
+        active_ = true;
     }
 
     void MeshGrobPaintRect::drag(const RayPick& p_ndc) {
+        if(!active_) {
+            return;
+        }
         vec2 q = ndc_to_dc(p_ndc.p_ndc);
         rendering_context()->overlay().clear();
         rendering_context()->overlay().fillrect(
@@ -508,11 +538,150 @@ namespace OGF {
         rendering_context()->overlay().rect(
             p_,q,Color(1.0, 1.0, 1.0, 1.0),1.5
         );
+
+        rendering_context()->overlay().fillcircle(
+            p_, 4.0, Color(1.0, 1.0, 1.0, 1.0)                
+        );
+
+        rendering_context()->overlay().fillcircle(
+            q, 4.0, Color(1.0, 1.0, 1.0, 1.0)                
+        );
+
+        rendering_context()->overlay().fillcircle(
+            vec2(p_.x, q.y), 4.0, Color(1.0, 1.0, 1.0, 1.0)                
+        );
+
+        rendering_context()->overlay().fillcircle(
+            vec2(q.x,p_.y), 4.0, Color(1.0, 1.0, 1.0, 1.0)                
+        );
+        
     }
 
-    void MeshGrobPaintRect::release(const RayPick& p_ndc) {
-        geo_argused(p_ndc);
+    void MeshGrobPaintRect::release(const RayPick& raypick) {
+        if(!active_) {
+            return;
+        }
+        active_ = false;
+        vec2 q = ndc_to_dc(raypick.p_ndc);
+        index_t px = index_t(p_.x);
+        index_t py = index_t(p_.y);
+        index_t qx = index_t(q.x);
+        index_t qy = index_t(q.y);
+
+        index_t x0 = std::min(px,qx);
+        index_t y0 = std::min(py,qy);
+        index_t x1 = std::max(px,qx);
+        index_t y1 = std::max(py,qy);
+
+        paint_rect(raypick,x0,y0,x1,y1);
+        
         rendering_context()->overlay().clear();
+    }
+
+    void MeshGrobPaintRect::paint_rect(
+        const RayPick& raypick,
+        index_t x0, index_t y0, index_t x1, index_t y1
+    ) {
+
+        PaintOp op = PAINT_SET;
+        if(accumulate_) {
+            op = raypick.button == 1 ? PAINT_INC : PAINT_DEC;
+        } else {
+            op = raypick.button == 1 ? PAINT_SET : PAINT_RESET;
+        }
+
+        MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
+            mesh_grob()->get_shader()
+        );
+        
+        if(shd == nullptr) {
+            return;
+        }
+
+        {
+            std::string painting;
+            shd->get_property("painting",painting);
+            if(painting != "ATTRIBUTE") {
+                return;
+            }
+        }
+
+        MeshElementsFlags where;
+        std::string attribute_name;
+        index_t component;
+        {
+            std::string full_attribute_name;
+            shd->get_property("attribute",full_attribute_name);
+            if(!Mesh::parse_attribute_name(
+                   full_attribute_name,where,attribute_name,component)
+            ) {
+                return;
+            }
+        }
+
+        // Pick the elements, and copy the selected rect in an image
+        index_t width  = x1-x0+1;
+        index_t height = y1-y0+1;
+        Image_var picking_image = new Image;
+        // We need 32-bit pixel values (default is 24-bit)
+        picking_image->initialize(
+            Image::RGBA, Image::BYTE, width, height
+        );
+
+        // Damnit, for glReadPixels, Y is swapped
+        y0 = rendering_context()->get_height()-height-1-y0;
+        
+        pick(
+            raypick, where, picking_image,
+            x0, y0, width, height
+        );
+
+        for_each_picked_element(
+            picking_image,
+            [&](index_t picked_element) {
+                paint_attribute(
+                    mesh_grob(), where,
+                    attribute_name, component,
+                    picked_element, op, value_
+                );
+            }
+        );
+        
+        if(!pick_vertices_only_ && where == MESH_VERTICES) {
+            pick(raypick, MESH_FACETS, picking_image, x0, y0, width, height);
+            for_each_picked_element(
+                picking_image,
+                [&](index_t f) {
+                    for(index_t lv = 0;
+                        lv<mesh_grob()->facets.nb_vertices(f); ++lv
+                       ) {
+                        index_t v = mesh_grob()->facets.vertex(f,lv);
+                        paint_attribute(
+                            mesh_grob(), where,
+                            attribute_name, component,
+                            v, op, value_
+                        );
+                    }
+                }
+            );
+
+            pick(raypick, MESH_CELLS, picking_image, x0, y0, width, height);
+            for_each_picked_element(
+                picking_image,
+                [&](index_t c) {
+                    for(index_t lv = 0;
+                        lv<mesh_grob()->cells.nb_vertices(c); ++lv
+                    ) {
+                        index_t v = mesh_grob()->cells.vertex(c,lv);
+                        paint_attribute(
+                            mesh_grob(), where,
+                            attribute_name, component,
+                            v, op, value_
+                        );
+                    }
+                }
+            );
+        }
     }
     
     /***************************************************************/
@@ -524,10 +693,15 @@ namespace OGF {
     }
    
     void MeshGrobProbe::grab(const RayPick& p_ndc) {
+        latest_ndc_ = p_ndc.p_ndc;
         probe(p_ndc);
     }
 
     void MeshGrobProbe::drag(const RayPick& p_ndc) {
+        if(length(p_ndc.p_ndc - latest_ndc_) <= 10.0/1024.0) {
+            return ;
+        }
+        latest_ndc_ = p_ndc.p_ndc;
         probe(p_ndc);
     }
 
@@ -673,12 +847,22 @@ namespace OGF {
         reset_tooltip();
 
         if(picked_) {
-            MeshGrobPaint* paint = dynamic_cast<MeshGrobPaint*>(
-                tools_manager()->resolve_tool("OGF::MeshGrobPaint")
-            );
-            paint->set_value(value_);
-            paint->set_accumulate(false);
-            paint->set_autorange(false);
+            static const char* paint_tools[] = {
+                "OGF::MeshGrobPaint",
+                "OGF::MeshGrobPaintRect",
+                nullptr
+            };
+
+            for(const char** p = paint_tools; *p != nullptr; ++p) {
+                MeshGrobPaintTool* paint_tool =
+                dynamic_cast<MeshGrobPaintTool*>(
+                    tools_manager()->resolve_tool(*p)
+                );
+                geo_assert(paint_tool != nullptr);      
+                paint_tool->set_value(value_);
+                paint_tool->set_accumulate(false);
+                paint_tool->set_autorange(false);
+            }
         }
     }
 
@@ -690,10 +874,18 @@ namespace OGF {
     }
 
     void MeshGrobRuler::grab(const RayPick& p_ndc) {
+        latest_ndc_    = p_ndc.p_ndc;
         p_picked_ = pick(p_ndc, p_);
     }
 
     void MeshGrobRuler::drag(const RayPick& p_ndc) {
+
+        if(length(p_ndc.p_ndc - latest_ndc_) <= 10.0/1024.0) {
+            return ;
+        }
+        
+        latest_ndc_ = p_ndc.p_ndc;
+        
         vec3 q;
         bool q_picked = pick(p_ndc,q);
         std::string message;

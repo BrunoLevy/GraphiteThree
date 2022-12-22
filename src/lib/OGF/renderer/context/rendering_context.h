@@ -425,9 +425,15 @@ namespace OGF {
          * \param[out] image The image, it should have the same size as 
 	 *  this RenderingContext and should be in RGB mode.
 	 * \param[in] make_current if true, makes this rendering context
-	 *  the current rendering context without reading the pixels.
+	 *  the current rendering context before reading the pixels.
+         * \param[in] x0 , y0 , width , height optional image bounds. If let
+         *  unspecified, the entire picking buffer is copied.
          */
-        virtual void snapshot(Image* image, bool make_current=true);
+        virtual void snapshot(
+            Image* image, bool make_current=true,
+            index_t x0=0, index_t y0=0,
+            index_t width=0, index_t height=0
+        );
 
         /**
          * \brief Gets the OpenGL vendor.

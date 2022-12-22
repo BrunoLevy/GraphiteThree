@@ -111,7 +111,8 @@ namespace OGF {
     }
     
     index_t MeshGrobTool::pick(
-        const RayPick& rp, MeshElementsFlags what
+        const RayPick& rp, MeshElementsFlags what, Image* image,
+        index_t x0, index_t y0, index_t width, index_t height
     ) {
         if(mesh_grob() == nullptr || mesh_grob()->vertices.dimension() < 3) {
             return index_t(-1);
@@ -134,11 +135,20 @@ namespace OGF {
 
         if(CmdLine::get_arg_bool("dbg:picking")) {
 	    Logger::out("Tool") << "Saving pick_debug.png" << std::endl;
-            Image image;
-            rendering_context()->snapshot(&image);
-            ImageLibrary::instance()->save_image("pick_debug.png",&image);
+            Image_var dbg_image = new Image;
+            
+            rendering_context()->snapshot(
+                dbg_image
+            );
+            ImageLibrary::instance()->save_image(
+                "pick_debug.png",dbg_image
+            );
         }
-	
+
+        if(image != nullptr) {
+            rendering_context()->snapshot(image, true, x0, y0, width, height);
+        }
+        
         rendering_context()->end_frame();
         rendering_context()->end_picking();
 

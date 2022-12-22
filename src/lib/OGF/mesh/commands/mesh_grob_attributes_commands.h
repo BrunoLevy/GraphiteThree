@@ -115,8 +115,8 @@ namespace OGF {
         /**
          * \menu Selection
          */
-        void remove_selected_elements(
-            bool remove_isolated_vertices = true
+        void delete_selected_elements(
+            bool delete_isolated_vertices = true
         );
         
         /**

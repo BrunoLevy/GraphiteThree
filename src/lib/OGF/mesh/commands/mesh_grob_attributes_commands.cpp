@@ -280,7 +280,7 @@ namespace OGF {
         mesh_grob()->update();
     }
 
-    void MeshGrobAttributesCommands::remove_selected_elements(
+    void MeshGrobAttributesCommands::delete_selected_elements(
         bool remove_isolated
     ) {
         MeshElementsFlags where = visible_selection();
@@ -357,6 +357,7 @@ namespace OGF {
     
     void MeshGrobAttributesCommands::show_vertices_selection() {
         Attribute<bool> sel(mesh_grob()->vertices.attributes(),"selection");
+        // show_vertices();
         show_attribute("vertices.selection");
     }
 

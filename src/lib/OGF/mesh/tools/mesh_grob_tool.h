@@ -151,10 +151,21 @@ namespace OGF {
          *  MESH_CELLS). It is also possible to use a bitwise-or combination
          *  of them (but then it is no longer possible to know what element
          *  type was picked).
+         * \param[in] image a pointer to an optional image to get the picking 
+         *  framebuffer (can be used by selection tools). The image is supposed
+         *  to be uninitialized. The function allocates it to the correct size
+         *  and reads the pixels from the picking buffer.
+         * \param[in] x0 , y0 , width , height optional image bounds. If let
+         *  unspecified, the entire picking buffer is copied.
          * \return the index of the picked element or index_t(-1) if nothing
          *  was picked.
          */
-        index_t pick(const RayPick& rp, MeshElementsFlags what);
+        index_t pick(
+            const RayPick& rp, MeshElementsFlags what,
+            Image* image=nullptr,
+            index_t x0=0, index_t y0=0,
+            index_t width=0, index_t height=0
+        );
 
         /**
          * \brief Gets the 3D coordinate of a point dragged from the latest

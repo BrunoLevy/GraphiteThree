@@ -96,7 +96,7 @@ namespace OGF {
 	 *  current OpenGL framebuffer is copied (with the GUI if it
 	 *  called after GUI refresh).
 	 */
-	void snapshot(Image* image, bool hide_gui=true) override;
+	void snapshot(Image* image, bool hide_gui=true);
 
     private:
 	FrameBufferObject FBO_;
