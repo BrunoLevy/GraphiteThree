@@ -186,6 +186,21 @@ namespace OGF {
          */
         void release(const RayPick& p_ndc) override;
 
+    gom_properties:
+
+        /**
+         * \brief If set, pick everything that falls
+         *  within the rect, else pick only visible
+         *  elements.
+         */
+        void set_xray_mode(bool x) {
+            xray_mode_ = x;
+        }
+
+        bool get_xray_mode() const {
+            return xray_mode_;
+        }
+        
     protected:
         void paint_rect(
             const RayPick& raypick,
@@ -193,6 +208,7 @@ namespace OGF {
         );
         
     private:
+        bool xray_mode_;
         bool active_;
         vec2 p_;
     };    

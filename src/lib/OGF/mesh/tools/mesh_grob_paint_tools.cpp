@@ -358,9 +358,18 @@ namespace {
         return result;
     }
 
+    /**
+     * \brief called a function for each unique picked element in a 
+     *  picking image
+     * \param[in,out] picking_image the image. It needs to be stored in 
+     *  RGBA format. It is modified by the function
+     * \param[in] doit the function to be called for each unique picked element
+     */
     void for_each_picked_element(
         Image* picking_image, std::function<void(index_t)> doit
     ) {
+        geo_assert(picking_image->color_encoding() == Image::RGBA);
+        geo_assert(picking_image->component_encoding() == Image::BYTE);
         // Get all the picked ids, by sorting the pixels of the image by
         // value then using std::unique
         Numeric::uint32* begin = (Numeric::uint32*)(picking_image->base_mem());
@@ -518,7 +527,11 @@ namespace OGF {
     MeshGrobPaintRect::MeshGrobPaintRect(
         ToolsManager* parent
     ) : MeshGrobPaintTool(parent) {
+        // This active flag is needed, else sometimes when one
+        // picks a GUI item, this triggers a release() event
+        // and creates a selection.
         active_ = false;
+        xray_mode_ = true;
     }
    
     void MeshGrobPaintRect::grab(const RayPick& p_ndc) {
@@ -583,6 +596,10 @@ namespace OGF {
         index_t x0, index_t y0, index_t x1, index_t y1
     ) {
 
+        if(x1 == x0 || y1 == y0) {
+            return;
+        }
+        
         PaintOp op = PAINT_SET;
         if(accumulate_) {
             op = raypick.button == 1 ? PAINT_INC : PAINT_DEC;
@@ -628,59 +645,118 @@ namespace OGF {
             Image::RGBA, Image::BYTE, width, height
         );
 
-        // Damnit, for glReadPixels, Y is swapped
-        y0 = rendering_context()->get_height()-height-1-y0;
-        
-        pick(
-            raypick, where, picking_image,
-            x0, y0, width, height
-        );
 
-        for_each_picked_element(
-            picking_image,
-            [&](index_t picked_element) {
-                paint_attribute(
-                    mesh_grob(), where,
-                    attribute_name, component,
-                    picked_element, op, value_
+        if(xray_mode_) {
+            switch(where) {
+            case MESH_VERTICES: {
+                for(index_t v: mesh_grob()->vertices) {
+                    vec2 p = project_point(
+                        vec3(mesh_grob()->vertices.point_ptr(v))
+                    );
+                    if(
+                        p.x >= double(x0) && p.y >= double(y0) &&
+                        p.x <= double(x1) && p.y <= double(y1)
+                    ) {
+                        paint_attribute(
+                            mesh_grob(), where,
+                            attribute_name, component,
+                            v, op, value_
+                        );
+                    }
+                }
+            } break;
+            case MESH_FACETS: {
+                for(index_t f: mesh_grob()->facets) {
+                    vec2 p = project_point(
+                        Geom::mesh_facet_center(*mesh_grob(),f)
+                    );
+                    if(
+                        p.x >= double(x0) && p.y >= double(y0) &&
+                        p.x <= double(x1) && p.y <= double(y1)
+                    ) {
+                        paint_attribute(
+                            mesh_grob(), where,
+                            attribute_name, component,
+                            f, op, value_
+                        );
+                    }
+                }
+            } break;
+            case MESH_CELLS: {
+                for(index_t c: mesh_grob()->cells) {
+                    vec2 p = project_point(
+                        Geom::mesh_cell_center(*mesh_grob(),c)
+                    );
+                    if(
+                        p.x >= double(x0) && p.y >= double(y0) &&
+                        p.x <= double(x1) && p.y <= double(y1)
+                    ) {
+                        paint_attribute(
+                            mesh_grob(), where,
+                            attribute_name, component,
+                            c, op, value_
+                        );
+                    }
+                }
+            } break;
+            }
+        } else {
+            // Damnit, for glReadPixels, Y is swapped
+            y0 = rendering_context()->get_height()-height-1-y0;
+        
+            pick(
+                raypick, where, picking_image,
+                x0, y0, width, height
+            );
+
+            for_each_picked_element(
+                picking_image,
+                [&](index_t picked_element) {
+                    paint_attribute(
+                        mesh_grob(), where,
+                        attribute_name, component,
+                        picked_element, op, value_
+                    );
+                }
+            );
+        
+            if(!pick_vertices_only_ && where == MESH_VERTICES) {
+                pick(
+                    raypick, MESH_FACETS, picking_image, x0, y0, width, height
+                );
+                for_each_picked_element(
+                    picking_image,
+                    [&](index_t f) {
+                        for(index_t lv = 0;
+                            lv<mesh_grob()->facets.nb_vertices(f); ++lv
+                           ) {
+                            index_t v = mesh_grob()->facets.vertex(f,lv);
+                            paint_attribute(
+                                mesh_grob(), where,
+                                attribute_name, component,
+                                v, op, value_
+                            );
+                        }
+                    }
+                );
+
+                pick(raypick, MESH_CELLS, picking_image, x0, y0, width, height);
+                for_each_picked_element(
+                    picking_image,
+                    [&](index_t c) {
+                        for(index_t lv = 0;
+                            lv<mesh_grob()->cells.nb_vertices(c); ++lv
+                           ) {
+                            index_t v = mesh_grob()->cells.vertex(c,lv);
+                            paint_attribute(
+                                mesh_grob(), where,
+                                attribute_name, component,
+                                v, op, value_
+                            );
+                        }
+                    }
                 );
             }
-        );
-        
-        if(!pick_vertices_only_ && where == MESH_VERTICES) {
-            pick(raypick, MESH_FACETS, picking_image, x0, y0, width, height);
-            for_each_picked_element(
-                picking_image,
-                [&](index_t f) {
-                    for(index_t lv = 0;
-                        lv<mesh_grob()->facets.nb_vertices(f); ++lv
-                       ) {
-                        index_t v = mesh_grob()->facets.vertex(f,lv);
-                        paint_attribute(
-                            mesh_grob(), where,
-                            attribute_name, component,
-                            v, op, value_
-                        );
-                    }
-                }
-            );
-
-            pick(raypick, MESH_CELLS, picking_image, x0, y0, width, height);
-            for_each_picked_element(
-                picking_image,
-                [&](index_t c) {
-                    for(index_t lv = 0;
-                        lv<mesh_grob()->cells.nb_vertices(c); ++lv
-                    ) {
-                        index_t v = mesh_grob()->cells.vertex(c,lv);
-                        paint_attribute(
-                            mesh_grob(), where,
-                            attribute_name, component,
-                            v, op, value_
-                        );
-                    }
-                }
-            );
         }
     }
     
