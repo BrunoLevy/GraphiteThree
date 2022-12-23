@@ -43,6 +43,7 @@
 #include <geogram_gfx/third_party/imgui/imgui.h>
 #include <geogram/mesh/mesh_geometry.h>
 #include <geogram/image/image_library.h>
+#include <geogram/image/image_rasterizer.h>
 #include <geogram/basic/stopwatch.h>
 
 #include <geogram_gfx/third_party/imgui/imgui.h>
@@ -362,14 +363,32 @@ namespace {
      * \brief called a function for each unique picked element in a 
      *  picking image
      * \param[in,out] picking_image the image. It needs to be stored in 
+     * \param[in] mask an optional pointer to a mask (or nullptr for no mask)
      *  RGBA format. It is modified by the function
      * \param[in] doit the function to be called for each unique picked element
      */
     void for_each_picked_element(
-        Image* picking_image, std::function<void(index_t)> doit
+        Image* picking_image, Image* mask, std::function<void(index_t)> doit
     ) {
         geo_assert(picking_image->color_encoding() == Image::RGBA);
         geo_assert(picking_image->component_encoding() == Image::BYTE);
+
+        // Apply mask to picking image
+        if(mask != nullptr) {
+            geo_assert(mask->color_encoding() == Image::GRAY);
+            geo_assert(mask->component_encoding() == Image::BYTE);
+            geo_assert(mask->width() == picking_image->width());
+            geo_assert(mask->height() == picking_image->height());
+            for(index_t y=0; y<picking_image->height(); ++y) {
+                for(index_t x=0; x<picking_image->width(); ++x) {
+                    if(*mask->pixel_base_byte_ptr(x,y) == 0) {
+                        *(Numeric::uint32*)picking_image->pixel_base(x,y) =
+                            Numeric::uint32(-1);
+                    }
+                }
+            }
+        }
+        
         // Get all the picked ids, by sorting the pixels of the image by
         // value then using std::unique
         Numeric::uint32* begin = (Numeric::uint32*)(picking_image->base_mem());
@@ -382,6 +401,27 @@ namespace {
                 doit(*p);
             }
         }
+    }
+
+    bool point_is_selected(
+        const vec2& p,                   // device coord
+        index_t x0, index_t y0, index_t x1, index_t y1,  // device coord
+        Image* mask = nullptr
+    ) {
+        if(p.x < double(x0) || p.y < double(y0) ||
+           p.x > double(x1) || p.y > double(y1)) {
+            return false;
+        }
+        if(mask != nullptr) {
+            if(
+                *mask->pixel_base_byte_ptr(
+                    index_t(p.x)-x0, index_t(p.y)-y0
+                ) == 0
+            ) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 
@@ -593,11 +633,18 @@ namespace OGF {
 
     void MeshGrobPaintRect::paint_rect(
         const RayPick& raypick,
-        index_t x0, index_t y0, index_t x1, index_t y1
+        index_t x0, index_t y0, index_t x1, index_t y1,
+        Image* mask
     ) {
-
         if(x1 == x0 || y1 == y0) {
             return;
+        }
+
+        if(mask != nullptr) {
+            geo_assert(mask->color_encoding() == Image::GRAY);
+            geo_assert(mask->component_encoding() == Image::BYTE);
+            geo_assert(mask->width() == x1-x0+1);
+            geo_assert(mask->height() == y1-y0+1);
         }
         
         PaintOp op = PAINT_SET;
@@ -653,10 +700,7 @@ namespace OGF {
                     vec2 p = project_point(
                         vec3(mesh_grob()->vertices.point_ptr(v))
                     );
-                    if(
-                        p.x >= double(x0) && p.y >= double(y0) &&
-                        p.x <= double(x1) && p.y <= double(y1)
-                    ) {
+                    if(point_is_selected(p,x0,y0,x1,y1,mask)) {
                         paint_attribute(
                             mesh_grob(), where,
                             attribute_name, component,
@@ -670,10 +714,7 @@ namespace OGF {
                     vec2 p = project_point(
                         Geom::mesh_facet_center(*mesh_grob(),f)
                     );
-                    if(
-                        p.x >= double(x0) && p.y >= double(y0) &&
-                        p.x <= double(x1) && p.y <= double(y1)
-                    ) {
+                    if(point_is_selected(p,x0,y0,x1,y1,mask)) {
                         paint_attribute(
                             mesh_grob(), where,
                             attribute_name, component,
@@ -687,10 +728,7 @@ namespace OGF {
                     vec2 p = project_point(
                         Geom::mesh_cell_center(*mesh_grob(),c)
                     );
-                    if(
-                        p.x >= double(x0) && p.y >= double(y0) &&
-                        p.x <= double(x1) && p.y <= double(y1)
-                    ) {
+                    if(point_is_selected(p,x0,y0,x1,y1,mask)) {
                         paint_attribute(
                             mesh_grob(), where,
                             attribute_name, component,
@@ -698,6 +736,8 @@ namespace OGF {
                         );
                     }
                 }
+            } break;
+            default: {
             } break;
             }
         } else {
@@ -710,7 +750,7 @@ namespace OGF {
             );
 
             for_each_picked_element(
-                picking_image,
+                picking_image, mask,
                 [&](index_t picked_element) {
                     paint_attribute(
                         mesh_grob(), where,
@@ -725,7 +765,7 @@ namespace OGF {
                     raypick, MESH_FACETS, picking_image, x0, y0, width, height
                 );
                 for_each_picked_element(
-                    picking_image,
+                    picking_image, mask,
                     [&](index_t f) {
                         for(index_t lv = 0;
                             lv<mesh_grob()->facets.nb_vertices(f); ++lv
@@ -742,7 +782,7 @@ namespace OGF {
 
                 pick(raypick, MESH_CELLS, picking_image, x0, y0, width, height);
                 for_each_picked_element(
-                    picking_image,
+                    picking_image, mask,
                     [&](index_t c) {
                         for(index_t lv = 0;
                             lv<mesh_grob()->cells.nb_vertices(c); ++lv
@@ -758,6 +798,125 @@ namespace OGF {
                 );
             }
         }
+    }
+
+    /***************************************************************/
+
+    MeshGrobPaintFreeform::MeshGrobPaintFreeform(
+        ToolsManager* parent
+    ) : MeshGrobPaintTool(parent) {
+        xray_mode_ = true;
+        active_ = false;
+    }
+
+    void MeshGrobPaintFreeform::grab(const RayPick& raypick) {
+        selection_.push_back(ndc_to_dc(raypick.p_ndc));
+        active_ = true;
+    }
+
+    void MeshGrobPaintFreeform::drag(const RayPick& raypick) {
+        if(!active_) {
+            return;
+        }
+        if(length(raypick.p_ndc - latest_ndc_) <= 10.0/1024.0) {
+            return ;
+        }
+        latest_ndc_ = raypick.p_ndc;
+        selection_.push_back(ndc_to_dc(raypick.p_ndc));
+        rendering_context()->overlay().clear();
+        for(index_t i=0; i<selection_.size(); ++i) {
+            index_t j = (i+1)%selection_.size();
+            rendering_context()->overlay().segment(
+                selection_[i], selection_[j], Color(1.0, 1.0, 1.0, 1.0), 2.0
+            );
+        }
+    }
+
+    void MeshGrobPaintFreeform::release(const RayPick& raypick) {
+        if(!active_) {
+            return;
+        }
+        active_ = false;
+
+        index_t x0,y0,width,height;
+        {
+            double minx =  Numeric::max_float64();
+            double miny =  Numeric::max_float64();
+            double maxx = -Numeric::max_float64();
+            double maxy = -Numeric::max_float64();
+            for(index_t i=0; i<selection_.size(); ++i) {
+                minx = std::min(minx, selection_[i].x);
+                miny = std::min(miny, selection_[i].y);
+                maxx = std::max(maxx, selection_[i].x);
+                maxy = std::max(maxy, selection_[i].y);            
+            }
+            x0 = index_t(minx);
+            y0 = index_t(miny);
+            width = index_t(maxx-minx)+1;
+            height = index_t(maxy-miny)+1;            
+        }
+
+        Image_var selection_image = new Image(
+            Image::GRAY,Image::BYTE, width, height
+        );
+
+        ImageRasterizer rasterizer(selection_image);
+        Color black(0.0,0.0,0.0,1.0);        
+        Color white(1.0,1.0,1.0,1.0);
+        
+        for(index_t i=0; i<selection_.size(); ++i) {
+            index_t j = (i+1)%selection_.size();
+            vec2 p1 = selection_[i];
+            vec2 p2 = selection_[j];
+            p1 -= vec2(double(x0),double(y0));
+            p2 -= vec2(double(x0),double(y0));            
+            p1.x /= double(width);
+            p1.y /= double(height);
+            p2.x /= double(width);
+            p2.y /= double(height);
+            rasterizer.segment(p1, p2, white);
+        }
+
+        // Flood-fill from all pixel borders, so that all
+        // pixels outside the selection will be white
+        // (we will invert right after)
+        for(int x=0; x<int(selection_image->width()); ++x) {
+            rasterizer.flood_fill(x,0,white);
+            rasterizer.flood_fill(x,int(height-1),white);
+        }
+        for(int y=0; y<int(selection_image->height()); ++y) {
+            rasterizer.flood_fill(0,y,white);
+            rasterizer.flood_fill(int(width-1),y,white);
+        }
+
+        // Invert colors (more logical to have selection in
+        // white and background in black)
+        for(int y=0; y<int(height); ++y) {
+            for(int x=0; x<int(width); ++x) {
+                if(rasterizer.pixel_is_black(x,y)) {
+                    rasterizer.set_pixel(x,y,white);
+                } else {
+                    rasterizer.set_pixel(x,y,black);
+                }
+            }
+        }
+        
+        ImageLibrary::instance()->save_image(
+            "selection_debug.png", selection_image
+        );
+
+        selection_.clear();
+        rendering_context()->overlay().clear();
+    }
+    
+    /***************************************************************/
+
+    MeshGrobPaintConnected::MeshGrobPaintConnected(
+        ToolsManager* parent
+    ) : MeshGrobPaintTool(parent) {
+    }
+    
+    void MeshGrobPaintConnected::grab(const RayPick& raypick) {
     }
     
     /***************************************************************/
@@ -926,6 +1085,8 @@ namespace OGF {
             static const char* paint_tools[] = {
                 "OGF::MeshGrobPaint",
                 "OGF::MeshGrobPaintRect",
+                "OGF::MeshGrobPaintFreeform",
+                "OGF::MeshGrobPaintConnected",                                
                 nullptr
             };
 
@@ -942,7 +1103,7 @@ namespace OGF {
         }
     }
 
-/***************************************************************/
+    /***************************************************************/
 
     MeshGrobRuler::MeshGrobRuler(
         ToolsManager* parent

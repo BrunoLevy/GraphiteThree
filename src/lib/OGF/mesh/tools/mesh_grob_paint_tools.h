@@ -123,7 +123,7 @@ namespace OGF {
      */
     gom_attribute(category, "paint")
     gom_attribute(icon, "paint")
-    gom_attribute(help, "paint attributes on a mesh")
+    gom_attribute(help, "paint attributes")
     gom_attribute(message, "btn1: paint; btn3: erase")
 	   
     gom_class MESH_API MeshGrobPaint : public MeshGrobPaintTool {
@@ -160,7 +160,7 @@ namespace OGF {
      */
     gom_attribute(category, "paint")
     gom_attribute(icon, "paint_rect")
-    gom_attribute(help, "paint attributes on a mesh in rectangle")
+    gom_attribute(help, "paint attributes in rectangle")
     gom_attribute(message, "btn1: paint; btn3: erase")
 	   
     gom_class MESH_API MeshGrobPaintRect : public MeshGrobPaintTool {
@@ -202,9 +202,20 @@ namespace OGF {
         }
         
     protected:
+
+        /**
+         * \brief Paints a rectangle
+         * \param[in] raypick 
+         * \param[in] x0 , y0 , x1 , y1 image bounds (device coordinates)
+         * \param[in] mask an optional mask. Black pixels do not belong to
+         *  the selection, non-zero pixels belong to selection. Image is
+         *  supposed to be grayscale, 8 bits per pixels. Size is supposed to
+         *  be (x1-x0+1) x (y1-y0+1)
+         */
         void paint_rect(
             const RayPick& raypick,
-            index_t x0, index_t y0, index_t x1, index_t y1
+            index_t x0, index_t y0, index_t x1, index_t y1,
+            Image* mask = nullptr
         );
         
     private:
@@ -213,14 +224,93 @@ namespace OGF {
         vec2 p_;
     };    
     
+
     /*************************************************************/
+
+    /**
+     * \brief Paint attributes using free-form selection
+     */
+    gom_attribute(category, "paint")
+    gom_attribute(icon, "paint_freeform")
+    gom_attribute(help, "paint attributes with free-form selection")
+    gom_attribute(message, "btn1: paint; btn3: erase")
+	   
+    gom_class MESH_API MeshGrobPaintFreeform : public MeshGrobPaintTool {
+    public:
+        /**
+         * \brief MeshGrobPaintFreeform constructor.
+         * \param[in] parent a pointer to the ToolsManager
+         */
+        MeshGrobPaintFreeform(ToolsManager* parent);
+        
+        /**
+         * \copydoc Tool::grab()
+         */
+        void grab(const RayPick& p_ndc) override;
+
+        /**
+         * \copydoc Tool::drag()
+         */
+        void drag(const RayPick& p_ndc) override;
+
+        /**
+         * \copydoc Tool::release()
+         */
+        void release(const RayPick& p_ndc) override;
+
+    gom_properties:
+
+        /**
+         * \brief If set, pick everything that falls
+         *  within the rect, else pick only visible
+         *  elements.
+         */
+        void set_xray_mode(bool x) {
+            xray_mode_ = x;
+        }
+
+        bool get_xray_mode() const {
+            return xray_mode_;
+        }
+    private:
+        bool xray_mode_;
+        bool active_;
+        vec2 latest_ndc_;
+        vector<vec2> selection_;
+    };
+
+    /*****************************************************************/
+
+    /**
+     * \brief Paint attributes in connected components
+     */
+    gom_attribute(category, "paint")
+    gom_attribute(icon, "paint_connected")
+    gom_attribute(help, "paint attributes on connected components")
+    gom_attribute(message, "btn1: paint; btn3: erase")
+	   
+    gom_class MESH_API MeshGrobPaintConnected : public MeshGrobPaintTool {
+    public:
+        /**
+         * \brief MeshGrobPaintConnected constructor.
+         * \param[in] parent a pointer to the ToolsManager
+         */
+        MeshGrobPaintConnected(ToolsManager* parent);
+
+        /**
+         * \copydoc Tool::grab()
+         */
+        void grab(const RayPick& p_ndc) override;
+    };
+
+    /**********************************************************************/
     
     /**
-     * \brief A tool that paints attribute values in a mesh
+     * \brief A tool that probes attribute values in a mesh
      */
     gom_attribute(category, "paint")
     gom_attribute(icon, "pipette")
-    gom_attribute(help, "probe attributes on a mesh")
+    gom_attribute(help, "probe attributes")
     gom_attribute(message, "btn1: probe attributes")
     
     gom_class MESH_API MeshGrobProbe : public MeshGrobTool {
