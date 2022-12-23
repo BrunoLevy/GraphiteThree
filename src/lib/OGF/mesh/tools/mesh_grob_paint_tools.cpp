@@ -381,7 +381,9 @@ namespace {
             geo_assert(mask->height() == picking_image->height());
             for(index_t y=0; y<picking_image->height(); ++y) {
                 for(index_t x=0; x<picking_image->width(); ++x) {
-                    if(*mask->pixel_base_byte_ptr(x,y) == 0) {
+                    // Note: glReadPixels flips the Y coordinate as compared
+                    // to everything else in Graphite-------------v
+                    if(*mask->pixel_base_byte_ptr(x,mask->height()-y-1) == 0) {
                         *(Numeric::uint32*)picking_image->pixel_base(x,y) =
                             Numeric::uint32(-1);
                     }
@@ -804,9 +806,7 @@ namespace OGF {
 
     MeshGrobPaintFreeform::MeshGrobPaintFreeform(
         ToolsManager* parent
-    ) : MeshGrobPaintTool(parent) {
-        xray_mode_ = true;
-        active_ = false;
+    ) : MeshGrobPaintRect(parent) {
     }
 
     void MeshGrobPaintFreeform::grab(const RayPick& raypick) {
@@ -856,11 +856,11 @@ namespace OGF {
             height = index_t(maxy-miny)+1;            
         }
 
-        Image_var selection_image = new Image(
+        Image_var mask = new Image(
             Image::GRAY,Image::BYTE, width, height
         );
 
-        ImageRasterizer rasterizer(selection_image);
+        ImageRasterizer rasterizer(mask);
         Color black(0.0,0.0,0.0,1.0);        
         Color white(1.0,1.0,1.0,1.0);
         
@@ -880,11 +880,11 @@ namespace OGF {
         // Flood-fill from all pixel borders, so that all
         // pixels outside the selection will be white
         // (we will invert right after)
-        for(int x=0; x<int(selection_image->width()); ++x) {
+        for(int x=0; x<int(mask->width()); ++x) {
             rasterizer.flood_fill(x,0,white);
             rasterizer.flood_fill(x,int(height-1),white);
         }
-        for(int y=0; y<int(selection_image->height()); ++y) {
+        for(int y=0; y<int(mask->height()); ++y) {
             rasterizer.flood_fill(0,y,white);
             rasterizer.flood_fill(int(width-1),y,white);
         }
@@ -900,11 +900,14 @@ namespace OGF {
                 }
             }
         }
-        
+
+        paint_rect(raypick, x0, y0, x0+width-1, y0+height-1, mask);
+        /*
         ImageLibrary::instance()->save_image(
             "selection_debug.png", selection_image
         );
-
+        */
+        
         selection_.clear();
         rendering_context()->overlay().clear();
     }

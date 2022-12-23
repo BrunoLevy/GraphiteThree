@@ -218,7 +218,6 @@ namespace OGF {
             Image* mask = nullptr
         );
         
-    private:
         bool xray_mode_;
         bool active_;
         vec2 p_;
@@ -235,7 +234,7 @@ namespace OGF {
     gom_attribute(help, "paint attributes with free-form selection")
     gom_attribute(message, "btn1: paint; btn3: erase")
 	   
-    gom_class MESH_API MeshGrobPaintFreeform : public MeshGrobPaintTool {
+    gom_class MESH_API MeshGrobPaintFreeform : public MeshGrobPaintRect {
     public:
         /**
          * \brief MeshGrobPaintFreeform constructor.
@@ -258,23 +257,7 @@ namespace OGF {
          */
         void release(const RayPick& p_ndc) override;
 
-    gom_properties:
-
-        /**
-         * \brief If set, pick everything that falls
-         *  within the rect, else pick only visible
-         *  elements.
-         */
-        void set_xray_mode(bool x) {
-            xray_mode_ = x;
-        }
-
-        bool get_xray_mode() const {
-            return xray_mode_;
-        }
     private:
-        bool xray_mode_;
-        bool active_;
         vec2 latest_ndc_;
         vector<vec2> selection_;
     };
