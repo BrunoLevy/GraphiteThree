@@ -45,8 +45,9 @@
 #include <geogram/image/image_library.h>
 #include <geogram/image/image_rasterizer.h>
 #include <geogram/basic/stopwatch.h>
+#include <geogram/basic/algorithm.h>
 
-#include <geogram_gfx/third_party/imgui/imgui.h>
+#include <stack>
 
 namespace {
     using namespace OGF;
@@ -73,22 +74,18 @@ namespace {
             return false;
         }
 
-        {
-            std::string painting;
-            shd->get_property("painting",painting);
-            if(painting != "ATTRIBUTE") {
-                return false;
-            }
+        std::string painting;
+        shd->get_property("painting",painting);
+        if(painting != "ATTRIBUTE") {
+            return false;
         }
 
-        {
-            std::string full_attribute_name;
-            shd->get_property("attribute",full_attribute_name);
-            if(!Mesh::parse_attribute_name(
-                   full_attribute_name,where,attribute_name,component)
-            ) {
-                return false;
-            }
+        std::string full_attribute_name;
+        shd->get_property("attribute",full_attribute_name);
+        if(!Mesh::parse_attribute_name(
+               full_attribute_name,where,attribute_name,component)
+          ) {
+            return false;
         }
         
         return true;
@@ -178,6 +175,113 @@ namespace {
                );            
     }
 
+    /**
+     * \brief Calls a user-specified function for each facet in a connected
+     *  component incident to a given facet
+     * \param[in] mesh_grob the mesh
+     * \param[in] seed_facet one of the facets of the connected component
+     * \param[in] doit the function to be called for each facet of the
+     *  connected component incident to \p seed_facet
+     */
+    void for_each_connected_facet(
+        MeshGrob* mesh_grob, index_t seed_facet,
+        std::function<void(index_t)> doit        
+    ) {
+        std::vector<bool> visited(mesh_grob->facets.nb(),false);
+        std::stack<index_t> S;
+        S.push(seed_facet);
+        visited[seed_facet] = true;
+        doit(seed_facet);
+        while(!S.empty()) {
+            index_t f = S.top();
+            S.pop();
+            for(index_t le=0; le<mesh_grob->facets.nb_vertices(f); ++le) {
+                index_t g = mesh_grob->facets.adjacent(f,le);
+                if(g != index_t(-1) && !visited[g]) {
+                    S.push(g);
+                    visited[g] = true;
+                    doit(g);
+                }
+            }
+        }
+    }
+
+    /**
+     * \brief Calls a user-specified function for each cell in a connected
+     *  component incident to a given cell
+     * \param[in] mesh_grob the mesh
+     * \param[in] seed_cell one of the cells of the connected component
+     * \param[in] doit the function to be called for each cell of the
+     *  connected component incident to \p seed_cell
+     */
+    
+    void for_each_connected_cell(
+        MeshGrob* mesh_grob, index_t seed_cell,
+        std::function<void(index_t)> doit        
+    ) {
+        std::vector<bool> visited(mesh_grob->cells.nb(),false);
+        std::stack<index_t> S;
+        S.push(seed_cell);
+        visited[seed_cell] = true;
+        doit(seed_cell);
+        while(!S.empty()) {
+            index_t c = S.top();
+            S.pop();
+            for(index_t lf=0; lf<mesh_grob->cells.nb_facets(c); ++lf) {
+                index_t d = mesh_grob->cells.adjacent(c,lf);
+                if(d != index_t(-1) && !visited[d]) {
+                    S.push(d);
+                    visited[d] = true;
+                    doit(d);
+                }
+            }
+        }
+    }
+
+    /**
+     * \brief Gets all the vertices of a connected component incident to 
+     *  a given facet
+     * \param[in] mesh_grob the mesh
+     * \param[in] seed_facet a facet of the connected component
+     * \param[in,out] vertices the vertices of the connected component are
+     *  appended here. Note that they may appear several times.
+     */
+    void get_connected_facet_vertices(
+        MeshGrob* mesh_grob, index_t seed_facet,
+        vector<index_t>& vertices
+    ) {
+        for_each_connected_facet(
+            mesh_grob, seed_facet,
+            [&](index_t f) {
+                for(index_t lv=0; lv<mesh_grob->facets.nb_vertices(f); ++lv) {
+                    vertices.push_back(mesh_grob->facets.vertex(f,lv));
+                }
+            }
+        );
+    }
+
+    /**
+     * \brief Gets all the vertices of a connected component incident to 
+     *  a given cell
+     * \param[in] mesh_grob the mesh
+     * \param[in] seed_cell a cell of the connected component
+     * \param[in,out] vertices the vertices of the connected component are
+     *  appended here. Note that they may appear several times.
+     */
+    void get_connected_cell_vertices(
+        MeshGrob* mesh_grob, index_t seed_cell,
+        vector<index_t>& vertices
+    ) {
+        for_each_connected_cell(
+            mesh_grob, seed_cell,
+            [&](index_t c) {
+                for(index_t lv=0; lv<mesh_grob->cells.nb_vertices(c); ++lv) {
+                    vertices.push_back(mesh_grob->cells.vertex(c,lv));
+                }
+            }
+        );
+    }
+    
     /**
      * \brief Probes an attribute value for a given type
      * \tparam T the type of the attribute
@@ -479,6 +583,16 @@ namespace OGF {
        picked_element_ = index_t(-1);
     }
 
+    void MeshGrobPaintTool::reset() {
+        MeshElementsFlags where;
+        std::string attribute_name;
+        index_t component;
+        if(!get_visible_attribute(mesh_grob(),where,attribute_name,component)){
+            mesh_grob()->query_interface("Attributes")
+                       ->invoke_method("show_vertices_selection");
+        }
+    }
+    
     bool MeshGrobPaintTool::get_painting_parameters(
         const RayPick& raypick,
         PaintOp& op,
@@ -506,9 +620,7 @@ namespace OGF {
         index_t component;
         
         if(
-            !get_painting_parameters(
-                raypick, op, where, attribute_name, component
-            )
+            !get_painting_parameters(raypick,op,where,attribute_name,component)
         ) {
             return;
         }
@@ -610,7 +722,7 @@ namespace OGF {
         // picks a GUI item, this triggers a release() event
         // and creates a selection.
         active_ = false;
-        xray_mode_ = true;
+        xray_mode_ = false;
     }
    
     void MeshGrobPaintRect::grab(const RayPick& p_ndc) {
@@ -931,12 +1043,72 @@ namespace OGF {
         if(!get_painting_parameters(raypick,op,where,attribute_name,component)){
             return;
         }
-
+        
         index_t picked_element = pick(raypick, where);
-        if(picked_element != index_t(-1)) {
-            // 
-        } else {
-            // 
+        
+        if(where != MESH_VERTICES && picked_element != index_t(-1)) {
+            switch(where) {
+            case MESH_FACETS: {
+                for_each_connected_facet(
+                    mesh_grob(), picked_element,
+                    [&](index_t f) {
+                        paint_attribute(
+                          mesh_grob(),where,attribute_name,component,f,op,value_
+                        );
+                    }
+                );
+            } break;
+            case MESH_CELLS: {
+                for_each_connected_cell(
+                    mesh_grob(), picked_element,
+                    [&](index_t c) {
+                        paint_attribute(
+                          mesh_grob(),where,attribute_name,component,c,op,value_
+                        );
+                    }
+                );
+            } break;
+            default: {
+            } break;
+            }
+        } else if(where == MESH_VERTICES) {
+            vector<index_t> vertices;
+            picked_element = pick_facet(raypick);
+            if(picked_element != index_t(-1)) {
+                get_connected_facet_vertices(
+                    mesh_grob(), picked_element, vertices
+                );
+                // if a cell facet was picked, propagate also to the
+                // volume connected component (obtained by finding a cell
+                // incident to one of the vertices of the picked facet)
+                index_t v = mesh_grob()->facets.vertex(picked_element,0);
+                for(index_t c: mesh_grob()->cells) {
+                    bool found = false;
+                    for(index_t lv=0;lv<mesh_grob()->cells.nb_vertices(c);++lv){
+                        if(mesh_grob()->cells.vertex(c,lv) == v) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if(found) {
+                        get_connected_cell_vertices(mesh_grob(),c,vertices);
+                        break;
+                    }
+                }
+            }
+            picked_element = pick_cell(raypick);
+            if(picked_element != index_t(-1)) {
+                get_connected_cell_vertices(
+                    mesh_grob(), picked_element, vertices
+                );
+            }
+            sort_unique(vertices);
+            for(index_t v: vertices) {
+                paint_attribute(
+                    mesh_grob(), MESH_VERTICES,
+                    attribute_name, component, v, op, value_
+                );
+            }
         }        
     }
     
@@ -964,7 +1136,6 @@ namespace OGF {
     void MeshGrobProbe::probe(const RayPick& p_ndc) {
         picked_ = false;
 
-        PaintOp op = PAINT_SET;
         MeshElementsFlags attribute_element_type;
         std::string attribute_name;
         index_t component;
@@ -1003,7 +1174,7 @@ namespace OGF {
 
         if(
             with_attributes &&
-            !with_value    &&
+            !with_value     &&
             attribute_element_type == MESH_VERTICES &&
             element_id != index_t(-1)
         ) {

@@ -63,6 +63,10 @@ namespace OGF {
     public:
         MeshGrobPaintTool(ToolsManager* parent);
 
+        /**
+         * \copydoc MeshGrobTool::reset()
+         */
+        void reset() override;
         
     gom_properties:
          /**
