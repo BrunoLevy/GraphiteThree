@@ -49,7 +49,16 @@
 
 namespace OGF {
 
-    
+    /**
+     * \brief A painting operation.
+     */
+    enum PaintOp {
+        PAINT_SET,   /**< sets attribute value */
+        PAINT_RESET, /**< resets attribute value to zero */
+        PAINT_INC,   /**< adds to attribute value */
+        PAINT_DEC    /**< subtracts from attribute value */
+    };
+
     gom_class MESH_API MeshGrobPaintTool : public MeshGrobTool {
     public:
         MeshGrobPaintTool(ToolsManager* parent);
@@ -103,6 +112,15 @@ namespace OGF {
          }
 
     protected:
+
+         bool get_painting_parameters(
+             const RayPick& raypick,
+             PaintOp& op,
+             MeshElementsFlags& where,
+             std::string& attribute_name,
+             index_t& component
+         );
+         
          void paint(const RayPick& p_ndc);
          
     protected:

@@ -52,14 +52,47 @@ namespace {
     using namespace OGF;
 
     /**
-     * \brief A painting operation.
+     * \brief Gets the visible attribute from the shader of a MeshGrob
+     * \param[in] mesh_grob the MeshGrob
+     * \param[out] where one of MESH_VERTICES, MESH_FACETS, MESH_CELLS
+     * \param[out] attribute_name the base name of the attribute
+     * \param[out] component the component index for a vector attribute 
+     *             (0 if it is a scalar attribute)
      */
-    enum PaintOp {
-        PAINT_SET,   /**< sets attribute value */
-        PAINT_RESET, /**< resets attribute value to zero */
-        PAINT_INC,   /**< adds to attribute value */
-        PAINT_DEC    /**< subtracts from attribute value */
-    };
+    bool get_visible_attribute(
+        MeshGrob* mesh_grob,
+        MeshElementsFlags& where,
+        std::string& attribute_name,
+        index_t& component
+    ) {
+        MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
+            mesh_grob->get_shader()
+        );
+        
+        if(shd == nullptr) {
+            return false;
+        }
+
+        {
+            std::string painting;
+            shd->get_property("painting",painting);
+            if(painting != "ATTRIBUTE") {
+                return false;
+            }
+        }
+
+        {
+            std::string full_attribute_name;
+            shd->get_property("attribute",full_attribute_name);
+            if(!Mesh::parse_attribute_name(
+                   full_attribute_name,where,attribute_name,component)
+            ) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
     
     /**
      * \brief Paints an attribute value for a given type
@@ -405,9 +438,18 @@ namespace {
         }
     }
 
+    /**
+     * \brief Tests whether a point belongs to a selection
+     * \details The selection is a rectangle in device coordinates plus an
+     *  optional mask image
+     * \param[in] p the device coordinates of the point to be tested
+     * \param[in] x0 , y0 , x1 , y1 the device coordinates rectangle 
+     * \param[in] mask the optional mask image. Needs to be in GRAYSCALE,
+     *  8 bits per pixel, with same dimensions as rectangle.
+     */
     bool point_is_selected(
-        const vec2& p,                   // device coord
-        index_t x0, index_t y0, index_t x1, index_t y1,  // device coord
+        const vec2& p,                  
+        index_t x0, index_t y0, index_t x1, index_t y1,  
         Image* mask = nullptr
     ) {
         if(p.x < double(x0) || p.y < double(y0) ||
@@ -415,11 +457,7 @@ namespace {
             return false;
         }
         if(mask != nullptr) {
-            if(
-                *mask->pixel_base_byte_ptr(
-                    index_t(p.x)-x0, index_t(p.y)-y0
-                ) == 0
-            ) {
+            if(*mask->pixel_base_byte_ptr(index_t(p.x)-x0,index_t(p.y)-y0)==0){
                 return false;
             }
         }
@@ -441,44 +479,41 @@ namespace OGF {
        picked_element_ = index_t(-1);
     }
 
-    void MeshGrobPaintTool::paint(const RayPick& p_ndc) {
-        MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
-            mesh_grob()->get_shader()
-        );
-        
-        if(shd == nullptr) {
-            return;
+    bool MeshGrobPaintTool::get_painting_parameters(
+        const RayPick& raypick,
+        PaintOp& op,
+        MeshElementsFlags& where,
+        std::string& attribute_name,
+        index_t& component
+    ) {
+        if(!get_visible_attribute(mesh_grob(),where,attribute_name,component)){
+            return false;
         }
-
-        {
-            std::string painting;
-            shd->get_property("painting",painting);
-            if(painting != "ATTRIBUTE") {
-                return;
-            }
+        op = PAINT_SET;
+        if(accumulate_) {
+            op = raypick.button == 1 ? PAINT_INC : PAINT_DEC;
+        } else {
+            op = raypick.button == 1 ? PAINT_SET : PAINT_RESET;
         }
+        return true;
+    }
+    
+    void MeshGrobPaintTool::paint(const RayPick& raypick) {
 
+        PaintOp op = PAINT_SET;
         MeshElementsFlags where;
         std::string attribute_name;
         index_t component;
-        {
-            std::string full_attribute_name;
-            shd->get_property("attribute",full_attribute_name);
-            if(!Mesh::parse_attribute_name(
-                   full_attribute_name,where,attribute_name,component)
-            ) {
-                return;
-            }
+        
+        if(
+            !get_painting_parameters(
+                raypick, op, where, attribute_name, component
+            )
+        ) {
+            return;
         }
         
-        PaintOp op = PAINT_SET;
-        if(accumulate_) {
-            op = p_ndc.button == 1 ? PAINT_INC : PAINT_DEC;
-        } else {
-            op = p_ndc.button == 1 ? PAINT_SET : PAINT_RESET;
-        }
-
-        index_t picked_element = pick(p_ndc,where);
+        index_t picked_element = pick(raypick,where);
         if(picked_element != index_t(-1)) {
             paint_attribute(
                 mesh_grob(), where,
@@ -486,7 +521,7 @@ namespace OGF {
                 picked_element, op, value_
             );
         } else if(where == MESH_VERTICES && !pick_vertices_only_) {
-            index_t f = pick_facet(p_ndc);
+            index_t f = pick_facet(raypick);
             if(f != index_t(-1)) {
                 picked_element_ = f;
                 for(index_t lv = 0;
@@ -500,7 +535,7 @@ namespace OGF {
                     );
                 } 
             } else {
-                index_t c = pick_cell(p_ndc);
+                index_t c = pick_cell(raypick);
                 picked_element_ = c;
                 if(c != index_t(-1)) {
                     for(index_t lv = 0;
@@ -519,7 +554,9 @@ namespace OGF {
 
         if(picked_element != picked_element_) {
             if(autorange_) {
-                shd->invoke_method("autorange");
+                if(mesh_grob()->get_shader() != nullptr) {
+                    mesh_grob()->get_shader()->invoke_method("autorange");
+                }
             }
             mesh_grob()->update();
             picked_element_ = picked_element;
@@ -650,41 +687,17 @@ namespace OGF {
         }
         
         PaintOp op = PAINT_SET;
-        if(accumulate_) {
-            op = raypick.button == 1 ? PAINT_INC : PAINT_DEC;
-        } else {
-            op = raypick.button == 1 ? PAINT_SET : PAINT_RESET;
-        }
-
-        MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
-            mesh_grob()->get_shader()
-        );
-        
-        if(shd == nullptr) {
-            return;
-        }
-
-        {
-            std::string painting;
-            shd->get_property("painting",painting);
-            if(painting != "ATTRIBUTE") {
-                return;
-            }
-        }
-
         MeshElementsFlags where;
         std::string attribute_name;
         index_t component;
-        {
-            std::string full_attribute_name;
-            shd->get_property("attribute",full_attribute_name);
-            if(!Mesh::parse_attribute_name(
-                   full_attribute_name,where,attribute_name,component)
-            ) {
-                return;
-            }
+        if(
+            !get_painting_parameters(
+                raypick, op, where, attribute_name, component
+            )
+        ) {
+            return;
         }
-
+        
         // Pick the elements, and copy the selected rect in an image
         index_t width  = x1-x0+1;
         index_t height = y1-y0+1;
@@ -744,12 +757,12 @@ namespace OGF {
             }
         } else {
             // Damnit, for glReadPixels, Y is swapped
+            // It has an importance here because we got a mask,
+            // so we flip y0 so that mask and picking image
+            // have the same orientation.
             y0 = rendering_context()->get_height()-height-1-y0;
         
-            pick(
-                raypick, where, picking_image,
-                x0, y0, width, height
-            );
+            pick(raypick, where, picking_image, x0, y0, width, height);
 
             for_each_picked_element(
                 picking_image, mask,
@@ -763,9 +776,7 @@ namespace OGF {
             );
         
             if(!pick_vertices_only_ && where == MESH_VERTICES) {
-                pick(
-                    raypick, MESH_FACETS, picking_image, x0, y0, width, height
-                );
+                pick(raypick,MESH_FACETS, picking_image, x0, y0, width, height);
                 for_each_picked_element(
                     picking_image, mask,
                     [&](index_t f) {
@@ -788,7 +799,7 @@ namespace OGF {
                     [&](index_t c) {
                         for(index_t lv = 0;
                             lv<mesh_grob()->cells.nb_vertices(c); ++lv
-                           ) {
+                        ) {
                             index_t v = mesh_grob()->cells.vertex(c,lv);
                             paint_attribute(
                                 mesh_grob(), where,
@@ -856,10 +867,7 @@ namespace OGF {
             height = index_t(maxy-miny)+1;            
         }
 
-        Image_var mask = new Image(
-            Image::GRAY,Image::BYTE, width, height
-        );
-
+        Image_var mask = new Image(Image::GRAY,Image::BYTE, width, height);
         ImageRasterizer rasterizer(mask);
         Color black(0.0,0.0,0.0,1.0);        
         Color white(1.0,1.0,1.0,1.0);
@@ -902,11 +910,6 @@ namespace OGF {
         }
 
         paint_rect(raypick, x0, y0, x0+width-1, y0+height-1, mask);
-        /*
-        ImageLibrary::instance()->save_image(
-            "selection_debug.png", selection_image
-        );
-        */
         
         selection_.clear();
         rendering_context()->overlay().clear();
@@ -920,6 +923,21 @@ namespace OGF {
     }
     
     void MeshGrobPaintConnected::grab(const RayPick& raypick) {
+        PaintOp op = PAINT_SET;
+        MeshElementsFlags where;
+        std::string attribute_name;
+        index_t component;
+        
+        if(!get_painting_parameters(raypick,op,where,attribute_name,component)){
+            return;
+        }
+
+        index_t picked_element = pick(raypick, where);
+        if(picked_element != index_t(-1)) {
+            // 
+        } else {
+            // 
+        }        
     }
     
     /***************************************************************/
@@ -945,39 +963,14 @@ namespace OGF {
 
     void MeshGrobProbe::probe(const RayPick& p_ndc) {
         picked_ = false;
-        
-        MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
-            mesh_grob()->get_shader()
-        );
-        
-        if(shd == nullptr) {
-            return;
-        }
 
-        bool with_attributes = true;
-        {
-            std::string painting;
-            shd->get_property("painting",painting);
-            if(painting != "ATTRIBUTE") {
-                with_attributes = false;
-            }
-        }
-
-
+        PaintOp op = PAINT_SET;
         MeshElementsFlags attribute_element_type;
         std::string attribute_name;
         index_t component;
-        if(with_attributes) {
-            std::string full_attribute_name;
-            shd->get_property("attribute",full_attribute_name);
-            if(!Mesh::parse_attribute_name(
-                   full_attribute_name,
-                   attribute_element_type,attribute_name,component
-               )
-            ) {
-                return;
-            }
-        }
+        bool with_attributes = get_visible_attribute(
+            mesh_grob(), attribute_element_type, attribute_name, component
+        );
         
         double value;
         bool with_value = false;
