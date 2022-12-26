@@ -117,14 +117,32 @@ namespace OGF {
          * \param[in] the color, with alpha
          */
         void fillcircle(vec2 p1, double R, Color color);
+
+        /**
+         * \brief Adds a filled triangle to the display list.
+         * \param[in] p1 , p2 , p3 the 2D coordinates of two corners of the
+         *  rectangle. One may use Tool::project_point() to obtain them from
+         *  real-world coordinates.
+         * \param[in] the color, with alpha
+         */
+        void filltriangle(vec2 p1, vec2 p2, vec2 p3, Color color);
+
+        /**
+         * \brief Adds a filled triangle to the display list.
+         * \param[in] p1 , p2 , p3 , p4 the 2D coordinates of two corners of the
+         *  rectangle. One may use Tool::project_point() to obtain them from
+         *  real-world coordinates.
+         * \param[in] the color, with alpha
+         */
+        void fillquad(vec2 p1, vec2 p2, vec2 p3, vec2 p4, Color color);
         
     private:
         enum PrimitiveType {
-            OVL_SEGMENT, OVL_RECT, OVL_CIRCLE
+            OVL_SEGMENT, OVL_RECT, OVL_CIRCLE, OVL_TRIANGLE, OVL_QUAD
         };
         struct Primitive {
             PrimitiveType type;
-            float x1,y1,x2,y2,R;
+            float x1,y1,x2,y2,x3,y3,x4,y4,R;
             float thickness;
             Numeric::uint32 color;
             bool filled;

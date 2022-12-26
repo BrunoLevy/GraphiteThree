@@ -98,46 +98,62 @@ namespace OGF {
 
 
         /**
-         * \menu Selection
+         * \menu /Selection
          */
         void select_all();
 
         /**
-         * \menu Selection
+         * \menu /Selection
          */
         void select_none();
 
         /**
-         * \menu Selection
+         * \menu /Selection
+         */
+        void grow_selection();
+
+        /**
+         * \menu /Selection
+         */
+        void shrink_selection();
+
+
+        /**
+         * \menu /Selection
+         */
+        void close_small_holes_in_selection(index_t hole_size=1);
+        
+        /**
+         * \menu /Selection
          */
         void invert_selection();
 
         /**
-         * \menu Selection
+         * \menu /Selection
          */
         void delete_selected_elements(
             bool delete_isolated_vertices = true
         );
         
         /**
-         * \menu Selection
+         * \menu /Selection
          */
         void hide_selection();
         
         /**
-         * \menu Vertices/Selection
+         * \menu /Selection/Vertices
          */
         void show_vertices_selection();
 
         /**
          * \brief Selects all the vertices on the border of a surface.
-         * \menu Vertices/Selection
+         * \menu /Selection/Vertices
          */
         void select_vertices_on_surface_border();
 
         /**
          * \brief Unselects all the vertices on the border of a surface.
-         * \menu Vertices/Selection
+         * \menu /Selection/Vertices
          */
         void unselect_vertices_on_surface_border();
 
@@ -146,18 +162,18 @@ namespace OGF {
 	 *  a mesh.
 	 * \param[in] tolerance maximum distance for considering
 	 *  that two vertices are duplicated.
-         * \menu Vertices/Selection
+         * \menu /Selection/Vertices
 	 */
 	void select_duplicated_vertices(double tolerance=0.0);
 
         
         /**
-         * \menu Facets/Selection
+         * \menu /Selection/Facets
          */
         void show_facets_selection();
 
         /**
-         * \menu Cells/Selection
+         * \menu /Selection/Cells
          */
         void show_cells_selection();
         

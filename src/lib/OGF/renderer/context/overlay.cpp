@@ -111,6 +111,23 @@ namespace OGF {
                     );
                 }
             } break;
+            case OVL_TRIANGLE: {
+                L->AddTriangleFilled(
+                    ImVec2(P.x1, P.y1),
+                    ImVec2(P.x2, P.y2),
+                    ImVec2(P.x3, P.y3),
+                    ImU32(P.color)
+                );
+            } break;
+            case OVL_QUAD: {
+                L->AddQuadFilled(
+                    ImVec2(P.x1, P.y1),
+                    ImVec2(P.x2, P.y2),
+                    ImVec2(P.x3, P.y3),
+                    ImVec2(P.x4, P.y4),                    
+                    ImU32(P.color)
+                );
+            } break;
             }
         }
     }
@@ -175,4 +192,34 @@ namespace OGF {
         primitives_.push_back(P);
     }
 
+    void Overlay::filltriangle(vec2 p1, vec2 p2, vec2 p3, Color color) {
+        Primitive P;
+        P.type = OVL_TRIANGLE;
+        P.x1 = float(p1.x);
+        P.y1 = float(p1.y);
+        P.x2 = float(p2.x);
+        P.y2 = float(p2.y);
+        P.x3 = float(p3.x);
+        P.y3 = float(p3.y);
+        P.color  = color_to_uint32(color);
+        P.filled = true;
+        primitives_.push_back(P);
+    }
+
+    void Overlay::fillquad(vec2 p1, vec2 p2, vec2 p3, vec2 p4, Color color) {
+        Primitive P;
+        P.type = OVL_QUAD;
+        P.x1 = float(p1.x);
+        P.y1 = float(p1.y);
+        P.x2 = float(p2.x);
+        P.y2 = float(p2.y);
+        P.x3 = float(p3.x);
+        P.y3 = float(p3.y);
+        P.x4 = float(p4.x);
+        P.y4 = float(p4.y);
+        P.color  = color_to_uint32(color);
+        P.filled = true;
+        primitives_.push_back(P);
+    }
+    
 }

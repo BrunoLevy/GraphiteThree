@@ -1,4 +1,3 @@
-
 /*
  *  OGF/Graphite: Geometry and Graphics Programming Library + Utilities
  *  Copyright (C) 2000-2009 INRIA - Project ALICE
@@ -39,7 +38,8 @@
 #include <OGF/mesh/tools/mesh_grob_paint_tools.h>
 #include <OGF/mesh/shaders/mesh_grob_shader.h>
 #include <OGF/renderer/context/rendering_context.h>
-#include <OGF/gom/interpreter/interpreter.h>
+#include <OGF/gom/reflection/meta.h>
+
 #include <geogram_gfx/third_party/imgui/imgui.h>
 #include <geogram/mesh/mesh_geometry.h>
 #include <geogram/image/image_library.h>
@@ -499,9 +499,9 @@ namespace {
     /**
      * \brief called a function for each unique picked element in a 
      *  picking image
-     * \param[in,out] picking_image the image. It needs to be stored in 
-     * \param[in] mask an optional pointer to a mask (or nullptr for no mask)
-     *  RGBA format. It is modified by the function
+     * \param[in,out] picking_image the image. It needs to be in RGBA format.
+     *  It is modified by the function.
+     * \param[in] mask an optional pointer to a mask (or nullptr for no mask).
      * \param[in] doit the function to be called for each unique picked element
      */
     void for_each_picked_element(
@@ -518,8 +518,8 @@ namespace {
             geo_assert(mask->height() == picking_image->height());
             for(index_t y=0; y<picking_image->height(); ++y) {
                 for(index_t x=0; x<picking_image->width(); ++x) {
-                    // Note: glReadPixels flips the Y coordinate as compared
-                    // to everything else in Graphite-------------v
+                    // Note: glReadPixels and rasterizer use the opposite
+                    // convention for the Y coordinate-------------v
                     if(*mask->pixel_base_byte_ptr(x,mask->height()-y-1) == 0) {
                         *(Numeric::uint32*)picking_image->pixel_base(x,y) =
                             Numeric::uint32(-1);
@@ -567,6 +567,7 @@ namespace {
         }
         return true;
     }
+
 }
 
 namespace OGF {
@@ -577,9 +578,8 @@ namespace OGF {
        value_ = 1.0;
        accumulate_ = false;
        autorange_ = true;
-       pick_vertices_only_ = false;
-       timestamp_ = 0.0;
-       update_time_ = 0.0;
+       xray_mode_ = false;
+       pick_vertices_only_ = true;
        picked_element_ = index_t(-1);
     }
 
@@ -590,6 +590,16 @@ namespace OGF {
         if(!get_visible_attribute(mesh_grob(),where,attribute_name,component)){
             mesh_grob()->query_interface("Attributes")
                        ->invoke_method("show_vertices_selection");
+            MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
+                mesh_grob()->get_shader()
+            );
+            if(shd != nullptr) {
+                if(pick_vertices_only_) {
+                    shd->show_vertices();
+                } else {
+                    shd->hide_vertices();                    
+                }
+            }
         }
     }
     
@@ -619,13 +629,14 @@ namespace OGF {
         std::string attribute_name;
         index_t component;
         
-        if(
-            !get_painting_parameters(raypick,op,where,attribute_name,component)
-        ) {
+        if(!get_painting_parameters(raypick,op,where,attribute_name,component)){
             return;
         }
         
         index_t picked_element = pick(raypick,where);
+
+        // Paint the picked element
+        
         if(picked_element != index_t(-1)) {
             paint_attribute(
                 mesh_grob(), where,
@@ -633,6 +644,10 @@ namespace OGF {
                 picked_element, op, value_
             );
         } else if(where == MESH_VERTICES && !pick_vertices_only_) {
+
+            // If painting vertices and no vertex was picked, try to
+            // pick a facet or a cell, and paint its vertices.
+            
             index_t f = pick_facet(raypick);
             if(f != index_t(-1)) {
                 picked_element_ = f;
@@ -675,8 +690,43 @@ namespace OGF {
         }
     }
 
+    void MeshGrobPaintTool::set_value(double value) {
+        // set property for all MeshGrobPaintTools.
+        vector<MeshGrobPaintTool*> tools;
+        get_paint_tools(tools_manager(), tools);
+        for(MeshGrobPaintTool* tool: tools) {
+            tool->set_value_for_this_tool(value);
+        }
+    }
+
+    void MeshGrobPaintTool::set_accumulate(bool value) {
+        // set property for all MeshGrobPaintTools.
+        vector<MeshGrobPaintTool*> tools;
+        get_paint_tools(tools_manager(), tools);
+        for(MeshGrobPaintTool* tool: tools) {
+            tool->set_accumulate_for_this_tool(value);
+        }
+    }
+
+    void MeshGrobPaintTool::set_autorange(bool value) {
+        // set property for all MeshGrobPaintTools.
+        vector<MeshGrobPaintTool*> tools;
+        get_paint_tools(tools_manager(), tools);
+        for(MeshGrobPaintTool* tool: tools) {
+            tool->set_autorange_for_this_tool(value);
+        }
+    }
+    
     void MeshGrobPaintTool::set_pick_vertices_only(bool value) {
-        pick_vertices_only_ = value;
+        // set property for all MeshGrobPaintTools.
+        vector<MeshGrobPaintTool*> tools;
+        get_paint_tools(tools_manager(), tools);
+        for(MeshGrobPaintTool* tool: tools) {
+            tool->set_pick_vertices_for_this_tool(value);
+        }
+
+        // if only vertices can be picked, then display them
+        // (else hide them).
         MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
             mesh_grob()->get_shader()
         );
@@ -688,31 +738,212 @@ namespace OGF {
             }
         }
     }
+
+    void MeshGrobPaintTool::set_xray_mode(bool value) {
+        // set property for all MeshGrobPaintTools.
+        vector<MeshGrobPaintTool*> tools;
+        get_paint_tools(tools_manager(), tools);
+        for(MeshGrobPaintTool* tool: tools) {
+            tool->set_xray_mode_for_this_tool(value);
+        }
+    }
+    
+    void MeshGrobPaintTool::get_paint_tools(
+        ToolsManager* manager, vector<MeshGrobPaintTool*>& paint_tools
+    ) {
+        paint_tools.clear();
+        
+        // Get OGF::MeshGrobPaintTool meta type
+        MetaType* mesh_grob_paint_tool_type =
+            Meta::instance()->resolve_meta_type("OGF::MeshGrobPaintTool");
+        geo_assert(mesh_grob_paint_tool_type != nullptr);
+
+        // Iterate on all meta types known in the system, and
+        // pick the ones that derive from OGF::MeshGrobPaintTool
+        
+        std::vector<MetaType*> all_types;
+        Meta::instance()->list_types(all_types);
+        for(MetaType* mtype : all_types) {
+            if(mtype->is_a(mesh_grob_paint_tool_type)) {
+
+                // Find (or create) the corresponding tool
+                // in the tools manager
+                MeshGrobPaintTool* paint_tool =
+                    dynamic_cast<MeshGrobPaintTool*>(
+                        manager->resolve_tool(mtype->name())
+                    );
+                geo_assert(paint_tool != nullptr);
+                paint_tools.push_back(paint_tool);
+            }
+        }
+    }
     
     /**********************************************************************/
     
     MeshGrobPaint::MeshGrobPaint(
         ToolsManager* parent
-    ) : MeshGrobPaintTool(parent) {
+    ) : MeshGrobPaintRect(parent) {
+        stroke_mode_ = true;
+        width_ = 5;
     }
    
-    void MeshGrobPaint::grab(const RayPick& p_ndc) {
-        latest_ndc_ = p_ndc.p_ndc;
-        paint(p_ndc);
+    void MeshGrobPaint::grab(const RayPick& raypick) {
+        latest_ndc_ = raypick.p_ndc;
+        if(stroke_mode_) {
+            stroke_.push_back(ndc_to_dc(raypick.p_ndc));
+        } else {
+            paint(raypick);
+        }
     }
 
-    void MeshGrobPaint::drag(const RayPick& p_ndc) {
-        if(length(p_ndc.p_ndc - latest_ndc_) <= 10.0/1024.0) {
+    void MeshGrobPaint::drag(const RayPick& raypick) {
+        if(length(raypick.p_ndc - latest_ndc_) <= 10.0/1024.0) {
             return ;
         }
-        latest_ndc_ = p_ndc.p_ndc;
-        paint(p_ndc);
+        latest_ndc_ = raypick.p_ndc;
+        
+        // In stroke mode, draw the stroke in the overlay
+        if(stroke_mode_) {
+            stroke_.push_back(ndc_to_dc(raypick.p_ndc));
+            rendering_context()->overlay().clear();
+            rendering_context()->overlay().fillcircle(
+                stroke_[0],double(width_),Color(1.0, 1.0, 1.0, 1.0)  
+            );
+            rendering_context()->overlay().fillcircle(
+                stroke_[stroke_.size()-1],double(width_),
+                Color(1.0, 1.0, 1.0, 1.0)  
+            );
+            for_each_stroke_quad(
+                [&](vec2 q1, vec2 q2, vec2 q3, vec2 q4) {
+                    rendering_context()->overlay().fillquad(
+                        q1,q2,q3,q4,Color(1.0, 1.0, 1.0, 1.0) 
+                    );
+                }
+            );
+        } else {
+            // If not in stroke mode, directly paint the picked element
+            paint(raypick);
+        }
     }
 
-    void MeshGrobPaint::release(const RayPick& p_ndc) {
-        paint(p_ndc);
+    void MeshGrobPaint::release(const RayPick& raypick) {
+
+        if(stroke_mode_ && stroke_.size() != 0) {
+            
+            // Get the bounding box of the stroke
+            int x0 =  65535;
+            int y0 =  65535;
+            int x1 = -65535;
+            int y1 = -65535;
+            for_each_stroke_quad(
+                [&](vec2 q1, vec2 q2, vec2 q3, vec2 q4) {
+                    vec2 t[4] = {q1,q2,q3,q4};
+                    for(index_t i=0; i<4; ++i) {
+                        x0 = std::min(x0, int(t[i].x));
+                        y0 = std::min(y0, int(t[i].y));
+                        x1 = std::max(x1, int(t[i].x));
+                        y1 = std::max(y1, int(t[i].y));                        
+                    }
+                }
+            );
+
+            // Enlarge the bbox to take into account the stroke width
+            x0 -= int(width_);
+            y0 -= int(width_);
+            x1 += int(width_);
+            y1 += int(width_);
+
+            // Clip bounding box
+            x0 = std::max(x0,0);
+            y0 = std::max(y0,0);
+            x1 = std::min(x1,int(rendering_context()->get_width() -1));
+            y1 = std::min(y1,int(rendering_context()->get_height()-1));
+
+            if(x1 > x0 && y1 > y0) {
+
+                // Generate mask
+                
+                Image_var mask = new Image(
+                    Image::GRAY, Image::BYTE,
+                    index_t(x1-x0+1),
+                    index_t(y1-y0+1)
+                );
+                ImageRasterizer rasterizer(mask);
+
+                Color white(1.0, 1.0, 1.0, 1.0);
+
+                if(stroke_.size() != 0) {
+                    vec2 t[2] = {stroke_[0], stroke_[stroke_.size()-1]};
+                    double r = double(width_)/double(x1-x0+1);
+                    for(index_t i=0; i<2; ++i) {
+                        t[i] -= vec2(double(x0), double(y0));
+                        t[i].x /= double(x1-x0+1);
+                        t[i].y /= double(y1-y0+1);
+                        rasterizer.fillcircle(t[i],r,white);
+                    }
+                }
+
+                for_each_stroke_quad(
+                    [&](vec2 q1, vec2 q2, vec2 q3, vec2 q4) {
+                        vec2 t[4] = {q1,q2,q3,q4};
+                        for(index_t i=0; i<4; ++i) {
+                            t[i] -= vec2(double(x0), double(y0));
+                            t[i].x /= double(x1-x0+1);
+                            t[i].y /= double(y1-y0+1);
+                            t[i].x = std::max(t[i].x,0.0);
+                            t[i].y = std::max(t[i].y,0.0);
+                            t[i].x = std::min(t[i].x,1.0);
+                            t[i].y = std::min(t[i].y,1.0);
+                        }
+                        rasterizer.triangle(t[0],white,t[1],white,t[2],white);
+                        rasterizer.triangle(t[0],white,t[2],white,t[3],white);
+                    }
+                );
+
+                paint_rect(
+                    raypick, index_t(x0), index_t(y0), index_t(x1), index_t(y1),
+                    mask
+                );
+                
+            } else {
+                paint(raypick);
+            }
+            
+            stroke_.clear();
+            rendering_context()->overlay().clear();
+        } else {
+            paint(raypick);
+        }
     }
 
+    void MeshGrobPaint::for_each_stroke_quad(
+        std::function<void(vec2, vec2, vec2, vec2)> doit
+    ) {
+        for(index_t i=0; i+1<stroke_.size(); ++i) {
+            vec2 p1 = stroke_[i];
+            vec2 p2 = stroke_[i+1];
+            vec2 n1 = p2-p1;
+            vec2 n2 = p2-p1;
+            if(i > 0) {
+                n1 += p1 - stroke_[i-1];
+            }
+            if(i+2<stroke_.size()) {
+                n2 += stroke_[i+2] - p2;
+            }
+            
+            n1 = normalize(vec2(n1.y, -n1.x));
+            n2 = normalize(vec2(n2.y, -n2.x));                    
+            
+            double width = double(width_);
+            vec2 q1 = p1-width*n1;
+            vec2 q2 = p1+width*n1;
+            vec2 q3 = p2-width*n2;
+            vec2 q4 = p2+width*n2;
+            
+            doit(q1,q2,q4,q3);
+        }                
+    }
+    
     /**********************************************************************/
     
     MeshGrobPaintRect::MeshGrobPaintRect(
@@ -722,7 +953,6 @@ namespace OGF {
         // picks a GUI item, this triggers a release() event
         // and creates a selection.
         active_ = false;
-        xray_mode_ = false;
     }
    
     void MeshGrobPaintRect::grab(const RayPick& p_ndc) {
@@ -734,6 +964,8 @@ namespace OGF {
         if(!active_) {
             return;
         }
+        
+        // Draw selection rectangle in overlay
         vec2 q = ndc_to_dc(p_ndc.p_ndc);
         rendering_context()->overlay().clear();
         rendering_context()->overlay().fillrect(
@@ -815,11 +1047,11 @@ namespace OGF {
         index_t height = y1-y0+1;
         Image_var picking_image = new Image;
         // We need 32-bit pixel values (default is 24-bit)
-        picking_image->initialize(
-            Image::RGBA, Image::BYTE, width, height
-        );
+        picking_image->initialize(Image::RGBA, Image::BYTE, width, height);
 
 
+        // In xray mode, test for each element whether its center falls in the
+        // selection. 
         if(xray_mode_) {
             switch(where) {
             case MESH_VERTICES: {
@@ -868,7 +1100,12 @@ namespace OGF {
             } break;
             }
         } else {
-            // Damnit, for glReadPixels, Y is swapped
+
+            // In standard mode, get picking image, apply the (optional) mask
+            // and find all the picked elements
+            
+            // Damnit, glReadPixels and ImageRasterizer use the
+            // opposite convention for Y coordinate.
             // It has an importance here because we got a mask,
             // so we flip y0 so that mask and picking image
             // have the same orientation.
@@ -886,7 +1123,10 @@ namespace OGF {
                     );
                 }
             );
-        
+
+            // If painting vertices and no vertex was picked, try to
+            // pick a facet or a cell, and paint its vertices.
+            
             if(!pick_vertices_only_ && where == MESH_VERTICES) {
                 pick(raypick,MESH_FACETS, picking_image, x0, y0, width, height);
                 for_each_picked_element(
@@ -1247,25 +1487,13 @@ namespace OGF {
     void MeshGrobProbe::release(const RayPick& p_ndc) {
         geo_argused(p_ndc);
         reset_tooltip();
-
         if(picked_) {
-            static const char* paint_tools[] = {
-                "OGF::MeshGrobPaint",
-                "OGF::MeshGrobPaintRect",
-                "OGF::MeshGrobPaintFreeform",
-                "OGF::MeshGrobPaintConnected",                                
-                nullptr
-            };
-
-            for(const char** p = paint_tools; *p != nullptr; ++p) {
-                MeshGrobPaintTool* paint_tool =
-                dynamic_cast<MeshGrobPaintTool*>(
-                    tools_manager()->resolve_tool(*p)
-                );
-                geo_assert(paint_tool != nullptr);      
-                paint_tool->set_value(value_);
-                paint_tool->set_accumulate(false);
-                paint_tool->set_autorange(false);
+            vector<MeshGrobPaintTool*> tools;
+            MeshGrobPaintTool::get_paint_tools(tools_manager(), tools);
+            for(MeshGrobPaintTool* tool: tools) {
+                tool->set_value_for_this_tool(value_);
+                tool->set_accumulate_for_this_tool(false);
+                tool->set_autorange_for_this_tool(false);
             }
         }
     }

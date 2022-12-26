@@ -231,7 +231,7 @@ namespace OGF {
 
     void MeshGrobAttributesCommands::select_all() {
         MeshElementsFlags where = visible_selection();
-        if(visible_selection() == MESH_NONE) {
+        if(where == MESH_NONE) {
             Logger::err("Selection") << "No visible selection"
                                      << std::endl;
             return;
@@ -248,7 +248,7 @@ namespace OGF {
 
     void MeshGrobAttributesCommands::select_none() {
         MeshElementsFlags where = visible_selection();
-        if(visible_selection() == MESH_NONE) {
+        if(where == MESH_NONE) {
             Logger::err("Selection") << "No visible selection"
                                      << std::endl;
             return;
@@ -280,6 +280,124 @@ namespace OGF {
         mesh_grob()->update();
     }
 
+    void MeshGrobAttributesCommands::grow_selection() {
+        MeshElementsFlags where = visible_selection();
+        if(where == MESH_NONE) {
+            Logger::err("Selection") << "No visible selection"
+                                     << std::endl;
+            return;
+        }
+        
+        Attribute<bool> selection(
+            mesh_grob()->get_subelements_by_type(where).attributes(),
+            "selection"
+        );
+        
+        vector<bool> new_selection(
+            mesh_grob()->get_subelements_by_type(where).nb(), false
+        );
+
+        switch(where) {
+        case MESH_VERTICES: {
+            for(index_t f: mesh_grob()->facets) {
+                index_t N = mesh_grob()->facets.nb_vertices(f);
+                for(index_t lv1=0; lv1<N; ++lv1){
+                    index_t lv2=(lv1+1) % N;
+                    index_t v1 = mesh_grob()->facets.vertex(f,lv1);
+                    index_t v2 = mesh_grob()->facets.vertex(f,lv2);
+                    if(selection[v1] || selection[v2]) {
+                        new_selection[v1] = true;
+                        new_selection[v2] = true;
+                    }
+                }
+            }
+            for(index_t c: mesh_grob()->cells) {
+                for(index_t lf = 0; lf<mesh_grob()->cells.nb_facets(c); ++lf) {
+                    index_t N = mesh_grob()->cells.facet_nb_vertices(c,lf);
+                    for(index_t lv1=0; lv1<N; ++lv1) {
+                        index_t lv2=(lv1+1) % N;
+                        index_t v1 = mesh_grob()->cells.facet_vertex(c,lf,lv1);
+                        index_t v2 = mesh_grob()->cells.facet_vertex(c,lf,lv2);
+                        if(selection[v1] || selection[v2]) {
+                            new_selection[v1] = true;
+                            new_selection[v2] = true;
+                        }
+                    }
+                }
+            }
+        } break;
+        case MESH_FACETS: {
+            for(index_t f: mesh_grob()->facets) {
+                if(selection[f]) {
+                    new_selection[f] = true;
+                }
+                for(index_t le=0; le<mesh_grob()->facets.nb_vertices(f); ++le) {
+                    index_t g = mesh_grob()->facets.adjacent(f,le);
+                    if(g != index_t(-1) && selection[g]) {
+                        new_selection[f] = true;
+                    }
+                }
+            }
+        } break;
+        case MESH_CELLS: {
+            for(index_t c: mesh_grob()->cells) {
+                if(selection[c]) {
+                    new_selection[c] = true;
+                }
+                for(index_t lf=0; lf<mesh_grob()->cells.nb_facets(c); ++lf) {
+                    index_t d = mesh_grob()->cells.adjacent(c,lf);
+                    if(d != index_t(-1) && selection[d]) {
+                        new_selection[c] = true;
+                    }
+                }
+            }
+        } break;
+        default: {
+            Logger::err("Selection") << "Invalid localisation"
+                                     << std::endl;
+        } break;
+        }
+
+        for(index_t i: mesh_grob()->get_subelements_by_type(where)) {
+            selection[i] = new_selection[i];
+        }
+        
+        mesh_grob()->update();
+    }
+    
+    void MeshGrobAttributesCommands::shrink_selection() {
+        MeshElementsFlags where = visible_selection();
+        if(where == MESH_NONE) {
+            Logger::err("Selection") << "No visible selection"
+                                     << std::endl;
+            return;
+        }
+        // Feeling lazy today !
+        // (shrink selection <=> grow complement of selection)
+        invert_selection();
+        grow_selection();
+        invert_selection();
+        mesh_grob()->update();
+    }
+    
+
+    void MeshGrobAttributesCommands::close_small_holes_in_selection(
+        index_t hole_size
+    ) {
+        MeshElementsFlags where = visible_selection();
+        if(where == MESH_NONE) {
+            Logger::err("Selection") << "No visible selection"
+                                     << std::endl;
+            return;
+        }
+        for(index_t i=0; i<hole_size; ++i) {
+            grow_selection();
+        }
+        for(index_t i=0; i<hole_size; ++i) {
+            shrink_selection();
+        }
+    }
+    
     void MeshGrobAttributesCommands::delete_selected_elements(
         bool remove_isolated
     ) {
@@ -448,16 +566,15 @@ namespace OGF {
         MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
             mesh_grob()->get_shader()
         );
+        
         if(shd == nullptr) {
             return MESH_NONE;
         }
 
-        {
-            std::string painting;
-            shd->get_property("painting",painting);
-            if(painting != "ATTRIBUTE") {
-                return MESH_NONE;
-            }
+        std::string painting;
+        shd->get_property("painting",painting);
+        if(painting != "ATTRIBUTE") {
+            return MESH_NONE;
         }
         
         std::string full_attribute_name;
@@ -470,10 +587,11 @@ namespace OGF {
           ) {
             return MESH_NONE;
         }
+        
         return where;
     }
     
-    /*****************************************************************************/    
+    /*************************************************************************/
     
     void MeshGrobAttributesCommands::compute_sub_elements_id(
         MeshElementsFlags what,
