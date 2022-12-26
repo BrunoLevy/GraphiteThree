@@ -195,7 +195,7 @@ namespace OGF {
 	shader->set_property("mesh_style", shd_mesh);
     }
 
-    void MeshGrobCommands::show_vertices() {
+    void MeshGrobCommands::set_vertices_visibility(bool visible) {
 	Shader* shader = mesh_grob()->get_shader();
 	if(shader == nullptr) {
 	    return;
@@ -214,15 +214,12 @@ namespace OGF {
 	    return;
 	}
 
-	if(shd_vertices_fields[0] == "true") {
-	    return;
-	}
-	
-	shd_vertices =
-            "true;"+shd_vertices_fields[1]+";"+shd_vertices_fields[2];
+        shd_vertices = visible ? "true;" : "false;";
+	shd_vertices += shd_vertices_fields[1]+";"+shd_vertices_fields[2];
         
 	shader->set_property("vertices_style", shd_vertices);
     }
+
     
     void MeshGrobCommands::show_UV(
 	const std::string& UV_prop_name, MeshGrob* M 

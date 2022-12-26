@@ -590,6 +590,9 @@ namespace OGF {
         if(!get_visible_attribute(mesh_grob(),where,attribute_name,component)){
             mesh_grob()->query_interface("Attributes")
                        ->invoke_method("show_vertices_selection");
+            where = MESH_VERTICES;
+        }
+        if(where == MESH_VERTICES) {
             MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
                 mesh_grob()->get_shader()
             );

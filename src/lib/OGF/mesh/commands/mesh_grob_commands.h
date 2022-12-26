@@ -104,12 +104,27 @@ namespace OGF {
 	 */
 	virtual void show_mesh(MeshGrob* M = nullptr);
 
+        /**
+         * \brief Shows or hides the vertices in the current shader.
+         * \param[in] visible true if vertices should be displayed, 
+         *   false otherwise.
+         */
+        virtual void set_vertices_visibility(bool visible);
 
         /**
-         * \nrief Shows the vertices.
+         * \brief Shows the vertices in the current shader.
          */
-        virtual void show_vertices();
-        
+        void show_vertices() {
+            set_vertices_visibility(true);
+        }
+
+        /**
+         * \brief Hides the vertices in the current shader.
+         */
+        void hide_vertices() {
+            set_vertices_visibility(false);
+        }
+
 
 	/** 
 	 * \brief Shows the parameterization of a mesh.

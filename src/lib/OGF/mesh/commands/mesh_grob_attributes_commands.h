@@ -110,12 +110,12 @@ namespace OGF {
         /**
          * \menu /Selection
          */
-        void grow_selection();
+        void grow_selection(index_t nb_times=1);
 
         /**
          * \menu /Selection
          */
-        void shrink_selection();
+        void shrink_selection(index_t nb_times=1);
 
 
         /**
