@@ -119,6 +119,7 @@ namespace OGF {
 	
         surface_style_.visible = true;
         surface_style_.color = Color(0.5,0.5,0.5,1.0);
+        facets_filter_ = false;
 	culling_mode_ = NO_CULL;
 	specular_ = 2;
 
@@ -126,7 +127,8 @@ namespace OGF {
         
         volume_style_.visible = true;
         volume_style_.color = Color(1.0,1.0,0.0,1.0);
-
+        cells_filter_ = false;
+        
         edges_style_.visible = true;
         edges_style_.color   = Color(0.0,0.0,0.5,1.0);
         edges_style_.width   = 1;
@@ -143,6 +145,8 @@ namespace OGF {
         vertices_style_.color   = Color(0.0,1.0,0.0,1.0);
         vertices_style_.size    = 2;
 
+        vertices_filter_ = false;
+        
 	vertices_transparency_ = 0.0;
 	
         vertices_selection_style_.visible = true;

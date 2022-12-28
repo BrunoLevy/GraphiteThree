@@ -176,6 +176,23 @@ namespace OGF {
          * \menu /Selection/Cells
          */
         void show_cells_selection();
+
+
+        /**
+         * \menu /Selection/Filters
+         */
+        gom_arg_attribute(where, handler, "combo_box")
+        gom_arg_attribute(where, values, "vertices;facets;cells")
+        void set_filter(
+            const std::string& where, const std::string& filter
+        );
+
+        /**
+         * \menu /Selection/Filters
+         */
+        gom_arg_attribute(where, handler, "combo_box")
+        gom_arg_attribute(where, values, "vertices;facets;cells")
+        void unset_filter(const std::string& where);
         
         /**
          * \brief Stores the vertices ids in an attribute.

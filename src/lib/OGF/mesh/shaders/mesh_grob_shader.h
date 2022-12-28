@@ -654,6 +654,23 @@ namespace OGF {
         }
 
         /**
+         * \brief Sets facet filtering
+         * \param[in] value true if facet filtering is activated
+         */
+        gom_attribute(visible_if, "has_facets")
+        void set_facets_filter(bool value) { 
+            facets_filter_ = value;
+            gfx_.set_filter(
+                MESH_FACETS, value ? "filter" : ""
+            );
+            update(); 
+        }
+
+        bool get_facets_filter() const {
+            return facets_filter_;
+        }
+        
+        /**
          * \brief Sets culling mode;
          * \param[in] value one of NO_CULL, CULL_FRONT, CULL_BACK
          */
@@ -736,6 +753,25 @@ namespace OGF {
         const SurfaceStyle& get_volume_style() const {
             return volume_style_;
         }
+
+
+        /**
+         * \brief Sets cells filtering
+         * \param[in] value true if facet filtering is activated
+         */
+        gom_attribute(visible_if, "has_cells")
+        void set_cells_filter(bool value) {
+            gfx_.set_filter(
+                MESH_CELLS, value ? "filter" : ""
+            );
+            cells_filter_ = value;
+            update(); 
+        }
+
+        bool get_cells_filter() const {
+            return cells_filter_;
+        }
+
         
         /**
          * \brief Sets whether volumetric cells should be colored
@@ -949,6 +985,23 @@ namespace OGF {
             return vertices_style_;
         }
 
+
+        /**
+         * \brief Sets vertices filtering
+         * \param[in] value true if vertices filtering is activated
+         */
+        void set_vertices_filter(bool value) {
+            gfx_.set_filter(
+                MESH_VERTICES, value ? "filter" : ""
+            );
+            vertices_filter_ = value;
+            update(); 
+        }
+
+        bool get_vertices_filter() const {
+            return vertices_filter_;
+        }
+        
 	/**
 	 * \brief Sets the transparency of the vertices 
 	 *  (use with dark background).
@@ -1126,11 +1179,13 @@ namespace OGF {
 	ImageFileName     texture_filename_;
 	
         SurfaceStyle surface_style_;
+        bool         facets_filter_;
 	CullingMode  culling_mode_;
 	
 	index_t      specular_;
         bool         two_sided_;
         SurfaceStyle volume_style_;
+        bool         cells_filter_;
         bool         colored_cells_;
         bool         tets_;
         bool         hexes_;
@@ -1142,6 +1197,7 @@ namespace OGF {
         EdgeStyle    mesh_style_;
         EdgeStyle    border_style_;
         PointStyle   vertices_style_;
+        bool         vertices_filter_;
 	double       vertices_transparency_;
         PointStyle   vertices_selection_style_;
         bool         animate_;

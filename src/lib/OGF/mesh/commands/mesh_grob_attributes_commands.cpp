@@ -121,6 +121,87 @@ namespace {
 	M(1,0) = MM[3]; M(1,1) = MM[4]; M(1,2) = MM[5];
 	M(2,0) = MM[6]; M(2,1) = MM[7]; M(2,2) = MM[8];	
     }
+
+    class Filter {
+    public:
+        Filter(index_t size, const std::string& description) {
+            size_ = size;
+            std::vector<std::string> words;
+            String::split_string(description,';',words);
+            for(index_t i=0; i<words.size(); ++i) {
+                if(words[i].size() == 0) {
+                    continue;
+                }
+                
+                if(words[i] == "*") {
+                    include_intervals_.push_back(std::make_pair(0, size_-1));
+                    continue;
+                }
+                
+                bool exclude = (words[i][0] == '!');
+                if(exclude) {
+                    words[i] = words[i].substr(1);
+                }
+                size_t pos = words[i].find('-');
+                if(pos == std::string::npos) {
+                    index_t item = String::to_uint(words[i]);
+                    if(item >= size_) {
+                        throw(std::logic_error("index out of bounds"));
+                    }
+                    if(exclude) {
+                        exclude_items_.push_back(item);
+                    } else {
+                        include_items_.push_back(item);
+                    }
+                } else {
+                    std::string from_str = words[i].substr(0,pos);
+                    std::string to_str   = words[i].substr(pos+1);
+                    index_t from = String::to_uint(from_str);
+                    index_t to   = String::to_uint(to_str);
+                    if(from >= size_ || to >= size_) {
+                        throw(std::logic_error("index out of bounds"));
+                    }
+                    if(exclude) {
+                        exclude_intervals_.push_back(std::make_pair(from,to));
+                    } else {
+                        include_intervals_.push_back(std::make_pair(from,to));
+                    }
+                }
+            }
+        }
+
+        bool test(index_t item) const {
+            bool result = false;
+            for(index_t i: include_items_) {
+                if(item == i) {
+                    result = true;
+                }
+            }
+            for(std::pair<index_t, index_t> I: include_intervals_) {
+                if(item >= I.first && item <= I.second) {
+                    result = true;
+                }
+            }
+            for(index_t i: exclude_items_) {
+                if(item == i) {
+                    result = false;
+                }
+            }
+            for(std::pair<index_t, index_t> I: exclude_intervals_) {
+                if(item >= I.first && item <= I.second) {
+                    result = false;
+                }
+            }
+            return result;
+        }
+        
+    private:
+        index_t size_;
+        vector<index_t> include_items_;
+        vector<std::pair<index_t, index_t> > include_intervals_;
+        vector<index_t> exclude_items_;
+        vector<std::pair<index_t, index_t> > exclude_intervals_;
+    };
     
 }
 
@@ -573,6 +654,67 @@ namespace OGF {
         show_attribute("cells.selection");
         hide_vertices();        
     }
+
+    void MeshGrobAttributesCommands::set_filter(
+        const std::string& where, const std::string& filter_string
+    ) {
+        MeshElementsFlags where_id = Mesh::name_to_subelements_type(where);
+        if(where_id == MESH_NONE) {
+            Logger::err("Attributes")
+                << where << ": invalid attribute localization"
+                << std::endl;
+            return;
+        }
+
+        Attribute<Numeric::uint8> attribute(
+            mesh_grob()->get_subelements_by_type(where_id).attributes(),
+            "filter"
+        );
+
+        try {
+            Filter filter(attribute.size(), filter_string);
+            for(index_t i=0; i<attribute.size(); ++i) {
+                attribute[i] = Numeric::uint8(filter.test(i));
+            }
+        } catch(...) {
+            Logger::err("Attributes") << "Invalid filter specification"
+                                      << std::endl;
+        }
+
+        Shader* shd = mesh_grob()->get_shader();
+        if(shd != nullptr) {
+            if(shd->has_property(where + "_filter")) {
+                shd->set_property(where + "_filter", "true");
+            }
+        }
+        
+        mesh_grob()->update();
+    }
+
+    void MeshGrobAttributesCommands::unset_filter(const std::string& where) {
+        MeshElementsFlags where_id = Mesh::name_to_subelements_type(where);
+        if(where_id == MESH_NONE) {
+            Logger::err("Attributes")
+                << where << ": invalid attribute localization"
+                << std::endl;
+            return;
+        }
+        AttributesManager& attributes =
+            mesh_grob()->get_subelements_by_type(where_id).attributes();
+        if(attributes.is_defined("filter")) {
+            attributes.delete_attribute_store("filter");
+        }
+        
+        Shader* shd = mesh_grob()->get_shader();
+        if(shd != nullptr) {
+            if(shd->has_property(where + "_filter")) {
+                shd->set_property(where + "_filter", "true");
+            }
+        }
+        
+        mesh_grob()->update();
+    }
+    
     
     MeshElementsFlags MeshGrobAttributesCommands::visible_selection() const {
         MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
