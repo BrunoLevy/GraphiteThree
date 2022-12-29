@@ -124,76 +124,6 @@ namespace {
 
     class Filter {
     public:
-        Filter(index_t size, const std::string& description) {
-            size_ = size;
-            std::vector<std::string> words;
-            String::split_string(description,';',words);
-            for(index_t i=0; i<words.size(); ++i) {
-                if(words[i].size() == 0) {
-                    continue;
-                }
-                
-                if(words[i] == "*") {
-                    include_intervals_.push_back(std::make_pair(0, size_-1));
-                    continue;
-                }
-                
-                bool exclude = (words[i][0] == '!');
-                if(exclude) {
-                    words[i] = words[i].substr(1);
-                }
-                size_t pos = words[i].find('-');
-                if(pos == std::string::npos) {
-                    index_t item = String::to_uint(words[i]);
-                    if(item >= size_) {
-                        throw(std::logic_error("index out of bounds"));
-                    }
-                    if(exclude) {
-                        exclude_items_.push_back(item);
-                    } else {
-                        include_items_.push_back(item);
-                    }
-                } else {
-                    std::string from_str = words[i].substr(0,pos);
-                    std::string to_str   = words[i].substr(pos+1);
-                    index_t from = String::to_uint(from_str);
-                    index_t to   = String::to_uint(to_str);
-                    if(from >= size_ || to >= size_) {
-                        throw(std::logic_error("index out of bounds"));
-                    }
-                    if(exclude) {
-                        exclude_intervals_.push_back(std::make_pair(from,to));
-                    } else {
-                        include_intervals_.push_back(std::make_pair(from,to));
-                    }
-                }
-            }
-        }
-
-        bool test(index_t item) const {
-            bool result = false;
-            for(index_t i: include_items_) {
-                if(item == i) {
-                    result = true;
-                }
-            }
-            for(std::pair<index_t, index_t> I: include_intervals_) {
-                if(item >= I.first && item <= I.second) {
-                    result = true;
-                }
-            }
-            for(index_t i: exclude_items_) {
-                if(item == i) {
-                    result = false;
-                }
-            }
-            for(std::pair<index_t, index_t> I: exclude_intervals_) {
-                if(item >= I.first && item <= I.second) {
-                    result = false;
-                }
-            }
-            return result;
-        }
         
     private:
         index_t size_;
@@ -206,6 +136,77 @@ namespace {
 }
 
 namespace OGF {
+
+    Filter::Filter(index_t size, const std::string& description) {
+        size_ = size;
+        std::vector<std::string> words;
+        String::split_string(description,';',words);
+        for(index_t i=0; i<words.size(); ++i) {
+            if(words[i].size() == 0) {
+                continue;
+            }
+            
+            if(words[i] == "*") {
+                include_intervals_.push_back(std::make_pair(0, size_-1));
+                continue;
+            }
+            
+            bool exclude = (words[i][0] == '!');
+            if(exclude) {
+                words[i] = words[i].substr(1);
+            }
+            size_t pos = words[i].find('-');
+            if(pos == std::string::npos) {
+                index_t item = String::to_uint(words[i]);
+                if(item >= size_) {
+                    throw(std::logic_error("index out of bounds"));
+                }
+                if(exclude) {
+                    exclude_items_.push_back(item);
+                } else {
+                    include_items_.push_back(item);
+                }
+            } else {
+                std::string from_str = words[i].substr(0,pos);
+                std::string to_str   = words[i].substr(pos+1);
+                index_t from = String::to_uint(from_str);
+                index_t to   = String::to_uint(to_str);
+                if(from >= size_ || to >= size_) {
+                    throw(std::logic_error("index out of bounds"));
+                }
+                if(exclude) {
+                    exclude_intervals_.push_back(std::make_pair(from,to));
+                } else {
+                    include_intervals_.push_back(std::make_pair(from,to));
+                }
+            }
+        }
+    }
+        
+    bool Filter::test(index_t item) const {
+        bool result = false;
+        for(index_t i: include_items_) {
+            if(item == i) {
+                result = true;
+            }
+        }
+        for(std::pair<index_t, index_t> I: include_intervals_) {
+            if(item >= I.first && item <= I.second) {
+                result = true;
+            }
+        }
+        for(index_t i: exclude_items_) {
+            if(item == i) {
+                result = false;
+            }
+        }
+        for(std::pair<index_t, index_t> I: exclude_intervals_) {
+            if(item >= I.first && item <= I.second) {
+                result = false;
+            }
+        }
+        return result;
+    }
     
     MeshGrobAttributesCommands::MeshGrobAttributesCommands() { 
     }
@@ -361,7 +362,7 @@ namespace OGF {
         mesh_grob()->update();
     }
 
-    void MeshGrobAttributesCommands::grow_selection(index_t nb_times) {
+    void MeshGrobAttributesCommands::enlarge_selection(index_t nb_times) {
         MeshElementsFlags where = visible_selection();
         if(where == MESH_NONE) {
             Logger::err("Selection") << "No visible selection"
@@ -465,9 +466,9 @@ namespace OGF {
             return;
         }
         // Feeling lazy today !
-        // (shrink selection <=> grow complement of selection)
+        // (shrink selection <=> enlarge complement of selection)
         invert_selection();
-        grow_selection(nb_times);
+        enlarge_selection(nb_times);
         invert_selection();
         mesh_grob()->update();
     }
@@ -483,7 +484,7 @@ namespace OGF {
             return;
         }
         for(index_t i=0; i<hole_size; ++i) {
-            grow_selection();
+            enlarge_selection();
         }
         for(index_t i=0; i<hole_size; ++i) {
             shrink_selection();

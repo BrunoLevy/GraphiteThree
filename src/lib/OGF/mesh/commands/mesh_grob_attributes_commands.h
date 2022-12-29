@@ -49,6 +49,42 @@
 
 namespace OGF {
 
+    /**
+     * \brief A class to select subsets in an array
+     */
+    class Filter {
+    public:
+        /**
+         * \brief Filter constructor
+         * \details Throws an exception if description cannot
+         *  be parsed
+         * \param[in] size size of the array
+         * \param[in] description description of the subset, as
+         *  a ';'-separated list of selections:
+         *   - '*' selects all elements
+         *   - 'nnn' selects an individual element
+         *   - 'nnn-mmm' selects the interval [nnn,mmm]
+         *   - '!nnn' unselects an individual element
+         *   - '!nnn-mmm' unselects the interval [nnn,mmm]
+         *  Example: "*;!5" selects everything but element number 5
+         */
+        Filter(index_t size, const std::string& description);
+
+        /**
+         * \brief Tests an element
+         * \param[in] item the element to be tested
+         * \retval true if the element is in the subset
+         * \retval false otherwise
+         */
+        bool test(index_t item) const;
+    private:
+        index_t size_;
+        vector<index_t> include_items_;
+        vector<std::pair<index_t, index_t> > include_intervals_;
+        vector<index_t> exclude_items_;
+        vector<std::pair<index_t, index_t> > exclude_intervals_;
+    };
+    
    /**
     * \brief Commands that manipulate mesh attributes.
     */
@@ -110,7 +146,7 @@ namespace OGF {
         /**
          * \menu /Selection
          */
-        void grow_selection(index_t nb_times=1);
+        void enlarge_selection(index_t nb_times=1);
 
         /**
          * \menu /Selection
