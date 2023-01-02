@@ -113,15 +113,32 @@ namespace OGF {
 
         /**
          * \brief Gets the list of all attributes.
-         * \return a ';'-separated list of all attributes.
+         * \return a ';'-separated list of all attributes. Each attribute
+         *  name is prefixed by the subelement is is bound to.
          */
         std::string get_attributes() const;
 	
         /**
          * \brief Gets the list of all scalar attributes.
-         * \return a ';'-separated list of all scalar attributes.
+         * \return a ';'-separated list of all scalar attributes. Each
+         *  attribute name is prefixed by the subelement it is bound to. For
+         *  vector attributes, all their components are listed.
          */
         std::string get_scalar_attributes() const;
+
+        /**
+         * \brief Gets the list of all selections.
+         * \return a ';'-separated list of all selections. Each selection
+         *  name is prefixed by the subelement is is bound to.
+         */
+        std::string get_selections() const;
+
+        /**
+         * \brief Gets the list of all filters.
+         * \return a ';'-separated list of all selections. Each filter
+         *  name is prefixed by the subelement is is bound to.
+         */
+        std::string get_filters() const;
         
     public:
         /**

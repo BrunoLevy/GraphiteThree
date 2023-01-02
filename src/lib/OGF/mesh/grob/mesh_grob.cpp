@@ -213,6 +213,46 @@ namespace OGF {
         return Mesh::get_scalar_attributes();
     }
 
+    std::string MeshGrob::get_selections() const {
+        std::string result = "";
+        static MeshElementsFlags elements[] = {
+            MESH_VERTICES, MESH_FACETS, MESH_CELLS
+        };
+        for(index_t i=0; i<sizeof(elements)/sizeof(MeshElementsFlags); ++i) {
+            if(
+                get_subelements_by_type(elements[i]).attributes().is_defined(
+                    "selection"
+                )
+            ) {
+                if(result == "") {
+                    result += ";";
+                }
+                result += subelements_type_to_name(elements[i]) + ".selection";
+            }
+        }
+        return result;
+    }
+
+    std::string MeshGrob::get_filters() const {
+        std::string result = "";
+        static MeshElementsFlags elements[] = {
+            MESH_VERTICES, MESH_FACETS, MESH_CELLS
+        };
+        for(index_t i=0; i<sizeof(elements)/sizeof(MeshElementsFlags); ++i) {
+            if(
+                get_subelements_by_type(elements[i]).attributes().is_defined(
+                    "filter"
+                )
+            ) {
+                if(result == "") {
+                    result += ";";
+                }
+                result += subelements_type_to_name(elements[i]) + ".selection";
+            }
+        }
+        return result;
+    }
+    
     bool MeshGrob::is_serializable() const {
         return true;
     }

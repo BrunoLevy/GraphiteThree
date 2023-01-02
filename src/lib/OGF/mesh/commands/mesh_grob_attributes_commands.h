@@ -240,7 +240,7 @@ namespace OGF {
 
 
         /**
-         * \menu /Selection/Filters
+         * \menu /Filters
          * \brief sets a filter
          * \param[in] where one of vertices, facets, cells
          * \param[in] filter semi-column-separated list of 
@@ -255,7 +255,7 @@ namespace OGF {
         );
 
         /**
-         * \menu /Selection/Filters
+         * \menu /Filters
          * \brief adds subsets to a filter
          * \param[in] where one of vertices, facets, cells
          * \param[in] filter semi-column-separated list of 
@@ -270,7 +270,7 @@ namespace OGF {
         );
 
         /**
-         * \menu /Selection/Filters
+         * \menu /Filters
          * \brief removes subsets from a filter
          * \param[in] where one of vertices, facets, cells
          * \param[in] filter semi-column-separated list of 
@@ -285,7 +285,47 @@ namespace OGF {
         );
 
         /**
-         * \menu /Selection/Filters
+         * \menu /Filters
+         * \param[in] filter semi-column-separated list of 
+         *  star,id,id1-id2,!id,!id1-id2
+         * \param[in] propagate propagate filter to other elements
+         */
+	gom_arg_attribute(attribute, handler, "combo_box")
+	gom_arg_attribute(attribute, values, "$grob.scalar_attributes")        
+        void set_filter_from_attribute(
+            const std::string& attribute, const std::string& filter,
+            bool propagate=true
+        );
+
+        /**
+         * \menu /Filters
+         * \param[in] filter semi-column-separated list of 
+         *  star,id,id1-id2,!id,!id1-id2
+         * \param[in] propagate propagate filter to other elements
+         */
+	gom_arg_attribute(attribute, handler, "combo_box")
+	gom_arg_attribute(attribute, values, "$grob.scalar_attributes")        
+        void add_to_filter_attribute(
+            const std::string& attribute, const std::string& filter,
+            bool propagate=true
+        );
+
+        /**
+         * \menu /Filters
+         * \param[in] filter semi-column-separated list of 
+         *  star,id,id1-id2,!id,!id1-id2
+         * \param[in] propagate propagate filter to other elements
+         */
+	gom_arg_attribute(attribute, handler, "combo_box")
+	gom_arg_attribute(attribute, values, "$grob.scalar_attributes")        
+        void remove_from_filter_attribute(
+            const std::string& attribute, const std::string& filter,
+            bool propagate=true
+        );
+        
+        
+        /**
+         * \menu /Filters
          * \brief propagates a filter from elements to all other
          *  elements (for instance, from cells to vertices and facets)
          * \param[in] from one of vertices, facets, cells
@@ -295,11 +335,27 @@ namespace OGF {
         void propagate_filter(const std::string& from);
         
         /**
-         * \menu /Selection/Filters
+         * \menu /Filters
+         */
+        gom_arg_attribute(filter, handler, "combo_box")
+        gom_arg_attribute(filter, values, "$grob.filters")
+        void copy_filter_to_selection(const std::string& filter);
+
+        /**
+         * \menu /Filters
+         */
+        gom_arg_attribute(selection, handler, "combo_box")
+        gom_arg_attribute(selection, values, "$grob.selections")
+        void copy_selection_to_filter(
+            const std::string& selection, bool propagate=true
+        );
+
+        /**
+         * \menu /Filters
          */
         gom_arg_attribute(where, handler, "combo_box")
         gom_arg_attribute(where, values, "vertices;facets;cells;all")
-        void delete_filter(const std::string& where);
+        void delete_filters(const std::string& where="all");
         
         /**
          * \brief Stores the vertices ids in an attribute.
