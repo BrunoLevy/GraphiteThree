@@ -134,20 +134,23 @@ namespace OGF {
         // Do not display timings for methods with continuous updates
         // (e.g. set_multiresolution_level)
         MetaMethod* mmethod = meta_class()->find_method(method_name) ;
-        bool do_timings = chrono_ && !mmethod->has_custom_attribute("continuous_update") ;
+        bool do_timings = chrono_ && mmethod != nullptr && 
+            !mmethod->has_custom_attribute("continuous_update") ;
 
         if(get_grob() != nullptr) {
             if(do_timings) {
 
-		// TODO:  prevent user from changing current object during execution
-		// of the command.
+		// TODO: prevent user from changing current object
+                // during execution the command.
 
                 std::string full_name =
                     meta_class()->name() + "::" + method_name ;
                 SystemStopwatch timer ;
                 Logger::out("timings")
                     << "(" << full_name << ") starting ..." << std::endl ;
-                bool result = Interface::invoke_method(method_name, args, ret_val) ;
+                bool result = Interface::invoke_method(
+                    method_name, args, ret_val
+                ) ;
                 Logger::out("timings")
                     << "(" << full_name << ") Elapsed time: " 
                     << timer.elapsed_user_time() << std::endl ;

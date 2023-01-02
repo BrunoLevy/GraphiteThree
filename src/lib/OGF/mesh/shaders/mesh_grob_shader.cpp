@@ -1020,6 +1020,13 @@ namespace OGF {
             rgn_subelements_name,
             rgn_attribute_name
         );
+
+        // Not a good idea, we are using this one internally !
+        if(rgn_attribute_name == "filter") {
+            PlainMeshGrobShader::draw();
+            return;
+        }
+        
         MeshElementsFlags rgn_attribute_subelements =
             mesh_grob()->name_to_subelements_type(rgn_subelements_name);
         const MeshSubElementsStore& rgn_subelements =

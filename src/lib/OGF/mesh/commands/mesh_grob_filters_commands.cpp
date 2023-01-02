@@ -719,14 +719,24 @@ namespace OGF {
         }
         Shader* shd = mesh->get_shader();
         if(shd != nullptr) {
+            std::string oldval;
             if(shd->has_property("vertices_filter")) {
-                shd->set_property("vertices_filter", "true");
+                shd->get_property("vertices_filter", oldval);
+                if(oldval != "true") {
+                    shd->set_property("vertices_filter", "true");
+                }
             }
             if(shd->has_property("facets_filter")) {
-                shd->set_property("facets_filter", "true");
+                shd->get_property("facets_filter", oldval);
+                if(oldval != "true") {
+                    shd->set_property("facets_filter", "true");
+                }
             }
             if(shd->has_property("cells_filter")) {
-                shd->set_property("cells_filter", "true");
+                shd->get_property("cells_filter", oldval);
+                if(oldval != "true") {
+                    shd->set_property("cells_filter", "true");
+                }
             }
         }
     }

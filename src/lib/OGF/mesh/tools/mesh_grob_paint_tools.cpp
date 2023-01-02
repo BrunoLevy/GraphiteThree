@@ -588,8 +588,10 @@ namespace OGF {
         std::string attribute_name;
         index_t component;
         if(!get_visible_attribute(mesh_grob(),where,attribute_name,component)){
-            mesh_grob()->query_interface("Attributes")
-                       ->invoke_method("show_vertices_selection");
+            Object_var I = mesh_grob()->query_interface("Selections");
+            if(!I.is_null()) {
+                I->invoke_method("show_vertices_selection");
+            }
             where = MESH_VERTICES;
         }
         if(where == MESH_VERTICES) {
