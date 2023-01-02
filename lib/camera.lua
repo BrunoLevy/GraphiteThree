@@ -206,7 +206,7 @@ autogui.handlers['OGF::ClippingConfig'] =
    local rotation = words[5]
    local invert = (words[6] == 'true')
 
-   local sel1,sel2,sel3,sel4,sel6, sel7
+   local sel1,sel2,sel3,sel4,sel6,sel7
 
    sel1,active = imgui.Checkbox('##active##'..property_name,active)
    imgui.SameLine()   

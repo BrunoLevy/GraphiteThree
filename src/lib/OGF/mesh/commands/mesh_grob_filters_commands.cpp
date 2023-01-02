@@ -39,137 +39,9 @@
 
 #include <OGF/mesh/commands/mesh_grob_filters_commands.h>
 
-namespace {
-    using namespace OGF;
-
-    /**
-     * \brief Propagates a filter from a mesh element to all
-     *  other mesh elements.
-     * \details If propagating from vertices, then facets and cells
-     *  are selected if all their vertices are selected.
-     *  If propagating from cells (or facets), then vertices that are
-     *  incident ot a selected cell (or facet). 
-     * \param[in] mesh a pointer to the Mesh
-     * \param[in] from one of MESH_VERTICES, MESH_FACETS, MESH_CELLS
-     */
-    void propagate_filter(MeshGrob* mesh, MeshElementsFlags from) {
-        Attribute<Numeric::uint8> vertices_filter(
-            mesh->vertices.attributes(), "filter"
-        );
-        Attribute<Numeric::uint8> facets_filter(
-            mesh->facets.attributes(), "filter"
-        );
-        Attribute<Numeric::uint8> cells_filter(
-            mesh->cells.attributes(), "filter"
-        );
-        switch(from) {
-        case MESH_VERTICES: {
-            for(index_t f: mesh->facets) {
-                facets_filter[f] = 1;
-                for(
-                    index_t lv=0;
-                    lv<mesh->facets.nb_vertices(f); ++lv
-                ) {
-                    index_t v = mesh->facets.vertex(f,lv);
-                    if(vertices_filter[v] == 0) {
-                        facets_filter[f] = 0;
-                        break;
-                    }
-                }
-            }
-            for(index_t c: mesh->cells) {
-                cells_filter[c] = 1;
-                for(
-                    index_t lv=0;
-                    lv<mesh->cells.nb_vertices(c); ++lv
-                ) {
-                    index_t v = mesh->cells.vertex(c,lv);
-                    if(vertices_filter[v] == 0) {
-                        cells_filter[c] = 0;
-                        break;
-                    }
-                }
-            }
-        } break;
-        case MESH_FACETS: {
-            for(index_t v: mesh->vertices) {
-                vertices_filter[v] = 0;
-            }            
-            for(index_t f: mesh->facets) {
-                if(facets_filter[f] != 0) {
-                    for(
-                        index_t lv=0;
-                        lv<mesh->facets.nb_vertices(f); ++lv
-                    ) {
-                        index_t v = mesh->facets.vertex(f,lv);
-                        vertices_filter[v] = 1;
-                    }
-                }
-            }
-            for(index_t c: mesh->cells) {
-                cells_filter[c] = 1;
-                for(
-                    index_t lv=0;
-                    lv<mesh->cells.nb_vertices(c); ++lv
-                ) {
-                    index_t v = mesh->cells.vertex(c,lv);
-                    if(vertices_filter[v] == 0) {
-                        cells_filter[c] = 0;
-                        break;
-                    }
-                }
-            }
-        } break;
-        case MESH_CELLS: {
-            for(index_t v: mesh->vertices) {
-                vertices_filter[v] = 0;
-            }            
-            for(index_t c: mesh->cells) {
-                if(cells_filter[c] != 0) {
-                    for(
-                        index_t lv=0;
-                        lv<mesh->cells.nb_vertices(c); ++lv
-                    ) {
-                        index_t v = mesh->cells.vertex(c,lv);
-                        vertices_filter[v] = 1;
-                    }
-                }
-            }
-            for(index_t f: mesh->facets) {
-                facets_filter[f] = 1;
-                for(
-                    index_t lv=0;
-                    lv<mesh->facets.nb_vertices(f); ++lv
-                ) {
-                    index_t v = mesh->facets.vertex(f,lv);
-                    if(vertices_filter[v] == 0) {
-                        facets_filter[f] = 0;
-                        break;
-                    }
-                }
-            }
-        } break;
-        default: {
-        } break;
-        }
-        Shader* shd = mesh->get_shader();
-        if(shd != nullptr) {
-            if(shd->has_property("vertices_filter")) {
-                shd->set_property("vertices_filter", "true");
-            }
-            if(shd->has_property("facets_filter")) {
-                shd->set_property("facets_filter", "true");
-            }
-            if(shd->has_property("cells_filter")) {
-                shd->set_property("cells_filter", "true");
-            }
-        }
-    }
-}
-
 namespace OGF {
 
-        Filter::Filter(
+    Filter::Filter(
         index_t size, const std::string& description, bool floating_point
     ) {
         size_ = size;
@@ -354,7 +226,7 @@ namespace OGF {
         }
 
         if(propagate) {
-            ::propagate_filter(mesh_grob(), where_id);
+            propagate_filter(mesh_grob(), where_id);
         }
         
         mesh_grob()->update();
@@ -396,7 +268,7 @@ namespace OGF {
         }
 
         if(propagate) {
-            ::propagate_filter(mesh_grob(), where_id);
+            propagate_filter(mesh_grob(), where_id);
         }
         
         mesh_grob()->update();
@@ -437,7 +309,7 @@ namespace OGF {
         }
 
         if(propagate) {
-            ::propagate_filter(mesh_grob(), where_id);
+            propagate_filter(mesh_grob(), where_id);
         }
         
         mesh_grob()->update();
@@ -488,7 +360,7 @@ namespace OGF {
         }
 
         if(propagate) {
-            ::propagate_filter(mesh_grob(), where);
+            propagate_filter(mesh_grob(), where);
         }
         
         mesh_grob()->update();
@@ -542,7 +414,7 @@ namespace OGF {
         }
 
         if(propagate) {
-            ::propagate_filter(mesh_grob(), where);
+            propagate_filter(mesh_grob(), where);
         }
         
         mesh_grob()->update();
@@ -596,7 +468,7 @@ namespace OGF {
         }
 
         if(propagate) {
-            ::propagate_filter(mesh_grob(), where);
+            propagate_filter(mesh_grob(), where);
         }
         
         mesh_grob()->update();
@@ -614,7 +486,7 @@ namespace OGF {
             return;
         }
 
-        ::propagate_filter(mesh_grob(), where_id);
+        propagate_filter(mesh_grob(), where_id);
         mesh_grob()->update();
     }
     
@@ -737,11 +609,127 @@ namespace OGF {
         }
         
         if(propagate) {
-            ::propagate_filter(mesh_grob(), where);
+            propagate_filter(mesh_grob(), where);
         }
         
         mesh_grob()->update();
     }
-    
+
+    void MeshGrobFiltersCommands::propagate_filter(
+        MeshGrob* mesh, MeshElementsFlags from
+    ) {
+        Attribute<Numeric::uint8> vertices_filter(
+            mesh->vertices.attributes(), "filter"
+        );
+        Attribute<Numeric::uint8> facets_filter(
+            mesh->facets.attributes(), "filter"
+        );
+        Attribute<Numeric::uint8> cells_filter(
+            mesh->cells.attributes(), "filter"
+        );
+        switch(from) {
+        case MESH_VERTICES: {
+            for(index_t f: mesh->facets) {
+                facets_filter[f] = 1;
+                for(
+                    index_t lv=0;
+                    lv<mesh->facets.nb_vertices(f); ++lv
+                ) {
+                    index_t v = mesh->facets.vertex(f,lv);
+                    if(vertices_filter[v] == 0) {
+                        facets_filter[f] = 0;
+                        break;
+                    }
+                }
+            }
+            for(index_t c: mesh->cells) {
+                cells_filter[c] = 1;
+                for(
+                    index_t lv=0;
+                    lv<mesh->cells.nb_vertices(c); ++lv
+                ) {
+                    index_t v = mesh->cells.vertex(c,lv);
+                    if(vertices_filter[v] == 0) {
+                        cells_filter[c] = 0;
+                        break;
+                    }
+                }
+            }
+        } break;
+        case MESH_FACETS: {
+            for(index_t v: mesh->vertices) {
+                vertices_filter[v] = 0;
+            }            
+            for(index_t f: mesh->facets) {
+                if(facets_filter[f] != 0) {
+                    for(
+                        index_t lv=0;
+                        lv<mesh->facets.nb_vertices(f); ++lv
+                    ) {
+                        index_t v = mesh->facets.vertex(f,lv);
+                        vertices_filter[v] = 1;
+                    }
+                }
+            }
+            for(index_t c: mesh->cells) {
+                cells_filter[c] = 1;
+                for(
+                    index_t lv=0;
+                    lv<mesh->cells.nb_vertices(c); ++lv
+                ) {
+                    index_t v = mesh->cells.vertex(c,lv);
+                    if(vertices_filter[v] == 0) {
+                        cells_filter[c] = 0;
+                        break;
+                    }
+                }
+            }
+        } break;
+        case MESH_CELLS: {
+            for(index_t v: mesh->vertices) {
+                vertices_filter[v] = 0;
+            }            
+            for(index_t c: mesh->cells) {
+                if(cells_filter[c] != 0) {
+                    for(
+                        index_t lv=0;
+                        lv<mesh->cells.nb_vertices(c); ++lv
+                    ) {
+                        index_t v = mesh->cells.vertex(c,lv);
+                        vertices_filter[v] = 1;
+                    }
+                }
+            }
+            for(index_t f: mesh->facets) {
+                facets_filter[f] = 1;
+                for(
+                    index_t lv=0;
+                    lv<mesh->facets.nb_vertices(f); ++lv
+                ) {
+                    index_t v = mesh->facets.vertex(f,lv);
+                    if(vertices_filter[v] == 0) {
+                        facets_filter[f] = 0;
+                        break;
+                    }
+                }
+            }
+        } break;
+        default: {
+        } break;
+        }
+        Shader* shd = mesh->get_shader();
+        if(shd != nullptr) {
+            if(shd->has_property("vertices_filter")) {
+                shd->set_property("vertices_filter", "true");
+            }
+            if(shd->has_property("facets_filter")) {
+                shd->set_property("facets_filter", "true");
+            }
+            if(shd->has_property("cells_filter")) {
+                shd->set_property("cells_filter", "true");
+            }
+        }
+    }
+
 }
 

@@ -229,6 +229,20 @@ namespace OGF {
         gom_arg_attribute(where, handler, "combo_box")
         gom_arg_attribute(where, values, "vertices;facets;cells;all")
         void delete_filters(const std::string& where="all");
+
+    public:
+        
+        /**
+         * \brief Propagates a filter from a mesh element to all
+         *  other mesh elements.
+         * \details If propagating from vertices, then facets and cells
+         *  are selected if all their vertices are selected.
+         *  If propagating from cells (or facets), then vertices that are
+         *  incident ot a selected cell (or facet). 
+         * \param[in] mesh a pointer to the Mesh
+         * \param[in] from one of MESH_VERTICES, MESH_FACETS, MESH_CELLS
+         */
+        static void propagate_filter(MeshGrob* mesh, MeshElementsFlags from);
     };
 }
 

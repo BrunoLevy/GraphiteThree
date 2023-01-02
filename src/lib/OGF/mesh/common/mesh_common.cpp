@@ -76,8 +76,9 @@ namespace OGF {
         ogf_register_grob_type<MeshGrob>();
         
         ogf_register_grob_shader<MeshGrob,PlainMeshGrobShader>();
+        ogf_register_grob_shader<MeshGrob,ExplodedViewMeshGrobShader>();        
+        ogf_register_grob_shader<MeshGrob,ParamMeshGrobShader>();
         ogf_register_grob_shader<MeshGrob,PDBMeshGrobShader>();
-        ogf_register_grob_shader<MeshGrob,ParamMeshGrobShader>();		
         
         ogf_register_grob_commands<MeshGrob,MeshGrobPointsCommands>();
         ogf_register_grob_commands<MeshGrob,MeshGrobSurfaceCommands>(); 

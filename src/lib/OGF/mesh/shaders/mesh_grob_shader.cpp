@@ -37,6 +37,7 @@
  
 
 #include <OGF/mesh/shaders/mesh_grob_shader.h>
+#include <OGF/mesh/commands/mesh_grob_filters_commands.h>
 #include <OGF/renderer/context/rendering_context.h>
 #include <OGF/basic/os/file_manager.h>
 
@@ -986,6 +987,151 @@ namespace OGF {
 	glupDisable(GLUP_TEXTURING);
 	GEO_CHECK_GL();	
     }
-    
+
+    /*************************************************************************/
+
+    ExplodedViewMeshGrobShader::ExplodedViewMeshGrobShader(
+        MeshGrob* grob
+    ) : PlainMeshGrobShader(grob) {
+        amount_ = 0;
+        dirty_ = false;
+        set_vertices_filter(true);
+        set_facets_filter(true);
+        set_cells_filter(true);
+    }
+
+    ExplodedViewMeshGrobShader::~ExplodedViewMeshGrobShader() {
+    }
+
+    void ExplodedViewMeshGrobShader::draw() {
+        if(mesh_grob()->graphics_are_locked()) {
+            return;
+        }
+
+        std::string rgn_subelements_name;
+        std::string rgn_attribute_name;
+        String::split_string(
+            region_, '.',
+            rgn_subelements_name,
+            rgn_attribute_name
+        );
+        
+        MeshElementsFlags rgn_attribute_subelements =
+            mesh_grob()->name_to_subelements_type(rgn_subelements_name);
+        const MeshSubElementsStore& rgn_subelements =
+            mesh_grob()->get_subelements_by_type(rgn_attribute_subelements);
+
+        ReadOnlyScalarAttributeAdapter rgn_attribute (
+            rgn_subelements.attributes(), rgn_attribute_name
+        );
+
+        if(!rgn_attribute.is_bound()) {
+            PlainMeshGrobShader::draw();
+            return;
+        }
+
+        if(
+            rgn_attribute.element_type() !=
+            ReadOnlyScalarAttributeAdapter::ET_INT32 &&
+            rgn_attribute.element_type() !=
+            ReadOnlyScalarAttributeAdapter::ET_UINT32 &&
+            rgn_attribute.element_type() !=
+            ReadOnlyScalarAttributeAdapter::ET_UINT8 &&
+            rgn_attribute.element_type() !=
+            ReadOnlyScalarAttributeAdapter::ET_INT8 
+        ) {
+            PlainMeshGrobShader::draw();
+            return;
+        }
+        
+        
+        if(dirty_ || mesh_grob()->dirty()) {
+            rgn_min_ = 100000;
+            rgn_max_ = -100000;
+            for(index_t elt: rgn_subelements) {
+                rgn_min_ = std::min(rgn_min_, int(rgn_attribute[elt]));
+                rgn_max_ = std::max(rgn_max_, int(rgn_attribute[elt]));
+            }
+            region_bary_.assign(
+                index_t(rgn_max_ - rgn_min_ + 1),vec3(0.0, 0.0, 0.0)
+            );
+            vector<index_t> region_count(index_t(rgn_max_ - rgn_min_ + 1), 0);
+            
+            switch(rgn_attribute_subelements) {
+            case MESH_VERTICES: {
+                for(index_t v: mesh_grob()->vertices) {
+                    int rgn = int(rgn_attribute[v]) - rgn_min_;
+                    region_bary_[rgn] +=
+                        vec3(mesh_grob()->vertices.point_ptr(v));
+                    region_count[rgn]++;
+                }
+            } break;
+            case MESH_FACETS: {
+                for(index_t f: mesh_grob()->facets) {
+                    int rgn = int(rgn_attribute[f]) - rgn_min_;
+                    for(index_t lv=0;
+                        lv< mesh_grob()->facets.nb_vertices(f); ++lv
+                    ) {
+                        index_t v = mesh_grob()->facets.vertex(f,lv);
+                        region_bary_[rgn] +=
+                            vec3(mesh_grob()->vertices.point_ptr(v));
+                        region_count[rgn]++;
+                    }
+                }
+            } break;
+            case MESH_CELLS: {
+                for(index_t c: mesh_grob()->facets) {
+                    int rgn = int(rgn_attribute[c]) - rgn_min_;
+                    for(index_t lv=0;
+                        lv< mesh_grob()->cells.nb_vertices(c); ++lv
+                    ) {
+                        index_t v = mesh_grob()->cells.vertex(c,lv);
+                        region_bary_[rgn] +=
+                            vec3(mesh_grob()->vertices.point_ptr(v));
+                        region_count[rgn]++;
+                    }
+                }
+            } break;
+            default:
+              break;
+            }
+            bary_ = vec3(0.0, 0.0, 0.0);
+            for(index_t rgn=0; rgn<region_bary_.size(); ++rgn) {
+                region_bary_[rgn] =
+                    1.0/double(region_count[rgn])*region_bary_[rgn];
+                bary_ = bary_ + region_bary_[rgn];
+            }
+            bary_ = 1.0/double(region_bary_.size())*bary_;
+            dirty_ = false;
+        }
+
+        Attribute<Numeric::uint8> filter(rgn_subelements.attributes(),"filter");
+        
+        for(index_t rgn=0; rgn<region_bary_.size(); ++rgn) {
+            for(index_t elt: rgn_subelements) {
+                filter[elt] = (int(rgn_attribute[elt]) == (int(rgn)+rgn_min_));
+            }
+            MeshGrobFiltersCommands::propagate_filter(
+                mesh_grob(),rgn_attribute_subelements
+            );
+
+            // This will mark the filters as dirty, and force
+            // sending data to the VBOs when using hardware
+            // filtering.
+            gfx_.set_filter(MESH_VERTICES,"filter");
+            gfx_.set_filter(MESH_FACETS,"filter");
+            gfx_.set_filter(MESH_CELLS,"filter");                        
+            
+            vec3 T = double(amount_)/10.0 * (region_bary_[rgn] - bary_);
+            glupMatrixMode(GLUP_MODELVIEW_MATRIX);
+            glupPushMatrix();
+            glupTranslated(T.x, T.y, T.z);
+            PlainMeshGrobShader::draw();
+            glupPopMatrix();
+        }
+    }
+
+    /*************************************************************************/
+
 }
 

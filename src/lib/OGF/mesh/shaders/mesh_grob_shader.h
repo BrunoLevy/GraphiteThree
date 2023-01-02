@@ -60,7 +60,7 @@ namespace GEO {
 
 namespace OGF {
 
-    //________________________________________________________
+    /**********************************************************/
     
     class Builder;
     class Texture;
@@ -260,7 +260,7 @@ namespace OGF {
         }
     };
 
-    //________________________________________________________
+    /****************************************************************/
 
     /**
      * \brief The default implementation of MeshGrobShader
@@ -1214,7 +1214,63 @@ namespace OGF {
 	GLuint       glsl_program_;
     };
 
-    //________________________________________________________    
+    /**********************************************************/
+
+    /**
+     * \brief Exploded view, moves regions apart.
+     */
+    gom_class MESH_API ExplodedViewMeshGrobShader : public PlainMeshGrobShader {
+    public:
+        /**
+         * \brief PlainMeshGrobShader constructor.
+         * \param[in] grob a pointer to the MeshGrob this shader is attached to
+         */
+         ExplodedViewMeshGrobShader(MeshGrob* grob);
+
+        /**
+         * \brief PlainMeshGrobShader destructor.
+         */
+         ~ExplodedViewMeshGrobShader() override;
+
+    gom_properties:
+
+         gom_attribute(handler, "combo_box")
+         gom_attribute(values, "$scalar_attributes")
+         void set_region(const std::string& value) {
+             region_ = value;
+             dirty_ = true;
+             update();
+         }
+
+         const std::string& get_region() const {
+             return region_;
+         }
+         
+         void set_amount(index_t value) {
+             amount_ = value;
+             update();
+         }
+
+         index_t get_amount() const {
+             return amount_;
+         }
+         
+    public:
+         void draw() override;
+
+    protected:
+         bool dirty_;
+         std::string region_;         
+         index_t amount_;
+         int rgn_min_;
+         int rgn_max_;
+         vec3 bary_;
+         vector<vec3> region_bary_;
+    };
+
+    /**********************************************************/
+         
 }
+
 #endif
 
