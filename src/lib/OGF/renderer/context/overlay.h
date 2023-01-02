@@ -138,7 +138,11 @@ namespace OGF {
         
     private:
         enum PrimitiveType {
-            OVL_SEGMENT, OVL_RECT, OVL_CIRCLE, OVL_TRIANGLE, OVL_QUAD
+            OVL_SEGMENT =0,
+            OVL_RECT    =1,
+            OVL_CIRCLE  =2,
+            OVL_TRIANGLE=3,
+            OVL_QUAD    =4
         };
         struct Primitive {
             PrimitiveType type;

@@ -224,7 +224,7 @@ namespace OGF {
                     "selection"
                 )
             ) {
-                if(result == "") {
+                if(result != "") {
                     result += ";";
                 }
                 result += subelements_type_to_name(elements[i]) + ".selection";
@@ -244,7 +244,7 @@ namespace OGF {
                     "filter"
                 )
             ) {
-                if(result == "") {
+                if(result != "") {
                     result += ";";
                 }
                 result += subelements_type_to_name(elements[i]) + ".selection";
