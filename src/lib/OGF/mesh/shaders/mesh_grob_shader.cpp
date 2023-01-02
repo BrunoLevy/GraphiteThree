@@ -1008,6 +1008,11 @@ namespace OGF {
             return;
         }
 
+
+        // Determine whether region is on vertices, facets or cells,
+        // and create a ReadOnlyScalarAttributeAdapter to access it
+        // whatever its internal type
+        
         std::string rgn_subelements_name;
         std::string rgn_attribute_name;
         String::split_string(
@@ -1015,12 +1020,10 @@ namespace OGF {
             rgn_subelements_name,
             rgn_attribute_name
         );
-        
         MeshElementsFlags rgn_attribute_subelements =
             mesh_grob()->name_to_subelements_type(rgn_subelements_name);
         const MeshSubElementsStore& rgn_subelements =
             mesh_grob()->get_subelements_by_type(rgn_attribute_subelements);
-
         ReadOnlyScalarAttributeAdapter rgn_attribute (
             rgn_subelements.attributes(), rgn_attribute_name
         );
@@ -1030,6 +1033,7 @@ namespace OGF {
             return;
         }
 
+        // Accept only integer types
         if(
             rgn_attribute.element_type() !=
             ReadOnlyScalarAttributeAdapter::ET_INT32 &&
@@ -1044,7 +1048,7 @@ namespace OGF {
             return;
         }
         
-        
+        // Compute object barycenter and regions barycenter
         if(dirty_ || mesh_grob()->dirty()) {
             rgn_min_ = 100000;
             rgn_max_ = -100000;
@@ -1106,8 +1110,12 @@ namespace OGF {
         }
 
         Attribute<Numeric::uint8> filter(rgn_subelements.attributes(),"filter");
-        
+
+        // Draw the object as many times as the number of regions
+        // (not efficient at all, but for a small number of regions it is OK)
         for(index_t rgn=0; rgn<region_bary_.size(); ++rgn) {
+
+            // For each region, generate a filter that only displays the region
             for(index_t elt: rgn_subelements) {
                 filter[elt] = (int(rgn_attribute[elt]) == (int(rgn)+rgn_min_));
             }
