@@ -919,6 +919,12 @@ namespace OGF {
         } else {
             paint(raypick);
         }
+
+        if(autorange_) {
+            if(mesh_grob()->get_shader() != nullptr) {
+                mesh_grob()->get_shader()->invoke_method("autorange");
+            }
+        }
     }
 
     void MeshGrobPaint::for_each_stroke_quad(
@@ -1168,6 +1174,11 @@ namespace OGF {
                 );
             }
         }
+        if(autorange_) {
+            if(mesh_grob()->get_shader() != nullptr) {
+                mesh_grob()->get_shader()->invoke_method("autorange");
+            }
+        }
     }
 
     /***************************************************************/
@@ -1354,7 +1365,12 @@ namespace OGF {
                     attribute_name, component, v, op, value_
                 );
             }
-        }        
+        }
+        if(autorange_) {
+            if(mesh_grob()->get_shader() != nullptr) {
+                mesh_grob()->get_shader()->invoke_method("autorange");
+            }
+        }
     }
     
     /***************************************************************/
