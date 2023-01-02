@@ -123,6 +123,28 @@ namespace OGF {
     
     Box3d MeshGrob::bbox() const {
         Box3d result;
+
+        // If there is a vertex filter, apply it.
+        Shader* shader = get_shader();
+        if(shader != nullptr) {
+            if(shader->has_property("vertices_filter")) {
+                std::string prop;
+                shader->get_property("vertices_filter", prop);
+                if(prop == "true") {
+                    Attribute<Numeric::uint8> filter;
+                    filter.bind_if_is_defined(this->vertices.attributes(),"filter");
+                    if(filter.is_bound()) {
+                        for(index_t v: vertices) {
+                            if(filter[v] != 0) {
+                                result.add_point(vec3(vertices.point_ptr(v)));
+                            }
+                        }
+                        return result;
+                    }
+                }
+            }
+        }
+        
         if(vertices.nb() != 0) {
             double xyzmin[3];
             double xyzmax[3];
@@ -130,6 +152,7 @@ namespace OGF {
             result.add_point(vec3(xyzmin));
             result.add_point(vec3(xyzmax));
         }
+        
         return result;
     }
     

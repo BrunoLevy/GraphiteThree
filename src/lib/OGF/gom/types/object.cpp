@@ -281,6 +281,10 @@ namespace OGF {
         }
 
         bool result = true;
+
+        if(connections_ == nullptr) {
+            return false;
+        }
         
         auto it = connections_->find(signal_name);
         if(it == connections_->end()) {

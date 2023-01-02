@@ -52,7 +52,7 @@ namespace OGF {
     /**
      * \brief A class to select subsets in an array
      */
-    class Filter {
+    class MESH_API Filter {
     public:
         /**
          * \brief Filter constructor
@@ -67,8 +67,13 @@ namespace OGF {
          *   - '!nnn' unselects an individual element
          *   - '!nnn-mmm' unselects the interval [nnn,mmm]
          *  Example: "*;!5" selects everything but element number 5
+         * \param[in] floating_point if set, values to be tested are
+         *  floating point values, else they are element indices.
          */
-        Filter(index_t size, const std::string& description);
+        Filter(
+            index_t size, const std::string& description,
+            bool floating_point=false
+        );
 
         /**
          * \brief Tests an element
@@ -77,12 +82,32 @@ namespace OGF {
          * \retval false otherwise
          */
         bool test(index_t item) const;
+
+        /**
+         * \brief Tests an element by value
+         * \param[in] item the element to be tested
+         * \retval true if the element is in the subset
+         * \retval false otherwise
+         */
+        bool test(double value) const;
+
+    protected:
+        /**
+         * \brief used in 'items' mode (ctor, floating_point = false)
+         */
+        void parse_items(const std::string& destription);
+
+        /**
+         * \brief used in 'values' mode (ctor, floating_point = true)
+         */
+        void parse_values(const std::string& destription);        
+        
     private:
         index_t size_;
-        vector<index_t> include_items_;
-        vector<std::pair<index_t, index_t> > include_intervals_;
-        vector<index_t> exclude_items_;
-        vector<std::pair<index_t, index_t> > exclude_intervals_;
+        vector<double> include_items_;
+        vector<std::pair<double, double> > include_intervals_;
+        vector<double> exclude_items_;
+        vector<std::pair<double, double> > exclude_intervals_;
     };
     
    /**
@@ -216,19 +241,65 @@ namespace OGF {
 
         /**
          * \menu /Selection/Filters
+         * \brief sets a filter
+         * \param[in] where one of vertices, facets, cells
+         * \param[in] filter semi-column-separated list of 
+         *  star,id,id1-id2,!id,!id1-id2
+         * \param[in] propagate propagate filter to other elements
          */
         gom_arg_attribute(where, handler, "combo_box")
         gom_arg_attribute(where, values, "vertices;facets;cells")
         void set_filter(
-            const std::string& where, const std::string& filter
+            const std::string& where, const std::string& filter="*",
+            bool propagate=true
         );
 
         /**
          * \menu /Selection/Filters
+         * \brief adds subsets to a filter
+         * \param[in] where one of vertices, facets, cells
+         * \param[in] filter semi-column-separated list of 
+         *  star,id,id1-id2,!id,!id1-id2
+         * \param[in] propagate propagate filter to other elements
          */
         gom_arg_attribute(where, handler, "combo_box")
         gom_arg_attribute(where, values, "vertices;facets;cells")
-        void unset_filter(const std::string& where);
+        void add_to_filter(
+            const std::string& where, const std::string& filter,
+            bool propagate=true
+        );
+
+        /**
+         * \menu /Selection/Filters
+         * \brief removes subsets from a filter
+         * \param[in] where one of vertices, facets, cells
+         * \param[in] filter semi-column-separated list of 
+         *  star,id,id1-id2,!id,!id1-id2
+         * \param[in] propagate propagate filter to other elements
+         */
+        gom_arg_attribute(where, handler, "combo_box")
+        gom_arg_attribute(where, values, "vertices;facets;cells")
+        void remove_from_filter(
+            const std::string& where, const std::string& filter,
+            bool propagate=true
+        );
+
+        /**
+         * \menu /Selection/Filters
+         * \brief propagates a filter from elements to all other
+         *  elements (for instance, from cells to vertices and facets)
+         * \param[in] from one of vertices, facets, cells
+         */
+        gom_arg_attribute(from, handler, "combo_box")
+        gom_arg_attribute(from, values, "vertices;facets;cells")            
+        void propagate_filter(const std::string& from);
+        
+        /**
+         * \menu /Selection/Filters
+         */
+        gom_arg_attribute(where, handler, "combo_box")
+        gom_arg_attribute(where, values, "vertices;facets;cells;all")
+        void delete_filter(const std::string& where);
         
         /**
          * \brief Stores the vertices ids in an attribute.

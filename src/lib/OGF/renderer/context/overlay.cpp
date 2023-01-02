@@ -40,6 +40,7 @@
 #ifdef __GNUC__
 #ifndef __ICC
 #pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Wconversion"
 #endif
 #endif
 
