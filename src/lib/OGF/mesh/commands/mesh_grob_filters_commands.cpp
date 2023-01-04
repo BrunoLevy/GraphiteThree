@@ -195,41 +195,7 @@ namespace OGF {
         const std::string& where, const std::string& filter_string,
         bool propagate
     ) {
-        MeshElementsFlags where_id = Mesh::name_to_subelements_type(where);
-        if(where_id == MESH_NONE) {
-            Logger::err("Attributes")
-                << where << ": invalid attribute localization"
-                << std::endl;
-            return;
-        }
-
-        Attribute<Numeric::uint8> attribute(
-            mesh_grob()->get_subelements_by_type(where_id).attributes(),
-            "filter"
-        );
-
-        try {
-            Filter filter(attribute.size(), filter_string);
-            for(index_t i=0; i<attribute.size(); ++i) {
-                attribute[i] = Numeric::uint8(filter.test(i));
-            }
-        } catch(...) {
-            Logger::err("Attributes") << "Invalid filter specification"
-                                      << std::endl;
-        }
-
-        Shader* shd = mesh_grob()->get_shader();
-        if(shd != nullptr) {
-            if(shd->has_property(where + "_filter")) {
-                shd->set_property(where + "_filter", "true");
-            }
-        }
-
-        if(propagate) {
-            propagate_filter(mesh_grob(), where_id);
-        }
-        
-        mesh_grob()->update();
+        apply_filter_op(FILTER_SET, where, filter_string, propagate);
     }
 
 
@@ -237,241 +203,41 @@ namespace OGF {
         const std::string& where, const std::string& filter_string,
         bool propagate
     ) {
-        MeshElementsFlags where_id = Mesh::name_to_subelements_type(where);
-        if(where_id == MESH_NONE) {
-            Logger::err("Attributes")
-                << where << ": invalid attribute localization"
-                << std::endl;
-            return;
-        }
-
-        Attribute<Numeric::uint8> attribute(
-            mesh_grob()->get_subelements_by_type(where_id).attributes(),
-            "filter"
-        );
-
-        try {
-            Filter filter(attribute.size(), filter_string);
-            for(index_t i=0; i<attribute.size(); ++i) {
-                attribute[i] = attribute[i] || filter.test(i);
-            }
-        } catch(...) {
-            Logger::err("Attributes") << "Invalid filter specification"
-                                      << std::endl;
-        }
-
-        Shader* shd = mesh_grob()->get_shader();
-        if(shd != nullptr) {
-            if(shd->has_property(where + "_filter")) {
-                shd->set_property(where + "_filter", "true");
-            }
-        }
-
-        if(propagate) {
-            propagate_filter(mesh_grob(), where_id);
-        }
-        
-        mesh_grob()->update();
+        apply_filter_op(FILTER_ADD, where, filter_string, propagate);
     }
 
     void MeshGrobFiltersCommands::remove_from_filter(
         const std::string& where, const std::string& filter_string,
         bool propagate
     ) {
-        MeshElementsFlags where_id = Mesh::name_to_subelements_type(where);
-        if(where_id == MESH_NONE) {
-            Logger::err("Attributes")
-                << where << ": invalid attribute localization"
-                << std::endl;
-            return;
-        }
-
-        Attribute<Numeric::uint8> attribute(
-            mesh_grob()->get_subelements_by_type(where_id).attributes(),
-            "filter"
-        );
-
-        try {
-            Filter filter(attribute.size(), filter_string);
-            for(index_t i=0; i<attribute.size(); ++i) {
-                attribute[i] = attribute[i] && !filter.test(i);
-            }
-        } catch(...) {
-            Logger::err("Attributes") << "Invalid filter specification"
-                                      << std::endl;
-        }
-
-        Shader* shd = mesh_grob()->get_shader();
-        if(shd != nullptr) {
-            if(shd->has_property(where + "_filter")) {
-                shd->set_property(where + "_filter", "true");
-            }
-        }
-
-        if(propagate) {
-            propagate_filter(mesh_grob(), where_id);
-        }
-        
-        mesh_grob()->update();
+        apply_filter_op(FILTER_REMOVE, where, filter_string, propagate);
     }
 
     void MeshGrobFiltersCommands::set_filter_from_attribute(
         const std::string& full_attribute_name,
         const std::string& filter_string, bool propagate
     ) {
-        MeshElementsFlags where; 
-        std::string attribute_name;
-        index_t component;
-
-        if(!Mesh::parse_attribute_name(
-               full_attribute_name, where, attribute_name, component)
-          ) {
-            Logger::err("Attributes") << "Error in attribute name: "
-                                      << full_attribute_name
-                                      << std::endl;
-            return;
-        }
-
-        ReadOnlyScalarAttributeAdapter attribute(
-            mesh_grob()->get_subelements_by_type(where).attributes(),
-            attribute_name + "[" + String::to_string(component) + "]"
+        apply_filter_op_attribute(
+            FILTER_SET, full_attribute_name, filter_string, propagate
         );
-
-        if(!attribute.is_bound()) {
-            Logger::err("Attributes") << full_attribute_name
-                                      << " : no such attribute"
-                                      << std::endl;
-            return;
-        }
-
-        Attribute<Numeric::uint8> filter_attribute(
-            mesh_grob()->get_subelements_by_type(where).attributes(),
-            "filter"
-        );
-
-        try {
-            Filter filter(attribute.size(), filter_string, true);
-            for(index_t i=0; i<attribute.size(); ++i) {
-                filter_attribute[i] =filter.test(attribute[i]);
-            }
-        } catch(...) {
-            Logger::err("Attributes") << "Invalid filter specification"
-                                      << std::endl;
-        }
-
-        if(propagate) {
-            propagate_filter(mesh_grob(), where);
-        }
-        
-        mesh_grob()->update();
     }
 
     void MeshGrobFiltersCommands::add_to_filter_attribute(
         const std::string& full_attribute_name,
         const std::string& filter_string, bool propagate
     ) {
-        MeshElementsFlags where; 
-        std::string attribute_name;
-        index_t component;
-
-        if(!Mesh::parse_attribute_name(
-               full_attribute_name, where, attribute_name, component)
-          ) {
-            Logger::err("Attributes") << "Error in attribute name: "
-                                      << full_attribute_name
-                                      << std::endl;
-            return;
-        }
-
-        ReadOnlyScalarAttributeAdapter attribute(
-            mesh_grob()->get_subelements_by_type(where).attributes(),
-            attribute_name + "[" + String::to_string(component) + "]"
+        apply_filter_op_attribute(
+            FILTER_ADD, full_attribute_name, filter_string, propagate
         );
-
-        if(!attribute.is_bound()) {
-            Logger::err("Attributes") << full_attribute_name
-                                      << " : no such attribute"
-                                      << std::endl;
-            return;
-        }
-
-        Attribute<Numeric::uint8> filter_attribute(
-            mesh_grob()->get_subelements_by_type(where).attributes(),
-            "filter"
-        );
-
-        try {
-            Filter filter(attribute.size(), filter_string, true);
-            for(index_t i=0; i<attribute.size(); ++i) {
-                filter_attribute[i] =
-                    Numeric::uint8(
-                        filter_attribute[i] || filter.test(attribute[i])
-                    );
-            }
-        } catch(...) {
-            Logger::err("Attributes") << "Invalid filter specification"
-                                      << std::endl;
-        }
-
-        if(propagate) {
-            propagate_filter(mesh_grob(), where);
-        }
-        
-        mesh_grob()->update();
     }
 
     void MeshGrobFiltersCommands::remove_from_filter_attribute(
         const std::string& full_attribute_name,
         const std::string& filter_string, bool propagate
     ) {
-        MeshElementsFlags where; 
-        std::string attribute_name;
-        index_t component;
-
-        if(!Mesh::parse_attribute_name(
-               full_attribute_name, where, attribute_name, component)
-          ) {
-            Logger::err("Attributes") << "Error in attribute name: "
-                                      << full_attribute_name
-                                      << std::endl;
-            return;
-        }
-
-        ReadOnlyScalarAttributeAdapter attribute(
-            mesh_grob()->get_subelements_by_type(where).attributes(),
-            attribute_name + "[" + String::to_string(component) + "]"
+        apply_filter_op_attribute(
+            FILTER_REMOVE, full_attribute_name, filter_string, propagate
         );
-
-        if(!attribute.is_bound()) {
-            Logger::err("Attributes") << full_attribute_name
-                                      << " : no such attribute"
-                                      << std::endl;
-            return;
-        }
-
-        Attribute<Numeric::uint8> filter_attribute(
-            mesh_grob()->get_subelements_by_type(where).attributes(),
-            "filter"
-        );
-
-        try {
-            Filter filter(attribute.size(), filter_string, true);
-            for(index_t i=0; i<attribute.size(); ++i) {
-                filter_attribute[i] =
-                    Numeric::uint8(
-                        filter_attribute[i] && !filter.test(attribute[i])
-                    );
-            }
-        } catch(...) {
-            Logger::err("Attributes") << "Invalid filter specification"
-                                      << std::endl;
-        }
-
-        if(propagate) {
-            propagate_filter(mesh_grob(), where);
-        }
-        
-        mesh_grob()->update();
     }
     
     
@@ -615,6 +381,137 @@ namespace OGF {
         mesh_grob()->update();
     }
 
+    /*********************************************************/
+
+
+    void MeshGrobFiltersCommands::apply_filter_op(
+        FilterOp op,
+        const std::string& where, const std::string& filter_string,
+        bool propagate
+    ) {
+        MeshElementsFlags where_id = Mesh::name_to_subelements_type(where);
+        if(where_id == MESH_NONE) {
+            Logger::err("Attributes")
+                << where << ": invalid attribute localization"
+                << std::endl;
+            return;
+        }
+
+        Attribute<Numeric::uint8> attribute(
+            mesh_grob()->get_subelements_by_type(where_id).attributes(),
+            "filter"
+        );
+
+        try {
+            Filter filter(attribute.size(), filter_string);
+            for(index_t i=0; i<attribute.size(); ++i) {
+                switch(op) {
+                case FILTER_SET:
+                    attribute[i] = Numeric::uint8(
+                        filter.test(i)
+                    );
+                    break;
+                case FILTER_ADD: {
+                    attribute[i] = Numeric::uint8(
+                        attribute[i] || filter.test(i)
+                    );
+                } break;
+                case FILTER_REMOVE:
+                    attribute[i] = Numeric::uint8(
+                        attribute[i] && !filter.test(i)
+                    );
+                    break;
+                }
+            }
+        } catch(...) {
+            Logger::err("Attributes") << "Invalid filter specification"
+                                      << std::endl;
+        }
+
+        Shader* shd = mesh_grob()->get_shader();
+        if(shd != nullptr) {
+            if(shd->has_property(where + "_filter")) {
+                shd->set_property(where + "_filter", "true");
+            }
+        }
+
+        if(propagate) {
+            propagate_filter(mesh_grob(), where_id);
+        }
+        
+        mesh_grob()->update();
+    }
+
+    void MeshGrobFiltersCommands::apply_filter_op_attribute(
+        FilterOp op,
+        const std::string& full_attribute_name,
+        const std::string& filter_string,
+        bool propagate
+    ) {
+        MeshElementsFlags where; 
+        std::string attribute_name;
+        index_t component;
+
+        if(!Mesh::parse_attribute_name(
+               full_attribute_name, where, attribute_name, component)
+          ) {
+            Logger::err("Attributes") << "Error in attribute name: "
+                                      << full_attribute_name
+                                      << std::endl;
+            return;
+        }
+
+        ReadOnlyScalarAttributeAdapter attribute(
+            mesh_grob()->get_subelements_by_type(where).attributes(),
+            attribute_name + "[" + String::to_string(component) + "]"
+        );
+
+        if(!attribute.is_bound()) {
+            Logger::err("Attributes") << full_attribute_name
+                                      << " : no such attribute"
+                                      << std::endl;
+            return;
+        }
+
+        Attribute<Numeric::uint8> filter_attribute(
+            mesh_grob()->get_subelements_by_type(where).attributes(),
+            "filter"
+        );
+
+        try {
+            Filter filter(attribute.size(), filter_string, true);
+            for(index_t i=0; i<attribute.size(); ++i) {
+                switch(op) {
+                case FILTER_SET: {
+                    filter_attribute[i] =
+                        Numeric::uint8(filter.test(attribute[i]));
+                } break;
+                case FILTER_ADD: {
+                    filter_attribute[i] =
+                        Numeric::uint8(
+                            filter_attribute[i] || filter.test(attribute[i])
+                        );
+                } break;
+                case FILTER_REMOVE: {
+                    filter_attribute[i] =
+                        Numeric::uint8(
+                            filter_attribute[i] && !filter.test(attribute[i])
+                        );
+                } break;
+                }
+            }
+        } catch(...) {
+            Logger::err("Attributes") << "Invalid filter specification"
+                                      << std::endl;
+        }
+
+        if(propagate) {
+            propagate_filter(mesh_grob(), where);
+        }
+        
+        mesh_grob()->update();
+    }
+    
     void MeshGrobFiltersCommands::propagate_filter(
         MeshGrob* mesh, MeshElementsFlags from
     ) {
@@ -741,5 +638,6 @@ namespace OGF {
         }
     }
 
+    
 }
 

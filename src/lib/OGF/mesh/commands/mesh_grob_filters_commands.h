@@ -172,7 +172,7 @@ namespace OGF {
 
         /**
          * \param[in] filter semi-column-separated list of 
-         *  star,id,id1-id2,!id,!id1-id2
+         *  star,val,val1-val2,!val,!val1-val2
          * \param[in] propagate propagate filter to other elements
          */
 	gom_arg_attribute(attribute, handler, "combo_box")
@@ -184,7 +184,7 @@ namespace OGF {
 
         /**
          * \param[in] filter semi-column-separated list of 
-         *  star,id,id1-id2,!id,!id1-id2
+         *  star,val,val1-val2,!val,!val1-val2
          * \param[in] propagate propagate filter to other elements
          */
 	gom_arg_attribute(attribute, handler, "combo_box")
@@ -196,7 +196,7 @@ namespace OGF {
 
         /**
          * \param[in] filter semi-column-separated list of 
-         *  star,id,id1-id2,!id,!id1-id2
+         *  star,val,val1-val2,!val,!val1-val2
          * \param[in] propagate propagate filter to other elements
          */
 	gom_arg_attribute(attribute, handler, "combo_box")
@@ -231,7 +231,6 @@ namespace OGF {
         void delete_filters(const std::string& where="all");
 
     public:
-        
         /**
          * \brief Propagates a filter from a mesh element to all
          *  other mesh elements.
@@ -243,6 +242,41 @@ namespace OGF {
          * \param[in] from one of MESH_VERTICES, MESH_FACETS, MESH_CELLS
          */
         static void propagate_filter(MeshGrob* mesh, MeshElementsFlags from);
+
+        
+        enum FilterOp { FILTER_SET, FILTER_ADD, FILTER_REMOVE };
+
+        /**
+         * \brief applies an operation to a filter
+         * \param[in] op the operation, one of 
+         *  FILTER_SET, FILTER_ADD, FILTER_REMOVE
+         * \param[in] where one of vertices, facets, cells
+         * \param[in] filter semi-column-separated list of 
+         *  star,id,id1-id2,!id,!id1-id2
+         * \param[in] propagate propagate filter to other elements
+         */
+        void apply_filter_op(
+            FilterOp op,
+            const std::string& where, const std::string& filter="*",
+            bool propagate=true
+        );
+
+        /**
+         * \brief applies an operation to a filter based on attribute values
+         * \param[in] op the operation, one of 
+         *  FILTER_SET, FILTER_ADD, FILTER_REMOVE
+         * \param[in] attribute the full name of the attribute, e.g.,
+         *  "facets.region" or "vertices.point[2]"
+         * \param[in] filter semi-column-separated list of 
+         *  star,val,val1-val2,!val,!val1-val2
+         * \param[in] propagate propagate filter to other elements
+         */
+        void apply_filter_op_attribute(
+            FilterOp op,
+            const std::string& attribute, const std::string& filter,
+            bool propagate=true
+        );
+
     };
 }
 

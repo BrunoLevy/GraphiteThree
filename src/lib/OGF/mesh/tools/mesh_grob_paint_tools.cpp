@@ -810,14 +810,13 @@ namespace OGF {
         // In stroke mode, draw the stroke in the overlay
         if(stroke_mode_) {
             stroke_.push_back(ndc_to_dc(raypick.p_ndc));
+
             rendering_context()->overlay().clear();
-            rendering_context()->overlay().fillcircle(
-                stroke_[0],double(width_),Color(1.0, 1.0, 1.0, 1.0)  
-            );
-            rendering_context()->overlay().fillcircle(
-                stroke_[stroke_.size()-1],double(width_),
-                Color(1.0, 1.0, 1.0, 1.0)  
-            );
+            for(index_t i=0; i<stroke_.size(); ++i) {
+                rendering_context()->overlay().fillcircle(
+                    stroke_[i],double(width_),Color(1.0, 1.0, 1.0, 1.0)  
+                );
+            }
             for_each_stroke_quad(
                 [&](vec2 q1, vec2 q2, vec2 q3, vec2 q4) {
                     rendering_context()->overlay().fillquad(
@@ -878,13 +877,13 @@ namespace OGF {
                 Color white(1.0, 1.0, 1.0, 1.0);
 
                 if(stroke_.size() != 0) {
-                    vec2 t[2] = {stroke_[0], stroke_[stroke_.size()-1]};
                     double r = double(width_)/double(x1-x0+1);
-                    for(index_t i=0; i<2; ++i) {
-                        t[i] -= vec2(double(x0), double(y0));
-                        t[i].x /= double(x1-x0+1);
-                        t[i].y /= double(y1-y0+1);
-                        rasterizer.fillcircle(t[i],r,white);
+                    for(index_t i=0; i<stroke_.size(); ++i) {
+                        vec2 c = stroke_[i];
+                        c -= vec2(double(x0), double(y0));
+                        c.x /= double(x1-x0+1);
+                        c.y /= double(y1-y0+1);
+                        rasterizer.fillcircle(c,r,white);
                     }
                 }
 
