@@ -397,6 +397,43 @@ namespace OGF {
          * \copydoc Tool::grab()
          */
         void grab(const RayPick& p_ndc) override;
+
+    gom_properties:
+
+        /**
+         * \brief If set, fill elements with same value
+         *  as picked element, within tolerance.
+         */
+        void set_fill_same_value(bool x) {
+            fill_same_value_ = x;
+        }
+
+        bool get_fill_same_value() const {
+            return fill_same_value_;
+        }
+
+        /**
+         * \brief Tolerance used if fill_same_value os
+         *  set.
+         */
+        void set_tolerance(double value) {
+            tolerance_ = value;
+        }
+        
+        double get_tolerance() const {
+            return tolerance_;
+        }
+
+        
+    protected:
+        bool test(double reference, double value) const {
+            return !fill_same_value_ ||
+                ::fabs(reference - value) <= tolerance_;
+        }
+
+    private:
+        bool fill_same_value_;
+        double tolerance_;
     };
 
     /**********************************************************************/
@@ -439,6 +476,7 @@ namespace OGF {
         bool picked_;
         double value_;
         vec2 latest_ndc_;
+        std::string message_;
     };    
 
     /********************************************************/

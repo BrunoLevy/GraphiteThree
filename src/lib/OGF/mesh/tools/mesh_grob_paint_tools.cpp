@@ -185,7 +185,7 @@ namespace {
      */
     void for_each_connected_facet(
         MeshGrob* mesh_grob, index_t seed_facet,
-        std::function<void(index_t)> doit        
+        std::function<bool(index_t)> doit        
     ) {
         std::vector<bool> visited(mesh_grob->facets.nb(),false);
         std::stack<index_t> S;
@@ -198,9 +198,10 @@ namespace {
             for(index_t le=0; le<mesh_grob->facets.nb_vertices(f); ++le) {
                 index_t g = mesh_grob->facets.adjacent(f,le);
                 if(g != index_t(-1) && !visited[g]) {
-                    S.push(g);
+                    if(doit(g)) {
+                        S.push(g);
+                    }
                     visited[g] = true;
-                    doit(g);
                 }
             }
         }
@@ -217,7 +218,7 @@ namespace {
     
     void for_each_connected_cell(
         MeshGrob* mesh_grob, index_t seed_cell,
-        std::function<void(index_t)> doit        
+        std::function<bool(index_t)> doit        
     ) {
         std::vector<bool> visited(mesh_grob->cells.nb(),false);
         std::stack<index_t> S;
@@ -230,9 +231,10 @@ namespace {
             for(index_t lf=0; lf<mesh_grob->cells.nb_facets(c); ++lf) {
                 index_t d = mesh_grob->cells.adjacent(c,lf);
                 if(d != index_t(-1) && !visited[d]) {
-                    S.push(d);
+                    if(doit(d)) {
+                        S.push(d);
+                    }
                     visited[d] = true;
-                    doit(d);
                 }
             }
         }
@@ -252,10 +254,11 @@ namespace {
     ) {
         for_each_connected_facet(
             mesh_grob, seed_facet,
-            [&](index_t f) {
+            [&](index_t f)->bool {
                 for(index_t lv=0; lv<mesh_grob->facets.nb_vertices(f); ++lv) {
                     vertices.push_back(mesh_grob->facets.vertex(f,lv));
                 }
+                return true;
             }
         );
     }
@@ -274,10 +277,11 @@ namespace {
     ) {
         for_each_connected_cell(
             mesh_grob, seed_cell,
-            [&](index_t c) {
+            [&](index_t c)->bool {
                 for(index_t lv=0; lv<mesh_grob->cells.nb_vertices(c); ++lv) {
                     vertices.push_back(mesh_grob->cells.vertex(c,lv));
                 }
+                return true;
             }
         );
     }
@@ -1287,6 +1291,8 @@ namespace OGF {
     MeshGrobPaintConnected::MeshGrobPaintConnected(
         ToolsManager* parent
     ) : MeshGrobPaintTool(parent) {
+        fill_same_value_ = true;
+        tolerance_ = 0.0;
     }
     
     void MeshGrobPaintConnected::grab(const RayPick& raypick) {
@@ -1300,26 +1306,58 @@ namespace OGF {
         }
         
         index_t picked_element = pick(raypick, where);
+        if(picked_element == index_t(-1)) {
+            return;
+        }
+
+        double picked_value;
+        bool with_value = probe_attribute(
+            mesh_grob(), where,
+            attribute_name, component,
+            picked_element, picked_value
+        );
+
+        if(fill_same_value_ && !with_value) {
+            return;
+        }
         
         if(where != MESH_VERTICES && picked_element != index_t(-1)) {
             switch(where) {
             case MESH_FACETS: {
                 for_each_connected_facet(
                     mesh_grob(), picked_element,
-                    [&](index_t f) {
+                    [&](index_t f)->bool {
+                        double value;
+                        probe_attribute(
+                            mesh_grob(), where, attribute_name, component,
+                            f, value
+                        );                        
+                        if(!test(picked_value, value)) {
+                            return false;
+                        }
                         paint_attribute(
-                          mesh_grob(),where,attribute_name,component,f,op,value_
+                            mesh_grob(),where,attribute_name,component,f,op,value_
                         );
+                        return true;
                     }
                 );
             } break;
             case MESH_CELLS: {
                 for_each_connected_cell(
                     mesh_grob(), picked_element,
-                    [&](index_t c) {
+                    [&](index_t c)->bool {
+                        double value;
+                        probe_attribute(
+                            mesh_grob(), where, attribute_name, component,
+                            c, value
+                        );
+                        if(!test(picked_value, value)) {
+                            return false;
+                        }
                         paint_attribute(
                           mesh_grob(),where,attribute_name,component,c,op,value_
                         );
+                        return true;
                     }
                 );
             } break;
@@ -1393,6 +1431,26 @@ namespace OGF {
         probe(p_ndc);
     }
 
+    void MeshGrobProbe::release(const RayPick& p_ndc) {
+        geo_argused(p_ndc);
+        reset_tooltip();
+        if(picked_) {
+            vector<MeshGrobPaintTool*> tools;
+            MeshGrobPaintTool::get_paint_tools(tools_manager(), tools);
+            for(MeshGrobPaintTool* tool: tools) {
+                tool->set_value_for_this_tool(value_);
+                tool->set_accumulate_for_this_tool(false);
+                tool->set_autorange_for_this_tool(false);
+            }
+        }
+        std::vector<std::string> lines;
+        String::split_string(message_,"\\n",lines);
+        for(const std::string& line : lines) {
+            Logger::out("Probe") << line << std::endl;
+        }
+        Logger::out("") << std::endl;
+    }
+    
     void MeshGrobProbe::probe(const RayPick& p_ndc) {
         picked_ = false;
 
@@ -1472,14 +1530,14 @@ namespace OGF {
             );
         }
         
-        std::string message = "<nothing>";
+        message_ = "<nothing>";
 
         if(element_id != index_t(-1) && element_type != MESH_NONE) {
-            message =
+            message_ =
                    "x=" + String::to_string(p.x) +
                 "\\ny=" + String::to_string(p.y) +
                 "\\nz=" + String::to_string(p.z) ;                 
-            message += "\\n" +
+            message_ += "\\n" +
                 mesh_grob()->subelements_type_to_name(element_type) +
                 ": #" + String::to_string(element_id);
             if(with_value) {
@@ -1496,27 +1554,14 @@ namespace OGF {
                         attribute_name + "["
                         + String::to_string(component) + "]";
                 }
-                message += ("\\n" + attribute_name + "=" + value_str);
+                message_ += ("\\n" + attribute_name + "=" + value_str);
                 picked_ = true;
                 value_ = value;
             }
         }
-        set_tooltip(message);
+        set_tooltip(message_);
     }
 
-    void MeshGrobProbe::release(const RayPick& p_ndc) {
-        geo_argused(p_ndc);
-        reset_tooltip();
-        if(picked_) {
-            vector<MeshGrobPaintTool*> tools;
-            MeshGrobPaintTool::get_paint_tools(tools_manager(), tools);
-            for(MeshGrobPaintTool* tool: tools) {
-                tool->set_value_for_this_tool(value_);
-                tool->set_accumulate_for_this_tool(false);
-                tool->set_autorange_for_this_tool(false);
-            }
-        }
-    }
 
     /***************************************************************/
 
