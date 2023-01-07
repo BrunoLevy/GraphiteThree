@@ -263,9 +263,38 @@ namespace OGF {
                     attribute_min_ = 0.0;
                     attribute_max_ = 1.0;
                 } else {
+
+                    Attribute<Numeric::uint8> filter;
+                    
+                    if(
+                        attribute_subelements_ == MESH_VERTICES &&
+                        vertices_filter_
+                    ) {
+                        filter.bind_if_is_defined(
+                            mesh_grob()->vertices.attributes(), "filter"
+                        );
+                    } else if(
+                        attribute_subelements_ == MESH_FACETS &&
+                        facets_filter_
+                    ) {
+                        filter.bind_if_is_defined(
+                            mesh_grob()->facets.attributes(), "filter"
+                        );
+                    } else if(
+                        attribute_subelements_ == MESH_CELLS &&
+                        cells_filter_
+                    ) {
+                        filter.bind_if_is_defined(
+                            mesh_grob()->cells.attributes(), "filter"
+                        );
+                    }
+                    
                     attribute_min_ = Numeric::max_float64();
                     attribute_max_ = Numeric::min_float64();
                     for(index_t i: subelements) {
+                        if(filter.is_bound() && !filter[i]) {
+                            continue;
+                        }
                         attribute_min_ = std::min(attribute_min_, attribute[i]);
                         attribute_max_ = std::max(attribute_max_, attribute[i]);
                     }
