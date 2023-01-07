@@ -354,11 +354,20 @@ namespace OGF {
 	int button, int action, int mods
     ) {
 
-        if( button > 6) {
+        if(button > 6) {
             return;
         }
-        
-        const index_t button_mapping[] = {1, 3, 2, 4, 5, 6, 7};
+
+        // Maps GLFW button id to RenderArea symbolic constant.
+        const MouseButton button_mapping[7] = {
+            MOUSE_BUTTON_LEFT,
+            MOUSE_BUTTON_RIGHT,
+            MOUSE_BUTTON_MIDDLE,
+            MOUSE_BUTTON_WHEEL_UP,
+            MOUSE_BUTTON_WHEEL_DOWN,
+            MOUSE_BUTTON_AUX1,
+            MOUSE_BUTTON_AUX2
+        };
 
 	last_point_ndc_ = rendering_context_->screen_to_ndc(
 	    index_t(last_point_dc_.x), index_t(last_point_dc_.y)
@@ -402,11 +411,8 @@ namespace OGF {
     ) {
 	// For retina displays: x and y are in 'window pixels',
 	// and GLUP project / unproject expect 'framebuffer pixels'.
-	double sx =
-	    double(get_frame_buffer_width()) / double(get_width());
-	    
-	double sy =
-	    double(get_frame_buffer_height()) / double(get_height());
+	double sx = double(get_frame_buffer_width()) / double(get_width());
+	double sy = double(get_frame_buffer_height()) / double(get_height());
 
 	xf *= sx;
 	yf *= sy;
@@ -423,8 +429,7 @@ namespace OGF {
 	    );
 	    
 	    last_point_wc_ = transform_point(
-		last_point_ndc_,
-		rendering_context_->inverse_viewing_matrix()
+		last_point_ndc_, rendering_context_->inverse_viewing_matrix()
 	    );
 
 	    vec2 delta_ndc = last_point_ndc_ - prev_point_ndc;
@@ -453,34 +458,28 @@ namespace OGF {
 
 	// Synthetize move/press/release mouse events
 	// with center button pressed.
-	
+        
 	vec2 last_point_dc_bak = last_point_dc_;
-
 	GLFWwindow* w = (GLFWwindow*)Application::instance()->impl_window();
-	
 	bool ctrl = (glfwGetKey(w, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS);
 	bool shift = (glfwGetKey(w, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS);
-        const int button = yoffset > 0 ? 3 : 4;
 
-	int mods=
-	    ctrl  * GLFW_MOD_CONTROL +
-	    shift * GLFW_MOD_SHIFT ;
+        // Note: this is a GLFW button code (not RenderArea::Button that uses
+        // a different mapping).
+        const int button = (yoffset > 0) ? 3 : 4;
+
+	int mods = (ctrl  ? GLFW_MOD_CONTROL : 0) |
+	           (shift ? GLFW_MOD_SHIFT   : 0) ;
 	
         // Wheel emulates move/press/move/release event
 	cursor_pos_callback(last_point_dc_.x, last_point_dc_.y);
 	mouse_button_callback(button, GLFW_PRESS, mods);
-	cursor_pos_callback(
-	    last_point_dc_.x, last_point_dc_.y - double(yoffset)
-	);
+	cursor_pos_callback(last_point_dc_.x,last_point_dc_.y-double(yoffset));
 	mouse_button_callback(button, GLFW_RELEASE, mods);
-	cursor_pos_callback(
-	    last_point_dc_bak.x, last_point_dc_bak.y
-	);
+	cursor_pos_callback(last_point_dc_bak.x, last_point_dc_bak.y);
     }
     
-    void RenderArea::drop_callback(
-	int nb, const char** p
-    ) {
+    void RenderArea::drop_callback(int nb, const char** p) {
 	for(int i=0; i<nb; ++i) {
 	    dropped_file(p[i]);
 	}

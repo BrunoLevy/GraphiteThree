@@ -50,8 +50,8 @@
 namespace OGF {
 
     class RenderingContext;
-    
-//_________________________________________________________
+
+    /**************************************************************************/
 
     /**
      * \brief Represents the information related with a picking event.
@@ -63,6 +63,7 @@ namespace OGF {
      */
     struct RayPick {
     public:
+
         /**
          * \brief RayPick constructor.
          * \param[in] p_ndc_in picked point, in normalized device
@@ -73,6 +74,7 @@ namespace OGF {
             p_ndc(p_ndc_in),
             button(btn_in) {
         }
+        
         /**
          * \brief RayPick constructor
          * \details Does not initialize the RayPick.
@@ -219,7 +221,7 @@ namespace OGF {
         );
     };
     
-//_________________________________________________________
+    /*************************************************************************/
     
 }
 #endif

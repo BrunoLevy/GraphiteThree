@@ -102,8 +102,8 @@ namespace OGF {
          * \param[in] parent a pointer to the ToolsManager
          */
         MeshGrobGlueUnglueEdges(ToolsManager* parent) : MultiTool(parent) {
-            set_tool(1, new MeshGrobGlueEdges(parent));            
-            set_tool(3, new MeshGrobUnglueEdges(parent));
+            set_tool(MOUSE_BUTTON_LEFT, new MeshGrobGlueEdges(parent));
+            set_tool(MOUSE_BUTTON_RIGHT, new MeshGrobUnglueEdges(parent));
         }
         /**
          * \copydoc Tool::reset()
@@ -148,8 +148,8 @@ namespace OGF {
          * \param[in] parent a pointer to the ToolsManager
          */
         MeshGrobZipUnzipEdges(ToolsManager* parent) : MultiTool(parent) {
-            set_tool(1, new MeshGrobZipEdges(parent));
-            set_tool(3, new MeshGrobUnglueEdges(parent));
+            set_tool(MOUSE_BUTTON_LEFT, new MeshGrobZipEdges(parent));
+            set_tool(MOUSE_BUTTON_RIGHT, new MeshGrobUnglueEdges(parent));
         }
         
         /**
@@ -209,8 +209,8 @@ namespace OGF {
         MeshGrobConnectDisconnectEdges(
             ToolsManager* parent
         ) : MultiTool(parent) {
-            set_tool(1, new MeshGrobConnectEdges(parent));
-            set_tool(3, new MeshGrobUnglueEdges(parent));
+            set_tool(MOUSE_BUTTON_LEFT, new MeshGrobConnectEdges(parent));
+            set_tool(MOUSE_BUTTON_RIGHT, new MeshGrobUnglueEdges(parent));
         }
         
         /**

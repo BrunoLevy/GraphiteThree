@@ -144,8 +144,12 @@ namespace OGF {
         MeshGrobKeepOrRemoveComponent(
             ToolsManager* parent
         ) : MultiTool(parent) {
-            set_tool(1, new MeshGrobRemoveComponent(parent,false));
-            set_tool(3, new MeshGrobRemoveComponent(parent,true));
+            set_tool(
+                MOUSE_BUTTON_LEFT, new MeshGrobRemoveComponent(parent,false)
+            );
+            set_tool(
+                MOUSE_BUTTON_RIGHT, new MeshGrobRemoveComponent(parent,true)
+            );
         }
 
 	/**
@@ -175,8 +179,12 @@ namespace OGF {
         MeshGrobCopyComponent(
             ToolsManager* parent
         ) : MeshGrobTransformTool(parent) {
-            set_tool(2, nullptr);
-            set_tool(3, new MeshGrobRemoveComponent(parent,false));            
+            set_tool(
+                MOUSE_BUTTON_MIDDLE, nullptr
+            );
+            set_tool(
+                MOUSE_BUTTON_RIGHT, new MeshGrobRemoveComponent(parent,false)
+            );            
         }
 
     protected:

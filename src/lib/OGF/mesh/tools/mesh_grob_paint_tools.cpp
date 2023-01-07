@@ -624,9 +624,9 @@ namespace OGF {
         }
         op = PAINT_SET;
         if(accumulate_) {
-            op = raypick.button == 1 ? PAINT_INC : PAINT_DEC;
+            op = (raypick.button==MOUSE_BUTTON_LEFT) ? PAINT_INC : PAINT_DEC;
         } else {
-            op = raypick.button == 1 ? PAINT_SET : PAINT_RESET;
+            op = (raypick.button==MOUSE_BUTTON_LEFT) ? PAINT_SET : PAINT_RESET;
         }
         return true;
     }

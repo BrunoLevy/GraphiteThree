@@ -316,6 +316,7 @@ namespace OGF {
          * \brief MeshGrobResizeSubset constructor.
          * \param[in] parent a pointer to the MeshGrobTransformTool (MultiTool)
          *  this MeshGrobResizeSubset belongs to.
+         * \param[in] step 1 for enlarge, -1 for shrink
          */
         MeshGrobScrollResizeSubset(
             MeshGrobTransformTool* parent, int step
@@ -376,11 +377,17 @@ namespace OGF {
     gom_class MeshGrobTransformTool : public MultiTool {
     public:
         MeshGrobTransformTool(ToolsManager* parent) : MultiTool(parent) {
-            set_tool(1, new MeshGrobMoveSubset(this));
-            set_tool(2, new MeshGrobResizeSubset(this));
-            set_tool(3, new MeshGrobRotateSubset(this));
-            set_tool(4, new MeshGrobScrollResizeSubset(this, 1));
-            set_tool(5, new MeshGrobScrollResizeSubset(this, -1));
+            set_tool(MOUSE_BUTTON_LEFT, new MeshGrobMoveSubset(this));
+            set_tool(MOUSE_BUTTON_MIDDLE, new MeshGrobResizeSubset(this));
+            set_tool(MOUSE_BUTTON_RIGHT, new MeshGrobRotateSubset(this));
+            set_tool(
+                MOUSE_BUTTON_WHEEL_UP,
+                new MeshGrobScrollResizeSubset(this, -1)
+            );
+            set_tool(
+                MOUSE_BUTTON_WHEEL_DOWN,
+                new MeshGrobScrollResizeSubset(this,  1)
+            );
             prev_inverse_transform_.load_identity();
         }
 

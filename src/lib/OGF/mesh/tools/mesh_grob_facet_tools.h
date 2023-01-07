@@ -117,8 +117,12 @@ namespace OGF {
          * \param[in] parent a pointer to the ToolsManager
          */
         MeshGrobEditCenterVertex(ToolsManager* parent) : MultiTool(parent) {
-            set_tool(1, new MeshGrobCreateCenterVertex(parent));
-            set_tool(3, new MeshGrobRemoveCenterVertex(parent));
+            set_tool(
+                MOUSE_BUTTON_LEFT, new MeshGrobCreateCenterVertex(parent)
+            );
+            set_tool(
+                MOUSE_BUTTON_RIGHT, new MeshGrobRemoveCenterVertex(parent)
+            );
         }
         /**
          * \copydoc Tool::reset()
@@ -213,8 +217,8 @@ namespace OGF {
          * \param[in] parent a pointer to the ToolsManager
          */
         MeshGrobEditHole(ToolsManager* parent) : MultiTool(parent) {
-            set_tool(1, new MeshGrobFillHole(parent));
-            set_tool(3, new MeshGrobRemoveFacet(parent));
+            set_tool(MOUSE_BUTTON_LEFT, new MeshGrobFillHole(parent));
+            set_tool(MOUSE_BUTTON_RIGHT, new MeshGrobRemoveFacet(parent));
         }
 
 	/**
@@ -337,8 +341,8 @@ namespace OGF {
          * \param[in] parent a pointer to the ToolsManager
          */
         MeshGrobEditFacetEdge(ToolsManager* parent) : MultiTool(parent) {
-            set_tool(1, new MeshGrobSplitFacet(parent));
-            set_tool(3, new MeshGrobJoinFacets(parent));
+            set_tool(MOUSE_BUTTON_LEFT, new MeshGrobSplitFacet(parent));
+            set_tool(MOUSE_BUTTON_RIGHT, new MeshGrobJoinFacets(parent));
         }
         
         /**

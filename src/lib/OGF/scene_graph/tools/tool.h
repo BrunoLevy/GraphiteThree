@@ -38,6 +38,7 @@
 #define H_OGF_SCENE_GRAPH_TYPES_TOOL_H
 
 #include <OGF/scene_graph/common/common.h>
+#include <OGF/skin/types/events.h>
 #include <OGF/skin/transforms/ray_picker.h>
 #include <OGF/gom/types/node.h>
 #include <OGF/basic/math/geometry.h>
@@ -59,7 +60,7 @@ namespace OGF {
     gom_attribute(abstract, "true") 
     gom_class SCENE_GRAPH_API Tool : public Node {
     public:
-
+        
         /**
          * \brief Tool constructor.
          * \param[in] mgr a pointer to the ToolsManager
@@ -191,14 +192,12 @@ namespace OGF {
     //___________________________________________________________________
 
     /**
-     * \brief A Tool that can associate up to three different
-     *  tools to the three buttons of the mouse.
+     * \brief A Tool that can associate a
+     *  different tool to each button of the mouse.
      */
     gom_attribute(abstract, "true") 
     gom_class SCENE_GRAPH_API MultiTool : public Tool {
     public:
-        enum {MAX_NB_TOOLS=7};
-        
         /**
          * \brief MultiTool constructor.
          * \param[in] mgr a pointer to the ToolsManager
@@ -250,7 +249,7 @@ namespace OGF {
         Tool* get_tool(int button) const ;
       
     protected:
-        Tool_var tools_[MAX_NB_TOOLS] ;
+        Tool_var tools_[MOUSE_BUTTONS_NB];
     } ; 
 
     //_________________________________________________________________

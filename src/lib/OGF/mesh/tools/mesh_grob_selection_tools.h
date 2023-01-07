@@ -119,8 +119,8 @@ namespace OGF {
          * \param[in] parent a pointer to the ToolsManager
          */
         MeshGrobSelectUnselectVertex(ToolsManager* parent) : MultiTool(parent) {
-            set_tool(1, new MeshGrobSelectVertex(parent));
-            set_tool(3, new MeshGrobUnselectVertex(parent));
+            set_tool(MOUSE_BUTTON_LEFT, new MeshGrobSelectVertex(parent));
+            set_tool(MOUSE_BUTTON_RIGHT, new MeshGrobUnselectVertex(parent));
         }
 
         /**
