@@ -354,12 +354,8 @@ namespace OGF {
 	int button, int action, int mods
     ) {
 
-        if(button > 6) {
-            return;
-        }
-
         // Maps GLFW button id to RenderArea symbolic constant.
-        const MouseButton button_mapping[7] = {
+        const MouseButton button_mapping[] = {
             MOUSE_BUTTON_LEFT,
             MOUSE_BUTTON_RIGHT,
             MOUSE_BUTTON_MIDDLE,
@@ -368,6 +364,11 @@ namespace OGF {
             MOUSE_BUTTON_AUX1,
             MOUSE_BUTTON_AUX2
         };
+        
+        if(size_t(button) > (sizeof(button_mapping)/sizeof(int))) {
+            return;
+        }
+
 
 	last_point_ndc_ = rendering_context_->screen_to_ndc(
 	    index_t(last_point_dc_.x), index_t(last_point_dc_.y)
