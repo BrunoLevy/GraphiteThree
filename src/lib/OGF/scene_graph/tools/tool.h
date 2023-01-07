@@ -197,7 +197,8 @@ namespace OGF {
     gom_attribute(abstract, "true") 
     gom_class SCENE_GRAPH_API MultiTool : public Tool {
     public:
-
+        enum {MAX_NB_TOOLS=7};
+        
         /**
          * \brief MultiTool constructor.
          * \param[in] mgr a pointer to the ToolsManager
@@ -234,7 +235,7 @@ namespace OGF {
     protected:
         /**
          * \brief Associates a tool to one of the buttons.
-         * \param[in] button one of (1,2,3)
+         * \param[in] button in 1..MAX_NB_TOOLS
          * \param[in] tool a pointer to the Tool. Ownership is
          *  transfered to this MultiTool.
          */
@@ -242,14 +243,14 @@ namespace OGF {
 
         /**
          * \brief Gets a Tool by button id.
-         * \param[in] button one of (1,2,3)
+         * \param[in] button in 1..MAX_NB_TOOLS
          * \return a pointer to the Tool associated with button \p button
          *  or nil if there is no such Tool.
          */
         Tool* get_tool(int button) const ;
       
     protected:
-        Tool_var tools_[3] ;
+        Tool_var tools_[MAX_NB_TOOLS] ;
     } ; 
 
     //_________________________________________________________________

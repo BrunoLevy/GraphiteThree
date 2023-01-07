@@ -142,7 +142,7 @@ namespace OGF {
     }
     
     void MultiTool::grab(const RayPick& ev) {
-	if(ev.button < 1 || ev.button > 3) {
+	if(ev.button < 1 || ev.button > MAX_NB_TOOLS) {
 	    return;
 	}
         if(!tools_[ev.button - 1].is_null()) {
@@ -151,7 +151,7 @@ namespace OGF {
     }
     
     void MultiTool::drag(const RayPick& ev) {
-	if(ev.button < 1 || ev.button > 3) {
+	if(ev.button < 1 || ev.button > MAX_NB_TOOLS) {
 	    return;
 	}
         if(!tools_[ev.button - 1].is_null()) {
@@ -160,7 +160,7 @@ namespace OGF {
     }
     
     void MultiTool::release(const RayPick& ev) {
-	if(ev.button < 1 || ev.button > 3) {
+	if(ev.button < 1 || ev.button > MAX_NB_TOOLS) {
 	    return;
 	}
         if(!tools_[ev.button - 1].is_null()) {
@@ -169,7 +169,7 @@ namespace OGF {
     }
     
     void MultiTool::reset() {
-        for(int i=0; i<3; i++) {
+        for(int i=0; i<MAX_NB_TOOLS; i++) {
             if(!tools_[i].is_null()) {
                 tools_[i]->reset() ;
             }
@@ -177,12 +177,12 @@ namespace OGF {
     }
 
     void MultiTool::set_tool(int button, Tool* tool) {
-        ogf_assert(button >= 1 && button <= 3) ;
+        ogf_assert(button >= 1 && button <= MAX_NB_TOOLS) ;
         tools_[button - 1] = tool ;
     }
 
     Tool* MultiTool::get_tool(int button) const {
-        ogf_assert(button >= 1 && button <= 3) ;
+        ogf_assert(button >= 1 && button <= MAX_NB_TOOLS) ;
         return tools_[button - 1] ;
     }
 

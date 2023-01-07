@@ -354,6 +354,12 @@ namespace OGF {
 	int button, int action, int mods
     ) {
 
+        if( button > 6) {
+            return;
+        }
+        
+        const index_t button_mapping[] = {1, 3, 2, 4, 5, 6, 7};
+
 	last_point_ndc_ = rendering_context_->screen_to_ndc(
 	    index_t(last_point_dc_.x), index_t(last_point_dc_.y)
         );
@@ -369,10 +375,7 @@ namespace OGF {
 	    case GLFW_PRESS: {
 		control_is_down_ = control;
 		shift_is_down_ = shift;
-		button_down_ =
-		    (button == GLFW_MOUSE_BUTTON_LEFT) * 1 +
-		    (button == GLFW_MOUSE_BUTTON_MIDDLE) * 2 + 
-		    (button == GLFW_MOUSE_BUTTON_RIGHT) * 3 ;
+                button_down_ = button_mapping[button];
 
 		if(button_down_ != 0) {
 		    mouse_down(
@@ -407,7 +410,7 @@ namespace OGF {
 
 	xf *= sx;
 	yf *= sy;
-	
+
 	last_point_dc_.x = xf;
 	last_point_dc_.y = yf;
 	
@@ -457,32 +460,22 @@ namespace OGF {
 	
 	bool ctrl = (glfwGetKey(w, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS);
 	bool shift = (glfwGetKey(w, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS);
+        const int button = yoffset > 0 ? 3 : 4;
 
 	int mods=
 	    ctrl  * GLFW_MOD_CONTROL +
 	    shift * GLFW_MOD_SHIFT ;
 	
-	
+        // Wheel emulates move/press/move/release event
+	cursor_pos_callback(last_point_dc_.x, last_point_dc_.y);
+	mouse_button_callback(button, GLFW_PRESS, mods);
 	cursor_pos_callback(
-	    double(width_/2), double(height_/2)
+	    last_point_dc_.x, last_point_dc_.y - double(yoffset)
 	);
-	
-	mouse_button_callback(
-	    2, GLFW_PRESS, mods 
-	);
-
-	cursor_pos_callback(
-	    double(width_/2), double(height_/2) - double(yoffset)	    
-	);
-
-	mouse_button_callback(
-	    2, GLFW_RELEASE, mods 
-	);
-
+	mouse_button_callback(button, GLFW_RELEASE, mods);
 	cursor_pos_callback(
 	    last_point_dc_bak.x, last_point_dc_bak.y
 	);
-	
     }
     
     void RenderArea::drop_callback(

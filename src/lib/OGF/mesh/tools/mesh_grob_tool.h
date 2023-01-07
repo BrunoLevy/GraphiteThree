@@ -307,6 +307,31 @@ namespace OGF {
     };
 
     /**
+     * \brief Applies a mouse-controlled scaling to a subset.
+     */
+    class MeshGrobScrollResizeSubset : public MeshGrobTransformSubset {
+    public:
+
+        /**
+         * \brief MeshGrobResizeSubset constructor.
+         * \param[in] parent a pointer to the MeshGrobTransformTool (MultiTool)
+         *  this MeshGrobResizeSubset belongs to.
+         */
+        MeshGrobScrollResizeSubset(
+            MeshGrobTransformTool* parent, int step
+        ) : MeshGrobTransformSubset(parent), step_(step) {
+        }
+
+        /**
+         * \copydoc Tool::grab()
+         */
+        void grab(const RayPick& p_ndc) override;
+
+    private:
+        int step_;
+    };
+
+    /**
      * \brief Applies a mouse-controlled rotation to a subset.
      */
     class MeshGrobRotateSubset : public MeshGrobTransformSubset {
@@ -354,6 +379,8 @@ namespace OGF {
             set_tool(1, new MeshGrobMoveSubset(this));
             set_tool(2, new MeshGrobResizeSubset(this));
             set_tool(3, new MeshGrobRotateSubset(this));
+            set_tool(4, new MeshGrobScrollResizeSubset(this, 1));
+            set_tool(5, new MeshGrobScrollResizeSubset(this, -1));
             prev_inverse_transform_.load_identity();
         }
 

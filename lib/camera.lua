@@ -67,6 +67,17 @@ gom.connect(main.render_area.mouse_move, xform.zoom_in)
    .if_arg('shift', false)
    .rename_arg('delta_y_ndc', 'value')
 
+gom.connect(main.render_area.mouse_move, xform.zoom_in)
+   .if_arg('button', 4)
+   .if_arg('control', true)
+   .if_arg('shift', false)
+   .rename_arg('delta_y_ndc', 'value')
+
+gom.connect(main.render_area.mouse_move, xform.zoom_in)
+   .if_arg('button', 5)
+   .if_arg('control', true)
+   .if_arg('shift', false)
+   .rename_arg('delta_y_ndc', 'value')
 
 camera_gui = {}
 camera_gui.name = 'Camera'

@@ -235,7 +235,20 @@ namespace OGF {
         update_transform_subset(M);
     }
 
-    /*******************/    
+    /*******************/
+
+    void MeshGrobScrollResizeSubset::grab(const RayPick& p_ndc) {
+        MeshGrobTransformSubset::grab(p_ndc);
+        const double s = 1.0 + step_*0.05;
+        const mat4 M =
+            create_translation_matrix(-center()) *
+            create_scaling_matrix(s) *
+            create_translation_matrix(center());
+        update_transform_subset(M);
+
+    }
+
+    /*******************/
 
     void MeshGrobRotateSubset::grab(const RayPick& rp) {
         mat4 M;
