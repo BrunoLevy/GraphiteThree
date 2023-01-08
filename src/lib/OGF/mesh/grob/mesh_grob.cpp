@@ -247,7 +247,7 @@ namespace OGF {
                 if(result != "") {
                     result += ";";
                 }
-                result += subelements_type_to_name(elements[i]) + ".selection";
+                result += subelements_type_to_name(elements[i]) + ".filter";
             }
         }
         return result;
