@@ -11,6 +11,8 @@ translation = gom.create('OGF::Translation')
 -- Note that xform is also accessed in the code
 -- that saves global viewing parameters.
 
+-- see OGF/skin/types/events.h for mouse button mapping
+
 camera = main.camera()
 
 gom.connect(

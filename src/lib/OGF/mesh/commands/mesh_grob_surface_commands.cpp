@@ -862,6 +862,7 @@ namespace OGF {
 	    shader->set_property("tex_coords","facet_corners." + attribute);
 	    shader->set_property("tex_repeat","1");	    
 	    shader->set_property("normal_map","true");
+	    shader->set_property("lighting","true");            
 	}
 
 	mesh_grob()->update();
