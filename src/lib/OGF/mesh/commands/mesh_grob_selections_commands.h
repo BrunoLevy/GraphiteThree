@@ -85,6 +85,14 @@ namespace OGF {
         );
         
         void hide_selection();
+
+
+        /**
+         * \brief sets the visible selection
+         * \param[in] selection semi-column-separated list of 
+         *  star,id,id1-id2,!id,!id1-id2
+         */
+        void set_selection(const std::string& selection="*");
         
         /**
          * \menu Vertices
@@ -117,6 +125,16 @@ namespace OGF {
          */
         void show_facets_selection();
 
+
+        /**
+         * \brief Selects facets that have an intersection with another
+         *  facet of the same mesh.
+         * \param test_adjacent_facets test also pairs of facets 
+         *  that share an edge or a vertex
+         * \menu Facets
+         */
+        void select_intersecting_facets(bool test_adjacent_facets=false);
+        
         /**
          * \menu Cells
          */

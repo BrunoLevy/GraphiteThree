@@ -36,12 +36,13 @@
  */
 
 #include <OGF/mesh/commands/mesh_grob_selections_commands.h>
+#include <OGF/mesh/commands/filter.h>
 #include <OGF/mesh/shaders/mesh_grob_shader.h>
+#include <geogram/mesh/triangle_intersection.h>
+#include <geogram/mesh/mesh_geometry.h>
+#include <geogram/mesh/mesh_AABB.h>
+#include <geogram/mesh/mesh_intersection.h>
 #include <geogram/points/colocate.h>
-
-namespace {
-    using namespace OGF;
-}
 
 namespace OGF {
     
@@ -394,6 +395,69 @@ namespace OGF {
         hide_vertices();
     }
 
+    void MeshGrobSelectionsCommands::select_intersecting_facets(
+        bool test_adjacent_facets
+    ) {
+        Attribute<bool> sel(mesh_grob()->facets.attributes(),"selection");
+        for(index_t f:mesh_grob()->facets) {
+            sel[f] = false;
+        }
+
+        MeshFacetsAABB AABB(*mesh_grob());
+        vector<TriangleIsect> sym;
+        AABB.compute_facet_bbox_intersections(
+            [&](index_t f1, index_t f2) {
+                if(f1 == f2) {
+                    return;
+                }
+                if(
+                    !test_adjacent_facets && (
+                        (mesh_grob()->
+                            facets.find_adjacent(f1,f2)       != index_t(-1)) ||
+                        (mesh_grob()->
+                             facets.find_common_vertex(f1,f2) != index_t(-1))
+                    )
+                ) {
+                    return;
+                }
+                if(mesh_facets_have_intersection(*mesh_grob(), f1, f2)) {
+                    sel[f1] = true;
+                    sel[f2] = true;
+                }
+            }
+        );
+        
+        show_facets_selection();
+
+        // For debugging
+        {
+            Attribute<double> tex_coord;
+            tex_coord.bind_if_is_defined(
+                mesh_grob()->facet_corners.attributes(), "tex_coord"
+            );
+            if(!tex_coord.is_bound()) {
+                tex_coord.create_vector_attribute(
+                    mesh_grob()->facet_corners.attributes(), "tex_coord",2
+                );
+            }
+            for(index_t f:mesh_grob()->facets) {
+                index_t c1 = mesh_grob()->facets.corners_begin(f);
+                index_t c2 = c1+1;
+                index_t c3 = c2+1;
+                tex_coord[2*c1  ] = 0.0;
+                tex_coord[2*c1+1] = 0.0;
+
+                tex_coord[2*c2  ] = 1.0;
+                tex_coord[2*c2+1] = 0.0;                
+
+                tex_coord[2*c3  ] = 0.0;
+                tex_coord[2*c3+1] = 1.0;                
+            }
+        }
+        
+        mesh_grob()->update();
+    }
+    
     void MeshGrobSelectionsCommands::show_cells_selection() {
         Attribute<bool> sel(mesh_grob()->cells.attributes(),"selection");
         show_attribute("cells.selection");
@@ -428,6 +492,31 @@ namespace OGF {
         
         return where;
     }
-    
+
+    void MeshGrobSelectionsCommands::set_selection(
+        const std::string& selection_string
+    ) {
+        MeshElementsFlags where = visible_selection();
+        if(visible_selection() == MESH_NONE) {
+            Logger::err("Selection") << "No visible selection"
+                                     << std::endl;
+            return;
+        }
+        Attribute<bool> selection(
+            mesh_grob()->get_subelements_by_type(where).attributes(),
+            "selection"
+        );
+        try {
+            Filter filter(selection.size(), selection_string);
+            for(index_t i=0; i<selection.size(); ++i) {
+                selection[i] = filter.test(i);
+            }
+        } catch(...) {
+            Logger::err("Attributes") << "Invalid filter specification"
+                                      << std::endl;
+        }
+        mesh_grob()->update();
+    }
+
 }
 
