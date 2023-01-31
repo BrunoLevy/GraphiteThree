@@ -142,7 +142,7 @@ namespace OGF {
 	}
     }
 
-    void MeshGrobCommands::show_charts() {
+    void MeshGrobCommands::show_charts(const std::string& attribute) {
 	Shader* shader = mesh_grob()->get_shader();
 	if(shader == nullptr) {
 	    return;
@@ -153,7 +153,7 @@ namespace OGF {
         for(index_t f: mesh_grob()->facets) {
             max_chart = std::max(max_chart, chart[f]);
         }
-	show_attribute("facets.chart");
+	show_attribute("facets."+attribute);
 	shader->invoke_method("autorange");
         shader->set_property("attribute_min","0");
         shader->set_property("attribute_max",String::to_string(max_chart+1));

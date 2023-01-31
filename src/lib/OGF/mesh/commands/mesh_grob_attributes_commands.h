@@ -120,6 +120,13 @@ namespace OGF {
         void compute_facets_id(const std::string& attribute="id");
 
         /**
+         * \brief Stores the chart (connected component) id in an attribute.
+         * \param[in] attribute the name of the facet attribute
+         * \menu Facets
+         */
+        void compute_chart_id(const std::string& attribute="chart");
+        
+        /**
          * \brief Computes facets visibility from random views.
          * \param[in] nb_views number of views
 	 * \param[in] dual_sided if true, facets seen as backfacing

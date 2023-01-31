@@ -51,6 +51,8 @@
 #include <geogram/points/kd_tree.h>
 #include <geogram/basic/stopwatch.h>
 
+#include <stack>
+
 namespace {
     using namespace OGF;    
     
@@ -253,10 +255,47 @@ namespace OGF {
     }
     
     void MeshGrobAttributesCommands::compute_facets_id(
-        const std::string& attribute) {
+        const std::string& attribute
+    ) {
         compute_sub_elements_id(MESH_FACETS, attribute);        
     }
 
+    void MeshGrobAttributesCommands::compute_chart_id(
+        const std::string& attribute
+    ) {
+        Attribute<index_t> chart(
+            mesh_grob()->facets.attributes(), attribute
+        );
+        for(index_t f: mesh_grob()->facets) {
+            chart[f] = index_t(-1);
+        }
+        std::stack<index_t> S;
+        index_t cur_chart = 0;
+        for(index_t f: mesh_grob()->facets) {
+            if(chart[f] == index_t(-1)) {
+                chart[f] = cur_chart;
+                S.push(f);
+                while(!S.empty()) {
+                    index_t g = S.top();
+                    S.pop();
+                    for(
+                        index_t le=0;
+                        le<mesh_grob()->facets.nb_vertices(g); ++le
+                    ) {
+                        index_t h = mesh_grob()->facets.adjacent(g,le);
+                        if(h != index_t(-1) && chart[h] == index_t(-1)) {
+                            chart[h] = cur_chart;
+                            S.push(h);
+                        }
+                    }
+                }
+                ++cur_chart;
+            }
+        }
+	show_charts(attribute);
+    }
+
+    
     void MeshGrobAttributesCommands::compute_cells_id(
         const std::string& attribute) {
         compute_sub_elements_id(MESH_CELLS, attribute);                

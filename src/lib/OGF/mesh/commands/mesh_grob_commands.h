@@ -96,7 +96,7 @@ namespace OGF {
 	/**
 	 * \brief Shows the charts, stored in the "chart" facet attribute.
 	 */
-	virtual void show_charts();
+	virtual void show_charts(const std::string& attribute="chart");
 
 	/**
 	 * \brief Shows the mesh.
