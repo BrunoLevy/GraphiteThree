@@ -121,6 +121,13 @@ namespace OGF {
 	void select_duplicated_vertices(double tolerance=0.0);
 
         /**
+         * \brief Selects all the vertices on triangles with
+         *  their three vertices that are colinear.
+         * \menu Vertices
+         */
+        void select_vertices_on_degenerate_facets();
+        
+        /**
          * \menu Facets
          */
         void show_facets_selection();
@@ -133,7 +140,7 @@ namespace OGF {
          *  that share an edge or a vertex
          * \menu Facets
          */
-        void select_intersecting_facets(bool test_adjacent_facets=false);
+        void select_intersecting_facets(bool test_adjacent_facets=true);
         
         /**
          * \menu Cells

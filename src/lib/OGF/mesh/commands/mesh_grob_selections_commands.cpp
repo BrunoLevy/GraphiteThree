@@ -42,6 +42,7 @@
 #include <geogram/mesh/mesh_geometry.h>
 #include <geogram/mesh/mesh_AABB.h>
 #include <geogram/mesh/mesh_intersection.h>
+#include <geogram/numerics/predicates.h>
 #include <geogram/points/colocate.h>
 
 namespace OGF {
@@ -389,6 +390,29 @@ namespace OGF {
 	mesh_grob()->update();
     }
 
+    void MeshGrobSelectionsCommands::select_vertices_on_degenerate_facets() {
+        Attribute<bool> v_selection(
+            mesh_grob()->vertices.attributes(), "selection"
+        );
+        for(index_t f: mesh_grob()->facets) {
+            if(mesh_grob()->facets.nb_vertices(f) == 3) {
+                index_t v1 = mesh_grob()->facets.vertex(f,0);
+                index_t v2 = mesh_grob()->facets.vertex(f,1);
+                index_t v3 = mesh_grob()->facets.vertex(f,2);
+                vec3 p1(mesh_grob()->vertices.point_ptr(v1));
+                vec3 p2(mesh_grob()->vertices.point_ptr(v2));
+                vec3 p3(mesh_grob()->vertices.point_ptr(v3));
+                if(PCK::aligned_3d(p1,p2,p3)) {
+                    v_selection[v1] = true;
+                    v_selection[v2] = true;
+                    v_selection[v3] = true;                    
+                }
+            }
+        }
+        show_vertices_selection();        
+	mesh_grob()->update();
+    }
+    
     void MeshGrobSelectionsCommands::show_facets_selection() {
         Attribute<bool> sel(mesh_grob()->facets.attributes(),"selection");
         show_attribute("facets.selection");
