@@ -78,7 +78,7 @@ namespace OGF {
          * \param[in] verbose enables tetgen statistics and messages.
          */
         void tet_meshing(
-            bool preprocess=true,
+            bool preprocess=false,
             bool refine=true,
             double quality=1.0,
             bool verbose=false,
