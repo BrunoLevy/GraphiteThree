@@ -1416,14 +1416,19 @@ namespace OGF {
         ToolsManager* parent
     ) : MeshGrobTool(parent) {
         picked_ = false;
+        grabbed_ = false;
     }
    
     void MeshGrobProbe::grab(const RayPick& p_ndc) {
         latest_ndc_ = p_ndc.p_ndc;
         probe(p_ndc);
+        grabbed_ = true;
     }
 
     void MeshGrobProbe::drag(const RayPick& p_ndc) {
+        if(!grabbed_) {
+            return;
+        }
         if(length(p_ndc.p_ndc - latest_ndc_) <= 10.0/1024.0) {
             return ;
         }
@@ -1434,6 +1439,9 @@ namespace OGF {
     void MeshGrobProbe::release(const RayPick& p_ndc) {
         geo_argused(p_ndc);
         reset_tooltip();
+        if(!grabbed_) {
+            return;
+        }
         if(picked_) {
             vector<MeshGrobPaintTool*> tools;
             MeshGrobPaintTool::get_paint_tools(tools_manager(), tools);
@@ -1449,6 +1457,7 @@ namespace OGF {
             Logger::out("Probe") << line << std::endl;
         }
         Logger::out("") << std::endl;
+        grabbed_ = false;
     }
     
     void MeshGrobProbe::probe(const RayPick& p_ndc) {

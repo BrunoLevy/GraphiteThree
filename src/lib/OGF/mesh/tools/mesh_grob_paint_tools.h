@@ -474,6 +474,7 @@ namespace OGF {
         
     private:
         bool picked_;
+        bool grabbed_;
         double value_;
         vec2 latest_ndc_;
         std::string message_;
