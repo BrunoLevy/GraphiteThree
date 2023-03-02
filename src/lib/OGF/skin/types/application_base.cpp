@@ -143,13 +143,15 @@ namespace OGF {
     }
 
     void ApplicationBase::begin() {
-        const std::string& task_name = Progress::current_task()->task_name();
+        const std::string& task_name =
+            Progress::current_progress_task()->task_name();
         Logger::out(task_name) << "Running..." << std::endl;
         notify_progress_begin(task_name);
     }
 
     void ApplicationBase::end(bool canceled) {
-        const std::string& task_name = Progress::current_task()->task_name();
+        const std::string& task_name =
+            Progress::current_progress_task()->task_name();
         if(canceled) {
             Logger::out(task_name) << "interrupted." << std::endl;
             notify_progress(0);
