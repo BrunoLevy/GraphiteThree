@@ -6,7 +6,7 @@ var dir_8bd9e63e3f99fdacb41b04655be2a67d =
     ] ],
     [ "command.h", "command_8h.html", "command_8h" ],
     [ "console.h", "geogram_2src_2lib_2geogram__gfx_2gui_2console_8h.html", "geogram_2src_2lib_2geogram__gfx_2gui_2console_8h" ],
-    [ "events.h", "events_8h_source.html", null ],
+    [ "events.h", "geogram_2src_2lib_2geogram__gfx_2gui_2events_8h_source.html", null ],
     [ "gui_state.h", "gui__state_8h_source.html", null ],
     [ "gui_state_h.h", "gui__state__h_8h_source.html", null ],
     [ "gui_state_v.h", "gui__state__v_8h_source.html", null ],

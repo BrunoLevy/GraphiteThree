@@ -23,6 +23,7 @@ var structUniformState =
     [ "picking_enabled", "structUniformState.html#a156cb56c65e658159d27bf8d0038d94c", null ],
     [ "picking_id", "structUniformState.html#aefb438fb286dc62f97aa41df3c678720", null ],
     [ "picking_mode", "structUniformState.html#afd26634e0fbf094860d376710f3a2a31", null ],
+    [ "primitive_filtering_enabled", "structUniformState.html#a1bb7f132a92478b28a4dce4da5b4e076", null ],
     [ "specular", "structUniformState.html#a901210140ec355d8df80083f3d011367", null ],
     [ "texture_matrix", "structUniformState.html#a821866ded968bac7a35b86727ce961c3", null ],
     [ "texture_mode", "structUniformState.html#ac8e2f4a724fee3d2cdaade362ef5ab96", null ],

@@ -3,7 +3,7 @@ var classGEO_1_1CentroidalVoronoiTesselation =
     [ "CentroidalVoronoiTesselation", "classGEO_1_1CentroidalVoronoiTesselation.html#a62cecf57c354216ce53f9d111fff6664", null ],
     [ "CentroidalVoronoiTesselation", "classGEO_1_1CentroidalVoronoiTesselation.html#a3d10df29b2b913d6726abfaaee403ed4", null ],
     [ "~CentroidalVoronoiTesselation", "classGEO_1_1CentroidalVoronoiTesselation.html#a0733dfed8b5c3ef1b4811d40cf17ed4a", null ],
-    [ "compute_initial_sampling", "classGEO_1_1CentroidalVoronoiTesselation.html#a530c05fce7562ab5ca36b07ad0534e30", null ],
+    [ "compute_initial_sampling", "classGEO_1_1CentroidalVoronoiTesselation.html#a4f5aaad10cff275a73e75d612c40dca0", null ],
     [ "compute_R3_embedding", "classGEO_1_1CentroidalVoronoiTesselation.html#a78418425c2f1b4cd15d326e860d8b682", null ],
     [ "compute_surface", "classGEO_1_1CentroidalVoronoiTesselation.html#aa3bfaa47d52a14dd62b0fff8384f5d19", null ],
     [ "compute_volume", "classGEO_1_1CentroidalVoronoiTesselation.html#a5ad2a59537b94df9c248916eff98488d", null ],

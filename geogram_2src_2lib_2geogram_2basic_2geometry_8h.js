@@ -44,6 +44,7 @@ var geogram_2src_2lib_2geogram_2basic_2geometry_8h =
     [ "triangle_circumcenter", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#af5bb27640b9135bee4fa6aed2d501045", null ],
     [ "triangle_mass", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a94d39ca64347ece1367a870d796e68f9", null ],
     [ "triangle_normal", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a8d60d892ddff8eaf632fa18f69f9b30a", null ],
+    [ "triangle_normal_axis", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#acd5f1c9bacaec4df14d52f5e4620ed77", null ],
     [ "triangle_signed_area", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a2e1cd28bf0c8c1b84afdd2637b0f84fd", null ],
     [ "triangle_signed_area_2d", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a9aa08d8cdaa85a71273b27c01503df18", null ]
 ];

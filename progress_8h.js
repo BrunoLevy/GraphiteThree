@@ -6,7 +6,7 @@ var progress_8h =
     [ "ProgressClient_var", "progress_8h.html#af21115a3dd60639a9d13188423249081", null ],
     [ "cancel", "progress_8h.html#a1d4a71de859175500d6d484bfbc0f655", null ],
     [ "clear_canceled", "progress_8h.html#a7a13c18ce6aea0050bc9aade10df37a2", null ],
-    [ "current_task", "progress_8h.html#a767b0954860c5dfeba7393cfe80bd332", null ],
+    [ "current_progress_task", "progress_8h.html#ae9d1249ef8ea969aa7ba2b8eaae923b8", null ],
     [ "initialize", "progress_8h.html#a5b2df9d0158c1fbd87cef4c6f97f009a", null ],
     [ "is_canceled", "progress_8h.html#aa16f66af807cde262c829fe0418035cf", null ],
     [ "set_client", "progress_8h.html#aa37722f4168daab0480c876db15a02dc", null ],

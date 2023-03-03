@@ -1,6 +1,5 @@
 var classGLUP_1_1ImmediateState =
 [
-    [ "NB_IMMEDIATE_BUFFERS", "classGLUP_1_1ImmediateState.html#ac3b8aa30783363eb862286e35eeb49b0a5dd831a617087ee5db6e5b4be32b0998", null ],
     [ "ImmediateState", "classGLUP_1_1ImmediateState.html#ad6357aa27541ade02d895a0eba7043b2", null ],
     [ "~ImmediateState", "classGLUP_1_1ImmediateState.html#ad4eed64d02bb66e6be126b2b16c251a9", null ],
     [ "begin", "classGLUP_1_1ImmediateState.html#a30948db204afafac6e2e8b20c3dd797d", null ],

@@ -2,6 +2,7 @@ var classOGF_1_1MeshGrobSpectralCommands =
 [
     [ "MeshGrobSpectralCommands", "classOGF_1_1MeshGrobSpectralCommands.html#ab8209e11a214aeb1494fe2cc1f83c6c3", null ],
     [ "~MeshGrobSpectralCommands", "classOGF_1_1MeshGrobSpectralCommands.html#a26787abbbea9d5fbc7309518b3ccf2b2", null ],
+    [ "compute_spectral_embedding", "classOGF_1_1MeshGrobSpectralCommands.html#aa4481e2979fa1b03f91a3082e1780392", null ],
     [ "__pad0__", "classOGF_1_1MeshGrobSpectralCommands.html#a18838144828374d5073c583b7e980d88", null ],
     [ "attribute", "classOGF_1_1MeshGrobSpectralCommands.html#aa3ee97fee5c4b12a43c104a11c7ecad8", null ],
     [ "discretization", "classOGF_1_1MeshGrobSpectralCommands.html#aae29a09562fdfbcb8291b4a6bb1d869a", null ],

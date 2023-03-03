@@ -18,6 +18,7 @@ var classGEO_1_1MeshFacets =
     [ "create_triangles", "classGEO_1_1MeshFacets.html#af01070b6e8e06d6eb75ba6652ca31901", null ],
     [ "delete_elements", "classGEO_1_1MeshFacets.html#a708b30046d6582200744fc1ae67cc8bd", null ],
     [ "find_adjacent", "classGEO_1_1MeshFacets.html#ac2574d4786a21abac3e2c442b1808c32", null ],
+    [ "find_common_vertex", "classGEO_1_1MeshFacets.html#a9c8c6f3e8c6bced6e325dd640a46f96b", null ],
     [ "find_vertex", "classGEO_1_1MeshFacets.html#ab9bae94ab5e8d969f8de9af28392d9f0", null ],
     [ "flip", "classGEO_1_1MeshFacets.html#a74e9e4266e7b963692b40d7cecd32d8b", null ],
     [ "is_not_simplicial", "classGEO_1_1MeshFacets.html#a356617e0653b0f7bb3128650c9f3ae93", null ],

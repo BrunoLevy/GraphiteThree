@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['elementtype_8815',['ElementType',['../classGEO_1_1ReadOnlyScalarAttributeAdapter.html#a0b2836d6a8c2a553fcad758611f647b5',1,'GEO::ReadOnlyScalarAttributeAdapter']]]
+  ['elementtype_9208',['ElementType',['../classGEO_1_1ScalarAttributeAdapterBase.html#a1f3ca6b855a92fbf1bc7f5e24e482983',1,'GEO::ScalarAttributeAdapterBase']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['preconditioner_8834',['Preconditioner',['../classOGF_1_1NL_1_1Matrix.html#ada95c61d487ce4720256d75e6a763a22',1,'OGF::NL::Matrix']]]
+  ['paintop_9230',['PaintOp',['../namespaceOGF.html#a56258a5669275c9bcbb9be7a81e46567',1,'OGF']]],
+  ['preconditioner_9231',['Preconditioner',['../classOGF_1_1NL_1_1Matrix.html#ada95c61d487ce4720256d75e6a763a22',1,'OGF::NL::Matrix']]]
 ];

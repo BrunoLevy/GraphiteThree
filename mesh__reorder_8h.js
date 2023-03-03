@@ -6,6 +6,7 @@ var mesh__reorder_8h =
     ] ],
     [ "compute_BRIO_order", "mesh__reorder_8h.html#abbfd8711b7353d61f27efe55b881fa65", null ],
     [ "compute_Hilbert_order", "mesh__reorder_8h.html#a9d14e254a2cccf1718079d7a9e81898c", null ],
+    [ "Hilbert_sort_periodic", "mesh__reorder_8h.html#ad39083b1645e45cc0aa26f14bfda9d59", null ],
     [ "Hilbert_sort_periodic", "mesh__reorder_8h.html#a107b3c898cc89d9be945910e74addcff", null ],
     [ "mesh_reorder", "mesh__reorder_8h.html#a44f4bef59b79b1f7f9663fe49a8b694d", null ]
 ];

@@ -6,6 +6,7 @@ var mesh__geometry_8h =
     [ "get_bbox", "mesh__geometry_8h.html#a256c74306b2a773b6fc1f5177a76ba1a", null ],
     [ "mesh_area", "mesh__geometry_8h.html#aaee1ff21650f83dfcc2ed8f12c7f1937", null ],
     [ "mesh_area", "mesh__geometry_8h.html#a72dd40388e80b2f86a6e22011bb1c655", null ],
+    [ "mesh_cell_center", "mesh__geometry_8h.html#a8296c672da9af6b67d2ed98afe3a2ba7", null ],
     [ "mesh_cell_facet_normal", "mesh__geometry_8h.html#af1b4b23bfc844ed93a17cfff836febd1", null ],
     [ "mesh_cell_volume", "mesh__geometry_8h.html#a8474825edf4365631fb8612e487558b0", null ],
     [ "mesh_cells_volume", "mesh__geometry_8h.html#a801243006f1cd19c88d842a1b4e50693", null ],

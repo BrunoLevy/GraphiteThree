@@ -1,24 +1,26 @@
 /*
-@licstart  The following is the entire license notice for the
-JavaScript code in this file.
+ @licstart  The following is the entire license notice for the JavaScript code in this file.
 
-Copyright (C) 1997-2019 by Dimitri van Heesch
+ The MIT License (MIT)
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of version 2 of the GNU General Public License as published by
-the Free Software Foundation
+ Copyright (C) 1997-2020 by Dimitri van Heesch
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ and associated documentation files (the "Software"), to deal in the Software without restriction,
+ including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
 
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ The above copyright notice and this permission notice shall be included in all copies or
+ substantial portions of the Software.
 
-@licend  The above is the entire license notice
-for the JavaScript code in this file
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+ BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+ @licend  The above is the entire license notice for the JavaScript code in this file
 */
 var NAVTREE =
 [
@@ -66,42 +68,48 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-".html",
-"GLUP__context_8h.html#a462b12237a78fc15e4e8c6135a3b7054",
-"classGEOGen_1_1ConvexCell_1_1Vertex.html#acae081d577decc0397240d144cd705ab",
-"classGEO_1_1AdaptiveKdTree.html#a3bc0b25c2e1842d6a6fe27dce34243e3",
-"classGEO_1_1BalancedKdTree.html#a40b6ecea7edbd725e2405f60e94c2e90",
-"classGEO_1_1Delaunay.html#a193fd661b910360a340ca12cdeca8d39",
-"classGEO_1_1FrameBufferObject.html#a3354f15e0427b7efb61814ed3aa31d13",
-"classGEO_1_1IntegrationSimplex.html#a7830c27ca440fd6d1273a1c5cf6e5d91",
-"classGEO_1_1MeshCellsStore.html#a7274f29ea1a3f262c80f1b03d6afa87a",
-"classGEO_1_1MeshGfx.html#ab6c3802b1ea661ec2900fab2f185510d",
-"classGEO_1_1OptimalTransportMap.html#aca3ffba929bef7da28d68cb38ea2ffd3",
-"classGEO_1_1Quaternion.html#a9d878a349d54228160d9a21f36f93aaa",
-"classGEO_1_1SimpleApplication.html#ab3ee7257be8a88184f812cc7ebe736e9",
-"classGEO_1_1VariableObserver.html#ab7503f089a006ddd95e26da028e3ace8",
-"classGEO_1_1vecng.html#ac4609626768665613f4fa1698de880ad",
-"classGLUP_1_1ImmediateState.html#a761df9343b52dc6082a6fd23922bba18",
-"classOGF_1_1BasicFactories.html",
-"classOGF_1_1Grob.html#a5bf96d197041cf9eacb9f899d2a05134",
-"classOGF_1_1MeshGrobConnectDisconnectEdges.html#affba35f63353983682709fbbf78f6084",
-"classOGF_1_1MeshGrobSurfaceCommands.html#af570a6a615788d875bba03b2061235bd",
-"classOGF_1_1MetaType.html#a3c93fe70b0902d39e98388f9ce21272d",
-"classOGF_1_1PlainMeshGrobShader.html#a076d14abbbf67db1bce979e32a4fb720",
-"classOGF_1_1RenderingContext.html#a11eb9ad057e1ffbf8b18e3023a839cb6",
-"classOGF_1_1SceneGraphToolsManager.html#a11ecb21e18268f486f9d4fe08d7cfae3",
-"classOGF_1_1VoxelGrob.html#adc26fac87867053e8f7c49cbd124e134",
-"convex__cell_8h.html#a06f2f1af26a1b3aa02fb4d492479fedeaa428fcf08488452fe0dd680905c10082",
-"functions_n.html",
-"hierarchy.html",
-"mesh__geometry_8h.html#a0f601fd1d574386f27c11ea8db00853d",
-"meta__slot_8h.html#ab9707539f9badc568f620c4db6320f74",
-"nl__blas_8h.html#a793c6aece2aa69c0ac7c4e6d576f3d05",
-"predicates_8h.html#a37767010717fca40fe0d8e933c8f6cd6",
-"src_2lib_2OGF_2renderer_2common_2common_8h.html#a3fd15acc4620077fe7cf40cc81ea88c4",
-"structGEO_1_1GeoFile_1_1AttributeSetInfo.html#a7f299bc9ef0a7945ab0cedc4d4914a25",
-"structGEO_1_1basic__trindex.html#a1a7345438b698685fe1a7d485f7af687",
-"structUniformState.html#a5a5cafeb6b7aff06dfd665383340711d"
+"CDT__2d_8h.html",
+"GLUP_8h.html#afdd46b78a37fb93e1ff7d37ab55742c5a069ce58ed436c027410b884bc629d19c",
+"classGEOGen_1_1ConvexCell.html#a69e33650e4703fb0f38a4dc3ca414a2f",
+"classGEOGen_1_1Vertex.html#a6fe879b7a0cbd940186939474c7eaccf",
+"classGEO_1_1AttributeStoreObserver.html#a9fda605f17813902272def8273b4a341",
+"classGEO_1_1CentroidalVoronoiTesselation.html#a3a07cebdd1d741f3992e505780f624cf",
+"classGEO_1_1Delaunay2d.html#ab99b2daa87c37bc990b9a95a78cbe1d8",
+"classGEO_1_1GeoFileException.html#a7d783ccb57869e43365366ab5ccfd409",
+"classGEO_1_1MemberFunctionCommandInvoker.html",
+"classGEO_1_1MeshFacets.html#ab9bae94ab5e8d969f8de9af28392d9f0",
+"classGEO_1_1MeshIOHandler.html#ab71f388b3d22de76edfe800cbaa2714e",
+"classGEO_1_1Optimizer.html#a732d01ed61a346482337f5cda1705642",
+"classGEO_1_1ReadWriteScalarAttributeAdapter.html#af0193abefa0f37a4e2863a872de6a1d7",
+"classGEO_1_1SimpleMeshApplication.html#a6f4cea78c1ceba00011af134e3bb277b",
+"classGEO_1_1expansion.html#af7a50b4b8bbff293d6ec91be203512ea",
+"classGEO_1_1vecng_3_012_00_01T_01_4.html#adfea6bb4cb200fca475565e766987503",
+"classGLUP_1_1MarchingCell.html#afbd8911880fd42da1cacd29ab7b5d44b",
+"classOGF_1_1Box3d.html#a26ddba2a7530182feea0bccfea36be8f",
+"classOGF_1_1Grob.html#a8fc21ac08f175cf9337eaa78f978278b",
+"classOGF_1_1MeshGrobConnectEdges.html#a26cb94ffe29ded03011a8df05c506f19",
+"classOGF_1_1MeshGrobScrollResizeSubset.html#afb239755d389b9928090f086b1ca0d86",
+"classOGF_1_1MetaClass.html#a6a3f735b1da59494ef096c25ee7ff290",
+"classOGF_1_1NL_1_1Vector.html#a569a583bdf4f156e7fbd09f6b9c234ae",
+"classOGF_1_1PlainMeshGrobShader.html#ab7a36c3254f74524dfe23cc0860c171f",
+"classOGF_1_1RenderingContext.html#aeaf81dcb4e6663cd59a72b9e6a715846",
+"classOGF_1_1TextUtils_1_1Environment.html#a1e86435dd7f8a2901d20511fa1db5d15",
+"classVBW_1_1ConvexCell.html#a2a5de71e665a76ca3c5d3cb49a316284",
+"dir_313f58cb9ab85737b7f74c2f25a92179.html",
+"generic__RVD__utils_8h.html#aef770f08d01caa261fb8ec897a26fedf",
+"imgui__ext_8h.html#a583eaf0b4c253925872b30fe08ff2ffe",
+"mesh__geometry_8h.html#a62db314212e5e22b34925798db22a999",
+"meta__method_8h.html",
+"namespaceGEO.html#a58d555c2075c8f3784a0a367178d38d3",
+"namespaceGEO.html#ad90b7049def9038485a975162048b544",
+"namespaceGEO_1_1MatrixUtil.html",
+"namespaceOGF_1_1Preferences.html#a0722903425a5bde6bf87c70a7cdd941a",
+"nl__iterative__solvers_8h_source.html",
+"process_8h.html#a3dc5cc28fadfcc45d872df6ff61e0687",
+"status__bar_8h_source.html",
+"structGEO_1_1GLSL_1_1GLSLCompileError.html",
+"structGEO_1_1basic__bindex.html#a39446931b7b44a6b9c80b74b4aad7c8c",
+"structOGF_1_1RayPick.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

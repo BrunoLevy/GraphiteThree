@@ -32,6 +32,7 @@ var dir_7bba15f800d694ac323ee679d8753093 =
       [ "MeshGrobSplitFacet", "classOGF_1_1MeshGrobSplitFacet.html", "classOGF_1_1MeshGrobSplitFacet" ],
       [ "MeshGrobEditFacetEdge", "classOGF_1_1MeshGrobEditFacetEdge.html", "classOGF_1_1MeshGrobEditFacetEdge" ]
     ] ],
+    [ "mesh_grob_paint_tools.h", "mesh__grob__paint__tools_8h.html", "mesh__grob__paint__tools_8h" ],
     [ "mesh_grob_selection_tools.h", "mesh__grob__selection__tools_8h.html", [
       [ "MeshGrobSelectVertex", "classOGF_1_1MeshGrobSelectVertex.html", "classOGF_1_1MeshGrobSelectVertex" ],
       [ "MeshGrobUnselectVertex", "classOGF_1_1MeshGrobUnselectVertex.html", "classOGF_1_1MeshGrobUnselectVertex" ],
@@ -42,6 +43,7 @@ var dir_7bba15f800d694ac323ee679d8753093 =
       [ "MeshGrobTransformSubset", "classOGF_1_1MeshGrobTransformSubset.html", "classOGF_1_1MeshGrobTransformSubset" ],
       [ "MeshGrobMoveSubset", "classOGF_1_1MeshGrobMoveSubset.html", "classOGF_1_1MeshGrobMoveSubset" ],
       [ "MeshGrobResizeSubset", "classOGF_1_1MeshGrobResizeSubset.html", "classOGF_1_1MeshGrobResizeSubset" ],
+      [ "MeshGrobScrollResizeSubset", "classOGF_1_1MeshGrobScrollResizeSubset.html", "classOGF_1_1MeshGrobScrollResizeSubset" ],
       [ "MeshGrobRotateSubset", "classOGF_1_1MeshGrobRotateSubset.html", "classOGF_1_1MeshGrobRotateSubset" ],
       [ "MeshGrobTransformTool", "classOGF_1_1MeshGrobTransformTool.html", "classOGF_1_1MeshGrobTransformTool" ]
     ] ]

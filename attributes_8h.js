@@ -12,6 +12,10 @@ var attributes_8h =
     [ "Attribute< bool >", "classGEO_1_1Attribute_3_01bool_01_4.html", "classGEO_1_1Attribute_3_01bool_01_4" ],
     [ "ConstBoolAttributeAccessor", "classGEO_1_1Attribute_3_01bool_01_4_1_1ConstBoolAttributeAccessor.html", "classGEO_1_1Attribute_3_01bool_01_4_1_1ConstBoolAttributeAccessor" ],
     [ "BoolAttributeAccessor", "classGEO_1_1Attribute_3_01bool_01_4_1_1BoolAttributeAccessor.html", "classGEO_1_1Attribute_3_01bool_01_4_1_1BoolAttributeAccessor" ],
+    [ "ScalarAttributeAdapterBase", "classGEO_1_1ScalarAttributeAdapterBase.html", "classGEO_1_1ScalarAttributeAdapterBase" ],
+    [ "Accessor", "classGEO_1_1ScalarAttributeAdapterBase_1_1Accessor.html", "classGEO_1_1ScalarAttributeAdapterBase_1_1Accessor" ],
+    [ "ConstAccessor", "classGEO_1_1ScalarAttributeAdapterBase_1_1ConstAccessor.html", "classGEO_1_1ScalarAttributeAdapterBase_1_1ConstAccessor" ],
     [ "ReadOnlyScalarAttributeAdapter", "classGEO_1_1ReadOnlyScalarAttributeAdapter.html", "classGEO_1_1ReadOnlyScalarAttributeAdapter" ],
+    [ "ReadWriteScalarAttributeAdapter", "classGEO_1_1ReadWriteScalarAttributeAdapter.html", "classGEO_1_1ReadWriteScalarAttributeAdapter" ],
     [ "AttributeStoreCreator_var", "attributes_8h.html#a9e4ec3821d05e598518fba2ac5742840", null ]
 ];

@@ -5,10 +5,12 @@ var predicates_8h =
       [ "SOS_LEXICO", "predicates_8h.html#a98bfa9f624ed630c8f6a1e17cedd683faf59824c80788add793264ac1aafea789", null ]
     ] ],
     [ "aligned_3d", "predicates_8h.html#a0913d1bc67a8836a57d10f511415ecea", null ],
+    [ "aligned_3d", "predicates_8h.html#afb25b673b06281da4167f0ba00533a4e", null ],
     [ "det_3d", "predicates_8h.html#a8b37bc46df6d18fc1fdc9b08962d7a4e", null ],
     [ "det_4d", "predicates_8h.html#a04afdab908d747674782a0fe0efd1f1e", null ],
     [ "det_compare_4d", "predicates_8h.html#a964b59d15bd98a91a71495dfb6d3fe7a", null ],
     [ "dot_3d", "predicates_8h.html#a96f2b2a5a5d629195f501061eb895b40", null ],
+    [ "dot_3d", "predicates_8h.html#a4fe02dbb444c192d585feae0574fd78f", null ],
     [ "dot_compare_3d", "predicates_8h.html#a29b6d5aedac5fe4c49eafe4db94593b4", null ],
     [ "get_SOS_mode", "predicates_8h.html#ada327805a9a8b5c39ee9675c20b853c0", null ],
     [ "in_circle_2d_SOS", "predicates_8h.html#a3c4b0e0199df2438227743b9b05ded73", null ],

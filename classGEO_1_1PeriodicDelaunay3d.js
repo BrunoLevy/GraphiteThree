@@ -2,6 +2,7 @@ var classGEO_1_1PeriodicDelaunay3d =
 [
     [ "IncidentTetrahedra", "structGEO_1_1PeriodicDelaunay3d_1_1IncidentTetrahedra.html", "structGEO_1_1PeriodicDelaunay3d_1_1IncidentTetrahedra" ],
     [ "PeriodicDelaunay3d", "classGEO_1_1PeriodicDelaunay3d.html#a139a23255004541dd1d6c58ebbe40fac", null ],
+    [ "PeriodicDelaunay3d", "classGEO_1_1PeriodicDelaunay3d.html#a0b0bc5ab470db94e56491c7f85e59969", null ],
     [ "check_volume", "classGEO_1_1PeriodicDelaunay3d.html#a13efbc39313cbecdafc408d2d158ce3f", null ],
     [ "compress", "classGEO_1_1PeriodicDelaunay3d.html#a4c8f9f9fb765e6c35f88cffa5aa53527", null ],
     [ "compute", "classGEO_1_1PeriodicDelaunay3d.html#a20ef560492bdad55caed9ea6ae48a443", null ],

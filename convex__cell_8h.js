@@ -9,10 +9,6 @@ var convex__cell_8h =
     [ "index_t", "convex__cell_8h.html#a108ea4c3a2b032bb1f69d05d4b0c909b", null ],
     [ "uchar", "convex__cell_8h.html#a8aaf56ca221cb23460db964282f08e52", null ],
     [ "ushort", "convex__cell_8h.html#a4be9f52e6e9ffffc8cf6484acab20e38", null ],
-    [ "CONFLICT_MASK", "convex__cell_8h.html#a69744e6245b662787bd33fde9a0e2558ac7b0060197859ab6cc0a8c27eeae7242", null ],
-    [ "MARKED_MASK", "convex__cell_8h.html#a69744e6245b662787bd33fde9a0e2558a68f0e8594920ae751ad9ffb99d2b0f46", null ],
-    [ "END_OF_LIST", "convex__cell_8h.html#a69744e6245b662787bd33fde9a0e2558aa2d513d5a0d7dd40420b81afedfa1340", null ],
-    [ "VERTEX_AT_INFINITY", "convex__cell_8h.html#a69744e6245b662787bd33fde9a0e2558ae95ad91c205aa3a92903f293ec267a53", null ],
     [ "ConvexCellFlag", "convex__cell_8h.html#a06f2f1af26a1b3aa02fb4d492479fede", [
       [ "None", "convex__cell_8h.html#a06f2f1af26a1b3aa02fb4d492479fedeaa428fcf08488452fe0dd680905c10082", null ],
       [ "WithVGlobal", "convex__cell_8h.html#a06f2f1af26a1b3aa02fb4d492479fedea112b83ed10c3a822ee9673401c07fb74", null ],

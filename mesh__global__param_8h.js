@@ -1,8 +1,5 @@
 var mesh__global__param_8h =
 [
-    [ "CNSTR_NONE", "mesh__global__param_8h.html#a4db2d6a948e0356a850ba6cd96f81f0bae131825659660e50921ef70f226c8ef9", null ],
-    [ "CNSTR_U", "mesh__global__param_8h.html#a4db2d6a948e0356a850ba6cd96f81f0baaf536c66905afc5da9f53bdffe15bef9", null ],
-    [ "CNSTR_V", "mesh__global__param_8h.html#a4db2d6a948e0356a850ba6cd96f81f0ba15c46f505f916a4d51c19bfade11b169", null ],
     [ "brush", "mesh__global__param_8h.html#a3ffdf50bf970ec52f48bad5b2ea963ab", null ],
     [ "compute_R_ff", "mesh__global__param_8h.html#a60cb77f5a5c33d1bb5b30c1598e3658a", null ],
     [ "compute_R_fv", "mesh__global__param_8h.html#a46500bc60317bb11043ba45585ff52a2", null ],

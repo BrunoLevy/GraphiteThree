@@ -19,6 +19,7 @@ var string_8h =
     [ "quote", "string_8h.html#a7ddb7bf97c3f52a6acb0f91b9cb8ab3c", null ],
     [ "split_string", "string_8h.html#ad97f1e8dbef1fdef1deb5a295a6043dd", null ],
     [ "split_string", "string_8h.html#a242600ece47eed4dab1834e21f069961", null ],
+    [ "split_string", "string_8h.html#aeaf519e0305b8531760257d0b8ef3e07", null ],
     [ "string_ends_with", "string_8h.html#a5024fa0ee69b52b2baaf892c133d1d05", null ],
     [ "string_starts_with", "string_8h.html#a5016b75563d1ceb68091d197d796b2bd", null ],
     [ "string_to_signed_integer", "string_8h.html#af0bc4020668f8b2dd38b30b04ba37272", null ],

@@ -7,5 +7,5 @@ var classOGF_1_1MultiTool =
     [ "release", "classOGF_1_1MultiTool.html#a5bd520c8145b1d121cf6390242b656a1", null ],
     [ "reset", "classOGF_1_1MultiTool.html#a183d5ce0344ae5b65b12acfee07bcbb3", null ],
     [ "set_tool", "classOGF_1_1MultiTool.html#a06d9ace98e880d9a3a32da64b8a55d15", null ],
-    [ "tools_", "classOGF_1_1MultiTool.html#aedd0e80315043e689107201e56cd3662", null ]
+    [ "tools_", "classOGF_1_1MultiTool.html#a1b9e8bf29745214262947410265f97cf", null ]
 ];

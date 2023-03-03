@@ -1,6 +1,8 @@
 var classGEO_1_1Memory_1_1aligned__allocator =
 [
     [ "rebind", "structGEO_1_1Memory_1_1aligned__allocator_1_1rebind.html", "structGEO_1_1Memory_1_1aligned__allocator_1_1rebind" ],
+    [ "const_pointer", "classGEO_1_1Memory_1_1aligned__allocator.html#a5f5bf1f85fb75d408d1d57cb89aedfa5", null ],
+    [ "const_reference", "classGEO_1_1Memory_1_1aligned__allocator.html#a4070e003e5411c4a46f60d6eb281f7f6", null ],
     [ "difference_type", "classGEO_1_1Memory_1_1aligned__allocator.html#ae95cb2f3d75157236070716bba85f54c", null ],
     [ "pointer", "classGEO_1_1Memory_1_1aligned__allocator.html#a3e3947d7c157a75e08b873e86b69ccc6", null ],
     [ "reference", "classGEO_1_1Memory_1_1aligned__allocator.html#acb60800843fbdcefad1b86af01aeea46", null ],
@@ -13,7 +15,5 @@ var classGEO_1_1Memory_1_1aligned__allocator =
     [ "deallocate", "classGEO_1_1Memory_1_1aligned__allocator.html#ae68fc025f8b7386e7f0269d23fd5e665", null ],
     [ "destroy", "classGEO_1_1Memory_1_1aligned__allocator.html#a41a6fbffb76148997210e1fcdb533500", null ],
     [ "max_size", "classGEO_1_1Memory_1_1aligned__allocator.html#a1914d6c5f7477460aaa7d395ccc34b7b", null ],
-    [ "operator aligned_allocator< T2, A2 >", "classGEO_1_1Memory_1_1aligned__allocator.html#a0ed08300bf24608cd054284d68406980", null ],
-    [ "const_pointer", "classGEO_1_1Memory_1_1aligned__allocator.html#a65190e896fd7eefe77aa984adeca38e7", null ],
-    [ "const_reference", "classGEO_1_1Memory_1_1aligned__allocator.html#a38762e8afea603fda564806914f151db", null ]
+    [ "operator aligned_allocator< T2, A2 >", "classGEO_1_1Memory_1_1aligned__allocator.html#a0ed08300bf24608cd054284d68406980", null ]
 ];

@@ -21,6 +21,7 @@ var classGEO_1_1AttributeStore =
     [ "reserve", "classGEO_1_1AttributeStore.html#afbbca9bc291e34d3e718c7f554cd5b45", null ],
     [ "resize", "classGEO_1_1AttributeStore.html#a997f4d76e5299421ec8680e5851e061b", null ],
     [ "size", "classGEO_1_1AttributeStore.html#a1d398b43477a6675372edd58e54a8683", null ],
+    [ "swap_items", "classGEO_1_1AttributeStore.html#ac0da799f34a6f8a10ff3b6bd3d410233", null ],
     [ "unregister_observer", "classGEO_1_1AttributeStore.html#ab2114e345fd3eb82743c3945c69626ce", null ],
     [ "zero", "classGEO_1_1AttributeStore.html#afcf0d3378994227c63b6dc4b2cf28f17", null ],
     [ "AttributeStoreObserver", "classGEO_1_1AttributeStore.html#a7dd3b2b6b504d2a4816b2db1d7531e9b", null ],

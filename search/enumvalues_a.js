@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['t_5frgn_5fe0_8895',['T_RGN_E0',['../namespaceGEO.html#a2aa39253e2c170b7f336966395258641a0448e264c06008d87a7cdebd26674b39',1,'GEO']]],
-  ['t_5frgn_5fe1_8896',['T_RGN_E1',['../namespaceGEO.html#a2aa39253e2c170b7f336966395258641a09f076d279f7318a5f6916681c87c735',1,'GEO']]],
-  ['t_5frgn_5fe2_8897',['T_RGN_E2',['../namespaceGEO.html#a2aa39253e2c170b7f336966395258641a0460374737d27ebfd1ad3a98741e1526',1,'GEO']]],
-  ['t_5frgn_5fp0_8898',['T_RGN_P0',['../namespaceGEO.html#a2aa39253e2c170b7f336966395258641a985c1bd3ac7c5dad22deeac6b3118532',1,'GEO']]],
-  ['t_5frgn_5fp1_8899',['T_RGN_P1',['../namespaceGEO.html#a2aa39253e2c170b7f336966395258641a032697a2138420e15493fb690326542c',1,'GEO']]],
-  ['t_5frgn_5fp2_8900',['T_RGN_P2',['../namespaceGEO.html#a2aa39253e2c170b7f336966395258641ab532cd70ca9db54db99037dd84718e78',1,'GEO']]],
-  ['t_5frgn_5ft_8901',['T_RGN_T',['../namespaceGEO.html#a2aa39253e2c170b7f336966395258641ae78391b5715d90cb537d2aed71af770f',1,'GEO']]]
+  ['segment_5fgeometric_5fvsa_5fl12_9297',['SEGMENT_GEOMETRIC_VSA_L12',['../namespaceGEO.html#aac9cfbedebd2a6d1830d4799c18846a7a0db8b0d34b7439664f7eb4d0d0e7f4c8',1,'GEO']]],
+  ['segment_5fgeometric_5fvsa_5fl2_9298',['SEGMENT_GEOMETRIC_VSA_L2',['../namespaceGEO.html#aac9cfbedebd2a6d1830d4799c18846a7a232414b106d9c698146eac6315822a43',1,'GEO']]],
+  ['segment_5finertia_5faxis_9299',['SEGMENT_INERTIA_AXIS',['../namespaceGEO.html#aac9cfbedebd2a6d1830d4799c18846a7a4271b2525f12bf00a827b2a268517b20',1,'GEO']]],
+  ['segment_5fspectral_5f100_9300',['SEGMENT_SPECTRAL_100',['../namespaceGEO.html#aac9cfbedebd2a6d1830d4799c18846a7ae66993e1883c4b955b3e019016f54a06',1,'GEO']]],
+  ['segment_5fspectral_5f20_9301',['SEGMENT_SPECTRAL_20',['../namespaceGEO.html#aac9cfbedebd2a6d1830d4799c18846a7ab88937d71abe78953b29cdcc0144208e',1,'GEO']]],
+  ['segment_5fspectral_5f8_9302',['SEGMENT_SPECTRAL_8',['../namespaceGEO.html#aac9cfbedebd2a6d1830d4799c18846a7a001a4ac9dbdfa3824975301536a43f86',1,'GEO']]]
 ];

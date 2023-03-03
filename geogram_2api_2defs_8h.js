@@ -9,7 +9,5 @@ var geogram_2api_2defs_8h =
     [ "geo_coord_t", "geogram_2api_2defs_8h.html#a5fdd474ecf9ca6b2dd53e0232d8023a3", null ],
     [ "geo_index_t", "geogram_2api_2defs_8h.html#ae5fa4e566065ddd7f5f6ab1ab26ca80d", null ],
     [ "geo_signed_index_t", "geogram_2api_2defs_8h.html#aeb0397ead5451c97c9edd1902394cea2", null ],
-    [ "GeoMesh", "geogram_2api_2defs_8h.html#a4553a6b588a1bb78178ae394800b469a", null ],
-    [ "GEO_FALSE", "geogram_2api_2defs_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a31826e6055bf3c9f3892e86b90407867", null ],
-    [ "GEO_TRUE", "geogram_2api_2defs_8h.html#adf764cbdea00d65edcd07bb9953ad2b7a42466f084f0b67e24419fb5f97463c67", null ]
+    [ "GeoMesh", "geogram_2api_2defs_8h.html#a4553a6b588a1bb78178ae394800b469a", null ]
 ];

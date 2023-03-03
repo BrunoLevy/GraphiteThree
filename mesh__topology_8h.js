@@ -1,6 +1,5 @@
 var mesh__topology_8h =
 [
-    [ "vector", "classGEO_1_1vector.html", "classGEO_1_1vector" ],
     [ "get_connected_components", "mesh__topology_8h.html#a0cbe39bbc23bded9ad5d908c1e93ae34", null ],
     [ "mesh_nb_borders", "mesh__topology_8h.html#aefc371a9f231276471393ef047453416", null ],
     [ "mesh_nb_connected_components", "mesh__topology_8h.html#ae905f82e9bc7a2474820635a4b62039a", null ],

@@ -1,7 +1,6 @@
 var imgui__ext_8h =
 [
     [ "ImGuiExtFileDialogFlags", "imgui__ext_8h.html#aa85dc76147bbb39442b5b02178b0fe7c", null ],
-    [ "geo_imgui_string_length", "imgui__ext_8h.html#af2da2ad40399cd5fd6b5e73d1747be3ba2fb0ca3b4b60658b92bf38f6e8d69b16", null ],
     [ "ImGuiExtFileDialogFlags_", "imgui__ext_8h.html#a883ec087611c5f7f0f8c16387cefdf17", [
       [ "ImGuiExtFileDialogFlags_Load", "imgui__ext_8h.html#a883ec087611c5f7f0f8c16387cefdf17a153919e4f719a725c6674ad4a2ee5306", null ],
       [ "ImGuiExtFileDialogFlags_Save", "imgui__ext_8h.html#a883ec087611c5f7f0f8c16387cefdf17a91ceeae07589da860a257868aaa211a5", null ]
