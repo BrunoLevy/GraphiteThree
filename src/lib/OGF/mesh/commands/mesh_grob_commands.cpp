@@ -146,9 +146,11 @@ namespace OGF {
                 attr_name
             );
             for(index_t i=0; i<selection.size(); ++i) {
-                ++nb_selected;
+                if(selection[i]) {
+                    ++nb_selected;
+                }
             }
-            Logger::out("Selection") << " selected elements:"
+            Logger::out("Selection") << "Selected elements: "
                                      << nb_selected << " / " << selection.size()
                                      << std::endl;
         }
