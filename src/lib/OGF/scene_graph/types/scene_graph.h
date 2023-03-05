@@ -111,7 +111,7 @@ namespace OGF {
 	 *  the file.
 	 * \retval false otherwise.
 	 */
-	bool save_viewer_properties(const std::string& value);
+         bool save_viewer_properties(const std::string& value);
 	
         /**
          * \brief Deletes the current object.
@@ -140,11 +140,15 @@ namespace OGF {
          * \param[in] type the class name that should be used to 
          *  create the object, or "default" (then it is deduced from
          *  the file extension)
+         * \param[in] invoked_from_gui set to true by file menu, and
+         *  makes it change directory to the directory that contains the
+         *  file
          * \return a pointer to the loaded object, or nullptr if no object
          *  could be loaded
          */
         Grob* load_object(
-            const FileName& value, const std::string& type="default"
+            const FileName& value, const std::string& type="default",
+            bool invoked_form_gui=false
         );
 
         /**
@@ -154,9 +158,13 @@ namespace OGF {
          * \param[in] type the class name that should be used to 
          *  create the objects, or "default" (then it is deduced from
          *  the file extensions)
+         * \param[in] invoked_from_gui set to true by file menu, and
+         *  makes it change directory to the directory that contains the
+         *  file
          */
         void load_objects(
-            const std::string& value, const std::string& type="default"
+            const std::string& value, const std::string& type="default",
+            bool invoked_form_gui=false
         );
 
         /**
@@ -170,7 +178,8 @@ namespace OGF {
          * \param[in] classname the class name of the object to create,
          *  as a string, with the "OGF::" prefix
          * \param[in] name the name of the object in the SceneGraph. If no 
-	 *  name is specified, then the created object will be given a default name.
+	 *  name is specified, then the created object will be 
+         *  given a default name.
          * \return a pointer to the created object
          */
         Grob* create_object(

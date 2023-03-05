@@ -313,7 +313,8 @@ namespace OGF {
     }
 
     Grob* SceneGraph::load_object(
-        const FileName& file_name_in, const std::string& type
+        const FileName& file_name_in, const std::string& type,
+        bool invoked_from_gui
     ) {
                 
         std::string file_name = file_name_in;
@@ -380,7 +381,8 @@ namespace OGF {
             
             result = create_object(class_names[i]);
             enable_signals();
-	    //   Commented-out, causes problems under Ubuntu: triggers a GUI draw from
+	    //   Commented-out, causes problems under Ubuntu:
+            // triggers a GUI draw from
 	    // a GUI draw (to be investigated...)
             // Logger::status() << "Loading object:" << base_name << std::endl;
             result->rename(base_name);
@@ -406,16 +408,24 @@ namespace OGF {
             interpreter()->add_to_history(out.str());
         }
 
+        if(invoked_from_gui) {
+            const std::string dir = FileSystem::dir_name(file_name);
+            if( FileSystem::is_directory(dir) ) {
+                FileSystem::set_current_working_directory(dir);
+            }
+        }
+        
         return result;
     }
 
     void SceneGraph::load_objects(
-        const std::string& file_names_str, const std::string& type
+        const std::string& file_names_str, const std::string& type,
+        bool invoked_from_gui
     ) {
         std::vector<std::string> file_names;
         String::split_string(file_names_str, ';', file_names);
         for(unsigned int i=0; i<file_names.size(); i++) {
-            load_object(file_names[i],type);
+            load_object(file_names[i],type,invoked_from_gui);
         }
     }
 
@@ -447,7 +457,9 @@ namespace OGF {
 	return true;
     }
 
-    Grob* SceneGraph::create_object(const GrobClassName& class_name_in, const std::string& name) {
+    Grob* SceneGraph::create_object(
+        const GrobClassName& class_name_in, const std::string& name
+    ) {
 	std::string class_name = class_name_in;
         if(class_name == "OGF::SceneGraph") {
             Logger::err("SceneGraph")
@@ -604,9 +616,7 @@ namespace OGF {
         return true;
     }
 
-    bool SceneGraph::save_viewer_properties(
-	const std::string& filename
-    ) {
+    bool SceneGraph::save_viewer_properties(const std::string& filename) {
 	bool result = true;
 	try {
 	    OutputGraphiteFile out(filename);

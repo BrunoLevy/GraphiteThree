@@ -92,37 +92,36 @@ namespace OGF {
 	shader->set_property("painting","ATTRIBUTE");
 	shader->set_property("attribute", attribute_name);
 
-	if(first_time) {
+        MeshElementsFlags where;
+        std::string attr_name;
+        index_t component;
+        if(
+            !Mesh::parse_attribute_name(
+                attribute_name, where, attr_name, component
+            )
+        ) {
+            return;
+        }
 
-            MeshElementsFlags where;
-            std::string attr_name;
-            index_t component;
-            if(
-                !Mesh::parse_attribute_name(
-                    attribute_name, where, attr_name, component
-                )
-            ) {
-                return;
-            }
+        MeshSubElementsStore& elts =
+            mesh_grob()->get_subelements_by_type(where);
 
-            MeshSubElementsStore& elts =
-                mesh_grob()->get_subelements_by_type(where);
+        AttributeStore* store = elts.attributes().find_attribute_store(
+            attr_name
+        );
 
-            AttributeStore* store = elts.attributes().find_attribute_store(
-                attr_name
-            );
+        bool is_bool = store->elements_type_matches(
+            typeid(Numeric::uint8).name()
+        );
 
-            bool is_bool = store->elements_type_matches(
-                typeid(Numeric::uint8).name()
-            );
-
-            bool is_integer = store->elements_type_matches(
-                typeid(Numeric::uint32).name()
+        bool is_integer = store->elements_type_matches(
+               typeid(Numeric::uint32).name()
             ) || store->elements_type_matches(
-                typeid(Numeric::int32).name()
-            );
+               typeid(Numeric::int32).name()
+            ) ;
             
-            
+        
+	if(first_time) {
 	    shader->invoke_method("autorange");
 	    if(
                 !is_bool && !is_integer && 
@@ -137,9 +136,22 @@ namespace OGF {
             shader->set_property(
                 "colormap",
                 colormap + ";true;0;false;" + smooth
-                // "plasma;true;0;false;false;"
             );
 	}
+
+        if(is_bool && attr_name == "selection") {
+            index_t nb_selected  = 0;
+            Attribute<bool> selection(
+                mesh_grob()->get_subelements_by_type(where).attributes(),
+                attr_name
+            );
+            for(index_t i=0; i<selection.size(); ++i) {
+                ++nb_selected;
+            }
+            Logger::out("Selection") << " selected elements:"
+                                     << nb_selected << " / " << selection.size()
+                                     << std::endl;
+        }
     }
 
     void MeshGrobCommands::show_charts(const std::string& attribute) {

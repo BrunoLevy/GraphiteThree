@@ -452,33 +452,6 @@ namespace OGF {
         );
         
         show_facets_selection();
-
-        // For debugging
-        {
-            Attribute<double> tex_coord;
-            tex_coord.bind_if_is_defined(
-                mesh_grob()->facet_corners.attributes(), "tex_coord"
-            );
-            if(!tex_coord.is_bound()) {
-                tex_coord.create_vector_attribute(
-                    mesh_grob()->facet_corners.attributes(), "tex_coord",2
-                );
-            }
-            for(index_t f:mesh_grob()->facets) {
-                index_t c1 = mesh_grob()->facets.corners_begin(f);
-                index_t c2 = c1+1;
-                index_t c3 = c2+1;
-                tex_coord[2*c1  ] = 0.0;
-                tex_coord[2*c1+1] = 0.0;
-
-                tex_coord[2*c2  ] = 1.0;
-                tex_coord[2*c2+1] = 0.0;                
-
-                tex_coord[2*c3  ] = 0.0;
-                tex_coord[2*c3+1] = 1.0;                
-            }
-        }
-        
         mesh_grob()->update();
     }
     
