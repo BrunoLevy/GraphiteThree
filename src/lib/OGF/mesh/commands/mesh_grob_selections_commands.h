@@ -134,13 +134,29 @@ namespace OGF {
 
 
         /**
+         * \brief Selects facets with zero-area
+         * \param[in] add_to_selection if set, do not clear selection
+         * \menu Facets
+         */
+        void select_degenerate_facets(bool add_to_selection=false);
+        
+        /**
          * \brief Selects facets that have an intersection with another
          *  facet of the same mesh.
+         * \param[in] add_to_selection if set, do not clear selection
          * \param test_adjacent_facets test also pairs of facets 
          *  that share an edge or a vertex
          * \menu Facets
          */
-        void select_intersecting_facets(bool test_adjacent_facets=true);
+        void select_intersecting_facets(
+            bool add_to_selection=false, bool test_adjacent_facets=true
+        );
+
+        /**
+         * \brief Selects facets that have all their vertices selected
+         * \menu Facets
+         */
+        void select_facets_from_vertices_selection();
         
         /**
          * \menu Cells

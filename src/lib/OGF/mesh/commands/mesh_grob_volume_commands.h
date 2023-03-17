@@ -73,16 +73,22 @@ namespace OGF {
          * \brief Fills a closed surface mesh with tetrahedra, using tetgen.
          * \param[in] preprocess Tentatively fix degeneracies 
          *  in the input mesh
+         * \param[in] epsilon if preprocess is set, tolerance for merging
+         *  vertices, in percent of bbox diagonal
+         * \param[in] max_hole_area if preprocess is set, tolerance for filling
+         *  holes, in percent of total surface area
          * \param[in] refine Create additional vertices to improve quality.
          * \param[in] quality 1.0 for high quality, 5.0 for low quality.
          * \param[in] verbose enables tetgen statistics and messages.
          */
         void tet_meshing(
             bool preprocess=false,
-            bool refine=true,
+            double epsilon=0.001,
+            double max_hole_area=0.01,
+            bool refine=false,
             double quality=1.0,
-            bool verbose=false,
-	    bool keep_regions=false
+	    bool keep_regions=false,
+            bool verbose=false
         );
 
        /*********************************************************************/

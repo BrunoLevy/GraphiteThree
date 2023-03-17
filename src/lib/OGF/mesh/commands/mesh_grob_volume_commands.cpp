@@ -182,18 +182,35 @@ namespace OGF {
     }
     
     void MeshGrobVolumeCommands::tet_meshing(
-        bool preprocess, bool refine, double quality,
-	bool verbose, bool keep_regions
+        bool preprocess, 
+        double epsilon, double max_hole_area,
+        bool refine, double quality,
+        bool keep_regions, 
+	bool verbose
     ) {
         CmdLine::set_arg("dbg:tetgen",verbose);        
         mesh_grob()->cells.clear();
         mesh_grob()->vertices.remove_isolated();
-        mesh_tetrahedralize(
-	    *mesh_grob(), preprocess, refine, quality, keep_regions
-	);
+        
+        MeshTetrahedralizeParameters params;
+        params.preprocess = preprocess;
+        params.preprocess_merge_vertices_epsilon = epsilon;
+        params.preprocess_fill_hole_max_area = max_hole_area;
+        params.refine = refine;
+        params.refine_quality = quality;
+        params.keep_regions = keep_regions;
+        params.verbose = verbose;
+        
+        if(!mesh_tetrahedralize(*mesh_grob(), params)) {
+            show_attribute("facets.selection");
+            hide_vertices();
+            mesh_grob()->update();
+            return;
+        }
         if(mesh_grob()->cells.nb() != 0) {
             mesh_grob()->cells.compute_borders();
         }
+        show_mesh();
         mesh_grob()->update();
     }
     

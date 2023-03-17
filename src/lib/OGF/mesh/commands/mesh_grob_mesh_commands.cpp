@@ -39,6 +39,7 @@
 #include <OGF/mesh/commands/mesh_grob_mesh_commands.h>
 #include <geogram/mesh/mesh_topology.h>
 #include <geogram/mesh/mesh_geometry.h>
+#include <geogram/mesh/mesh_repair.h>
 
 namespace OGF {
     
@@ -219,6 +220,42 @@ namespace OGF {
 	    p[2] = zmin + scale[2] * (p[2] - mesh_xyz_min[2]);		
 	}
 	mesh_grob()->update();
+    }
+
+    void MeshGrobMeshCommands::append(
+        const MeshGrobName& other
+    ) {
+        MeshGrob* M = MeshGrob::find(scene_graph(), other);
+        if(M == mesh_grob()) {
+            Logger::err("MeshGrob") << "Cannot append mesh to itself"
+                                    << std::endl;
+        }
+        index_t dim = std::max(
+            M->vertices.dimension(),
+            mesh_grob()->vertices.dimension()
+        );
+        mesh_grob()->vertices.set_dimension(dim);
+        index_t new_v = mesh_grob()->vertices.create_vertices(M->vertices.nb());
+        for(index_t v: M->vertices) {
+            for(index_t c=0; c<M->vertices.dimension(); ++c) {
+                mesh_grob()->vertices.point_ptr(new_v + v)[c] =
+                    M->vertices.point_ptr(v)[c];
+            }
+        }
+        for(index_t f: M->facets) {
+            index_t N = M->facets.nb_vertices(f);
+            index_t new_f = mesh_grob()->facets.create_polygon(N);
+            for(index_t lv=0; lv<N; ++lv) {
+                index_t v = M->facets.vertex(f,lv);
+                mesh_grob()->facets.set_vertex(new_f, lv, new_v+v);
+            }
+        }
+
+        mesh_repair(*mesh_grob());
+
+        // TODO: cells
+        
+        mesh_grob()->update();
     }
     
 

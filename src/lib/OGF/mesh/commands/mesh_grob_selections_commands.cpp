@@ -419,16 +419,59 @@ namespace OGF {
         hide_vertices();
     }
 
-    void MeshGrobSelectionsCommands::select_intersecting_facets(
-        bool test_adjacent_facets
+    void MeshGrobSelectionsCommands::select_degenerate_facets(
+        bool add_to_selection
     ) {
         Attribute<bool> sel(mesh_grob()->facets.attributes(),"selection");
-        for(index_t f:mesh_grob()->facets) {
-            sel[f] = false;
+        if(!add_to_selection) {
+            for(index_t f:mesh_grob()->facets) {
+                sel[f] = false;
+            }
         }
 
+        bool has_degenerate_facets = false;
+        
+        for(index_t f: mesh_grob()->facets) {
+            bool degenerate = true;
+            index_t N = mesh_grob()->facets.nb_vertices(f);
+            for(index_t li=0; li<N; ++li) {
+                index_t i = mesh_grob()->facets.vertex(f,li);
+                vec3 p1(mesh_grob()->vertices.point_ptr(i));
+                for(index_t lj=li+1; lj<N; ++lj) {
+                    index_t j = mesh_grob()->facets.vertex(f,lj);
+                    vec3 p2(mesh_grob()->vertices.point_ptr(j));
+                    for(index_t lk=lj+1; lk<N; ++lk) {
+                        index_t k = mesh_grob()->facets.vertex(f,lk);
+                        vec3 p3(mesh_grob()->vertices.point_ptr(k));
+                        degenerate = degenerate && PCK::aligned_3d(p1,p2,p3);
+                        has_degenerate_facets = has_degenerate_facets || degenerate;
+                    }
+                }
+            }
+            sel[f] = sel[f] || degenerate;
+        }
+        show_facets_selection();
+        if(has_degenerate_facets) {
+            show_vertices();
+        }
+        mesh_grob()->update();
+    }
+
+    
+    void MeshGrobSelectionsCommands::select_intersecting_facets(
+        bool add_to_selection, bool test_adjacent_facets
+    ) {
+        Attribute<bool> sel(mesh_grob()->facets.attributes(),"selection");
+        if(!add_to_selection) {
+            for(index_t f:mesh_grob()->facets) {
+                sel[f] = false;
+            }
+        }
+
+        bool has_intersections = false;
+        
         MeshFacetsAABB AABB(*mesh_grob());
-        vector<TriangleIsect> sym;
+        vector<std::pair<index_t, index_t> > candidates;
         AABB.compute_facet_bbox_intersections(
             [&](index_t f1, index_t f2) {
                 if(f1 == f2) {
@@ -444,14 +487,46 @@ namespace OGF {
                 ) {
                     return;
                 }
+                candidates.push_back(std::make_pair(f1,f2));
+            }
+        );
+
+        parallel_for(
+            0, candidates.size(),
+            [&](index_t i) {
+                index_t f1 = candidates[i].first;
+                index_t f2 = candidates[i].second;                
                 if(mesh_facets_have_intersection(*mesh_grob(), f1, f2)) {
                     sel[f1] = true;
                     sel[f2] = true;
+                    has_intersections = true;
                 }
             }
         );
-        
+
         show_facets_selection();
+        if(has_intersections) {
+            show_vertices();
+        }
+        mesh_grob()->update();
+    }
+
+    void MeshGrobSelectionsCommands::select_facets_from_vertices_selection() {
+        Attribute<bool> sel(mesh_grob()->facets.attributes(),"selection");
+        Attribute<bool> vsel(mesh_grob()->vertices.attributes(),"selection");
+        for(index_t f: mesh_grob()->facets) {
+            bool f_is_selected = true;
+            for(index_t lv=0; lv<mesh_grob()->facets.nb_vertices(f); ++lv) {
+                f_is_selected =
+                    f_is_selected && vsel[mesh_grob()->facets.vertex(f,lv)];
+                if(!f_is_selected) {
+                    break;
+                }
+            }
+            sel[f] = f_is_selected;
+        }
+        show_attribute("facets.selection");
+        hide_vertices();
         mesh_grob()->update();
     }
     

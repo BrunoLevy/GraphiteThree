@@ -148,6 +148,15 @@ namespace OGF {
 	    bool uniform = true
 	);
 
+
+        /**
+         * \brief Appends a surface mesh to this mesh. Note: for now,
+         *  only works for surfaces, and does not append attributes
+         *  (TODO...)
+         */
+        void append(
+            const MeshGrobName& other
+        );
 	
     };
 }

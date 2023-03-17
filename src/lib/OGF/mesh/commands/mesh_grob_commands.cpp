@@ -78,19 +78,6 @@ namespace OGF {
 	) {
 	    return;
 	}
-	
-	std::string shd_painting;
-	std::string shd_attribute;
-	shader->get_property("painting",shd_painting);
-	shader->get_property("attribute",shd_attribute);
-	
-	bool first_time = (
-	    shd_painting != "ATTRIBUTE" ||
-	    shd_attribute != attribute_name
-	);
-	
-	shader->set_property("painting","ATTRIBUTE");
-	shader->set_property("attribute", attribute_name);
 
         MeshElementsFlags where;
         std::string attr_name;
@@ -110,6 +97,24 @@ namespace OGF {
             attr_name
         );
 
+        if(store == nullptr) {
+            return;
+        }
+        
+	std::string shd_painting;
+	std::string shd_attribute;
+	shader->get_property("painting",shd_painting);
+	shader->get_property("attribute",shd_attribute);
+	
+	bool first_time = (
+	    shd_painting != "ATTRIBUTE" ||
+	    shd_attribute != attribute_name
+	);
+	
+	shader->set_property("painting","ATTRIBUTE");
+	shader->set_property("attribute", attribute_name);
+
+        
         bool is_bool = store->elements_type_matches(
             typeid(Numeric::uint8).name()
         );
