@@ -42,6 +42,7 @@
 #include <geogram/mesh/mesh_geometry.h>
 #include <geogram/mesh/mesh_AABB.h>
 #include <geogram/mesh/mesh_intersection.h>
+#include <geogram/mesh/mesh_repair.h>
 #include <geogram/numerics/predicates.h>
 #include <geogram/points/colocate.h>
 
@@ -528,6 +529,25 @@ namespace OGF {
         show_attribute("facets.selection");
         hide_vertices();
         mesh_grob()->update();
+    }
+
+    void MeshGrobSelectionsCommands::select_duplicated_facets() {
+        Mesh M;
+        M.copy(*mesh_grob());
+        Attribute<index_t> orig_facet(M.facets.attributes(), "orig_facet");
+        for(index_t f: M.facets) {
+            orig_facet[f] = f;
+        }
+        mesh_repair(M, MESH_REPAIR_DUP_F);
+        Attribute<bool> selection(mesh_grob()->facets.attributes(), "selection");
+        for(index_t f: mesh_grob()->facets) {
+            selection[f] = true;
+        }
+        for(index_t f: M.facets) {
+            selection[orig_facet[f]] = false;
+        }
+        show_facets_selection();        
+	mesh_grob()->update();
     }
     
     void MeshGrobSelectionsCommands::show_cells_selection() {

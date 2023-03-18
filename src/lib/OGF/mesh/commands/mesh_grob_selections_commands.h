@@ -153,6 +153,13 @@ namespace OGF {
         );
 
         /**
+         * \brief For each set of duplicated facet, select one facet of
+         *  the set.
+         * \menu Facets
+         */
+        void select_duplicated_facets();
+        
+        /**
          * \brief Selects facets that have all their vertices selected
          * \menu Facets
          */
