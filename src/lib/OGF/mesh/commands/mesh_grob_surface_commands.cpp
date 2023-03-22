@@ -54,7 +54,7 @@
 #include <geogram/mesh/mesh_fill_holes.h>
 #include <geogram/mesh/mesh_remesh.h>
 #include <geogram/mesh/mesh_geometry.h>
-#include <geogram/mesh/mesh_intersection.h>
+#include <geogram/mesh/mesh_surface_intersection.h>
 #include <geogram/mesh/mesh_decimate.h>
 #include <geogram/mesh/mesh_AABB.h>
 #include <geogram/mesh/mesh_subdivision.h>
@@ -72,7 +72,7 @@ namespace {
     using namespace OGF;
 
     /**
-     * \brief Post-processes the result of a boolean operation.
+     * \brief Pre or post-processes the result of a boolean operation.
      * \details Triangulates the facets, collapses the small edges
      *  and removes self-intersections.
      */

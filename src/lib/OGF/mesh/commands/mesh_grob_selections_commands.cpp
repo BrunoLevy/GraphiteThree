@@ -38,10 +38,9 @@
 #include <OGF/mesh/commands/mesh_grob_selections_commands.h>
 #include <OGF/mesh/commands/filter.h>
 #include <OGF/mesh/shaders/mesh_grob_shader.h>
-#include <geogram/mesh/triangle_intersection.h>
+#include <geogram/mesh/mesh_surface_intersection.h>
 #include <geogram/mesh/mesh_geometry.h>
 #include <geogram/mesh/mesh_AABB.h>
-#include <geogram/mesh/mesh_intersection.h>
 #include <geogram/mesh/mesh_repair.h>
 #include <geogram/numerics/predicates.h>
 #include <geogram/points/colocate.h>

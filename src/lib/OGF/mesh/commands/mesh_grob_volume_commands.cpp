@@ -42,7 +42,7 @@
 #include <geogram/mesh/mesh_repair.h>
 #include <geogram/mesh/mesh_preprocessing.h>
 #include <geogram/mesh/mesh_geometry.h>
-#include <geogram/mesh/mesh_intersection.h>
+#include <geogram/mesh/mesh_surface_intersection.h>
 #include <geogram/mesh/mesh_reorder.h>
 #include <geogram/mesh/mesh_repair.h>
 #include <geogram/delaunay/delaunay.h>

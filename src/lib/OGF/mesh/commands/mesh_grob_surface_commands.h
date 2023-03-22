@@ -246,7 +246,7 @@ namespace OGF {
        /**********************************************************/
 
         /**
-	  * \menu Boolean operations (experimental)
+	  * \menu Boolean operations
 	  * \brief Computes the union between two meshes.
           * \param[in] other name of the other mesh
           * \param[in] result name of the result mesh
@@ -259,12 +259,12 @@ namespace OGF {
 	    const MeshGrobName& other,
 	    const NewMeshGrobName& result = "result",
 	    bool pre_process=false,	    
-	    bool post_process=true
+	    bool post_process=false
         );
 
 
         /**
-	  * \menu Boolean operations (experimental)
+	  * \menu Boolean operations
 	  * \brief Computes the intersection between two meshes.
           * \param[in] other name of the other mesh
           * \param[in] result name of the result mesh
@@ -277,11 +277,11 @@ namespace OGF {
 	    const MeshGrobName& other,
 	    const NewMeshGrobName& result = "result",
 	    bool pre_process=false,
-	    bool post_process=true	    
+	    bool post_process=false	    
         );
 
         /**
-	  * \menu Boolean operations (experimental)
+	  * \menu Boolean operations
 	  * \brief Computes the difference between two meshes.
           * \param[in] other name of the other mesh
           * \param[in] result name of the result mesh
@@ -294,7 +294,7 @@ namespace OGF {
 	    const MeshGrobName& other,
 	    const NewMeshGrobName& result = "result",
 	    bool pre_process=false,
-	    bool post_process=true	    
+	    bool post_process=false	    
         );
 
 
