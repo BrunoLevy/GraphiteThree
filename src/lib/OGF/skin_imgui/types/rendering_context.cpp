@@ -82,7 +82,7 @@ namespace OGF {
 	draw_unit_textured_quad();
 	GEO_CHECK_GL();	    	    	    
 	FBO_.unbind();
-	glEnable(GL_DEPTH_TEST);	    	    
+	glEnable(GL_DEPTH_TEST);
     }
 
     void SkinImGUIRenderingContext::snapshot(Image* image, bool make_current) {

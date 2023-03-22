@@ -681,81 +681,83 @@ function text_editor_gui.tooltip(args)
   if obj == nil then
     local strval = interp.eval_string(args.context)
     if strval ~= '' then
-       imgui.BeginTooltip()
-       if strval ~= args.context and
-          strval ~= '\''..args.context..'\'' then
-	     text_editor_gui.Text(args.context .. '=' .. strval)
-       else
-	     text_editor_gui.Text(strval)       
+       if imgui.BeginTooltip() then
+          if strval ~= args.context and
+             strval ~= '\''..args.context..'\'' then
+	        text_editor_gui.Text(args.context .. '=' .. strval)
+          else
+	        text_editor_gui.Text(strval)       
+          end
+          imgui.EndTooltip()
        end
-       imgui.EndTooltip()
     end
     return
   end
   local mclass = obj.meta_class
-  imgui.BeginTooltip()
-  if mclass.name == 'OGF::Request' then
-     local rq_obj = obj.object()
-     local mmethod = obj.method()
-     text_editor_gui.Text_title(
-       rq_obj.meta_class.name .. '::' .. mmethod.name .. '()'
-     )
-     text_editor_gui.show_help(mmethod)
-     if mmethod.nb_args() ~= 0 then
-        imgui.Separator()
-     end	
-     for i=0,mmethod.nb_args()-1 do
-        text_editor_gui.Text('  '..mmethod.ith_arg_name(i))
-	imgui.SameLine()
-	text_editor_gui.Text_keyword(' : ' .. mmethod.ith_arg_type_name(i))
-	if mmethod.ith_arg_has_custom_attribute(i, 'help') then
-           text_editor_gui.Text_comment(
-   	      '    '..mmethod.ith_arg_custom_attribute_value(i,'help')
-	   )
-	end
-     end
-  elseif mclass.is_a(gom.resolve_meta_type('OGF::Callable')) then
-     imgui.Text('builtin or function')
-  else
-     text_editor_gui.Text_title(mclass.name)
-     text_editor_gui.show_help(mclass)
-     imgui.Separator()
-     imgui.BeginGroup()
-     text_editor_gui.Text_section('gom_slots')
-     for i=0,mclass.nb_slots()-1 do
-        text_editor_gui.Text('  '..mclass.ith_slot(i).name..'()')
-     end
-     imgui.EndGroup()
-     imgui.SameLine()
-     imgui.Text('  ')
-     imgui.SameLine()     
-     imgui.BeginGroup()
-     text_editor_gui.Text_section('gom_properties')     
-     for i=0,mclass.nb_properties()-1 do
-        local propname = mclass.ith_property(i).name
-	local proptype = mclass.ith_property(i).type_name()
-	local propval
-	if proptype:sub(-1) == '*' then
-	   propval = '<pointer>'
-	elseif proptype == 'std::string' then
-	   propval = tostring(obj[propname])
-	   if propval == '' then
-              propval = '<emptystring>'
-	   else
-              propval = '\''..propval..'\''	   
+  if imgui.BeginTooltip() then
+     if mclass.name == 'OGF::Request' then
+        local rq_obj = obj.object()
+        local mmethod = obj.method()
+        text_editor_gui.Text_title(
+          rq_obj.meta_class.name .. '::' .. mmethod.name .. '()'
+        )
+        text_editor_gui.show_help(mmethod)
+        if mmethod.nb_args() ~= 0 then
+           imgui.Separator()
+        end	
+        for i=0,mmethod.nb_args()-1 do
+           text_editor_gui.Text('  '..mmethod.ith_arg_name(i))
+	   imgui.SameLine()
+	   text_editor_gui.Text_keyword(' : ' .. mmethod.ith_arg_type_name(i))
+	   if mmethod.ith_arg_has_custom_attribute(i, 'help') then
+              text_editor_gui.Text_comment(
+   	         '    '..mmethod.ith_arg_custom_attribute_value(i,'help')
+	      )
 	   end
-	else
-	   propval = tostring(obj[propname])	
-	end
-        text_editor_gui.Text('  '..propname)
-	imgui.SameLine()
-	text_editor_gui.Text_keyword(' : '..proptype)
-	imgui.SameLine()
-	text_editor_gui.Text_comment(' = '..propval)
+        end
+     elseif mclass.is_a(gom.resolve_meta_type('OGF::Callable')) then
+        imgui.Text('builtin or function')
+     else
+        text_editor_gui.Text_title(mclass.name)
+        text_editor_gui.show_help(mclass)
+        imgui.Separator()
+        imgui.BeginGroup()
+        text_editor_gui.Text_section('gom_slots')
+        for i=0,mclass.nb_slots()-1 do
+           text_editor_gui.Text('  '..mclass.ith_slot(i).name..'()')
+        end
+        imgui.EndGroup()
+        imgui.SameLine()
+        imgui.Text('  ')
+        imgui.SameLine()     
+        imgui.BeginGroup()
+        text_editor_gui.Text_section('gom_properties')     
+        for i=0,mclass.nb_properties()-1 do
+           local propname = mclass.ith_property(i).name
+	   local proptype = mclass.ith_property(i).type_name()
+	   local propval
+	   if proptype:sub(-1) == '*' then
+	      propval = '<pointer>'
+	   elseif proptype == 'std::string' then
+	      propval = tostring(obj[propname])
+	      if propval == '' then
+                 propval = '<emptystring>'
+	      else
+                 propval = '\''..propval..'\''	   
+	      end
+	   else
+	      propval = tostring(obj[propname])	
+	   end
+           text_editor_gui.Text('  '..propname)
+	   imgui.SameLine()
+	   text_editor_gui.Text_keyword(' : '..proptype)
+	   imgui.SameLine()
+	   text_editor_gui.Text_comment(' = '..propval)
+        end
+        imgui.EndGroup()     
      end
-     imgui.EndGroup()     
+     imgui.EndTooltip()
   end
-  imgui.EndTooltip()
 end
 
 graphite_main_window.add_module(text_editor_gui)

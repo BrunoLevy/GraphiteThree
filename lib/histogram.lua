@@ -227,13 +227,14 @@ function Stats.selection_handler()
 	 Stats.dragging = true
       end
       if hovering_histo then
-         imgui.BeginTooltip()
-         imgui.Text(
-	     string.format('value: %0.3f',Stats.index_to_val(mi)) ..
-	     '\nnb samples: ' ..
-	     tostring(Stats.histo[mi])
-	 )
-         imgui.EndTooltip()      
+         if imgui.BeginTooltip() then
+            imgui.Text(
+	       string.format('value: %0.3f',Stats.index_to_val(mi)) ..
+	       '\nnb samples: ' ..
+	       tostring(Stats.histo[mi])
+	    )
+            imgui.EndTooltip()
+         end
       end
    end
    if Stats.sel1 ~= Stats.sel2 then
