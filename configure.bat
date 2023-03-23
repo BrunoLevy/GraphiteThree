@@ -47,7 +47,7 @@ if exist "geogram\CMakeOptions.txt" (
    ECHO "Using user-supplied CMakeOptions.txt in geogram"
 ) else (
    ECHO "Using Graphite default CMakeOptions.txt in geogram"
-   copy "geogram\CMakeOptions.txt.graphite" "geogram\CMakeOptions.txt"
+   copy "geogram\cmake\options\CMakeOptions.txt.graphite" "geogram\CMakeOptions.txt"
 )
 
 ECHO ----------------------------------------------------------------
