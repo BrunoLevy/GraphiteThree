@@ -56,7 +56,7 @@ def compute_linear_system(H,b):
    # Get the Laguerre diagram (RVD) as a triangulation
    OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')  
    RVD.I.Surface.triangulate()
-   RVD.I.Surface.merge_vertices() 
+   RVD.I.Surface.merge_vertices(1e-10)
 
    # vertex v's coordinates are XYZ[v][0], XYZ[v][1]
    XYZ   = numpy.asarray(RVD.I.Editor.find_attribute('vertices.point'))

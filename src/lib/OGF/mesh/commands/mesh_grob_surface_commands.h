@@ -106,7 +106,7 @@ namespace OGF {
          * \param [in] epsilon Tolerance for merging vertices, 
          *  in % of bbox diagonal.
          */
-        void merge_vertices(double epsilon = 1e-6);
+        void merge_vertices(double epsilon = 0.0);
         
        /**********************************************************/
 
@@ -297,7 +297,28 @@ namespace OGF {
 	    bool post_process=false	    
         );
 
+        /**
+	  * \menu Boolean operations
+	  * \brief Computes a boolean operation between two meshes
+          * \param[in] other name of the other mesh
+          * \param[in] result name of the result mesh
+          * \param[in] operation one of "A+B", "A*B", "A-B", "B-A"
+	  * \param[in] pre_process triangulate, inputs, remove small edges, 
+	  *  make sure there is no intersection
+	  * \param[in] post_process triangulate result, remove small edges, 
+	  *  make sure there is no intersection
+          */
+        gom_arg_attribute(operation, handler, "combo_box")
+        gom_arg_attribute(operation, values, "A+B;A*B;A-B;B-A")
+        void compute_boolean_operation(
+            const MeshGrobName& other,
+            const NewMeshGrobName& result = "result",
+            const std::string& operation = "A+B",
+	    bool pre_process=false,
+	    bool post_process=false	    
+        );
 
+        
        /**********************************************************/
 	
        /**

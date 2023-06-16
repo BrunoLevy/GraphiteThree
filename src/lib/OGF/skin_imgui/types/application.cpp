@@ -418,7 +418,6 @@ namespace OGF {
     }
 
     void Application::draw() {
-	update();
 	impl_->draw();
     }
 

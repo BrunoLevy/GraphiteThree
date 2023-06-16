@@ -70,7 +70,8 @@ namespace OGF {
 
         /**
          * \brief Initializes a voxel grob from an object box.
-         * \param[in] object name of the object to copy the bounding box from
+         * \param[in] object name of the object to copy the bounding box from, or
+         *  empty screen for unit box.
          * \param[in] nu number of cells along the U axis
          * \param[in] nv number of cells along the V axis
          * \param[in] nw number of cells along the W axis
@@ -136,6 +137,8 @@ namespace OGF {
 	/**
 	 * \brief Loads an attribute for a 32 bit floating point
 	 *    raw file.
+         * \param[in] filename a binary file with the attribute stored
+         *    as single-precision floats.
 	 */
 	void load_attribute(
 	    const std::string& attribute,

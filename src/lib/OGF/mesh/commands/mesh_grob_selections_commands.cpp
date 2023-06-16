@@ -260,7 +260,7 @@ namespace OGF {
                 for(index_t e: mesh_grob()->edges) {
                     if(
                         selection[mesh_grob()->edges.vertex(e,0)] ||
-                        selection[mesh_grob()->edges.vertex(e,0)]
+                        selection[mesh_grob()->edges.vertex(e,1)]
                     ) {
                         delete_e[e] = 1;
                     }

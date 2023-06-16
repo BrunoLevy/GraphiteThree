@@ -55,14 +55,24 @@ namespace OGF {
         index_t nv,
         index_t nw
     ) {
-        Grob* object = Grob::find(scene_graph(), object_name);
-        if(object == nullptr) {
-            Logger::err("VoxelGrob") << object_name << ": no such object"
-                                     << std::endl;
-            return;
-        }
+        Box3d bbox;
 
-        Box3d bbox = object->bbox();
+        if(object_name == "") {
+            bbox.xyz_min[0] = 0.0;
+            bbox.xyz_min[1] = 0.0;
+            bbox.xyz_min[2] = 0.0;
+            bbox.xyz_max[0] = 1.0;
+            bbox.xyz_max[1] = 1.0;
+            bbox.xyz_max[2] = 1.0;
+        } else {
+            Grob* object = Grob::find(scene_graph(), object_name);
+            if(object == nullptr) {
+                Logger::err("VoxelGrob") << object_name << ": no such object"
+                                         << std::endl;
+                return;
+            }
+            bbox = object->bbox();
+        }
 
         vec3 origin(bbox.x_min(), bbox.y_min(), bbox.z_min());
         vec3 U(bbox.x_max() - bbox.x_min(), 0.0, 0.0);

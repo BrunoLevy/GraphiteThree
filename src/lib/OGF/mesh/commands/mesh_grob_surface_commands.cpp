@@ -239,38 +239,11 @@ namespace OGF {
 	bool pre_process,
 	bool post_process
     ) {
-	MeshGrob* other = MeshGrob::find(scene_graph(), other_name);
-	if(other == nullptr) {
-	    Logger::err("Booleans") << other_name << ": no such MeshGrob"
-				    << std::endl;
-	    return;
-	}
-	if(other == mesh_grob()) {
-	    Logger::err("Booleans") << "Mesh and operand are the same"
-				    << std::endl;
-	    return;
-	}
-	if(!mesh_grob()->facets.are_simplices()) {
-	    Logger::err("Booleans") << "Mesh is not triangulated" << std::endl;
-	    return;
-	}
-	if(!other->facets.are_simplices()) {
-	    Logger::err("Booleans") << other_name << " is not triangulated"
-				    << std::endl;
-	    return;	    
-	}
-	MeshGrob* result = MeshGrob::find_or_create(scene_graph(), result_name);
-	if(pre_process) {
-	    fix_mesh_for_boolean_ops(mesh_grob());
-	    mesh_grob()->update();
-	    fix_mesh_for_boolean_ops(other);
-	    other->update();
-	}
-	mesh_union(*result, *mesh_grob(), *other);
-	if(post_process) {
-	    fix_mesh_for_boolean_ops(result);
-	}
-	result->update();
+        compute_boolean_operation(
+            other_name, result_name,
+            "A+B",
+            pre_process, post_process
+        );
     }
     
     void MeshGrobSurfaceCommands::compute_intersection(
@@ -279,38 +252,11 @@ namespace OGF {
 	bool pre_process,
 	bool post_process
     ) {
-	MeshGrob* other = MeshGrob::find(scene_graph(), other_name);
-	if(other == nullptr) {
-	    Logger::err("Booleans") << other_name << ": no such MeshGrob"
-				    << std::endl;
-	    return;
-	}
-	if(other == mesh_grob()) {
-	    Logger::err("Booleans") << "Mesh and operand are the same"
-				    << std::endl;
-	    return;
-	}
-	if(!mesh_grob()->facets.are_simplices()) {
-	    Logger::err("Booleans") << "Mesh is not triangulated" << std::endl;
-	    return;
-	}
-	if(!other->facets.are_simplices()) {
-	    Logger::err("Booleans") << other_name << " is not triangulated"
-				    << std::endl;
-	    return;	    
-	}
-	MeshGrob* result = MeshGrob::find_or_create(scene_graph(), result_name);
-	if(pre_process) {
-	    fix_mesh_for_boolean_ops(mesh_grob());
-	    mesh_grob()->update();
-	    fix_mesh_for_boolean_ops(other);
-	    other->update();
-	}
-	mesh_intersection(*result, *mesh_grob(), *other);
-	if(post_process) {
-	    fix_mesh_for_boolean_ops(result);
-	}
-	result->update();
+        compute_boolean_operation(
+            other_name, result_name,
+            "A*B",
+            pre_process, post_process
+        );
     }
 
     void MeshGrobSurfaceCommands::compute_difference(
@@ -318,6 +264,20 @@ namespace OGF {
 	const NewMeshGrobName& result_name,
 	bool pre_process,
 	bool post_process
+    ) {
+        compute_boolean_operation(
+            other_name, result_name,
+            "A-B",
+            pre_process, post_process
+        );
+    }
+
+    void MeshGrobSurfaceCommands::compute_boolean_operation(
+        const MeshGrobName& other_name,
+        const NewMeshGrobName& result_name,
+        const std::string& operation,
+        bool pre_process,
+        bool post_process
     ) {
 	MeshGrob* other = MeshGrob::find(scene_graph(), other_name);
 	if(other == nullptr) {
@@ -346,12 +306,13 @@ namespace OGF {
 	    fix_mesh_for_boolean_ops(other);
 	    other->update();
 	}
-	mesh_difference(*result, *mesh_grob(), *other);
+	mesh_boolean_operation(*result, *mesh_grob(), *other, operation);
 	if(post_process) {
 	    fix_mesh_for_boolean_ops(result);
 	}
 	result->update();
     }
+
     
     void MeshGrobSurfaceCommands::remesh_smooth(
         const NewMeshGrobName& surface_name_in,
