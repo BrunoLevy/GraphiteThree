@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['nlmemorytype_9227',['NLmemoryType',['../nl__blas_8h.html#a86140fb6ed607c43fb4cc407c89cd8d3',1,'nl_blas.h']]]
+  ['nlmemorytype_9037',['NLmemoryType',['../nl__blas_8h.html#a86140fb6ed607c43fb4cc407c89cd8d3',1,'nl_blas.h']]]
 ];

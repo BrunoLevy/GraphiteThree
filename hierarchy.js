@@ -32,12 +32,11 @@ var hierarchy =
       ] ],
       [ "GEO::AttributeBase< T >", "classGEO_1_1AttributeBase.html", [
         [ "GEO::Attribute< double >", "classGEO_1_1Attribute.html", null ],
-        [ "GEO::Attribute< GEO::Matrix >", "classGEO_1_1Attribute.html", null ],
         [ "GEO::Attribute< float >", "classGEO_1_1Attribute.html", null ],
         [ "GEO::Attribute< int >", "classGEO_1_1Attribute.html", null ],
+        [ "GEO::Attribute< const GEO::vec3HE * >", "classGEO_1_1Attribute.html", null ],
         [ "GEO::Attribute< index_t >", "classGEO_1_1Attribute.html", null ],
         [ "GEO::Attribute< GEOGen::SymbolicVertex >", "classGEO_1_1Attribute.html", null ],
-        [ "GEO::Attribute< GEO::vecng >", "classGEO_1_1Attribute.html", null ],
         [ "GEO::Attribute< T >", "classGEO_1_1Attribute.html", null ]
       ] ],
       [ "GEO::ScalarAttributeAdapterBase", "classGEO_1_1ScalarAttributeAdapterBase.html", [
@@ -46,15 +45,11 @@ var hierarchy =
       ] ],
       [ "OGF::NL::Vector", "classOGF_1_1NL_1_1Vector.html", null ]
     ] ],
-    [ "GEO::AxisPermutation", "structGEO_1_1AxisPermutation.html", null ],
     [ "GEO::basic_bindex< IndexType >", "structGEO_1_1basic__bindex.html", null ],
     [ "GEO::basic_quadindex< IndexType >", "structGEO_1_1basic__quadindex.html", null ],
     [ "GEO::basic_trindex< IndexType >", "structGEO_1_1basic__trindex.html", null ],
     [ "OGF::BasicFactories< T >", "classOGF_1_1BasicFactories.html", null ],
     [ "OGF::BasicFactoriesWithArg< T, ARG >", "classOGF_1_1BasicFactoriesWithArg.html", null ],
-    [ "GEO::Basis3d", "structGEO_1_1Basis3d.html", null ],
-    [ "GEO::BBox", "structGEO_1_1BBox.html", null ],
-    [ "GEO::BBox1", "structGEO_1_1BBox1.html", null ],
     [ "GEO::BinaryStream", "classGEO_1_1BinaryStream.html", [
       [ "GEO::BinaryInputStream", "classGEO_1_1BinaryInputStream.html", null ],
       [ "GEO::BinaryOutputStream", "classGEO_1_1BinaryOutputStream.html", null ]
@@ -66,14 +61,13 @@ var hierarchy =
     ] ],
     [ "GEO::Box2d", "classGEO_1_1Box2d.html", null ],
     [ "OGF::Box2d", "classOGF_1_1Box2d.html", null ],
-    [ "GEO::OptimalTransportMap::Callback", "classGEO_1_1OptimalTransportMap_1_1Callback.html", null ],
     [ "GEO::Cavity", "classGEO_1_1Cavity.html", null ],
     [ "GEO::CDTBase2d", "classGEO_1_1CDTBase2d.html", [
-      [ "GEO::CDT2d", "classGEO_1_1CDT2d.html", null ]
+      [ "GEO::CDT2d", "classGEO_1_1CDT2d.html", null ],
+      [ "GEO::MeshInTriangle", "classGEO_1_1MeshInTriangle.html", null ]
     ] ],
     [ "GEO::CellDescriptor", "structGEO_1_1CellDescriptor.html", null ],
     [ "GEO::CentroidalVoronoiTesselation", "classGEO_1_1CentroidalVoronoiTesselation.html", null ],
-    [ "GEO::Coeff", "structGEO_1_1Coeff.html", null ],
     [ "GEO::SimpleApplication::ColormapInfo", "structGEO_1_1SimpleApplication_1_1ColormapInfo.html", null ],
     [ "OGF::ColormapStyle", "structOGF_1_1ColormapStyle.html", null ],
     [ "GEO::ScalarAttributeAdapterBase::ConstAccessor", "classGEO_1_1ScalarAttributeAdapterBase_1_1ConstAccessor.html", null ],
@@ -81,7 +75,6 @@ var hierarchy =
     [ "GEOGen::ConvexCell", "classGEOGen_1_1ConvexCell.html", null ],
     [ "VBW::ConvexCell", "classVBW_1_1ConvexCell.html", null ],
     [ "GEOGen::ConvexCell::Corner", "classGEOGen_1_1ConvexCell_1_1Corner.html", null ],
-    [ "GEO::CoTan3D", "structGEO_1_1CoTan3D.html", null ],
     [ "GEO::Counted", "classGEO_1_1Counted.html", [
       [ "GEO::Factory< FactoryCreator1< Type, Param1 > >", "classGEO_1_1Factory.html", [
         [ "GEO::Factory1< Type, Param1 >", "classGEO_1_1Factory1.html", null ]
@@ -345,7 +338,7 @@ var hierarchy =
       [ "OGF::MetaInformation", "classOGF_1_1MetaInformation.html", null ]
     ] ],
     [ "GEO::CDTBase2d::DList", "structGEO_1_1CDTBase2d_1_1DList.html", null ],
-    [ "GEO::DynamicHBoxes", "structGEO_1_1DynamicHBoxes.html", null ],
+    [ "GEO::MeshInTriangle::Edge", "classGEO_1_1MeshInTriangle_1_1Edge.html", null ],
     [ "OGF::EdgeStyle", "structOGF_1_1EdgeStyle.html", null ],
     [ "OGF::TextUtils::Environment", "classOGF_1_1TextUtils_1_1Environment.html", null ],
     [ "std::exception", null, [
@@ -360,19 +353,13 @@ var hierarchy =
     ] ],
     [ "GEO::expansion", "classGEO_1_1expansion.html", null ],
     [ "GEO::expansion_nt", "classGEO_1_1expansion__nt.html", null ],
-    [ "GEO::FacetIntersect", "structGEO_1_1FacetIntersect.html", null ],
     [ "GEOGen::FacetSeed", "structGEOGen_1_1FacetSeed.html", null ],
     [ "GEOGen::FacetSeedMarking", "classGEOGen_1_1FacetSeedMarking.html", null ],
-    [ "GEO::FacetsExtraConnectivity", "structGEO_1_1FacetsExtraConnectivity.html", null ],
-    [ "GEO::FacetsExtraConnectivityWithInvalidFacets", "structGEO_1_1FacetsExtraConnectivityWithInvalidFacets.html", null ],
     [ "GEO::FactoryCreator0< Type >", "structGEO_1_1FactoryCreator0.html", null ],
     [ "GEO::FactoryCreator1< Type, Param1 >", "structGEO_1_1FactoryCreator1.html", null ],
-    [ "GEO::FF_param", "structGEO_1_1FF__param.html", null ],
-    [ "GEO::FFopt", "classGEO_1_1FFopt.html", null ],
     [ "OGF::File< T >", "classOGF_1_1File.html", null ],
     [ "GEO::MeshGfx::Filter", "structGEO_1_1MeshGfx_1_1Filter.html", null ],
     [ "OGF::Filter", "classOGF_1_1Filter.html", null ],
-    [ "GEO::Frame", "structGEO_1_1Frame.html", null ],
     [ "GEO::FrameBufferObject", "classGEO_1_1FrameBufferObject.html", null ],
     [ "GEO::FrameField", "classGEO_1_1FrameField.html", null ],
     [ "GEO::geo_declare_image_serializer< T >", "classGEO_1_1geo__declare__image__serializer.html", null ],
@@ -388,8 +375,6 @@ var hierarchy =
     [ "OGF::GomCodeGenerator", "classOGF_1_1GomCodeGenerator.html", null ],
     [ "GEO::MeshHalfedges::Halfedge", "structGEO_1_1MeshHalfedges_1_1Halfedge.html", null ],
     [ "GEOGen::RestrictedVoronoiDiagram< DIM >::HalfedgeAction< ACTION >", "classGEOGen_1_1RestrictedVoronoiDiagram_1_1HalfedgeAction.html", null ],
-    [ "GEO::HBoxes", "structGEO_1_1HBoxes.html", null ],
-    [ "GEO::HexdomParam", "structGEO_1_1HexdomParam.html", null ],
     [ "OGF::IconRepository", "classOGF_1_1IconRepository.html", null ],
     [ "GEO::ImageRasterizer", "classGEO_1_1ImageRasterizer.html", null ],
     [ "GLUP::ImmediateBuffer", "classGLUP_1_1ImmediateBuffer.html", null ],
@@ -397,9 +382,9 @@ var hierarchy =
     [ "GEO::PeriodicDelaunay3d::IncidentTetrahedra", "structGEO_1_1PeriodicDelaunay3d_1_1IncidentTetrahedra.html", null ],
     [ "GEO::InstanceRepo", "classGEO_1_1InstanceRepo.html", null ],
     [ "GEO::MeshFacetsAABB::Intersection", "structGEO_1_1MeshFacetsAABB_1_1Intersection.html", null ],
+    [ "GEO::IsectInfo", "structGEO_1_1IsectInfo.html", null ],
     [ "GEO::BinaryStream::ItemSize< N >", "structGEO_1_1BinaryStream_1_1ItemSize.html", null ],
     [ "GEO::NearestNeighborSearch::KeepInitialValues", "structGEO_1_1NearestNeighborSearch_1_1KeepInitialValues.html", null ],
-    [ "GEO::LinearLeastSquares", "classGEO_1_1LinearLeastSquares.html", null ],
     [ "GEO::LineInput", "classGEO_1_1LineInput.html", null ],
     [ "GEO::LocalFeatureSize", "classGEO_1_1LocalFeatureSize.html", null ],
     [ "GEO::LoggerClient", null, [
@@ -408,7 +393,6 @@ var hierarchy =
       ] ],
       [ "OGF::ApplicationBase::ApplicationBaseLoggerClient", "classOGF_1_1ApplicationBase_1_1ApplicationBaseLoggerClient.html", null ]
     ] ],
-    [ "LogTime", "structLogTime.html", null ],
     [ "GEO::lua_to< T >", "classGEO_1_1lua__to.html", null ],
     [ "GEO::lua_to< bool >", "classGEO_1_1lua__to_3_01bool_01_4.html", null ],
     [ "GEO::lua_to< const char * >", "classGEO_1_1lua__to_3_01const_01char_01_5_01_4.html", null ],
@@ -425,11 +409,7 @@ var hierarchy =
     [ "GLUP::MarchingCell", "classGLUP_1_1MarchingCell.html", null ],
     [ "GEO::Matrix< DIM, FT >", "classGEO_1_1Matrix.html", null ],
     [ "GLUP::MatrixStack::Matrix", "structGLUP_1_1MatrixStack_1_1Matrix.html", null ],
-    [ "GEO::Matrix< 10, double >", "classGEO_1_1Matrix.html", null ],
-    [ "GEO::Matrix< 4, double >", "classGEO_1_1Matrix.html", null ],
     [ "GEO::Matrix< 4, Numeric::float64 >", "classGEO_1_1Matrix.html", null ],
-    [ "GEO::MatrixM", "structGEO_1_1MatrixM.html", null ],
-    [ "GEO::MatrixMixedConstrainedSolver", "structGEO_1_1MatrixMixedConstrainedSolver.html", null ],
     [ "GLUP::MatrixStack", "classGLUP_1_1MatrixStack.html", null ],
     [ "GEO::Mesh", "classGEO_1_1Mesh.html", [
       [ "OGF::MeshGrob", "classOGF_1_1MeshGrob.html", null ]
@@ -457,10 +437,11 @@ var hierarchy =
       ] ],
       [ "GEO::MeshVertices", "classGEO_1_1MeshVertices.html", null ]
     ] ],
+    [ "GEO::MeshSurfaceIntersection", "classGEO_1_1MeshSurfaceIntersection.html", null ],
+    [ "GEO::MeshTetrahedralizeParameters", "structGEO_1_1MeshTetrahedralizeParameters.html", null ],
     [ "OGF::Meta", "classOGF_1_1Meta.html", null ],
     [ "OGF::ModuleMaker", "classOGF_1_1ModuleMaker.html", null ],
     [ "GEO::MorphoMath", "classGEO_1_1MorphoMath.html", null ],
-    [ "GEO::NaiveSparseMatrix", "structGEO_1_1NaiveSparseMatrix.html", null ],
     [ "OGF::Name< T, create >", "classOGF_1_1Name.html", null ],
     [ "OGF::Name< Colormap * >", "classOGF_1_1Name.html", null ],
     [ "OGF::Name< File< Image * > >", "classOGF_1_1Name.html", null ],
@@ -500,21 +481,12 @@ var hierarchy =
     [ "OGF::ogf_register_grob_tool< T1, T2 >", "classOGF_1_1ogf__register__grob__tool.html", null ],
     [ "OGF::ogf_register_grob_type< T >", "classOGF_1_1ogf__register__grob__type.html", null ],
     [ "OGF::ogf_register_grob_write_file_extension< T >", "classOGF_1_1ogf__register__grob__write__file__extension.html", null ],
-    [ "GEO::OptimalTransportMap", "classGEO_1_1OptimalTransportMap.html", [
-      [ "GEO::OptimalTransportMap2d", "classGEO_1_1OptimalTransportMap2d.html", null ],
-      [ "GEO::OptimalTransportMap3d", "classGEO_1_1OptimalTransportMap3d.html", null ],
-      [ "GEO::OptimalTransportMapOnSurface", "classGEO_1_1OptimalTransportMapOnSurface.html", null ]
-    ] ],
     [ "OGF::Overlay", "classOGF_1_1Overlay.html", null ],
     [ "GEO::PackedArrays", "classGEO_1_1PackedArrays.html", null ],
-    [ "std::pair", null, [
-      [ "GEO::IdPair", "structGEO_1_1IdPair.html", null ]
-    ] ],
     [ "GEO::ParamValidator", "classGEO_1_1ParamValidator.html", null ],
     [ "GEO::Periodic", "classGEO_1_1Periodic.html", [
       [ "GEO::PeriodicDelaunay3d", "classGEO_1_1PeriodicDelaunay3d.html", null ]
     ] ],
-    [ "GEO::PGPopt", "classGEO_1_1PGPopt.html", null ],
     [ "GEO::Plane", "structGEO_1_1Plane.html", null ],
     [ "GEO::Memory::PointAlignment< DIM >", "structGEO_1_1Memory_1_1PointAlignment.html", null ],
     [ "GEO::Memory::PointAlignment< 2 >", "structGEO_1_1Memory_1_1PointAlignment_3_012_01_4.html", null ],
@@ -524,8 +496,6 @@ var hierarchy =
     [ "GEO::Memory::PointAlignment< 8 >", "structGEO_1_1Memory_1_1PointAlignment_3_018_01_4.html", null ],
     [ "GEOGen::PointAllocator", "classGEOGen_1_1PointAllocator.html", null ],
     [ "OGF::PointStyle", "structOGF_1_1PointStyle.html", null ],
-    [ "GEO::Poly2d", "structGEO_1_1Poly2d.html", null ],
-    [ "GEO::Poly3d", "structGEO_1_1Poly3d.html", null ],
     [ "GEOGen::Polygon", "classGEOGen_1_1Polygon.html", null ],
     [ "GEOGen::RestrictedVoronoiDiagram< DIM >::PolygonAction< ACTION >", "classGEOGen_1_1RestrictedVoronoiDiagram_1_1PolygonAction.html", null ],
     [ "GEOGen::RestrictedVoronoiDiagram< DIM >::PolyhedronAction< ACTION >", "classGEOGen_1_1RestrictedVoronoiDiagram_1_1PolyhedronAction.html", null ],
@@ -540,6 +510,7 @@ var hierarchy =
       [ "GLUP::Context", "classGLUP_1_1Context.html", null ]
     ] ],
     [ "GEO::Quaternion", "classGEO_1_1Quaternion.html", null ],
+    [ "GEO::MeshSurfaceIntersection::RadialSort", "classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html", null ],
     [ "GEO::range< NO_ITERATOR >", "classGEO_1_1range.html", null ],
     [ "GEO::rational_nt", "classGEO_1_1rational__nt.html", null ],
     [ "GEO::Ray", "structGEO_1_1Ray.html", null ],
@@ -547,7 +518,6 @@ var hierarchy =
     [ "OGF::RayPick", "structOGF_1_1RayPick.html", null ],
     [ "GEO::Memory::aligned_allocator< T, ALIGN >::rebind< U >", "structGEO_1_1Memory_1_1aligned__allocator_1_1rebind.html", null ],
     [ "GEO::Factory< FactoryCreator >::RegisterCreator< ConcreteType >", "structGEO_1_1Factory_1_1RegisterCreator.html", null ],
-    [ "GEO::RemoveColMatrix", "structGEO_1_1RemoveColMatrix.html", null ],
     [ "GEOGen::RestrictedVoronoiDiagram< DIM >", "classGEOGen_1_1RestrictedVoronoiDiagram.html", null ],
     [ "GEO::RVDCallback", "classGEO_1_1RVDCallback.html", [
       [ "GEO::RVDPolygonCallback", "classGEO_1_1RVDPolygonCallback.html", null ],
@@ -593,7 +563,6 @@ var hierarchy =
     [ "GEO::SmartPointer< Tool >", "classGEO_1_1SmartPointer.html", null ],
     [ "GEO::SmartPointer< UnsharpMaskingImpl >", "classGEO_1_1SmartPointer.html", null ],
     [ "GEO::GLSL::Source", "classGEO_1_1GLSL_1_1Source.html", null ],
-    [ "GEO::SphericalHarmonicL4", "structGEO_1_1SphericalHarmonicL4.html", null ],
     [ "GLUP::StateVariableBase", "classGLUP_1_1StateVariableBase.html", [
       [ "GLUP::StateVariable< GLint >", "classGLUP_1_1StateVariable.html", null ],
       [ "GLUP::StateVariable< GLfloat >", "classGLUP_1_1StateVariable.html", null ],
@@ -608,22 +577,24 @@ var hierarchy =
     [ "GEO::SystemStopwatch", "classGEO_1_1SystemStopwatch.html", null ],
     [ "GEOGen::RestrictedVoronoiDiagram< DIM >::TetrahedronAction< ACTION >", "classGEOGen_1_1RestrictedVoronoiDiagram_1_1TetrahedronAction.html", null ],
     [ "GEO::TextEditor", "classGEO_1_1TextEditor.html", null ],
-    [ "GEO::TrFan", "structGEO_1_1TrFan.html", null ],
-    [ "GEO::TrFan::TrFanElt", "structGEO_1_1TrFan_1_1TrFanElt.html", null ],
-    [ "GEO::TrglGradient", "classGEO_1_1TrglGradient.html", null ],
     [ "GEOGen::ConvexCell::Triangle", "structGEOGen_1_1ConvexCell_1_1Triangle.html", null ],
     [ "VBW::Triangle", "structVBW_1_1Triangle.html", [
       [ "VBW::TriangleWithFlags", "structVBW_1_1TriangleWithFlags.html", null ]
     ] ],
     [ "GEOGen::RestrictedVoronoiDiagram< DIM >::TriangleAction< ACTION >", "classGEOGen_1_1RestrictedVoronoiDiagram_1_1TriangleAction.html", null ],
-    [ "GEO::UncenteredPCA3D", "structGEO_1_1UncenteredPCA3D.html", null ],
     [ "GLUP::UniformState", "structGLUP_1_1UniformState.html", null ],
     [ "UniformState", "structUniformState.html", null ],
     [ "GEO::VariableObserver", "classGEO_1_1VariableObserver.html", null ],
     [ "GEO::VariableObserverList", "classGEO_1_1VariableObserverList.html", null ],
+    [ "GEO::vec2HE", "structGEO_1_1vec2HE.html", null ],
+    [ "GEO::vec2HELexicoCompare", "classGEO_1_1vec2HELexicoCompare.html", null ],
+    [ "GEO::vec3HE", "structGEO_1_1vec3HE.html", null ],
+    [ "GEO::vec3HELexicoCompare", "classGEO_1_1vec3HELexicoCompare.html", null ],
+    [ "GEO::vec3HEProjectedLexicoCompare", "classGEO_1_1vec3HEProjectedLexicoCompare.html", null ],
     [ "GEO::vecng< DIM, T >", "classGEO_1_1vecng.html", null ],
     [ "GEO::vecng< 2, Numeric::float64 >", "classGEO_1_1vecng.html", null ],
     [ "GEO::vecng< 2, T >", "classGEO_1_1vecng_3_012_00_01T_01_4.html", null ],
+    [ "GEO::vecng< 3, expansion_nt >", "classGEO_1_1vecng.html", null ],
     [ "GEO::vecng< 3, Numeric::float64 >", "classGEO_1_1vecng.html", null ],
     [ "GEO::vecng< 3, T >", "classGEO_1_1vecng_3_013_00_01T_01_4.html", null ],
     [ "GEO::vecng< 4, Numeric::float32 >", "classGEO_1_1vecng.html", null ],
@@ -633,14 +604,11 @@ var hierarchy =
     [ "GEO::vecng< 4, T >", "classGEO_1_1vecng_3_014_00_01T_01_4.html", [
       [ "GEO::GenColor< T >", "classGEO_1_1GenColor.html", null ]
     ] ],
-    [ "GEO::vecng< 9, Numeric::float64 >", "classGEO_1_1vecng.html", null ],
     [ "std::vector< T >", null, [
       [ "GEO::vector< Primitive >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< double >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< coord_index_t >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< BOX >", "classGEO_1_1vector.html", null ],
-      [ "GEO::vector< GEO::vector< GEO::Coeff > >", "classGEO_1_1vector.html", null ],
-      [ "GEO::vector< GEO::Coeff >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< int >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< GEO::GeoFile::AttributeInfo >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< vec4 >", "classGEO_1_1vector.html", null ],
@@ -654,21 +622,21 @@ var hierarchy =
       [ "GEO::vector< ushort >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< VBW::TriangleWithFlags >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< GEOGen::Vertex >", "classGEO_1_1vector.html", null ],
+      [ "GEO::vector< GEO::MeshInTriangle::Vertex >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< Numeric::uint8 >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< signed_index_t >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< global_index_t >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< GEOGen::ConvexCell::Vertex >", "classGEO_1_1vector.html", null ],
+      [ "GEO::vector< GEO::MeshInTriangle::Edge >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< index_t >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< VBW::Triangle >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< GLUP::PrimitiveInfo >", "classGEO_1_1vector.html", null ],
-      [ "GEO::vector< GEO::TrFan::TrFanElt >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< thread_index_t >", "classGEO_1_1vector.html", null ],
-      [ "GEO::vector< GEO::vector< index_t > >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< GEO::vecng >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< OGF::Any >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< GLUP::VectorStateVariable >", "classGEO_1_1vector.html", null ],
+      [ "GEO::vector< std::pair< index_t, Sign > >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< std::pair< double, double > >", "classGEO_1_1vector.html", null ],
-      [ "GEO::vector< GEO::BBox >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< Arg >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< T >", "classGEO_1_1vector.html", null ],
       [ "GEO::vector< bool >", "classGEO_1_1vector_3_01bool_01_4.html", null ],
@@ -678,9 +646,9 @@ var hierarchy =
       [ "GEO::TypedThreadGroup< THREAD >", "classGEO_1_1TypedThreadGroup.html", null ]
     ] ],
     [ "GEOGen::VectorStack< T >", "classGEOGen_1_1VectorStack.html", null ],
+    [ "GEO::MeshInTriangle::Vertex", "classGEO_1_1MeshInTriangle_1_1Vertex.html", null ],
     [ "GEOGen::ConvexCell::Vertex", "classGEOGen_1_1ConvexCell_1_1Vertex.html", null ],
     [ "GEOGen::Vertex", "classGEOGen_1_1Vertex.html", null ],
     [ "GEOGen::RestrictedVoronoiDiagram< DIM >::VolumetricIntegrationSimplexAction< ACTION >", "classGEOGen_1_1RestrictedVoronoiDiagram_1_1VolumetricIntegrationSimplexAction.html", null ],
-    [ "GEO::VSDM", "classGEO_1_1VSDM.html", null ],
     [ "VSUniformState", "structVSUniformState.html", null ]
 ];

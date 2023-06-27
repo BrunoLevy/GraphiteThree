@@ -13,6 +13,7 @@ var geogram_2src_2lib_2geogram_2basic_2geometry_8h =
     [ "vec2i", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#aa0e7f40177010f6b7443243763fa160b", null ],
     [ "vec3", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a6044ad0fa5784ccde33b7bb3fa0e1459", null ],
     [ "vec3f", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a263d266efedd0d8639a755e77770e3f0", null ],
+    [ "vec3i", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a61214617267831dffa867b38c49179cd", null ],
     [ "vec4", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a9ccb76276219a82b23fd62196cfe4596", null ],
     [ "vec4f", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a33703704d415101436638a3032e8ad3e", null ],
     [ "vec4i", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#ae813614a5399c582b67ceed2b64f4275", null ],

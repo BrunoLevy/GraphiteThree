@@ -14,7 +14,7 @@ var dir_7faf8be2027c4a91a1e5453dfee06721 =
     ] ],
     [ "mesh_geometry.h", "mesh__geometry_8h.html", "mesh__geometry_8h" ],
     [ "mesh_halfedges.h", "mesh__halfedges_8h.html", "mesh__halfedges_8h" ],
-    [ "mesh_intersection.h", "mesh__intersection_8h.html", "mesh__intersection_8h" ],
+    [ "mesh_intersection.h", "mesh__intersection_8h.html", null ],
     [ "mesh_io.h", "mesh__io_8h.html", "mesh__io_8h" ],
     [ "mesh_local_operations.h", "mesh__local__operations_8h.html", "mesh__local__operations_8h" ],
     [ "mesh_manifold_harmonics.h", "mesh__manifold__harmonics_8h.html", "mesh__manifold__harmonics_8h" ],
@@ -26,6 +26,13 @@ var dir_7faf8be2027c4a91a1e5453dfee06721 =
     [ "mesh_sampling.h", "mesh__sampling_8h.html", "mesh__sampling_8h" ],
     [ "mesh_smoothing.h", "mesh__smoothing_8h.html", "mesh__smoothing_8h" ],
     [ "mesh_subdivision.h", "mesh__subdivision_8h.html", "mesh__subdivision_8h" ],
+    [ "mesh_surface_intersection.h", "mesh__surface__intersection_8h.html", "mesh__surface__intersection_8h" ],
+    [ "mesh_surface_intersection_internal.h", "mesh__surface__intersection__internal_8h.html", [
+      [ "MeshInTriangle", "classGEO_1_1MeshInTriangle.html", "classGEO_1_1MeshInTriangle" ],
+      [ "Edge", "classGEO_1_1MeshInTriangle_1_1Edge.html", "classGEO_1_1MeshInTriangle_1_1Edge" ],
+      [ "Vertex", "classGEO_1_1MeshInTriangle_1_1Vertex.html", "classGEO_1_1MeshInTriangle_1_1Vertex" ],
+      [ "IsectInfo", "structGEO_1_1IsectInfo.html", "structGEO_1_1IsectInfo" ]
+    ] ],
     [ "mesh_tetrahedralize.h", "mesh__tetrahedralize_8h.html", "mesh__tetrahedralize_8h" ],
     [ "mesh_topology.h", "mesh__topology_8h.html", "mesh__topology_8h" ],
     [ "triangle_intersection.h", "triangle__intersection_8h.html", "triangle__intersection_8h" ]

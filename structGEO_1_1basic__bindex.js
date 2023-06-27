@@ -6,10 +6,10 @@ var structGEO_1_1basic__bindex =
     [ "basic_bindex", "structGEO_1_1basic__bindex.html#af518a7b183ed9565572311a2a1198c20", null ],
     [ "basic_bindex", "structGEO_1_1basic__bindex.html#a201906bc53d74453911fc93f855a8a16", null ],
     [ "basic_bindex", "structGEO_1_1basic__bindex.html#a88ffca1a1fca57bdd9bba7423415bd12", null ],
-    [ "basic_bindex", "structGEO_1_1basic__bindex.html#a64fa77ae687a221efb732e3f357f9124", null ],
+    [ "basic_bindex", "structGEO_1_1basic__bindex.html#a3e3a19f3bb79c5b8636257a8f8a2e8dc", null ],
     [ "operator!=", "structGEO_1_1basic__bindex.html#a39446931b7b44a6b9c80b74b4aad7c8c", null ],
     [ "operator<", "structGEO_1_1basic__bindex.html#a4d48edaec34d093f56185e130142eea9", null ],
-    [ "operator=", "structGEO_1_1basic__bindex.html#a9fc30b25255d1e79b8430d9a28ba5fb6", null ],
+    [ "operator=", "structGEO_1_1basic__bindex.html#a7565f432223d581da3dbe1d4db5d8a7d", null ],
     [ "operator==", "structGEO_1_1basic__bindex.html#a7ac0997d596ed6921745d8dc3d969940", null ],
     [ "operator<<", "structGEO_1_1basic__bindex.html#ac9fd3c6628c1cdbbc95cdd0b8e2ccdd6", null ],
     [ "indices", "structGEO_1_1basic__bindex.html#ad1169207ab950715a8c42842a4ad7246", null ]

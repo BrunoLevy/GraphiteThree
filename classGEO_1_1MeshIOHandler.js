@@ -9,6 +9,7 @@ var classGEO_1_1MeshIOHandler =
     [ "MeshIOHandler_var", "classGEO_1_1MeshIOHandler.html#a3a5fe03ad44a921a2cebabda353d047d", null ],
     [ "MeshIOHandlerFactory", "classGEO_1_1MeshIOHandler.html#adc490b25748ac056181e14119e1304f9", null ],
     [ "cell_region_", "classGEO_1_1MeshIOHandler.html#a7fb59d9b9e7818da6f3b298c8582db19", null ],
+    [ "edge_region_", "classGEO_1_1MeshIOHandler.html#ac3705caa794932420642fce4c0996f51", null ],
     [ "facet_region_", "classGEO_1_1MeshIOHandler.html#a5d9cd4fb2dc24fde618fec7f77ab3019", null ],
     [ "vertex_region_", "classGEO_1_1MeshIOHandler.html#a2e54c701f8950f0ef809f9d281222538", null ]
 ];

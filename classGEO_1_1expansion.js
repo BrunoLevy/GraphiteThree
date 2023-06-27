@@ -1,7 +1,9 @@
 var classGEO_1_1expansion =
 [
     [ "expansion", "classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb", null ],
+    [ "assign", "classGEO_1_1expansion.html#ae91bbd25779ca9ede5c1678a82ecd8e1", null ],
     [ "assign", "classGEO_1_1expansion.html#ad64c0ccbe03f05554b4bf2dcb05d03a4", null ],
+    [ "assign_abs", "classGEO_1_1expansion.html#a7ef4cebbdbfa0beffc10d711f45f40cd", null ],
     [ "assign_det2x2", "classGEO_1_1expansion.html#ab99e7c9a03dbbcaa55f4e5a8c6dcf14d", null ],
     [ "assign_det3x3", "classGEO_1_1expansion.html#a4070de94a4e1088dcf65f9af2c1fffc0", null ],
     [ "assign_det_111_2x3", "classGEO_1_1expansion.html#a7620cbbb6e457c92037f45e4f6669f8b", null ],
@@ -43,6 +45,7 @@ var classGEO_1_1expansion =
     [ "show", "classGEO_1_1expansion.html#a7723b51f733449365e5d6878ad5f2079", null ],
     [ "sign", "classGEO_1_1expansion.html#afee0cfb671d849378715fa3b769ff0f0", null ],
     [ "to_string", "classGEO_1_1expansion.html#ae349faafb0b3b74b07f6df66ca76b338", null ],
+    [ "expansion_abs", "classGEO_1_1expansion.html#aa0a528d06bacc9e57b59b6ae802256be", null ],
     [ "expansion_create", "classGEO_1_1expansion.html#ac73b16e5c143290e3864bd29083f43d0", null ],
     [ "expansion_det2x2", "classGEO_1_1expansion.html#aa2b4cd929c0cdde5d321006d6820995a", null ],
     [ "expansion_det3x3", "classGEO_1_1expansion.html#accb53ab149390dda8821488793dce0e7", null ],

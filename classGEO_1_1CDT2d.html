@@ -124,9 +124,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a474a33e7bf04b09bfcf25fda048c8a2e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDT2d.html#a474a33e7bf04b09bfcf25fda048c8a2e">insert</a> (const <a class="el" href="namespaceGEO.html#ad7e1b53e52be6caed089a5f4f29d8057">vec2</a> &amp;p, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> hint=<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>(-1))</td></tr>
 <tr class="memdesc:a474a33e7bf04b09bfcf25fda048c8a2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a point.  <a href="classGEO_1_1CDT2d.html#a474a33e7bf04b09bfcf25fda048c8a2e">More...</a><br /></td></tr>
 <tr class="separator:a474a33e7bf04b09bfcf25fda048c8a2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d2666299f798282bbe19bd6fd000dee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDT2d.html#a1d2666299f798282bbe19bd6fd000dee">insert</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb_points, const double *points)</td></tr>
-<tr class="memdesc:a1d2666299f798282bbe19bd6fd000dee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Batch-inserts a set of point.  <a href="classGEO_1_1CDT2d.html#a1d2666299f798282bbe19bd6fd000dee">More...</a><br /></td></tr>
-<tr class="separator:a1d2666299f798282bbe19bd6fd000dee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f5166f21b6d417860ab20adff37a3f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDT2d.html#a7f5166f21b6d417860ab20adff37a3f1">insert</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb_points, const double *points, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> *indices=nullptr, bool remove_unreferenced_vertices=false)</td></tr>
+<tr class="memdesc:a7f5166f21b6d417860ab20adff37a3f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Batch-inserts a set of point.  <a href="classGEO_1_1CDT2d.html#a7f5166f21b6d417860ab20adff37a3f1">More...</a><br /></td></tr>
+<tr class="separator:a7f5166f21b6d417860ab20adff37a3f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc309fa0826cc4250e9f36dc67d217e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDT2d.html#afc309fa0826cc4250e9f36dc67d217e3">save</a> (const std::string &amp;filename) const override</td></tr>
 <tr class="memdesc:afc309fa0826cc4250e9f36dc67d217e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves this CDT to a geogram mesh file.  <a href="classGEO_1_1CDT2d.html#afc309fa0826cc4250e9f36dc67d217e3">More...</a><br /></td></tr>
 <tr class="separator:afc309fa0826cc4250e9f36dc67d217e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -190,7 +190,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a722bb6591a94ef7d795ca67cb6859d30"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a9c97e58e4526cb2ab931b3fde0a3b002">Sign</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDT2d.html#a722bb6591a94ef7d795ca67cb6859d30">orient2d</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> i, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> j, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> k) const override</td></tr>
-<tr class="memdesc:a722bb6591a94ef7d795ca67cb6859d30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the orientation predicate in 3d.  <a href="classGEO_1_1CDT2d.html#a722bb6591a94ef7d795ca67cb6859d30">More...</a><br /></td></tr>
 <tr class="separator:a722bb6591a94ef7d795ca67cb6859d30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7961974d2ed007ded38f62d13ee398df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a9c97e58e4526cb2ab931b3fde0a3b002">Sign</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDT2d.html#a7961974d2ed007ded38f62d13ee398df">incircle</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> i, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> j, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> k, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> l) const override</td></tr>
 <tr class="memdesc:a7961974d2ed007ded38f62d13ee398df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Incircle predicate.  <a href="classGEO_1_1CDT2d.html#a7961974d2ed007ded38f62d13ee398df">More...</a><br /></td></tr>
@@ -288,6 +287,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:adda4cc0ead5e6a5d33259857b30db5b2 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#adda4cc0ead5e6a5d33259857b30db5b2">is_convex_quad</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> t) const</td></tr>
 <tr class="memdesc:adda4cc0ead5e6a5d33259857b30db5b2 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether triange t and its neighbor accross edge 0 form a strictly convex quad.  <a href="classGEO_1_1CDTBase2d.html#adda4cc0ead5e6a5d33259857b30db5b2">More...</a><br /></td></tr>
 <tr class="separator:adda4cc0ead5e6a5d33259857b30db5b2 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a512a4b305ade062f2d0e512536829e31 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a512a4b305ade062f2d0e512536829e31">remove_marked_triangles</a> ()</td></tr>
+<tr class="memdesc:a512a4b305ade062f2d0e512536829e31 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all the triangles that have the flag T_MARKED_FLAG set.  <a href="classGEO_1_1CDTBase2d.html#a512a4b305ade062f2d0e512536829e31">More...</a><br /></td></tr>
+<tr class="separator:a512a4b305ade062f2d0e512536829e31 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5de7e491083ef66509cdbfd0c8b9abe inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#ad5de7e491083ef66509cdbfd0c8b9abe">Tcheck</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> t) const</td></tr>
 <tr class="memdesc:ad5de7e491083ef66509cdbfd0c8b9abe inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Consistency check for a triangle.  <a href="classGEO_1_1CDTBase2d.html#ad5de7e491083ef66509cdbfd0c8b9abe">More...</a><br /></td></tr>
 <tr class="separator:ad5de7e491083ef66509cdbfd0c8b9abe inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -363,6 +365,8 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:af173fb8db05e201d5246cc28791a35ea inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa56a051e170efb41fbaa150996fb9439 inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a9c97e58e4526cb2ab931b3fde0a3b002">Sign</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#aa56a051e170efb41fbaa150996fb9439">orient_012_</a></td></tr>
 <tr class="separator:aa56a051e170efb41fbaa150996fb9439 inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05c68716d93c97a7509ddf767d95f01e inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a05c68716d93c97a7509ddf767d95f01e">exact_incircle_</a></td></tr>
+<tr class="separator:a05c68716d93c97a7509ddf767d95f01e inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -374,9 +378,9 @@ Additional Inherited Members</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a1045da60655ba58c8301590d0ae933a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constants for list_id. <br /></td></tr>
 <tr class="separator:a1045da60655ba58c8301590d0ae933a2 inherit pro_types_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace5f36b6d887a37914c9b715302ca7b1 inherit pro_types_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a id="ace5f36b6d887a37914c9b715302ca7b1"></a>enum &#160;</td><td class="memItemRight" valign="bottom">{ <b>T_MARKED_FLAG</b> = DLIST_NB
+<tr class="memitem:ace5f36b6d887a37914c9b715302ca7b1 inherit pro_types_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classGEO_1_1CDTBase2d.html#ace5f36b6d887a37914c9b715302ca7b1a7f2d743e835a38d514d2932c392aeeb9">T_MARKED_FLAG</a> = DLIST_NB
  }</td></tr>
-<tr class="memdesc:ace5f36b6d887a37914c9b715302ca7b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constants for triangle flags. <br /></td></tr>
+<tr class="memdesc:ace5f36b6d887a37914c9b715302ca7b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constants for triangle flags.  <a href="classGEO_1_1CDTBase2d.html#ace5f36b6d887a37914c9b715302ca7b1">More...</a><br /></td></tr>
 <tr class="separator:ace5f36b6d887a37914c9b715302ca7b1 inherit pro_types_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a081897d4a9f7be5c72f5a6a075ecd152 inherit pro_types_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a id="a081897d4a9f7be5c72f5a6a075ecd152"></a>
 typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Edge</b></td></tr>
@@ -417,7 +421,7 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
 <p>If you have many points to insert, you can use the function: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> CDT::insert(<a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb_points, <span class="keyword">const</span> <span class="keywordtype">double</span>* points);</div>
 </div><!-- fragment --><p> It is much much faster than inserting the points one by one. Internally it uses Amenta et.al's BRIO method (multi-resolution spatial sort). </p>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01222">1222</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01234">1234</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a9a023a9352bcf8bbd775e72408189d84"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9a023a9352bcf8bbd775e72408189d84">&#9670;&nbsp;</a></span>clear()</h2>
@@ -552,7 +556,7 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
 </dl>
 <p><a class="el" href="classGEO_1_1CDT2d.html#aa39191ce38e67d8d1c039dacc12f6e21" title="Creates a first large enclosing triangle.">create_enclosing_triangle()</a>, <a class="el" href="classGEO_1_1CDT2d.html#ac2864c00a69ae327379658994c39b5c8" title="Creates a first large enclosing rectangle.">create_enclosing_rectangle()</a> or <a class="el" href="classGEO_1_1CDT2d.html#a30bbed3da1d3aa3aa70237d7d8de931e" title="Creates a first large enclosing quad.">create_enclosing_quad()</a> need to be called before anything else </p>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01262">1262</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01274">1274</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -782,14 +786,14 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the index of the created point. Duplicated points are detected (and them the index of the existing point is returned) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the index of the created point. Duplicated points are detected (and then the index of the existing point is returned) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01281">1281</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01293">1293</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
-<a id="a1d2666299f798282bbe19bd6fd000dee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d2666299f798282bbe19bd6fd000dee">&#9670;&nbsp;</a></span>insert() <span class="overload">[2/2]</span></h2>
+<a id="a7f5166f21b6d417860ab20adff37a3f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f5166f21b6d417860ab20adff37a3f1">&#9670;&nbsp;</a></span>insert() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -804,7 +808,19 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const double *&#160;</td>
-          <td class="paramname"><em>points</em>&#160;</td>
+          <td class="paramname"><em>points</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> *&#160;</td>
+          <td class="paramname"><em>indices</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>remove_unreferenced_vertices</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -815,10 +831,12 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
 </div><div class="memdoc">
 
 <p>Batch-inserts a set of point. </p>
-<p>In general, it is much faster than calling <a class="el" href="classGEO_1_1CDT2d.html#a474a33e7bf04b09bfcf25fda048c8a2e" title="Inserts a point.">insert()</a> multiple times. Internally it uses a spatial sort (Amenta et.al's BRIO method). </p><dl class="params"><dt>Parameters</dt><dd>
+<p>In general, it is much faster than calling <a class="el" href="classGEO_1_1CDT2d.html#a474a33e7bf04b09bfcf25fda048c8a2e" title="Inserts a point.">insert()</a> multiple times. Internally it uses a spatial sort (Amenta et.al's BRIO method). On exit, the optional <code>indices</code> array contains the index mapping. indices[i] may be different from i if there were duplicated points. If there may be duplicated points and if one wants to insert constraint using <a class="el" href="classGEO_1_1CDTBase2d.html#adf854f3aebf85dffa431d548d97ff842" title="Inserts a constraint.">CDTBase2d::insert_constraint()</a>, one needs to call insert_constraint(indices[i],indices[j]) to get the correct translation of the indices </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">points</td><td>a contiguous array of all point coordinates </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">nb_points</td><td>number of points </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">indices</td><td>an optional pointer to an array of size <code>nb_points</code> of indices. On exit, indices[i] contains the index of the mesh vertex that corresponds to the i-th point. If there are duplicated points or if <code>remove_unreferenced_vertices</code> is set, then indices[i] may be different from i </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">remove_unreferenced_vertices</td><td>if set, then duplicated vertices are not stored in the vertices array. Internally, this systematically changes the order of the points. For this reason, if this flag is set, then one needs to do index mapping with <code>indices</code>, even when there is no duplicated point </td></tr>
   </table>
   </dd>
 </dl>
@@ -865,22 +883,7 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
 </table>
 </div><div class="memdoc">
 
-<p>Computes the orientation predicate in 3d. </p>
-<p>Computes the sign of the signed area of the triangle p0, p1, p2. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p0,p1,p2</td><td>vertices of the triangle </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">POSITIVE</td><td>if the triangle is oriented positively </td></tr>
-    <tr><td class="paramname">ZERO</td><td>if the triangle is flat </td></tr>
-    <tr><td class="paramname">NEGATIVE</td><td>if the triangle is oriented negatively </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>check whether orientation is inverted as compared to Shewchuk's version. </dd></dl>
+<p></p>
 
 <p>Implements <a class="el" href="classGEO_1_1CDTBase2d.html#a6b3fc1f1288741c57e1bc8011ddf7591">GEO::CDTBase2d</a>.</p>
 
@@ -919,7 +922,7 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the point at index <code>v</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01315">1315</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01346">1346</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -968,7 +971,7 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1CDT2d.html">CDT2d</a></li>
-    <li class="footer">Generated on Fri Mar 3 2023 16:22:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -138,6 +138,9 @@ $(document).ready(function(){initNavTree('functions_m.html',''); initResizable()
 <li>mark_as_used()
 : <a class="el" href="classGEOGen_1_1ConvexCell.html#a71006dc5d9a4f8f9c8b436c1b6e0f457">GEOGen::ConvexCell</a>
 </li>
+<li>mark_external_shell()
+: <a class="el" href="classGEO_1_1MeshSurfaceIntersection.html#acd400e1ac86eb0b714e1b794023874c7">GEO::MeshSurfaceIntersection</a>
+</li>
 <li>mark_tet()
 : <a class="el" href="classGEO_1_1Delaunay3d.html#a1d898ac5ba753c6a864834b0fcc17649">GEO::Delaunay3d</a>
 </li>
@@ -165,9 +168,6 @@ $(document).ready(function(){initNavTree('functions_m.html',''); initResizable()
 </li>
 <li>MAX_DEPTH
 : <a class="el" href="classGLUP_1_1MatrixStack.html#a96b8c76f0af6adb97e079340722cbe5c">GLUP::MatrixStack</a>
-</li>
-<li>MAX_DIM
-: <a class="el" href="classGEO_1_1LinearLeastSquares.html#ae7b680d2c8521b680c9df970aaebcbf1">GEO::LinearLeastSquares</a>
 </li>
 <li>max_iter_
 : <a class="el" href="classGEO_1_1Optimizer.html#aa8be4b95f81b4ac3950867736b699452">GEO::Optimizer</a>
@@ -205,9 +205,6 @@ $(document).ready(function(){initNavTree('functions_m.html',''); initResizable()
 : <a class="el" href="classGEO_1_1MonoThreadingThreadManager.html#a5c59dd8184416926856ba066a6737e30">GEO::MonoThreadingThreadManager</a>
 , <a class="el" href="classGEO_1_1ThreadManager.html#ad45513086fdd1b0fc435f34635aa6ab4">GEO::ThreadManager</a>
 </li>
-<li>measure_of_smallest_cell_
-: <a class="el" href="classGEO_1_1OptimalTransportMap.html#a165237993ace9257f3143f3eb25bc849">GEO::OptimalTransportMap</a>
-</li>
 <li>MemberFunctionCommandInvoker()
 : <a class="el" href="classGEO_1_1MemberFunctionCommandInvoker.html#a4b1c8e09d85d22ad53aca15ad132e3c8">GEO::MemberFunctionCommandInvoker&lt; T, TFPTR &gt;</a>
 </li>
@@ -218,7 +215,7 @@ $(document).ready(function(){initNavTree('functions_m.html',''); initResizable()
 : <a class="el" href="classGEOGen_1_1ConvexCell.html#a9a95e35c82292790ead4d9acf24fee91">GEOGen::ConvexCell</a>
 </li>
 <li>merge_vertices()
-: <a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#a3b5daa4b37321b1d14706e9ea76bf3ee">OGF::MeshGrobSurfaceCommands</a>
+: <a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#a77fcde896d3b2584008085fef05f4e9b">OGF::MeshGrobSurfaceCommands</a>
 </li>
 <li>mesh()
 : <a class="el" href="classGEO_1_1CentroidalVoronoiTesselation.html#aa5a208f68f82ef54c334f75302480eac">GEO::CentroidalVoronoiTesselation</a>
@@ -231,10 +228,11 @@ $(document).ready(function(){initNavTree('functions_m.html',''); initResizable()
 , <a class="el" href="classGEO_1_1MeshAABB3d.html#a62e41d8e14ff7e2f84eb76ed697a4f3a">GEO::MeshAABB3d</a>
 , <a class="el" href="classGEO_1_1MeshGfx.html#abedd671fab0182313f94b80daf5ee7d7">GEO::MeshGfx</a>
 , <a class="el" href="classGEO_1_1MeshHalfedges.html#a2c495511c9072851d50cd626c8e36548">GEO::MeshHalfedges</a>
-, <a class="el" href="classGEO_1_1OptimalTransportMap.html#ada3bd4431c359ae46ac0be4678dcc866">GEO::OptimalTransportMap</a>
+, <a class="el" href="classGEO_1_1MeshInTriangle.html#ab296217ef3acf760523b99d453a677de">GEO::MeshInTriangle</a>
+, <a class="el" href="classGEO_1_1MeshInTriangle_1_1Vertex.html#a3d21471b93a0b53b412f425a5b858d4f">GEO::MeshInTriangle::Vertex</a>
 , <a class="el" href="classGEO_1_1RestrictedVoronoiDiagram.html#aa9e2ffabb6e4246f40557c7fb7d078bb">GEO::RestrictedVoronoiDiagram</a>
 , <a class="el" href="classGEO_1_1SimpleMeshApplication.html#a500b4a4c0a52aafa03e1323aa05fc3d8">GEO::SimpleMeshApplication</a>
-, <a class="el" href="classGEOGen_1_1RestrictedVoronoiDiagram.html#a3ee5802041191097472e710adad35aeb">GEOGen::RestrictedVoronoiDiagram&lt; DIM &gt;</a>
+, <a class="el" href="classGEOGen_1_1RestrictedVoronoiDiagram.html#a1919bb1909874ba9b7b6b72109ff3dac">GEOGen::RestrictedVoronoiDiagram&lt; DIM &gt;</a>
 </li>
 <li>mesh_gfx()
 : <a class="el" href="classGEO_1_1SimpleMeshApplication.html#ac2e5af282f20b489c0218a6620a852d1">GEO::SimpleMeshApplication</a>
@@ -612,7 +610,7 @@ $(document).ready(function(){initNavTree('functions_m.html',''); initResizable()
 , <a class="el" href="structNLSparseMatrix.html#a5ceccfd51c9f937ad55ccc6d8e332457">NLSparseMatrix</a>
 </li>
 <li>mult_matrix()
-: <a class="el" href="classGLUP_1_1Context.html#a478d181855435d354b5dfbda36ffb6ff">GLUP::Context</a>
+: <a class="el" href="classGLUP_1_1Context.html#a284b40f3dec3def2753ee5df5ad2104c">GLUP::Context</a>
 </li>
 <li>MultiTool()
 : <a class="el" href="classOGF_1_1MultiTool.html#a5a09665b09ba11055e022b64210fd704">OGF::MultiTool</a>
@@ -623,7 +621,7 @@ $(document).ready(function(){initNavTree('functions_m.html',''); initResizable()
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 3 2023 16:22:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Tue Jun 27 2023 06:45:50 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -14,5 +14,6 @@ var classGEO_1_1MeshHalfedges =
     [ "move_to_prev_around_facet", "classGEO_1_1MeshHalfedges.html#af6d4fae02d0849422d8cdbc62c322686", null ],
     [ "move_to_prev_around_vertex", "classGEO_1_1MeshHalfedges.html#a354131f44453e1fd0d75f6a969ec8bc1", null ],
     [ "set_use_facet_region", "classGEO_1_1MeshHalfedges.html#a0de6c63e82c51fd854bafcfc305c0413", null ],
+    [ "set_use_facet_region", "classGEO_1_1MeshHalfedges.html#af0b2b47c4463aceb265a9bb91e800c54", null ],
     [ "set_use_facet_region", "classGEO_1_1MeshHalfedges.html#a08c78089a8d6518be2a6c357eb0d7c06", null ]
 ];

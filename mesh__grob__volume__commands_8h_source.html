@@ -144,92 +144,94 @@ $(document).ready(function(){initNavTree('mesh__grob__volume__commands_8h_source
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment">       /*********************************************************************/</span></div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keywordtype">void</span> tet_meshing(</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <span class="keywordtype">bool</span> preprocess=<span class="keyword">false</span>,</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordtype">bool</span> refine=<span class="keyword">true</span>,</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <span class="keywordtype">double</span> quality=1.0,</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <span class="keywordtype">bool</span> verbose=<span class="keyword">false</span>,</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="keywordtype">bool</span> keep_regions=<span class="keyword">false</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        );</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">       /*********************************************************************/</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="classOGF_1_1MeshGrobVolumeCommands.html#ad29d099cbdd39508846c9fd937049fcd">  107</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1MeshGrobVolumeCommands.html#ad29d099cbdd39508846c9fd937049fcd">hex_dominant_meshing</a>(</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">NewMeshGrobName</a>&amp; hexdom_name = <span class="stringliteral">&quot;hexes&quot;</span>,</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_points = 30000,</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <span class="keywordtype">bool</span> prisms = <span class="keyword">true</span>,</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            <span class="keywordtype">bool</span> pyramids = <span class="keyword">true</span>,</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            <span class="keywordtype">bool</span> border_refine = <span class="keyword">false</span>,</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            <span class="keywordtype">double</span> border_max_dist = 0.2,</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="keywordtype">double</span> min_normal_cos = 0.5,</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            <span class="keywordtype">double</span> max_corner_cos = 0.6</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        );</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="comment">        /*********************************************************************/</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keyword">enum</span> VoronoiSimplification {</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            keep_everything,</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            simplify_tet,</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            simplify_tet_voro</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        };</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keywordtype">void</span> tet_meshing(</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="keywordtype">bool</span> preprocess=<span class="keyword">false</span>,</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <span class="keywordtype">double</span> epsilon=0.001,</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keywordtype">double</span> max_hole_area=0.01,</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <span class="keywordtype">bool</span> refine=<span class="keyword">false</span>,</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            <span class="keywordtype">double</span> quality=1.0,</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <span class="keywordtype">bool</span> keep_regions=<span class="keyword">false</span>,</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            <span class="keywordtype">bool</span> verbose=<span class="keyword">false</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        );</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">       /*********************************************************************/</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="classOGF_1_1MeshGrobVolumeCommands.html#ad29d099cbdd39508846c9fd937049fcd">  113</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1MeshGrobVolumeCommands.html#ad29d099cbdd39508846c9fd937049fcd">hex_dominant_meshing</a>(</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">NewMeshGrobName</a>&amp; hexdom_name = <span class="stringliteral">&quot;hexes&quot;</span>,</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> nb_points = 30000,</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            <span class="keywordtype">bool</span> prisms = <span class="keyword">true</span>,</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            <span class="keywordtype">bool</span> pyramids = <span class="keyword">true</span>,</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            <span class="keywordtype">bool</span> border_refine = <span class="keyword">false</span>,</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            <span class="keywordtype">double</span> border_max_dist = 0.2,</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            <span class="keywordtype">double</span> min_normal_cos = 0.5,</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            <span class="keywordtype">double</span> max_corner_cos = 0.6</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        );</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="comment">        /*********************************************************************/</span></div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
-<div class="line"><a name="l00146"></a><span class="lineno"><a class="line" href="classOGF_1_1MeshGrobVolumeCommands.html#a1b38e68fd80d5a60cfbfac088642f5a9">  146</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1MeshGrobVolumeCommands.html#a1b38e68fd80d5a60cfbfac088642f5a9">Voronoi_meshing</a>(</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">NewMeshGrobName</a>&amp; voronoi = <span class="stringliteral">&quot;voronoi&quot;</span>,</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;            <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb_cells = 1000,</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            VoronoiSimplification simplification = simplify_tet_voro,</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;            <span class="keywordtype">double</span> angle_threshold = 1e-3,</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            <span class="keywordtype">double</span> shrink = 0.0,</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">NewMeshGrobName</a>&amp; points = <span class="stringliteral">&quot;&quot;</span>,</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;            <span class="keywordtype">bool</span> exact = <span class="keyword">true</span>,</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;            <span class="keywordtype">bool</span> tessellate_non_convex = <span class="keyword">false</span>,</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;            <span class="keywordtype">bool</span> generate_ids = <span class="keyword">true</span>,</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;            <span class="keywordtype">bool</span> medial_axis = <span class="keyword">false</span></div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        );</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        </div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="comment">        /*********************************************************************/</span></div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        </div>
-<div class="line"><a name="l00169"></a><span class="lineno"><a class="line" href="classOGF_1_1MeshGrobVolumeCommands.html#a4f838acb0883d2c3eb2bbaaf3f9a9829">  169</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1MeshGrobVolumeCommands.html#a4f838acb0883d2c3eb2bbaaf3f9a9829">volume_mesh_statistics</a>(</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            <span class="keywordtype">bool</span> save_histo=<span class="keyword">false</span>,            </div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;            <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb_bins=100</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        );</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        </div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="comment">        /*********************************************************************/</span></div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
-<div class="line"><a name="l00189"></a><span class="lineno"><a class="line" href="classOGF_1_1MeshGrobVolumeCommands.html#a40c8a1e7f6fc28e2a78af856b6a8c3b1">  189</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1MeshGrobVolumeCommands.html#a40c8a1e7f6fc28e2a78af856b6a8c3b1">tet_meshing_with_points</a>(</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">MeshGrobName</a>&amp; points,</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">NewMeshGrobName</a>&amp; tetrahedra = <span class="stringliteral">&quot;tetrahedra&quot;</span>,</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;            <span class="keywordtype">bool</span> refine_surface = <span class="keyword">false</span>,</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;            <span class="keywordtype">double</span> max_distance = 0.2</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        );</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160; </div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;<span class="comment">        /*********************************************************************/</span></div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
-<div class="line"><a name="l00211"></a><span class="lineno"><a class="line" href="classOGF_1_1MeshGrobVolumeCommands.html#a8fa38a0275c603c381e4af81dead9e5f">  211</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1MeshGrobVolumeCommands.html#a8fa38a0275c603c381e4af81dead9e5f">tet2hex</a>(</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">NewMeshGrobName</a>&amp; hexdom_name = <span class="stringliteral">&quot;hexes&quot;</span>,</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;            <span class="keywordtype">bool</span> prisms = <span class="keyword">true</span>,</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;            <span class="keywordtype">bool</span> pyramids = <span class="keyword">true</span>,</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;            <span class="keywordtype">double</span> min_normal_cos = 0.5,</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;            <span class="keywordtype">double</span> max_corner_cos = 0.6</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        );</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160; </div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="comment">        /*********************************************************************/</span></div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
-<div class="line"><a name="l00227"></a><span class="lineno"><a class="line" href="classOGF_1_1MeshGrobVolumeCommands.html#ac276372561cecc423333d15000c1434b">  227</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1MeshGrobVolumeCommands.html#ac276372561cecc423333d15000c1434b">remesh_tetrahedra</a>(<span class="keywordtype">double</span> quality = 0.5);</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="comment">        /*********************************************************************/</span></div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160; </div>
-<div class="line"><a name="l00234"></a><span class="lineno"><a class="line" href="classOGF_1_1MeshGrobVolumeCommands.html#abd6b7c7ff3aabed4ef39a843f0bede42">  234</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1MeshGrobVolumeCommands.html#abd6b7c7ff3aabed4ef39a843f0bede42">display_volume</a>();</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160; </div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="comment">        /*********************************************************************/</span></div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160; </div>
-<div class="line"><a name="l00242"></a><span class="lineno"><a class="line" href="classOGF_1_1MeshGrobVolumeCommands.html#a3cabac66366e55ed672e65e27e3fdb94">  242</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1MeshGrobVolumeCommands.html#a3cabac66366e55ed672e65e27e3fdb94">compute_borders</a>();</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    };</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    </div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;}</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160; </div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keyword">enum</span> VoronoiSimplification {</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;            keep_everything,</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;            simplify_tet,</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;            simplify_tet_voro</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        };</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160; </div>
+<div class="line"><a name="l00152"></a><span class="lineno"><a class="line" href="classOGF_1_1MeshGrobVolumeCommands.html#a1b38e68fd80d5a60cfbfac088642f5a9">  152</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1MeshGrobVolumeCommands.html#a1b38e68fd80d5a60cfbfac088642f5a9">Voronoi_meshing</a>(</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">NewMeshGrobName</a>&amp; voronoi = <span class="stringliteral">&quot;voronoi&quot;</span>,</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;            <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb_cells = 1000,</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;            VoronoiSimplification simplification = simplify_tet_voro,</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;            <span class="keywordtype">double</span> angle_threshold = 1e-3,</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            <span class="keywordtype">double</span> shrink = 0.0,</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">NewMeshGrobName</a>&amp; points = <span class="stringliteral">&quot;&quot;</span>,</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            <span class="keywordtype">bool</span> exact = <span class="keyword">true</span>,</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;            <span class="keywordtype">bool</span> tessellate_non_convex = <span class="keyword">false</span>,</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            <span class="keywordtype">bool</span> generate_ids = <span class="keyword">true</span>,</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            <span class="keywordtype">bool</span> medial_axis = <span class="keyword">false</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        );</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        </div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="comment">        /*********************************************************************/</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        </div>
+<div class="line"><a name="l00175"></a><span class="lineno"><a class="line" href="classOGF_1_1MeshGrobVolumeCommands.html#a4f838acb0883d2c3eb2bbaaf3f9a9829">  175</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1MeshGrobVolumeCommands.html#a4f838acb0883d2c3eb2bbaaf3f9a9829">volume_mesh_statistics</a>(</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;            <span class="keywordtype">bool</span> save_histo=<span class="keyword">false</span>,            </div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;            <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb_bins=100</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        );</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        </div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;<span class="comment">        /*********************************************************************/</span></div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160; </div>
+<div class="line"><a name="l00195"></a><span class="lineno"><a class="line" href="classOGF_1_1MeshGrobVolumeCommands.html#a40c8a1e7f6fc28e2a78af856b6a8c3b1">  195</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1MeshGrobVolumeCommands.html#a40c8a1e7f6fc28e2a78af856b6a8c3b1">tet_meshing_with_points</a>(</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">MeshGrobName</a>&amp; points,</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">NewMeshGrobName</a>&amp; tetrahedra = <span class="stringliteral">&quot;tetrahedra&quot;</span>,</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;            <span class="keywordtype">bool</span> refine_surface = <span class="keyword">false</span>,</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;            <span class="keywordtype">double</span> max_distance = 0.2</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;        );</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160; </div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="comment">        /*********************************************************************/</span></div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
+<div class="line"><a name="l00217"></a><span class="lineno"><a class="line" href="classOGF_1_1MeshGrobVolumeCommands.html#a8fa38a0275c603c381e4af81dead9e5f">  217</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1MeshGrobVolumeCommands.html#a8fa38a0275c603c381e4af81dead9e5f">tet2hex</a>(</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">NewMeshGrobName</a>&amp; hexdom_name = <span class="stringliteral">&quot;hexes&quot;</span>,</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;            <span class="keywordtype">bool</span> prisms = <span class="keyword">true</span>,</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;            <span class="keywordtype">bool</span> pyramids = <span class="keyword">true</span>,</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;            <span class="keywordtype">double</span> min_normal_cos = 0.5,</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;            <span class="keywordtype">double</span> max_corner_cos = 0.6</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        );</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="comment">        /*********************************************************************/</span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160; </div>
+<div class="line"><a name="l00233"></a><span class="lineno"><a class="line" href="classOGF_1_1MeshGrobVolumeCommands.html#ac276372561cecc423333d15000c1434b">  233</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1MeshGrobVolumeCommands.html#ac276372561cecc423333d15000c1434b">remesh_tetrahedra</a>(<span class="keywordtype">double</span> quality = 0.5);</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160; </div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="comment">        /*********************************************************************/</span></div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160; </div>
+<div class="line"><a name="l00240"></a><span class="lineno"><a class="line" href="classOGF_1_1MeshGrobVolumeCommands.html#abd6b7c7ff3aabed4ef39a843f0bede42">  240</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1MeshGrobVolumeCommands.html#abd6b7c7ff3aabed4ef39a843f0bede42">display_volume</a>();</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160; </div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;<span class="comment">        /*********************************************************************/</span></div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
+<div class="line"><a name="l00248"></a><span class="lineno"><a class="line" href="classOGF_1_1MeshGrobVolumeCommands.html#a3cabac66366e55ed672e65e27e3fdb94">  248</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1MeshGrobVolumeCommands.html#a3cabac66366e55ed672e65e27e3fdb94">compute_borders</a>();</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    };</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    </div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;}</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160; </div>
 <div class="ttc" id="aclassOGF_1_1MeshGrobCommands_html"><div class="ttname"><a href="classOGF_1_1MeshGrobCommands.html">OGF::MeshGrobCommands</a></div><div class="ttdoc">Base class for Commands related with a MeshGrob object.</div><div class="ttdef"><b>Definition:</b> <a href="mesh__grob__commands_8h_source.html#l00056">mesh_grob_commands.h:56</a></div></div>
 <div class="ttc" id="aclassOGF_1_1MeshGrobVolumeCommands_html"><div class="ttname"><a href="classOGF_1_1MeshGrobVolumeCommands.html">OGF::MeshGrobVolumeCommands</a></div><div class="ttdoc">Commands that manipulate volume meshes.</div><div class="ttdef"><b>Definition:</b> <a href="mesh__grob__volume__commands_8h_source.html#l00055">mesh_grob_volume_commands.h:55</a></div></div>
 <div class="ttc" id="aclassOGF_1_1MeshGrobVolumeCommands_html_a1b38e68fd80d5a60cfbfac088642f5a9"><div class="ttname"><a href="classOGF_1_1MeshGrobVolumeCommands.html#a1b38e68fd80d5a60cfbfac088642f5a9">OGF::MeshGrobVolumeCommands::Voronoi_meshing</a></div><div class="ttdeci">void Voronoi_meshing(const NewMeshGrobName &amp;voronoi=&quot;voronoi&quot;, index_t nb_cells=1000, VoronoiSimplification simplification=simplify_tet_voro, double angle_threshold=1e-3, double shrink=0.0, const NewMeshGrobName &amp;points=&quot;&quot;, bool exact=true, bool tessellate_non_convex=false, bool generate_ids=true, bool medial_axis=false)</div><div class="ttdoc">Generates a Voronoi mesh from a volume and points.</div></div>
@@ -253,7 +255,7 @@ $(document).ready(function(){initNavTree('mesh__grob__volume__commands_8h_source
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_aef77abc1c70517fe3037d0ad81c1d82.html">OGF</a></li><li class="navelem"><a class="el" href="dir_fc9bd745fd3f5b971e94c93398ad7331.html">mesh</a></li><li class="navelem"><a class="el" href="dir_fa4cd75815104451c40304a5ee1ceca5.html">commands</a></li><li class="navelem"><a class="el" href="mesh__grob__volume__commands_8h.html">mesh_grob_volume_commands.h</a></li>
-    <li class="footer">Generated on Fri Mar 3 2023 16:22:45 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

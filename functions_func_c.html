@@ -89,20 +89,11 @@ $(document).ready(function(){initNavTree('functions_func_c.html',''); initResiza
 <li>call()
 : <a class="el" href="classGEO_1_1lua__wrapper.html#a0d941413871611ffd773060908d51c46">GEO::lua_wrapper&lt; FPTR &gt;</a>
 </li>
-<li>call_callback_on_RVD()
-: <a class="el" href="classGEO_1_1OptimalTransportMap2d.html#ac87e4ccd4da348c71d3ad9a7d5066e59">GEO::OptimalTransportMap2d</a>
-, <a class="el" href="classGEO_1_1OptimalTransportMap3d.html#ac2346ebec6f8b02898e3c9f541a05aae">GEO::OptimalTransportMap3d</a>
-, <a class="el" href="classGEO_1_1OptimalTransportMap.html#abc583b81ef6f08b1479610e2f37fd5b3">GEO::OptimalTransportMap</a>
-, <a class="el" href="classGEO_1_1OptimalTransportMapOnSurface.html#a66c3be557ad161a2da9c0570ab8911a4">GEO::OptimalTransportMapOnSurface</a>
-</li>
 <li>Callable()
 : <a class="el" href="classOGF_1_1Callable.html#a04751e1dbe8ff0c4a59b8edcab56ceea">OGF::Callable</a>
 </li>
 <li>CallableConnection()
 : <a class="el" href="classOGF_1_1CallableConnection.html#aa387793beba71f5e8a3853efea33a953">OGF::CallableConnection</a>
-</li>
-<li>Callback()
-: <a class="el" href="classGEO_1_1OptimalTransportMap_1_1Callback.html#a3246a2eb6240f2413ab115504eb5dcf9">GEO::OptimalTransportMap::Callback</a>
 </li>
 <li>callbacks_initialize()
 : <a class="el" href="classGEO_1_1Application.html#a8b0bbf47ee97e8c197fcce35fba749b4">GEO::Application</a>
@@ -276,6 +267,7 @@ $(document).ready(function(){initNavTree('functions_func_c.html',''); initResiza
 , <a class="el" href="classGEO_1_1MeshElements.html#a5c64aaeaf4181e3fa6200778dabc3edf">GEO::MeshElements</a>
 , <a class="el" href="classGEO_1_1MeshFacets.html#a1b4ba59d6cabf521e936cbc76084f520">GEO::MeshFacets</a>
 , <a class="el" href="structGEO_1_1MeshHalfedges_1_1Halfedge.html#a0fd0934d9d1aeca2697580c4a8a97303">GEO::MeshHalfedges::Halfedge</a>
+, <a class="el" href="classGEO_1_1MeshInTriangle.html#a2fb64388fdec3aea330d7505dfdced3a">GEO::MeshInTriangle</a>
 , <a class="el" href="classGEO_1_1MeshVertices.html#a1e6ef940a177369b313a0da102bc2f84">GEO::MeshVertices</a>
 , <a class="el" href="classGEO_1_1PackedArrays.html#a49ff736fb39259a02f344044faf5adb3">GEO::PackedArrays</a>
 , <a class="el" href="classGEO_1_1TypedAttributeStore.html#a51cc4540088a6eeb843a4828e32bb173">GEO::TypedAttributeStore&lt; T &gt;</a>
@@ -340,8 +332,8 @@ $(document).ready(function(){initNavTree('functions_func_c.html',''); initResiza
 <li>clip_by_plane()
 : <a class="el" href="classGEOGen_1_1ConvexCell.html#a8b679b2b657290c60e80fc688f1997c2">GEOGen::ConvexCell</a>
 , <a class="el" href="classGEOGen_1_1Polygon.html#acdade908db0110c718df1bf3b7adaf70">GEOGen::Polygon</a>
-, <a class="el" href="classGEOGen_1_1RestrictedVoronoiDiagram.html#af2d133105b936ae449904eb217b77b50">GEOGen::RestrictedVoronoiDiagram&lt; DIM &gt;</a>
-, <a class="el" href="classVBW_1_1ConvexCell.html#a12ea8b06a755b2192fcef19241ef54fc">VBW::ConvexCell</a>
+, <a class="el" href="classGEOGen_1_1RestrictedVoronoiDiagram.html#a3544843feb4ee5d09ffb3847bc1b2a57">GEOGen::RestrictedVoronoiDiagram&lt; DIM &gt;</a>
+, <a class="el" href="classVBW_1_1ConvexCell.html#a8ab673ac814fe811d97f97f48e2c41c4">VBW::ConvexCell</a>
 </li>
 <li>clip_by_plane_exact()
 : <a class="el" href="classGEOGen_1_1Polygon.html#a32f9e7f218c353978e5e083c3cd93a44">GEOGen::Polygon</a>
@@ -379,7 +371,7 @@ $(document).ready(function(){initNavTree('functions_func_c.html',''); initResiza
 : <a class="el" href="classGEO_1_1Colormap.html#ab1d42420ca70a9e7d0f1e5b3e11b4870">GEO::Colormap</a>
 </li>
 <li>colormap()
-: <a class="el" href="classGEO_1_1Image.html#ae0447f85fd54ab83bc685338ff13fb1b">GEO::Image</a>
+: <a class="el" href="classGEO_1_1Image.html#a9f12c8b20974a1090d98e7cfe1b870a8">GEO::Image</a>
 </li>
 <li>ColormapStyle()
 : <a class="el" href="structOGF_1_1ColormapStyle.html#ad9db9370f133a6c8baa9c5411eca8da8">OGF::ColormapStyle</a>
@@ -396,10 +388,13 @@ $(document).ready(function(){initNavTree('functions_func_c.html',''); initResiza
 <li>Commands()
 : <a class="el" href="classOGF_1_1Commands.html#af0e0e72f640b9b6c1ec9194a1cb121e5">OGF::Commands</a>
 </li>
+<li>commit()
+: <a class="el" href="classGEO_1_1MeshInTriangle.html#afb407081f14dcba131a7b35a0f2d4b6f">GEO::MeshInTriangle</a>
+</li>
 <li>compare()
-: <a class="el" href="classGEO_1_1expansion.html#a595a0475bda4a9c23318ecd8217d9056">GEO::expansion</a>
-, <a class="el" href="classGEO_1_1expansion__nt.html#ab0cea3b0082d9bb14195d57796346d2e">GEO::expansion_nt</a>
-, <a class="el" href="classGEO_1_1rational__nt.html#a0be80a18d2ee6fd3a0833515b098c9ce">GEO::rational_nt</a>
+: <a class="el" href="classGEO_1_1expansion.html#afdb437d78c07c9cf3edf7b93b30183c4">GEO::expansion</a>
+, <a class="el" href="classGEO_1_1expansion__nt.html#ad799573de5c1d57ebc77afb54fca665b">GEO::expansion_nt</a>
+, <a class="el" href="classGEO_1_1rational__nt.html#abcc557b947cea7b2de41a9904cf8d883">GEO::rational_nt</a>
 </li>
 <li>completions()
 : <a class="el" href="classOGF_1_1TextEditor.html#ae572bab9fecbed8afa885bd3cfb06231">OGF::TextEditor</a>
@@ -439,7 +434,7 @@ $(document).ready(function(){initNavTree('functions_func_c.html',''); initResiza
 : <a class="el" href="classGEO_1_1MeshFacetsAABB.html#a8c17ebba1ebf32cda52a80c1b4569596">GEO::MeshFacetsAABB</a>
 </li>
 <li>compute_borders()
-: <a class="el" href="classGEO_1_1MeshCells.html#ac3fe1eb04d48aed572ec01633b0b01ea">GEO::MeshCells</a>
+: <a class="el" href="classGEO_1_1MeshCells.html#a1dfb5bc37971adcf2636620c01fb65c7">GEO::MeshCells</a>
 , <a class="el" href="classGEO_1_1MeshFacets.html#a19a76ad0374e401b4c32b9cb2fe54a65">GEO::MeshFacets</a>
 , <a class="el" href="classOGF_1_1MeshGrobVolumeCommands.html#a3cabac66366e55ed672e65e27e3fdb94">OGF::MeshGrobVolumeCommands</a>
 </li>
@@ -474,7 +469,7 @@ $(document).ready(function(){initNavTree('functions_func_c.html',''); initResiza
 : <a class="el" href="classGEO_1_1RestrictedVoronoiDiagram.html#ad07063b85e3f11fdcd02d64eceaba6f5">GEO::RestrictedVoronoiDiagram</a>
 </li>
 <li>compute_difference()
-: <a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#a7de0afd96e60823b58fe2089f29973a0">OGF::MeshGrobSurfaceCommands</a>
+: <a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#aab6b36ee58583dfd7d4093a4ffd38691">OGF::MeshGrobSurfaceCommands</a>
 </li>
 <li>compute_distance_to_surface()
 : <a class="el" href="classOGF_1_1MeshGrobAttributesCommands.html#a6732aa7f2ce15243b9faa6c9e6450058">OGF::MeshGrobAttributesCommands</a>
@@ -497,10 +492,8 @@ $(document).ready(function(){initNavTree('functions_func_c.html',''); initResiza
 : <a class="el" href="classGEO_1_1ParamValidator.html#aa2d4cc5feef7680ed3642c8a376f3785">GEO::ParamValidator</a>
 </li>
 <li>compute_geometry()
-: <a class="el" href="classVBW_1_1ConvexCell.html#ac86269f4f13e21cc796901079984abcf">VBW::ConvexCell</a>
-</li>
-<li>compute_graph_Laplacian()
-: <a class="el" href="classGEO_1_1VSDM.html#a6ef01666feca57c50f6467b31d2455ee">GEO::VSDM</a>
+: <a class="el" href="classGEO_1_1MeshInTriangle_1_1Vertex.html#aae2b8bac4fc3f3d7d359738f76fe14a1">GEO::MeshInTriangle::Vertex</a>
+, <a class="el" href="classVBW_1_1ConvexCell.html#ac86269f4f13e21cc796901079984abcf">VBW::ConvexCell</a>
 </li>
 <li>compute_initial_sampling()
 : <a class="el" href="classGEO_1_1CentroidalVoronoiTesselation.html#a4f5aaad10cff275a73e75d612c40dca0">GEO::CentroidalVoronoiTesselation</a>
@@ -517,16 +510,10 @@ $(document).ready(function(){initNavTree('functions_func_c.html',''); initResiza
 </li>
 <li>compute_intersection()
 : <a class="el" href="classGLUP_1_1Context.html#a6b3e34da6c23205c23fc4b8b0f613ec7">GLUP::Context</a>
-, <a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#aa56724388c088e6b2a43dbb2be63884a">OGF::MeshGrobSurfaceCommands</a>
+, <a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#acb2322e8a48331bf0f47bb142fd7db77">OGF::MeshGrobSurfaceCommands</a>
 </li>
 <li>compute_inverse()
 : <a class="el" href="classGEO_1_1Matrix.html#aceeda3be84e97c46b4cee67441ab23dd">GEO::Matrix&lt; DIM, FT &gt;</a>
-</li>
-<li>compute_Laguerre_centroids()
-: <a class="el" href="classGEO_1_1OptimalTransportMap2d.html#a782cde78a032a9d04aa17c84c585d5e5">GEO::OptimalTransportMap2d</a>
-, <a class="el" href="classGEO_1_1OptimalTransportMap3d.html#a93a678f7b591bc7d9253a65015025c68">GEO::OptimalTransportMap3d</a>
-, <a class="el" href="classGEO_1_1OptimalTransportMap.html#ad23287700059f5a3e63b00ff2784a610">GEO::OptimalTransportMap</a>
-, <a class="el" href="classGEO_1_1OptimalTransportMapOnSurface.html#af0283ee6e6814643cfa9f6f999d3797b">GEO::OptimalTransportMapOnSurface</a>
 </li>
 <li>compute_local_feature_size()
 : <a class="el" href="classOGF_1_1MeshGrobAttributesCommands.html#a530b10c5d8eec6f6356a20e14430c28c">OGF::MeshGrobAttributesCommands</a>
@@ -538,14 +525,11 @@ $(document).ready(function(){initNavTree('functions_func_c.html',''); initResiza
 : <a class="el" href="classGEO_1_1MeshCellsAABB.html#ac5061a551a2f9eb34f922a9ae359931d">GEO::MeshCellsAABB</a>
 , <a class="el" href="classGEO_1_1MeshFacetsAABB2d.html#a2726b30dcc333bae37cbd20189f9cbf8">GEO::MeshFacetsAABB2d</a>
 </li>
-<li>compute_P1_Laplacian()
-: <a class="el" href="classGEO_1_1OptimalTransportMap.html#a87c7c28861b576bb61723e0a11030317">GEO::OptimalTransportMap</a>
-</li>
 <li>compute_R3_embedding()
 : <a class="el" href="classGEO_1_1CentroidalVoronoiTesselation.html#a78418425c2f1b4cd15d326e860d8b682">GEO::CentroidalVoronoiTesselation</a>
 </li>
 <li>compute_RDT()
-: <a class="el" href="classGEO_1_1RestrictedVoronoiDiagram.html#a9dd235a20615a5a89368492601635f0d">GEO::RestrictedVoronoiDiagram</a>
+: <a class="el" href="classGEO_1_1RestrictedVoronoiDiagram.html#adb164d729ebbc63a07ba48440dd2eed7">GEO::RestrictedVoronoiDiagram</a>
 </li>
 <li>compute_RVC()
 : <a class="el" href="classGEO_1_1RestrictedVoronoiDiagram.html#a77f02a8fcb7ccb2ad871c75931a53a2a">GEO::RestrictedVoronoiDiagram</a>
@@ -575,7 +559,7 @@ $(document).ready(function(){initNavTree('functions_func_c.html',''); initResiza
 : <a class="el" href="classVBW_1_1ConvexCell.html#a1295bd879548027af14d800cefe8309b">VBW::ConvexCell</a>
 </li>
 <li>compute_union()
-: <a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#a61e2ab8a877bc2474e34ca0e03f43406">OGF::MeshGrobSurfaceCommands</a>
+: <a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#a0601e4285ac43e04d5e76715a60034c2">OGF::MeshGrobSurfaceCommands</a>
 </li>
 <li>compute_vertices_id()
 : <a class="el" href="classOGF_1_1MeshGrobAttributesCommands.html#a86b229a3dc7143294d5663b7a2d7d602">OGF::MeshGrobAttributesCommands</a>
@@ -808,7 +792,7 @@ $(document).ready(function(){initNavTree('functions_func_c.html',''); initResiza
 , <a class="el" href="classGEO_1_1MeshFacetsStore.html#a21b4e11788d791689a1dae531f6d44e0">GEO::MeshFacetsStore</a>
 </li>
 <li>Corner()
-: <a class="el" href="classGEOGen_1_1ConvexCell_1_1Corner.html#a586fe2e83696e4d08c07dc8f65f78220">GEOGen::ConvexCell::Corner</a>
+: <a class="el" href="classGEOGen_1_1ConvexCell_1_1Corner.html#a08d2f90bc5f5e95289e6ce33007dca95">GEOGen::ConvexCell::Corner</a>
 </li>
 <li>corners()
 : <a class="el" href="classGEO_1_1MeshCells.html#ad8fd1d45147955743790e09b879c583a">GEO::MeshCells</a>
@@ -835,15 +819,15 @@ $(document).ready(function(){initNavTree('functions_func_c.html',''); initResiza
 , <a class="el" href="classGEO_1_1MeshIOHandler.html#a6964a2ef08d69d6423c4e613f4385cc5">GEO::MeshIOHandler</a>
 , <a class="el" href="classGEO_1_1NearestNeighborSearch.html#a6950a12d7076d4d9975c16a09c7d1639">GEO::NearestNeighborSearch</a>
 , <a class="el" href="classGEO_1_1Optimizer.html#a40dac396596289e51ff04e2cfabf1481">GEO::Optimizer</a>
-, <a class="el" href="classGEO_1_1RestrictedVoronoiDiagram.html#a81c0a26a7d477efc4c83f91307f76a83">GEO::RestrictedVoronoiDiagram</a>
+, <a class="el" href="classGEO_1_1RestrictedVoronoiDiagram.html#aa9f1df47a2fe75a28f6a32b8ee41cc58">GEO::RestrictedVoronoiDiagram</a>
 , <a class="el" href="classOGF_1_1Any.html#ac9be38f9301f0a957b0f02c625535d80">OGF::Any</a>
 , <a class="el" href="classOGF_1_1Factory.html#aba0fb86b789ad7cf8275a09d2f83a8db">OGF::Factory</a>
 , <a class="el" href="classOGF_1_1FactoryMetaClass.html#a8fa3940a99e3e95ea4967cadff893669">OGF::FactoryMetaClass</a>
-, <a class="el" href="classOGF_1_1Interpreter.html#a45907a01e6f895578574275d6f821505">OGF::Interpreter</a>
+, <a class="el" href="classOGF_1_1Interpreter.html#af0383b49314feebb31a7f34258c191fb">OGF::Interpreter</a>
 </li>
 <li>create_arg()
 : <a class="el" href="classGEO_1_1Command.html#ac176db0523134a117ed1d4b75706b143">GEO::Command</a>
-, <a class="el" href="classOGF_1_1ArgList.html#a3d92e9186cfe291e0f3ebaebda2d1432">OGF::ArgList</a>
+, <a class="el" href="classOGF_1_1ArgList.html#a41b3abbf3af8562ee2fe9d3f6679a87a">OGF::ArgList</a>
 </li>
 <li>create_attribute()
 : <a class="el" href="classOGF_1_1MeshGrobEditor.html#a46608dc4e8bf4ad2f4e0aa9ed573bd56">OGF::MeshGrobEditor</a>
@@ -887,7 +871,7 @@ $(document).ready(function(){initNavTree('functions_func_c.html',''); initResiza
 , <a class="el" href="classOGF_1_1ModuleMaker.html#aebc5681a10cc13a4455456cc5cf5c5e4">OGF::ModuleMaker</a>
 </li>
 <li>create_edge()
-: <a class="el" href="classGEO_1_1MeshEdges.html#a7261e918bb4ea4d1ea6f46cfb04c5a74">GEO::MeshEdges</a>
+: <a class="el" href="classGEO_1_1MeshEdges.html#a714055ca9eb5ddc2b614cc1eabebceb1">GEO::MeshEdges</a>
 , <a class="el" href="classOGF_1_1MeshGrobEditor.html#a48aecc4c84a0727cb388edd79d9d0e87">OGF::MeshGrobEditor</a>
 </li>
 <li>create_edges()
@@ -973,6 +957,7 @@ $(document).ready(function(){initNavTree('functions_func_c.html',''); initResiza
 <li>create_intersection()
 : <a class="el" href="classGEO_1_1CDT2d.html#a253680c3241764bdc0a83023e62c6071">GEO::CDT2d</a>
 , <a class="el" href="classGEO_1_1CDTBase2d.html#a68530aeb1cefcb0a9292cb80717b93a8">GEO::CDTBase2d</a>
+, <a class="el" href="classGEO_1_1MeshInTriangle.html#a152b69138f53959d14836666169e1890">GEO::MeshInTriangle</a>
 </li>
 <li>create_kd_tree_recursive()
 : <a class="el" href="classGEO_1_1AdaptiveKdTree.html#a66dffbb9b06fd9d8f9f68451ff0a92c3">GEO::AdaptiveKdTree</a>
@@ -996,7 +981,7 @@ $(document).ready(function(){initNavTree('functions_func_c.html',''); initResiza
 : <a class="el" href="classOGF_1_1SceneGraphDevelCommands.html#ade2860b74c3ce5f8d475939fe9185a2d">OGF::SceneGraphDevelCommands</a>
 </li>
 <li>create_polygon()
-: <a class="el" href="classGEO_1_1MeshFacets.html#a7ba6c76e67fba75332599c93cb2f50fe">GEO::MeshFacets</a>
+: <a class="el" href="classGEO_1_1MeshFacets.html#a33cd32e6bf7b14de6c69a4b7e10bb5c3">GEO::MeshFacets</a>
 </li>
 <li>create_prism()
 : <a class="el" href="classGEO_1_1MeshCells.html#a6e579f6aeabce1a4182a56dc30cf2b56">GEO::MeshCells</a>
@@ -1174,7 +1159,7 @@ $(document).ready(function(){initNavTree('functions_func_c.html',''); initResiza
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 3 2023 16:22:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Tue Jun 27 2023 06:45:50 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

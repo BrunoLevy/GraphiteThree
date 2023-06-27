@@ -6,10 +6,10 @@ var structGEO_1_1basic__quadindex =
     [ "basic_quadindex", "structGEO_1_1basic__quadindex.html#a8bd227974fa600917dd1b22451eb8fc9", null ],
     [ "basic_quadindex", "structGEO_1_1basic__quadindex.html#aad6a6984ff00d12428a8c057b03e78ca", null ],
     [ "basic_quadindex", "structGEO_1_1basic__quadindex.html#a9f506a86aa670f646ff94273206b76db", null ],
-    [ "basic_quadindex", "structGEO_1_1basic__quadindex.html#ada84c7f7f240de14b6394a17a74c246e", null ],
+    [ "basic_quadindex", "structGEO_1_1basic__quadindex.html#a3966a04856cc0c8ec04177919dcd38a9", null ],
     [ "operator!=", "structGEO_1_1basic__quadindex.html#aa893bb8687e2241d6df4c49bd90041af", null ],
     [ "operator<", "structGEO_1_1basic__quadindex.html#a61aa8a2d180be6921074a3bb5d07f798", null ],
-    [ "operator=", "structGEO_1_1basic__quadindex.html#a8ae96428e6e0c1940e442e123c6f66ac", null ],
+    [ "operator=", "structGEO_1_1basic__quadindex.html#a071829f96c06d7263b04fb832e728a55", null ],
     [ "operator==", "structGEO_1_1basic__quadindex.html#a26a1b05baf6200e7ff88b72baa56bf5b", null ],
     [ "operator<<", "structGEO_1_1basic__quadindex.html#ae36e2bfac9481f19a550bfdf6684fe37", null ],
     [ "indices", "structGEO_1_1basic__quadindex.html#a28c37c668270a5a06a53294ead1b1bd7", null ]

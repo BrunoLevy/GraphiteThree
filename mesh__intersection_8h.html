@@ -83,50 +83,28 @@ $(document).ready(function(){initNavTree('mesh__intersection_8h.html',''); initR
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mesh_intersection.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Functions for computing surfacic (and soon volumetric) mesh intersections.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;<a class="el" href="geogram_2src_2lib_2geogram_2basic_2common_8h_source.html">geogram/basic/common.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="numeric_8h_source.html">geogram/basic/numeric.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="mesh__surface__intersection_8h_source.html">geogram/mesh/mesh_surface_intersection.h</a>&gt;</code><br />
 </div>
 <p><a href="mesh__intersection_8h_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespaceGEO"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html">GEO</a></td></tr>
-<tr class="memdesc:namespaceGEO"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global Vorpaline namespace. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:aa620f919a909c50496afca315ba17905"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#aa620f919a909c50496afca315ba17905">GEO::mesh_union</a> (Mesh &amp;result, Mesh &amp;A, Mesh &amp;B)</td></tr>
-<tr class="memdesc:aa620f919a909c50496afca315ba17905"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the union of two surface meshes.  <a href="namespaceGEO.html#aa620f919a909c50496afca315ba17905">More...</a><br /></td></tr>
-<tr class="separator:aa620f919a909c50496afca315ba17905"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e9bd7ead4bc073fd16b04166b9f8d96"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a5e9bd7ead4bc073fd16b04166b9f8d96">GEO::mesh_intersection</a> (Mesh &amp;result, Mesh &amp;A, Mesh &amp;B)</td></tr>
-<tr class="memdesc:a5e9bd7ead4bc073fd16b04166b9f8d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the intersection of two surface meshes.  <a href="namespaceGEO.html#a5e9bd7ead4bc073fd16b04166b9f8d96">More...</a><br /></td></tr>
-<tr class="separator:a5e9bd7ead4bc073fd16b04166b9f8d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad07349e452fdaad5c82cfbec4a5106c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#ad07349e452fdaad5c82cfbec4a5106c5">GEO::mesh_difference</a> (Mesh &amp;result, Mesh &amp;A, Mesh &amp;B)</td></tr>
-<tr class="memdesc:ad07349e452fdaad5c82cfbec4a5106c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the difference of two surface meshes.  <a href="namespaceGEO.html#ad07349e452fdaad5c82cfbec4a5106c5">More...</a><br /></td></tr>
-<tr class="separator:ad07349e452fdaad5c82cfbec4a5106c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7e2674779e29d48f7130b8d94c120e3"><td class="memItemLeft" align="right" valign="top"><a id="ae7e2674779e29d48f7130b8d94c120e3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#ae7e2674779e29d48f7130b8d94c120e3">GEO::mesh_remove_intersections</a> (Mesh &amp;M, index_t max_iter=3)</td></tr>
-<tr class="memdesc:ae7e2674779e29d48f7130b8d94c120e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to make a surface mesh conformal by removing intersecting facets and re-triangulating the holes. <br /></td></tr>
-<tr class="separator:ae7e2674779e29d48f7130b8d94c120e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e19a60ac956fe8234dc0b6db8aab059"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a0e19a60ac956fe8234dc0b6db8aab059">GEO::mesh_facets_have_intersection</a> (Mesh &amp;M, index_t f1, index_t f2)</td></tr>
-<tr class="memdesc:a0e19a60ac956fe8234dc0b6db8aab059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether two mesh facets have a non-degenerate intersection.  <a href="namespaceGEO.html#a0e19a60ac956fe8234dc0b6db8aab059">More...</a><br /></td></tr>
-<tr class="separator:a0e19a60ac956fe8234dc0b6db8aab059"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Functions for computing surfacic (and soon volumetric) mesh intersections. </p>
+
+<p class="definition">Definition in file <a class="el" href="mesh__intersection_8h_source.html">mesh_intersection.h</a>.</p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_7faf8be2027c4a91a1e5453dfee06721.html">mesh</a></li><li class="navelem"><a class="el" href="mesh__intersection_8h.html">mesh_intersection.h</a></li>
-    <li class="footer">Generated on Fri Mar 3 2023 16:22:45 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

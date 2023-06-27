@@ -9,7 +9,7 @@ var classGEO_1_1CDT2d =
     [ "create_intersection", "classGEO_1_1CDT2d.html#a253680c3241764bdc0a83023e62c6071", null ],
     [ "incircle", "classGEO_1_1CDT2d.html#a7961974d2ed007ded38f62d13ee398df", null ],
     [ "insert", "classGEO_1_1CDT2d.html#a474a33e7bf04b09bfcf25fda048c8a2e", null ],
-    [ "insert", "classGEO_1_1CDT2d.html#a1d2666299f798282bbe19bd6fd000dee", null ],
+    [ "insert", "classGEO_1_1CDT2d.html#a7f5166f21b6d417860ab20adff37a3f1", null ],
     [ "orient2d", "classGEO_1_1CDT2d.html#a722bb6591a94ef7d795ca67cb6859d30", null ],
     [ "point", "classGEO_1_1CDT2d.html#a93567b233919ee37af85efbba656968d", null ],
     [ "save", "classGEO_1_1CDT2d.html#afc309fa0826cc4250e9f36dc67d217e3", null ],

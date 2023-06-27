@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['withtflags_9304',['WithTFlags',['../convex__cell_8h.html#a06f2f1af26a1b3aa02fb4d492479fedeadc6638d6e54b82a2f9c1c918e35fe73e',1,'VBW']]],
-  ['withvglobal_9305',['WithVGlobal',['../convex__cell_8h.html#a06f2f1af26a1b3aa02fb4d492479fedea112b83ed10c3a822ee9673401c07fb74',1,'VBW']]]
+  ['vertex_5fat_5finfinity_9113',['VERTEX_AT_INFINITY',['../convex__cell_8h.html#a962a1aed318a4620980ac7d3868f00caae95ad91c205aa3a92903f293ec267a53',1,'VBW']]]
 ];

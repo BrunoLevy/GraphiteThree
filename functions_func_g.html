@@ -277,6 +277,9 @@ $(document).ready(function(){initNavTree('functions_func_g.html',''); initResiza
 <li>get_connectors()
 : <a class="el" href="classOGF_1_1PlainMeshGrobShader.html#ac94c91c4c2756449c5c10890f820e135">OGF::PlainMeshGrobShader</a>
 </li>
+<li>get_constraints()
+: <a class="el" href="classGEO_1_1MeshInTriangle.html#afb8d6ff2cf9e432afe4582bdd1d00771">GEO::MeshInTriangle</a>
+</li>
 <li>get_constructors()
 : <a class="el" href="classOGF_1_1MetaClass.html#a09979fd722dee62f816fa151b9c53a69">OGF::MetaClass</a>
 </li>
@@ -333,6 +336,12 @@ $(document).ready(function(){initNavTree('functions_func_g.html',''); initResiza
 <li>get_draw_selected_only()
 : <a class="el" href="classOGF_1_1Camera.html#aed267043ff8c4d4c2e16c691696572bc">OGF::Camera</a>
 , <a class="el" href="classOGF_1_1SceneGraphShaderManager.html#a2b1a9689d3a79f600650e61810ff2a4b">OGF::SceneGraphShaderManager</a>
+</li>
+<li>get_edge_edge_intersection()
+: <a class="el" href="classGEO_1_1MeshInTriangle.html#a41359c2c59d380dbf618956ee1bd8293">GEO::MeshInTriangle</a>
+</li>
+<li>get_edge_edge_intersection_2D()
+: <a class="el" href="classGEO_1_1MeshInTriangle.html#a9f52d98f21ac73e2c0e0f3fef8145d48">GEO::MeshInTriangle</a>
 </li>
 <li>get_edges_style()
 : <a class="el" href="classOGF_1_1PlainMeshGrobShader.html#a6d232e1aa29b7d674d331c73c6b0dbbf">OGF::PlainMeshGrobShader</a>
@@ -493,7 +502,7 @@ $(document).ready(function(){initNavTree('functions_func_g.html',''); initResiza
 : <a class="el" href="classOGF_1_1MeshGrobShader.html#ad46b605b7ee4f9c97018ead0e825d0e3">OGF::MeshGrobShader</a>
 </li>
 <li>get_keys()
-: <a class="el" href="classOGF_1_1Interpreter.html#aeceba22fb7df61dd6de1a299a8bf9e2b">OGF::Interpreter</a>
+: <a class="el" href="classOGF_1_1Interpreter.html#a6b74a8317540c347ea2ccd161a388769">OGF::Interpreter</a>
 , <a class="el" href="classOGF_1_1LuaInterpreter.html#a0c76babdcd6a3b0fc6f0e7022e7bc578">OGF::LuaInterpreter</a>
 </li>
 <li>get_language()
@@ -542,7 +551,7 @@ $(document).ready(function(){initNavTree('functions_func_g.html',''); initResiza
 : <a class="el" href="classGLUP_1_1Context.html#a0953c2354ac920c9ba4e75205c4c4a24">GLUP::Context</a>
 </li>
 <li>get_matrix()
-: <a class="el" href="classGLUP_1_1Context.html#ae62ba7e401d98dc67d88379c663f9418">GLUP::Context</a>
+: <a class="el" href="classGLUP_1_1Context.html#a56f1b5d0de21b75d43367c3f95a0af32">GLUP::Context</a>
 , <a class="el" href="classOGF_1_1Transform3d.html#a695719571ec0ab0ec3ffb0b2702b44d8">OGF::Transform3d</a>
 </li>
 <li>get_matrix_mode()
@@ -649,7 +658,7 @@ $(document).ready(function(){initNavTree('functions_func_g.html',''); initResiza
 </li>
 <li>get_neighbors_internal()
 : <a class="el" href="classGEO_1_1Delaunay.html#a2c8ceed12544f33fb86fb8e35f2425c2">GEO::Delaunay</a>
-, <a class="el" href="classGEO_1_1Delaunay__NearestNeighbors.html#a8bbef20d4a0f9c728112fbc863e310fe">GEO::Delaunay_NearestNeighbors</a>
+, <a class="el" href="classGEO_1_1Delaunay__NearestNeighbors.html#a6008eac87a3ca352b42251226af65d54">GEO::Delaunay_NearestNeighbors</a>
 </li>
 <li>get_node()
 : <a class="el" href="classGEO_1_1AdaptiveKdTree.html#aef80b5fe4c19049448925a5ec9290698">GEO::AdaptiveKdTree</a>
@@ -687,7 +696,7 @@ $(document).ready(function(){initNavTree('functions_func_g.html',''); initResiza
 : <a class="el" href="classGEO_1_1MeshGfx.html#af895195857c53dc09919f4b52a95cc28">GEO::MeshGfx</a>
 </li>
 <li>get_pointer()
-: <a class="el" href="classGLUP_1_1FloatsArrayStateVariable.html#a681948ca3d21e1df53b5fb492d325bf9">GLUP::FloatsArrayStateVariable</a>
+: <a class="el" href="classGLUP_1_1FloatsArrayStateVariable.html#aec0910c96dd46c478585e5bda946fb90">GLUP::FloatsArrayStateVariable</a>
 </li>
 <li>get_points_color()
 : <a class="el" href="classGEO_1_1MeshGfx.html#a0a0a2b3038dc648a2c4824f333ad4f35">GEO::MeshGfx</a>
@@ -738,12 +747,6 @@ $(document).ready(function(){initNavTree('functions_func_g.html',''); initResiza
 </li>
 <li>get_rotation_matrix()
 : <a class="el" href="classOGF_1_1Transform3d.html#a64735353e2a75c59c5695a73c8918093">OGF::Transform3d</a>
-</li>
-<li>get_RVD()
-: <a class="el" href="classGEO_1_1OptimalTransportMap2d.html#a2fdc9caecf6686e2784a70e1e3dd1f00">GEO::OptimalTransportMap2d</a>
-, <a class="el" href="classGEO_1_1OptimalTransportMap3d.html#aa8fe068caf8a0ba49875e95dcd77eb08">GEO::OptimalTransportMap3d</a>
-, <a class="el" href="classGEO_1_1OptimalTransportMap.html#a623bcb3f727b199881b63e930be5b60f">GEO::OptimalTransportMap</a>
-, <a class="el" href="classGEO_1_1OptimalTransportMapOnSurface.html#a0800d7209cfff0918ee66fbb157221aa">GEO::OptimalTransportMapOnSurface</a>
 </li>
 <li>get_scalar_attributes()
 : <a class="el" href="classGEO_1_1Mesh.html#ae702e4cfd236a816ae2b5f4f59199d3f">GEO::Mesh</a>
@@ -1025,7 +1028,8 @@ $(document).ready(function(){initNavTree('functions_func_g.html',''); initResiza
 </li>
 <li>gom_arg_attribute()
 : <a class="el" href="classOGF_1_1MeshGrobAttributesCommands.html#ac380a26dd67cbf0b9132cd29f81313ef">OGF::MeshGrobAttributesCommands</a>
-, <a class="el" href="classOGF_1_1MeshGrobFiltersCommands.html#a924783cd17109fe11cdace047a2be8eb">OGF::MeshGrobFiltersCommands</a>
+, <a class="el" href="classOGF_1_1MeshGrobFiltersCommands.html#afe59c45908456e317ac0fcc7818a0d60">OGF::MeshGrobFiltersCommands</a>
+, <a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#a912a4dc6cd626fd0fac7e70e5bad761d">OGF::MeshGrobSurfaceCommands</a>
 </li>
 <li>GomCodeGenerator()
 : <a class="el" href="classOGF_1_1GomCodeGenerator.html#a472c592f3f55402e7c0f7f36386c8073">OGF::GomCodeGenerator</a>
@@ -1069,9 +1073,6 @@ $(document).ready(function(){initNavTree('functions_func_g.html',''); initResiza
 </li>
 <li>grabbed()
 : <a class="el" href="classGEO_1_1ArcBall.html#a4eef751e32ebcd1f650f2684bcc115f9">GEO::ArcBall</a>
-</li>
-<li>gradient_threshold()
-: <a class="el" href="classGEO_1_1OptimalTransportMap.html#a04c508920ec895962f493d18fc47d46d">GEO::OptimalTransportMap</a>
 </li>
 <li>graphics_are_locked()
 : <a class="el" href="classOGF_1_1Grob.html#a28fc6a93abcb36c641cc911b11261e36">OGF::Grob</a>
@@ -1122,7 +1123,7 @@ $(document).ready(function(){initNavTree('functions_func_g.html',''); initResiza
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 3 2023 16:22:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Tue Jun 27 2023 06:45:50 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

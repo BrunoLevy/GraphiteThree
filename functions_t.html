@@ -92,6 +92,9 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 <li>T_
 : <a class="el" href="classGEO_1_1CDTBase2d.html#ac1963ce8000768c1839a171fcd3713dc">GEO::CDTBase2d</a>
 </li>
+<li>T_MARKED_FLAG
+: <a class="el" href="classGEO_1_1CDTBase2d.html#ace5f36b6d887a37914c9b715302ca7b1a7f2d743e835a38d514d2932c392aeeb9">GEO::CDTBase2d</a>
+</li>
 <li>T_to_instance()
 : <a class="el" href="classGEO_1_1Periodic.html#a55c319ac2441cabe24cc66fedbee06cd">GEO::Periodic</a>
 </li>
@@ -109,6 +112,10 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 </li>
 <li>Tadj_set()
 : <a class="el" href="classGEO_1_1CDTBase2d.html#aae8153b9eb30b1568f959eceb4a50c9e">GEO::CDTBase2d</a>
+</li>
+<li>target_mesh()
+: <a class="el" href="classGEO_1_1MeshInTriangle.html#a60a4e8e50a698d8b0ecc4198aaed903d">GEO::MeshInTriangle</a>
+, <a class="el" href="classGEO_1_1MeshSurfaceIntersection.html#a283652b8388d1d1d2c54c3ab813d0eb5">GEO::MeshSurfaceIntersection</a>
 </li>
 <li>task_name()
 : <a class="el" href="classGEO_1_1ProgressTask.html#aaa4ef049a4aa4d830a4779afd5db097e">GEO::ProgressTask</a>
@@ -152,7 +159,7 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 </li>
 <li>test()
 : <a class="el" href="structGEO_1_1MeshGfx_1_1Filter.html#ac2c22a127f260a3131716ece3658751a">GEO::MeshGfx::Filter</a>
-, <a class="el" href="classOGF_1_1Filter.html#ab625ca11fd9bd1523f4608d00f0fbe24">OGF::Filter</a>
+, <a class="el" href="classOGF_1_1Filter.html#a5f44de33ddd07b79da01d70baa02de94">OGF::Filter</a>
 </li>
 <li>test_arg_condition()
 : <a class="el" href="classOGF_1_1Connection.html#aba375b93a1c5eca2fc1cb46bb027a4ae">OGF::Connection</a>
@@ -270,6 +277,7 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 <li>to_string()
 : <a class="el" href="classGEO_1_1expansion.html#ae349faafb0b3b74b07f6df66ca76b338">GEO::expansion</a>
 , <a class="el" href="classGEO_1_1expansion__nt.html#a715a279c202dc053a656b0f50eedfad5">GEO::expansion_nt</a>
+, <a class="el" href="classGEO_1_1MeshInTriangle_1_1Vertex.html#a73e80556b04791d48c4edc462666dcd1">GEO::MeshInTriangle::Vertex</a>
 </li>
 <li>to_unsigned_int()
 : <a class="el" href="classGEOGen_1_1SymbolicVertex.html#acd6a3eac2e8cda4df3dabd11dd3e5684">GEOGen::SymbolicVertex</a>
@@ -294,15 +302,7 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 </li>
 <li>top()
 : <a class="el" href="classGEOGen_1_1VectorStack.html#a3679e211cb63cee0828239322647e271">GEOGen::VectorStack&lt; T &gt;</a>
-, <a class="el" href="classGLUP_1_1MatrixStack.html#a42268801da2002dd1e88f986b814b54f">GLUP::MatrixStack</a>
-</li>
-<li>total_mass()
-: <a class="el" href="classGEO_1_1OptimalTransportMap.html#aca3ffba929bef7da28d68cb38ea2ffd3">GEO::OptimalTransportMap</a>
-</li>
-<li>total_mesh_mass()
-: <a class="el" href="classGEO_1_1OptimalTransportMap2d.html#addd3fa17fd312ef1fd9a1d9dcbd0a226">GEO::OptimalTransportMap2d</a>
-, <a class="el" href="classGEO_1_1OptimalTransportMap3d.html#a1d4f16bbfb2bdac0db964bb46679d9f8">GEO::OptimalTransportMap3d</a>
-, <a class="el" href="classGEO_1_1OptimalTransportMapOnSurface.html#a38742a86d09730e72cbebd17329b8f76">GEO::OptimalTransportMapOnSurface</a>
+, <a class="el" href="classGLUP_1_1MatrixStack.html#a84f2d930267b4291dec85379806bd36d">GLUP::MatrixStack</a>
 </li>
 <li>touch()
 : <a class="el" href="classGEO_1_1FileSystem_1_1Node.html#a565817b89f26f6a9b0f4bb6745f86885">GEO::FileSystem::Node</a>
@@ -344,14 +344,11 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 <li>Treset_flag()
 : <a class="el" href="classGEO_1_1CDTBase2d.html#adbc7729eb5f174019deb08452953fd95">GEO::CDTBase2d</a>
 </li>
-<li>TrglGradient()
-: <a class="el" href="classGEO_1_1TrglGradient.html#aae15e782da8e3d847a53177248d15585">GEO::TrglGradient</a>
-</li>
 <li>triangle()
-: <a class="el" href="classGEO_1_1ImageRasterizer.html#a13e80235121f05d644beba4526730e9a">GEO::ImageRasterizer</a>
+: <a class="el" href="classGEO_1_1ImageRasterizer.html#acca717f6757127bd9dddd9a8d2a21800">GEO::ImageRasterizer</a>
 </li>
 <li>Triangle()
-: <a class="el" href="structGEOGen_1_1ConvexCell_1_1Triangle.html#a1c99637b6b08e95f456d8a2c69fa2483">GEOGen::ConvexCell::Triangle</a>
+: <a class="el" href="structGEOGen_1_1ConvexCell_1_1Triangle.html#a48f20bea12a2062dc5d5811cba490cd7">GEOGen::ConvexCell::Triangle</a>
 </li>
 <li>triangle_adjacent()
 : <a class="el" href="classGEO_1_1Delaunay2d.html#a6f4868831cea1c7882ea05f550e4fbbf">GEO::Delaunay2d</a>
@@ -468,9 +465,6 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 <li>Trot()
 : <a class="el" href="classGEO_1_1CDTBase2d.html#a0d2e748399c33500e0cb71b4048398ac">GEO::CDTBase2d</a>
 </li>
-<li>try_quadrangulate()
-: <a class="el" href="structGEO_1_1Poly3d.html#ade59e57a7899b8e829d513ef51a95125">GEO::Poly3d</a>
-</li>
 <li>Tset()
 : <a class="el" href="classGEO_1_1CDTBase2d.html#accef2d6dd6bbe2dc308f51eeb971c49d">GEO::CDTBase2d</a>
 </li>
@@ -503,12 +497,6 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 </li>
 <li>two_sum()
 : <a class="el" href="classGEO_1_1expansion.html#af28cee041f21e381b374f5d450074bb1">GEO::expansion</a>
-</li>
-<li>TX()
-: <a class="el" href="classGEO_1_1TrglGradient.html#a091b534f622b0cc6a896f78e3cdca0b8">GEO::TrglGradient</a>
-</li>
-<li>TY()
-: <a class="el" href="classGEO_1_1TrglGradient.html#a706b9ed29d1a8f7ba1499d5ac1d8209e">GEO::TrglGradient</a>
 </li>
 <li>type()
 : <a class="el" href="classGEO_1_1MeshCellsStore.html#a8530b9101194ce24099118abf4cdbbf4">GEO::MeshCellsStore</a>
@@ -544,7 +532,7 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 3 2023 16:22:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Tue Jun 27 2023 06:45:50 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

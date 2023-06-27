@@ -1,6 +1,7 @@
 var multi__precision_8h =
 [
     [ "expansion", "classGEO_1_1expansion.html", "classGEO_1_1expansion" ],
+    [ "expansion_abs", "multi__precision_8h.html#aa0a528d06bacc9e57b59b6ae802256be", null ],
     [ "expansion_create", "multi__precision_8h.html#ac73b16e5c143290e3864bd29083f43d0", null ],
     [ "expansion_det2x2", "multi__precision_8h.html#aa2b4cd929c0cdde5d321006d6820995a", null ],
     [ "expansion_det3x3", "multi__precision_8h.html#accb53ab149390dda8821488793dce0e7", null ],

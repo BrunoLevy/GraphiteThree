@@ -132,9 +132,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a161b8535ef282308148e9a228c1efad2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1VoxelGrobAttributesCommands.html#a161b8535ef282308148e9a228c1efad2">Poisson_reconstruction</a> (const <a class="el" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a> &amp;points, const std::string &amp;attribute=&quot;distance&quot;, index_t depth=8, const <a class="el" href="namespaceOGF.html#ab6f4e46c4c17608b487155ab73b52ddf">NewMeshGrobName</a> &amp;reconstruction=&quot;&quot;)</td></tr>
 <tr class="memdesc:a161b8535ef282308148e9a228c1efad2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reconstructs a surface from points and normals using Misha Kahzdan's Screened Poisson Reconstruction.  <a href="classOGF_1_1VoxelGrobAttributesCommands.html#a161b8535ef282308148e9a228c1efad2">More...</a><br /></td></tr>
 <tr class="separator:a161b8535ef282308148e9a228c1efad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cbf11797ad5438b451eab10db6188c0"><td class="memItemLeft" align="right" valign="top"><a id="a9cbf11797ad5438b451eab10db6188c0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1VoxelGrobAttributesCommands.html#a9cbf11797ad5438b451eab10db6188c0">load_attribute</a> (const std::string &amp;attribute, const <a class="el" href="namespaceOGF.html#ab58ce773075064b1c5319a5654c9602b">FileName</a> &amp;filename)</td></tr>
-<tr class="memdesc:a9cbf11797ad5438b451eab10db6188c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads an attribute for a 32 bit floating point raw file. <br /></td></tr>
+<tr class="memitem:a9cbf11797ad5438b451eab10db6188c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1VoxelGrobAttributesCommands.html#a9cbf11797ad5438b451eab10db6188c0">load_attribute</a> (const std::string &amp;attribute, const <a class="el" href="namespaceOGF.html#ab58ce773075064b1c5319a5654c9602b">FileName</a> &amp;filename)</td></tr>
+<tr class="memdesc:a9cbf11797ad5438b451eab10db6188c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads an attribute for a 32 bit floating point raw file.  <a href="classOGF_1_1VoxelGrobAttributesCommands.html#a9cbf11797ad5438b451eab10db6188c0">More...</a><br /></td></tr>
 <tr class="separator:a9cbf11797ad5438b451eab10db6188c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classOGF_1_1VoxelGrobCommands"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classOGF_1_1VoxelGrobCommands')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classOGF_1_1VoxelGrobCommands.html">OGF::VoxelGrobCommands</a></td></tr>
 <tr class="memitem:a63a04a0676c49c497ffd63abc5a71c53 inherit pub_methods_classOGF_1_1VoxelGrobCommands"><td class="memItemLeft" align="right" valign="top"><a id="a63a04a0676c49c497ffd63abc5a71c53"></a>
@@ -427,6 +426,42 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a9cbf11797ad5438b451eab10db6188c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9cbf11797ad5438b451eab10db6188c0">&#9670;&nbsp;</a></span>load_attribute()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OGF::VoxelGrobAttributesCommands::load_attribute </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>attribute</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespaceOGF.html#ab58ce773075064b1c5319a5654c9602b">FileName</a> &amp;&#160;</td>
+          <td class="paramname"><em>filename</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Loads an attribute for a 32 bit floating point raw file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">filename</td><td>a binary file with the attribute stored as single-precision floats. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a98d432e1d85668114c5ec2c65e3d3b54"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a98d432e1d85668114c5ec2c65e3d3b54">&#9670;&nbsp;</a></span>normalize_attribute()</h2>
 
@@ -537,7 +572,7 @@ Additional Inherited Members</h2></td></tr>
 <b>Initial value:</b><div class="fragment"><div class="line">= 128</div>
 <div class="line">        )</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="voxel__grob__attributes__commands_8h_source.html#l00082">82</a> of file <a class="el" href="voxel__grob__attributes__commands_8h_source.html">voxel_grob_attributes_commands.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="voxel__grob__attributes__commands_8h_source.html#l00083">83</a> of file <a class="el" href="voxel__grob__attributes__commands_8h_source.html">voxel_grob_attributes_commands.h</a>.</p>
 
 </div>
 </div>
@@ -550,7 +585,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1VoxelGrobAttributesCommands.html">VoxelGrobAttributesCommands</a></li>
-    <li class="footer">Generated on Fri Mar 3 2023 16:22:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Tue Jun 27 2023 06:45:50 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

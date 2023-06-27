@@ -122,7 +122,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:a96c5904f4039ebf1ad839c384ad33b23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Symbolic constant for <a class="el" href="nl_8h.html#aa5a6bc65d2084a6df59c34a2cc8f901b" title="Specifies an integer solver parameter.">nlSolverParameteri()</a> to specify the maximum number of iterations before the iterative solver is stopped.  <a href="nl_8h.html#a96c5904f4039ebf1ad839c384ad33b23">More...</a><br /></td></tr>
 <tr class="separator:a96c5904f4039ebf1ad839c384ad33b23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c458de7a0be304725341a3fe03f2e9f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">NL_THRESHOLD</a>&#160;&#160;&#160;0x104</td></tr>
-<tr class="memdesc:a9c458de7a0be304725341a3fe03f2e9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Symbolic constant for <a class="el" href="nl_8h.html#aab7caf5c9ecd67f840a0abfc540bb9ab" title="Specifies a floating-point solver parameter.">nlSolverParameterd()</a> to specify the maximum threshold <img class="formulaInl" alt="$ \| Ax - b \| / \| b \| $" src="form_3.png"/> before the iterative solver is stopped.  <a href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">More...</a><br /></td></tr>
+<tr class="memdesc:a9c458de7a0be304725341a3fe03f2e9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Symbolic constant for <a class="el" href="nl_8h.html#aab7caf5c9ecd67f840a0abfc540bb9ab" title="Specifies a floating-point solver parameter.">nlSolverParameterd()</a> to specify the maximum threshold <img class="formulaInl" alt="$ \| Ax - b \| / \| b \| $" src="form_15.png"/> before the iterative solver is stopped.  <a href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">More...</a><br /></td></tr>
 <tr class="separator:a9c458de7a0be304725341a3fe03f2e9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aabaaa63844465ddf7391179a846b93f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nl_8h.html#aabaaa63844465ddf7391179a846b93f2">NL_OMEGA</a>&#160;&#160;&#160;0x105</td></tr>
 <tr class="memdesc:aabaaa63844465ddf7391179a846b93f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Symbolic constant for <a class="el" href="nl_8h.html#aab7caf5c9ecd67f840a0abfc540bb9ab" title="Specifies a floating-point solver parameter.">nlSolverParameterd()</a> to specify the relaxation parameter <img class="formulaInl" alt="$ \omega \in (0,\ldots 2) $" src="form_16.png"/> used by the SSOR preconditioner.  <a href="nl_8h.html#aabaaa63844465ddf7391179a846b93f2">More...</a><br /></td></tr>
@@ -488,7 +488,7 @@ NLAPI void NLAPIENTRY&#160;</td><td class="memItemRight" valign="bottom"><a clas
 <p>The purpose of the example programs shown below is to demonstrate OpenNL programs that are as simple as possible. Note that for such small linear systems, the sparse iterative solvers in OpenNL will work, but they are completely inappropriate, one would normally solve the system directly.</p>
 <h1><a class="anchor" id="autotoc_md0"></a>
 Example 1 (a simple linear system)</h1>
-<p>Solve <img class="formulaInl" alt="$ \left[ \begin{array}{ll} 1 &amp; 2 \\ 3 &amp; 4 \end{array} \right] \left[ \begin{array}{l} x \\ y \end{array} \right] = \left[ \begin{array}{l} 5 \\ 6 \end{array} \right] $" src="form_11.png"/> </p><div class="fragment"><div class="line"><span class="keywordtype">double</span> x,y; <span class="comment">// Solution of the system</span></div>
+<p>Solve <img class="formulaInl" alt="$ \left[ \begin{array}{ll} 1 &amp; 2 \\ 3 &amp; 4 \end{array} \right] \left[ \begin{array}{l} x \\ y \end{array} \right] = \left[ \begin{array}{l} 5 \\ 6 \end{array} \right] $" src="form_10.png"/> </p><div class="fragment"><div class="line"><span class="keywordtype">double</span> x,y; <span class="comment">// Solution of the system</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Create and initialize OpenNL context</span></div>
 <div class="line"><a class="code" href="nl_8h.html#aaf754795d656ab372e0711b54e169fdd">nlNewContext</a>();</div>
@@ -533,7 +533,7 @@ Example 1 (a simple linear system)</h1>
 <div class="ttc" id="anl_8h_html_afc8ad9366a4e9d569a597d3a9234a0b2"><div class="ttname"><a href="nl_8h.html#afc8ad9366a4e9d569a597d3a9234a0b2">nlDeleteContext</a></div><div class="ttdeci">NLAPI void NLAPIENTRY nlDeleteContext(NLContext context)</div><div class="ttdoc">Destroys an existing OpenNL context.</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md1"></a>
 Example 2 (least squares regression)</h1>
-<p>Reads <img class="formulaInl" alt="$ (X,Y) $" src="form_12.png"/> coordinates from a file and finds the parameters <img class="formulaInl" alt="$ a,b $" src="form_13.png"/> of the straight line <img class="formulaInl" alt="$ y = ax + b $" src="form_14.png"/> that best fits the data points. </p><div class="fragment"><div class="line">FILE* input = fopen(<span class="stringliteral">&quot;datapoints.dat&quot;</span>, <span class="stringliteral">&quot;r&quot;</span>);</div>
+<p>Reads <img class="formulaInl" alt="$ (X,Y) $" src="form_11.png"/> coordinates from a file and finds the parameters <img class="formulaInl" alt="$ a,b $" src="form_12.png"/> of the straight line <img class="formulaInl" alt="$ y = ax + b $" src="form_13.png"/> that best fits the data points. </p><div class="fragment"><div class="line">FILE* input = fopen(<span class="stringliteral">&quot;datapoints.dat&quot;</span>, <span class="stringliteral">&quot;r&quot;</span>);</div>
 <div class="line"><span class="keywordtype">double</span> X,Y; <span class="comment">// current datapoint</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Create and initialize OpenNL context</span></div>
@@ -569,7 +569,7 @@ Example 2 (least squares regression)</h1>
 <div class="ttc" id="anl_8h_html_ab803a6e79704c5027f50a830dc341d0c"><div class="ttname"><a href="nl_8h.html#ab803a6e79704c5027f50a830dc341d0c">NL_TRUE</a></div><div class="ttdeci">#define NL_TRUE</div><div class="ttdoc">Constant for true NLbooleans.</div><div class="ttdef"><b>Definition:</b> <a href="nl_8h_source.html#l00316">nl.h:316</a></div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md2"></a>
 Example 3 (least squares regression with locked variable)</h1>
-<p>As in the previous example, reads <img class="formulaInl" alt="$ (X,Y) $" src="form_12.png"/> coordinates from a file and finds the parameters <img class="formulaInl" alt="$ a,b $" src="form_13.png"/> of the straight line <img class="formulaInl" alt="$ y = ax + b $" src="form_14.png"/> that best fits the data points, but this time subject to the constraint <img class="formulaInl" alt="$ a = 1 $" src="form_15.png"/>. </p><div class="fragment"><div class="line">FILE* input = fopen(<span class="stringliteral">&quot;datapoints.dat&quot;</span>, <span class="stringliteral">&quot;r&quot;</span>);</div>
+<p>As in the previous example, reads <img class="formulaInl" alt="$ (X,Y) $" src="form_11.png"/> coordinates from a file and finds the parameters <img class="formulaInl" alt="$ a,b $" src="form_12.png"/> of the straight line <img class="formulaInl" alt="$ y = ax + b $" src="form_13.png"/> that best fits the data points, but this time subject to the constraint <img class="formulaInl" alt="$ a = 1 $" src="form_14.png"/>. </p><div class="fragment"><div class="line">FILE* input = fopen(<span class="stringliteral">&quot;datapoints.dat&quot;</span>, <span class="stringliteral">&quot;r&quot;</span>);</div>
 <div class="line"><span class="keywordtype">double</span> X,Y; <span class="comment">// current datapoint</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Create and initialize OpenNL context</span></div>
@@ -695,7 +695,7 @@ Example 4 (fine tuning)</h1>
 </div><div class="memdoc">
 
 <p>Symbolic constant for <a class="el" href="nl_8h.html#a87a6bc4c327732489204ddc77258ed64" title="Gets the value of a double-precision floating-point parameter.">nlGetDoublev()</a> to obtain the error after <a class="el" href="nl_8h.html#aac215232a82e110132b68d74b8435022" title="Solves the linear system in the current context.">nlSolve()</a> is called. </p>
-<p>Gets <img class="formulaInl" alt="$ \| Ax - b \| / \| b \| $" src="form_3.png"/>. Usage: </p><div class="fragment"><div class="line"><a class="code" href="nl_8h.html#a76325b3c3d61908603a0da93ee45b60e">NLdouble</a> error;</div>
+<p>Gets <img class="formulaInl" alt="$ \| Ax - b \| / \| b \| $" src="form_15.png"/>. Usage: </p><div class="fragment"><div class="line"><a class="code" href="nl_8h.html#a76325b3c3d61908603a0da93ee45b60e">NLdouble</a> error;</div>
 <div class="line"><a class="code" href="nl_8h.html#a87a6bc4c327732489204ddc77258ed64">nlGetDoublev</a>(<a class="code" href="nl_8h.html#a5ecd0f9865869c2c7f61d7aef08d025d">NL_ERROR</a>, &amp;error);</div>
 <div class="ttc" id="anl_8h_html_a5ecd0f9865869c2c7f61d7aef08d025d"><div class="ttname"><a href="nl_8h.html#a5ecd0f9865869c2c7f61d7aef08d025d">NL_ERROR</a></div><div class="ttdeci">#define NL_ERROR</div><div class="ttdoc">Symbolic constant for nlGetDoublev() to obtain the error after nlSolve() is called.</div><div class="ttdef"><b>Definition:</b> <a href="nl_8h_source.html#l00445">nl.h:445</a></div></div>
 </div><!-- fragment --> 
@@ -1297,7 +1297,7 @@ Example 4 (fine tuning)</h1>
       </table>
 </div><div class="memdoc">
 
-<p>Symbolic constant for <a class="el" href="nl_8h.html#aab7caf5c9ecd67f840a0abfc540bb9ab" title="Specifies a floating-point solver parameter.">nlSolverParameterd()</a> to specify the maximum threshold <img class="formulaInl" alt="$ \| Ax - b \| / \| b \| $" src="form_3.png"/> before the iterative solver is stopped. </p>
+<p>Symbolic constant for <a class="el" href="nl_8h.html#aab7caf5c9ecd67f840a0abfc540bb9ab" title="Specifies a floating-point solver parameter.">nlSolverParameterd()</a> to specify the maximum threshold <img class="formulaInl" alt="$ \| Ax - b \| / \| b \| $" src="form_15.png"/> before the iterative solver is stopped. </p>
 <p>Usage: </p><div class="fragment"><div class="line"><a class="code" href="nl_8h.html#aab7caf5c9ecd67f840a0abfc540bb9ab">nlSolverParameterd</a>(<a class="code" href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">NL_THRESHOLD</a>, epsilon);</div>
 </div><!-- fragment --><p> If the solver is left unspecified or is set to <a class="el" href="nl_8h.html#ac1f333dba3357f7acf5f16521bf76297">NL_SOLVER_DEFAULT</a>, then a reasonable value is used (1e-6). </p>
 
@@ -1337,7 +1337,7 @@ Example 4 (fine tuning)</h1>
 </div><div class="memdoc">
 
 <p>Symbolic constant for <a class="el" href="nl_8h.html#a0bd4ff61f75f901f096a5f65f7d4c632" title="Gets the value of an integer parameter.">nlGetIntegerv()</a> to obtain the used number of iteration. </p>
-<p>The solver exits whenever the maximum number of iterations (<a class="el" href="nl_8h.html#a96c5904f4039ebf1ad839c384ad33b23">NL_MAX_ITERATIONS</a>) is reached or whenever <img class="formulaInl" alt="$ \| Ax - b \| / \| b \| $" src="form_3.png"/> gets smaller than <a class="el" href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">NL_THRESHOLD</a>. Usage: </p><div class="fragment"><div class="line"><a class="code" href="nl_8h.html#a9138fd24f9d2960d69ada6ecd7e7b14e">NLint</a> used_iter;</div>
+<p>The solver exits whenever the maximum number of iterations (<a class="el" href="nl_8h.html#a96c5904f4039ebf1ad839c384ad33b23">NL_MAX_ITERATIONS</a>) is reached or whenever <img class="formulaInl" alt="$ \| Ax - b \| / \| b \| $" src="form_15.png"/> gets smaller than <a class="el" href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">NL_THRESHOLD</a>. Usage: </p><div class="fragment"><div class="line"><a class="code" href="nl_8h.html#a9138fd24f9d2960d69ada6ecd7e7b14e">NLint</a> used_iter;</div>
 <div class="line"><a class="code" href="nl_8h.html#a0bd4ff61f75f901f096a5f65f7d4c632">nlGetIntegerv</a>(<a class="code" href="nl_8h.html#a8c4e3622ccaa750945545411e2c81000">NL_USED_ITERATIONS</a>, &amp;used_iter);</div>
 <div class="ttc" id="anl_8h_html_a0bd4ff61f75f901f096a5f65f7d4c632"><div class="ttname"><a href="nl_8h.html#a0bd4ff61f75f901f096a5f65f7d4c632">nlGetIntegerv</a></div><div class="ttdeci">NLAPI void NLAPIENTRY nlGetIntegerv(NLenum pname, NLint *params)</div><div class="ttdoc">Gets the value of an integer parameter.</div></div>
 <div class="ttc" id="anl_8h_html_a8c4e3622ccaa750945545411e2c81000"><div class="ttname"><a href="nl_8h.html#a8c4e3622ccaa750945545411e2c81000">NL_USED_ITERATIONS</a></div><div class="ttdeci">#define NL_USED_ITERATIONS</div><div class="ttdoc">Symbolic constant for nlGetIntegerv() to obtain the used number of iteration.</div><div class="ttdef"><b>Definition:</b> <a href="nl_8h_source.html#l00433">nl.h:433</a></div></div>
@@ -2721,7 +2721,7 @@ Example 4 (fine tuning)</h1>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pname</td><td>the symbolic name of the parameter, one of (<a class="el" href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">NL_THRESHOLD</a>, <a class="el" href="nl_8h.html#aabaaa63844465ddf7391179a846b93f2">NL_OMEGA</a>). </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">param</td><td>the double-precision floating-point value of the parameter. <ul>
-<li><code>If</code> pname = <a class="el" href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">NL_THRESHOLD</a>, then <code>param</code> is the maximum value of <img class="formulaInl" alt="$ \| Ax - b \| / \| b \| $" src="form_3.png"/> before iterations are stopped; </li>
+<li><code>If</code> pname = <a class="el" href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">NL_THRESHOLD</a>, then <code>param</code> is the maximum value of <img class="formulaInl" alt="$ \| Ax - b \| / \| b \| $" src="form_15.png"/> before iterations are stopped; </li>
 <li><code>if</code> pname = <a class="el" href="nl_8h.html#aabaaa63844465ddf7391179a846b93f2">NL_OMEGA</a> and the specified preconditioner is NL_SSOR, then <code>param</code> is the relaxation parameter, in (0.0 .. 2.0) excluded, for the SSOR preconditioner. </li>
 </ul>
 </td></tr>
@@ -2873,7 +2873,7 @@ Example 4 (fine tuning)</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_53d5e9858254fface141430feef69984.html">NL</a></li><li class="navelem"><a class="el" href="nl_8h.html">nl.h</a></li>
-    <li class="footer">Generated on Fri Mar 3 2023 16:22:45 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

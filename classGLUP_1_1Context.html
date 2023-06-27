@@ -135,13 +135,16 @@ virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class
 <tr class="memitem:abad6e995dce0eaa9c61d8adb695614eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLUP_1_1Context.html#abad6e995dce0eaa9c61d8adb695614eb">load_matrix</a> (const GLfloat m[16])</td></tr>
 <tr class="memdesc:abad6e995dce0eaa9c61d8adb695614eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces the top of the current matrix stack with the specified matrix.  <a href="classGLUP_1_1Context.html#abad6e995dce0eaa9c61d8adb695614eb">More...</a><br /></td></tr>
 <tr class="separator:abad6e995dce0eaa9c61d8adb695614eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5373309a429576d9c70a368a91cec814"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLUP_1_1Context.html#a5373309a429576d9c70a368a91cec814">load_matrix</a> (const GLdouble m[16])</td></tr>
+<tr class="memdesc:a5373309a429576d9c70a368a91cec814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces the top of the current matrix stack with the specified matrix.  <a href="classGLUP_1_1Context.html#a5373309a429576d9c70a368a91cec814">More...</a><br /></td></tr>
+<tr class="separator:a5373309a429576d9c70a368a91cec814"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae332a6a9fd37c24f2c77911269ee79ea"><td class="memItemLeft" align="right" valign="top"><a id="ae332a6a9fd37c24f2c77911269ee79ea"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLUP_1_1Context.html#ae332a6a9fd37c24f2c77911269ee79ea">load_identity</a> ()</td></tr>
 <tr class="memdesc:ae332a6a9fd37c24f2c77911269ee79ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces the top of the current matrix stack with the identity matrix. <br /></td></tr>
 <tr class="separator:ae332a6a9fd37c24f2c77911269ee79ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a478d181855435d354b5dfbda36ffb6ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLUP_1_1Context.html#a478d181855435d354b5dfbda36ffb6ff">mult_matrix</a> (const GLfloat m[16])</td></tr>
-<tr class="memdesc:a478d181855435d354b5dfbda36ffb6ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Post-multiplies the top of the current matrix stack with the specified matrix.  <a href="classGLUP_1_1Context.html#a478d181855435d354b5dfbda36ffb6ff">More...</a><br /></td></tr>
-<tr class="separator:a478d181855435d354b5dfbda36ffb6ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a284b40f3dec3def2753ee5df5ad2104c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLUP_1_1Context.html#a284b40f3dec3def2753ee5df5ad2104c">mult_matrix</a> (const GLdouble m[16])</td></tr>
+<tr class="memdesc:a284b40f3dec3def2753ee5df5ad2104c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Post-multiplies the top of the current matrix stack with the specified matrix.  <a href="classGLUP_1_1Context.html#a284b40f3dec3def2753ee5df5ad2104c">More...</a><br /></td></tr>
+<tr class="separator:a284b40f3dec3def2753ee5df5ad2104c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae576066c5973f4a1433bb31c992a0f82"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLUP_1_1Context.html#ae576066c5973f4a1433bb31c992a0f82">push_matrix</a> ()</td></tr>
 <tr class="memdesc:ae576066c5973f4a1433bb31c992a0f82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pushes a copy of the top of the current stack matrix onto the current stack matrix.  <a href="classGLUP_1_1Context.html#ae576066c5973f4a1433bb31c992a0f82">More...</a><br /></td></tr>
 <tr class="separator:ae576066c5973f4a1433bb31c992a0f82"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -204,9 +207,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLUP_1_1Context.html#ad00333af8b180befb637fe929df64eb6">flag_matrices_as_dirty</a> ()</td></tr>
 <tr class="memdesc:ad00333af8b180befb637fe929df64eb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates that cached matrix information needs to be recomputed. <br /></td></tr>
 <tr class="separator:ad00333af8b180befb637fe929df64eb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae62ba7e401d98dc67d88379c663f9418"><td class="memItemLeft" align="right" valign="top">GLUPfloat *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLUP_1_1Context.html#ae62ba7e401d98dc67d88379c663f9418">get_matrix</a> (GLUPmatrix matrix)</td></tr>
-<tr class="memdesc:ae62ba7e401d98dc67d88379c663f9418"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to the values of the matrix at the top of a given stack.  <a href="classGLUP_1_1Context.html#ae62ba7e401d98dc67d88379c663f9418">More...</a><br /></td></tr>
-<tr class="separator:ae62ba7e401d98dc67d88379c663f9418"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56f1b5d0de21b75d43367c3f95a0af32"><td class="memItemLeft" align="right" valign="top">GLUPdouble *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLUP_1_1Context.html#a56f1b5d0de21b75d43367c3f95a0af32">get_matrix</a> (GLUPmatrix matrix)</td></tr>
+<tr class="memdesc:a56f1b5d0de21b75d43367c3f95a0af32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to the values of the matrix at the top of a given stack.  <a href="classGLUP_1_1Context.html#a56f1b5d0de21b75d43367c3f95a0af32">More...</a><br /></td></tr>
+<tr class="separator:a56f1b5d0de21b75d43367c3f95a0af32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab797efc9321964833948436bad288ef8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGLUP_1_1Context.html#ab797efc9321964833948436bad288ef8">get_vertex_shader_preamble_pseudo_file</a> (std::vector&lt; <a class="el" href="classGEO_1_1GLSL_1_1Source.html">GLSL::Source</a> &gt; &amp;sources)</td></tr>
 <tr class="memdesc:ab797efc9321964833948436bad288ef8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the content of the virtual file GLUP/current_profile/vertex_shader_preamble.h.  <a href="classGLUP_1_1Context.html#ab797efc9321964833948436bad288ef8">More...</a><br /></td></tr>
 <tr class="separator:ab797efc9321964833948436bad288ef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -508,7 +511,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>GLUP context stores a Uniform Buffer Object with state variables similar to OpenGL's fixed functionality pipeline, and a set of Vertex Buffer Objects to emulate OpenGL's immediate mode. </p>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01030">1030</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01058">1058</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a78a045748d694990da96353363f5b282"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a78a045748d694990da96353363f5b282">&#9670;&nbsp;</a></span>begin()</h2>
@@ -699,7 +702,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01787">1787</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01826">1826</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -1074,7 +1077,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>an integer with the i-th bit set if vertex i is visible, and unset if it is clipped. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01767">1767</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01806">1806</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -1208,8 +1211,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 
 </div>
 </div>
-<a id="ae62ba7e401d98dc67d88379c663f9418"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae62ba7e401d98dc67d88379c663f9418">&#9670;&nbsp;</a></span>get_matrix()</h2>
+<a id="a56f1b5d0de21b75d43367c3f95a0af32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56f1b5d0de21b75d43367c3f95a0af32">&#9670;&nbsp;</a></span>get_matrix()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1218,7 +1221,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">GLUPfloat* GLUP::Context::get_matrix </td>
+          <td class="memname">GLUPdouble* GLUP::Context::get_matrix </td>
           <td>(</td>
           <td class="paramtype">GLUPmatrix&#160;</td>
           <td class="paramname"><em>matrix</em></td><td>)</td>
@@ -1240,7 +1243,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01320">1320</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01359">1359</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -1270,7 +1273,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 <p>Gets the current matrix stack. </p>
 <dl class="section return"><dt>Returns</dt><dd>The current matrix stack, i.e. one of GLUP_MODELVIEW, GLUP_PROJECT </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01149">1149</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01188">1188</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -1568,7 +1571,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01176">1176</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01215">1215</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -1620,7 +1623,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01200">1200</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01239">1239</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -1650,7 +1653,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 <p>Gets the immediate state. </p>
 <dl class="section return"><dt>Returns</dt><dd>a reference to the immediate state. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01442">1442</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01481">1481</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -1708,7 +1711,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01187">1187</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01226">1226</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -1767,12 +1770,48 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 </dl>
 <p>The color and texture coordinates of the new vertex are initialized from the current color and current texture coordinates. </p>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01161">1161</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01200">1200</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+
+</div>
+</div>
+<a id="a5373309a429576d9c70a368a91cec814"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5373309a429576d9c70a368a91cec814">&#9670;&nbsp;</a></span>load_matrix() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GLUP::Context::load_matrix </td>
+          <td>(</td>
+          <td class="paramtype">const GLdouble&#160;</td>
+          <td class="paramname"><em>m</em>[16]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Replaces the top of the current matrix stack with the specified matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">m</td><td>the matrix that will replace the top of the current matrix stack </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01129">1129</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
 <a id="abad6e995dce0eaa9c61d8adb695614eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abad6e995dce0eaa9c61d8adb695614eb">&#9670;&nbsp;</a></span>load_matrix()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abad6e995dce0eaa9c61d8adb695614eb">&#9670;&nbsp;</a></span>load_matrix() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1803,12 +1842,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01090">1090</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01118">1118</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
-<a id="a478d181855435d354b5dfbda36ffb6ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a478d181855435d354b5dfbda36ffb6ff">&#9670;&nbsp;</a></span>mult_matrix()</h2>
+<a id="a284b40f3dec3def2753ee5df5ad2104c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a284b40f3dec3def2753ee5df5ad2104c">&#9670;&nbsp;</a></span>mult_matrix()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1819,7 +1858,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
         <tr>
           <td class="memname">void GLUP::Context::mult_matrix </td>
           <td>(</td>
-          <td class="paramtype">const GLfloat&#160;</td>
+          <td class="paramtype">const GLdouble&#160;</td>
           <td class="paramname"><em>m</em>[16]</td><td>)</td>
           <td></td>
         </tr>
@@ -1840,7 +1879,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 </dl>
 <dl class="section see"><dt>See also</dt><dd>matrix_mode() </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01111">1111</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01150">1150</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -1969,7 +2008,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 <p>Pushes a copy of the top of the current stack matrix onto the current stack matrix. </p>
 <dl class="section see"><dt>See also</dt><dd>matrix_mode(), <a class="el" href="classGLUP_1_1Context.html#a5de614412440e6df342b0efb3961fcd8" title="Pops the top of the current stack matrix.">pop_matrix()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01122">1122</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01161">1161</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -2004,9 +2043,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
   </table>
   </dd>
 </dl>
-<p>This determines on which matrix stack set_matrix(), <a class="el" href="classGLUP_1_1Context.html#a478d181855435d354b5dfbda36ffb6ff" title="Post-multiplies the top of the current matrix stack with the specified matrix.">mult_matrix()</a>, <a class="el" href="classGLUP_1_1Context.html#ae576066c5973f4a1433bb31c992a0f82" title="Pushes a copy of the top of the current stack matrix onto the current stack matrix.">push_matrix()</a> and <a class="el" href="classGLUP_1_1Context.html#a5de614412440e6df342b0efb3961fcd8" title="Pops the top of the current stack matrix.">pop_matrix()</a> operate. </p>
+<p>This determines on which matrix stack set_matrix(), <a class="el" href="classGLUP_1_1Context.html#a284b40f3dec3def2753ee5df5ad2104c" title="Post-multiplies the top of the current matrix stack with the specified matrix.">mult_matrix()</a>, <a class="el" href="classGLUP_1_1Context.html#ae576066c5973f4a1433bb31c992a0f82" title="Pushes a copy of the top of the current stack matrix onto the current stack matrix.">push_matrix()</a> and <a class="el" href="classGLUP_1_1Context.html#a5de614412440e6df342b0efb3961fcd8" title="Pops the top of the current stack matrix.">pop_matrix()</a> operate. </p>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01140">1140</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01179">1179</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -2346,7 +2385,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01683">1683</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01722">1722</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -2432,7 +2471,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 <p>Gets the uniform state. </p>
 <dl class="section return"><dt>Returns</dt><dd>a reference to the uniform state </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01274">1274</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01313">1313</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -2462,7 +2501,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 <p>Gets the uniform state. </p>
 <dl class="section return"><dt>Returns</dt><dd>a const reference to the uniform state </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01282">1282</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01321">1321</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -2550,7 +2589,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 <p>A wrapper around glUseProgram that tests whether uniform state needs to be sent to the program. </p>
 <p>Each time a different program is used, the uniform state can be sent to it through the virtual function update_program_state(). If UBOs are supported, update_program_state() does nothing. </p>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01845">1845</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01884">1884</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -2578,7 +2617,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 <p>computed intersections. </p>
 <p>Used when clipping mode is GLUP_CLIP_SLICE_CELLS and clipping is done by software. </p>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01940">1940</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01979">1979</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -2605,7 +2644,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 <p>Latest used GLSL program. </p>
 <p>Used to check whether it changed and whether some uniform variables need to be sent to it. </p>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01947">1947</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01986">1986</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -2632,7 +2671,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 <p>Indicates for a given vertex whether it is clipped or is visible, according to the current clipping plane. </p>
 <p>Used when clipping is done by software. </p>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01933">1933</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01972">1972</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -2659,7 +2698,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 <p>Used by GPU-side uniform buffer. </p>
 <p>It is initialized by create_GPU_side_uniform_buffer(), used only by VanillaGL and ES2 implementations. </p>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01926">1926</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01965">1965</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -2686,7 +2725,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 <p>A vertex buffer object with 65536 16 bits integers. </p>
 <p>It is used to emulate gl_VertexID in shaders. </p>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01953">1953</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01992">1992</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -2713,7 +2752,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 <p>Cached pointer to uniform state variable. </p>
 <p>It is initialized by create_GPU_side_uniform_buffer(), used only by VanillaGL and ES2 implementations. </p>
 
-<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01919">1919</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GLUP__context_8h_source.html#l01958">1958</a> of file <a class="el" href="GLUP__context_8h_source.html">GLUP_context.h</a>.</p>
 
 </div>
 </div>
@@ -2726,7 +2765,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>use_ES_profile_</b></
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><b>GLUP</b></li><li class="navelem"><a class="el" href="classGLUP_1_1Context.html">Context</a></li>
-    <li class="footer">Generated on Fri Mar 3 2023 16:22:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

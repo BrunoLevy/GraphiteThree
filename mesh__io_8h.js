@@ -10,6 +10,7 @@ var mesh__io_8h =
       [ "MESH_VERTEX_COLOR", "mesh__io_8h.html#aab7a839400169da2ed93ab089340e595a5f0122c57f40eb972df6c03fcf488dec", null ],
       [ "MESH_FACET_REGION", "mesh__io_8h.html#aab7a839400169da2ed93ab089340e595a5e4419240aaea78aa5025ff8a6217101", null ],
       [ "MESH_CELL_REGION", "mesh__io_8h.html#aab7a839400169da2ed93ab089340e595ab068056473215a8fc6fc8222b0ae2956", null ],
+      [ "MESH_EDGE_REGION", "mesh__io_8h.html#aab7a839400169da2ed93ab089340e595ad6f2b3a4a3d697326d6f234776ad1c99", null ],
       [ "MESH_ALL_ATTRIBUTES", "mesh__io_8h.html#aab7a839400169da2ed93ab089340e595a558d8d115d04d5907459600f8da87f5d", null ]
     ] ],
     [ "mesh_io_initialize", "mesh__io_8h.html#a0f8b690ae067c4d4a0163afe69489bd0", null ],

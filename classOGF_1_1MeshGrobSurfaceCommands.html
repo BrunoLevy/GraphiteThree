@@ -129,9 +129,9 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#a08090acfe26b9b094da13025dd67daa9">~MeshGrobSurfaceCommands</a> () override</td></tr>
 <tr class="memdesc:a08090acfe26b9b094da13025dd67daa9"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html" title="Commands that manipulate surface meshes.">MeshGrobSurfaceCommands</a> destructor. <br /></td></tr>
 <tr class="separator:a08090acfe26b9b094da13025dd67daa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b5daa4b37321b1d14706e9ea76bf3ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#a3b5daa4b37321b1d14706e9ea76bf3ee">merge_vertices</a> (double epsilon=1e-6)</td></tr>
-<tr class="memdesc:a3b5daa4b37321b1d14706e9ea76bf3ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merges vertices that are at the same location or within tolerance.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#a3b5daa4b37321b1d14706e9ea76bf3ee">More...</a><br /></td></tr>
-<tr class="separator:a3b5daa4b37321b1d14706e9ea76bf3ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77fcde896d3b2584008085fef05f4e9b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#a77fcde896d3b2584008085fef05f4e9b">merge_vertices</a> (double epsilon=0.0)</td></tr>
+<tr class="memdesc:a77fcde896d3b2584008085fef05f4e9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merges vertices that are at the same location or within tolerance.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#a77fcde896d3b2584008085fef05f4e9b">More...</a><br /></td></tr>
+<tr class="separator:a77fcde896d3b2584008085fef05f4e9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af570a6a615788d875bba03b2061235bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#af570a6a615788d875bba03b2061235bd">expand_border</a> (double margin=0.05)</td></tr>
 <tr class="memdesc:af570a6a615788d875bba03b2061235bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preprocessing for remesh_feature_sensitive.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#af570a6a615788d875bba03b2061235bd">More...</a><br /></td></tr>
 <tr class="separator:af570a6a615788d875bba03b2061235bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -153,15 +153,21 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa5cfe481a409e47166426d7948df3db0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#aa5cfe481a409e47166426d7948df3db0">remesh_quad_dominant</a> (const <a class="el" href="namespaceOGF.html#ab6f4e46c4c17608b487155ab73b52ddf">NewMeshGrobName</a> &amp;surface_name=&quot;remesh&quot;, double rel_edge_len=1.0, bool sharp_features=true, bool optimize_parity=false, double max_scaling_corr=1.0)</td></tr>
 <tr class="memdesc:aa5cfe481a409e47166426d7948df3db0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a quad-dominant mesh.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#aa5cfe481a409e47166426d7948df3db0">More...</a><br /></td></tr>
 <tr class="separator:aa5cfe481a409e47166426d7948df3db0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61e2ab8a877bc2474e34ca0e03f43406"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#a61e2ab8a877bc2474e34ca0e03f43406">compute_union</a> (const <a class="el" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a> &amp;other, const <a class="el" href="namespaceOGF.html#ab6f4e46c4c17608b487155ab73b52ddf">NewMeshGrobName</a> &amp;result=&quot;result&quot;, bool pre_process=false, bool post_process=true)</td></tr>
-<tr class="memdesc:a61e2ab8a877bc2474e34ca0e03f43406"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the union between two meshes.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#a61e2ab8a877bc2474e34ca0e03f43406">More...</a><br /></td></tr>
-<tr class="separator:a61e2ab8a877bc2474e34ca0e03f43406"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa56724388c088e6b2a43dbb2be63884a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#aa56724388c088e6b2a43dbb2be63884a">compute_intersection</a> (const <a class="el" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a> &amp;other, const <a class="el" href="namespaceOGF.html#ab6f4e46c4c17608b487155ab73b52ddf">NewMeshGrobName</a> &amp;result=&quot;result&quot;, bool pre_process=false, bool post_process=true)</td></tr>
-<tr class="memdesc:aa56724388c088e6b2a43dbb2be63884a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the intersection between two meshes.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#aa56724388c088e6b2a43dbb2be63884a">More...</a><br /></td></tr>
-<tr class="separator:aa56724388c088e6b2a43dbb2be63884a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7de0afd96e60823b58fe2089f29973a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#a7de0afd96e60823b58fe2089f29973a0">compute_difference</a> (const <a class="el" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a> &amp;other, const <a class="el" href="namespaceOGF.html#ab6f4e46c4c17608b487155ab73b52ddf">NewMeshGrobName</a> &amp;result=&quot;result&quot;, bool pre_process=false, bool post_process=true)</td></tr>
-<tr class="memdesc:a7de0afd96e60823b58fe2089f29973a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the difference between two meshes.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#a7de0afd96e60823b58fe2089f29973a0">More...</a><br /></td></tr>
-<tr class="separator:a7de0afd96e60823b58fe2089f29973a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0601e4285ac43e04d5e76715a60034c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#a0601e4285ac43e04d5e76715a60034c2">compute_union</a> (const <a class="el" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a> &amp;other, const <a class="el" href="namespaceOGF.html#ab6f4e46c4c17608b487155ab73b52ddf">NewMeshGrobName</a> &amp;result=&quot;result&quot;, bool pre_process=false, bool post_process=false)</td></tr>
+<tr class="memdesc:a0601e4285ac43e04d5e76715a60034c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the union between two meshes.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#a0601e4285ac43e04d5e76715a60034c2">More...</a><br /></td></tr>
+<tr class="separator:a0601e4285ac43e04d5e76715a60034c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb2322e8a48331bf0f47bb142fd7db77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#acb2322e8a48331bf0f47bb142fd7db77">compute_intersection</a> (const <a class="el" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a> &amp;other, const <a class="el" href="namespaceOGF.html#ab6f4e46c4c17608b487155ab73b52ddf">NewMeshGrobName</a> &amp;result=&quot;result&quot;, bool pre_process=false, bool post_process=false)</td></tr>
+<tr class="memdesc:acb2322e8a48331bf0f47bb142fd7db77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the intersection between two meshes.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#acb2322e8a48331bf0f47bb142fd7db77">More...</a><br /></td></tr>
+<tr class="separator:acb2322e8a48331bf0f47bb142fd7db77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab6b36ee58583dfd7d4093a4ffd38691"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#aab6b36ee58583dfd7d4093a4ffd38691">compute_difference</a> (const <a class="el" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a> &amp;other, const <a class="el" href="namespaceOGF.html#ab6f4e46c4c17608b487155ab73b52ddf">NewMeshGrobName</a> &amp;result=&quot;result&quot;, bool pre_process=false, bool post_process=false)</td></tr>
+<tr class="memdesc:aab6b36ee58583dfd7d4093a4ffd38691"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the difference between two meshes.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#aab6b36ee58583dfd7d4093a4ffd38691">More...</a><br /></td></tr>
+<tr class="separator:aab6b36ee58583dfd7d4093a4ffd38691"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a912a4dc6cd626fd0fac7e70e5bad761d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#a912a4dc6cd626fd0fac7e70e5bad761d">gom_arg_attribute</a> (operation, handler, &quot;combo_box&quot;) gom_arg_attribute(operation</td></tr>
+<tr class="memdesc:a912a4dc6cd626fd0fac7e70e5bad761d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a boolean operation between two meshes.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#a912a4dc6cd626fd0fac7e70e5bad761d">More...</a><br /></td></tr>
+<tr class="separator:a912a4dc6cd626fd0fac7e70e5bad761d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8303c7ff28a2c9903a287bc9707695bb"><td class="memItemLeft" align="right" valign="top"><a id="a8303c7ff28a2c9903a287bc9707695bb"></a>
+B A void&#160;</td><td class="memItemRight" valign="bottom"><b>compute_boolean_operation</b> (const <a class="el" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a> &amp;other, const <a class="el" href="namespaceOGF.html#ab6f4e46c4c17608b487155ab73b52ddf">NewMeshGrobName</a> &amp;result=&quot;result&quot;, const std::string &amp;operation=&quot;A+B&quot;, bool pre_process=false, bool post_process=false)</td></tr>
+<tr class="separator:a8303c7ff28a2c9903a287bc9707695bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae53210e49b56a54976b58216cc4faa3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#aae53210e49b56a54976b58216cc4faa3">decimate</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb_bins=100, bool remove_deg3_vrtx=true, bool keep_borders=true, bool repair=true)</td></tr>
 <tr class="memdesc:aae53210e49b56a54976b58216cc4faa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simplifies a surface using vertex clustering.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#aae53210e49b56a54976b58216cc4faa3">More...</a><br /></td></tr>
 <tr class="separator:aae53210e49b56a54976b58216cc4faa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -397,6 +403,15 @@ double double double double&#160;</td><td class="memItemRight" valign="bottom"><
 <tr class="separator:a89b5eaeaec2a99c8cd99ee0b3f702578"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86e11c9b0391ae5a17d4ce216e0266bf"><td class="memItemLeft" align="right" valign="top">double double double double bool&#160;</td><td class="memItemRight" valign="bottom"><b>remove_intersections</b></td></tr>
 <tr class="separator:a86e11c9b0391ae5a17d4ce216e0266bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50e5787be9a6760baf810f2994de2db6"><td class="memItemLeft" align="right" valign="top"><a id="a50e5787be9a6760baf810f2994de2db6"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>values</b></td></tr>
+<tr class="separator:a50e5787be9a6760baf810f2994de2db6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeddf2d503984f3d14fe31e2df8e7afde"><td class="memItemLeft" align="right" valign="top"><a id="aeddf2d503984f3d14fe31e2df8e7afde"></a>
+A&#160;</td><td class="memItemRight" valign="bottom"><b>B</b></td></tr>
+<tr class="separator:aeddf2d503984f3d14fe31e2df8e7afde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad46bf2945d32a5df4b39c70d33e1b7fc"><td class="memItemLeft" align="right" valign="top"><a id="ad46bf2945d32a5df4b39c70d33e1b7fc"></a>
+A *&#160;</td><td class="memItemRight" valign="bottom"><b>B</b></td></tr>
+<tr class="separator:ad46bf2945d32a5df4b39c70d33e1b7fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_attribs_classOGF_1_1Commands"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classOGF_1_1Commands')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classOGF_1_1Commands.html">OGF::Commands</a></td></tr>
 <tr class="memitem:a6b6f99aca9a1ee4f0edd1e0987728b5d inherit pub_attribs_classOGF_1_1Commands"><td class="memItemLeft" align="right" valign="top"><a id="a6b6f99aca9a1ee4f0edd1e0987728b5d"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>__pad0__</b>: bool get_chrono() const { return chrono_</td></tr>
@@ -674,8 +689,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a id="a7de0afd96e60823b58fe2089f29973a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7de0afd96e60823b58fe2089f29973a0">&#9670;&nbsp;</a></span>compute_difference()</h2>
+<a id="aab6b36ee58583dfd7d4093a4ffd38691"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab6b36ee58583dfd7d4093a4ffd38691">&#9670;&nbsp;</a></span>compute_difference()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -702,7 +717,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>post_process</em> = <code>true</code>&#160;</td>
+          <td class="paramname"><em>post_process</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -713,7 +728,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><div class="memdoc">
 
 <p>Computes the difference between two meshes. </p>
-<p>\menu Boolean operations (experimental) </p><dl class="params"><dt>Parameters</dt><dd>
+<p>\menu Boolean operations </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>name of the other mesh </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">result</td><td>name of the result mesh </td></tr>
@@ -725,8 +740,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a id="aa56724388c088e6b2a43dbb2be63884a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa56724388c088e6b2a43dbb2be63884a">&#9670;&nbsp;</a></span>compute_intersection()</h2>
+<a id="acb2322e8a48331bf0f47bb142fd7db77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb2322e8a48331bf0f47bb142fd7db77">&#9670;&nbsp;</a></span>compute_intersection()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -753,7 +768,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>post_process</em> = <code>true</code>&#160;</td>
+          <td class="paramname"><em>post_process</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -764,7 +779,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><div class="memdoc">
 
 <p>Computes the intersection between two meshes. </p>
-<p>\menu Boolean operations (experimental) </p><dl class="params"><dt>Parameters</dt><dd>
+<p>\menu Boolean operations </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>name of the other mesh </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">result</td><td>name of the result mesh </td></tr>
@@ -776,8 +791,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a id="a61e2ab8a877bc2474e34ca0e03f43406"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61e2ab8a877bc2474e34ca0e03f43406">&#9670;&nbsp;</a></span>compute_union()</h2>
+<a id="a0601e4285ac43e04d5e76715a60034c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0601e4285ac43e04d5e76715a60034c2">&#9670;&nbsp;</a></span>compute_union()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -804,7 +819,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>post_process</em> = <code>true</code>&#160;</td>
+          <td class="paramname"><em>post_process</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -815,7 +830,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><div class="memdoc">
 
 <p>Computes the union between two meshes. </p>
-<p>\menu Boolean operations (experimental) </p><dl class="params"><dt>Parameters</dt><dd>
+<p>\menu Boolean operations </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>name of the other mesh </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">result</td><td>name of the result mesh </td></tr>
@@ -970,6 +985,52 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a id="a912a4dc6cd626fd0fac7e70e5bad761d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a912a4dc6cd626fd0fac7e70e5bad761d">&#9670;&nbsp;</a></span>gom_arg_attribute()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">OGF::MeshGrobSurfaceCommands::gom_arg_attribute </td>
+          <td>(</td>
+          <td class="paramtype">operation&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">handler&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&quot;combo_box&quot;&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes a boolean operation between two meshes. </p>
+<p>\menu Boolean operations </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>name of the other mesh </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">result</td><td>name of the result mesh </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">operation</td><td>one of "A+B", "A*B", "A-B", "B-A" </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pre_process</td><td>triangulate, inputs, remove small edges, make sure there is no intersection </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">post_process</td><td>triangulate result, remove small edges, make sure there is no intersection </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ac6ac371ec645118ab861348b933adb41"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac6ac371ec645118ab861348b933adb41">&#9670;&nbsp;</a></span>make_texture_atlas()</h2>
 
@@ -1028,8 +1089,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a id="a3b5daa4b37321b1d14706e9ea76bf3ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b5daa4b37321b1d14706e9ea76bf3ee">&#9670;&nbsp;</a></span>merge_vertices()</h2>
+<a id="a77fcde896d3b2584008085fef05f4e9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77fcde896d3b2584008085fef05f4e9b">&#9670;&nbsp;</a></span>merge_vertices()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1038,7 +1099,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="memname">void OGF::MeshGrobSurfaceCommands::merge_vertices </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>epsilon</em> = <code>1e-6</code></td><td>)</td>
+          <td class="paramname"><em>epsilon</em> = <code>0.0</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1578,7 +1639,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Triangulates all the facets. </p>
 <p>\menu Subdivision </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh__grob__surface__commands_8h_source.html#l00358">358</a> of file <a class="el" href="mesh__grob__surface__commands_8h_source.html">mesh_grob_surface_commands.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__grob__surface__commands_8h_source.html#l00379">379</a> of file <a class="el" href="mesh__grob__surface__commands_8h_source.html">mesh_grob_surface_commands.h</a>.</p>
 
 </div>
 </div>
@@ -1676,7 +1737,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html">MeshGrobSurfaceCommands</a></li>
-    <li class="footer">Generated on Fri Mar 3 2023 16:22:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Tue Jun 27 2023 06:45:49 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

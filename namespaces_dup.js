@@ -41,11 +41,13 @@ var namespaces_dup =
         [ "GLUP_NORMAL_ATTRIBUTE", "GLUP__context_8h.html#a529589ed5c2fd1b606aecc1e8d315b80a5ab493544435dbf18140b8b1c2e51d9d", null ],
         [ "GLUP_VERTEX_ID_ATTRIBUTE", "GLUP__context_8h.html#a529589ed5c2fd1b606aecc1e8d315b80a8a9f381c7895058e107d2247bbf53536", null ]
       ] ],
+      [ "copy_vector", "GLUP__context_8h.html#acad62f228edb12f0b641e00bb8f8aa77", null ],
       [ "copy_vector", "GLUP__context_8h.html#af194aaaf936df483356f9122a7bbb3d9", null ],
       [ "copy_vector", "GLUP__context_8h.html#a052b69c7a6f6de12fde87730f8c87c19", null ],
       [ "copy_vector", "GLUP__context_8h.html#aad757109705220d07ad8ca5970def04c", null ],
       [ "invert_matrix", "GLUP__context_8h.html#ac11fdbb62d0756b8248d155e7cfbfcc5", null ],
       [ "invert_matrix", "GLUP__context_8h.html#a652512b45b3547857be614e44a9d2cc0", null ],
+      [ "load_identity_matrix", "GLUP__context_8h.html#ac6c0e013de0a2fc43bc780618733f114", null ],
       [ "load_identity_matrix", "GLUP__context_8h.html#a462b12237a78fc15e4e8c6135a3b7054", null ],
       [ "mult_matrices", "GLUP__context_8h.html#a673597791388994f355b21bc9e094a27", null ],
       [ "mult_matrices", "GLUP__context_8h.html#ace08f420c367245faf6eb95e42e4535c", null ],
@@ -56,26 +58,14 @@ var namespaces_dup =
       [ "normalize_vector", "GLUP__context_8h.html#a6cae8d9859473cae0fd59967f71647d2", null ],
       [ "register_embedded_shaders_fullscreen", "embedded__shaders_8h.html#a5b04ae6d0ff1ff662f6bc96961d1a5dc", null ],
       [ "register_embedded_shaders_GLUP", "embedded__shaders_8h.html#a366515712ac16df17732654620a8cc66", null ],
+      [ "show_matrix", "GLUP__context_8h.html#a3b6126ce9bdf4645f891adea38a793f6", null ],
       [ "show_matrix", "GLUP__context_8h.html#abc07e63ab05dcb250425b25d28fa8ffc", null ],
+      [ "show_vector", "GLUP__context_8h.html#ae61bfa5048db91704762fa9cfad58e10", null ],
       [ "show_vector", "GLUP__context_8h.html#ace3e349926385102cc146d86ffbb3722", null ],
       [ "transpose_matrix", "GLUP__context_8h.html#a14539497bfd70696735d7597c6595ee8", null ],
       [ "transpose_matrix", "GLUP__context_8h.html#a83a813cde6f27b1fcc7693414cca596d", null ],
       [ "current_context_", "GLUP__private_8h.html#a094cb0cee7eb999e67fcdb85ea5ea4f3", null ],
       [ "nb_vertices_per_primitive", "GLUP__context_8h.html#a5dfc0e981af683d402437cd7c6337d8d", null ]
-    ] ],
-    [ "IdMap", null, [
-      [ "compress_id2grp", "id__map_8h.html#add74bf8833d8e8b543a48f512fdb4297", null ],
-      [ "connect_to_root", "id__map_8h.html#ae8690d12b02c56319d08b58b5f1daabf", null ],
-      [ "make_identity", "id__map_8h.html#a92733915f31e19f2cfed04bc9b7c4ff1", null ],
-      [ "merge", "id__map_8h.html#a477e193222ae6bf0c51a9569db1033ee", null ],
-      [ "tree_to_map", "id__map_8h.html#a7ab32375e2f000acdca760502d06751e", null ]
-    ] ],
-    [ "IdMapSigned", null, [
-      [ "compress_id2grp", "id__map_8h.html#afaf91e35f16658d4939c7d3d17271665", null ],
-      [ "connect_to_root", "id__map_8h.html#aae4cf6007dcd6d52cae9045cdd8d0344", null ],
-      [ "make_identity", "id__map_8h.html#a73b119cc73047080692b6be792333ebf", null ],
-      [ "merge", "id__map_8h.html#a7a7b30961ef14ff3f30ebb2032e5ae5b", null ],
-      [ "tree_to_map", "id__map_8h.html#add37a376ec131a4ea61430163c8f5ec5", null ]
     ] ],
     [ "ImGui", null, [
       [ "BeginMenu", "imgui__ext_8h.html#a1beabcdc361f3972f8bb030323b567ae", null ],

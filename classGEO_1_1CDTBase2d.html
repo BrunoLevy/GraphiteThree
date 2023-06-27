@@ -106,7 +106,8 @@ Inheritance diagram for GEO::CDTBase2d:</div>
  <div class="center">
   <img src="classGEO_1_1CDTBase2d.png" usemap="#GEO::CDTBase2d_map" alt=""/>
   <map id="GEO::CDTBase2d_map" name="GEO::CDTBase2d_map">
-<area href="classGEO_1_1CDT2d.html" title="Constrained Delaunay triangulation." alt="GEO::CDT2d" shape="rect" coords="0,56,112,80"/>
+<area href="classGEO_1_1CDT2d.html" title="Constrained Delaunay triangulation." alt="GEO::CDT2d" shape="rect" coords="0,56,132,80"/>
+<area href="classGEO_1_1MeshInTriangle.html" title="Meshes a single triangle with the constraints that come from the intersections with the other triangl..." alt="GEO::MeshInTriangle" shape="rect" coords="142,56,274,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -187,9 +188,9 @@ Protected Types</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a1045da60655ba58c8301590d0ae933a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constants for list_id. <br /></td></tr>
 <tr class="separator:a1045da60655ba58c8301590d0ae933a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace5f36b6d887a37914c9b715302ca7b1"><td class="memItemLeft" align="right" valign="top"><a id="ace5f36b6d887a37914c9b715302ca7b1"></a>enum &#160;</td><td class="memItemRight" valign="bottom">{ <b>T_MARKED_FLAG</b> = DLIST_NB
+<tr class="memitem:ace5f36b6d887a37914c9b715302ca7b1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classGEO_1_1CDTBase2d.html#ace5f36b6d887a37914c9b715302ca7b1a7f2d743e835a38d514d2932c392aeeb9">T_MARKED_FLAG</a> = DLIST_NB
  }</td></tr>
-<tr class="memdesc:ace5f36b6d887a37914c9b715302ca7b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constants for triangle flags. <br /></td></tr>
+<tr class="memdesc:ace5f36b6d887a37914c9b715302ca7b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constants for triangle flags.  <a href="classGEO_1_1CDTBase2d.html#ace5f36b6d887a37914c9b715302ca7b1">More...</a><br /></td></tr>
 <tr class="separator:ace5f36b6d887a37914c9b715302ca7b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a081897d4a9f7be5c72f5a6a075ecd152"><td class="memItemLeft" align="right" valign="top"><a id="a081897d4a9f7be5c72f5a6a075ecd152"></a>
 typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Edge</b></td></tr>
@@ -295,6 +296,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a68530aeb1cefcb0a9292cb80717b93a8"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a68530aeb1cefcb0a9292cb80717b93a8">create_intersection</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> E1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> i, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> j, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> E2, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> k, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> l)=0</td></tr>
 <tr class="memdesc:a68530aeb1cefcb0a9292cb80717b93a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given two segments that have an intersection, create the intersection.  <a href="classGEO_1_1CDTBase2d.html#a68530aeb1cefcb0a9292cb80717b93a8">More...</a><br /></td></tr>
 <tr class="separator:a68530aeb1cefcb0a9292cb80717b93a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a512a4b305ade062f2d0e512536829e31"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a512a4b305ade062f2d0e512536829e31">remove_marked_triangles</a> ()</td></tr>
+<tr class="memdesc:a512a4b305ade062f2d0e512536829e31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all the triangles that have the flag T_MARKED_FLAG set.  <a href="classGEO_1_1CDTBase2d.html#a512a4b305ade062f2d0e512536829e31">More...</a><br /></td></tr>
+<tr class="separator:a512a4b305ade062f2d0e512536829e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5de7e491083ef66509cdbfd0c8b9abe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#ad5de7e491083ef66509cdbfd0c8b9abe">Tcheck</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> t) const</td></tr>
 <tr class="memdesc:ad5de7e491083ef66509cdbfd0c8b9abe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Consistency check for a triangle.  <a href="classGEO_1_1CDTBase2d.html#ad5de7e491083ef66509cdbfd0c8b9abe">More...</a><br /></td></tr>
 <tr class="separator:ad5de7e491083ef66509cdbfd0c8b9abe"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -372,17 +376,50 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:af173fb8db05e201d5246cc28791a35ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa56a051e170efb41fbaa150996fb9439"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a9c97e58e4526cb2ab931b3fde0a3b002">Sign</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#aa56a051e170efb41fbaa150996fb9439">orient_012_</a></td></tr>
 <tr class="separator:aa56a051e170efb41fbaa150996fb9439"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05c68716d93c97a7509ddf767d95f01e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a05c68716d93c97a7509ddf767d95f01e">exact_incircle_</a></td></tr>
+<tr class="separator:a05c68716d93c97a7509ddf767d95f01e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for constrained <a class="el" href="classGEO_1_1Delaunay.html" title="Abstract interface for Delaunay triangulation in Nd.">Delaunay</a> triangulation. </p>
 <p>Manages the combinatorics of the constrained <a class="el" href="classGEO_1_1Delaunay.html" title="Abstract interface for Delaunay triangulation in Nd.">Delaunay</a> triangulation. The points need to be stored elsewhere, and manipulated through indices, with two predicates:</p><ul>
 <li>orient2d(i,j,k)</li>
 <li>incircle(i,j,k,l) and one construction:</li>
-<li>create_intersection(i,j,k,l) See CDT for an example of implementation </li>
+<li>create_intersection(i,j,k,l) See <a class="el" href="classGEO_1_1CDT2d.html">CDT2d</a> for an example of implementation </li>
 </ul>
 
 <p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00073">73</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="ace5f36b6d887a37914c9b715302ca7b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace5f36b6d887a37914c9b715302ca7b1">&#9670;&nbsp;</a></span>anonymous enum</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constants for triangle flags. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ace5f36b6d887a37914c9b715302ca7b1a7f2d743e835a38d514d2932c392aeeb9"></a>T_MARKED_FLAG&#160;</td><td class="fielddoc"><p>marked triangle </p>
+</td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00290">290</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a17d2af332c4da0e0203ef7ac5fb8f2d4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a17d2af332c4da0e0203ef7ac5fb8f2d4">&#9670;&nbsp;</a></span>check_combinatorics()</h2>
 
@@ -409,7 +446,7 @@ Protected Attributes</h2></td></tr>
 <p>Consistency combinatorial check for all the triangles. </p>
 <p>aborts if inconsistency is detected </p>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00990">990</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01003">1003</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -490,7 +527,7 @@ Protected Attributes</h2></td></tr>
 <p>Consistency geometrical check for all the triangles. </p>
 <p>aborts if inconsistency is detected </p>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01011">1011</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01024">1024</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -781,7 +818,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the index of a newly created vertex that corresponds to the intersection between [<code>i</code> , <code>j</code>] and [<code>k</code> , <code>l</code>] </dd></dl>
 
-<p>Implemented in <a class="el" href="classGEO_1_1CDT2d.html#a253680c3241764bdc0a83023e62c6071">GEO::CDT2d</a>.</p>
+<p>Implemented in <a class="el" href="classGEO_1_1MeshInTriangle.html#a152b69138f53959d14836666169e1890">GEO::MeshInTriangle</a>, and <a class="el" href="classGEO_1_1CDT2d.html#a253680c3241764bdc0a83023e62c6071">GEO::CDT2d</a>.</p>
 
 </div>
 </div>
@@ -811,7 +848,7 @@ Protected Attributes</h2></td></tr>
 <p>Consistency combinatorial check for all the triangles in debug mode, ignored in release mode. </p>
 <p>aborts if inconsistency is detected </p>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01001">1001</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01014">1014</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -841,7 +878,7 @@ Protected Attributes</h2></td></tr>
 <p>Consistency geometrical check for all the triangles in debug mode, ignored in release mode. </p>
 <p>aborts if inconsistency is detected </p>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01024">1024</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01039">1039</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -877,7 +914,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00978">978</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00991">991</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -994,7 +1031,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a triangle with E as its edge 0 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01109">1109</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01120">1120</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -1043,7 +1080,7 @@ Protected Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the index (0,1 or 2) of <code>v</code> in <code>T</code> </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>The three entries of <code>T</code> are different and one of them is equal to <code>v</code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00935">935</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00936">936</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -1142,7 +1179,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00826">826</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00827">827</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -1209,7 +1246,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classGEO_1_1CDT2d.html#a7961974d2ed007ded38f62d13ee398df">GEO::CDT2d</a>.</p>
+<p>Implemented in <a class="el" href="classGEO_1_1MeshInTriangle.html#a2052e48f8971b82a45da066266ec96c2">GEO::MeshInTriangle</a>, and <a class="el" href="classGEO_1_1CDT2d.html#a7961974d2ed007ded38f62d13ee398df">GEO::CDT2d</a>.</p>
 
 </div>
 </div>
@@ -1642,7 +1679,35 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the sign of det(pj-pi,pk-pi) </dd></dl>
 
-<p>Implemented in <a class="el" href="classGEO_1_1CDT2d.html#a722bb6591a94ef7d795ca67cb6859d30">GEO::CDT2d</a>.</p>
+<p>Implemented in <a class="el" href="classGEO_1_1MeshInTriangle.html#a2a5ba1ba36760f84fc31fc8e19ec1fc1">GEO::MeshInTriangle</a>, and <a class="el" href="classGEO_1_1CDT2d.html#a722bb6591a94ef7d795ca67cb6859d30">GEO::CDT2d</a>.</p>
+
+</div>
+</div>
+<a id="a512a4b305ade062f2d0e512536829e31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a512a4b305ade062f2d0e512536829e31">&#9670;&nbsp;</a></span>remove_marked_triangles()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GEO::CDTBase2d::remove_marked_triangles </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Removes all the triangles that have the flag T_MARKED_FLAG set. </p>
+<p>This compresses the triangle array, and updates triangle adjacencies, as well as the vertex to triangle array. Note that it uses Tnext_'s storage for internal bookkeeping, so this function should not be used if there exists a non-empty <a class="el" href="structGEO_1_1CDTBase2d_1_1DList.html" title="Doubly connected triangle list.">DList</a>. </p>
 
 </div>
 </div>
@@ -1678,7 +1743,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classGEO_1_1CDT2d.html#afc309fa0826cc4250e9f36dc67d217e3">GEO::CDT2d</a>.</p>
+<p>Implemented in <a class="el" href="classGEO_1_1MeshInTriangle.html#ac3599bd629700bac344bec4ddaceb35a">GEO::MeshInTriangle</a>, and <a class="el" href="classGEO_1_1CDT2d.html#afc309fa0826cc4250e9f36dc67d217e3">GEO::CDT2d</a>.</p>
 
 </div>
 </div>
@@ -1745,7 +1810,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01083">1083</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01094">1094</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -1811,7 +1876,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01064">1064</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01075">1075</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -1994,7 +2059,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00730">730</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00731">731</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -2095,7 +2160,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00711">711</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00712">712</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -2131,7 +2196,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00956">956</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00969">969</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -2179,7 +2244,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the constraint associated with this edge, or index_t(-1) if there is no such constraint. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00767">767</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00768">768</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -2233,7 +2298,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00813">813</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00814">814</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -2318,7 +2383,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00272">272</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00271">271</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -2391,7 +2456,7 @@ Protected Attributes</h2></td></tr>
 <p>Creates a new triangle. </p>
 <dl class="section return"><dt>Returns</dt><dd>the index of the new triange </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00748">748</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00749">749</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -2438,7 +2503,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00259">259</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00258">258</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -2485,7 +2550,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00674">674</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00675">675</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -2636,7 +2701,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00779">779</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00780">780</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -2690,7 +2755,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00793">793</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00794">794</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -2737,7 +2802,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00248">248</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l00247">247</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -2896,7 +2961,33 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>if set, compute a CDT, else just a CT </p>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01171">1171</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01182">1182</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+
+</div>
+</div>
+<a id="a05c68716d93c97a7509ddf767d95f01e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05c68716d93c97a7509ddf767d95f01e">&#9670;&nbsp;</a></span>exact_incircle_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GEO::CDTBase2d::exact_incircle_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>true if <a class="el" href="classGEO_1_1CDTBase2d.html#a70c8e236556554bfea55279e1ad85a95" title="Incircle predicate.">incircle()</a> is 100% exact <br  />
+ </p>
+
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01184">1184</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -2922,7 +3013,7 @@ Protected Attributes</h2></td></tr>
 <p>global triangles orientation <br  />
  </p>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01172">1172</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01183">1183</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -2948,7 +3039,7 @@ Protected Attributes</h2></td></tr>
 <p>triangles vertices array <br  />
  </p>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01164">1164</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01175">1175</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -2974,7 +3065,7 @@ Protected Attributes</h2></td></tr>
 <p>triangles adjacency array <br  />
  </p>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01165">1165</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01176">1176</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -3000,7 +3091,7 @@ Protected Attributes</h2></td></tr>
 <p>triangle edge constraint <br  />
  </p>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01168">1168</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01179">1179</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -3026,7 +3117,7 @@ Protected Attributes</h2></td></tr>
 <p>triangle flags <br  />
  </p>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01167">1167</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01178">1178</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -3052,7 +3143,7 @@ Protected Attributes</h2></td></tr>
 <p>doubly connected triangle list <br  />
  </p>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01169">1169</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01180">1180</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -3078,7 +3169,7 @@ Protected Attributes</h2></td></tr>
 <p>doubly connected triangle list <br  />
  </p>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01170">1170</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01181">1181</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -3104,7 +3195,7 @@ Protected Attributes</h2></td></tr>
 <p>vertex to triangle back pointer <br  />
  </p>
 
-<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01166">1166</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="CDT__2d_8h_source.html#l01177">1177</a> of file <a class="el" href="CDT__2d_8h_source.html">CDT_2d.h</a>.</p>
 
 </div>
 </div>
@@ -3117,7 +3208,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1CDTBase2d.html">CDTBase2d</a></li>
-    <li class="footer">Generated on Fri Mar 3 2023 16:22:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

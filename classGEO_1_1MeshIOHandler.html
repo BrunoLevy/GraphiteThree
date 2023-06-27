@@ -176,6 +176,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a2e54c701f8950f0ef809f9d281222538"><td class="memItemLeft" align="right" valign="top"><a id="a2e54c701f8950f0ef809f9d281222538"></a>
 <a class="el" href="classGEO_1_1Attribute.html">Attribute</a>&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>vertex_region_</b></td></tr>
 <tr class="separator:a2e54c701f8950f0ef809f9d281222538"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3705caa794932420642fce4c0996f51"><td class="memItemLeft" align="right" valign="top"><a id="ac3705caa794932420642fce4c0996f51"></a>
+<a class="el" href="classGEO_1_1Attribute.html">Attribute</a>&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>edge_region_</b></td></tr>
+<tr class="separator:ac3705caa794932420642fce4c0996f51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d9cd4fb2dc24fde618fec7f77ab3019"><td class="memItemLeft" align="right" valign="top"><a id="a5d9cd4fb2dc24fde618fec7f77ab3019"></a>
 <a class="el" href="classGEO_1_1Attribute.html">Attribute</a>&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>facet_region_</b></td></tr>
 <tr class="separator:a5d9cd4fb2dc24fde618fec7f77ab3019"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -209,7 +212,7 @@ typedef <a class="el" href="classGEO_1_1SmartPointer.html">SmartPointer</a>&lt; 
 <dd>
 <a class="el" href="mesh__io_8h.html#a2af344a055948ce3a4268bf177f966ef" title="Helper macro to register a MeshIOHandler implementation.">geo_register_MeshIOHandler_creator</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh__io_8h_source.html#l00328">328</a> of file <a class="el" href="mesh__io_8h_source.html">mesh_io.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__io_8h_source.html#l00329">329</a> of file <a class="el" href="mesh__io_8h_source.html">mesh_io.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a6964a2ef08d69d6423c4e613f4385cc5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6964a2ef08d69d6423c4e613f4385cc5">&#9670;&nbsp;</a></span>create()</h2>
@@ -246,7 +249,7 @@ typedef <a class="el" href="classGEO_1_1SmartPointer.html">SmartPointer</a>&lt; 
   <table class="retval">
     <tr><td class="paramname">nullptr</td><td>if <code>format</code> is not a supported file format. </td></tr>
     <tr><td class="paramname">otherwise,a</td><td>pointer to a IO handler. The returned pointer must be stored in an MeshIOHandler_var that does automatic destruction: <div class="fragment"><div class="line"><a class="code" href="classGEO_1_1MeshIOHandler.html#a3a5fe03ad44a921a2cebabda353d047d">MeshIOHandler_var</a> handler = <a class="code" href="classGEO_1_1MeshIOHandler.html#a6964a2ef08d69d6423c4e613f4385cc5">MeshIOHandler::create</a>(<span class="stringliteral">&quot;mesh&quot;</span>);</div>
-<div class="ttc" id="aclassGEO_1_1MeshIOHandler_html_a3a5fe03ad44a921a2cebabda353d047d"><div class="ttname"><a href="classGEO_1_1MeshIOHandler.html#a3a5fe03ad44a921a2cebabda353d047d">GEO::MeshIOHandler::MeshIOHandler_var</a></div><div class="ttdeci">SmartPointer&lt; MeshIOHandler &gt; MeshIOHandler_var</div><div class="ttdoc">A smart pointer that contains a MeshIOHandler object.</div><div class="ttdef"><b>Definition:</b> <a href="mesh__io_8h_source.html#l00407">mesh_io.h:407</a></div></div>
+<div class="ttc" id="aclassGEO_1_1MeshIOHandler_html_a3a5fe03ad44a921a2cebabda353d047d"><div class="ttname"><a href="classGEO_1_1MeshIOHandler.html#a3a5fe03ad44a921a2cebabda353d047d">GEO::MeshIOHandler::MeshIOHandler_var</a></div><div class="ttdeci">SmartPointer&lt; MeshIOHandler &gt; MeshIOHandler_var</div><div class="ttdoc">A smart pointer that contains a MeshIOHandler object.</div><div class="ttdef"><b>Definition:</b> <a href="mesh__io_8h_source.html#l00409">mesh_io.h:409</a></div></div>
 <div class="ttc" id="aclassGEO_1_1MeshIOHandler_html_a6964a2ef08d69d6423c4e613f4385cc5"><div class="ttname"><a href="classGEO_1_1MeshIOHandler.html#a6964a2ef08d69d6423c4e613f4385cc5">GEO::MeshIOHandler::create</a></div><div class="ttdeci">static MeshIOHandler * create(const std::string &amp;format)</div><div class="ttdoc">Creates a MeshIOHandler.</div></div>
 </div><!-- fragment --> </td></tr>
   </table>
@@ -429,7 +432,7 @@ typedef <a class="el" href="classGEO_1_1SmartPointer.html">SmartPointer</a>&lt; 
 <dd>
 <a class="el" href="classGEO_1_1Factory.html" title="Factory of typed objects.">Factory</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh__io_8h_source.html#l00419">419</a> of file <a class="el" href="mesh__io_8h_source.html">mesh_io.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__io_8h_source.html#l00421">421</a> of file <a class="el" href="mesh__io_8h_source.html">mesh_io.h</a>.</p>
 
 </div>
 </div>
@@ -442,7 +445,7 @@ typedef <a class="el" href="classGEO_1_1SmartPointer.html">SmartPointer</a>&lt; 
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1MeshIOHandler.html">MeshIOHandler</a></li>
-    <li class="footer">Generated on Fri Mar 3 2023 16:22:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -19,6 +19,7 @@ var dir_4586f940cce2020c46fbc4f79c1663fc =
     [ "counted.h", "counted_8h.html", [
       [ "Counted", "classGEO_1_1Counted.html", "classGEO_1_1Counted" ]
     ] ],
+    [ "determinant.h", "determinant_8h.html", "determinant_8h" ],
     [ "environment.h", "environment_8h.html", [
       [ "VariableObserver", "classGEO_1_1VariableObserver.html", "classGEO_1_1VariableObserver" ],
       [ "VariableObserverList", "classGEO_1_1VariableObserverList.html", "classGEO_1_1VariableObserverList" ],

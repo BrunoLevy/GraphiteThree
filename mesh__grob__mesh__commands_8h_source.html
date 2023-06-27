@@ -182,12 +182,16 @@ $(document).ready(function(){initNavTree('mesh__grob__mesh__commands_8h_source.h
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;            <span class="keywordtype">bool</span> uniform = <span class="keyword">true</span></div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        );</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        </div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    };</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;}</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
+<div class="line"><a name="l00157"></a><span class="lineno"><a class="line" href="classOGF_1_1MeshGrobMeshCommands.html#adf2daeb42d70801cda435c6a5f95dd14">  157</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1MeshGrobMeshCommands.html#adf2daeb42d70801cda435c6a5f95dd14">append</a>(</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">MeshGrobName</a>&amp; other</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        );</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        </div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    };</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;}</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
 <div class="ttc" id="aclassOGF_1_1MeshGrobCommands_html"><div class="ttname"><a href="classOGF_1_1MeshGrobCommands.html">OGF::MeshGrobCommands</a></div><div class="ttdoc">Base class for Commands related with a MeshGrob object.</div><div class="ttdef"><b>Definition:</b> <a href="mesh__grob__commands_8h_source.html#l00056">mesh_grob_commands.h:56</a></div></div>
 <div class="ttc" id="aclassOGF_1_1MeshGrobMeshCommands_html"><div class="ttname"><a href="classOGF_1_1MeshGrobMeshCommands.html">OGF::MeshGrobMeshCommands</a></div><div class="ttdoc">Commands that manipulate the mesh in a MeshGrob.</div><div class="ttdef"><b>Definition:</b> <a href="mesh__grob__mesh__commands_8h_source.html#l00054">mesh_grob_mesh_commands.h:54</a></div></div>
 <div class="ttc" id="aclassOGF_1_1MeshGrobMeshCommands_html_a052fb42c470d6a337efb43ec024a2d26"><div class="ttname"><a href="classOGF_1_1MeshGrobMeshCommands.html#a052fb42c470d6a337efb43ec024a2d26">OGF::MeshGrobMeshCommands::copy</a></div><div class="ttdeci">void copy(const std::string &amp;name, bool edges=true, bool facets=true, bool cells=true, bool attributes=true, bool kill_isolated_vx=false)</div><div class="ttdoc">Copies a mesh.</div></div>
@@ -198,6 +202,8 @@ $(document).ready(function(){initNavTree('mesh__grob__mesh__commands_8h_source.h
 <div class="ttc" id="aclassOGF_1_1MeshGrobMeshCommands_html_aa34aedbe62c85d53ae231b1e18bd18b8"><div class="ttname"><a href="classOGF_1_1MeshGrobMeshCommands.html#aa34aedbe62c85d53ae231b1e18bd18b8">OGF::MeshGrobMeshCommands::MeshGrobMeshCommands</a></div><div class="ttdeci">MeshGrobMeshCommands()</div><div class="ttdoc">MeshGrobMeshCommands constructor.</div></div>
 <div class="ttc" id="aclassOGF_1_1MeshGrobMeshCommands_html_aa7431f26695e888ce47133c2e1f828f9"><div class="ttname"><a href="classOGF_1_1MeshGrobMeshCommands.html#aa7431f26695e888ce47133c2e1f828f9">OGF::MeshGrobMeshCommands::~MeshGrobMeshCommands</a></div><div class="ttdeci">~MeshGrobMeshCommands() override</div><div class="ttdoc">MeshGrobMeshCommands destructor.</div></div>
 <div class="ttc" id="aclassOGF_1_1MeshGrobMeshCommands_html_ad51c029b8703617184179b1a1c0457ae"><div class="ttname"><a href="classOGF_1_1MeshGrobMeshCommands.html#ad51c029b8703617184179b1a1c0457ae">OGF::MeshGrobMeshCommands::normalize_mesh_box</a></div><div class="ttdeci">void normalize_mesh_box(double xmin=0.0, double ymin=0.0, double zmin=0.0, double xmax=1.0, double ymax=1.0, double zmax=1.0, bool uniform=true)</div><div class="ttdoc">Scales and translates a mesh to fit within a box.</div></div>
+<div class="ttc" id="aclassOGF_1_1MeshGrobMeshCommands_html_adf2daeb42d70801cda435c6a5f95dd14"><div class="ttname"><a href="classOGF_1_1MeshGrobMeshCommands.html#adf2daeb42d70801cda435c6a5f95dd14">OGF::MeshGrobMeshCommands::append</a></div><div class="ttdeci">void append(const MeshGrobName &amp;other)</div><div class="ttdoc">Appends a surface mesh to this mesh. Note: for now, only works for surfaces, and does not append attr...</div></div>
+<div class="ttc" id="aclassOGF_1_1Name_html"><div class="ttname"><a href="classOGF_1_1Name.html">OGF::Name</a></div><div class="ttdoc">A template class for strings that need to have a specific type in the GOM system.</div><div class="ttdef"><b>Definition:</b> <a href="scene__graph_2types_2properties_8h_source.html#l00217">properties.h:217</a></div></div>
 <div class="ttc" id="amesh__grob__commands_8h_html"><div class="ttname"><a href="mesh__grob__commands_8h.html">mesh_grob_commands.h</a></div><div class="ttdoc">Base class for Commands related with a MeshGrob object.</div></div>
 <div class="ttc" id="anamespaceOGF_html"><div class="ttname"><a href="namespaceOGF.html">OGF</a></div><div class="ttdoc">Global Graphite namespace.</div><div class="ttdef"><b>Definition:</b> <a href="src_2lib_2OGF_2basic_2common_2common_8h_source.html#l00076">common.h:76</a></div></div>
 <div class="ttc" id="asrc_2lib_2OGF_2mesh_2common_2common_8h_html"><div class="ttname"><a href="src_2lib_2OGF_2mesh_2common_2common_8h.html">common.h</a></div><div class="ttdoc">Definitions common to all include files in the mesh library.</div></div>
@@ -207,7 +213,7 @@ $(document).ready(function(){initNavTree('mesh__grob__mesh__commands_8h_source.h
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_aef77abc1c70517fe3037d0ad81c1d82.html">OGF</a></li><li class="navelem"><a class="el" href="dir_fc9bd745fd3f5b971e94c93398ad7331.html">mesh</a></li><li class="navelem"><a class="el" href="dir_fa4cd75815104451c40304a5ee1ceca5.html">commands</a></li><li class="navelem"><a class="el" href="mesh__grob__mesh__commands_8h.html">mesh_grob_mesh_commands.h</a></li>
-    <li class="footer">Generated on Fri Mar 3 2023 16:22:45 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

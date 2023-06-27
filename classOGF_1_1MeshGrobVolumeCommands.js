@@ -16,8 +16,10 @@ var classOGF_1_1MeshGrobVolumeCommands =
     [ "volume_mesh_statistics", "classOGF_1_1MeshGrobVolumeCommands.html#a4f838acb0883d2c3eb2bbaaf3f9a9829", null ],
     [ "Voronoi_meshing", "classOGF_1_1MeshGrobVolumeCommands.html#a1b38e68fd80d5a60cfbfac088642f5a9", null ],
     [ "__pad0__", "classOGF_1_1MeshGrobVolumeCommands.html#a4ee75a5939986a10b210d686bc900198", null ],
-    [ "keep_regions", "classOGF_1_1MeshGrobVolumeCommands.html#ab2703f83e673fa6cf1b56c2081008103", null ],
-    [ "quality", "classOGF_1_1MeshGrobVolumeCommands.html#a299f6de271548701a9103b65b500cc40", null ],
-    [ "refine", "classOGF_1_1MeshGrobVolumeCommands.html#a43a32670ffdf7ec272c2eb1b612d4add", null ],
-    [ "verbose", "classOGF_1_1MeshGrobVolumeCommands.html#a84fb1ce062fe67d76e45b9c176dfe726", null ]
+    [ "epsilon", "classOGF_1_1MeshGrobVolumeCommands.html#a555d1d823ba86c745cb3969b23ab4f8c", null ],
+    [ "keep_regions", "classOGF_1_1MeshGrobVolumeCommands.html#ae50d8c2e285e40fa3c9b7c7bf8be996f", null ],
+    [ "max_hole_area", "classOGF_1_1MeshGrobVolumeCommands.html#a695b8c976d53467180a15913bb82c9b3", null ],
+    [ "quality", "classOGF_1_1MeshGrobVolumeCommands.html#a8fb639f35e2a0ad524334ec5d85c21b6", null ],
+    [ "refine", "classOGF_1_1MeshGrobVolumeCommands.html#add4e7cb783f5466e42052b578568cffc", null ],
+    [ "verbose", "classOGF_1_1MeshGrobVolumeCommands.html#ab941fcad905abf4e5c1adeb4508b8ce7", null ]
 ];
