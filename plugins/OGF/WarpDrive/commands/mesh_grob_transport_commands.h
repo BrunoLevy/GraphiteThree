@@ -90,6 +90,18 @@ namespace OGF {
             const std::string& reference = ""
         );
 
+
+        /**
+	 * \menu Pre-processing
+         * \brief normalize DESI data
+         * \param[in] nb_bins for selection function
+         * \param[in] subsample if non-zero, only use a subset of the data
+         */
+        void DESI_normalize_and_compute_selection_function(
+            index_t nb_bins = 1000,
+            index_t subsample = 0
+        );
+        
         /**
 	 * \menu Compute
          * \brief Computes the optimal transport between this volumetric mesh

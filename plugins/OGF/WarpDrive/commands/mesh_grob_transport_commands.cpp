@@ -191,6 +191,71 @@ namespace OGF {
         mesh_grob()->update();
     }
 
+    void MeshGrobTransportCommands::DESI_normalize_and_compute_selection_function(
+        index_t nb_bins, index_t subsample
+    ) {
+        if(subsample != 0) {
+            vector<GEO::index_t> indices(mesh_grob()->vertices.nb());
+            for(index_t i: mesh_grob()->vertices) {
+                indices[i] = i;
+            }
+            std::random_shuffle(indices.begin(), indices.end());       
+            Permutation::apply(mesh_grob()->vertices.point_ptr(0), indices, sizeof(double)*3);
+            for(index_t i : mesh_grob()->vertices) {
+                indices[i] = (i >= subsample) ? 1 : 0;
+            }
+            mesh_grob()->vertices.delete_elements(indices);
+        }
+
+        double max_radius = 0.0;
+        for(index_t v: mesh_grob()->vertices) {
+            vec3 p(mesh_grob()->vertices.point_ptr(v));
+            max_radius = std::max(max_radius,length2(p));
+        }
+        max_radius = ::sqrt(max_radius);
+        double s = 0.5 / max_radius;
+
+        // Normalize in [0,1]^3 cube
+        for(index_t v: mesh_grob()->vertices) {
+            vec3 p(mesh_grob()->vertices.point_ptr(v));
+            p *= s;
+            mesh_grob()->vertices.point_ptr(v)[0] = 0.5 + p.x;
+            mesh_grob()->vertices.point_ptr(v)[1] = 0.5 + p.y;
+            mesh_grob()->vertices.point_ptr(v)[2] = 0.5 + p.z;
+        }
+
+        // Compute histogram
+        vector<index_t> histo(nb_bins);
+        vec3 C(0.5, 0.5, 0.5);
+        for(index_t v: mesh_grob()->vertices) {
+            vec3 p(mesh_grob()->vertices.point_ptr(v));
+            p -= C;
+            double R = 2.0*length(p);
+            index_t i = index_t(R * double(nb_bins));
+            i = std::min(i, nb_bins-1);
+            ++histo[i];
+        }
+
+        for(index_t i=0; i<histo.size(); ++i) {
+            std::cerr << i << ":" << histo[i] << std::endl;
+        }
+        
+        Attribute<double> density(
+            mesh_grob()->vertices.attributes(), "mass"
+        );
+
+        for(index_t v: mesh_grob()->vertices) {
+            vec3 p(mesh_grob()->vertices.point_ptr(v));
+            p -= C;
+            double R = 2.0*length(p);
+            index_t i = index_t(R * double(nb_bins));
+            i = std::min(i, nb_bins-1);
+            density[v] = 1.0/double(histo[i]);
+        }
+        
+        mesh_grob()->update();
+    }
+    
     void MeshGrobTransportCommands::transport_3d(
         const MeshGrobName& target_name,
         index_t nb_points,
