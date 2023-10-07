@@ -65,10 +65,19 @@
 #include <geogram/basic/command_line.h>
 #include <geogram/basic/command_line_args.h>
 
+#ifdef GEOGRAM_WITH_VORPALINE
+#include <vorpalib/basic/common.h>
+#endif
+
 // [includes insertion point] (do not delete this line)
 
 namespace OGF {
     void mesh_libinit::initialize() {
+        
+#ifdef GEOGRAM_WITH_VORPALINE
+        GEO::vorpaline_initialize();
+#endif        
+        
         Logger::out("Init") << "<mesh>" << std::endl; 
         //_____________________________________________________________
         gom_package_initialize(mesh) ;
