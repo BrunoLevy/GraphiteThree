@@ -293,16 +293,12 @@ namespace OGF {
 	SmartPointer<OGF::StatusBar> status_bar_;
     };
 
-    Application* Application::instance_;
-    
     Application::Application(Interpreter* interpreter) :
 	ApplicationBase(interpreter)
     {
-        ogf_assert(instance_ == nullptr);
 	picked_grob_ = nullptr;
 	impl_ = new ApplicationImpl(this);	
         icon_repository_ = new IconRepository; 
-        instance_ = this;
 	if(CmdLine::arg_is_declared("gui:font_size")) {
 	    set_font_size(CmdLine::get_arg_uint("gui:font_size"));
 	}
@@ -328,7 +324,6 @@ namespace OGF {
 #ifdef GEO_DEBUG
 	Logger::out("Skin") << "Application::~Application()" << std::endl;
 #endif	
-        ogf_assert(instance_ == this);
 	delete icon_repository_;
 	icon_repository_ = nullptr;
 	// Make sure RenderArea is deleted before
@@ -336,7 +331,6 @@ namespace OGF {
 	render_area_.reset();
 	delete impl_;
 	impl_ = nullptr;
-        instance_ = nullptr;
     }
 
     void Application::lock_updates() {

@@ -119,21 +119,21 @@ namespace OGF {
     }
 
     void Tool::set_tooltip(const std::string& text) {
-        // Directly make the Lua interpreter change the variable
-        // graphite_gui.tooltip.
-        // If it is set, then the function graphite_gui.draw() in
-        // lib/graphite_imgui.lua draws a tooltip.
-        Interpreter::instance_by_language("Lua")->execute(
-            "graphite_gui.tooltip = '" + text + "'",
-            false, false
-        );
+        // get Application through high level gom object API to avoid creating
+        // a SceneGraph -> GUI dependency
+        Object* main = scene_graph()->interpreter()->resolve_object("main");
+        if(main != nullptr) {
+            main->set_property("tooltip", text);
+        }
     }
 
     void Tool::reset_tooltip() {
-        Interpreter::instance_by_language("Lua")->execute(
-            "graphite_gui.tooltip = nil",
-            false, false
-        );
+        // get Application through high level gom object API to avoid creating
+        // a SceneGraph -> GUI dependency
+        Object* main = scene_graph()->interpreter()->resolve_object("main");
+        if(main != nullptr) {
+            main->set_property("tooltip", "");
+        }
     }
     
     /*******************************************************/

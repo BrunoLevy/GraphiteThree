@@ -46,7 +46,6 @@
 #include <geogram/basic/file_system.h>
 #include <geogram/basic/line_stream.h>
 #include <geogram/basic/command_line.h>
-// #include <geogram/third_party/gzstream/gzstream.h>
 
 #include <vector>
 #include <fstream>
@@ -54,11 +53,14 @@
 
 namespace OGF {
 
+    ApplicationBase* ApplicationBase::instance_ = nullptr;
     bool ApplicationBase::stopping_ = true;
     
     ApplicationBase::ApplicationBase(Interpreter* interpreter) :
 	interpreter_(interpreter)
     {
+        geo_assert(instance_ == nullptr);
+        instance_ = this;
 	logger_client_ = new ApplicationBaseLoggerClient(this);
 	progress_client_ = new ApplicationBaseProgressClient(this);
 	Logger::instance()->register_client(logger_client_);
@@ -66,10 +68,12 @@ namespace OGF {
     }
 
     ApplicationBase::~ApplicationBase() {
+        geo_assert(instance_ == this);
 	if(logger_client_ != nullptr) {
 	    Logger::instance()->unregister_client(logger_client_);
 	}
 	Progress::set_client(nullptr);
+        instance_ = nullptr;
     }
 
     void ApplicationBase::start() {

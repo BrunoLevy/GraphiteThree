@@ -81,7 +81,7 @@ namespace OGF {
          * \return a pointer to the unique instance
          */
         static Application* instance() {
-            return instance_;
+            return dynamic_cast<Application*>(ApplicationBase::instance());
         }
 	
         /**
@@ -434,7 +434,6 @@ namespace OGF {
 	void error_occured(const std::string& error);
 
     private:
-        static Application* instance_;
 	ApplicationImpl* impl_;
         IconRepository* icon_repository_;
 	RenderArea_var render_area_;

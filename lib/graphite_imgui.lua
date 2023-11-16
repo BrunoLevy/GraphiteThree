@@ -94,12 +94,14 @@ function graphite_gui.draw()
     
     if not graphite_gui.presentation_mode() then
        graphite_gui.draw_menu_bar()
-       if graphite_gui.tooltip ~= nil then
+       
+       if main.tooltip ~= '' then
           if imgui.BeginTooltip() then
-             imgui.Text(graphite_gui.tooltip)
+             imgui.Text(main.tooltip)
              imgui.EndTooltip()
           end
-       end   
+       end
+
        main.draw_dock_space()
     end
 

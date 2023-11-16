@@ -77,7 +77,38 @@ namespace OGF {
 	Interpreter* interpreter() {
 	    return interpreter_;
 	}
-	
+
+        static ApplicationBase* instance() {
+            return instance_;
+        }
+
+    gom_properties:
+
+        /**
+         * \brief Sets a tooltip to be displayed near the cursor
+         *  in the rendering area.
+         */
+        void set_tooltip(const std::string& x) {
+            tooltip_ = x;
+            // Interpret "\\n" in string.
+            for(
+                size_t index = tooltip_.find("\\n");
+                index != std::string::npos;
+                index = tooltip_.find("\\n", index+2)
+            ) {
+                tooltip_.replace(index, 2, " \n");
+            }
+        }
+
+        /**
+         * \brief Gets the tooltip to be displayed near the cursor
+         *  in the rendering area, or an empty string if there is
+         *  no tooltip.
+         */
+        const std::string& get_tooltip() const {
+            return tooltip_;
+        }
+        
     gom_slots:
         /**
          * \brief Starts the application.
@@ -354,7 +385,9 @@ namespace OGF {
 	Interpreter* interpreter_;
         LoggerClient_var logger_client_;
         ProgressClient_var progress_client_;
+        std::string tooltip_;
 
+        static ApplicationBase* instance_;
 	static bool stopping_;
     };
 
