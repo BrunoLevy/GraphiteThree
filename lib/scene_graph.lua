@@ -1,6 +1,10 @@
 --  GUI for the scene-graph, for use with Skin_imgui
 ----------------------------------------------------
 
+-- Needed to enable navigation in object list with
+-- arrow keys (declared in imgui_internal.h)
+ImGuiSelectableFlags_SelectOnNav = (1 << 21)
+
 -- All types and functions related with the scene graph.
 scene_graph_gui = {}
 scene_graph_gui.name = 'Scene'
@@ -510,7 +514,7 @@ function scene_graph_gui.draw()
 	     end
 	  elseif imgui.Selectable(
 	       name, name == current_name,
-	       ImGuiSelectableFlags_AllowDoubleClick
+	       ImGuiSelectableFlags_AllowDoubleClick | ImGuiSelectableFlags_SelectOnNav
 	  ) then
 	      if imgui.IsMouseDoubleClicked(0) then
                   for i = 0,scene_graph.nb_children-1 do
