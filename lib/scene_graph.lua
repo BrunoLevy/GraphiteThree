@@ -484,6 +484,7 @@ function scene_graph_gui.draw()
 	  )
 	  if sel then
 	     grob.visible=val
+             scene_graph.current_object = grob.name
 	  end
 	  imgui.SameLine()
 	  local icon = scene_graph_gui.grob_icon[grob.meta_class.name]
