@@ -289,7 +289,7 @@ namespace {
 	Preferences::declare_preference_variable("gfx:full_screen");
        
         Preferences::declare_preference_variable(
-	      "gui:keyboard_nav",false,"keyboard navigation"
+	      "gui:keyboard_nav",true,"keyboard navigation"
 	);
         Preferences::declare_preference_variable(
 	      "gui:viewports",false,"individual dockable windows for dialogs"
