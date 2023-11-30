@@ -122,7 +122,7 @@ namespace OGF {
          * \brief Creates a new tool in a plugin.
          * \param[in] plugin_name the name of the plugin
          * \param[in] type the Grob class the shader should be attached to
-         * \param[in] name for instance "FooBar" for "OGF::MeshGrobFooBarShader"
+         * \param[in] name for instance "FooBar" for "OGF::MeshGrobFooBarTool"
          * \param[in] base_class_name optional base class for the shader
          *  (with the "OGF::" prefix)
          */

@@ -69,7 +69,7 @@ function draw_gui()
 end    
 
 main = gom.create({classname='OGF::Application',interpreter=gom})
-win = main.render_area()
+win = main.render_area
 gom.connect(win.redraw_request, draw)
 gom.connect(main.redraw_request,draw_gui)
 main.start()
