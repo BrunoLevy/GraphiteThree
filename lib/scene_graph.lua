@@ -160,10 +160,12 @@ function scene_graph_gui.menu_map.draw(grob, node)
 	    
          autogui.command_menu_item(grob, v, object_as_string)	    
       else
-         if imgui.BeginMenu(v.name) then
-            scene_graph_gui.menu_map.draw(grob, v)
-	    imgui.EndMenu()
-	 end
+         if v.name ~= 'menubar' then
+            if imgui.BeginMenu(v.name) then
+               scene_graph_gui.menu_map.draw(grob, v)
+	       imgui.EndMenu()
+	    end
+         end
       end
    end
 end
@@ -415,7 +417,7 @@ function scene_graph_gui.scene_graph_menu(with_file_menu)
        commands_as_string
     )
     imgui.Separator()
-    scene_graph_gui.menu_map.draw(scene_graph)
+    scene_graph_gui.menu_map.draw(scene_graph, nil)
     if with_file_menu then
        imgui.Separator()
        scene_graph_gui.file_menu()

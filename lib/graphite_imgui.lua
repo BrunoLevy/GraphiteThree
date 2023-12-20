@@ -70,6 +70,16 @@ function graphite_gui.draw_menu_bar()
          scene_graph_gui.scene_graph_menu(false)
 	 imgui.EndMenu()
       end
+
+      -- draw SceneGraphCommands that have a /menubar/... menu
+      local node = scene_graph_gui.menu_map.get(scene_graph)
+      node = node.by_name['menubar']
+      if node ~= nil then
+         scene_graph_gui.menu_map.draw(
+            scene_graph, node
+         )
+      end
+
       if scene_graph.current() ~= nil then
           scene_graph_gui.grob_ops(
 	     scene_graph.current(), true
