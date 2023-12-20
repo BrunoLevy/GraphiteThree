@@ -104,6 +104,18 @@ namespace OGF {
         );
 
         /**
+         * \brief Creates a new Commands class for the SceneGraph in a plugin.
+         * \param[in] plugin_name the name of the plugin
+         * \param[in] name for instance "FooBar" 
+         *  for "OGF::SceneGraphFooBarCommands"
+         */
+        void create_scene_graph_commands(
+            const DynamicModuleName& plugin_name,
+            const std::string& name
+        );
+
+        
+        /**
          * \brief Creates a new Shader class in a plugin.
          * \param[in] plugin_name the name of the plugin
          * \param[in] type the Grob class the shader should be attached to

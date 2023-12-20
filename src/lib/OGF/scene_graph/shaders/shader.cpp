@@ -46,6 +46,7 @@
 
 #include <geogram/image/image.h>
 #include <geogram/image/image_library.h>
+#include <geogram/basic/command_line.h>
 
 namespace OGF {
 
@@ -89,6 +90,11 @@ namespace OGF {
     void Shader::blink() {
     }
 
+    bool Shader::dark_mode() const {
+        std::string gui_mode = CmdLine::get_arg("gui:style");
+        return gui_mode == "Dark";
+    }
+    
     Texture* Shader::create_texture_from_file(
         const std::string& file_name, GLint filtering, GLint wrapping         
     ) {

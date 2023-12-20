@@ -182,7 +182,7 @@ namespace OGF {
 		copy_property_to_arglist("camera.auto_focus",args);
 		copy_property_to_arglist("camera.draw_selected_only",args);
 		copy_property_to_arglist("camera.clipping",args);
-		copy_property_to_arglist("camera.lighting_matrix",args);		
+		copy_property_to_arglist("camera.lighting_matrix",args);
 		
 		copy_property_to_arglist("xform.u", args);
 		copy_property_to_arglist("xform.v", args);

@@ -119,7 +119,7 @@ namespace OGF {
 	tex_normal_mapping_ = false;
 	
         surface_style_.visible = true;
-        surface_style_.color = Color(0.5,0.5,0.5,1.0);
+        surface_style_.color = Color(0.5,0.5,0.5);
         facets_filter_ = false;
 	culling_mode_ = NO_CULL;
 	specular_ = 2;
@@ -127,23 +127,23 @@ namespace OGF {
         two_sided_ = false;
         
         volume_style_.visible = true;
-        volume_style_.color = Color(1.0,1.0,0.0,1.0);
+        volume_style_.color = Color(1.0,1.0,0.0);
         cells_filter_ = false;
         
         edges_style_.visible = true;
-        edges_style_.color   = Color(0.0,0.0,0.5,1.0);
-        edges_style_.width   = 1;
+        edges_style_.color  = dark_mode() ? Color(1.0,1.0,1.0) : Color(0.0,0.0,0.5);
+        edges_style_.width  = 1;
         
         mesh_style_.visible = false;
-        mesh_style_.color   = Color(0.0,0.0,0.0,1.0);
+        mesh_style_.color   = Color(0.0,0.0,0.0);
         mesh_style_.width   = 1;
 
         border_style_.visible = true;
-        border_style_.color   = Color(0.0,0.0,0.5,1.0);
+        border_style_.color = dark_mode() ? Color(1.0,1.0,0.0) : Color(0.0,0.0,0.5);
         border_style_.width   = 2;
 
         vertices_style_.visible = false;
-        vertices_style_.color   = Color(0.0,1.0,0.0,1.0);
+        vertices_style_.color   = Color(0.0,1.0,0.0);
         vertices_style_.size    = 2;
 
         vertices_filter_ = false;
@@ -151,7 +151,7 @@ namespace OGF {
 	vertices_transparency_ = 0.0;
 	
         vertices_selection_style_.visible = true;
-        vertices_selection_style_.color   = Color(1.0,0.0,0.0,1.0);
+        vertices_selection_style_.color   = Color(1.0,0.0,0.0);
         vertices_selection_style_.size    = 3;
         
         shrink_ = 0;

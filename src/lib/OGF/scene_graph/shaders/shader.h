@@ -155,6 +155,13 @@ namespace OGF {
         GLint* latest_viewport() {
             return viewport_;
         }
+
+        /**
+         * \brief Tests whether dark mode is set
+         * \retval true if gui colors are rather dark
+         * \retval false otherwise
+         */
+        bool dark_mode() const;
         
     protected:
 

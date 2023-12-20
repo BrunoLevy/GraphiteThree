@@ -158,6 +158,7 @@ function graphite_main_window.draw_contents()
   if imgui.Button(imgui.font_icon('home')..' Home',-1,0) then
      graphite_main_window.home()
   end
+  
   imgui.Separator()
   for index,module in ipairs(graphite_main_window.modules_by_index) do
      graphite_main_window.draw_module(module)

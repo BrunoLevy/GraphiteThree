@@ -99,6 +99,14 @@ namespace OGF {
         ModuleMaker mm;
         mm.create_commands(plugin_name, type, name);
     }
+
+    void SceneGraphDevelCommands::create_scene_graph_commands(
+        const DynamicModuleName& plugin_name,
+        const std::string& name
+    ) {
+        ModuleMaker mm;
+        mm.create_commands(plugin_name, "OGF::SceneGraph", name);
+    }
     
     void SceneGraphDevelCommands::create_shader(
         const DynamicModuleName& plugin_name,

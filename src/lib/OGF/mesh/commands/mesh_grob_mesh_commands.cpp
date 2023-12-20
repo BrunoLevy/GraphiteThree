@@ -82,10 +82,17 @@ namespace OGF {
             << "Nb components = "
             << mesh_nb_connected_components(*mesh_grob())
             << std::endl;
-        Logger::out("MeshTopology/surface")
-            << "Nb borders = "
-            << mesh_nb_borders(*mesh_grob())
-            << std::endl;
+        int nb_borders = mesh_nb_borders(*mesh_grob());
+        if(nb_borders == -1) {
+            Logger::out("MeshTopology/surface")
+                << "Surface has non-manifold borders (with bowtie vertex)"
+                << std::endl;
+        } else {
+            Logger::out("MeshTopology/surface")
+                << "Nb borders = "
+                << mesh_nb_borders(*mesh_grob())
+                << std::endl;
+        }
         Logger::out("MeshTopology/surface")
             << "Xi = "
             << mesh_Xi(*mesh_grob())
