@@ -158,7 +158,6 @@ function graphite_main_window.draw_contents()
      camera_gui.projection_dialog()
      imgui.EndMenu()
   end
-  
   imgui.Separator()
   for index,module in ipairs(graphite_main_window.modules_by_index) do
      graphite_main_window.draw_module(module)

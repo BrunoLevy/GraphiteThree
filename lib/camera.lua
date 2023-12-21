@@ -146,6 +146,12 @@ end
 camera_gui.snapshot_filename = ''
 
 function camera_gui.draw_menu()
+  if imgui.Button(imgui.font_icon('home')..' Home',-1,0) then
+     camera_gui.home()
+  end
+  imgui.Separator()
+  camera_gui.projection_dialog()
+  imgui.Separator()
   if imgui.BeginMenu('Properties...') then
      autogui.properties_editor(main.camera())
      imgui.EndMenu()
@@ -320,6 +326,7 @@ function camera_gui.projection_dialog()
        imgui.PopStyleColor()
     end
 
+    imgui.Text(' ')
     imgui.SameLine(45)
     axis_button('+Z',b)
 
