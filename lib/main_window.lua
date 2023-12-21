@@ -144,9 +144,71 @@ function graphite_main_window.draw_module(module)
 end
 
 function graphite_main_window.home()
-  scene_graph.scene_graph_shader_manager.update_focus()
-  xform.reset()
+    scene_graph.scene_graph_shader_manager.update_focus()
+    xform.reset()
 end
+
+function graphite_main_window.projection(axis)
+    graphite_main_window.home()
+    if(    axis == '+X') then
+       xform.rotation_matrix = ' 0 0  1 0   0 1  0 0  -1  0  0 0   0 0 0 1'    
+    elseif(axis == '-X') then
+       xform.rotation_matrix = ' 0 0 -1 0   0 1  0 0   1  0  0 0   0 0 0 1'    
+    elseif(axis == '+Y') then
+       xform.rotation_matrix = ' 1 0  0 0   0 1  0 0   0  0  1 0   0 0 0 1'
+    elseif(axis == '-Y') then
+       xform.rotation_matrix = '-1 0  0 0   0 1  0 0   0  0 -1 0   0 0 0 1'
+    elseif(axis == '+Z') then
+       xform.rotation_matrix = ' 1 0  0 0   0 0  1 0   0 -1  0 0   0 0 0 1'    
+    elseif(axis == '-Z') then
+       xform.rotation_matrix = ' 1 0  0 0   0 0 -1 0   0  1  0 0   0 0 0 1'
+    end       
+end
+
+function graphite_main_window.cube_view_dialog()
+    local r,g,b
+
+    if gom.get_environment_value('gui:style') == 'Dark' then
+       r = 0xFF8080FF
+       g = 0xFF80FF80
+       b = 0xFFFF8080
+    else
+       r = 0xFF0000FF
+       g = 0xFF00FF00
+       b = 0xFFFF0000
+    end
+
+    local ImGuiStyleVar_FrameRounding = 12
+    imgui.PushStyleVar(ImGuiStyleVar_FrameRounding,0)
+
+    function axis_button(axis,color)
+       imgui.PushStyleColor(ImGuiCol_Text,color)
+       if imgui.Button(axis,30,0) then
+          graphite_main_window.projection(axis)
+       end
+       imgui.PopStyleColor()
+    end
+
+    imgui.SameLine(45)
+    axis_button('+Z',b)
+
+    axis_button('-X',r)
+    imgui.SameLine(45)
+    axis_button('+Y',g)
+    imgui.SameLine(82)
+    axis_button('+X',r)
+
+    imgui.Text(' ')
+    imgui.SameLine(45)
+    axis_button('-Z',b)
+
+    imgui.Text(' ')
+    imgui.SameLine(45)
+    axis_button('-Y',g)
+
+    imgui.PopStyleVar()
+end
+
 
 function graphite_main_window.draw_contents()
   if scene_graph_gui ~= nil and graphite_gui.presentation_mode() then
@@ -155,8 +217,13 @@ function graphite_main_window.draw_contents()
         imgui.EndMenuBar()
      end
   end
-  if imgui.Button(imgui.font_icon('home')..' Home',-1,0) then
+  if imgui.Button(imgui.font_icon('home')..' Home',-40,0) then
      graphite_main_window.home()
+  end
+  imgui.SameLine()
+  if imgui.BeginMenu(imgui.font_icon('cube')) then
+     graphite_main_window.cube_view_dialog()
+     imgui.EndMenu()
   end
   
   imgui.Separator()
