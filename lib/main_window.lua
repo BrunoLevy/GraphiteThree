@@ -150,13 +150,12 @@ function graphite_main_window.draw_contents()
         imgui.EndMenuBar()
      end
   end
-  if imgui.Button(imgui.font_icon('home')..' Home',-40,0) then
+  if imgui.Button(imgui.font_icon('home')..' Home',-1,0) then
      camera_gui.home()
   end
-  imgui.SameLine()
-  if imgui.BeginMenu(imgui.font_icon('ruler-combined')) then
+  if imgui.BeginPopupContextItem() then
      camera_gui.projection_dialog()
-     imgui.EndMenu()
+     imgui.EndPopup()
   end
   imgui.Separator()
   for index,module in ipairs(graphite_main_window.modules_by_index) do

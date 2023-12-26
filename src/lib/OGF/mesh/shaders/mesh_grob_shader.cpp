@@ -379,7 +379,8 @@ namespace OGF {
 			for(index_t u=0; u<4; ++u) {
 			    for(index_t v=0; v<4; ++v) {
 				for(index_t w=0; w<4; ++w) {
-				    Memory::byte* p = image->pixel_base(u,v,w);
+				    Memory::byte* p =
+                                        image->pixel_base(u,v,w);
 				    index_t uu = (u + 1)%4;
 				    index_t vv = (v + 1)%4;
 				    index_t ww = (w + 1)%4;
@@ -396,7 +397,8 @@ namespace OGF {
 			    image, GL_NEAREST, GL_REPEAT
 			);
 		    } else {
-			std::string filename = "textures/checkerboard_gray.xpm";
+			std::string filename =
+                            "textures/checkerboard_gray.xpm";
 			if(FileManager::instance()->find_file(filename)) {
 			    texture_ = create_texture_from_file(
 				filename, GL_NEAREST, GL_REPEAT
@@ -416,7 +418,8 @@ namespace OGF {
             texture_->unbind();
 	} else if(get_attributes()) {
             index_t repeat = colormap_style_.repeat;
-            GLint filtering = colormap_style_.smooth ? GL_LINEAR : GL_NEAREST;
+            GLint filtering =
+                colormap_style_.smooth ? GL_LINEAR : GL_NEAREST;
             if(
                 String::string_starts_with(
                     colormap_style_.colormap_name,"iso"
@@ -533,6 +536,7 @@ namespace OGF {
                 float(border_style_.color.g()),
                 float(border_style_.color.b())                
             );
+            gfx_.set_mesh_border_width(border_style_.width);
             gfx_.draw_surface_borders();
         }
         
@@ -541,7 +545,7 @@ namespace OGF {
                 float(surface_style_.color.r()),
                 float(surface_style_.color.g()),
                 float(surface_style_.color.b()),
-                float(surface_style_.color.a())                		
+                float(surface_style_.color.a())
             );
             gfx_.set_mesh_color(
                 float(mesh_style_.color.r()),
