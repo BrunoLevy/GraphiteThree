@@ -66,6 +66,7 @@ namespace OGF {
 
     LuaCallable::LuaCallable(lua_State* L, int target_index) {
 	lua_state_ = L;
+
 	// Since we change the stack, we need to convert index relative
 	// to top into absolute index.
 	if(target_index < 0) {
@@ -79,6 +80,7 @@ namespace OGF {
 	lua_pushnil(lua_state_);
 	lua_copy(lua_state_, target_index, -1);
 	lua_seti(lua_state_, -2, lua_Integer(instance_id_));
+        lua_pop(lua_state_, 1); // Leave the Lua stack as we found it
     }
 
 
@@ -112,7 +114,7 @@ namespace OGF {
 	    result = (lua_pcall(lua_state_, 1, 1, 0) == 0);		
 	} else {
 	    for(index_t i=0; i<args.nb_args(); ++i) {
-		lua_pushgraphiteval(lua_state_, args.ith_arg_value(i));		
+		lua_pushgraphiteval(lua_state_, args.ith_arg_value(i));
 	    }
 	    result = (
 		lua_pcall(lua_state_, int(args.nb_args()), 1, 0) == 0

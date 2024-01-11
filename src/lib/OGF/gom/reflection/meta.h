@@ -131,6 +131,16 @@ namespace OGF {
         MetaType* resolve_meta_type(const std::string& type_name) const ;
 
         /**
+         * \brief Finds a MetaClass by type name
+         * \param[in] type_name type name
+         * \return the MetaClass associated with \p type_name if it exists
+         *  or nullptr otherwise
+         */
+        MetaClass* resolve_meta_class(const std::string& type_name) const {
+            return dynamic_cast<MetaClass*>(resolve_meta_type(type_name));
+        }
+        
+        /**
          * \brief Finds a MetaType by typeid name
          * \param[in] typeid_name the C++ RTTI name of the system,
          *  as obtained by typeid<T>.name()

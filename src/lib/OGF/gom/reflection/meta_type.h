@@ -184,7 +184,20 @@ namespace OGF {
 	 * \copydoc CustomAttributes::custom_attribute_value()
 	 */
 	std::string custom_attribute_value(const std::string& name) const;
-	
+
+	/**
+	 * \copydoc CustomAttributes::create_custom_attribute()
+	 */
+        void create_custom_attribute(
+            const std::string& name, const std::string& value
+        );
+
+	/**
+	 * \copydoc CustomAttributes::set_custom_attribute()
+	 */
+        void set_custom_attribute(
+            const std::string& name, const std::string& value
+        );        
     } ;
 
     /**

@@ -319,6 +319,15 @@ namespace OGF {
 	 */
 	virtual MetaType* resolve_meta_type(const std::string& type_name) const;
 
+        /**
+         * \brief Binds a MetaType
+         * \param[in] mtype the MetaType to be bound
+         * \retval true if the MetaType could be bound
+         * \retval false otherwise. This can happen if a MetaType with the same
+         *   name was already bound
+         */
+        virtual bool bind_meta_type(MetaType* mtype);
+        
 	/**
 	 * \brief Creates an object.
 	 * \param[in] args the ArgList, with at least an argument classname. 

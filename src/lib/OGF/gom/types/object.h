@@ -401,8 +401,6 @@ namespace OGF {
             const std::string& prop_name, Any& prop_value
         ) const;
 	
-
-	
     protected:
 
         /**

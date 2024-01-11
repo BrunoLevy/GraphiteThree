@@ -497,6 +497,10 @@ namespace OGF {
         return Meta::instance()->resolve_meta_type(type_name);
     }
 
+    bool Interpreter::bind_meta_type(MetaType* mtype) {
+        return Meta::instance()->bind_meta_type(mtype);
+    }
+    
     Object* Interpreter::create(const ArgList& args_in) {
 	Object* result = nullptr;
 	if(args_in.has_arg("classname")) {

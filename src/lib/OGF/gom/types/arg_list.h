@@ -71,7 +71,8 @@ namespace OGF {
          * \brief ArgList copy-constructor.
          * \param[in] rhs a const reference to the ArgList to be copied
          */
-        ArgList(const ArgList& rhs) : argval_(rhs.argval_), argname_(rhs.argname_) {
+        ArgList(const ArgList& rhs) :
+           argval_(rhs.argval_), argname_(rhs.argname_) {
         }
 
         /**

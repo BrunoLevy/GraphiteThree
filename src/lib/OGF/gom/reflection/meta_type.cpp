@@ -60,8 +60,22 @@ namespace OGF {
 	return CustomAttributes::ith_custom_attribute_value(i);
     }
 
-    std::string MetaInformation::custom_attribute_value(const std::string& name) const {
+    std::string MetaInformation::custom_attribute_value(
+        const std::string& name
+    ) const {
 	return CustomAttributes::custom_attribute_value(name);
+    }
+
+    void MetaInformation::create_custom_attribute(
+        const std::string& name, const std::string& value
+    ) {
+        CustomAttributes::create_custom_attribute(name, value);
+    }
+
+    void MetaInformation::set_custom_attribute(
+        const std::string& name, const std::string& value
+    ) {
+        CustomAttributes::set_custom_attribute(name, value);
     }
     
     /**************************************************************************/

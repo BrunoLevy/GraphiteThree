@@ -396,10 +396,10 @@ namespace OGF {
 
         /**
          * \brief Gets the factory.
-         * \return a pointer to the factory associated with this class, or nullptr
-         *  if there is no factory. The returned factory is typically a 
-         *  FactoryMetaClass, that selects the best constructor according to
-         *  the arguments.
+         * \return a pointer to the factory associated with this class, 
+         *  or nullptr if there is no factory. 
+         *  The returned factory is typically a FactoryMetaClass, 
+         *  that selects the best constructor according to the arguments.
          */
         Factory* factory() const {
             return factory_;
@@ -490,7 +490,7 @@ namespace OGF {
      */
     typedef SmartPointer<MetaClass> MetaClass_var;   
 
-    //____________________________________________________________________
+    /*******************************************************************/
 
     /**
      * \brief A Factory that uses a MetaClass. 
@@ -526,6 +526,7 @@ namespace OGF {
         MetaClass* meta_class_;
     };
 
+    /*******************************************************************/
 }
 #endif 
 

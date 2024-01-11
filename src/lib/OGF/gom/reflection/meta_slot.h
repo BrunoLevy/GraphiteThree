@@ -64,7 +64,7 @@ namespace OGF {
          */
         MetaSlot(
             const std::string& name, MetaClass* container,
-            const std::string& return_type_name 
+            const std::string& return_type_name = "void"
         ) ;
 
         /**

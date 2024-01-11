@@ -213,6 +213,20 @@ namespace OGF {
          */
         void set_visibility(index_t index, bool value);
 
+
+        /**
+         * \brief Associates a Commands class to a Grob class.
+         * \details It is used with Commands class created in Lua.
+         * \param[in] grob_class_name the name of the grob class, 
+         *   with the 'OGF::' prefix
+         * \param[in] commands_class_name the name of the commands class, 
+         *   with the 'OGF::' prefix
+         */
+        void register_grob_commands(
+            const std::string& grob_class_name,
+            const std::string& commands_class_name
+        );
+        
     gom_properties:
         /**
          * \brief Gets the current object by name.

@@ -131,7 +131,7 @@ namespace OGF {
         cells_filter_ = false;
         
         edges_style_.visible = true;
-        edges_style_.color  = dark_mode() ? Color(1.0,1.0,1.0) : Color(0.0,0.0,0.5);
+        edges_style_.color  = dark_mode() ? Color(0.0,1.0,1.0) : Color(0.0,0.0,0.5);
         edges_style_.width  = 1;
         
         mesh_style_.visible = false;
@@ -139,7 +139,7 @@ namespace OGF {
         mesh_style_.width   = 1;
 
         border_style_.visible = true;
-        border_style_.color = dark_mode() ? Color(1.0,1.0,0.0) : Color(0.0,0.0,0.5);
+        border_style_.color = dark_mode() ? Color(1.0,1.0,1.0) : Color(0.0,0.0,0.5);
         border_style_.width   = 2;
 
         vertices_style_.visible = false;

@@ -37,6 +37,7 @@
 #include <OGF/gom/reflection/meta_class.h>
 #include <OGF/gom/reflection/meta_constructor.h>
 #include <OGF/gom/reflection/meta.h>
+#include <OGF/gom/reflection/dynamic_object.h>
 
 /*****************************************************************************/
 
@@ -393,9 +394,18 @@ namespace OGF {
         return best_so_far;
     }
 
-//__________________________________________________________________________
+/****************************************************************************/
 
     Object* FactoryMetaClass::create(const ArgList& args) {
+
+        // If meta class is a DynamicMetaClass (written in Lua),
+        // create a generic Object and set its meta class.
+        if(dynamic_cast<DynamicMetaClass*>(meta_class()) != nullptr) {
+            Object* result = new DynamicObject;
+            result->set_meta_class(meta_class());
+            return result;
+        }
+        
         MetaConstructor* best_constructor = 
             meta_class()->best_constructor(args);
         if(best_constructor != nullptr) {
@@ -411,8 +421,5 @@ namespace OGF {
         }
         return nullptr;
     }    
-
-//__________________________________________________________________________
-
 }
 

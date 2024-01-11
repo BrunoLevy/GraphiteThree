@@ -107,6 +107,15 @@ namespace OGF {
         }
     }
 
+    void SceneGraph::register_grob_commands(
+        const std::string& grob_class_name,
+        const std::string& commands_class_name
+    ) {
+        SceneGraphLibrary::instance()->register_grob_commands(
+            grob_class_name, commands_class_name
+        );
+    }
+    
     void SceneGraph::set_visibilities(const std::string& x) {
         std::vector< std::string > values;
         String::split_string( x, ';', values );
