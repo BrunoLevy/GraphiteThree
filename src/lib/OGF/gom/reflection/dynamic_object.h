@@ -98,6 +98,10 @@ namespace OGF {
          */
         void add_arg(const std::string& name, const std::string& type_name);
 
+        
+        // TODO: default value
+        // TODO: custom attribute for args
+        
     protected:
         Callable_var action_;
     };

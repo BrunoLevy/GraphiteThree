@@ -46,8 +46,7 @@ namespace OGF {
         // Object properties. Then we let Object do the
         // job and access the property in Object fields.
         if(
-            Meta::instance()->resolve_meta_class("OGF::Object")->
-            find_property(name) != nullptr
+            ogf_meta<OGF::Object>::meta_class()->find_property(name) != nullptr
         ) {
             return Object::set_property(name, value);
         }
@@ -70,8 +69,7 @@ namespace OGF {
         // Object properties. Then we let Object do the
         // job and access the property in Object fields.
         if(
-            Meta::instance()->resolve_meta_class("OGF::Object")->
-            find_property(name) != nullptr
+            ogf_meta<OGF::Object>::meta_class()->find_property(name) != nullptr
         ) {
             return Object::get_property(name, value);
         }
@@ -109,28 +107,6 @@ namespace OGF {
                 }
                 ArgList args2 = args;
                 args2.create_arg("self",target);
-                /*
-                {
-                    printf("target=0x%lx\n",long(target));
-                    Any self = args2.arg_value("self");
-                    std::cerr << "self type = " << self.meta_type()->name()
-                              << std::endl;
-                    std::cerr << "self as string = " << self.as_string()
-                              << std::endl;
-                }
-                {
-                    Any self = args2.arg_value("self");
-                    MetaType* mtype = self.meta_type();
-                    if(Any::is_pointer_type(mtype)) {
-                        MetaType* mbasetype = Any::pointed_type(mtype);
-                        if(dynamic_cast<MetaClass*>(mbasetype) != nullptr) {
-                            Object* object = nullptr;
-                            self.get_value(object);
-                            printf("object=0x%lx\n",long(object));
-                        }
-                    }
-                }
-                */
                 return mmethod->action_->invoke(args2, ret_val);
             }
         );
