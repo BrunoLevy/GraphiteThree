@@ -128,10 +128,7 @@ mrandomize.create_custom_attribute('help','applies a random perturbation to the 
 -- the menu path with '/'. 
 mrandomize.create_custom_attribute('menu','/Mesh')
 
--- Make our new class visitible from GOM...
-gom.bind_meta_type(mclass)
-
--- ... and visible from MeshGrob
+-- Make our new Commands visible from MeshGrob
 scene_graph.register_grob_commands('OGF::MeshGrob', mclass.name)
 
 
@@ -228,10 +225,8 @@ msphere.add_arg('radius','double',1.0)
 msphere.add_arg('precision','int',4)
 msphere.create_custom_attribute('menu','/Shapes')
 
--- Make our new class visible from the Graphite Object Model
--- and from SceneGraph
+-- Make our new class visible from SceneGraph
 
-gom.bind_meta_type(mclass)
 scene_graph.register_grob_commands('OGF::SceneGraph', mclass.name)
 
 -- -----------------------------------------------------------------------

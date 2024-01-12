@@ -398,9 +398,11 @@ namespace OGF {
     MetaClass* MetaClass::create_subclass(
         const std::string& name, bool is_abstract
     ) {
-        return new DynamicMetaClass(
+        MetaClass* result = new DynamicMetaClass(
             name, this->name(), is_abstract
         );
+        Meta::instance()->bind_meta_type(result);
+        return result;
     }
     
 /****************************************************************************/
