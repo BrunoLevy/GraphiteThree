@@ -58,9 +58,9 @@ namespace OGF {
 
         /**
          * \brief MetaEnum constructor.
-         * \param[in] enum_name C++ type name of the enum
+         * \param[in] name C++ type name of the enum
          */
-        MetaEnum(const std::string& enum_name) ;
+        MetaEnum(const std::string& name) ;
 
         /**
          * \brief MetaEnum destructor.
@@ -129,7 +129,6 @@ namespace OGF {
          */
         const std::string& get_name_by_value(int value) const ; 
 	
-    public:
         /**
          * \brief Adds a new value to this MetaEnum.
          * \param[in] name symbolic name
