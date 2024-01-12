@@ -270,6 +270,18 @@ namespace OGF {
             const std::string& property_name, bool super = true 
         ) const;
 
+        /**
+         * \brief Creates a new subclass dynamically
+         * \param[in] name the name of the subclass to be created
+         * \param[in] is_abstract true if the class is abstract, that is, if
+         *  no object of this class can be created
+         * \return the newly created subclass
+         * \details To be used in scripts that create new classes dynamically
+         */
+        virtual MetaClass* create_subclass(
+            const std::string& name, bool is_abstract=false
+        );
+        
     public:
         
         /**

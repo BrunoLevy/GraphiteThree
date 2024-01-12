@@ -39,6 +39,8 @@
 
 namespace OGF {
 
+    /*************************************************************************/
+    
     bool DynamicObject::set_property(
         const std::string& name, const Any& value
     ) {
@@ -84,8 +86,40 @@ namespace OGF {
         return true;
     }
 
-    /**********************************************************************/
+    /*************************************************************************/
 
+    Object* DynamicFactoryMetaClass::create(const ArgList& args) {
+        Object* result = new DynamicObject;
+        result->set_meta_class(meta_class());
+
+        if(action_.is_null()) {
+            // Default constructor initializes object's properties from args
+            for(index_t i=0; i<args.nb_args(); ++i) {
+                if(result->has_property(args.ith_arg_name(i))) {
+                    result->set_property(
+                        args.ith_arg_name(i), args.ith_arg_value(i)
+                    );
+                }
+            }
+        } else {
+            // If an action was specified, initialize 'self' and call it
+            ArgList args2 = args;
+            args2.create_arg("self", result);
+            action_->invoke(args2);
+        }
+        return result;
+    }
+    
+    /*************************************************************************/
+    
+    DynamicMetaConstructor::DynamicMetaConstructor(
+        MetaClass* container, Callable* action
+    ) : MetaConstructor(container) {
+        set_factory(new DynamicFactoryMetaClass(container, action));
+    }
+
+    /*************************************************************************/
+    
     DynamicMetaSlot::DynamicMetaSlot(
         const std::string& name, MetaClass* container,
         Callable* action,
@@ -107,6 +141,7 @@ namespace OGF {
                 }
                 ArgList args2 = args;
                 args2.create_arg("self",target);
+                args2.create_arg("method",method_name);
                 return mmethod->action_->invoke(args2, ret_val);
             }
         );
@@ -117,9 +152,29 @@ namespace OGF {
     }
 
     void DynamicMetaSlot::add_arg(
-        const std::string& name, const std::string& type_name
+        const std::string& name, const std::string& type_name,
+        const std::string& default_value
     ) {
-        MetaSlot::add_arg(MetaArg(name, type_name));
+        MetaArg marg(name, type_name);
+        if(default_value != "") {
+            marg.default_value().set_value(default_value);
+        }
+        MetaSlot::add_arg(marg);
+    }
+
+    void DynamicMetaSlot::create_arg_custom_attribute(
+        const std::string& arg_name,
+        const std::string& name, const std::string& value
+    ) {
+        MetaArg* marg = find_arg(arg_name);
+        if(marg == nullptr) {
+            Logger::err("GOM")
+                << meta_class()->name() << "::" << this->name() << "() :"
+                << arg_name << ":no such argument"
+                << std::endl;
+            return;
+        }
+        marg->create_custom_attribute(name,value);
     }
     
     /**********************************************************************/
@@ -130,4 +185,16 @@ namespace OGF {
         bool is_abstract
     ) : MetaClass(class_name, super_class_name, is_abstract) {
     }
+
+    DynamicMetaConstructor* DynamicMetaClass::add_constructor(Callable* action) {
+        return new DynamicMetaConstructor(this, action);
+    }
+    
+    DynamicMetaSlot* DynamicMetaClass::add_slot(
+        const std::string& name, Callable* action,
+        const std::string& return_type
+    ) {
+        return new DynamicMetaSlot(name, this, action, return_type);
+    }
+    
 }

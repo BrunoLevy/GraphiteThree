@@ -72,7 +72,45 @@ namespace OGF {
         mutable std::map<std::string, Any> properties_;
     };
 
+    /******************************************************************/
 
+    class GOM_API DynamicFactoryMetaClass : public FactoryMetaClass {
+    public:
+        /**
+         * \brief FactoryMetaClass constructor
+         * \param[in] mclass a pointer to the meta class
+         */
+        DynamicFactoryMetaClass(MetaClass* mclass, Callable* action = nullptr) :
+            FactoryMetaClass(mclass), action_(action) {
+        }
+
+        /**
+         * \copydoc FactoryMetaClass::create()
+         */
+        Object* create(const ArgList& args) override;
+
+    private:
+        Callable_var action_;
+    };
+    
+    /******************************************************************/
+    
+    gom_class GOM_API DynamicMetaConstructor : public MetaConstructor {
+    public:
+        /**
+         * \brief DynamicMetaSlot constructor.
+         * \param[in] container the MetaClass this MetaSlot belongs to
+         * \param[in] action an optional callable object with the action to be
+         *  executed each time the constructor is invoked. 
+         */
+        DynamicMetaConstructor(MetaClass* container, Callable* action = nullptr);
+    };
+    
+    /******************************************************************/
+
+    /**
+     * \brief A slot in a dynamically-created class.
+     */
     gom_class GOM_API DynamicMetaSlot : public MetaSlot {
     public:
         /**
@@ -96,11 +134,23 @@ namespace OGF {
          * \param[in] name the name of the argument
          * \param[in] type_name a string with the C++ type name of the argument
          */
-        void add_arg(const std::string& name, const std::string& type_name);
+        void add_arg(
+            const std::string& name, const std::string& type_name,
+            const std::string& default_value = ""
+        );
 
-        
-        // TODO: default value
-        // TODO: custom attribute for args
+
+        /**
+         * \brief Creates a new custom attribute
+         * \param[in] arg_name name of the argument
+         * \param[in] name name of the custom attribute
+         * \param[in] value value of the custom attribute
+         * \pre !ith_arg_has_custom_attribute(name)
+         */
+        void create_arg_custom_attribute(
+            const std::string& arg_name,
+            const std::string& name, const std::string& value
+        );
         
     protected:
         Callable_var action_;
@@ -125,11 +175,36 @@ namespace OGF {
             const std::string& super_class_name,
             bool is_abstract = false
         );
+
+    gom_slots:
+
+        /**
+         * \brief Creates a new constructor
+         * \param[in] action an optional action to be invoked each time this
+         *  constructor is called
+         * \return the created DynamicMetaConstructor
+         * \details one can create the arguments by calling 
+         *  DynamicMetacONSTRUCTOR::add_arg() on the returned 
+         *  DynamicMetaConstructor
+         */
+        DynamicMetaConstructor* add_constructor(Callable* action=nullptr);
+        
+        /**
+         * \brief Creates a new slot
+         * \param[in] name the name of the slot
+         * \param[in] action the function to be called when the slot is invoked
+         * \param[in] return_type an optional string with the return type 
+         * \return the created DynamicMetaSlot
+         * \details one can create the arguments by calling 
+         *  DynamicMetaSlot::add_arg() on the returned DynamicMetaSlot.
+         */
+        DynamicMetaSlot* add_slot(
+            const std::string& name, Callable* action,
+            const std::string& return_type="void"
+        );
     };
 
 }
-
-
 
 #endif
 

@@ -394,18 +394,18 @@ namespace OGF {
         return best_so_far;
     }
 
+
+    MetaClass* MetaClass::create_subclass(
+        const std::string& name, bool is_abstract
+    ) {
+        return new DynamicMetaClass(
+            name, this->name(), is_abstract
+        );
+    }
+    
 /****************************************************************************/
 
     Object* FactoryMetaClass::create(const ArgList& args) {
-
-        // If meta class is a DynamicMetaClass (written in Lua),
-        // create a generic Object and set its meta class.
-        if(dynamic_cast<DynamicMetaClass*>(meta_class()) != nullptr) {
-            Object* result = new DynamicObject;
-            result->set_meta_class(meta_class());
-            return result;
-        }
-        
         MetaConstructor* best_constructor = 
             meta_class()->best_constructor(args);
         if(best_constructor != nullptr) {
@@ -420,6 +420,9 @@ namespace OGF {
             return result;
         }
         return nullptr;
-    }    
+    }
+
+
+    
 }
 
