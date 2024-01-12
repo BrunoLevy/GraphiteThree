@@ -76,10 +76,11 @@ mfoobar2.add_arg('z','double',3)
 mfoobar2.create_custom_attribute('menu','Foobars')
 
 -- Make our new class visitible from GOM...
-gom.bind_meta_type(mycommandclass)
+gom.bind_meta_type(mclass)
 
 -- ... and visible from MeshGrob
-scene_graph.register_grob_commands('OGF::MeshGrob', mycommandclass.name)
+scene_graph.register_grob_commands('OGF::MeshGrob', mclass.name)
+
 
 -- -----------------------------------------------------------------------
 -- Example 2: commands associated with the SceneGraph
