@@ -11,7 +11,14 @@
 -- -----------------------------------------------------------------------
 
 
--- The three functions that implement our three commands
+-- The functions that implement our commands
+-- The first three ones just display their
+-- arguments. The arguments can be accessed
+-- using args.<argname>. There is also an
+-- additional argument args.self, that
+-- refers to our Commands class. it can be
+-- used to retreive the MeshGrob the command
+-- was invoked from, through args.self.grob
 
 function trululu(args) 
     print('trululu args='..tostring(args))
@@ -28,6 +35,38 @@ function foobar2(args)
     print('self='..tostring(args.self))
 end
 
+-- This function applies random perturbations to
+-- the vertices of a mesh.
+
+function randomize(args)
+   -- get our OGF::MeshGrobCustomCommands
+   -- (it is args.self)
+   local cmd = args.self
+   -- now get the MeshGrob from the commands
+   local S = cmd.grob   
+
+   -- create a MeshGrobEditor to modify the mesh
+   local E = S.I.Editor
+   -- access to the array of vertices coordinates
+   local point  = E.find_attribute('vertices.point')
+
+   -- Iterate on all the vertices
+   for v=0,E.nb_vertices-1 do
+      -- get coordinates of current vertex
+      -- (point is a 'vector attribute', with 3
+      --  elements per item).
+      local x = point[3*v]
+      local y = point[3*v+1]
+      local z = point[3*v+2]
+      x = x + args.howmuch * (math.random() - 0.5) 
+      y = y + args.howmuch * (math.random() - 0.5) 
+      z = z + args.howmuch * (math.random() - 0.5)  
+      point[3*v]   = x
+      point[3*v+1] = y
+      point[3*v+2] = z
+   end
+end
+
 -- We are going to create a subclass of OGF::MeshGrobCommands,
 -- let us first get the metaclass associated with OGF::MeshGrobCommands
 superclass = gom.resolve_meta_type('OGF::MeshGrobCommands')
@@ -38,14 +77,17 @@ superclass = gom.resolve_meta_type('OGF::MeshGrobCommands')
 -- menu, or use custom attributes, see below).
 mclass = superclass.create_subclass('OGF::MeshGrobCustomCommands')
 
--- Create a constructor for our new class (here it is the default constructor)
+-- Create a constructor for our new class.
+-- For Commands classes, we just create the default constructor(
+-- (one can also create constructors with arguments, but we do not need that here)
 mclass.add_constructor()
 
 -- Create a new slot in our class. Its name is 'trululu' (will create a 'trululu'
 -- menu item in the 'Custom' menu), and it will call the function trululu each
--- time the menu item is invoked.
+-- time the menu item is invoked. You are not obliged to use the same name for both
+-- (but doing so makes sense).
 mtrululu = mclass.add_slot('trululu',trululu) 
--- Now create the arguments using add_arg(), that takes
+-- Now create the arguments using the add_arg() function, that takes
 -- - the name of the argument
 -- - a string with the type of the argument
 -- - an optional default value
@@ -75,6 +117,17 @@ mfoobar2.add_arg('y','double',2)
 mfoobar2.add_arg('z','double',3)
 mfoobar2.create_custom_attribute('menu','Foobars')
 
+-- And finally our 'randomize' command
+mrandomize = mclass.add_slot('randomize', randomize)
+mrandomize.add_arg('howmuch','double',0.02)
+-- Hep bubbles can also be associated with each command argument if you want
+mrandomize.create_arg_custom_attribute('howmuch','help','amount of perturbation')
+-- And this help bubble is associated with the command
+mrandomize.create_custom_attribute('help','applies a random perturbation to the vertices of a mesh')
+-- It is possible to create menu entries in any existing menu of Graphite, by starting
+-- the menu path with '/'. 
+mrandomize.create_custom_attribute('menu','/Mesh')
+
 -- Make our new class visitible from GOM...
 gom.bind_meta_type(mclass)
 
@@ -88,12 +141,12 @@ scene_graph.register_grob_commands('OGF::MeshGrob', mclass.name)
 
 -- It is sometimes inconvenient to have to create a MeshGrob before being
 -- able to invoke any command associated to the MeshGrob. One possibility
--- is to add commands associated with the SceneGraph, that are always
+-- is to associate commands with the SceneGraph. SceneGraph commands are always
 -- displayed in Graphite, even when the SceneGraph is empty.
 -- We are going to implement commands that create basic shapes in the
 -- SceneGraph.
 
--- The function that implements our commands
+-- The function that implements our commands.
 -- One can dispatch several method to the same Lua function,
 -- the additional field args.method lets you determine the
 -- method that was calls.
@@ -150,11 +203,9 @@ mclass.add_constructor()
 
 -- The three commands and their arguments, with some examples of
 -- custom attributes.
--- For creating a menu directly attached to the MenuBar with
--- SceneGraph commands, note that the '/menubar/Shapes' custom
--- attribute that starts with '/menubar' (unlike commands attached
--- to objects for which a single starting '/' suffices to make them
--- attached to the MenuBar).
+-- For creating a menu directly attached to the MenuBar,
+-- note the absolute path '/Shapes' custom attribute
+-- that starts with '/' 
 
 msquare = mclass.add_slot('square', create_shape)
 msquare.add_arg('name','OGF::NewMeshGrobName','shape')
@@ -163,19 +214,19 @@ msquare.add_arg('size','double',1.0)
 msquare.create_arg_custom_attribute('size','help','edge length of the square')
 msquare.add_arg('center','bool',false)
 msquare.create_arg_custom_attribute('center','help','if set, dimensions go from -size/2 to size/2 instead of [0,size]')
-msquare.create_custom_attribute('menu','/menubar/Shapes')
+msquare.create_custom_attribute('menu','/Shapes')
 msquare.create_custom_attribute('help','guess what ? it creates a square (what an informative help bubble !!)')
 
 mcube = mclass.add_slot('cube', create_shape)
 mcube.add_arg('name','OGF::NewMeshGrobName','shape')
 mcube.add_arg('size','double',1.0)
-mcube.create_custom_attribute('menu','/menubar/Shapes')
+mcube.create_custom_attribute('menu','/Shapes')
 
 msphere = mclass.add_slot('sphere',create_shape)
 msphere.add_arg('name','OGF::NewMeshGrobName','shape')
 msphere.add_arg('radius','double',1.0)
 msphere.add_arg('precision','int',4)
-msphere.create_custom_attribute('menu','/menubar/Shapes')
+msphere.create_custom_attribute('menu','/Shapes')
 
 -- Make our new class visible from the Graphite Object Model
 -- and from SceneGraph
@@ -191,7 +242,13 @@ scene_graph.register_grob_commands('OGF::SceneGraph', mclass.name)
 -- C++. For instance, one can invoke them from the scripting languages of
 -- Graphite (Lua, Python). Try this:
 --
--- create a MeshGrob, call it S
--- in Graphite's command line, type
--- scene_graph.objects.S.I.Custom.trululu()
--- (press <tab> for automatic completion)
+-- - create a MeshGrob, call it S
+-- - now, in Graphite's command line, type:
+--      scene_graph.objects.S.I.Custom.randomize()
+--   (press <tab> for automatic completion).
+--
+-- Your new command classes are a "citizen" of the Graphite Object Model,
+-- with the same "rights" as the ones implemented in C++ (can be scripted
+-- and invoked from the gui)
+
+

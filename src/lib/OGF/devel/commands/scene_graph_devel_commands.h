@@ -71,6 +71,7 @@ namespace OGF {
         /**
          * \brief Loads a plugin.
          * \param[in] plugin_name the name of the plugin
+         * \menu /Devel
          */
         void load_plugin(const std::string& plugin_name);
 
@@ -82,6 +83,7 @@ namespace OGF {
          *  in the generated headers, you can leave blank if you wish)
          * \param[in] autoload if true, the plugin will be loaded next time
          *  Graphite is started (once the plugin is compiled)
+         * \menu /Devel
          */
         void create_plugin(
             const std::string& plugin_name,
@@ -96,6 +98,7 @@ namespace OGF {
          * \param[in] type the Grob class the commands should be attached to
          * \param[in] name for instance "FooBar" 
          *  for "OGF::MeshGrobFooBarCommands"
+         * \menu /Devel
          */
         void create_commands(
             const DynamicModuleName& plugin_name,
@@ -108,6 +111,7 @@ namespace OGF {
          * \param[in] plugin_name the name of the plugin
          * \param[in] name for instance "FooBar" 
          *  for "OGF::SceneGraphFooBarCommands"
+         * \menu /Devel
          */
         void create_scene_graph_commands(
             const DynamicModuleName& plugin_name,
@@ -122,6 +126,7 @@ namespace OGF {
          * \param[in] name for instance "FooBar" for "OGF::MeshGrobFooBarShader"
          * \param[in] base_class_name optional base class for the shader
          *  (with the "OGF::" prefix)
+         * \menu /Devel
          */
         void create_shader(
             const DynamicModuleName& plugin_name, 
@@ -137,6 +142,7 @@ namespace OGF {
          * \param[in] name for instance "FooBar" for "OGF::MeshGrobFooBarTool"
          * \param[in] base_class_name optional base class for the shader
          *  (with the "OGF::" prefix)
+         * \menu /Devel
          */
         void create_tool(
             const DynamicModuleName& plugin_name,
@@ -153,6 +159,7 @@ namespace OGF {
          *  save/load objects with this Grob class, without the "."
          * \param[in] base_class_name optional base class (with the "OGF::"
          *  prefix)
+         * \menu /Devel
          */
         void create_grob(
             const DynamicModuleName& plugin_name,
@@ -167,6 +174,7 @@ namespace OGF {
          * \param[in] subdirectory relative path to the subdirectory where 
          *  the class files should be created
          * \param[in] class_name the name of the class to be created
+         * \menu /Devel
          */
         void create_class(
             const DynamicModuleName& plugin_name,
@@ -180,14 +188,13 @@ namespace OGF {
          * \param[in] subdirectory relative path to the subdirectory where 
          *  the class files should be created
          * \param[in] name the name of the file to be created, without extension
+         * \menu /Devel
          */
         void create_file(
             const DynamicModuleName& plugin_name,
             const std::string& subdirectory,
             const std::string& name
         );
-
-        
     };
 }
 

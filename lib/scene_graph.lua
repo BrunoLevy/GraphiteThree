@@ -121,8 +121,16 @@ function scene_graph_gui.menu_map.get(grob)
 	       if submenu_name:sub(-1) == '/' then
 		   submenu_name = submenu_name:sub(1,-2)
 	       end
+               -- If submenu starts with '/' it is an absolute path
 	       if submenu_name:sub(1,1) == '/' then
-	          menu_name = submenu_name:sub(2)
+                   menu_name = submenu_name:sub(2)
+                   -- Particular case: SceneGraph commands starting with '/',
+                   -- to be rooted in the menu bar, are stored in the '/menubar'
+                   -- menumap (and handled with
+                   -- specific code in graphite_gui.draw_menu_bar())
+                   if(grob.meta_class.name == 'OGF::SceneGraph') then
+                      menu_name = 'menubar/'..menu_name
+                   end
 	       else 
 	          menu_name = menu_name .. '/' .. submenu_name
 	       end
