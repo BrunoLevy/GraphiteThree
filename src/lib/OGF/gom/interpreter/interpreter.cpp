@@ -52,9 +52,12 @@ namespace OGF {
     std::map<std::string, Interpreter* >
        Interpreter::instance_by_file_extension_;
 
-
     Interpreter::Interpreter() {
 	globals_ = new GlobalScope(this);
+        MetaTypesScope* meta_types = new MetaTypesScope();
+        meta_types->create_subscope("OGF");
+        meta_types->create_subscope("std");
+        meta_types_ = meta_types;
     }
 
     void Interpreter::initialize(
@@ -359,7 +362,6 @@ namespace OGF {
 	ModuleManager::append_dynamic_libraries_path(path);
     }
     
-
     Connection* Interpreter::connect(Request* from, Callable* to) {
 	// Special case: target is a Request.
 	// We create a SlotConnection, that does not do reference counting
@@ -758,6 +760,62 @@ namespace OGF {
 	    }
 	}
     }
+
+    /********************************************************/
+
+    MetaTypesScope::MetaTypesScope(const std::string& prefix) :
+        Scope(nullptr),
+        prefix_(prefix) {
+    }
+
+    MetaTypesScope::~MetaTypesScope() {
+    }
+
+    Any MetaTypesScope::resolve(const std::string& name) {
+        Any result;
+        
+        auto it = subscopes_.find(name);
+        if(it != subscopes_.end()) {
+            result.set_value((Scope*)(it->second));
+            return result;
+        }
+        
+        MetaType* mtype = Meta::instance()->resolve_meta_type(prefix_ + name);
+        result.set_value(mtype);
+        return result;
+    }
+
+    void MetaTypesScope::list_names(std::vector<std::string>& names) const {
+        names.clear();
+        std::vector<MetaType*> types;
+        Meta::instance()->list_types(types);
+        for(MetaType* type: types) {
+            std::string cur = type->name();
+            if(prefix_ == "") {
+                if(cur.find("::") == std::string::npos) {
+                    names.push_back(cur);
+                }
+            } else {
+                if(
+                    String::string_starts_with(cur, prefix_) &&
+                    cur.find("::",prefix_.length()) == std::string::npos 
+                ) {
+                    names.push_back(cur.substr(prefix_.length()));
+                }
+            }
+        }
+        for(auto it: subscopes_) {
+            names.push_back(it.first);
+        }
+    }
+
+    MetaTypesScope* MetaTypesScope::create_subscope(const std::string& name) {
+        std::string prefix = prefix_ + name + "::";
+        MetaTypesScope* result = new MetaTypesScope(prefix);
+        subscopes_[name] = result;
+        return result;
+    }
+
     
     /********************************************************/
 

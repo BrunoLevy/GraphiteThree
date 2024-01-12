@@ -805,7 +805,7 @@ namespace {
 	    lua_newtable(L);
 	    lua_setfield(L, LUA_REGISTRYINDEX, "graphite_lua_targets");
 	}
-	
+
 	// Last argument set to false: do not manage ref count, else
 	// this would generate a circular reference.
 	lua_pushgraphite(L, interpreter, false);

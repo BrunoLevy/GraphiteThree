@@ -163,6 +163,47 @@ namespace OGF {
     };
 
     /*************************************************************************/ 
+
+    /**
+     * \brief The Scope that contains all interfaces of an object.
+     * \details Encapsulates query_interface() in such a way that 
+     *  automatic completion works when using object.I.
+     */
+    gom_class GOM_API MetaTypesScope : public Scope {
+      public:
+	/**
+	 * \brief MetaTypesScope constructor.
+	 * \param[in] prefix optional prefix for object names, 
+         *   for instance "OGF::" or "std::"
+	 */
+	MetaTypesScope(const std::string& prefix = "");
+
+	/**
+	 * \brief MetaTypesScope destructor.
+	 */
+	~MetaTypesScope() override;
+
+	/**
+	 * \copydoc Scope::resolve()
+	 */
+	Any resolve(const std::string& name) override;
+
+	/**
+	 * \copydoc Scope::list_names()
+	 */
+	void list_names(std::vector<std::string>& names) const override;
+
+    gom_slots:
+        MetaTypesScope* create_subscope(const std::string& name);
+        
+    private:
+        std::string prefix_;
+        std::map<std::string, Scope_var> subscopes_;
+    };
+
+
+    /*************************************************************************/ 
+
     
     /**
      * \brief Abstract base class for the GOM interpreter.
@@ -490,7 +531,15 @@ namespace OGF {
 	Scope* get_globals() const {
 	    return globals_;
 	}
-	
+
+        /**
+         * \brief Gets the Scope with the meta types.
+         * \return a pointer to the Scope
+         */
+        Scope* get_meta_types() const {
+            return meta_types_;
+        }
+        
       public:
 	
         /**
@@ -726,6 +775,7 @@ namespace OGF {
 	    instance_by_file_extension_;
 	
 	Scope_var globals_;
+        Scope_var meta_types_;
     };
 
     /*************************************************************************/
