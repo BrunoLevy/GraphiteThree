@@ -48,7 +48,7 @@ function randomize(args)
    -- create a MeshGrobEditor to modify the mesh
    local E = S.I.Editor
    -- access to the array of vertices coordinates
-   local point  = E.find_attribute('vertices.point')
+   local point = E.find_attribute('vertices.point')
 
    -- Iterate on all the vertices
    for v=0,E.nb_vertices-1 do
@@ -78,7 +78,7 @@ superclass = gom.meta_types.OGF.MeshGrobCommands
 mclass = superclass.create_subclass('OGF::MeshGrobCustomCommands')
 
 -- Create a constructor for our new class.
--- For Commands classes, we just create the default constructor(
+-- For Commands classes, we just create the default constructor
 -- (one can also create constructors with arguments, but we do not need that here)
 mclass.add_constructor()
 
@@ -89,8 +89,8 @@ mclass.add_constructor()
 mtrululu = mclass.add_slot('trululu',trululu) 
 -- Now create the arguments using the add_arg() function, that takes
 -- - the name of the argument
--- - a string with the type of the argument
--- - an optional default value
+-- - the type of the argument
+-- - an optional default value (encoded in a string)
 -- argument type names are used by autogui to generate the right widgets in the
 -- command dialog
 mtrululu.add_arg('nb',gom.meta_types.int,42)
