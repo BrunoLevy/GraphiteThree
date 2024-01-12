@@ -192,7 +192,7 @@ function create_shape(args)
 end
 
 -- Our new class is a subclass of OGF::SceneGraphCommands
-baseclass = gom.resolve_meta_type('OGF::SceneGraphCommands')
+baseclass = gom.meta_types.OGF.SceneGraphCommands
 mclass    = baseclass.create_subclass('OGF::SceneGraphShapesCommands')
 
 -- We need a constructor 
@@ -245,5 +245,6 @@ scene_graph.register_grob_commands(gom.meta_types.OGF.SceneGraph, mclass)
 -- Your new command classes are a "citizen" of the Graphite Object Model,
 -- with the same "rights" as the ones implemented in C++ (can be scripted
 -- and invoked from the gui)
+
 
 

@@ -95,8 +95,7 @@ namespace OGF {
 	}
     }
 
-    SceneGraphShaderManager* SceneGraph::get_scene_graph_shader_manager(
-    ) const {
+    SceneGraphShaderManager* SceneGraph::get_scene_graph_shader_manager() const {
 	return scene_graph_shader_manager_;
     }
     
@@ -107,7 +106,9 @@ namespace OGF {
         }
     }
 
-    void SceneGraph::register_grob_commands(MetaClass* grob_class, MetaClass* commands_class) {
+    void SceneGraph::register_grob_commands(
+        MetaClass* grob_class, MetaClass* commands_class
+    ) {
         SceneGraphLibrary::instance()->register_grob_commands(
             grob_class->name(), commands_class->name()
         );
