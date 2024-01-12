@@ -107,12 +107,9 @@ namespace OGF {
         }
     }
 
-    void SceneGraph::register_grob_commands(
-        const std::string& grob_class_name,
-        const std::string& commands_class_name
-    ) {
+    void SceneGraph::register_grob_commands(MetaClass* grob_class, MetaClass* commands_class) {
         SceneGraphLibrary::instance()->register_grob_commands(
-            grob_class_name, commands_class_name
+            grob_class->name(), commands_class->name()
         );
     }
     

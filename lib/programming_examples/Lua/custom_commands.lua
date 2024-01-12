@@ -69,7 +69,7 @@ end
 
 -- We are going to create a subclass of OGF::MeshGrobCommands,
 -- let us first get the metaclass associated with OGF::MeshGrobCommands
-superclass = gom.resolve_meta_type('OGF::MeshGrobCommands')
+superclass = gom.meta_types.OGF.MeshGrobCommands 
 
 -- Create our subclass, that we name OGF::MeshGrobCustomCommands
 -- By default, our commands will land in a new menu 'Custom'
@@ -93,17 +93,17 @@ mtrululu = mclass.add_slot('trululu',trululu)
 -- - an optional default value
 -- argument type names are used by autogui to generate the right widgets in the
 -- command dialog
-mtrululu.add_arg('nb','int',42)
-mtrululu.add_arg('name','std::string','coucou')
+mtrululu.add_arg('nb',gom.meta_types.int,42)
+mtrululu.add_arg('name',gom.meta_types.std.string,'coucou')
 -- if you want you can specify an help bubble that will be displayed when the
 -- title bar of the command dialog is hovered by the mouse cursor
 mtrululu.create_custom_attribute('help','Applies Cray-Lorgan function to the data')
 
 -- Let us create another command (associated with the same Commands class)
 mfoobar1 = mclass.add_slot('foobar1', foobar1)
-mfoobar1.add_arg('x','double',3.14)
-mfoobar1.add_arg('y','double')
-mfoobar1.add_arg('z','double')
+mfoobar1.add_arg('x',gom.meta_types.double,3.14)
+mfoobar1.add_arg('y',gom.meta_types.double)
+mfoobar1.add_arg('z',gom.meta_types.double)
 -- You can optionally specify a submenu path for your command. Submenus
 -- are separated by '/'. If your menupath starts with '/' then it is
 -- direclty added to the menubar. This example simply creates a 'Foobars'
@@ -112,14 +112,14 @@ mfoobar1.create_custom_attribute('menu','Foobars')
 
 -- And another command, also created in the 'Foobars' submenu
 mfoobar2 = mclass.add_slot('foobar2', foobar2)
-mfoobar2.add_arg('x','double',1)
-mfoobar2.add_arg('y','double',2)
-mfoobar2.add_arg('z','double',3)
+mfoobar2.add_arg('x',gom.meta_types.double,1)
+mfoobar2.add_arg('y',gom.meta_types.double,2)
+mfoobar2.add_arg('z',gom.meta_types.double,3)
 mfoobar2.create_custom_attribute('menu','Foobars')
 
 -- And finally our 'randomize' command
 mrandomize = mclass.add_slot('randomize', randomize)
-mrandomize.add_arg('howmuch','double',0.02)
+mrandomize.add_arg('howmuch',gom.meta_types.double,0.02)
 -- Hep bubbles can also be associated with each command argument if you want
 mrandomize.create_arg_custom_attribute('howmuch','help','amount of perturbation')
 -- And this help bubble is associated with the command
@@ -129,7 +129,7 @@ mrandomize.create_custom_attribute('help','applies a random perturbation to the 
 mrandomize.create_custom_attribute('menu','/Mesh')
 
 -- Make our new Commands visible from MeshGrob
-scene_graph.register_grob_commands('OGF::MeshGrob', mclass.name)
+scene_graph.register_grob_commands(gom.meta_types.OGF.MeshGrob,mclass)
 
 
 -- -----------------------------------------------------------------------
@@ -205,29 +205,29 @@ mclass.add_constructor()
 -- that starts with '/' 
 
 msquare = mclass.add_slot('square', create_shape)
-msquare.add_arg('name','OGF::NewMeshGrobName','shape')
+msquare.add_arg('name',gom.meta_types.OGF.NewMeshGrobName,'shape')
 msquare.create_arg_custom_attribute('name','help','name of the object to create')
-msquare.add_arg('size','double',1.0)
+msquare.add_arg('size',gom.meta_types.double,1.0)
 msquare.create_arg_custom_attribute('size','help','edge length of the square')
-msquare.add_arg('center','bool',false)
+msquare.add_arg('center',gom.meta_types.bool,false)
 msquare.create_arg_custom_attribute('center','help','if set, dimensions go from -size/2 to size/2 instead of [0,size]')
 msquare.create_custom_attribute('menu','/Shapes')
 msquare.create_custom_attribute('help','guess what ? it creates a square (what an informative help bubble !!)')
 
 mcube = mclass.add_slot('cube', create_shape)
-mcube.add_arg('name','OGF::NewMeshGrobName','shape')
-mcube.add_arg('size','double',1.0)
+mcube.add_arg('name',gom.meta_types.OGF.NewMeshGrobName,'shape')
+mcube.add_arg('size',gom.meta_types.double,1.0)
 mcube.create_custom_attribute('menu','/Shapes')
 
 msphere = mclass.add_slot('sphere',create_shape)
-msphere.add_arg('name','OGF::NewMeshGrobName','shape')
-msphere.add_arg('radius','double',1.0)
-msphere.add_arg('precision','int',4)
+msphere.add_arg('name',gom.meta_types.OGF.NewMeshGrobName,'shape')
+msphere.add_arg('radius',gom.meta_types.double,1.0)
+msphere.add_arg('precision',gom.meta_types.int,4)
 msphere.create_custom_attribute('menu','/Shapes')
 
 -- Make our new class visible from SceneGraph
 
-scene_graph.register_grob_commands('OGF::SceneGraph', mclass.name)
+scene_graph.register_grob_commands(gom.meta_types.OGF.SceneGraph, mclass)
 
 -- -----------------------------------------------------------------------
 -- More information

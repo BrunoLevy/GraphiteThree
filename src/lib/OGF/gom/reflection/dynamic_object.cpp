@@ -144,10 +144,10 @@ namespace OGF {
     }
 
     void DynamicMetaSlot::add_arg(
-        const std::string& name, const std::string& type_name,
+        const std::string& name, MetaType* type,
         const std::string& default_value
     ) {
-        MetaArg marg(name, type_name);
+        MetaArg marg(name, type);
         if(default_value != "") {
             marg.default_value().set_value(default_value);
         }

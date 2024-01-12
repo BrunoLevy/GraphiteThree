@@ -119,13 +119,12 @@ namespace OGF {
         /**
          * \brief Adds an argument to a DynamicMetaSlot
          * \param[in] name the name of the argument
-         * \param[in] type_name a string with the C++ type name of the argument
+         * \param[in] type the MetaType of the argument
          */
         void add_arg(
-            const std::string& name, const std::string& type_name,
+            const std::string& name, MetaType* type,
             const std::string& default_value = ""
         );
-
 
         /**
          * \brief Creates a new custom attribute

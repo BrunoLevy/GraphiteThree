@@ -216,15 +216,12 @@ namespace OGF {
 
         /**
          * \brief Associates a Commands class to a Grob class.
-         * \details It is used with Commands class created in Lua.
-         * \param[in] grob_class_name the name of the grob class, 
-         *   with the 'OGF::' prefix
-         * \param[in] commands_class_name the name of the commands class, 
-         *   with the 'OGF::' prefix
+         * \details It is used with Commands class created in a script.
+         * \param[in] grob_class the MetaClass of the grob
+         * \param[in] commands_class the MetaClass of the commands
          */
         void register_grob_commands(
-            const std::string& grob_class_name,
-            const std::string& commands_class_name
+            MetaClass* grob_class, MetaClass* commands_class
         );
         
     gom_properties:
