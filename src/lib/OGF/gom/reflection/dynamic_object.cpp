@@ -112,14 +112,6 @@ namespace OGF {
     
     /*************************************************************************/
     
-    DynamicMetaConstructor::DynamicMetaConstructor(
-        MetaClass* container, Callable* action
-    ) : MetaConstructor(container) {
-        set_factory(new DynamicFactoryMetaClass(container, action));
-    }
-
-    /*************************************************************************/
-    
     DynamicMetaSlot::DynamicMetaSlot(
         const std::string& name, MetaClass* container,
         Callable* action,
@@ -186,8 +178,10 @@ namespace OGF {
     ) : MetaClass(class_name, super_class_name, is_abstract) {
     }
 
-    DynamicMetaConstructor* DynamicMetaClass::add_constructor(Callable* action) {
-        return new DynamicMetaConstructor(this, action);
+    MetaConstructor* DynamicMetaClass::add_constructor(Callable* action) {
+        MetaConstructor* result = new MetaConstructor(this);
+        result->set_factory(new DynamicFactoryMetaClass(this, action));
+        return result;
     }
     
     DynamicMetaSlot* DynamicMetaClass::add_slot(

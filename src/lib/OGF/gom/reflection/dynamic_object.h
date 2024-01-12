@@ -94,19 +94,6 @@ namespace OGF {
     };
     
     /******************************************************************/
-    
-    gom_class GOM_API DynamicMetaConstructor : public MetaConstructor {
-    public:
-        /**
-         * \brief DynamicMetaSlot constructor.
-         * \param[in] container the MetaClass this MetaSlot belongs to
-         * \param[in] action an optional callable object with the action to be
-         *  executed each time the constructor is invoked. 
-         */
-        DynamicMetaConstructor(MetaClass* container, Callable* action = nullptr);
-    };
-    
-    /******************************************************************/
 
     /**
      * \brief A slot in a dynamically-created class.
@@ -182,12 +169,11 @@ namespace OGF {
          * \brief Creates a new constructor
          * \param[in] action an optional action to be invoked each time this
          *  constructor is called
-         * \return the created DynamicMetaConstructor
+         * \return the created MetaConstructor
          * \details one can create the arguments by calling 
-         *  DynamicMetacONSTRUCTOR::add_arg() on the returned 
-         *  DynamicMetaConstructor
+         *  MetaConstructor::add_arg() on the returned MetaConstructor
          */
-        DynamicMetaConstructor* add_constructor(Callable* action=nullptr);
+        MetaConstructor* add_constructor(Callable* action=nullptr);
         
         /**
          * \brief Creates a new slot
