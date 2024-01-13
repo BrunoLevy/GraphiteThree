@@ -137,6 +137,12 @@ namespace OGF {
         void add_value(const std::string& name, int value) ;
 
 
+        /**
+         * \brief Adds values to this MegaEnum
+         * \param[in] values an arglist with name,value pairs
+         */
+        void add_values(const ArgList& values);
+
     private:
         struct Value {
             std::string name ;

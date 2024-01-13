@@ -12,9 +12,7 @@
 
 -- Create a new enum type
 menum = gom.meta_types.OGF.MetaEnum.create({name='Titi'})
-menum.add_value({name='tutu',value=0})
-menum.add_value({name='tata',value=1})
-menum.add_value({name='toto',value=2})
+menum.add_values({tutu=0,tata=1,toto=2})
 gom.bind_meta_type(menum)
 
 -- The functions that implement our commands
@@ -101,7 +99,7 @@ mtrululu = mclass.add_slot('trululu',trululu)
 -- command dialog
 mtrululu.add_arg('nb',   gom.meta_types.int,        42)
 mtrululu.add_arg('name', gom.meta_types.std.string, 'coucou')
-mtrululu.add_arg('titi', gom.meta_types.Titi,       'toto')
+mtrululu.add_arg('titi', gom.meta_types.Titi,       'tata')
 -- if you want you can specify an help bubble that will be displayed when the
 -- title bar of the command dialog is hovered by the mouse cursor
 mtrululu.create_custom_attribute('help','Applies Cray-Lorgan function to the data')
@@ -153,7 +151,7 @@ scene_graph.register_grob_commands(gom.meta_types.OGF.MeshGrob,mclass)
 -- The function that implements our commands.
 -- One can dispatch several method to the same Lua function,
 -- the additional field args.method lets you determine the
--- method that was calls.
+-- method that was called.
 -- (One can also use separate functions if preferred, as done
 --  in the first part of this tutorial).
 
@@ -161,7 +159,7 @@ function create_shape(args)
     print('create shape, args='..tostring(args))
     print('self='..tostring(args.self))
 
-    o = scene_graph.create_object({
+    local o = scene_graph.create_object({
         classname='OGF::MeshGrob',name=args.name
     })
 
