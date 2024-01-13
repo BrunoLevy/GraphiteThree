@@ -11,7 +11,7 @@
 -- -----------------------------------------------------------------------
 
 -- Create a new enum type
-menum = gom.create({classname='OGF::MetaEnum',name='Titi'})
+menum = gom.meta_types.OGF.MetaEnum.create({name='Titi'})
 menum.add_value({name='tutu',value=0})
 menum.add_value({name='tata',value=1})
 menum.add_value({name='toto',value=2})
@@ -99,9 +99,9 @@ mtrululu = mclass.add_slot('trululu',trululu)
 -- - an optional default value (encoded in a string)
 -- argument type names are used by autogui to generate the right widgets in the
 -- command dialog
-mtrululu.add_arg('nb',gom.meta_types.int,42)
-mtrululu.add_arg('name',gom.meta_types.std.string,'coucou')
-mtrululu.add_arg('titi',gom.meta_types.Titi,'toto')
+mtrululu.add_arg('nb',   gom.meta_types.int,        42)
+mtrululu.add_arg('name', gom.meta_types.std.string, 'coucou')
+mtrululu.add_arg('titi', gom.meta_types.Titi,       'toto')
 -- if you want you can specify an help bubble that will be displayed when the
 -- title bar of the command dialog is hovered by the mouse cursor
 mtrululu.create_custom_attribute('help','Applies Cray-Lorgan function to the data')
@@ -252,7 +252,4 @@ scene_graph.register_grob_commands(gom.meta_types.OGF.SceneGraph, mclass)
 -- Your new command classes are a "citizen" of the Graphite Object Model,
 -- with the same "rights" as the ones implemented in C++ (can be scripted
 -- and invoked from the gui)
-
-
-
 

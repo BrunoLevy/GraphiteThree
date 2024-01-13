@@ -129,6 +129,15 @@ namespace OGF {
         }
 
         /**
+         * \brief Creates an object of this class.
+         * \param args the parameters to be passed to the constructor.
+         *  The constructor that best matches the parameters list is selected.
+         * \return the created object, or nullptr if no matching constructor was
+         *  found or if the class is abstract.
+         */
+        Object* create(const ArgList& args);
+        
+        /**
          * \brief Gets the number of class members.
          * \details Class members are constructors,
          *  signals, slots or properties.

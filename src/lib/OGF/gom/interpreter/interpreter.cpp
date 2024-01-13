@@ -538,56 +538,11 @@ namespace OGF {
 	return result;
     }
     
-    Object* Interpreter::create(
-	const std::string& classname, const ArgList& args_in
-    ) {
+    Object* Interpreter::create(const std::string& classname, const ArgList& args) {
         Object* result = nullptr;
-
-        ArgList args = args_in;
-        MetaClass* mclass = dynamic_cast<MetaClass*>(
-	    Meta::instance()->resolve_meta_type(classname)
-	);
+        MetaClass* mclass = Meta::instance()->resolve_meta_class(classname);
         if(mclass != nullptr) {
-            MetaConstructor* constructor = mclass->best_constructor(args);
-            if(constructor == nullptr) {
-                Logger::err("Interpreter") 
-                    << classname 
-                    << " does not have a matching constructor"
-                    << " (missing arg?)" 
-                    << std::endl;
-                for(unsigned int i=0; i<args.nb_args(); i++) {
-                    Logger::err("Interpreter") << "arg " << i << " name= "
-                                           << args.ith_arg_name(i)
-                                           << " value= "
-					   << args.ith_arg_value(i).as_string()
-                                           << std::endl;
-                }
-                return nullptr;
-            }
-
-            result = mclass->factory()->create(args);
-
-            if(result == nullptr) {
-                Logger::err("Interpreter")
-		    << classname << " : could not create object"
-		    << std::endl;
-                return nullptr;
-            }
-
-            if(constructor != nullptr) {
-                for(unsigned int i=0; i<args.nb_args(); i++) {
-                    if(!constructor->has_arg(args.ith_arg_name(i))) {
-                        MetaProperty* mprop =
-                            mclass->find_property(args.ith_arg_name(i));
-                        if(mprop != nullptr && !mprop->read_only()) {
-                            result->set_property(
-                                args.ith_arg_name(i),
-                                args.ith_arg_value(i)
-                            );
-                        }
-                    }
-                }
-            }
+            result = mclass->create(args);
         }
         return result;
     }

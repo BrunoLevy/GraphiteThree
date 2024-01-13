@@ -122,6 +122,61 @@ namespace OGF {
     MetaClass::~MetaClass() {
     }
 
+    Object* MetaClass::create(const ArgList& args) {
+        Object* result = nullptr;
+
+        if(is_abstract()) {
+            Logger::err("GOM") 
+                << this->name() 
+                << " is abstract (cannot create() instances)"
+                << std::endl;
+            return nullptr;
+        }
+        
+        MetaConstructor* constructor = best_constructor(args);
+        
+        if(constructor == nullptr) {
+            Logger::err("GOM") 
+                << this->name() 
+                << " does not have a matching constructor"
+                << " (missing arg?)" 
+                << std::endl;
+            for(unsigned int i=0; i<args.nb_args(); i++) {
+                Logger::err("Interpreter") << "arg " << i << " name= "
+                                           << args.ith_arg_name(i)
+                                           << " value= "
+					   << args.ith_arg_value(i).as_string()
+                                           << std::endl;
+            }
+            return nullptr;
+        }
+
+        result = factory()->create(args);
+
+        if(result == nullptr) {
+            Logger::err("GOM")
+                << this->name() << " : could not create object"
+                << std::endl;
+            return nullptr;
+        }
+
+        if(constructor != nullptr) {
+            for(unsigned int i=0; i<args.nb_args(); i++) {
+                if(!constructor->has_arg(args.ith_arg_name(i))) {
+                    MetaProperty* mprop = find_property(args.ith_arg_name(i));
+                    if(mprop != nullptr && !mprop->read_only()) {
+                        result->set_property(
+                            args.ith_arg_name(i),
+                            args.ith_arg_value(i)
+                        );
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+    
     void MetaClass::pre_delete() {
 	MetaType::pre_delete();
         for(index_t i=0; i<nb_members(false); ++i) {
