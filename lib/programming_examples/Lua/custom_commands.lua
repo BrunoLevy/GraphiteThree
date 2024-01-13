@@ -11,8 +11,10 @@
 -- -----------------------------------------------------------------------
 
 -- Create a new enum type
-menum = gom.meta_types.OGF.MetaEnum.create({name='Titi'})
+menum = gom.meta_types.OGF.MetaEnum.create('Titi')
+-- Declare enum values
 menum.add_values({tutu=0,tata=1,toto=2})
+-- Make new enum visible from GOM type system
 gom.bind_meta_type(menum)
 
 -- The functions that implement our commands

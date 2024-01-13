@@ -746,6 +746,10 @@ namespace OGF {
         Meta::instance()->list_types(types);
         for(MetaType* type: types) {
             std::string cur = type->name();
+            // Skip pointer types
+            if(*cur.rbegin() == '*') {
+                continue;
+            }
             if(prefix_ == "") {
                 if(cur.find("::") == std::string::npos) {
                     names.push_back(cur);

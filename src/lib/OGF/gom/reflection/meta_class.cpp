@@ -160,14 +160,14 @@ namespace OGF {
             return nullptr;
         }
 
+        // Args that are not used by the constructor are set as properties
         if(constructor != nullptr) {
             for(unsigned int i=0; i<args.nb_args(); i++) {
                 if(!constructor->has_arg(args.ith_arg_name(i))) {
                     MetaProperty* mprop = find_property(args.ith_arg_name(i));
                     if(mprop != nullptr && !mprop->read_only()) {
                         result->set_property(
-                            args.ith_arg_name(i),
-                            args.ith_arg_value(i)
+                            args.ith_arg_name(i), args.ith_arg_value(i)
                         );
                     }
                 }
@@ -436,13 +436,20 @@ namespace OGF {
         index_t nb_used_args = 0;
         std::vector<MetaConstructor*> constructors;
         get_constructors(constructors);
-        for(index_t i = 0; i<constructors.size(); i++) {
-            MetaConstructor* cur = constructors[i];
-            if(cur->check_args(args)) {
-                index_t cur_nb_used_args = cur->nb_used_args(args);
-                if(cur_nb_used_args >= nb_used_args) {
+        if(args.has_unnamed_args()) {
+            for(MetaConstructor* cur: constructors) {
+                if(args.nb_args() == cur->nb_args()) {
                     best_so_far = cur;
-                    nb_used_args = cur_nb_used_args;
+                }
+            }
+        } else {
+            for(MetaConstructor* cur: constructors) {
+                if(cur->check_args(args)) {
+                    index_t cur_nb_used_args = cur->nb_used_args(args);
+                    if(cur_nb_used_args >= nb_used_args) {
+                        best_so_far = cur;
+                        nb_used_args = cur_nb_used_args;
+                    }
                 }
             }
         }
@@ -465,18 +472,35 @@ namespace OGF {
     Object* FactoryMetaClass::create(const ArgList& args) {
         MetaConstructor* best_constructor = 
             meta_class()->best_constructor(args);
-        if(best_constructor != nullptr) {
-            ogf_assert(best_constructor->factory() != nullptr);
+
+        if(best_constructor == nullptr) {
+            return nullptr;
+        }
+        
+        ogf_assert(best_constructor->factory() != nullptr);
+        Object* result = nullptr;
+        
+        if(args.has_unnamed_args()) {
+            geo_assert(args.nb_args() == best_constructor->nb_args());
+            ArgList named_args;
+            for(index_t i=0; i<args.nb_args(); ++i) {
+                named_args.create_arg(
+                    best_constructor->ith_arg_name(i),
+                    args.ith_arg_value(i)
+                );
+            }
+            result = best_constructor->factory()->create(named_args);
+        } else {
             if(best_constructor->nb_default_args(args) != 0) {
                 ArgList all_args = args;
                 best_constructor->add_default_args(all_args);
-                return best_constructor->factory()->create(all_args);
-            }
-            Object* result = best_constructor->factory()->create(args);
-            result->meta_class(); // initializes metaclass information.
-            return result;
+                result = best_constructor->factory()->create(all_args);
+            } else 
+                result = best_constructor->factory()->create(args);
         }
-        return nullptr;
+        result->meta_class(); // initializes metaclass information.
+        
+        return result;
     }
 
 

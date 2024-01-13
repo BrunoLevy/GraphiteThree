@@ -94,6 +94,23 @@ namespace OGF {
         }
 
         /**
+         * \brief Tests whether this ArgList has unnamed args
+         * \retval true if this ArgList has unnamed args
+         * \retval false otherwise
+         */
+        bool has_unnamed_args() const {
+            if(nb_args() == 0) {
+                return false;
+            }
+            for(index_t i=0; i<nb_args(); ++i) {
+                if(ith_arg_name(i) != "arg#" + String::to_string(i)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        /**
          * \brief Tests whether an argument of a given name
          *  exists in this ArgList.
          * \param[in] name a const reference to the name of the
@@ -236,6 +253,15 @@ namespace OGF {
 	    return *(argval_.rbegin());
         }
 
+        /**
+         * \brief Creates an uninitialized unnamed argument.
+	 * \return a reference to the Any that will store the argument.
+         * \pre nb_args() == 0 || has_unnamed_args()
+         */
+        Any& create_unnamed_arg() {
+            geo_debug_assert(nb_args() == 0 || has_unnamed_args());
+            return create_arg("arg#" + String::to_string(nb_args()));
+        }
 	
         /**
          * \brief Creates an argument.

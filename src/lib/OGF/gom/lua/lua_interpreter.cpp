@@ -85,15 +85,13 @@ namespace OGF {
 
 
     static bool args_are_for_name_value_call(const ArgList& args) {
+        if(args.nb_args() == 0) {
+            return false;
+        }
 	if(args.nb_args() == 1 && args.ith_arg_name(0) == "value") {
 	    return false;
 	}
-	for(index_t i=0; i<args.nb_args(); ++i) {
-	    if(args.ith_arg_name(i) != "arg#" + String::to_string(i)) {
-		return true;
-	    }
-	}
-	return false;
+        return !args.has_unnamed_args();
     }
     
     bool LuaCallable::invoke(const ArgList& args, Any& ret_val) {
@@ -387,7 +385,7 @@ namespace {
 	    for(index_t i=0; index + int(i) <= lua_gettop(L); ++i) {
 		lua_tographiteval(
 		    L, index + int(i),
-		    args.create_arg("arg#"+String::to_string(i))
+		    args.create_unnamed_arg()
 		);
 	    }
 	}

@@ -110,9 +110,9 @@ namespace OGF {
             type_name_to_meta_type_[meta_type->name()] =
                 typeid_name_to_meta_type_[typeid_name];
         } else {
-            type_name_to_meta_type_[meta_type->name()]   = meta_type ;
-            typeid_name_to_meta_type_[typeid_name]       = meta_type ;
-            meta_type->set_typeid_name(typeid_name) ;
+            type_name_to_meta_type_[meta_type->name()] = meta_type ;
+            typeid_name_to_meta_type_[typeid_name] = meta_type ;
+            meta_type->set_typeid_name(typeid_name);
         }
         return true ;
     }

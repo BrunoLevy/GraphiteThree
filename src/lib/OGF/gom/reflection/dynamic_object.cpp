@@ -95,7 +95,10 @@ namespace OGF {
         if(action_.is_null()) {
             // Default constructor initializes object's properties from args
             for(index_t i=0; i<args.nb_args(); ++i) {
-                if(result->has_property(args.ith_arg_name(i))) {
+                MetaProperty* mprop = meta_class()->find_property(
+                    args.ith_arg_name(i)
+                );
+                if(mprop != nullptr && !mprop->read_only()) {
                     result->set_property(
                         args.ith_arg_name(i), args.ith_arg_value(i)
                     );
