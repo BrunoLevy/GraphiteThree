@@ -23,7 +23,7 @@ else()
 endif()
 
 set(
-   GRAPHITE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/../../../GraphiteThree/"
+   GRAPHITE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/../../../../GraphiteThree/"
    CACHE PATH "full path to the Graphite installation"
 )
 

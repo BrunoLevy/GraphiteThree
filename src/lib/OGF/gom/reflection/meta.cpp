@@ -35,6 +35,7 @@
  */
 
 #include <OGF/gom/reflection/meta.h>
+#include <OGF/gom/types/gom_implementation.h>
 
 //___________________________________________________
 
@@ -170,7 +171,14 @@ namespace OGF {
     void Meta::list_types(std::vector<MetaType*>& types) {
         types.clear() ;
         for(auto& it : type_name_to_meta_type_) {
-            types.push_back(it.second) ;
+            types.push_back(it.second);
+        }
+    }
+
+    void Meta::list_type_names(std::vector<std::string>& type_names) {
+        type_names.clear() ;
+        for(auto& it : type_name_to_meta_type_) {
+            type_names.push_back(it.first);
         }
     }
 }

@@ -167,6 +167,12 @@ namespace OGF {
         void list_types(std::vector<MetaType*>& types) ;
 
         /**
+         * \brief Gets the list of all type names declared to the system.
+         * \param[out] type_names a vector of all type names, including aliases.
+         */
+        void list_type_names(std::vector<std::string>& type_names);
+        
+        /**
          * \brief Initializes the Meta database
          * \note Does not need to be called by client code, called
          *  at Graphite initialization.

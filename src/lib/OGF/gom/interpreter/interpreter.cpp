@@ -742,12 +742,15 @@ namespace OGF {
 
     void MetaTypesScope::list_names(std::vector<std::string>& names) const {
         names.clear();
-        std::vector<MetaType*> types;
-        Meta::instance()->list_types(types);
-        for(MetaType* type: types) {
-            std::string cur = type->name();
+        std::vector<std::string> type_names;
+        Meta::instance()->list_type_names(type_names);
+        for(std::string cur: type_names) {
             // Skip pointer types
             if(*cur.rbegin() == '*') {
+                continue;
+            }
+            // Skip names that have space (unsigned int, unsigned long)
+            if(cur.find(' ') != std::string::npos) {
                 continue;
             }
             if(prefix_ == "") {
