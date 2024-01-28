@@ -137,6 +137,9 @@ namespace OGF {
             const std::string& arg_name,
             const std::string& name, const std::string& value
         );
+
+    public:
+        void pre_delete() override;
         
     protected:
         Callable_var action_;

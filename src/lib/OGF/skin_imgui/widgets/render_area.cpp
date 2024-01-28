@@ -588,13 +588,18 @@ namespace OGF {
 
     /*************************************************************************/
 
-    void RenderArea::snapshot(const std::string& filename, bool make_current) {
+    void RenderArea::snapshot(
+        const std::string& filename, bool make_current, bool with_gui
+    ) {
 	if(rendering_context_ == nullptr) {
 	    Logger::warn("RenderArea")
 		<< "Cannot take a snapshot, not initialized yet"
 		<< std::endl;
 	} else {
             Image image;
+            if(!with_gui) {
+                draw_memorized_frame();
+            }
             rendering_context_->snapshot(&image, make_current);
             ImageLibrary::instance()->save_image(filename,&image);
 	}

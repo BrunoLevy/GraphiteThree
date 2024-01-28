@@ -778,6 +778,8 @@ namespace OGF {
         Scope_var meta_types_;
     };
 
+    typedef SmartPointer<Interpreter> Interpreter_var;
+    
     /*************************************************************************/
 
 } 

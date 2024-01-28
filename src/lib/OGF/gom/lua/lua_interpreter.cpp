@@ -81,6 +81,10 @@ namespace OGF {
 	lua_copy(lua_state_, target_index, -1);
 	lua_seti(lua_state_, -2, lua_Integer(instance_id_));
         lua_pop(lua_state_, 1); // Leave the Lua stack as we found it
+
+        // Keep a ref to the Lua interpreter so that the Lua interpreter
+        // is not destroyed before the last LuaCallable closes the door.
+        interpreter_ = Interpreter::instance_by_language("Lua");
     }
 
 

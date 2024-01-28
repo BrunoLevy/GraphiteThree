@@ -135,8 +135,7 @@ namespace OGF {
 
     Interpreter::~Interpreter() {
     }
-
-
+    
     void Interpreter::add_to_history(const std::string& command) {
         if(command != "") {
             if(*command.rbegin() == '\n') {

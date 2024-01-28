@@ -50,10 +50,10 @@ namespace OGF {
 	// First delete all the ArgLists stored in the Meta information,
 	// because deleting Any requires to access the LifeCycle objects
 	// that are stored in the Meta information (do not saw the branch...)
-	for(auto& it : type_name_to_meta_type_) {
+	// Now we are good to go !
+        for(auto& it : type_name_to_meta_type_) {
 	    it.second->pre_delete();
 	}
-	// Now we are good to go !
         type_name_to_meta_type_.clear() ;
         typeid_name_to_meta_type_.clear() ;
     }

@@ -78,6 +78,9 @@ namespace OGF {
     private:
 	index_t instance_id_;
 	lua_State* lua_state_;
+        Interpreter_var interpreter_; // Keeps refcount so that Lua interp
+                                      // is not destroyed before the last
+                                      // Callable
 	static index_t current_instance_id_;
     };
     

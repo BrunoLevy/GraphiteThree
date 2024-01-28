@@ -112,7 +112,7 @@ namespace OGF {
         }
         return result;
     }
-    
+
     /*************************************************************************/
     
     DynamicMetaSlot::DynamicMetaSlot(
@@ -144,6 +144,11 @@ namespace OGF {
         // Quick and dirty fix: artificially increase ref count
         // so that it is never deleted (small memory leak here)
         action_->ref();
+
+        // Analysis of the problem: Interpreter is destroyed before Meta
+        // Solution: keep a smart pointer from Callable to Interpreter, so that
+        // last Callable closes the door...
+        // Tryed it, still crashes (to be investigated)
     }
 
     void DynamicMetaSlot::add_arg(
@@ -170,6 +175,14 @@ namespace OGF {
             return;
         }
         marg->create_custom_attribute(name,value);
+    }
+
+    void DynamicMetaSlot::pre_delete() {
+        action_.reset(); // crash on LuaCallable destructor
+                         // if I do not articially increase refcount
+                         // (see comments in constructor),
+                         // to be fixed (there is a tiny memory leak here)
+        MetaSlot::pre_delete();
     }
     
     /**********************************************************************/

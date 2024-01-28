@@ -121,9 +121,13 @@ namespace OGF {
 	 * \param[in] make_current if true, makes the associated
 	 *  rendering context current, else use the current 
 	 *  rendering context.
+         * \param[in] with_gui if set, the gui of graphite is
+         *  rendereed in the image with the 3D objects, else
+         *  only the 3D objects are rendered
 	 */
 	void snapshot(
-	    const std::string& filename, bool make_current = true
+	    const std::string& filename, bool make_current = true,
+            bool with_gui = false
 	);
 
 	/**
