@@ -318,6 +318,22 @@ namespace OGF {
 	    bool post_process=false	    
         );
 
+        /**
+	  * \menu Boolean operations
+	  * \brief Computes intersections in a surface mesh
+          * \param[in] remove_internal_shells keep only facets on external hull
+          * \param[in] simplify_coplanar_facets retriangulates planar zones
+          * \param[in] coplanar_angle_tolerance in degrees
+          * \param[in] interpolate_attributes interpolate facet corner 
+          *   attributes on generated intersections. Deactivates coplanar
+          *   facets simplification if set.
+          */
+        void intersect(
+            bool remove_internal_shells = true,
+            bool simplify_coplanar_facets = true,
+            double coplanar_angle_tolerance = 0.001,
+            bool interpolate_attributes = false
+        );
         
        /**********************************************************/
 	

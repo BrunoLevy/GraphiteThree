@@ -313,6 +313,31 @@ namespace OGF {
 	result->update();
     }
 
+    void MeshGrobSurfaceCommands::intersect(
+        bool remove_internal_shells,
+        bool simplify_coplanar_facets,
+        double coplanar_angle_tolerance,
+        bool interpolate_attributes 
+    ) {
+        MeshSurfaceIntersection intersection(*mesh_grob());
+        intersection.set_delaunay(true);
+        intersection.set_detect_intersecting_neighbors(true);
+        intersection.set_radial_sort(remove_internal_shells);
+        intersection.set_interpolate_attributes(interpolate_attributes);
+        
+        intersection.intersect();
+        if(remove_internal_shells) {
+            intersection.remove_internal_shells();
+        }
+        
+        if(simplify_coplanar_facets) {
+            intersection.simplify_coplanar_facets(coplanar_angle_tolerance);
+        }
+
+        show_mesh();
+        mesh_grob()->update();
+    }
+    
     
     void MeshGrobSurfaceCommands::remesh_smooth(
         const NewMeshGrobName& surface_name_in,
