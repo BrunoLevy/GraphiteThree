@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -102,13 +109,14 @@ Inheritance diagram for OGF::MetaType:</div>
  <div class="center">
   <img src="classOGF_1_1MetaType.png" usemap="#OGF::MetaType_map" alt=""/>
   <map id="OGF::MetaType_map" name="OGF::MetaType_map">
-<area href="classOGF_1_1MetaInformation.html" title="Base class for everything that resides in the Meta repository." alt="OGF::MetaInformation" shape="rect" coords="149,112,288,136"/>
-<area href="classOGF_1_1Object.html" title="Base class for all objects in the GOM system." alt="OGF::Object" shape="rect" coords="74,56,213,80"/>
-<area href="classOGF_1_1CustomAttributes.html" title="Stores a set of custom attributes, i.e. name-value pairs attached to the objects." alt="OGF::CustomAttributes" shape="rect" coords="223,56,362,80"/>
-<area href="classGEO_1_1Counted.html" title="Base class for reference-counted objects." alt="GEO::Counted" shape="rect" coords="74,0,213,24"/>
-<area href="classOGF_1_1MetaBuiltinType.html" title="MetaType for builting types." alt="OGF::MetaBuiltinType" shape="rect" coords="0,224,139,248"/>
-<area href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository." alt="OGF::MetaClass" shape="rect" coords="149,224,288,248"/>
-<area href="classOGF_1_1MetaEnum.html" title="MetaType for enums." alt="OGF::MetaEnum" shape="rect" coords="298,224,437,248"/>
+<area href="classOGF_1_1MetaInformation.html" title="Base class for everything that resides in the Meta repository." alt="OGF::MetaInformation" shape="rect" coords="163,112,316,136"/>
+<area href="classOGF_1_1Object.html" title="Base class for all objects in the GOM system." alt="OGF::Object" shape="rect" coords="81,56,234,80"/>
+<area href="classOGF_1_1CustomAttributes.html" title="Stores a set of custom attributes, i.e. name-value pairs attached to the objects." alt="OGF::CustomAttributes" shape="rect" coords="244,56,397,80"/>
+<area href="classGEO_1_1Counted.html" title="Base class for reference-counted objects." alt="GEO::Counted" shape="rect" coords="81,0,234,24"/>
+<area href="classOGF_1_1MetaBuiltinType.html" title="MetaType for builting types." alt="OGF::MetaBuiltinType" shape="rect" coords="0,224,153,248"/>
+<area href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository." alt="OGF::MetaClass" shape="rect" coords="163,224,316,248"/>
+<area href="classOGF_1_1MetaEnum.html" title="MetaType for enums." alt="OGF::MetaEnum" shape="rect" coords="326,224,479,248"/>
+<area href="classOGF_1_1DynamicMetaClass.html" title="A MetaClass that can be created in Lua." alt="OGF::DynamicMetaClass" shape="rect" coords="163,280,316,304"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -158,6 +166,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a761d91c3883227e4e409087cbf2a5400 inherit pub_methods_classOGF_1_1MetaInformation"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MetaInformation.html#a761d91c3883227e4e409087cbf2a5400">custom_attribute_value</a> (const std::string &amp;name) const</td></tr>
 <tr class="memdesc:a761d91c3883227e4e409087cbf2a5400 inherit pub_methods_classOGF_1_1MetaInformation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the value of a new custom attribute.  <a href="classOGF_1_1MetaInformation.html#a761d91c3883227e4e409087cbf2a5400">More...</a><br /></td></tr>
 <tr class="separator:a761d91c3883227e4e409087cbf2a5400 inherit pub_methods_classOGF_1_1MetaInformation"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee59c43ca909fe9d3af26b2be317fdc0 inherit pub_methods_classOGF_1_1MetaInformation"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MetaInformation.html#aee59c43ca909fe9d3af26b2be317fdc0">create_custom_attribute</a> (const std::string &amp;name, const std::string &amp;value)</td></tr>
+<tr class="memdesc:aee59c43ca909fe9d3af26b2be317fdc0 inherit pub_methods_classOGF_1_1MetaInformation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new custom attribute.  <a href="classOGF_1_1MetaInformation.html#aee59c43ca909fe9d3af26b2be317fdc0">More...</a><br /></td></tr>
+<tr class="separator:aee59c43ca909fe9d3af26b2be317fdc0 inherit pub_methods_classOGF_1_1MetaInformation"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5d002caa60526323488b52165142292 inherit pub_methods_classOGF_1_1MetaInformation"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MetaInformation.html#ad5d002caa60526323488b52165142292">set_custom_attribute</a> (const std::string &amp;name, const std::string &amp;value)</td></tr>
+<tr class="memdesc:ad5d002caa60526323488b52165142292 inherit pub_methods_classOGF_1_1MetaInformation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the value of a new custom attribute.  <a href="classOGF_1_1MetaInformation.html#ad5d002caa60526323488b52165142292">More...</a><br /></td></tr>
+<tr class="separator:ad5d002caa60526323488b52165142292 inherit pub_methods_classOGF_1_1MetaInformation"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classOGF_1_1Object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classOGF_1_1Object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classOGF_1_1Object.html">OGF::Object</a></td></tr>
 <tr class="memitem:a91bcd1a1cb2ad02629c1b54d15d66fff inherit pub_methods_classOGF_1_1Object"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Object.html#a91bcd1a1cb2ad02629c1b54d15d66fff">Object</a> (bool transient=false)</td></tr>
 <tr class="memdesc:a91bcd1a1cb2ad02629c1b54d15d66fff inherit pub_methods_classOGF_1_1Object"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOGF_1_1Object.html" title="Base class for all objects in the GOM system.">Object</a> constructor.  <a href="classOGF_1_1Object.html#a91bcd1a1cb2ad02629c1b54d15d66fff">More...</a><br /></td></tr>
@@ -345,7 +359,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The representation of a type in the <a class="el" href="classOGF_1_1Meta.html" title="Stores all the meta information of the system, used by the reflection API.">Meta</a> repository. </p>
 
-<p class="definition">Definition at line <a class="el" href="meta__type_8h_source.html#l00194">194</a> of file <a class="el" href="meta__type_8h_source.html">meta_type.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta__type_8h_source.html#l00207">207</a> of file <a class="el" href="meta__type_8h_source.html">meta_type.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3c93fe70b0902d39e98388f9ce21272d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3c93fe70b0902d39e98388f9ce21272d">&#9670;&nbsp;</a></span>MetaType()</h2>
@@ -408,7 +422,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Gets the <a class="el" href="classOGF_1_1LifeCycle.html" title="Manages the life cycle of an object.">LifeCycle</a> associated with the type. </p>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the <a class="el" href="classOGF_1_1LifeCycle.html" title="Manages the life cycle of an object.">LifeCycle</a> or nil if none is available </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="meta__type_8h_source.html#l00240">240</a> of file <a class="el" href="meta__type_8h_source.html">meta_type.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta__type_8h_source.html#l00253">253</a> of file <a class="el" href="meta__type_8h_source.html">meta_type.h</a>.</p>
 
 </div>
 </div>
@@ -438,7 +452,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Gets the C++ name of the type. </p>
 <dl class="section return"><dt>Returns</dt><dd>the C++ name of the type (as in C++ sources, with <a class="el" href="namespaceOGF.html" title="Global Graphite namespace.">OGF</a>:: scope) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="meta__type_8h_source.html#l00214">214</a> of file <a class="el" href="meta__type_8h_source.html">meta_type.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta__type_8h_source.html#l00227">227</a> of file <a class="el" href="meta__type_8h_source.html">meta_type.h</a>.</p>
 
 </div>
 </div>
@@ -498,7 +512,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Gets the serializer associated with the type. </p>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the <a class="el" href="classOGF_1_1Serializer.html" title="Abstract base class for reading and writing values from/to streams.">Serializer</a> or nil if none is available </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="meta__type_8h_source.html#l00259">259</a> of file <a class="el" href="meta__type_8h_source.html">meta_type.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta__type_8h_source.html#l00272">272</a> of file <a class="el" href="meta__type_8h_source.html">meta_type.h</a>.</p>
 
 </div>
 </div>
@@ -534,7 +548,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="meta__type_8h_source.html#l00249">249</a> of file <a class="el" href="meta__type_8h_source.html">meta_type.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta__type_8h_source.html#l00262">262</a> of file <a class="el" href="meta__type_8h_source.html">meta_type.h</a>.</p>
 
 </div>
 </div>
@@ -570,7 +584,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="meta__type_8h_source.html#l00268">268</a> of file <a class="el" href="meta__type_8h_source.html">meta_type.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta__type_8h_source.html#l00281">281</a> of file <a class="el" href="meta__type_8h_source.html">meta_type.h</a>.</p>
 
 </div>
 </div>
@@ -606,7 +620,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="meta__type_8h_source.html#l00223">223</a> of file <a class="el" href="meta__type_8h_source.html">meta_type.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta__type_8h_source.html#l00236">236</a> of file <a class="el" href="meta__type_8h_source.html">meta_type.h</a>.</p>
 
 </div>
 </div>
@@ -636,7 +650,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Gets the typeid name. </p>
 <dl class="section return"><dt>Returns</dt><dd>the typeid name, as obtained by typeid(T).<a class="el" href="classOGF_1_1MetaType.html#a470c8dff9a9a2dee899df07e417493fa" title="Gets the C++ name of the type.">name()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="meta__type_8h_source.html#l00231">231</a> of file <a class="el" href="meta__type_8h_source.html">meta_type.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta__type_8h_source.html#l00244">244</a> of file <a class="el" href="meta__type_8h_source.html">meta_type.h</a>.</p>
 
 </div>
 </div>
@@ -649,7 +663,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1MetaType.html">MetaType</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

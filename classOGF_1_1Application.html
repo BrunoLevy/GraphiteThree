@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -280,6 +287,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a623b3a04995b8658a9247ada4a951b59 inherit pub_methods_classOGF_1_1ApplicationBase"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOGF_1_1Interpreter.html">Interpreter</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1ApplicationBase.html#a623b3a04995b8658a9247ada4a951b59">interpreter</a> ()</td></tr>
 <tr class="memdesc:a623b3a04995b8658a9247ada4a951b59 inherit pub_methods_classOGF_1_1ApplicationBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the main <a class="el" href="classOGF_1_1Interpreter.html" title="Abstract base class for the GOM interpreter.">Interpreter</a>.  <a href="classOGF_1_1ApplicationBase.html#a623b3a04995b8658a9247ada4a951b59">More...</a><br /></td></tr>
 <tr class="separator:a623b3a04995b8658a9247ada4a951b59 inherit pub_methods_classOGF_1_1ApplicationBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bdd251b58835bfbc1b94edb44c75223 inherit pub_methods_classOGF_1_1ApplicationBase"><td class="memItemLeft" align="right" valign="top"><a id="a3bdd251b58835bfbc1b94edb44c75223"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>for</b> (size_t index=tooltip_.find(&quot;\\n&quot;);index !=std::string::npos;index=tooltip_.find(&quot;\\n&quot;, index+2))</td></tr>
+<tr class="separator:a3bdd251b58835bfbc1b94edb44c75223 inherit pub_methods_classOGF_1_1ApplicationBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a750966317d806f3046ec37f012d39d22 inherit pub_methods_classOGF_1_1ApplicationBase"><td class="memItemLeft" align="right" valign="top"><a id="a750966317d806f3046ec37f012d39d22"></a>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1ApplicationBase.html#a750966317d806f3046ec37f012d39d22">get_tooltip</a> () const</td></tr>
+<tr class="memdesc:a750966317d806f3046ec37f012d39d22 inherit pub_methods_classOGF_1_1ApplicationBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the tooltip to be displayed near the cursor in the rendering area, or an empty string if there is no tooltip. <br /></td></tr>
+<tr class="separator:a750966317d806f3046ec37f012d39d22 inherit pub_methods_classOGF_1_1ApplicationBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8256111148dc3d1c9a3a0daf96cd812d inherit pub_methods_classOGF_1_1ApplicationBase"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1ApplicationBase.html#a8256111148dc3d1c9a3a0daf96cd812d">declare_preference_variable</a> (const std::string &amp;name, const std::string &amp;value, const std::string &amp;help=&quot;&quot;)</td></tr>
 <tr class="memdesc:a8256111148dc3d1c9a3a0daf96cd812d inherit pub_methods_classOGF_1_1ApplicationBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declares a preference variable.  <a href="classOGF_1_1ApplicationBase.html#a8256111148dc3d1c9a3a0daf96cd812d">More...</a><br /></td></tr>
 <tr class="separator:a8256111148dc3d1c9a3a0daf96cd812d inherit pub_methods_classOGF_1_1ApplicationBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -445,6 +459,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:a6793abd934621e8d708fd5a44d1271c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the instance.  <a href="classOGF_1_1Application.html#a6793abd934621e8d708fd5a44d1271c6">More...</a><br /></td></tr>
 <tr class="separator:a6793abd934621e8d708fd5a44d1271c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_methods_classOGF_1_1ApplicationBase"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classOGF_1_1ApplicationBase')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classOGF_1_1ApplicationBase.html">OGF::ApplicationBase</a></td></tr>
+<tr class="memitem:a60d81f8eae421db1eab1d91703d45211 inherit pub_static_methods_classOGF_1_1ApplicationBase"><td class="memItemLeft" align="right" valign="top"><a id="a60d81f8eae421db1eab1d91703d45211"></a>
+static <a class="el" href="classOGF_1_1ApplicationBase.html">ApplicationBase</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>instance</b> ()</td></tr>
+<tr class="separator:a60d81f8eae421db1eab1d91703d45211 inherit pub_static_methods_classOGF_1_1ApplicationBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c42f35875825460ef6e1721c6b049c1 inherit pub_static_methods_classOGF_1_1ApplicationBase"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1ApplicationBase.html#a9c42f35875825460ef6e1721c6b049c1">is_stopping</a> ()</td></tr>
 <tr class="memdesc:a9c42f35875825460ef6e1721c6b049c1 inherit pub_static_methods_classOGF_1_1ApplicationBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether the application is stopping.  <a href="classOGF_1_1ApplicationBase.html#a9c42f35875825460ef6e1721c6b049c1">More...</a><br /></td></tr>
 <tr class="separator:a9c42f35875825460ef6e1721c6b049c1 inherit pub_static_methods_classOGF_1_1ApplicationBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -473,11 +490,14 @@ gom_signals&#160;</td><td class="memItemRight" valign="bottom"><b>__pad2__</b>: 
 <tr class="separator:aa35418401d8780832dd81e4cb32fc907"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_attribs_classOGF_1_1ApplicationBase"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classOGF_1_1ApplicationBase')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classOGF_1_1ApplicationBase.html">OGF::ApplicationBase</a></td></tr>
 <tr class="memitem:a38dff4d48ec4737f2bd97471fba08dee inherit pub_attribs_classOGF_1_1ApplicationBase"><td class="memItemLeft" align="right" valign="top"><a id="a38dff4d48ec4737f2bd97471fba08dee"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>__pad0__</b>: virtual void start()</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>__pad0__</b>: void set_tooltip(const std::string&amp; x) { tooltip_ = x</td></tr>
 <tr class="separator:a38dff4d48ec4737f2bd97471fba08dee inherit pub_attribs_classOGF_1_1ApplicationBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c16feb633a03762f3b7a309a9c077bd inherit pub_attribs_classOGF_1_1ApplicationBase"><td class="memItemLeft" align="right" valign="top"><a id="a2c16feb633a03762f3b7a309a9c077bd"></a>
-gom_signals&#160;</td><td class="memItemRight" valign="bottom"><b>__pad1__</b>: void started()</td></tr>
-<tr class="separator:a2c16feb633a03762f3b7a309a9c077bd inherit pub_attribs_classOGF_1_1ApplicationBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd047d50310aa98db82e4ea0ae9901af inherit pub_attribs_classOGF_1_1ApplicationBase"><td class="memItemLeft" align="right" valign="top"><a id="afd047d50310aa98db82e4ea0ae9901af"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>__pad1__</b>: virtual void start()</td></tr>
+<tr class="separator:afd047d50310aa98db82e4ea0ae9901af inherit pub_attribs_classOGF_1_1ApplicationBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af19a5b993c04ddcfeba90476454af0be inherit pub_attribs_classOGF_1_1ApplicationBase"><td class="memItemLeft" align="right" valign="top"><a id="af19a5b993c04ddcfeba90476454af0be"></a>
+gom_signals&#160;</td><td class="memItemRight" valign="bottom"><b>__pad2__</b>: void started()</td></tr>
+<tr class="separator:af19a5b993c04ddcfeba90476454af0be inherit pub_attribs_classOGF_1_1ApplicationBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_attribs_classOGF_1_1Object"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classOGF_1_1Object')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classOGF_1_1Object.html">OGF::Object</a></td></tr>
 <tr class="memitem:af010b50686db470e523acabb950cb70c inherit pub_attribs_classOGF_1_1Object"><td class="memItemLeft" align="right" valign="top"><a id="af010b50686db470e523acabb950cb70c"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>__pad0__</b>: virtual <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> get_nb_elements() const</td></tr>
@@ -513,7 +533,13 @@ LoggerClient_var&#160;</td><td class="memItemRight" valign="bottom"><b>logger_cl
 <tr class="memitem:a6b005067530acd45cb1279c43758018f inherit pro_attribs_classOGF_1_1ApplicationBase"><td class="memItemLeft" align="right" valign="top"><a id="a6b005067530acd45cb1279c43758018f"></a>
 <a class="el" href="namespaceGEO.html#af21115a3dd60639a9d13188423249081">ProgressClient_var</a>&#160;</td><td class="memItemRight" valign="bottom"><b>progress_client_</b></td></tr>
 <tr class="separator:a6b005067530acd45cb1279c43758018f inherit pro_attribs_classOGF_1_1ApplicationBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac12a5d84329c151b0d651873bdf94554 inherit pro_attribs_classOGF_1_1ApplicationBase"><td class="memItemLeft" align="right" valign="top"><a id="ac12a5d84329c151b0d651873bdf94554"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>tooltip_</b></td></tr>
+<tr class="separator:ac12a5d84329c151b0d651873bdf94554 inherit pro_attribs_classOGF_1_1ApplicationBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_static_attribs_classOGF_1_1ApplicationBase"><td colspan="2" onclick="javascript:toggleInherit('pro_static_attribs_classOGF_1_1ApplicationBase')"><img src="closed.png" alt="-"/>&#160;Static Protected Attributes inherited from <a class="el" href="classOGF_1_1ApplicationBase.html">OGF::ApplicationBase</a></td></tr>
+<tr class="memitem:a5045b9cfeeaf4b530e02cc46d86e6de9 inherit pro_static_attribs_classOGF_1_1ApplicationBase"><td class="memItemLeft" align="right" valign="top"><a id="a5045b9cfeeaf4b530e02cc46d86e6de9"></a>
+static <a class="el" href="classOGF_1_1ApplicationBase.html">ApplicationBase</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>instance_</b></td></tr>
+<tr class="separator:a5045b9cfeeaf4b530e02cc46d86e6de9 inherit pro_static_attribs_classOGF_1_1ApplicationBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c68ca8d3f4fc2b235d9b31857772b7c inherit pro_static_attribs_classOGF_1_1ApplicationBase"><td class="memItemLeft" align="right" valign="top"><a id="a2c68ca8d3f4fc2b235d9b31857772b7c"></a>
 static bool&#160;</td><td class="memItemRight" valign="bottom"><b>stopping_</b></td></tr>
 <tr class="separator:a2c68ca8d3f4fc2b235d9b31857772b7c inherit pro_static_attribs_classOGF_1_1ApplicationBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1693,7 +1719,7 @@ static bool&#160;</td><td class="memItemRight" valign="bottom"><b>stopping_</b><
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1Application.html">Application</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:50 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:09 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

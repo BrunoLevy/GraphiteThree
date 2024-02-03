@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -99,10 +106,11 @@ $(document).ready(function(){initNavTree('vertex__shader__state_8h_source.html',
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <a class="code" href="namespaceGEO.html#a9ccb76276219a82b23fd62196cfe4596">vec4</a>  world_clip_plane;          </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keywordtype">float</span> point_size;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <a class="code" href="namespaceGEO.html#a9ccb76276219a82b23fd62196cfe4596">vec4</a>  viewport;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;};</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;uniform <a class="code" href="structVSUniformState.html">VSUniformState</a> GLUP_VS;     </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keywordtype">float</span> mesh_width;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;};</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;uniform <a class="code" href="structVSUniformState.html">VSUniformState</a> GLUP_VS;     </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
 <div class="ttc" id="anamespaceGEO_html_a18708792ceea5d2737ac3b8492aa2b03"><div class="ttname"><a href="namespaceGEO.html#a18708792ceea5d2737ac3b8492aa2b03">GEO::mat4</a></div><div class="ttdeci">Matrix&lt; 4, Numeric::float64 &gt; mat4</div><div class="ttdoc">Represents a 4x4 matrix.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00133">geometry.h:133</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_a9ccb76276219a82b23fd62196cfe4596"><div class="ttname"><a href="namespaceGEO.html#a9ccb76276219a82b23fd62196cfe4596">GEO::vec4</a></div><div class="ttdeci">vecng&lt; 4, Numeric::float64 &gt; vec4</div><div class="ttdoc">Represents points and vectors in 4d.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00071">geometry.h:71</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_ac1900d8e3be5a1d582186fc28684c4fe"><div class="ttname"><a href="namespaceGEO.html#ac1900d8e3be5a1d582186fc28684c4fe">GEO::mat3</a></div><div class="ttdeci">Matrix&lt; 3, Numeric::float64 &gt; mat3</div><div class="ttdoc">Represents a 3x3 matrix.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00127">geometry.h:127</a></div></div>
@@ -113,7 +121,7 @@ $(document).ready(function(){initNavTree('vertex__shader__state_8h_source.html',
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_20037eb6270bb31b4654a405ea4434e9.html">geogram_gfx</a></li><li class="navelem"><a class="el" href="dir_6ee10e88a74785d72493f3d7d7c0b76b.html">GLUP</a></li><li class="navelem"><a class="el" href="dir_4d3ab1102c0731354964a39120f98db1.html">shaders</a></li><li class="navelem"><a class="el" href="dir_0781b7967d18f5c1485f8b5852b19d72.html">GLUPES</a></li><li class="navelem"><b>vertex_shader_state.h</b></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -157,7 +164,7 @@ $(document).ready(function(){initNavTree('mesh__preprocessing_8h_source.html',''
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="ttc" id="aclassGEO_1_1Mesh_html"><div class="ttname"><a href="classGEO_1_1Mesh.html">GEO::Mesh</a></div><div class="ttdoc">Represents a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="mesh_8h_source.html#l02648">mesh.h:2648</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Mesh_html"><div class="ttname"><a href="classGEO_1_1Mesh.html">GEO::Mesh</a></div><div class="ttdoc">Represents a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="mesh_8h_source.html#l02672">mesh.h:2672</a></div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
 <div class="ttc" id="amesh__degree3__vertices_8h_html"><div class="ttname"><a href="mesh__degree3__vertices_8h.html">mesh_degree3_vertices.h</a></div><div class="ttdoc">Functions for removing degree 3 vertices in a mesh.</div></div>
 <div class="ttc" id="amesh__fill__holes_8h_html"><div class="ttname"><a href="mesh__fill__holes_8h.html">mesh_fill_holes.h</a></div><div class="ttdoc">Functions for filling the holes in a mesh.</div></div>
@@ -167,7 +174,7 @@ $(document).ready(function(){initNavTree('mesh__preprocessing_8h_source.html',''
 <div class="ttc" id="anamespaceGEO_html_a273b2dd4fc613465b850c28d4d8786a5"><div class="ttname"><a href="namespaceGEO.html#a273b2dd4fc613465b850c28d4d8786a5">GEO::remove_small_connected_components</a></div><div class="ttdeci">void remove_small_connected_components(Mesh &amp;M, double min_component_area, index_t min_component_facets=0.0)</div><div class="ttdoc">Removes the connected components that have an area smaller than a given threshold.</div></div>
 <div class="ttc" id="anamespaceGEO_html_a71b4dc366be326dc105d02813a8e74ad"><div class="ttname"><a href="namespaceGEO.html#a71b4dc366be326dc105d02813a8e74ad">GEO::expand_border</a></div><div class="ttdeci">void expand_border(Mesh &amp;M, double epsilon)</div><div class="ttdoc">Enlarges a surface by moving the vertices on the border.</div></div>
 <div class="ttc" id="anamespaceGEO_html_a9075f208cd79f87765d3ecf33620f209"><div class="ttname"><a href="namespaceGEO.html#a9075f208cd79f87765d3ecf33620f209">GEO::remove_degree2_vertices</a></div><div class="ttdeci">void remove_degree2_vertices(Mesh &amp;M)</div><div class="ttdoc">Removes the degree 2 vertices in a surface mesh.</div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_aa9bf4372e41421e8ec0f8c38a56e1a33"><div class="ttname"><a href="namespaceGEO.html#aa9bf4372e41421e8ec0f8c38a56e1a33">GEO::remove_small_facets</a></div><div class="ttdeci">void remove_small_facets(Mesh &amp;M, double min_facet_area)</div><div class="ttdoc">Removes the facets that have an area smaller than a given threshold.</div></div>
 <div class="ttc" id="anamespaceGEO_html_ad12bb6af33080860c77fe516ebb72bd0"><div class="ttname"><a href="namespaceGEO.html#ad12bb6af33080860c77fe516ebb72bd0">GEO::invert_normals</a></div><div class="ttdeci">void invert_normals(Mesh &amp;M)</div><div class="ttdoc">Inverts all the normals of a mesh.</div></div>
 </div><!-- fragment --></div><!-- contents -->
@@ -176,7 +183,7 @@ $(document).ready(function(){initNavTree('mesh__preprocessing_8h_source.html',''
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_7faf8be2027c4a91a1e5453dfee06721.html">mesh</a></li><li class="navelem"><a class="el" href="mesh__preprocessing_8h.html">mesh_preprocessing.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

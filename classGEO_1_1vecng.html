@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -127,6 +134,9 @@ template&lt;class T2 , index_t DIM2&gt; </td></tr>
 <tr class="memitem:ae5c74dc420e700d9688843991e1d2a32"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classGEO_1_1vecng.html#ae5c74dc420e700d9688843991e1d2a32">vecng</a> (const T2 *v)</td></tr>
 <tr class="memdesc:ae5c74dc420e700d9688843991e1d2a32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a vector from an array.  <a href="classGEO_1_1vecng.html#ae5c74dc420e700d9688843991e1d2a32">More...</a><br /></td></tr>
 <tr class="separator:ae5c74dc420e700d9688843991e1d2a32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad87191c1e3ec8e62c79d753ffae73b15"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1vecng.html#ad87191c1e3ec8e62c79d753ffae73b15">vecng</a> (const std::initializer_list&lt; T &gt; &amp;Vi)</td></tr>
+<tr class="memdesc:ad87191c1e3ec8e62c79d753ffae73b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a vector from an initializer list.  <a href="classGEO_1_1vecng.html#ad87191c1e3ec8e62c79d753ffae73b15">More...</a><br /></td></tr>
+<tr class="separator:ad87191c1e3ec8e62c79d753ffae73b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61783ad22be74bc161752b8ab455f72a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1vecng.html#a61783ad22be74bc161752b8ab455f72a">dimension</a> () const</td></tr>
 <tr class="memdesc:a61783ad22be74bc161752b8ab455f72a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the vector dimension.  <a href="classGEO_1_1vecng.html#a61783ad22be74bc161752b8ab455f72a">More...</a><br /></td></tr>
 <tr class="separator:a61783ad22be74bc161752b8ab455f72a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -285,10 +295,10 @@ class GEO::vecng&lt; DIM, T &gt;</h3>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00069">69</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00070">70</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a9a762dd8ca5dbcf546d591894524873a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9a762dd8ca5dbcf546d591894524873a">&#9670;&nbsp;</a></span>vecng() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a762dd8ca5dbcf546d591894524873a">&#9670;&nbsp;</a></span>vecng() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -315,12 +325,12 @@ template&lt;index_t DIM, class T &gt; </div>
 <p>Default vector constructor. </p>
 <p>All coordinates are initialized to 0 (zero). </p>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00084">84</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00085">85</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
 <a id="ac4609626768665613f4fa1698de880ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4609626768665613f4fa1698de880ad">&#9670;&nbsp;</a></span>vecng() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4609626768665613f4fa1698de880ad">&#9670;&nbsp;</a></span>vecng() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -361,12 +371,12 @@ template&lt;class T2 &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00103">103</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00104">104</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
 <a id="ae5c74dc420e700d9688843991e1d2a32"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5c74dc420e700d9688843991e1d2a32">&#9670;&nbsp;</a></span>vecng() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5c74dc420e700d9688843991e1d2a32">&#9670;&nbsp;</a></span>vecng() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -407,7 +417,45 @@ template&lt;class T2 &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00129">129</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00130">130</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+
+</div>
+</div>
+<a id="ad87191c1e3ec8e62c79d753ffae73b15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad87191c1e3ec8e62c79d753ffae73b15">&#9670;&nbsp;</a></span>vecng() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;index_t DIM, class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGEO_1_1vecng.html">GEO::vecng</a>&lt; DIM, T &gt;::<a class="el" href="classGEO_1_1vecng.html">vecng</a> </td>
+          <td>(</td>
+          <td class="paramtype">const std::initializer_list&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>Vi</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a vector from an initializer list. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">Vi</td><td>the initializer list, should contain DIM elements. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00140">140</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -440,7 +488,7 @@ template&lt;index_t DIM, class T &gt; </div>
 <p>Gets modifiable vector data. </p>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the first element of the vector </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00147">147</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00161">161</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -472,7 +520,7 @@ template&lt;index_t DIM, class T &gt; </div>
 <p>Gets non-modifiable vector data. </p>
 <dl class="section return"><dt>Returns</dt><dd>a const pointer to the first element of the vector </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00155">155</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00169">169</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -504,7 +552,7 @@ template&lt;index_t DIM, class T &gt; </div>
 <p>Gets the vector dimension. </p>
 <dl class="section return"><dt>Returns</dt><dd>the value of <code>DIM</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00139">139</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00153">153</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -543,7 +591,7 @@ template&lt;index_t DIM, class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>(<code>v</code> - <code>this</code>).<a class="el" href="classGEO_1_1vecng.html#a592e707b5def1949096d473ecabe2497" title="Gets the length of the vector.">length()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00215">215</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00229">229</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -582,7 +630,7 @@ template&lt;index_t DIM, class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>(<code>v</code> - <code>this</code>).<a class="el" href="classGEO_1_1vecng.html#a3c205e3f218819ce35a9862a321aadaf" title="Gets the squared length of the vector.">length2()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00202">202</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00216">216</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -629,7 +677,7 @@ template&lt;class T2 &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the result vector (<code>this</code> * <code>s</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00323">323</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00337">337</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -676,7 +724,7 @@ template&lt;class T2 &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to this vector </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00259">259</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00273">273</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -715,7 +763,7 @@ template&lt;index_t DIM, class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the result vector (<code>this</code> + <code>v</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00290">290</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00304">304</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -754,7 +802,7 @@ template&lt;index_t DIM, class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to this vector </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00228">228</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00242">242</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -786,7 +834,7 @@ template&lt;index_t DIM, class T &gt; </div>
 <p>Negates a vector. </p>
 <p>Builds a vector by negating coordinates of this vector. </p><dl class="section return"><dt>Returns</dt><dd>the result vector (-<code>this</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00354">354</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00368">368</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -825,7 +873,7 @@ template&lt;index_t DIM, class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the result vector (<code>this</code> - <code>v</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00305">305</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00319">319</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -864,7 +912,7 @@ template&lt;index_t DIM, class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to this vector </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00242">242</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00256">256</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -911,7 +959,7 @@ template&lt;class T2 &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the result vector (<code>this</code> / <code>s</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00341">341</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00355">355</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -958,7 +1006,7 @@ template&lt;class T2 &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to this vector </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00276">276</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00290">290</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -997,7 +1045,7 @@ template&lt;index_t DIM, class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to coordinate at index <code>i</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00164">164</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00178">178</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1036,7 +1084,7 @@ template&lt;index_t DIM, class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a const reference to coordinate at index <code>i</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00174">174</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00188">188</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1087,7 +1135,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the cross product (<code>v1</code> x <code>v2</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00883">883</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00930">930</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1137,7 +1185,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the value of the determinant </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00677">677</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00707">707</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1188,7 +1236,7 @@ template&lt;index_t DIM, class T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the distance between <code>v1</code> and <code>v2</code>. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classGEO_1_1vecng.html#ab73cd7919a9602eefb488feed82331e5" title="Gets the distance to a vector.">vecng::distance()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00456">456</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00470">470</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1239,7 +1287,7 @@ template&lt;index_t DIM, class T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the square distance between <code>v1</code> and <code>v2</code>. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classGEO_1_1vecng.html#ace4d8f549ec84067b946870239eef36a" title="Gets the squared distance to a vector.">vecng::distance2()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00441">441</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00455">455</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1289,7 +1337,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the dot product (<code>v1</code> . <code>v2</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00663">663</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00693">693</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1339,7 +1387,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the dot product (<code>v1</code> . <code>v2</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00869">869</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00916">916</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1389,7 +1437,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the dot product (<code>v1</code> . <code>v2</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l01090">1090</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l01147">1147</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1439,7 +1487,7 @@ template&lt;index_t DIM, class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the dot product (<code>v1</code> . <code>v2</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00374">374</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00388">388</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1479,7 +1527,7 @@ template&lt;index_t DIM, class T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the norm of vector <code>v</code> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classGEO_1_1vecng.html#a592e707b5def1949096d473ecabe2497" title="Gets the length of the vector.">vecng::length()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00416">416</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00430">430</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1519,7 +1567,7 @@ template&lt;index_t DIM, class T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the square norm of vector <code>v</code> </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classGEO_1_1vecng.html#a3c205e3f218819ce35a9862a321aadaf" title="Gets the squared length of the vector.">vecng::length2()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00428">428</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00442">442</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1576,7 +1624,7 @@ template&lt;index_t DIM, class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the barycenter (1 - <code>s</code>) * <code>v1</code> + <code>s</code> * <code>v2</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00493">493</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00507">507</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1615,7 +1663,7 @@ template&lt;index_t DIM, class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the normalized vector </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00472">472</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00486">486</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1671,7 +1719,7 @@ template&lt;class T2 , class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the result vector (<code>s</code> * <code>v</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00688">688</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00718">718</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1727,7 +1775,7 @@ template&lt;class T2 , class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the result vector (<code>s</code> * <code>v</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00898">898</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00945">945</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1783,7 +1831,7 @@ template&lt;class T2 , class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the result vector (<code>s</code> * <code>v</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l01101">1101</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l01158">1158</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1839,7 +1887,7 @@ template&lt;class T2 , index_t DIM, class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the result vector (<code>s</code> * <code>v</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00396">396</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l00410">410</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1889,7 +1937,7 @@ template&lt;index_t DIM, class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to the output stream <code>out</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l01117">1117</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l01174">1174</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1939,7 +1987,7 @@ template&lt;index_t DIM, class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to the input stream <code>in</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l01138">1138</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vecg_8h_source.html#l01195">1195</a> of file <a class="el" href="vecg_8h_source.html">vecg.h</a>.</p>
 
 </div>
 </div>
@@ -1952,7 +2000,7 @@ template&lt;index_t DIM, class T &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1vecng.html">vecng</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

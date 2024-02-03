@@ -3,6 +3,7 @@ var classGLUP_1_1ImmediateBuffer =
     [ "ImmediateBuffer", "classGLUP_1_1ImmediateBuffer.html#af017e7de26851c5df2f6bbf68c3266ac", null ],
     [ "~ImmediateBuffer", "classGLUP_1_1ImmediateBuffer.html#a0d13c2768f48eafdb81ad6477fd66f8a", null ],
     [ "ImmediateBuffer", "classGLUP_1_1ImmediateBuffer.html#a8a1dfbaee67e94b0615930b18eaea740", null ],
+    [ "copy", "classGLUP_1_1ImmediateBuffer.html#a968854daa37c182c2dc89b82bfb25d29", null ],
     [ "copy", "classGLUP_1_1ImmediateBuffer.html#aa6a03e2f3eb33ced14147cf8cc2dbb74", null ],
     [ "copy_current_to", "classGLUP_1_1ImmediateBuffer.html#aa95eda5e616068bd428cccb5170d19cb", null ],
     [ "data", "classGLUP_1_1ImmediateBuffer.html#a50401a5c5f9197df5a6668fb680b60ba", null ],

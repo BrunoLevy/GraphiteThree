@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -116,7 +123,7 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Lookup tables that describe the combinatorics of each cell type. </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01430">1430</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01454">1454</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="a7c1e3cdcafd903851e0810162d32c3ee"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7c1e3cdcafd903851e0810162d32c3ee">&#9670;&nbsp;</a></span>edge_adjacent_facet</h2>
@@ -131,7 +138,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Cell facet index by (edge index, adjacent facet index). </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01457">1457</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01481">1481</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -148,7 +155,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Cell vertex index by (edge index, edge vertex index). </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01452">1452</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01476">1476</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -165,7 +172,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Cell vertex index by (facet index,facet vertex index). </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01443">1443</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01467">1467</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -182,7 +189,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Number of edges </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01447">1447</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01471">1471</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -199,7 +206,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Number of facets </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01435">1435</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01459">1459</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -216,7 +223,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Number of vertices </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01432">1432</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01456">1456</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -233,7 +240,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Number of vertices in each facet </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01438">1438</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01462">1462</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -246,7 +253,7 @@ Public Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="structGEO_1_1CellDescriptor.html">CellDescriptor</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -113,9 +120,6 @@ Functions</h2></td></tr>
 <tr class="memitem:a8d60d892ddff8eaf632fa18f69f9b30a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a6044ad0fa5784ccde33b7bb3fa0e1459">vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO_1_1Geom.html#a8d60d892ddff8eaf632fa18f69f9b30a">triangle_normal</a> (const <a class="el" href="namespaceGEO.html#a6044ad0fa5784ccde33b7bb3fa0e1459">vec3</a> &amp;p1, const <a class="el" href="namespaceGEO.html#a6044ad0fa5784ccde33b7bb3fa0e1459">vec3</a> &amp;p2, const <a class="el" href="namespaceGEO.html#a6044ad0fa5784ccde33b7bb3fa0e1459">vec3</a> &amp;p3)</td></tr>
 <tr class="memdesc:a8d60d892ddff8eaf632fa18f69f9b30a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the normal of a 3d triangle.  <a href="namespaceGEO_1_1Geom.html#a8d60d892ddff8eaf632fa18f69f9b30a">More...</a><br /></td></tr>
 <tr class="separator:a8d60d892ddff8eaf632fa18f69f9b30a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd5f1c9bacaec4df14d52f5e4620ed77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#ae771f961036ac7f98502ff145b99d424">coord_index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO_1_1Geom.html#acd5f1c9bacaec4df14d52f5e4620ed77">triangle_normal_axis</a> (const <a class="el" href="namespaceGEO.html#a6044ad0fa5784ccde33b7bb3fa0e1459">vec3</a> &amp;p1, const <a class="el" href="namespaceGEO.html#a6044ad0fa5784ccde33b7bb3fa0e1459">vec3</a> &amp;p2, const <a class="el" href="namespaceGEO.html#a6044ad0fa5784ccde33b7bb3fa0e1459">vec3</a> &amp;p3)</td></tr>
-<tr class="memdesc:acd5f1c9bacaec4df14d52f5e4620ed77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the axis that is most normal to a triangle.  <a href="namespaceGEO_1_1Geom.html#acd5f1c9bacaec4df14d52f5e4620ed77">More...</a><br /></td></tr>
-<tr class="separator:acd5f1c9bacaec4df14d52f5e4620ed77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab41768b8831c2200675a98ceef0ef2a0"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO_1_1Geom.html#ab41768b8831c2200675a98ceef0ef2a0">triangle_area_3d</a> (const double *p1, const double *p2, const double *p3)</td></tr>
 <tr class="memdesc:ab41768b8831c2200675a98ceef0ef2a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the area of a 3d triangle.  <a href="namespaceGEO_1_1Geom.html#ab41768b8831c2200675a98ceef0ef2a0">More...</a><br /></td></tr>
 <tr class="separator:ab41768b8831c2200675a98ceef0ef2a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -362,7 +366,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the angle between <code>a</code> and <code>b</code> in radians, in the interval <img class="formulaInl" alt="$ [ 0 \ldots \pi ] $" src="form_4.png"/>.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the angle between <code>a</code> and <code>b</code> in radians, in the interval \( [ 0 \ldots \pi ] \).</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>first vector </td></tr>
@@ -370,9 +374,9 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>the angle between <em>and</em> <b>in</b> radians, in the interval <img class="formulaInl" alt="$ [-\pi \ldots \pi] $" src="form_5.png"/> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>the angle between <em>and</em> <b>in</b> radians, in the interval \( [-\pi \ldots \pi] \) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00225">225</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00266">266</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -421,7 +425,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the barycenter of <code>p1</code> and <code>p2</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00148">148</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00189">189</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -477,7 +481,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the barycenter of <code>p1</code>, <code>p2</code> and <code>p3</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00176">176</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00217">217</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -658,7 +662,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the cosine of the angle between <code>a</code> and <code>b</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00208">208</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00249">249</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -706,7 +710,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the determinant of <code>a</code> and <code>b</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00251">251</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00292">292</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -1181,7 +1185,7 @@ template&lt;class VEC &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if one of the coordinates is a NaN, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00400">400</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00429">429</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -2577,7 +2581,7 @@ template&lt;class VEC &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a random point in triangle ( <code>p1</code>, <code>p2</code>, <code>p3</code> ) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00553">553</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00582">582</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -2691,7 +2695,7 @@ template&lt;class VEC &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the signed volume of the tetrahedron (<code>p1</code>, <code>p2</code>, <code>p3</code>, <code>p4</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00450">450</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00479">479</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -2753,7 +2757,7 @@ template&lt;class VEC &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the signed volume of the tetrahedron (<code>p1</code>, <code>p2</code>, <code>p3</code>, <code>p4</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00434">434</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00463">463</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -2957,7 +2961,7 @@ template&lt;class VEC &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the volume of the tetrahedron (<code>p1</code>, <code>p2</code>, <code>p3</code>, <code>p4</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00471">471</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00500">500</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -3294,7 +3298,7 @@ template&lt;class VEC &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the area of the triangle (<code>p1</code>, <code>p2</code>, <code>p3</code>). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00319">319</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00348">348</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -3349,7 +3353,7 @@ template&lt;class VEC &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the area of the triangle (<code>p1</code>, <code>p2</code>, <code>p3</code>). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00377">377</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00406">406</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -3402,7 +3406,7 @@ template&lt;class VEC &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the area of the triangle (<code>p1</code>, <code>p2</code>, <code>p3</code>). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00297">297</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00326">326</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -3692,7 +3696,7 @@ template&lt;class VEC &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00505">505</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00534">534</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -3959,7 +3963,7 @@ template&lt;class VEC &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the mass of the weighted triangle ( <code>p</code>, <code>a</code>), ( <code>q</code>, <code>b</code>), ( <code>r</code>, <code>c</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00534">534</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00563">563</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -4012,50 +4016,7 @@ template&lt;class VEC &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the normal of the triangle (<code>p1</code>, <code>p2</code>, <code>p3</code>). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00274">274</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
-
-</div>
-</div>
-<a id="acd5f1c9bacaec4df14d52f5e4620ed77"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd5f1c9bacaec4df14d52f5e4620ed77">&#9670;&nbsp;</a></span>triangle_normal_axis()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespaceGEO.html#ae771f961036ac7f98502ff145b99d424">coord_index_t</a> GEO::Geom::triangle_normal_axis </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespaceGEO.html#a6044ad0fa5784ccde33b7bb3fa0e1459">vec3</a> &amp;&#160;</td>
-          <td class="paramname"><em>p1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="namespaceGEO.html#a6044ad0fa5784ccde33b7bb3fa0e1459">vec3</a> &amp;&#160;</td>
-          <td class="paramname"><em>p2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="namespaceGEO.html#a6044ad0fa5784ccde33b7bb3fa0e1459">vec3</a> &amp;&#160;</td>
-          <td class="paramname"><em>p3</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the axis that is most normal to a triangle. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p1,p2,p3</td><td>the three vertices of the triangle </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>the coordinate of the normal vector with the greatest absolute value </dd></dl>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00315">315</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -4110,7 +4071,7 @@ template&lt;class VEC &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the signed area of the triangle (<code>p1</code>, <code>p2</code>, <code>p3</code>), positive if the triangle is oriented clockwise, negative otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00351">351</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00380">380</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -4165,7 +4126,7 @@ template&lt;class VEC &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the signed area of the 2D triangle (<code>p1</code>, <code>p2</code>, <code>p3</code>), positive if the triangle is oriented clockwise, negative otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00333">333</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00362">362</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geometry.h</a>.</p>
 
 </div>
 </div>
@@ -4175,7 +4136,7 @@ template&lt;class VEC &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="namespaceGEO_1_1Geom.html">Geom</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

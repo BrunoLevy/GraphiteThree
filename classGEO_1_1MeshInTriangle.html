@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -85,6 +92,7 @@ $(document).ready(function(){initNavTree('classGEO_1_1MeshInTriangle.html',''); 
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classGEO_1_1MeshInTriangle-members.html">List of all members</a>  </div>
@@ -116,6 +124,12 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A vertex of the triangulation.  <a href="classGEO_1_1MeshInTriangle_1_1Vertex.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:aaf15893d4a81aed83e8dc3ea58d4f039"><td class="memItemLeft" align="right" valign="top"><a id="aaf15893d4a81aed83e8dc3ea58d4f039"></a>
+typedef <a class="el" href="namespaceGEO_1_1exact.html#ad1969be6438566eae9280d4b4dc38a7b">exact::vec3h</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ExactPoint</b></td></tr>
+<tr class="separator:aaf15893d4a81aed83e8dc3ea58d4f039"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad8422f623e8ba54603430358a4fcfe6b"><td class="memItemLeft" align="right" valign="top"><a id="ad8422f623e8ba54603430358a4fcfe6b"></a>
@@ -127,10 +141,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a60a4e8e50a698d8b0ecc4198aaed903d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1Mesh.html">Mesh</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle.html#a60a4e8e50a698d8b0ecc4198aaed903d">target_mesh</a> ()</td></tr>
 <tr class="memdesc:a60a4e8e50a698d8b0ecc4198aaed903d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the target mesh.  <a href="classGEO_1_1MeshInTriangle.html#a60a4e8e50a698d8b0ecc4198aaed903d">More...</a><br /></td></tr>
 <tr class="separator:a60a4e8e50a698d8b0ecc4198aaed903d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92b7e8aacf769912e7711394e68fe2bb"><td class="memItemLeft" align="right" valign="top"><a id="a92b7e8aacf769912e7711394e68fe2bb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle.html#a92b7e8aacf769912e7711394e68fe2bb">set_approx_incircle</a> (bool x)</td></tr>
-<tr class="memdesc:a92b7e8aacf769912e7711394e68fe2bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">If <a class="el" href="classGEO_1_1Delaunay.html" title="Abstract interface for Delaunay triangulation in Nd.">Delaunay</a> is set, use approximated incircle predicate (default: use exact incircle) <br /></td></tr>
-<tr class="separator:a92b7e8aacf769912e7711394e68fe2bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3ca8d33df6f5d18c00ae8ad0abca7e4"><td class="memItemLeft" align="right" valign="top"><a id="ab3ca8d33df6f5d18c00ae8ad0abca7e4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle.html#ab3ca8d33df6f5d18c00ae8ad0abca7e4">set_dry_run</a> (bool x)</td></tr>
+<tr class="memdesc:ab3ca8d33df6f5d18c00ae8ad0abca7e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">In dry run mode, the computed local triangulations are not inserted in the global mesh. This is for benchmarking. Default is off. <br /></td></tr>
+<tr class="separator:ab3ca8d33df6f5d18c00ae8ad0abca7e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c2e55ff8f60e6bdf9528d0c02fa5fbd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle.html#a7c2e55ff8f60e6bdf9528d0c02fa5fbd">save_constraints</a> (const std::string &amp;filename)</td></tr>
 <tr class="memdesc:a7c2e55ff8f60e6bdf9528d0c02fa5fbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">For debugging, save constraints to a file.  <a href="classGEO_1_1MeshInTriangle.html#a7c2e55ff8f60e6bdf9528d0c02fa5fbd">More...</a><br /></td></tr>
 <tr class="separator:a7c2e55ff8f60e6bdf9528d0c02fa5fbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,9 +157,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>begin_facet</b> (<a c
 <tr class="memitem:ab13884dd2c94f4efec6b92c784e22201"><td class="memItemLeft" align="right" valign="top"><a id="ab13884dd2c94f4efec6b92c784e22201"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>add_edge</b> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> f2, <a class="el" href="namespaceGEO.html#a2aa39253e2c170b7f336966395258641">TriangleRegion</a> AR1, <a class="el" href="namespaceGEO.html#a2aa39253e2c170b7f336966395258641">TriangleRegion</a> AR2, <a class="el" href="namespaceGEO.html#a2aa39253e2c170b7f336966395258641">TriangleRegion</a> BR1, <a class="el" href="namespaceGEO.html#a2aa39253e2c170b7f336966395258641">TriangleRegion</a> BR2)</td></tr>
 <tr class="separator:ab13884dd2c94f4efec6b92c784e22201"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42ecce5a4a6e8551a8c85d52c35a0d68"><td class="memItemLeft" align="right" valign="top"><a id="a42ecce5a4a6e8551a8c85d52c35a0d68"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>end_facet</b> ()</td></tr>
-<tr class="separator:a42ecce5a4a6e8551a8c85d52c35a0d68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb407081f14dcba131a7b35a0f2d4b6f"><td class="memItemLeft" align="right" valign="top"><a id="afb407081f14dcba131a7b35a0f2d4b6f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle.html#afb407081f14dcba131a7b35a0f2d4b6f">commit</a> ()</td></tr>
+<tr class="memdesc:afb407081f14dcba131a7b35a0f2d4b6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates new vertices and new triangles in target mesh. <br /></td></tr>
+<tr class="separator:afb407081f14dcba131a7b35a0f2d4b6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fb64388fdec3aea330d7505dfdced3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle.html#a2fb64388fdec3aea330d7505dfdced3a">clear</a> () override</td></tr>
+<tr class="separator:a2fb64388fdec3aea330d7505dfdced3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3599bd629700bac344bec4ddaceb35a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle.html#ac3599bd629700bac344bec4ddaceb35a">save</a> (const std::string &amp;filename) const override</td></tr>
 <tr class="memdesc:ac3599bd629700bac344bec4ddaceb35a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves this CDT to a geogram mesh file.  <a href="classGEO_1_1MeshInTriangle.html#ac3599bd629700bac344bec4ddaceb35a">More...</a><br /></td></tr>
 <tr class="separator:ac3599bd629700bac344bec4ddaceb35a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -161,10 +178,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:adf854f3aebf85dffa431d548d97ff842 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#adf854f3aebf85dffa431d548d97ff842">insert_constraint</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> i, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> j)</td></tr>
 <tr class="memdesc:adf854f3aebf85dffa431d548d97ff842 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a constraint.  <a href="classGEO_1_1CDTBase2d.html#adf854f3aebf85dffa431d548d97ff842">More...</a><br /></td></tr>
 <tr class="separator:adf854f3aebf85dffa431d548d97ff842 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8145c8e7bdad17df5fe201e8e5546825 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a id="a8145c8e7bdad17df5fe201e8e5546825"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a8145c8e7bdad17df5fe201e8e5546825">remove_external_triangles</a> ()</td></tr>
-<tr class="memdesc:a8145c8e7bdad17df5fe201e8e5546825 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recursively removes all the triangles adjacent to the border, and keeps what's surrounded by constraints. <br /></td></tr>
-<tr class="separator:a8145c8e7bdad17df5fe201e8e5546825 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8da23acc57ec16c9c64f17a9eb1a1aeb inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a8da23acc57ec16c9c64f17a9eb1a1aeb">remove_external_triangles</a> (bool remove_internal_holes=false)</td></tr>
+<tr class="memdesc:a8da23acc57ec16c9c64f17a9eb1a1aeb inherit pub_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recursively removes all the triangles adjacent to the border, and keeps what's surrounded by constraints.  <a href="classGEO_1_1CDTBase2d.html#a8da23acc57ec16c9c64f17a9eb1a1aeb">More...</a><br /></td></tr>
+<tr class="separator:a8da23acc57ec16c9c64f17a9eb1a1aeb inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4a2368d3c449aa4497119979fc3b4b0 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#af4a2368d3c449aa4497119979fc3b4b0">set_delaunay</a> (bool delaunay)</td></tr>
 <tr class="memdesc:af4a2368d3c449aa4497119979fc3b4b0 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies whether a constrained <a class="el" href="classGEO_1_1Delaunay.html" title="Abstract interface for Delaunay triangulation in Nd.">Delaunay</a> triangulation should be constructed, or just a plain constrained triangulation.  <a href="classGEO_1_1CDTBase2d.html#af4a2368d3c449aa4497119979fc3b4b0">More...</a><br /></td></tr>
 <tr class="separator:af4a2368d3c449aa4497119979fc3b4b0 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -195,6 +211,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a469f2c8218b7fde63412f8ba366aacf3 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a469f2c8218b7fde63412f8ba366aacf3">vT</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> v) const</td></tr>
 <tr class="memdesc:a469f2c8218b7fde63412f8ba366aacf3 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a triangle incident to a given vertex.  <a href="classGEO_1_1CDTBase2d.html#a469f2c8218b7fde63412f8ba366aacf3">More...</a><br /></td></tr>
 <tr class="separator:a469f2c8218b7fde63412f8ba366aacf3 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2079b41410aae52f1b1b00ee72e4f7d0 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a2079b41410aae52f1b1b00ee72e4f7d0">Tedge_cnstr_first</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> t, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> le) const</td></tr>
+<tr class="memdesc:a2079b41410aae52f1b1b00ee72e4f7d0 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the constraint associated with an edge.  <a href="classGEO_1_1CDTBase2d.html#a2079b41410aae52f1b1b00ee72e4f7d0">More...</a><br /></td></tr>
+<tr class="separator:a2079b41410aae52f1b1b00ee72e4f7d0 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4efc954320bac76c6c85929b4df3b20b inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a4efc954320bac76c6c85929b4df3b20b">edge_cnstr_next</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> ecit) const</td></tr>
+<tr class="memdesc:a4efc954320bac76c6c85929b4df3b20b inherit pub_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the successor of an edge constraint iterator.  <a href="classGEO_1_1CDTBase2d.html#a4efc954320bac76c6c85929b4df3b20b">More...</a><br /></td></tr>
+<tr class="separator:a4efc954320bac76c6c85929b4df3b20b inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab15fe47c912d73bd1c02a9e63808197c inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#ab15fe47c912d73bd1c02a9e63808197c">edge_cnstr</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> ecit) const</td></tr>
+<tr class="memdesc:ab15fe47c912d73bd1c02a9e63808197c inherit pub_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an edge constraint fro an edge constraint iterator.  <a href="classGEO_1_1CDTBase2d.html#ab15fe47c912d73bd1c02a9e63808197c">More...</a><br /></td></tr>
+<tr class="separator:ab15fe47c912d73bd1c02a9e63808197c inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedb65fc282c15ed78b852d8bf32cfa93 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#aedb65fc282c15ed78b852d8bf32cfa93">Tedge_cnstr_nb</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> t, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> le) const</td></tr>
+<tr class="memdesc:aedb65fc282c15ed78b852d8bf32cfa93 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of constraints associated with a triange edge.  <a href="classGEO_1_1CDTBase2d.html#aedb65fc282c15ed78b852d8bf32cfa93">More...</a><br /></td></tr>
+<tr class="separator:aedb65fc282c15ed78b852d8bf32cfa93 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc730330131f2382a3f360976036b091 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#afc730330131f2382a3f360976036b091">Tedge_is_Delaunay</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> t, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> le) const</td></tr>
 <tr class="memdesc:afc730330131f2382a3f360976036b091 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether a triangle edge is <a class="el" href="classGEO_1_1Delaunay.html" title="Abstract interface for Delaunay triangulation in Nd.">Delaunay</a>.  <a href="classGEO_1_1CDTBase2d.html#afc730330131f2382a3f360976036b091">More...</a><br /></td></tr>
 <tr class="separator:afc730330131f2382a3f360976036b091 inherit pub_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -205,10 +233,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:afb407081f14dcba131a7b35a0f2d4b6f"><td class="memItemLeft" align="right" valign="top"><a id="afb407081f14dcba131a7b35a0f2d4b6f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle.html#afb407081f14dcba131a7b35a0f2d4b6f">commit</a> ()</td></tr>
-<tr class="memdesc:afb407081f14dcba131a7b35a0f2d4b6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates new vertices and new triangles in target mesh. <br /></td></tr>
-<tr class="separator:afb407081f14dcba131a7b35a0f2d4b6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb8d6ff2cf9e432afe4582bdd1d00771"><td class="memItemLeft" align="right" valign="top"><a id="afb8d6ff2cf9e432afe4582bdd1d00771"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle.html#afb8d6ff2cf9e432afe4582bdd1d00771">get_constraints</a> (<a class="el" href="classGEO_1_1Mesh.html">Mesh</a> &amp;M, bool with_edges=true) const</td></tr>
 <tr class="memdesc:afb8d6ff2cf9e432afe4582bdd1d00771"><td class="mdescLeft">&#160;</td><td class="mdescRight">For debugging, copies the constraints to a mesh. <br /></td></tr>
@@ -225,10 +249,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:ad60a2163d3c93fe66fe6b7716770d7ff"><td class="memItemLeft" align="right" valign="top"><a id="ad60a2163d3c93fe66fe6b7716770d7ff"></a>
 <a class="el" href="namespaceGEO.html#ad7e1b53e52be6caed089a5f4f29d8057">vec2</a>&#160;</td><td class="memItemRight" valign="bottom"><b>mesh_facet_vertex_UV</b> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> f, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> lv) const</td></tr>
 <tr class="separator:ad60a2163d3c93fe66fe6b7716770d7ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2fb64388fdec3aea330d7505dfdced3a"><td class="memItemLeft" align="right" valign="top"><a id="a2fb64388fdec3aea330d7505dfdced3a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle.html#a2fb64388fdec3aea330d7505dfdced3a">clear</a> () override</td></tr>
-<tr class="memdesc:a2fb64388fdec3aea330d7505dfdced3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes everything from this triangulation. <br /></td></tr>
-<tr class="separator:a2fb64388fdec3aea330d7505dfdced3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1f73f963e76d2c48620494d2cfdb8f8"><td class="memItemLeft" align="right" valign="top"><a id="ae1f73f963e76d2c48620494d2cfdb8f8"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>log_err</b> () const</td></tr>
 <tr class="separator:ae1f73f963e76d2c48620494d2cfdb8f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -241,12 +261,21 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>log_err</b> () const<
 <tr class="memitem:a152b69138f53959d14836666169e1890"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle.html#a152b69138f53959d14836666169e1890">create_intersection</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> i, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> j, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e2, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> k, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> l) override</td></tr>
 <tr class="memdesc:a152b69138f53959d14836666169e1890"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given two segments that have an intersection, create the intersection.  <a href="classGEO_1_1MeshInTriangle.html#a152b69138f53959d14836666169e1890">More...</a><br /></td></tr>
 <tr class="separator:a152b69138f53959d14836666169e1890"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41359c2c59d380dbf618956ee1bd8293"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle.html#a41359c2c59d380dbf618956ee1bd8293">get_edge_edge_intersection</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e2, <a class="el" href="structGEO_1_1vec3HE.html">vec3HE</a> &amp;I) const</td></tr>
-<tr class="memdesc:a41359c2c59d380dbf618956ee1bd8293"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the intersection between two edges.  <a href="classGEO_1_1MeshInTriangle.html#a41359c2c59d380dbf618956ee1bd8293">More...</a><br /></td></tr>
-<tr class="separator:a41359c2c59d380dbf618956ee1bd8293"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f52d98f21ac73e2c0e0f3fef8145d48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle.html#a9f52d98f21ac73e2c0e0f3fef8145d48">get_edge_edge_intersection_2D</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e2, <a class="el" href="structGEO_1_1vec3HE.html">vec3HE</a> &amp;I) const</td></tr>
-<tr class="memdesc:a9f52d98f21ac73e2c0e0f3fef8145d48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Auxilliary function used by <a class="el" href="classGEO_1_1MeshInTriangle.html#a41359c2c59d380dbf618956ee1bd8293" title="Computes the intersection between two edges.">get_edge_edge_intersection()</a> for the special case when the two edges are coplanar.  <a href="classGEO_1_1MeshInTriangle.html#a9f52d98f21ac73e2c0e0f3fef8145d48">More...</a><br /></td></tr>
-<tr class="separator:a9f52d98f21ac73e2c0e0f3fef8145d48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08bdacf3595968bfcb3439346d41f766"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle.html#a08bdacf3595968bfcb3439346d41f766">get_edge_edge_intersection</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e2, <a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a> &amp;I) const</td></tr>
+<tr class="memdesc:a08bdacf3595968bfcb3439346d41f766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the intersection between two edges.  <a href="classGEO_1_1MeshInTriangle.html#a08bdacf3595968bfcb3439346d41f766">More...</a><br /></td></tr>
+<tr class="separator:a08bdacf3595968bfcb3439346d41f766"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6414de7cb84170702b470fb38f7c5af9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle.html#a6414de7cb84170702b470fb38f7c5af9">get_edge_edge_intersection_2D</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e2, <a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a> &amp;I) const</td></tr>
+<tr class="memdesc:a6414de7cb84170702b470fb38f7c5af9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Auxilliary function used by <a class="el" href="classGEO_1_1MeshInTriangle.html#a08bdacf3595968bfcb3439346d41f766" title="Computes the intersection between two edges.">get_edge_edge_intersection()</a> for the special case when the two edges are coplanar.  <a href="classGEO_1_1MeshInTriangle.html#a6414de7cb84170702b470fb38f7c5af9">More...</a><br /></td></tr>
+<tr class="separator:a6414de7cb84170702b470fb38f7c5af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2ac3930be121b6770671d3d297267d5"><td class="memItemLeft" align="right" valign="top"><a id="af2ac3930be121b6770671d3d297267d5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>begin_insert_transaction</b> () override</td></tr>
+<tr class="separator:af2ac3930be121b6770671d3d297267d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a366d8d615a98629f1b09cbacad5c0607"><td class="memItemLeft" align="right" valign="top"><a id="a366d8d615a98629f1b09cbacad5c0607"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>commit_insert_transaction</b> () override</td></tr>
+<tr class="separator:a366d8d615a98629f1b09cbacad5c0607"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4237487f45f627b34714cfb0f7e2ed5c"><td class="memItemLeft" align="right" valign="top"><a id="a4237487f45f627b34714cfb0f7e2ed5c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>rollback_insert_transaction</b> () override</td></tr>
+<tr class="separator:a4237487f45f627b34714cfb0f7e2ed5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classGEO_1_1CDTBase2d"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classGEO_1_1CDTBase2d')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classGEO_1_1CDTBase2d.html">GEO::CDTBase2d</a></td></tr>
 <tr class="memitem:a0016f2229ddcd906ff9328d24a47bf96 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a0016f2229ddcd906ff9328d24a47bf96">insert</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> v, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> hint=<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>(-1))</td></tr>
 <tr class="memdesc:a0016f2229ddcd906ff9328d24a47bf96 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a new point.  <a href="classGEO_1_1CDTBase2d.html#a0016f2229ddcd906ff9328d24a47bf96">More...</a><br /></td></tr>
@@ -292,6 +321,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:ad2bbc105ae49f3ed540385a2d6234e52 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#ad2bbc105ae49f3ed540385a2d6234e52">constrain_edges</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> i, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> j, <a class="el" href="structGEO_1_1CDTBase2d_1_1DList.html">DList</a> &amp;Q, <a class="el" href="structGEO_1_1CDTBase2d_1_1DList.html">DList</a> &amp;N)</td></tr>
 <tr class="memdesc:ad2bbc105ae49f3ed540385a2d6234e52 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constrains an edge by iteratively flipping the intersected edges.  <a href="classGEO_1_1CDTBase2d.html#ad2bbc105ae49f3ed540385a2d6234e52">More...</a><br /></td></tr>
 <tr class="separator:ad2bbc105ae49f3ed540385a2d6234e52 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50f157b6bdbbc2f6e8dc7eb079ea798d inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a50f157b6bdbbc2f6e8dc7eb079ea798d">Delaunayize_vertex_neighbors</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> from_v)</td></tr>
+<tr class="memdesc:a50f157b6bdbbc2f6e8dc7eb079ea798d inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restores <a class="el" href="classGEO_1_1Delaunay.html" title="Abstract interface for Delaunay triangulation in Nd.">Delaunay</a> condition starting from the triangles incident to a given vertex.  <a href="classGEO_1_1CDTBase2d.html#a50f157b6bdbbc2f6e8dc7eb079ea798d">More...</a><br /></td></tr>
+<tr class="separator:a50f157b6bdbbc2f6e8dc7eb079ea798d inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1504150e165a229be83039d69ee638aa inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a1504150e165a229be83039d69ee638aa">Delaunayize_vertex_neighbors</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> v, <a class="el" href="structGEO_1_1CDTBase2d_1_1DList.html">DList</a> &amp;S)</td></tr>
 <tr class="memdesc:a1504150e165a229be83039d69ee638aa inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restores <a class="el" href="classGEO_1_1Delaunay.html" title="Abstract interface for Delaunay triangulation in Nd.">Delaunay</a> condition starting from the triangles incident to a given vertex.  <a href="classGEO_1_1CDTBase2d.html#a1504150e165a229be83039d69ee638aa">More...</a><br /></td></tr>
 <tr class="separator:a1504150e165a229be83039d69ee638aa inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -310,21 +342,25 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:aae8153b9eb30b1568f959eceb4a50c9e inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#aae8153b9eb30b1568f959eceb4a50c9e">Tadj_set</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> t, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> le, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> adj)</td></tr>
 <tr class="memdesc:aae8153b9eb30b1568f959eceb4a50c9e inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a triangle adjacency relation.  <a href="classGEO_1_1CDTBase2d.html#aae8153b9eb30b1568f959eceb4a50c9e">More...</a><br /></td></tr>
 <tr class="separator:aae8153b9eb30b1568f959eceb4a50c9e inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a5e60d394232ab16d69ee6f872d643c inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a id="a6a5e60d394232ab16d69ee6f872d643c"></a>
+<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a6a5e60d394232ab16d69ee6f872d643c">Topp</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> t, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> e=0) const</td></tr>
+<tr class="memdesc:a6a5e60d394232ab16d69ee6f872d643c inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the neighboring triangle vertex opposite to a given vertex. <br /></td></tr>
+<tr class="separator:a6a5e60d394232ab16d69ee6f872d643c inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fdfe21bbb7092a4f7c47224b740e723 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a8fdfe21bbb7092a4f7c47224b740e723">Tadj_back_connect</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> t1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> le1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> prev_t2_adj_e2)</td></tr>
 <tr class="memdesc:a8fdfe21bbb7092a4f7c47224b740e723 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">After having changed connections from triangle to a neighbor, creates connections from neighbor to triangle.  <a href="classGEO_1_1CDTBase2d.html#a8fdfe21bbb7092a4f7c47224b740e723">More...</a><br /></td></tr>
 <tr class="separator:a8fdfe21bbb7092a4f7c47224b740e723 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70bd8cb27de41f21ee8ef9e0f027144a inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a70bd8cb27de41f21ee8ef9e0f027144a">Tnew</a> ()</td></tr>
 <tr class="memdesc:a70bd8cb27de41f21ee8ef9e0f027144a inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new triangle.  <a href="classGEO_1_1CDTBase2d.html#a70bd8cb27de41f21ee8ef9e0f027144a">More...</a><br /></td></tr>
 <tr class="separator:a70bd8cb27de41f21ee8ef9e0f027144a inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac9f6c77d3beb46d05c62eb1ef825676 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#aac9f6c77d3beb46d05c62eb1ef825676">Tedge_cnstr</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> t, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> le) const</td></tr>
-<tr class="memdesc:aac9f6c77d3beb46d05c62eb1ef825676 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the constraint associated with an edge.  <a href="classGEO_1_1CDTBase2d.html#aac9f6c77d3beb46d05c62eb1ef825676">More...</a><br /></td></tr>
-<tr class="separator:aac9f6c77d3beb46d05c62eb1ef825676 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9e5cbf117ac01fdd2bade7b932879c6 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#ab9e5cbf117ac01fdd2bade7b932879c6">Tset_edge_cnstr</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> t, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> le, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> cnstr_id)</td></tr>
-<tr class="memdesc:ab9e5cbf117ac01fdd2bade7b932879c6 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an edge as constrained.  <a href="classGEO_1_1CDTBase2d.html#ab9e5cbf117ac01fdd2bade7b932879c6">More...</a><br /></td></tr>
-<tr class="separator:ab9e5cbf117ac01fdd2bade7b932879c6 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69758c06db025cd4b410bc910be7293f inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a69758c06db025cd4b410bc910be7293f">Tset_edge_cnstr_with_neighbor</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> t, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> le, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> cnstr_id)</td></tr>
-<tr class="memdesc:a69758c06db025cd4b410bc910be7293f inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an edge as constrained in triangle and in neighbor.  <a href="classGEO_1_1CDTBase2d.html#a69758c06db025cd4b410bc910be7293f">More...</a><br /></td></tr>
-<tr class="separator:a69758c06db025cd4b410bc910be7293f inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc18cc0fde177439ecffd5340d404198 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#abc18cc0fde177439ecffd5340d404198">Tset_edge_cnstr_first</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> t, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> le, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> ecit)</td></tr>
+<tr class="memdesc:abc18cc0fde177439ecffd5340d404198 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the constraints list associated with an edge.  <a href="classGEO_1_1CDTBase2d.html#abc18cc0fde177439ecffd5340d404198">More...</a><br /></td></tr>
+<tr class="separator:abc18cc0fde177439ecffd5340d404198 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb40853cb6d5f61fdd829929f9f9f710 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#abb40853cb6d5f61fdd829929f9f9f710">Tadd_edge_cnstr</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> t, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> le, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> cnstr_id)</td></tr>
+<tr class="memdesc:abb40853cb6d5f61fdd829929f9f9f710 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a constraint to a triangle edge.  <a href="classGEO_1_1CDTBase2d.html#abb40853cb6d5f61fdd829929f9f9f710">More...</a><br /></td></tr>
+<tr class="separator:abb40853cb6d5f61fdd829929f9f9f710 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7555b100cc1d473a9f7c78e86593ec0c inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a7555b100cc1d473a9f7c78e86593ec0c">Tadd_edge_cnstr_with_neighbor</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> t, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> le, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> cnstr_id)</td></tr>
+<tr class="memdesc:a7555b100cc1d473a9f7c78e86593ec0c inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a constraint to a triangle edge and to the neighboring edge if it exists.  <a href="classGEO_1_1CDTBase2d.html#a7555b100cc1d473a9f7c78e86593ec0c">More...</a><br /></td></tr>
+<tr class="separator:a7555b100cc1d473a9f7c78e86593ec0c inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3300d38ac5afe7c5a67a8e6e4f653aae inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a3300d38ac5afe7c5a67a8e6e4f653aae">Tedge_is_constrained</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> t, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> le) const</td></tr>
 <tr class="memdesc:a3300d38ac5afe7c5a67a8e6e4f653aae inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether an edge is constrained.  <a href="classGEO_1_1CDTBase2d.html#a3300d38ac5afe7c5a67a8e6e4f653aae">More...</a><br /></td></tr>
 <tr class="separator:a3300d38ac5afe7c5a67a8e6e4f653aae inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -352,9 +388,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:ab86c13940d78a74abcddfdeb5deabe8c inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#ab86c13940d78a74abcddfdeb5deabe8c">debug_check_combinatorics</a> () const</td></tr>
 <tr class="memdesc:ab86c13940d78a74abcddfdeb5deabe8c inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Consistency combinatorial check for all the triangles in debug mode, ignored in release mode.  <a href="classGEO_1_1CDTBase2d.html#ab86c13940d78a74abcddfdeb5deabe8c">More...</a><br /></td></tr>
 <tr class="separator:ab86c13940d78a74abcddfdeb5deabe8c inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae37ee72bee364ed37cf2595e0d2727e1 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#ae37ee72bee364ed37cf2595e0d2727e1">check_geometry</a> () const</td></tr>
-<tr class="memdesc:ae37ee72bee364ed37cf2595e0d2727e1 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Consistency geometrical check for all the triangles.  <a href="classGEO_1_1CDTBase2d.html#ae37ee72bee364ed37cf2595e0d2727e1">More...</a><br /></td></tr>
-<tr class="separator:ae37ee72bee364ed37cf2595e0d2727e1 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab150b6ef7ecf6cf2126222e76e457407 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#ab150b6ef7ecf6cf2126222e76e457407">check_geometry</a> () const</td></tr>
+<tr class="memdesc:ab150b6ef7ecf6cf2126222e76e457407 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Consistency geometrical check for all the triangles.  <a href="classGEO_1_1CDTBase2d.html#ab150b6ef7ecf6cf2126222e76e457407">More...</a><br /></td></tr>
+<tr class="separator:ab150b6ef7ecf6cf2126222e76e457407 inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ec949eec869d1208c66be470ecdd82c inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a8ec949eec869d1208c66be470ecdd82c">debug_check_geometry</a> () const</td></tr>
 <tr class="memdesc:a8ec949eec869d1208c66be470ecdd82c inherit pro_methods_classGEO_1_1CDTBase2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Consistency geometrical check for all the triangles in debug mode, ignored in release mode.  <a href="classGEO_1_1CDTBase2d.html#a8ec949eec869d1208c66be470ecdd82c">More...</a><br /></td></tr>
 <tr class="separator:a8ec949eec869d1208c66be470ecdd82c inherit pro_methods_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -395,9 +431,10 @@ Additional Inherited Members</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a1045da60655ba58c8301590d0ae933a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constants for list_id. <br /></td></tr>
 <tr class="separator:a1045da60655ba58c8301590d0ae933a2 inherit pro_types_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace5f36b6d887a37914c9b715302ca7b1 inherit pro_types_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classGEO_1_1CDTBase2d.html#ace5f36b6d887a37914c9b715302ca7b1a7f2d743e835a38d514d2932c392aeeb9">T_MARKED_FLAG</a> = DLIST_NB
+<tr class="memitem:ace5f36b6d887a37914c9b715302ca7b1 inherit pro_types_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a id="ace5f36b6d887a37914c9b715302ca7b1"></a>enum &#160;</td><td class="memItemRight" valign="bottom">{ <b>T_MARKED_FLAG</b> = DLIST_NB
+, <b>T_VISITED_FLAG</b> = DLIST_NB+1
  }</td></tr>
-<tr class="memdesc:ace5f36b6d887a37914c9b715302ca7b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constants for triangle flags.  <a href="classGEO_1_1CDTBase2d.html#ace5f36b6d887a37914c9b715302ca7b1">More...</a><br /></td></tr>
+<tr class="memdesc:ace5f36b6d887a37914c9b715302ca7b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constants for triangle flags. <br /></td></tr>
 <tr class="separator:ace5f36b6d887a37914c9b715302ca7b1 inherit pro_types_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a081897d4a9f7be5c72f5a6a075ecd152 inherit pro_types_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a id="a081897d4a9f7be5c72f5a6a075ecd152"></a>
 typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Edge</b></td></tr>
@@ -421,8 +458,12 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
 <tr class="separator:ac3a087dd4593f353dceadaf7df1dc418 inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f777f0f9d520cd95338b31faabe3e6d inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1vector.html">vector</a>&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a2f777f0f9d520cd95338b31faabe3e6d">Tflags_</a></td></tr>
 <tr class="separator:a2f777f0f9d520cd95338b31faabe3e6d inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3d74f6e78bd828f8ec80d6736849564 inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1vector.html">vector</a>&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#ac3d74f6e78bd828f8ec80d6736849564">Tecnstr_</a></td></tr>
-<tr class="separator:ac3d74f6e78bd828f8ec80d6736849564 inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a437e428668ce995aa31730ed56bf6932 inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1vector.html">vector</a>&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a437e428668ce995aa31730ed56bf6932">Tecnstr_first_</a></td></tr>
+<tr class="separator:a437e428668ce995aa31730ed56bf6932 inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00130901a6f37154193ba8f95f197a75 inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1vector.html">vector</a>&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a00130901a6f37154193ba8f95f197a75">ecnstr_val_</a></td></tr>
+<tr class="separator:a00130901a6f37154193ba8f95f197a75 inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe4cbb0cdcbd5be473d5dd7b88e9a8d4 inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1vector.html">vector</a>&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#afe4cbb0cdcbd5be473d5dd7b88e9a8d4">ecnstr_next_</a></td></tr>
+<tr class="separator:afe4cbb0cdcbd5be473d5dd7b88e9a8d4 inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b6882781c2801540cbb25b75aed1ce3 inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1vector.html">vector</a>&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a7b6882781c2801540cbb25b75aed1ce3">Tnext_</a></td></tr>
 <tr class="separator:a7b6882781c2801540cbb25b75aed1ce3 inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4aa3e0956638f93900d965ca33bb5b1 inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1vector.html">vector</a>&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#ad4aa3e0956638f93900d965ca33bb5b1">Tprev_</a></td></tr>
@@ -433,13 +474,43 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
 <tr class="separator:aa56a051e170efb41fbaa150996fb9439 inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05c68716d93c97a7509ddf767d95f01e inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a05c68716d93c97a7509ddf767d95f01e">exact_incircle_</a></td></tr>
 <tr class="separator:a05c68716d93c97a7509ddf767d95f01e inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d0c7008060d012ac92b27fd5ece773a inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDTBase2d.html#a8d0c7008060d012ac92b27fd5ece773a">exact_intersections_</a></td></tr>
+<tr class="separator:a8d0c7008060d012ac92b27fd5ece773a inherit pro_attribs_classGEO_1_1CDTBase2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Meshes a single triangle with the constraints that come from the intersections with the other triangles. </p>
-<p>Inherits <a class="el" href="classGEO_1_1CDTBase2d.html" title="Base class for constrained Delaunay triangulation.">CDTBase2d</a> (constrained <a class="el" href="classGEO_1_1Delaunay.html" title="Abstract interface for Delaunay triangulation in Nd.">Delaunay</a> triangulation), and redefines <a class="el" href="classGEO_1_1MeshInTriangle.html#a2a5ba1ba36760f84fc31fc8e19ec1fc1" title="Tests the orientation of three vertices.">orient2d()</a>, incircle2d() and <a class="el" href="classGEO_1_1MeshInTriangle.html#a152b69138f53959d14836666169e1890" title="Given two segments that have an intersection, create the intersection.">create_intersection()</a> using vectors with homogeneous coordinates stored as arithmetic expansions (<a class="el" href="structGEO_1_1vec2HE.html" title="2D vector in homogeneous coordinates with coordinates as arithmetic expansions">vec2HE</a>). </p>
+<p>Inherits <a class="el" href="classGEO_1_1CDTBase2d.html" title="Base class for constrained Delaunay triangulation.">CDTBase2d</a> (constrained <a class="el" href="classGEO_1_1Delaunay.html" title="Abstract interface for Delaunay triangulation in Nd.">Delaunay</a> triangulation), and redefines <a class="el" href="classGEO_1_1MeshInTriangle.html#a2a5ba1ba36760f84fc31fc8e19ec1fc1" title="Tests the orientation of three vertices.">orient2d()</a>, incircle2d() and <a class="el" href="classGEO_1_1MeshInTriangle.html#a152b69138f53959d14836666169e1890" title="Given two segments that have an intersection, create the intersection.">create_intersection()</a> using vectors with homogeneous coordinates stored as arithmetic expansions (vec2HE) or arbitrary-precision floating point numbers (vec2HEx) if compiled with Tessael's geogramplus extension package. </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection__internal_8h_source.html#l00068">68</a> of file <a class="el" href="mesh__surface__intersection__internal_8h_source.html">mesh_surface_intersection_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection__internal_8h_source.html#l00070">70</a> of file <a class="el" href="mesh__surface__intersection__internal_8h_source.html">mesh_surface_intersection_internal.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a2fb64388fdec3aea330d7505dfdced3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fb64388fdec3aea330d7505dfdced3a">&#9670;&nbsp;</a></span>clear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GEO::MeshInTriangle::clear </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classGEO_1_1CDT2d.html#a9a023a9352bcf8bbd775e72408189d84" title="Removes everything from this triangulation.">CDT2d::clear()</a> </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classGEO_1_1CDTBase2d.html#a9ea0a8c3075e61bf1bcdd386e0ef59da">GEO::CDTBase2d</a>.</p>
+
+</div>
+</div>
 <a id="a152b69138f53959d14836666169e1890"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a152b69138f53959d14836666169e1890">&#9670;&nbsp;</a></span>create_intersection()</h2>
 
@@ -514,8 +585,8 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
 
 </div>
 </div>
-<a id="a41359c2c59d380dbf618956ee1bd8293"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41359c2c59d380dbf618956ee1bd8293">&#9670;&nbsp;</a></span>get_edge_edge_intersection()</h2>
+<a id="a08bdacf3595968bfcb3439346d41f766"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08bdacf3595968bfcb3439346d41f766">&#9670;&nbsp;</a></span>get_edge_edge_intersection()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -538,7 +609,7 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structGEO_1_1vec3HE.html">vec3HE</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a> &amp;&#160;</td>
           <td class="paramname"><em>I</em>&#160;</td>
         </tr>
         <tr>
@@ -565,8 +636,8 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
 
 </div>
 </div>
-<a id="a9f52d98f21ac73e2c0e0f3fef8145d48"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f52d98f21ac73e2c0e0f3fef8145d48">&#9670;&nbsp;</a></span>get_edge_edge_intersection_2D()</h2>
+<a id="a6414de7cb84170702b470fb38f7c5af9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6414de7cb84170702b470fb38f7c5af9">&#9670;&nbsp;</a></span>get_edge_edge_intersection_2D()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -589,7 +660,7 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structGEO_1_1vec3HE.html">vec3HE</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a> &amp;&#160;</td>
           <td class="paramname"><em>I</em>&#160;</td>
         </tr>
         <tr>
@@ -605,7 +676,7 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
 </table>
 </div><div class="memdoc">
 
-<p>Auxilliary function used by <a class="el" href="classGEO_1_1MeshInTriangle.html#a41359c2c59d380dbf618956ee1bd8293" title="Computes the intersection between two edges.">get_edge_edge_intersection()</a> for the special case when the two edges are coplanar. </p>
+<p>Auxilliary function used by <a class="el" href="classGEO_1_1MeshInTriangle.html#a08bdacf3595968bfcb3439346d41f766" title="Computes the intersection between two edges.">get_edge_edge_intersection()</a> for the special case when the two edges are coplanar. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">e1,e2</td><td>the two edges </td></tr>
@@ -709,7 +780,7 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
 <p>Gets the readonly initial mesh. </p>
 <dl class="section return"><dt>Returns</dt><dd>a const reference to a copy of the initial mesh </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection__internal_8h_source.html#l00259">259</a> of file <a class="el" href="mesh__surface__intersection__internal_8h_source.html">mesh_surface_intersection_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection__internal_8h_source.html#l00261">261</a> of file <a class="el" href="mesh__surface__intersection__internal_8h_source.html">mesh_surface_intersection_internal.h</a>.</p>
 
 </div>
 </div>
@@ -841,7 +912,7 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection__internal_8h_source.html#l00284">284</a> of file <a class="el" href="mesh__surface__intersection__internal_8h_source.html">mesh_surface_intersection_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection__internal_8h_source.html#l00287">287</a> of file <a class="el" href="mesh__surface__intersection__internal_8h_source.html">mesh_surface_intersection_internal.h</a>.</p>
 
 </div>
 </div>
@@ -871,7 +942,7 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
 <p>Gets the target mesh. </p>
 <dl class="section return"><dt>Returns</dt><dd>a reference to the target mesh </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection__internal_8h_source.html#l00267">267</a> of file <a class="el" href="mesh__surface__intersection__internal_8h_source.html">mesh_surface_intersection_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection__internal_8h_source.html#l00269">269</a> of file <a class="el" href="mesh__surface__intersection__internal_8h_source.html">mesh_surface_intersection_internal.h</a>.</p>
 
 </div>
 </div>
@@ -884,7 +955,7 @@ typedef std::pair&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1MeshInTriangle.html">MeshInTriangle</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

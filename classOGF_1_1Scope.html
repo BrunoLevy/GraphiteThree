@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -102,11 +109,12 @@ Inheritance diagram for OGF::Scope:</div>
  <div class="center">
   <img src="classOGF_1_1Scope.png" usemap="#OGF::Scope_map" alt=""/>
   <map id="OGF::Scope_map" name="OGF::Scope_map">
-<area href="classOGF_1_1Object.html" title="Base class for all objects in the GOM system." alt="OGF::Object" shape="rect" coords="177,56,344,80"/>
-<area href="classGEO_1_1Counted.html" title="Base class for reference-counted objects." alt="GEO::Counted" shape="rect" coords="177,0,344,24"/>
+<area href="classOGF_1_1Object.html" title="Base class for all objects in the GOM system." alt="OGF::Object" shape="rect" coords="265,56,432,80"/>
+<area href="classGEO_1_1Counted.html" title="Base class for reference-counted objects." alt="GEO::Counted" shape="rect" coords="265,0,432,24"/>
 <area href="classOGF_1_1CompositeGrobScope.html" title="An Interpreter Scope that corresponds to the objects in a CompositeGrob." alt="OGF::CompositeGrobScope" shape="rect" coords="0,168,167,192"/>
 <area href="classOGF_1_1GlobalScope.html" title="The Scope that contains all global variables of an Interpreter." alt="OGF::GlobalScope" shape="rect" coords="177,168,344,192"/>
 <area href="classOGF_1_1InterfaceScope.html" title="The Scope that contains all interfaces of an object." alt="OGF::InterfaceScope" shape="rect" coords="354,168,521,192"/>
+<area href="classOGF_1_1MetaTypesScope.html" title="The Scope that contains all interfaces of an object." alt="OGF::MetaTypesScope" shape="rect" coords="531,168,698,192"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -340,7 +348,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classOGF_1_1CompositeGrobScope.html#a5e2ba2f9fadfb004d7c24a3a3b0d24fc">OGF::CompositeGrobScope</a>, <a class="el" href="classOGF_1_1InterfaceScope.html#a986f17e4d79ced120acc8d60af68b745">OGF::InterfaceScope</a>, and <a class="el" href="classOGF_1_1GlobalScope.html#ab807af52f2ad08ca450841d57348cf0e">OGF::GlobalScope</a>.</p>
+<p>Reimplemented in <a class="el" href="classOGF_1_1CompositeGrobScope.html#a5e2ba2f9fadfb004d7c24a3a3b0d24fc">OGF::CompositeGrobScope</a>, <a class="el" href="classOGF_1_1MetaTypesScope.html#aeabbb9d38d3a12fc943751d04797dba7">OGF::MetaTypesScope</a>, <a class="el" href="classOGF_1_1InterfaceScope.html#a986f17e4d79ced120acc8d60af68b745">OGF::InterfaceScope</a>, and <a class="el" href="classOGF_1_1GlobalScope.html#ab807af52f2ad08ca450841d57348cf0e">OGF::GlobalScope</a>.</p>
 
 </div>
 </div>
@@ -377,7 +385,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="classOGF_1_1Any.html" title="A class that stores a variable of arbitrary type.">Any</a> with the variable, or a null <a class="el" href="classOGF_1_1Any.html" title="A class that stores a variable of arbitrary type.">Any</a> if name is not bound to a variable. </dd></dl>
 
-<p>Implemented in <a class="el" href="classOGF_1_1CompositeGrobScope.html#a78708ca78566d9db42eaf20c9230fc9f">OGF::CompositeGrobScope</a>, <a class="el" href="classOGF_1_1InterfaceScope.html#ad0d92ababc12db8b05643746caac985d">OGF::InterfaceScope</a>, and <a class="el" href="classOGF_1_1GlobalScope.html#a2c0c80b7920dedfb957ba48fafe91d14">OGF::GlobalScope</a>.</p>
+<p>Implemented in <a class="el" href="classOGF_1_1CompositeGrobScope.html#a78708ca78566d9db42eaf20c9230fc9f">OGF::CompositeGrobScope</a>, <a class="el" href="classOGF_1_1MetaTypesScope.html#ab587f92dbf3402ea7eca2807c5e556c1">OGF::MetaTypesScope</a>, <a class="el" href="classOGF_1_1InterfaceScope.html#ad0d92ababc12db8b05643746caac985d">OGF::InterfaceScope</a>, and <a class="el" href="classOGF_1_1GlobalScope.html#a2c0c80b7920dedfb957ba48fafe91d14">OGF::GlobalScope</a>.</p>
 
 </div>
 </div>
@@ -390,7 +398,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1Scope.html">Scope</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

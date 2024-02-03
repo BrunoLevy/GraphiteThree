@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -89,6 +96,7 @@ $(document).ready(function(){initNavTree('classGEO_1_1SimpleApplication.html',''
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-types">Protected Types</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classGEO_1_1SimpleApplication-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -311,6 +319,60 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a3a23f578c82f5aa1467c8e6b8371767c">reset_soft_keyboard_flag</a> ()</td></tr>
 <tr class="memdesc:a3a23f578c82f5aa1467c8e6b8371767c inherit pub_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used internally. <br /></td></tr>
 <tr class="separator:a3a23f578c82f5aa1467c8e6b8371767c inherit pub_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a39ded66244c6365465058211b2f203 inherit pub_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a1a39ded66244c6365465058211b2f203">key_to_string</a> (int key)</td></tr>
+<tr class="memdesc:a1a39ded66244c6365465058211b2f203 inherit pub_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a key to a symbolic string with the name of the key.  <a href="classGEO_1_1Application.html#a1a39ded66244c6365465058211b2f203">More...</a><br /></td></tr>
+<tr class="separator:a1a39ded66244c6365465058211b2f203 inherit pub_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7384baf7fc335c0a9de20358b0f28b55 inherit pub_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a7384baf7fc335c0a9de20358b0f28b55">pre_draw</a> ()</td></tr>
+<tr class="memdesc:a7384baf7fc335c0a9de20358b0f28b55 inherit pub_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called before starting drawing operations.  <a href="classGEO_1_1Application.html#a7384baf7fc335c0a9de20358b0f28b55">More...</a><br /></td></tr>
+<tr class="separator:a7384baf7fc335c0a9de20358b0f28b55 inherit pub_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0d3306d7d0d76517a703b292fc614cf inherit pub_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#ae0d3306d7d0d76517a703b292fc614cf">needs_to_redraw</a> () const</td></tr>
+<tr class="memdesc:ae0d3306d7d0d76517a703b292fc614cf inherit pub_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether the window needs to be redrawn.  <a href="classGEO_1_1Application.html#ae0d3306d7d0d76517a703b292fc614cf">More...</a><br /></td></tr>
+<tr class="separator:ae0d3306d7d0d76517a703b292fc614cf inherit pub_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaabd19f2e2095df53fc99338b9348b49 inherit pub_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="aaabd19f2e2095df53fc99338b9348b49"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#aaabd19f2e2095df53fc99338b9348b49">create_window</a> ()</td></tr>
+<tr class="memdesc:aaabd19f2e2095df53fc99338b9348b49 inherit pub_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the window using GLFW. <br /></td></tr>
+<tr class="separator:aaabd19f2e2095df53fc99338b9348b49 inherit pub_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab75df614f9d96dc58deb1cc9cbb132e2 inherit pub_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="ab75df614f9d96dc58deb1cc9cbb132e2"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#ab75df614f9d96dc58deb1cc9cbb132e2">delete_window</a> ()</td></tr>
+<tr class="memdesc:ab75df614f9d96dc58deb1cc9cbb132e2 inherit pub_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the window created by GLFW. <br /></td></tr>
+<tr class="separator:ab75df614f9d96dc58deb1cc9cbb132e2 inherit pub_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c477f904bb41161e13aca686a2c8440 inherit pub_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a7c477f904bb41161e13aca686a2c8440">one_frame</a> ()</td></tr>
+<tr class="memdesc:a7c477f904bb41161e13aca686a2c8440 inherit pub_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws one frame.  <a href="classGEO_1_1Application.html#a7c477f904bb41161e13aca686a2c8440">More...</a><br /></td></tr>
+<tr class="separator:a7c477f904bb41161e13aca686a2c8440 inherit pub_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03d2a7179658242633dac851d875d297 inherit pub_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a03d2a7179658242633dac851d875d297">main_loop</a> ()</td></tr>
+<tr class="memdesc:a03d2a7179658242633dac851d875d297 inherit pub_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enters the main application loop.  <a href="classGEO_1_1Application.html#a03d2a7179658242633dac851d875d297">More...</a><br /></td></tr>
+<tr class="separator:a03d2a7179658242633dac851d875d297 inherit pub_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23e544298b0c2ac126d51ce9f97717e8 inherit pub_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="a23e544298b0c2ac126d51ce9f97717e8"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a23e544298b0c2ac126d51ce9f97717e8">ImGui_load_fonts</a> ()</td></tr>
+<tr class="memdesc:a23e544298b0c2ac126d51ce9f97717e8 inherit pub_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the fonts in ImGui. <br /></td></tr>
+<tr class="separator:a23e544298b0c2ac126d51ce9f97717e8 inherit pub_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a434116a0accf94c55740d85748c139c5 inherit pub_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="a434116a0accf94c55740d85748c139c5"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a434116a0accf94c55740d85748c139c5">ImGui_terminate</a> ()</td></tr>
+<tr class="memdesc:a434116a0accf94c55740d85748c139c5 inherit pub_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deallocates objects used by the ImGui library. <br /></td></tr>
+<tr class="separator:a434116a0accf94c55740d85748c139c5 inherit pub_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6e8fbc64f95c79cc2f4ec42745521d3 inherit pub_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="ad6e8fbc64f95c79cc2f4ec42745521d3"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#ad6e8fbc64f95c79cc2f4ec42745521d3">ImGui_new_frame</a> ()</td></tr>
+<tr class="memdesc:ad6e8fbc64f95c79cc2f4ec42745521d3 inherit pub_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifies ImGui that a new frame has just started. <br /></td></tr>
+<tr class="separator:ad6e8fbc64f95c79cc2f4ec42745521d3 inherit pub_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b0bbf47ee97e8c197fcce35fba749b4 inherit pub_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="a8b0bbf47ee97e8c197fcce35fba749b4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a8b0bbf47ee97e8c197fcce35fba749b4">callbacks_initialize</a> ()</td></tr>
+<tr class="memdesc:a8b0bbf47ee97e8c197fcce35fba749b4 inherit pub_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the callbacks if not already initialized. <br /></td></tr>
+<tr class="separator:a8b0bbf47ee97e8c197fcce35fba749b4 inherit pub_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13259d9c2f9513fd2497b8a81bc48627 inherit pub_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::string &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a13259d9c2f9513fd2497b8a81bc48627">filenames</a> () const</td></tr>
+<tr class="memdesc:a13259d9c2f9513fd2497b8a81bc48627 inherit pub_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all the filenames specified on the command line.  <a href="classGEO_1_1Application.html#a13259d9c2f9513fd2497b8a81bc48627">More...</a><br /></td></tr>
+<tr class="separator:a13259d9c2f9513fd2497b8a81bc48627 inherit pub_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fa9eb67758af0eecbb89fdd69985fa4 inherit pub_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="a4fa9eb67758af0eecbb89fdd69985fa4"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>animate</b> () const</td></tr>
+<tr class="separator:a4fa9eb67758af0eecbb89fdd69985fa4 inherit pub_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a79bb4244569efd8b9ce3fa7217a659 inherit pub_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="a7a79bb4244569efd8b9ce3fa7217a659"></a>
+bool *&#160;</td><td class="memItemRight" valign="bottom"><b>animate_ptr</b> ()</td></tr>
+<tr class="separator:a7a79bb4244569efd8b9ce3fa7217a659 inherit pub_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb513c7216159d3ab514fbd9f58bca86 inherit pub_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="adb513c7216159d3ab514fbd9f58bca86"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>start_animation</b> ()</td></tr>
+<tr class="separator:adb513c7216159d3ab514fbd9f58bca86 inherit pub_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9425b2bd8f81cbf1981c00e52ebc1467 inherit pub_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="a9425b2bd8f81cbf1981c00e52ebc1467"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>stop_animation</b> ()</td></tr>
+<tr class="separator:a9425b2bd8f81cbf1981c00e52ebc1467 inherit pub_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -491,64 +553,18 @@ virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><b>defau
 <tr class="memitem:ad2219e6f48c009350138e4aa5bb3ee1e"><td class="memItemLeft" align="right" valign="top"><a id="ad2219e6f48c009350138e4aa5bb3ee1e"></a>
 virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><b>default_layout_android_horizontal</b> () const</td></tr>
 <tr class="separator:ad2219e6f48c009350138e4aa5bb3ee1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_methods_classGEO_1_1Application"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classGEO_1_1Application')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classGEO_1_1Application.html">GEO::Application</a></td></tr>
-<tr class="memitem:a1a39ded66244c6365465058211b2f203 inherit pro_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a1a39ded66244c6365465058211b2f203">key_to_string</a> (int key)</td></tr>
-<tr class="memdesc:a1a39ded66244c6365465058211b2f203 inherit pro_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a key to a symbolic string with the name of the key.  <a href="classGEO_1_1Application.html#a1a39ded66244c6365465058211b2f203">More...</a><br /></td></tr>
-<tr class="separator:a1a39ded66244c6365465058211b2f203 inherit pro_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7384baf7fc335c0a9de20358b0f28b55 inherit pro_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a7384baf7fc335c0a9de20358b0f28b55">pre_draw</a> ()</td></tr>
-<tr class="memdesc:a7384baf7fc335c0a9de20358b0f28b55 inherit pro_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called before starting drawing operations.  <a href="classGEO_1_1Application.html#a7384baf7fc335c0a9de20358b0f28b55">More...</a><br /></td></tr>
-<tr class="separator:a7384baf7fc335c0a9de20358b0f28b55 inherit pro_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0d3306d7d0d76517a703b292fc614cf inherit pro_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#ae0d3306d7d0d76517a703b292fc614cf">needs_to_redraw</a> () const</td></tr>
-<tr class="memdesc:ae0d3306d7d0d76517a703b292fc614cf inherit pro_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether the window needs to be redrawn.  <a href="classGEO_1_1Application.html#ae0d3306d7d0d76517a703b292fc614cf">More...</a><br /></td></tr>
-<tr class="separator:ae0d3306d7d0d76517a703b292fc614cf inherit pro_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaabd19f2e2095df53fc99338b9348b49 inherit pro_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="aaabd19f2e2095df53fc99338b9348b49"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#aaabd19f2e2095df53fc99338b9348b49">create_window</a> ()</td></tr>
-<tr class="memdesc:aaabd19f2e2095df53fc99338b9348b49 inherit pro_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the window using GLFW. <br /></td></tr>
-<tr class="separator:aaabd19f2e2095df53fc99338b9348b49 inherit pro_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab75df614f9d96dc58deb1cc9cbb132e2 inherit pro_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="ab75df614f9d96dc58deb1cc9cbb132e2"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#ab75df614f9d96dc58deb1cc9cbb132e2">delete_window</a> ()</td></tr>
-<tr class="memdesc:ab75df614f9d96dc58deb1cc9cbb132e2 inherit pro_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the window created by GLFW. <br /></td></tr>
-<tr class="separator:ab75df614f9d96dc58deb1cc9cbb132e2 inherit pro_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c477f904bb41161e13aca686a2c8440 inherit pro_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a7c477f904bb41161e13aca686a2c8440">one_frame</a> ()</td></tr>
-<tr class="memdesc:a7c477f904bb41161e13aca686a2c8440 inherit pro_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws one frame.  <a href="classGEO_1_1Application.html#a7c477f904bb41161e13aca686a2c8440">More...</a><br /></td></tr>
-<tr class="separator:a7c477f904bb41161e13aca686a2c8440 inherit pro_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03d2a7179658242633dac851d875d297 inherit pro_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a03d2a7179658242633dac851d875d297">main_loop</a> ()</td></tr>
-<tr class="memdesc:a03d2a7179658242633dac851d875d297 inherit pro_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enters the main application loop.  <a href="classGEO_1_1Application.html#a03d2a7179658242633dac851d875d297">More...</a><br /></td></tr>
-<tr class="separator:a03d2a7179658242633dac851d875d297 inherit pro_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23e544298b0c2ac126d51ce9f97717e8 inherit pro_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="a23e544298b0c2ac126d51ce9f97717e8"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a23e544298b0c2ac126d51ce9f97717e8">ImGui_load_fonts</a> ()</td></tr>
-<tr class="memdesc:a23e544298b0c2ac126d51ce9f97717e8 inherit pro_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the fonts in ImGui. <br /></td></tr>
-<tr class="separator:a23e544298b0c2ac126d51ce9f97717e8 inherit pro_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a434116a0accf94c55740d85748c139c5 inherit pro_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="a434116a0accf94c55740d85748c139c5"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a434116a0accf94c55740d85748c139c5">ImGui_terminate</a> ()</td></tr>
-<tr class="memdesc:a434116a0accf94c55740d85748c139c5 inherit pro_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deallocates objects used by the ImGui library. <br /></td></tr>
-<tr class="separator:a434116a0accf94c55740d85748c139c5 inherit pro_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6e8fbc64f95c79cc2f4ec42745521d3 inherit pro_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="ad6e8fbc64f95c79cc2f4ec42745521d3"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#ad6e8fbc64f95c79cc2f4ec42745521d3">ImGui_new_frame</a> ()</td></tr>
-<tr class="memdesc:ad6e8fbc64f95c79cc2f4ec42745521d3 inherit pro_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifies ImGui that a new frame has just started. <br /></td></tr>
-<tr class="separator:ad6e8fbc64f95c79cc2f4ec42745521d3 inherit pro_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b0bbf47ee97e8c197fcce35fba749b4 inherit pro_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="a8b0bbf47ee97e8c197fcce35fba749b4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a8b0bbf47ee97e8c197fcce35fba749b4">callbacks_initialize</a> ()</td></tr>
-<tr class="memdesc:a8b0bbf47ee97e8c197fcce35fba749b4 inherit pro_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the callbacks if not already initialized. <br /></td></tr>
-<tr class="separator:a8b0bbf47ee97e8c197fcce35fba749b4 inherit pro_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13259d9c2f9513fd2497b8a81bc48627 inherit pro_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::string &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a13259d9c2f9513fd2497b8a81bc48627">filenames</a> () const</td></tr>
-<tr class="memdesc:a13259d9c2f9513fd2497b8a81bc48627 inherit pro_methods_classGEO_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all the filenames specified on the command line.  <a href="classGEO_1_1Application.html#a13259d9c2f9513fd2497b8a81bc48627">More...</a><br /></td></tr>
-<tr class="separator:a13259d9c2f9513fd2497b8a81bc48627 inherit pro_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fa9eb67758af0eecbb89fdd69985fa4 inherit pro_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="a4fa9eb67758af0eecbb89fdd69985fa4"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>animate</b> () const</td></tr>
-<tr class="separator:a4fa9eb67758af0eecbb89fdd69985fa4 inherit pro_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a79bb4244569efd8b9ce3fa7217a659 inherit pro_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="a7a79bb4244569efd8b9ce3fa7217a659"></a>
-bool *&#160;</td><td class="memItemRight" valign="bottom"><b>animate_ptr</b> ()</td></tr>
-<tr class="separator:a7a79bb4244569efd8b9ce3fa7217a659 inherit pro_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb513c7216159d3ab514fbd9f58bca86 inherit pro_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="adb513c7216159d3ab514fbd9f58bca86"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>start_animation</b> ()</td></tr>
-<tr class="separator:adb513c7216159d3ab514fbd9f58bca86 inherit pro_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9425b2bd8f81cbf1981c00e52ebc1467 inherit pro_methods_classGEO_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="a9425b2bd8f81cbf1981c00e52ebc1467"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>stop_animation</b> ()</td></tr>
-<tr class="separator:a9425b2bd8f81cbf1981c00e52ebc1467 inherit pro_methods_classGEO_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
+Static Protected Member Functions</h2></td></tr>
+<tr class="memitem:ad7598768264aa9be6a3866e7b0911a78"><td class="memItemLeft" align="right" valign="top"><a id="ad7598768264aa9be6a3866e7b0911a78"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>replay_latest_command</b> ()</td></tr>
+<tr class="separator:ad7598768264aa9be6a3866e7b0911a78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
+<tr class="memitem:a428842d85c4f1846d3428e7a77f091db"><td class="memItemLeft" align="right" valign="top"><a id="a428842d85c4f1846d3428e7a77f091db"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>locked_</b></td></tr>
+<tr class="separator:a428842d85c4f1846d3428e7a77f091db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4a5d4a64f6fe63e3f78ec7823742313"><td class="memItemLeft" align="right" valign="top"><a id="af4a5d4a64f6fe63e3f78ec7823742313"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>lighting_</b></td></tr>
 <tr class="separator:af4a5d4a64f6fe63e3f78ec7823742313"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1377,6 +1393,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
 
 <p>Reimplemented from <a class="el" href="classGEO_1_1Application.html#a463bda8e0aeb1a3438e67cbac2543e13">GEO::Application</a>.</p>
 
+<p>Reimplemented in <a class="el" href="classGEO_1_1SimpleMeshApplication.html#a081a7d09bd4ad4bb5e4372f1e2153bd0">GEO::SimpleMeshApplication</a>.</p>
+
 </div>
 </div>
 <a id="acff484d0dcda2a5de789b213c9d4761e"></a>
@@ -2140,7 +2158,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
 </div><div class="memdoc">
 <p>Zoom when mouse down. </p>
 
-<p class="definition">Definition at line <a class="el" href="simple__application_8h_source.html#l00515">515</a> of file <a class="el" href="simple__application_8h_source.html">simple_application.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="simple__application_8h_source.html#l00519">519</a> of file <a class="el" href="simple__application_8h_source.html">simple_application.h</a>.</p>
 
 </div>
 </div>
@@ -2153,7 +2171,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1SimpleApplication.html">SimpleApplication</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

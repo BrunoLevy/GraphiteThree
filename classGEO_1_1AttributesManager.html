@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -164,6 +171,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:ab8bc1173eb9a9cdbfb956999697e3624"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1AttributesManager.html#ab8bc1173eb9a9cdbfb956999697e3624">swap_items</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> i, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> j)</td></tr>
 <tr class="memdesc:ab8bc1173eb9a9cdbfb956999697e3624"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps all the attributes of two items.  <a href="classGEO_1_1AttributesManager.html#ab8bc1173eb9a9cdbfb956999697e3624">More...</a><br /></td></tr>
 <tr class="separator:ab8bc1173eb9a9cdbfb956999697e3624"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2454c4334a5d8e92c0fb92a19a94f258"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1AttributesManager.html#a2454c4334a5d8e92c0fb92a19a94f258">zero_item</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> to)</td></tr>
+<tr class="memdesc:a2454c4334a5d8e92c0fb92a19a94f258"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an item to zero.  <a href="classGEO_1_1AttributesManager.html#a2454c4334a5d8e92c0fb92a19a94f258">More...</a><br /></td></tr>
+<tr class="separator:a2454c4334a5d8e92c0fb92a19a94f258"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a854e5234b71931fe9d6d56a7292a4c77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1AttributesManager.html#a854e5234b71931fe9d6d56a7292a4c77">scale_item</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> to, double s)</td></tr>
+<tr class="memdesc:a854e5234b71931fe9d6d56a7292a4c77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scales an item.  <a href="classGEO_1_1AttributesManager.html#a854e5234b71931fe9d6d56a7292a4c77">More...</a><br /></td></tr>
+<tr class="separator:a854e5234b71931fe9d6d56a7292a4c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab44535a91421b74085602cc58c6cb94a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1AttributesManager.html#ab44535a91421b74085602cc58c6cb94a">madd_item</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> to, double s, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> from)</td></tr>
+<tr class="memdesc:ab44535a91421b74085602cc58c6cb94a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a scaled item to another item \detais item[to] += s * item[from].  <a href="classGEO_1_1AttributesManager.html#ab44535a91421b74085602cc58c6cb94a">More...</a><br /></td></tr>
+<tr class="separator:ab44535a91421b74085602cc58c6cb94a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf109bc5ef0eadd21d560d63b20ec07e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1AttributesManager.html#adf109bc5ef0eadd21d560d63b20ec07e">copy_attribute</a> (const std::string &amp;name, const std::string &amp;new_name)</td></tr>
 <tr class="memdesc:adf109bc5ef0eadd21d560d63b20ec07e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies an attribute.  <a href="classGEO_1_1AttributesManager.html#adf109bc5ef0eadd21d560d63b20ec07e">More...</a><br /></td></tr>
 <tr class="separator:adf109bc5ef0eadd21d560d63b20ec07e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -174,7 +190,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Managers a set of attributes attached to an object. </p>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l00732">732</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l00833">833</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a8ce72d1bd77007e6539bdf2841c49c91"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8ce72d1bd77007e6539bdf2841c49c91">&#9670;&nbsp;</a></span>apply_permutation()</h2>
@@ -270,7 +286,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Gets the capacity. </p>
 <dl class="section return"><dt>Returns</dt><dd>the number of items that can be stored without doing a reallocation. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l00776">776</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l00877">877</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -334,8 +350,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div class="line">   }</div>
 <div class="line">}</div>
 <div class="line">data = data2 ;</div>
-<div class="ttc" id="aclassGEO_1_1AttributesManager_html_ac6a07653dbdeba562a39b04009b4f6f8"><div class="ttname"><a href="classGEO_1_1AttributesManager.html#ac6a07653dbdeba562a39b04009b4f6f8">GEO::AttributesManager::size</a></div><div class="ttdeci">index_t size() const</div><div class="ttdoc">Gets the size.</div><div class="ttdef"><b>Definition:</b> <a href="attributes_8h_source.html#l00767">attributes.h:767</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
+<div class="ttc" id="aclassGEO_1_1AttributesManager_html_ac6a07653dbdeba562a39b04009b4f6f8"><div class="ttname"><a href="classGEO_1_1AttributesManager.html#ac6a07653dbdeba562a39b04009b4f6f8">GEO::AttributesManager::size</a></div><div class="ttdeci">index_t size() const</div><div class="ttdoc">Gets the size.</div><div class="ttdef"><b>Definition:</b> <a href="attributes_8h_source.html#l00868">attributes.h:868</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">old2new</td><td>the index mapping to be applied. </td></tr>
@@ -593,7 +609,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l00847">847</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l00948">948</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -623,6 +639,51 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a id="ab44535a91421b74085602cc58c6cb94a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab44535a91421b74085602cc58c6cb94a">&#9670;&nbsp;</a></span>madd_item()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GEO::AttributesManager::madd_item </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td>
+          <td class="paramname"><em>to</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td>
+          <td class="paramname"><em>from</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a scaled item to another item \detais item[to] += s * item[from]. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">to</td><td>the item </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>the scaling factor </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">from</td><td>the item to be scaled and added</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>default implementation does nothing </p>
+
+</div>
+</div>
 <a id="a4ebaf22aaebf5d8bcaf8d3cad8c2a883"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4ebaf22aaebf5d8bcaf8d3cad8c2a883">&#9670;&nbsp;</a></span>nb()</h2>
 
@@ -649,7 +710,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Gets the number of attributes. </p>
 <dl class="section return"><dt>Returns</dt><dd>The number of attributes managed by this <a class="el" href="classGEO_1_1AttributesManager.html" title="Managers a set of attributes attached to an object.">AttributesManager</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l00750">750</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l00851">851</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -748,6 +809,44 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a id="a854e5234b71931fe9d6d56a7292a4c77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a854e5234b71931fe9d6d56a7292a4c77">&#9670;&nbsp;</a></span>scale_item()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GEO::AttributesManager::scale_item </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td>
+          <td class="paramname"><em>to</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>s</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Scales an item. </p>
+<p>item[to] *= s </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">to</td><td>the index of the item </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>the scaling factor</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>default implementation does nothing </p>
+
+</div>
+</div>
 <a id="ac6a07653dbdeba562a39b04009b4f6f8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac6a07653dbdeba562a39b04009b4f6f8">&#9670;&nbsp;</a></span>size()</h2>
 
@@ -774,7 +873,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Gets the size. </p>
 <p>All attributes stored in an <a class="el" href="classGEO_1_1AttributesManager.html" title="Managers a set of attributes attached to an object.">AttributesManager</a> have the same number of items. </p><dl class="section return"><dt>Returns</dt><dd>the number of items of each attribute. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l00767">767</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l00868">868</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -815,6 +914,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a id="a2454c4334a5d8e92c0fb92a19a94f258"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2454c4334a5d8e92c0fb92a19a94f258">&#9670;&nbsp;</a></span>zero_item()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GEO::AttributesManager::zero_item </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td>
+          <td class="paramname"><em>to</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets an item to zero. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">to</td><td>index of the item </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>geogram/basic/<a class="el" href="attributes_8h_source.html">attributes.h</a></li>
 </ul>
@@ -824,7 +949,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1AttributesManager.html">AttributesManager</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

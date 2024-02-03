@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -144,6 +151,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2b080e50ff611ee6136c41e1ac186cdb"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshIOFlags.html#a2b080e50ff611ee6136c41e1ac186cdb">get_texture_filename</a> () const</td></tr>
 <tr class="memdesc:a2b080e50ff611ee6136c41e1ac186cdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the name of the texture image file.  <a href="classGEO_1_1MeshIOFlags.html#a2b080e50ff611ee6136c41e1ac186cdb">More...</a><br /></td></tr>
 <tr class="separator:a2b080e50ff611ee6136c41e1ac186cdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac410d7600dbc6b0f3d011e9b1f77810f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshIOFlags.html#ac410d7600dbc6b0f3d011e9b1f77810f">set_verbose</a> (bool x)</td></tr>
+<tr class="memdesc:ac410d7600dbc6b0f3d011e9b1f77810f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets verbosity.  <a href="classGEO_1_1MeshIOFlags.html#ac410d7600dbc6b0f3d011e9b1f77810f">More...</a><br /></td></tr>
+<tr class="separator:ac410d7600dbc6b0f3d011e9b1f77810f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af70377f32ef4a56a3f0c809baabfffd8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshIOFlags.html#af70377f32ef4a56a3f0c809baabfffd8">verbose</a> () const</td></tr>
+<tr class="memdesc:af70377f32ef4a56a3f0c809baabfffd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether messages should be displayed.  <a href="classGEO_1_1MeshIOFlags.html#af70377f32ef4a56a3f0c809baabfffd8">More...</a><br /></td></tr>
+<tr class="separator:af70377f32ef4a56a3f0c809baabfffd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classGEO_1_1Mesh.html" title="Represents a mesh.">Mesh</a> load/save flags. </p>
@@ -646,6 +659,79 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ac410d7600dbc6b0f3d011e9b1f77810f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac410d7600dbc6b0f3d011e9b1f77810f">&#9670;&nbsp;</a></span>set_verbose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GEO::MeshIOFlags::set_verbose </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets verbosity. </p>
+<p>Error messages are always displayed, whatever the verbosity level. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>true if messages should be displayed, false otherwise. Default is true. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="mesh__io_8h_source.html#l00230">230</a> of file <a class="el" href="mesh__io_8h_source.html">mesh_io.h</a>.</p>
+
+</div>
+</div>
+<a id="af70377f32ef4a56a3f0c809baabfffd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af70377f32ef4a56a3f0c809baabfffd8">&#9670;&nbsp;</a></span>verbose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GEO::MeshIOFlags::verbose </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tests whether messages should be displayed. </p>
+<p>Error messages are always displayed, whatever the verbosity level. </p><dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>if messages are displayed </td></tr>
+    <tr><td class="paramname">false</td><td>otherwise </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classGEO_1_1MeshIOFlags.html#ac410d7600dbc6b0f3d011e9b1f77810f" title="Sets verbosity.">set_verbose()</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="mesh__io_8h_source.html#l00242">242</a> of file <a class="el" href="mesh__io_8h_source.html">mesh_io.h</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>geogram/mesh/<a class="el" href="mesh__io_8h_source.html">mesh_io.h</a></li>
 </ul>
@@ -655,7 +741,7 @@ Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1MeshIOFlags.html">MeshIOFlags</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

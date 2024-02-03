@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -117,6 +124,8 @@ Inheritance diagram for OGF::MetaInformation:</div>
 <area href="classOGF_1_1MetaMethodSetProperty.html" title="A MetaMethod that corresponds to the setter of a property." alt="OGF::MetaMethodSetProperty" shape="rect" coords="386,280,569,304"/>
 <area href="classOGF_1_1MetaSignal.html" title="The representation of a signal in the Meta repository." alt="OGF::MetaSignal" shape="rect" coords="579,280,762,304"/>
 <area href="classOGF_1_1MetaSlot.html" title="The representation of a slot in the Meta repository." alt="OGF::MetaSlot" shape="rect" coords="772,280,955,304"/>
+<area href="classOGF_1_1DynamicMetaClass.html" title="A MetaClass that can be created in Lua." alt="OGF::DynamicMetaClass" shape="rect" coords="965,280,1148,304"/>
+<area href="classOGF_1_1DynamicMetaSlot.html" title="A slot in a dynamically-created class." alt="OGF::DynamicMetaSlot" shape="rect" coords="772,336,955,360"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -134,6 +143,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a761d91c3883227e4e409087cbf2a5400"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MetaInformation.html#a761d91c3883227e4e409087cbf2a5400">custom_attribute_value</a> (const std::string &amp;name) const</td></tr>
 <tr class="memdesc:a761d91c3883227e4e409087cbf2a5400"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the value of a new custom attribute.  <a href="classOGF_1_1MetaInformation.html#a761d91c3883227e4e409087cbf2a5400">More...</a><br /></td></tr>
 <tr class="separator:a761d91c3883227e4e409087cbf2a5400"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee59c43ca909fe9d3af26b2be317fdc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MetaInformation.html#aee59c43ca909fe9d3af26b2be317fdc0">create_custom_attribute</a> (const std::string &amp;name, const std::string &amp;value)</td></tr>
+<tr class="memdesc:aee59c43ca909fe9d3af26b2be317fdc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new custom attribute.  <a href="classOGF_1_1MetaInformation.html#aee59c43ca909fe9d3af26b2be317fdc0">More...</a><br /></td></tr>
+<tr class="separator:aee59c43ca909fe9d3af26b2be317fdc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5d002caa60526323488b52165142292"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MetaInformation.html#ad5d002caa60526323488b52165142292">set_custom_attribute</a> (const std::string &amp;name, const std::string &amp;value)</td></tr>
+<tr class="memdesc:ad5d002caa60526323488b52165142292"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the value of a new custom attribute.  <a href="classOGF_1_1MetaInformation.html#ad5d002caa60526323488b52165142292">More...</a><br /></td></tr>
+<tr class="separator:ad5d002caa60526323488b52165142292"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classOGF_1_1Object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classOGF_1_1Object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classOGF_1_1Object.html">OGF::Object</a></td></tr>
 <tr class="memitem:a91bcd1a1cb2ad02629c1b54d15d66fff inherit pub_methods_classOGF_1_1Object"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Object.html#a91bcd1a1cb2ad02629c1b54d15d66fff">Object</a> (bool transient=false)</td></tr>
 <tr class="memdesc:a91bcd1a1cb2ad02629c1b54d15d66fff inherit pub_methods_classOGF_1_1Object"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOGF_1_1Object.html" title="Base class for all objects in the GOM system.">Object</a> constructor.  <a href="classOGF_1_1Object.html#a91bcd1a1cb2ad02629c1b54d15d66fff">More...</a><br /></td></tr>
@@ -316,6 +331,44 @@ Additional Inherited Members</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="meta__type_8h_source.html#l00155">155</a> of file <a class="el" href="meta__type_8h_source.html">meta_type.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="aee59c43ca909fe9d3af26b2be317fdc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee59c43ca909fe9d3af26b2be317fdc0">&#9670;&nbsp;</a></span>create_custom_attribute()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OGF::MetaInformation::create_custom_attribute </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a new custom attribute. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>name of the custom attribute </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>value of the custom attribute </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Precondition</dt><dd>!has_custom_attribute(name) </dd></dl>
+
+</div>
+</div>
 <a id="a761d91c3883227e4e409087cbf2a5400"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a761d91c3883227e4e409087cbf2a5400">&#9670;&nbsp;</a></span>custom_attribute_value()</h2>
 
@@ -433,6 +486,44 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="ad5d002caa60526323488b52165142292"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5d002caa60526323488b52165142292">&#9670;&nbsp;</a></span>set_custom_attribute()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OGF::MetaInformation::set_custom_attribute </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the value of a new custom attribute. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>name of the custom attribute </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>value of the custom attribute </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Precondition</dt><dd>has_custom_attribute(name) </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>OGF/gom/reflection/<a class="el" href="meta__type_8h_source.html">meta_type.h</a></li>
 </ul>
@@ -442,7 +533,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1MetaInformation.html">MetaInformation</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

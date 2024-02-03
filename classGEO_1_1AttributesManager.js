@@ -16,11 +16,14 @@ var classGEO_1_1AttributesManager =
     [ "find_attribute_store", "classGEO_1_1AttributesManager.html#ae1ec2a2b68aad64a56a2dcbc8813516a", null ],
     [ "is_defined", "classGEO_1_1AttributesManager.html#ab7c8a786faab04469e617b850d924349", null ],
     [ "list_attribute_names", "classGEO_1_1AttributesManager.html#a9b2522aa4b65c09602fe0b0a857dc665", null ],
+    [ "madd_item", "classGEO_1_1AttributesManager.html#ab44535a91421b74085602cc58c6cb94a", null ],
     [ "nb", "classGEO_1_1AttributesManager.html#a4ebaf22aaebf5d8bcaf8d3cad8c2a883", null ],
     [ "rename_attribute", "classGEO_1_1AttributesManager.html#a6b22f2f4bf435b2bf6f4ecc33be9d15b", null ],
     [ "reserve", "classGEO_1_1AttributesManager.html#af893f9e1414aa34e2cc7d144e83f067f", null ],
     [ "resize", "classGEO_1_1AttributesManager.html#afb8503164520b84026176f2681de466a", null ],
+    [ "scale_item", "classGEO_1_1AttributesManager.html#a854e5234b71931fe9d6d56a7292a4c77", null ],
     [ "size", "classGEO_1_1AttributesManager.html#ac6a07653dbdeba562a39b04009b4f6f8", null ],
     [ "swap_items", "classGEO_1_1AttributesManager.html#ab8bc1173eb9a9cdbfb956999697e3624", null ],
-    [ "zero", "classGEO_1_1AttributesManager.html#ae739f64cf5544d2938892966d25dd1e7", null ]
+    [ "zero", "classGEO_1_1AttributesManager.html#ae739f64cf5544d2938892966d25dd1e7", null ],
+    [ "zero_item", "classGEO_1_1AttributesManager.html#a2454c4334a5d8e92c0fb92a19a94f258", null ]
 ];

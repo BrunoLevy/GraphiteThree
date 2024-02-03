@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -169,6 +176,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:ab449532f9dd474d7121439c9bf0357a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1SceneGraph.html#ab449532f9dd474d7121439c9bf0357a6">set_visibility</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> index, bool value)</td></tr>
 <tr class="memdesc:ab449532f9dd474d7121439c9bf0357a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the visibility flag of one of the objects.  <a href="classOGF_1_1SceneGraph.html#ab449532f9dd474d7121439c9bf0357a6">More...</a><br /></td></tr>
 <tr class="separator:ab449532f9dd474d7121439c9bf0357a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace820113dae859f7a2be1891e27464fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1SceneGraph.html#ace820113dae859f7a2be1891e27464fa">register_grob_commands</a> (<a class="el" href="classOGF_1_1MetaClass.html">MetaClass</a> *grob_class, <a class="el" href="classOGF_1_1MetaClass.html">MetaClass</a> *commands_class)</td></tr>
+<tr class="memdesc:ace820113dae859f7a2be1891e27464fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Associates a <a class="el" href="classOGF_1_1Commands.html" title="Represents a set of commands.">Commands</a> class to a <a class="el" href="classOGF_1_1Grob.html" title="Base class for all 3D Graphite objects.">Grob</a> class.  <a href="classOGF_1_1SceneGraph.html#ace820113dae859f7a2be1891e27464fa">More...</a><br /></td></tr>
+<tr class="separator:ace820113dae859f7a2be1891e27464fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae17d5782f56efed0bcd4745bab7151e3"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1SceneGraph.html#ae17d5782f56efed0bcd4745bab7151e3">get_current_object</a> () const</td></tr>
 <tr class="memdesc:ae17d5782f56efed0bcd4745bab7151e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the name of the current object.  <a href="classOGF_1_1SceneGraph.html#ae17d5782f56efed0bcd4745bab7151e3">More...</a><br /></td></tr>
 <tr class="separator:ae17d5782f56efed0bcd4745bab7151e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -999,7 +1009,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>dirty_</b></td></tr>
 <p>Gets the application. </p>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the application, or nullptr if no application was specified. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="scene__graph_8h_source.html#l00286">286</a> of file <a class="el" href="scene__graph_8h_source.html">scene_graph.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="scene__graph_8h_source.html#l00297">297</a> of file <a class="el" href="scene__graph_8h_source.html">scene_graph.h</a>.</p>
 
 </div>
 </div>
@@ -1049,7 +1059,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>dirty_</b></td></tr>
 <p>Gets the render area. </p>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the render area, or nullptr if no render area was specified. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="scene__graph_8h_source.html#l00269">269</a> of file <a class="el" href="scene__graph_8h_source.html">scene_graph.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="scene__graph_8h_source.html#l00280">280</a> of file <a class="el" href="scene__graph_8h_source.html">scene_graph.h</a>.</p>
 
 </div>
 </div>
@@ -1394,6 +1404,43 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>dirty_</b></td></tr>
 
 </div>
 </div>
+<a id="ace820113dae859f7a2be1891e27464fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace820113dae859f7a2be1891e27464fa">&#9670;&nbsp;</a></span>register_grob_commands()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OGF::SceneGraph::register_grob_commands </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOGF_1_1MetaClass.html">MetaClass</a> *&#160;</td>
+          <td class="paramname"><em>grob_class</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classOGF_1_1MetaClass.html">MetaClass</a> *&#160;</td>
+          <td class="paramname"><em>commands_class</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Associates a <a class="el" href="classOGF_1_1Commands.html" title="Represents a set of commands.">Commands</a> class to a <a class="el" href="classOGF_1_1Grob.html" title="Base class for all 3D Graphite objects.">Grob</a> class. </p>
+<p>It is used with <a class="el" href="classOGF_1_1Commands.html" title="Represents a set of commands.">Commands</a> class created in a script. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">grob_class</td><td>the <a class="el" href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository.">MetaClass</a> of the grob </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">commands_class</td><td>the <a class="el" href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository.">MetaClass</a> of the commands </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a862b0074bd2439ef765d34dddc31e25b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a862b0074bd2439ef765d34dddc31e25b">&#9670;&nbsp;</a></span>save_current_object()</h2>
 
@@ -1620,7 +1667,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>dirty_</b></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="scene__graph_8h_source.html#l00277">277</a> of file <a class="el" href="scene__graph_8h_source.html">scene_graph.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="scene__graph_8h_source.html#l00288">288</a> of file <a class="el" href="scene__graph_8h_source.html">scene_graph.h</a>.</p>
 
 </div>
 </div>
@@ -1693,7 +1740,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>dirty_</b></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="scene__graph_8h_source.html#l00260">260</a> of file <a class="el" href="scene__graph_8h_source.html">scene_graph.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="scene__graph_8h_source.html#l00271">271</a> of file <a class="el" href="scene__graph_8h_source.html">scene_graph.h</a>.</p>
 
 </div>
 </div>
@@ -1897,7 +1944,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>dirty_</b></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1SceneGraph.html">SceneGraph</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:49 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:09 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -4,6 +4,7 @@ var classGEO_1_1Matrix =
     [ "value_type", "classGEO_1_1Matrix.html#a35d08fc58134ddf6a3a2968a07feb46f", null ],
     [ "Matrix", "classGEO_1_1Matrix.html#aca63ac7946bd231913f121ebebac4781", null ],
     [ "Matrix", "classGEO_1_1Matrix.html#a1cbffef1bfbf56bc40860baa754461a7", null ],
+    [ "Matrix", "classGEO_1_1Matrix.html#a87630935be753ca8b52d62326e9d8233", null ],
     [ "compute_inverse", "classGEO_1_1Matrix.html#aceeda3be84e97c46b4cee67441ab23dd", null ],
     [ "data", "classGEO_1_1Matrix.html#aa3708f93ed9b8606bbc111cf60609412", null ],
     [ "data", "classGEO_1_1Matrix.html#aea12e2e95d3181d652521bb12fdc1ef1", null ],

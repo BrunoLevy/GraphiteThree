@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -113,9 +120,9 @@ Inheritance diagram for OGF::MetaEnum:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a772818ffe6d368b8dc70e38c5d7b53f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MetaEnum.html#a772818ffe6d368b8dc70e38c5d7b53f5">MetaEnum</a> (const std::string &amp;enum_name)</td></tr>
-<tr class="memdesc:a772818ffe6d368b8dc70e38c5d7b53f5"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOGF_1_1MetaEnum.html" title="MetaType for enums.">MetaEnum</a> constructor.  <a href="classOGF_1_1MetaEnum.html#a772818ffe6d368b8dc70e38c5d7b53f5">More...</a><br /></td></tr>
-<tr class="separator:a772818ffe6d368b8dc70e38c5d7b53f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaac261a8b408abc00464c0a38ff90f99"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MetaEnum.html#aaac261a8b408abc00464c0a38ff90f99">MetaEnum</a> (const std::string &amp;<a class="el" href="classOGF_1_1MetaType.html#a470c8dff9a9a2dee899df07e417493fa">name</a>)</td></tr>
+<tr class="memdesc:aaac261a8b408abc00464c0a38ff90f99"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOGF_1_1MetaEnum.html" title="MetaType for enums.">MetaEnum</a> constructor.  <a href="classOGF_1_1MetaEnum.html#aaac261a8b408abc00464c0a38ff90f99">More...</a><br /></td></tr>
+<tr class="separator:aaac261a8b408abc00464c0a38ff90f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a314f30f8ca0687108ba6510400263f"><td class="memItemLeft" align="right" valign="top"><a id="a9a314f30f8ca0687108ba6510400263f"></a>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MetaEnum.html#a9a314f30f8ca0687108ba6510400263f">~MetaEnum</a> ()</td></tr>
 <tr class="memdesc:a9a314f30f8ca0687108ba6510400263f"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOGF_1_1MetaEnum.html" title="MetaType for enums.">MetaEnum</a> destructor. <br /></td></tr>
@@ -141,6 +148,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a1425c4a6827f8efc0afa19146895dbd0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MetaEnum.html#a1425c4a6827f8efc0afa19146895dbd0">add_value</a> (const std::string &amp;<a class="el" href="classOGF_1_1MetaType.html#a470c8dff9a9a2dee899df07e417493fa">name</a>, int value)</td></tr>
 <tr class="memdesc:a1425c4a6827f8efc0afa19146895dbd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new value to this <a class="el" href="classOGF_1_1MetaEnum.html" title="MetaType for enums.">MetaEnum</a>.  <a href="classOGF_1_1MetaEnum.html#a1425c4a6827f8efc0afa19146895dbd0">More...</a><br /></td></tr>
 <tr class="separator:a1425c4a6827f8efc0afa19146895dbd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc400117d38fbab0d349bdf141dac1ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MetaEnum.html#afc400117d38fbab0d349bdf141dac1ab">add_values</a> (const <a class="el" href="classOGF_1_1ArgList.html">ArgList</a> &amp;values)</td></tr>
+<tr class="memdesc:afc400117d38fbab0d349bdf141dac1ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds values to this MegaEnum.  <a href="classOGF_1_1MetaEnum.html#afc400117d38fbab0d349bdf141dac1ab">More...</a><br /></td></tr>
+<tr class="separator:afc400117d38fbab0d349bdf141dac1ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classOGF_1_1MetaType"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classOGF_1_1MetaType')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classOGF_1_1MetaType.html">OGF::MetaType</a></td></tr>
 <tr class="memitem:a3c93fe70b0902d39e98388f9ce21272d inherit pub_methods_classOGF_1_1MetaType"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MetaType.html#a3c93fe70b0902d39e98388f9ce21272d">MetaType</a> (const std::string &amp;<a class="el" href="classOGF_1_1MetaType.html#a470c8dff9a9a2dee899df07e417493fa">name</a>)</td></tr>
 <tr class="memdesc:a3c93fe70b0902d39e98388f9ce21272d inherit pub_methods_classOGF_1_1MetaType"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a> constructor.  <a href="classOGF_1_1MetaType.html#a3c93fe70b0902d39e98388f9ce21272d">More...</a><br /></td></tr>
@@ -186,6 +196,12 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a761d91c3883227e4e409087cbf2a5400 inherit pub_methods_classOGF_1_1MetaInformation"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MetaInformation.html#a761d91c3883227e4e409087cbf2a5400">custom_attribute_value</a> (const std::string &amp;name) const</td></tr>
 <tr class="memdesc:a761d91c3883227e4e409087cbf2a5400 inherit pub_methods_classOGF_1_1MetaInformation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the value of a new custom attribute.  <a href="classOGF_1_1MetaInformation.html#a761d91c3883227e4e409087cbf2a5400">More...</a><br /></td></tr>
 <tr class="separator:a761d91c3883227e4e409087cbf2a5400 inherit pub_methods_classOGF_1_1MetaInformation"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee59c43ca909fe9d3af26b2be317fdc0 inherit pub_methods_classOGF_1_1MetaInformation"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MetaInformation.html#aee59c43ca909fe9d3af26b2be317fdc0">create_custom_attribute</a> (const std::string &amp;name, const std::string &amp;value)</td></tr>
+<tr class="memdesc:aee59c43ca909fe9d3af26b2be317fdc0 inherit pub_methods_classOGF_1_1MetaInformation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new custom attribute.  <a href="classOGF_1_1MetaInformation.html#aee59c43ca909fe9d3af26b2be317fdc0">More...</a><br /></td></tr>
+<tr class="separator:aee59c43ca909fe9d3af26b2be317fdc0 inherit pub_methods_classOGF_1_1MetaInformation"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5d002caa60526323488b52165142292 inherit pub_methods_classOGF_1_1MetaInformation"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MetaInformation.html#ad5d002caa60526323488b52165142292">set_custom_attribute</a> (const std::string &amp;name, const std::string &amp;value)</td></tr>
+<tr class="memdesc:ad5d002caa60526323488b52165142292 inherit pub_methods_classOGF_1_1MetaInformation"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the value of a new custom attribute.  <a href="classOGF_1_1MetaInformation.html#ad5d002caa60526323488b52165142292">More...</a><br /></td></tr>
+<tr class="separator:ad5d002caa60526323488b52165142292 inherit pub_methods_classOGF_1_1MetaInformation"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classOGF_1_1Object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classOGF_1_1Object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classOGF_1_1Object.html">OGF::Object</a></td></tr>
 <tr class="memitem:a91bcd1a1cb2ad02629c1b54d15d66fff inherit pub_methods_classOGF_1_1Object"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Object.html#a91bcd1a1cb2ad02629c1b54d15d66fff">Object</a> (bool transient=false)</td></tr>
 <tr class="memdesc:a91bcd1a1cb2ad02629c1b54d15d66fff inherit pub_methods_classOGF_1_1Object"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOGF_1_1Object.html" title="Base class for all objects in the GOM system.">Object</a> constructor.  <a href="classOGF_1_1Object.html#a91bcd1a1cb2ad02629c1b54d15d66fff">More...</a><br /></td></tr>
@@ -380,8 +396,8 @@ Additional Inherited Members</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="meta__enum_8h_source.html#l00056">56</a> of file <a class="el" href="meta__enum_8h_source.html">meta_enum.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a772818ffe6d368b8dc70e38c5d7b53f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a772818ffe6d368b8dc70e38c5d7b53f5">&#9670;&nbsp;</a></span>MetaEnum()</h2>
+<a id="aaac261a8b408abc00464c0a38ff90f99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaac261a8b408abc00464c0a38ff90f99">&#9670;&nbsp;</a></span>MetaEnum()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -390,7 +406,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">OGF::MetaEnum::MetaEnum </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>enum_name</em></td><td>)</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -399,7 +415,7 @@ Additional Inherited Members</h2></td></tr>
 <p><a class="el" href="classOGF_1_1MetaEnum.html" title="MetaType for enums.">MetaEnum</a> constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">enum_name</td><td>C++ type name of the enum </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>C++ type name of the enum </td></tr>
   </table>
   </dd>
 </dl>
@@ -438,6 +454,32 @@ Additional Inherited Members</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>symbolic name </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>associated value. Can be negative. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="afc400117d38fbab0d349bdf141dac1ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc400117d38fbab0d349bdf141dac1ab">&#9670;&nbsp;</a></span>add_values()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OGF::MetaEnum::add_values </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classOGF_1_1ArgList.html">ArgList</a> &amp;&#160;</td>
+          <td class="paramname"><em>values</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds values to this MegaEnum. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">values</td><td>an arglist with name,value pairs </td></tr>
   </table>
   </dd>
 </dl>
@@ -649,7 +691,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1MetaEnum.html">MetaEnum</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

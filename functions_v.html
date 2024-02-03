@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -120,6 +127,8 @@ $(document).ready(function(){initNavTree('functions_v.html',''); initResizable()
 <li>value_type
 : <a class="el" href="classGEO_1_1Matrix.html#a35d08fc58134ddf6a3a2968a07feb46f">GEO::Matrix&lt; DIM, FT &gt;</a>
 , <a class="el" href="classGEO_1_1Memory_1_1aligned__allocator.html#a6da1b7738cf374f0274554f427619d0c">GEO::Memory::aligned_allocator&lt; T, ALIGN &gt;</a>
+, <a class="el" href="classGEO_1_1vec2Hg.html#a1c4eee9ceb3b63467c806fc330b9000d">GEO::vec2Hg&lt; T &gt;</a>
+, <a class="el" href="classGEO_1_1vec3Hg.html#a95caabfa81c6d83ee9335f21c27fe2ec">GEO::vec3Hg&lt; T &gt;</a>
 , <a class="el" href="classGEO_1_1vecng.html#a2073e0ebcdd3718ad6e99c1294c3f419">GEO::vecng&lt; DIM, T &gt;</a>
 , <a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a63f39a8b6b07e07839f76bc30f856aa5">GEO::vecng&lt; 2, T &gt;</a>
 , <a class="el" href="classGEO_1_1vecng_3_013_00_01T_01_4.html#a2975357562b28e9890cd76bfaf140562">GEO::vecng&lt; 3, T &gt;</a>
@@ -156,15 +165,9 @@ $(document).ready(function(){initNavTree('functions_v.html',''); initResizable()
 <li>VBO()
 : <a class="el" href="classGLUP_1_1ImmediateBuffer.html#ae82725cff83fdd8903bad0730219dca1">GLUP::ImmediateBuffer</a>
 </li>
-<li>vec2HE()
-: <a class="el" href="structGEO_1_1vec2HE.html#a80d45ce96abdcc0c0c76cfa78bbbc52b">GEO::vec2HE</a>
-</li>
-<li>vec3HE()
-: <a class="el" href="structGEO_1_1vec3HE.html#aa25541a6ca1bf36b779c9978a81835c1">GEO::vec3HE</a>
-</li>
 <li>vecng()
-: <a class="el" href="classGEO_1_1vecng.html#ae5c74dc420e700d9688843991e1d2a32">GEO::vecng&lt; DIM, T &gt;</a>
-, <a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a78c1e216eca20fa16000697684880001">GEO::vecng&lt; 2, T &gt;</a>
+: <a class="el" href="classGEO_1_1vecng.html#ad87191c1e3ec8e62c79d753ffae73b15">GEO::vecng&lt; DIM, T &gt;</a>
+, <a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a052524bad39fb676cdc6842b7b1b69ac">GEO::vecng&lt; 2, T &gt;</a>
 , <a class="el" href="classGEO_1_1vecng_3_013_00_01T_01_4.html#a0e5d8f9dcdfdb7a3813d039bd7bf5e56">GEO::vecng&lt; 3, T &gt;</a>
 , <a class="el" href="classGEO_1_1vecng_3_014_00_01T_01_4.html#a8c8d065ed4c0a55b3cb7eb9e6e56a57d">GEO::vecng&lt; 4, T &gt;</a>
 </li>
@@ -187,8 +190,10 @@ $(document).ready(function(){initNavTree('functions_v.html',''); initResizable()
 <li>vendor()
 : <a class="el" href="classOGF_1_1Module.html#ae61c583cdbe609af33cb40cbd3b1f2d8">OGF::Module</a>
 </li>
-<li>verbose
-: <a class="el" href="structGEO_1_1MeshTetrahedralizeParameters.html#a9ae74d97f874327cef18836a98fb9c0f">GEO::MeshTetrahedralizeParameters</a>
+<li>verbose()
+: <a class="el" href="classGEO_1_1CSGBuilder.html#a457d25d223a2f82bcbae58a03f3d02ce">GEO::CSGBuilder</a>
+, <a class="el" href="classGEO_1_1MeshIOFlags.html#af70377f32ef4a56a3f0c809baabfffd8">GEO::MeshIOFlags</a>
+, <a class="el" href="structGEO_1_1MeshTetrahedralizeParameters.html#a9ae74d97f874327cef18836a98fb9c0f">GEO::MeshTetrahedralizeParameters</a>
 , <a class="el" href="structNLContextStruct.html#adbd56486623619589f612c700e9eece3">NLContextStruct</a>
 </li>
 <li>version()
@@ -203,21 +208,23 @@ $(document).ready(function(){initNavTree('functions_v.html',''); initResizable()
 , <a class="el" href="classGEO_1_1MeshFacets.html#a4d301f894ccb16186e176c93eac82546">GEO::MeshFacets</a>
 </li>
 <li>Vertex()
-: <a class="el" href="classGEO_1_1MeshInTriangle_1_1Vertex.html#a7b4ac54281a14c488cad059073bb377b">GEO::MeshInTriangle::Vertex</a>
+: <a class="el" href="classGEO_1_1MeshInTriangle_1_1Vertex.html#ace41998e8a260656c3915ccb76885650">GEO::MeshInTriangle::Vertex</a>
 </li>
 <li>vertex()
-: <a class="el" href="classGEO_1_1PeriodicDelaunay3d.html#ad49f61a6eb39f7ac04e297039e991178">GEO::PeriodicDelaunay3d</a>
+: <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1Halfedges.html#ac476f978e70cbe989ce7f157cf54b17a">GEO::MeshSurfaceIntersection::Halfedges</a>
+, <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialBundles.html#a394d0f83c96b2455f454988091f7b299">GEO::MeshSurfaceIntersection::RadialBundles</a>
+, <a class="el" href="classGEO_1_1PeriodicDelaunay3d.html#ad49f61a6eb39f7ac04e297039e991178">GEO::PeriodicDelaunay3d</a>
 , <a class="el" href="classGEO_1_1RVDPolyhedronCallback.html#a0ed150d03e6a3e88e666a215954eb846">GEO::RVDPolyhedronCallback</a>
 </li>
 <li>Vertex()
 : <a class="el" href="classGEOGen_1_1ConvexCell_1_1Vertex.html#a8175a39ee77d5d39352bffb725b21095">GEOGen::ConvexCell::Vertex</a>
 </li>
 <li>vertex()
-: <a class="el" href="classGEOGen_1_1Polygon.html#a73e4f639111ac4d769a334bd9952a84d">GEOGen::Polygon</a>
+: <a class="el" href="classGEOGen_1_1Polygon.html#a3d83245e6641a90b4359078f54d14c6e">GEOGen::Polygon</a>
 </li>
 <li>Vertex
 : <a class="el" href="classGEOGen_1_1RestrictedVoronoiDiagram.html#a028beb1cc2fa1c2f28586e17cab51198">GEOGen::RestrictedVoronoiDiagram&lt; DIM &gt;</a>
-, <a class="el" href="classGEOGen_1_1Vertex.html#a2d5f7f830c9d19c560d2d292394e43e7">GEOGen::Vertex</a>
+, <a class="el" href="classGEOGen_1_1Vertex.html#a09ea33c1f402e3878fe14232cd7c4771">GEOGen::Vertex</a>
 </li>
 <li>VERTEX_AT_INFINITY
 : <a class="el" href="classGEO_1_1Delaunay2d.html#a3f5b4a3b227a25ac2fe66f1f1f378654">GEO::Delaunay2d</a>
@@ -226,8 +233,12 @@ $(document).ready(function(){initNavTree('functions_v.html',''); initResizable()
 <li>vertex_cell()
 : <a class="el" href="classGEO_1_1Delaunay.html#a8ac40a2bb7c8c95431cc5c2cc22e68ff">GEO::Delaunay</a>
 </li>
+<li>vertex_first_bundle()
+: <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialBundles.html#a4b23b20ed7bbf2f85627c0b8c14840e8">GEO::MeshSurfaceIntersection::RadialBundles</a>
+</li>
 <li>vertex_id()
-: <a class="el" href="classGEOGen_1_1ConvexCell.html#a9297b0850b29adc6d07b29769f286508">GEOGen::ConvexCell</a>
+: <a class="el" href="classGEO_1_1ExactCDT2d.html#aedc0d8bec92ac124f20b06b8b27b5e2a">GEO::ExactCDT2d</a>
+, <a class="el" href="classGEOGen_1_1ConvexCell.html#a9297b0850b29adc6d07b29769f286508">GEOGen::ConvexCell</a>
 </li>
 <li>vertex_id_VBO_
 : <a class="el" href="classGLUP_1_1Context.html#a9390cf82c57b44ed60f49326b026ddc6">GLUP::Context</a>
@@ -235,7 +246,7 @@ $(document).ready(function(){initNavTree('functions_v.html',''); initResizable()
 <li>vertex_index_ptr()
 : <a class="el" href="classGEO_1_1MeshCellCornersStore.html#a1d570b07f08a69e2eeef7a7dcedcd6ac">GEO::MeshCellCornersStore</a>
 , <a class="el" href="classGEO_1_1MeshEdges.html#a851886170b510b951d2e2fc72289f67e">GEO::MeshEdges</a>
-, <a class="el" href="classGEO_1_1MeshFacetCornersStore.html#af7d43d63b6a2bf23041c9830326999b9">GEO::MeshFacetCornersStore</a>
+, <a class="el" href="classGEO_1_1MeshFacetCornersStore.html#aea1457ac2511090a2f2c6a44b5371843">GEO::MeshFacetCornersStore</a>
 </li>
 <li>vertex_internal()
 : <a class="el" href="classGEO_1_1RVDPolyhedronCallback.html#addd371374cda77e91a01061d34a12aef">GEO::RVDPolyhedronCallback</a>
@@ -315,7 +326,7 @@ $(document).ready(function(){initNavTree('functions_v.html',''); initResizable()
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:50 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:09 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

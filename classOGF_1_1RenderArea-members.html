@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -170,7 +177,7 @@ $(document).ready(function(){initNavTree('classOGF_1_1RenderArea.html',''); init
   <tr><td class="entry"><a class="el" href="classOGF_1_1Object.html#a70ad865935d4ecd8c32bb030fb185b0e">set_signals_enabled</a>(bool value)</td><td class="entry"><a class="el" href="classOGF_1_1Object.html">OGF::Object</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1Object.html#a8c2174bb5fde8e8dde45f6bcca83c434">set_slots_enabled</a>(bool value)</td><td class="entry"><a class="el" href="classOGF_1_1Object.html">OGF::Object</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classOGF_1_1RenderArea.html#afcaf3b044562240e5048e49c7fbaee00">set_viewing_matrix</a>(const mat4 &amp;value)</td><td class="entry"><a class="el" href="classOGF_1_1RenderArea.html">OGF::RenderArea</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1RenderArea.html#a0c55630829abb8810f3f8c00e5c513ad">snapshot</a>(const std::string &amp;filename, bool make_current=true)</td><td class="entry"><a class="el" href="classOGF_1_1RenderArea.html">OGF::RenderArea</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1RenderArea.html#a478ddca10a9a54f6988068ed07d1e982">snapshot</a>(const std::string &amp;filename, bool make_current=true, bool with_gui=false)</td><td class="entry"><a class="el" href="classOGF_1_1RenderArea.html">OGF::RenderArea</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classOGF_1_1Object.html#a9aa5f7a58c4f07822a9c2638cc3481c8">string_id</a>() const</td><td class="entry"><a class="el" href="classOGF_1_1Object.html">OGF::Object</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1Counted.html#a7cc0da6a4f3ca45ea76044bd8f8d682a">unref</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1Counted.html">GEO::Counted</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1Counted.html#ab0d28fa10631fc7dfe9c7b5cdfd1b443">unref</a>(const Counted *counted)</td><td class="entry"><a class="el" href="classGEO_1_1Counted.html">GEO::Counted</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
@@ -187,7 +194,7 @@ $(document).ready(function(){initNavTree('classOGF_1_1RenderArea.html',''); init
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:50 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:09 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

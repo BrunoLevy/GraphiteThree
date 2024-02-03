@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -111,23 +118,24 @@ Inheritance diagram for OGF::Object:</div>
 <area href="classOGF_1_1Callable.html" title="A Callable object." alt="OGF::Callable" shape="rect" coords="218,224,426,248"/>
 <area href="classOGF_1_1Camera.html" title="Application attributes and methods related with camera management." alt="OGF::Camera" shape="rect" coords="218,280,426,304"/>
 <area href="classOGF_1_1CheckerSphere.html" title="Draws a sphere with a colored checkerboard." alt="OGF::CheckerSphere" shape="rect" coords="218,336,426,360"/>
-<area href="classOGF_1_1FullScreenEffect.html" title="A Full screen effect." alt="OGF::FullScreenEffect" shape="rect" coords="218,392,426,416"/>
-<area href="classOGF_1_1Interface.html" title="Represents additional functions that can be attached to an object." alt="OGF::Interface" shape="rect" coords="218,448,426,472"/>
-<area href="classOGF_1_1Interpreter.html" title="Abstract base class for the GOM interpreter." alt="OGF::Interpreter" shape="rect" coords="218,504,426,528"/>
-<area href="classOGF_1_1MetaInformation.html" title="Base class for everything that resides in the Meta repository." alt="OGF::MetaInformation" shape="rect" coords="218,560,426,584"/>
-<area href="classOGF_1_1NL_1_1Blas.html" title="Wrapper class for BLAS operations on vectors (Basic Linear Algebra)." alt="OGF::NL::Blas" shape="rect" coords="218,616,426,640"/>
-<area href="classOGF_1_1NL_1_1Library.html" title="Scripting interface to the OpenNL library." alt="OGF::NL::Library" shape="rect" coords="218,672,426,696"/>
-<area href="classOGF_1_1NL_1_1Matrix.html" alt="OGF::NL::Matrix" shape="rect" coords="218,728,426,752"/>
-<area href="classOGF_1_1NL_1_1Vector.html" title="A scriptable Vector objects." alt="OGF::NL::Vector" shape="rect" coords="218,784,426,808"/>
-<area href="classOGF_1_1Node.html" title="A composite object in the GOM system." alt="OGF::Node" shape="rect" coords="218,840,426,864"/>
-<area href="classOGF_1_1RayPicker.html" title="Converts a 2D picking in a rendering window into a ray picking event." alt="OGF::RayPicker" shape="rect" coords="218,896,426,920"/>
-<area href="classOGF_1_1RenderArea.html" title="Implementation of RenderArea using ImGui." alt="OGF::RenderArea" shape="rect" coords="218,952,426,976"/>
-<area href="classOGF_1_1SceneGraphShaderManager.html" title="Manages the shaders and full screen effects for the entire SceneGraph." alt="OGF::SceneGraphShaderManager" shape="rect" coords="218,1008,426,1032"/>
-<area href="classOGF_1_1Scope.html" title="A naming scope in an Interpreter." alt="OGF::Scope" shape="rect" coords="218,1064,426,1088"/>
-<area href="classOGF_1_1ShaderManager.html" title="Manages the Shader objects associated with a Grob." alt="OGF::ShaderManager" shape="rect" coords="218,1120,426,1144"/>
-<area href="classOGF_1_1TextEditor.html" title="A TextEditor for writing LUA functions." alt="OGF::TextEditor" shape="rect" coords="218,1176,426,1200"/>
-<area href="classOGF_1_1Transform3d.html" title="Controls a 3d transform by different means." alt="OGF::Transform3d" shape="rect" coords="218,1232,426,1256"/>
-<area href="classOGF_1_1Translation.html" title="Enables to interactively define a 2d translation." alt="OGF::Translation" shape="rect" coords="218,1288,426,1312"/>
+<area href="classOGF_1_1DynamicObject.html" title="An object with a class that can be created in Lua." alt="OGF::DynamicObject" shape="rect" coords="218,392,426,416"/>
+<area href="classOGF_1_1FullScreenEffect.html" title="A Full screen effect." alt="OGF::FullScreenEffect" shape="rect" coords="218,448,426,472"/>
+<area href="classOGF_1_1Interface.html" title="Represents additional functions that can be attached to an object." alt="OGF::Interface" shape="rect" coords="218,504,426,528"/>
+<area href="classOGF_1_1Interpreter.html" title="Abstract base class for the GOM interpreter." alt="OGF::Interpreter" shape="rect" coords="218,560,426,584"/>
+<area href="classOGF_1_1MetaInformation.html" title="Base class for everything that resides in the Meta repository." alt="OGF::MetaInformation" shape="rect" coords="218,616,426,640"/>
+<area href="classOGF_1_1NL_1_1Blas.html" title="Wrapper class for BLAS operations on vectors (Basic Linear Algebra)." alt="OGF::NL::Blas" shape="rect" coords="218,672,426,696"/>
+<area href="classOGF_1_1NL_1_1Library.html" title="Scripting interface to the OpenNL library." alt="OGF::NL::Library" shape="rect" coords="218,728,426,752"/>
+<area href="classOGF_1_1NL_1_1Matrix.html" alt="OGF::NL::Matrix" shape="rect" coords="218,784,426,808"/>
+<area href="classOGF_1_1NL_1_1Vector.html" title="A scriptable Vector objects." alt="OGF::NL::Vector" shape="rect" coords="218,840,426,864"/>
+<area href="classOGF_1_1Node.html" title="A composite object in the GOM system." alt="OGF::Node" shape="rect" coords="218,896,426,920"/>
+<area href="classOGF_1_1RayPicker.html" title="Converts a 2D picking in a rendering window into a ray picking event." alt="OGF::RayPicker" shape="rect" coords="218,952,426,976"/>
+<area href="classOGF_1_1RenderArea.html" title="Implementation of RenderArea using ImGui." alt="OGF::RenderArea" shape="rect" coords="218,1008,426,1032"/>
+<area href="classOGF_1_1SceneGraphShaderManager.html" title="Manages the shaders and full screen effects for the entire SceneGraph." alt="OGF::SceneGraphShaderManager" shape="rect" coords="218,1064,426,1088"/>
+<area href="classOGF_1_1Scope.html" title="A naming scope in an Interpreter." alt="OGF::Scope" shape="rect" coords="218,1120,426,1144"/>
+<area href="classOGF_1_1ShaderManager.html" title="Manages the Shader objects associated with a Grob." alt="OGF::ShaderManager" shape="rect" coords="218,1176,426,1200"/>
+<area href="classOGF_1_1TextEditor.html" title="A TextEditor for writing LUA functions." alt="OGF::TextEditor" shape="rect" coords="218,1232,426,1256"/>
+<area href="classOGF_1_1Transform3d.html" title="Controls a 3d transform by different means." alt="OGF::Transform3d" shape="rect" coords="218,1288,426,1312"/>
+<area href="classOGF_1_1Translation.html" title="Enables to interactively define a 2d translation." alt="OGF::Translation" shape="rect" coords="218,1344,426,1368"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -593,6 +601,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>MetaMethod</b></td><
   </table>
   </dd>
 </dl>
+
+<p>Reimplemented in <a class="el" href="classOGF_1_1DynamicObject.html#ab2a101b0123c16b915bb51cc4a8c0543">OGF::DynamicObject</a>.</p>
 
 </div>
 </div>
@@ -1272,6 +1282,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>MetaMethod</b></td><
   </dd>
 </dl>
 
+<p>Reimplemented in <a class="el" href="classOGF_1_1DynamicObject.html#a8f568e89b5649bdca3a915d86c512c3d">OGF::DynamicObject</a>.</p>
+
 </div>
 </div>
 <a id="a42e8a5768a041c56108a87362c3ae926"></a>
@@ -1428,7 +1440,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>MetaMethod</b></td><
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1Object.html">Object</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:49 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

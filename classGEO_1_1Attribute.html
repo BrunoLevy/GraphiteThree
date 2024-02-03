@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -268,7 +275,7 @@ class GEO::Attribute&lt; T &gt;</h3>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01267">1267</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01393">1393</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a28ba0c2cc91935857e71323819e47d15"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a28ba0c2cc91935857e71323819e47d15">&#9670;&nbsp;</a></span>Attribute()</h2>
@@ -315,7 +322,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01309">1309</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01435">1435</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -355,7 +362,7 @@ template&lt;class T &gt; </div>
 </dl>
 <p>rhs needs to have the same size and dimension as this <a class="el" href="classGEO_1_1Attribute.html" title="Manages an attribute attached to a set of object.">Attribute</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01351">1351</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01477">1477</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -387,7 +394,7 @@ template&lt;class T &gt; </div>
 <p>Gets the pointer to the data. </p>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the stored array. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01363">1363</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01489">1489</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -419,7 +426,7 @@ template&lt;class T &gt; </div>
 <p>Gets the pointer to the data. </p>
 <dl class="section return"><dt>Returns</dt><dd>a const pointer to the stored array. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01371">1371</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01497">1497</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -457,7 +464,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01339">1339</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01465">1465</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -496,7 +503,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a modifiable reference to the <code>ith</code> element </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01319">1319</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01445">1445</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -535,7 +542,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a const reference to the <code>ith</code> element </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01329">1329</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01455">1455</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -548,7 +555,7 @@ template&lt;class T &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1Attribute.html">Attribute</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

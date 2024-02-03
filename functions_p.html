@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -222,7 +229,7 @@ $(document).ready(function(){initNavTree('functions_p.html',''); initResizable()
 : <a class="el" href="classGEO_1_1Image.html#a3da683906cf366a1c4ccdbd2c2d9e9ae">GEO::Image</a>
 </li>
 <li>pixel_base_int32_ptr()
-: <a class="el" href="classGEO_1_1Image.html#a636e2f225a71f7a32b747b550a64d53d">GEO::Image</a>
+: <a class="el" href="classGEO_1_1Image.html#aa71f6173f9ad5f2d0dd56bf5d69eb79c">GEO::Image</a>
 </li>
 <li>pixel_is_black()
 : <a class="el" href="classGEO_1_1ImageRasterizer.html#a518d8dd7ef765951eb4ee8280aabb630">GEO::ImageRasterizer</a>
@@ -253,6 +260,7 @@ $(document).ready(function(){initNavTree('functions_p.html',''); initResizable()
 </li>
 <li>point()
 : <a class="el" href="classGEO_1_1CDT2d.html#a93567b233919ee37af85efbba656968d">GEO::CDT2d</a>
+, <a class="el" href="classGEO_1_1ExactCDT2d.html#a91baa03de9ce0002bb356ec0e340cc61">GEO::ExactCDT2d</a>
 , <a class="el" href="classGEO_1_1IntegrationSimplex.html#aa253d4de9de5995a88da4e4c0ca62b9d">GEO::IntegrationSimplex</a>
 , <a class="el" href="classGEO_1_1MeshVertices.html#afb4e9ca83cec09d00515a892601079c0">GEO::MeshVertices</a>
 , <a class="el" href="classGEOGen_1_1Vertex.html#add5a7096cd1c39f3065f248b18782714">GEOGen::Vertex</a>
@@ -268,7 +276,7 @@ $(document).ready(function(){initNavTree('functions_p.html',''); initResizable()
 : <a class="el" href="classGEO_1_1CentroidalVoronoiTesselation.html#a98755f0c6fc86de1e3b7b4283271358f">GEO::CentroidalVoronoiTesselation</a>
 </li>
 <li>point_ptr()
-: <a class="el" href="classGEO_1_1MeshVertices.html#aef33f60233383cbf89018270a879eff5">GEO::MeshVertices</a>
+: <a class="el" href="classGEO_1_1MeshVertices.html#a0ff7a6392c78509703393ec460f7d866">GEO::MeshVertices</a>
 , <a class="el" href="classGEO_1_1NearestNeighborSearch.html#a25d7ffc26bf476efd4e346b2a1261a31">GEO::NearestNeighborSearch</a>
 </li>
 <li>point_to_ray_pick()
@@ -324,13 +332,17 @@ $(document).ready(function(){initNavTree('functions_p.html',''); initResizable()
 : <a class="el" href="classGEO_1_1Application.html#aa2a213172fca9d8c30743bb53fe37a7c">GEO::Application</a>
 , <a class="el" href="classGEO_1_1SimpleApplication.html#acbf820e9f79f71f8fabfebe4bd529fe5">GEO::SimpleApplication</a>
 </li>
+<li>post_process()
+: <a class="el" href="classGEO_1_1CSGBuilder.html#a3c95b54a98cf4fe307f41ffbca7760fd">GEO::CSGBuilder</a>
+</li>
 <li>post_render()
 : <a class="el" href="classGEO_1_1AmbientOcclusionImpl.html#abc038fc593e40cea0bb809f583a856cf">GEO::AmbientOcclusionImpl</a>
 , <a class="el" href="classGEO_1_1FullScreenEffectImpl.html#afaa7a8a5700b7edd18d22fdb06072d67">GEO::FullScreenEffectImpl</a>
 , <a class="el" href="classGEO_1_1UnsharpMaskingImpl.html#af0d8445e1bd02232d70e9b4af91df740">GEO::UnsharpMaskingImpl</a>
 </li>
 <li>pre_delete()
-: <a class="el" href="classOGF_1_1MetaClass.html#ac12603f62b4790b5b1c7d6caedeb8df1">OGF::MetaClass</a>
+: <a class="el" href="classOGF_1_1DynamicMetaSlot.html#a3b5a20a3cf9a88223814a881e1698768">OGF::DynamicMetaSlot</a>
+, <a class="el" href="classOGF_1_1MetaClass.html#ac12603f62b4790b5b1c7d6caedeb8df1">OGF::MetaClass</a>
 , <a class="el" href="classOGF_1_1MetaMember.html#a79f75015dc393d33309d76988782fc59">OGF::MetaMember</a>
 , <a class="el" href="classOGF_1_1MetaMethod.html#a44b62c637bbb80a7610301e3c1f5c7d2">OGF::MetaMethod</a>
 , <a class="el" href="classOGF_1_1MetaType.html#ae2539c1776675b3fa692d703966925ba">OGF::MetaType</a>
@@ -367,8 +379,14 @@ $(document).ready(function(){initNavTree('functions_p.html',''); initResizable()
 <li>preprocess_merge_vertices_epsilon
 : <a class="el" href="structGEO_1_1MeshTetrahedralizeParameters.html#aaef13543bc05a0341b3a1a9658284a4d">GEO::MeshTetrahedralizeParameters</a>
 </li>
+<li>prev_along_polyline()
+: <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialBundles.html#a84cf8de3199476484a774a5835365281">GEO::MeshSurfaceIntersection::RadialBundles</a>
+</li>
 <li>prev_corner_around_facet()
 : <a class="el" href="classGEO_1_1MeshFacets.html#adc764d89401f52196d0a37b4f029d658">GEO::MeshFacets</a>
+</li>
+<li>prev_file()
+: <a class="el" href="classGEO_1_1SimpleMeshApplication.html#acf358cae2ab659904a32053f71a1ec27">GEO::SimpleMeshApplication</a>
 </li>
 <li>prev_inverse_transform_
 : <a class="el" href="classOGF_1_1MeshGrobTransformTool.html#a9ec7c4df5766d1e73c5377d0366d67c5">OGF::MeshGrobTransformTool</a>
@@ -448,10 +466,13 @@ $(document).ready(function(){initNavTree('functions_p.html',''); initResizable()
 : <a class="el" href="classOGF_1_1Tool.html#af3d466c51809e07cc2d477e256ece1a1">OGF::Tool</a>
 </li>
 <li>project_points_on_surface()
-: <a class="el" href="classGEO_1_1RestrictedVoronoiDiagram.html#af5380c121ab90aced05abe117f83e7c5">GEO::RestrictedVoronoiDiagram</a>
+: <a class="el" href="classGEO_1_1RestrictedVoronoiDiagram.html#ad983d22365c50d7af674a85cd728359c">GEO::RestrictedVoronoiDiagram</a>
 </li>
 <li>project_root()
 : <a class="el" href="classOGF_1_1FileManager.html#acd2062b5b95548bab9fed8af92a9b224">OGF::FileManager</a>
+</li>
+<li>projection()
+: <a class="el" href="classGEO_1_1CSGBuilder.html#ab0101e062c20e3cc6580958e0c4bfee8">GEO::CSGBuilder</a>
 </li>
 <li>projection_matrix()
 : <a class="el" href="classOGF_1_1RenderingContext.html#acc5c815ec41235846b8acf37d02b005e">OGF::RenderingContext</a>
@@ -483,7 +504,7 @@ $(document).ready(function(){initNavTree('functions_p.html',''); initResizable()
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:50 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:09 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

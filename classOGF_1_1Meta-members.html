@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -94,8 +101,10 @@ $(document).ready(function(){initNavTree('classOGF_1_1Meta.html',''); initResiza
   <tr><td class="entry"><a class="el" href="classOGF_1_1Meta.html#a6864d65add55f1d66021f7ec241ccc22">bind_meta_type</a>(MetaType *meta_type, const std::string &amp;typeid_name)</td><td class="entry"><a class="el" href="classOGF_1_1Meta.html">OGF::Meta</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1Meta.html#a8c405d94165b42ff632988f6aa470c0f">initialize</a>()</td><td class="entry"><a class="el" href="classOGF_1_1Meta.html">OGF::Meta</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr><td class="entry"><a class="el" href="classOGF_1_1Meta.html#a1bc205db5df29aac427dd4d7ddaaaaa0">instance</a>()</td><td class="entry"><a class="el" href="classOGF_1_1Meta.html">OGF::Meta</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1Meta.html#a72842fc368ba91d02a956bfda57a80b9">list_types</a>(std::vector&lt; MetaType * &gt; &amp;types)</td><td class="entry"><a class="el" href="classOGF_1_1Meta.html">OGF::Meta</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classOGF_1_1Meta.html#a09a670391cf69807403acb3dcb131c47">meta_type_is_bound</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="classOGF_1_1Meta.html">OGF::Meta</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1Meta.html#a7b6e3b0e1a40fef040fe27187481cd93">list_type_names</a>(std::vector&lt; std::string &gt; &amp;type_names)</td><td class="entry"><a class="el" href="classOGF_1_1Meta.html">OGF::Meta</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classOGF_1_1Meta.html#a72842fc368ba91d02a956bfda57a80b9">list_types</a>(std::vector&lt; MetaType * &gt; &amp;types)</td><td class="entry"><a class="el" href="classOGF_1_1Meta.html">OGF::Meta</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1Meta.html#a09a670391cf69807403acb3dcb131c47">meta_type_is_bound</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="classOGF_1_1Meta.html">OGF::Meta</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classOGF_1_1Meta.html#a354358e2d5c624085c618b839785d455">resolve_meta_class</a>(const std::string &amp;type_name) const</td><td class="entry"><a class="el" href="classOGF_1_1Meta.html">OGF::Meta</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1Meta.html#a854440412125f9036d266f8993f45a5c">resolve_meta_type</a>(const std::string &amp;type_name) const</td><td class="entry"><a class="el" href="classOGF_1_1Meta.html">OGF::Meta</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classOGF_1_1Meta.html#a0081f0b64b6608ba2f9497975f2bd815">resolve_meta_type_by_typeid_name</a>(const std::string &amp;typeid_name) const</td><td class="entry"><a class="el" href="classOGF_1_1Meta.html">OGF::Meta</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1Meta.html#ad86c07768cab1081f2c259bb195c8596">terminate</a>()</td><td class="entry"><a class="el" href="classOGF_1_1Meta.html">OGF::Meta</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
@@ -107,7 +116,7 @@ $(document).ready(function(){initNavTree('classOGF_1_1Meta.html',''); initResiza
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

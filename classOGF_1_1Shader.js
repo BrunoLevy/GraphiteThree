@@ -5,6 +5,7 @@ var classOGF_1_1Shader =
     [ "blink", "classOGF_1_1Shader.html#a264d77346b46f608364e0ed0f2f18130", null ],
     [ "create_texture_from_colormap_name", "classOGF_1_1Shader.html#adb428044533164ffec5012b6e229d93d", null ],
     [ "create_texture_from_file", "classOGF_1_1Shader.html#aedafbce6cb4ef2aa495c55adc930ddc9", null ],
+    [ "dark_mode", "classOGF_1_1Shader.html#a81ba8d41941932c1dea9cac85af27c44", null ],
     [ "draw", "classOGF_1_1Shader.html#a606d7bd0baeb80b3108e4f042b464ec2", null ],
     [ "get_grob", "classOGF_1_1Shader.html#a573124fc6980ce7c0df503703d4169cd", null ],
     [ "get_multi", "classOGF_1_1Shader.html#ac13fd5bfa7b818287d453725375a3c4c", null ],

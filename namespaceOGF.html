@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -156,6 +163,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1InterfaceScope.html">InterfaceScope</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classOGF_1_1Scope.html" title="A naming scope in an Interpreter.">Scope</a> that contains all interfaces of an object.  <a href="classOGF_1_1InterfaceScope.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MetaTypesScope.html">MetaTypesScope</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classOGF_1_1Scope.html" title="A naming scope in an Interpreter.">Scope</a> that contains all interfaces of an object.  <a href="classOGF_1_1MetaTypesScope.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Interpreter.html">Interpreter</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract base class for the GOM interpreter.  <a href="classOGF_1_1Interpreter.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,6 +174,17 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1LuaInterpreter.html">LuaInterpreter</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The main class that interfaces the Python interpreter with Graphite.  <a href="classOGF_1_1LuaInterpreter.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1DynamicObject.html">DynamicObject</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An object with a class that can be created in Lua.  <a href="classOGF_1_1DynamicObject.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1DynamicFactoryMetaClass.html">DynamicFactoryMetaClass</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1DynamicMetaSlot.html">DynamicMetaSlot</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A slot in a dynamically-created class.  <a href="classOGF_1_1DynamicMetaSlot.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1DynamicMetaClass.html">DynamicMetaClass</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A <a class="el" href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository.">MetaClass</a> that can be created in Lua.  <a href="classOGF_1_1DynamicMetaClass.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Meta.html">Meta</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores all the meta information of the system, used by the reflection API.  <a href="classOGF_1_1Meta.html#details">More...</a><br /></td></tr>
@@ -713,6 +734,9 @@ typedef <a class="el" href="classGEO_1_1SmartPointer.html">SmartPointer</a>&lt; 
 <tr class="memitem:a0e1aeab644a317b9da20a3b8bee0e870"><td class="memItemLeft" align="right" valign="top"><a id="a0e1aeab644a317b9da20a3b8bee0e870"></a>
 typedef <a class="el" href="classGEO_1_1SmartPointer.html">SmartPointer</a>&lt; <a class="el" href="classOGF_1_1Scope.html">Scope</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Scope_var</b></td></tr>
 <tr class="separator:a0e1aeab644a317b9da20a3b8bee0e870"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e4129bcdf325b2892bd48ef6ad8a2f8"><td class="memItemLeft" align="right" valign="top"><a id="a9e4129bcdf325b2892bd48ef6ad8a2f8"></a>
+typedef <a class="el" href="classGEO_1_1SmartPointer.html">SmartPointer</a>&lt; <a class="el" href="classOGF_1_1Interpreter.html">Interpreter</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Interpreter_var</b></td></tr>
+<tr class="separator:a9e4129bcdf325b2892bd48ef6ad8a2f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d01bd05e6eacfd9e59f4cd5bfec9183"><td class="memItemLeft" align="right" valign="top"><a id="a5d01bd05e6eacfd9e59f4cd5bfec9183"></a>
 typedef std::vector&lt; <a class="el" href="classOGF_1_1MetaArg.html">MetaArg</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOGF.html#a5d01bd05e6eacfd9e59f4cd5bfec9183">MetaArgList</a></td></tr>
 <tr class="memdesc:a5d01bd05e6eacfd9e59f4cd5bfec9183"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOGF_1_1Meta.html" title="Stores all the meta information of the system, used by the reflection API.">Meta</a> representation of a list of arguments. <br /></td></tr>
@@ -1714,7 +1738,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00347">347</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00363">363</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
 
 </div>
 </div>
@@ -1770,7 +1794,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00327">327</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00343">343</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
 
 </div>
 </div>
@@ -1809,7 +1833,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a> of the variable if it exists or nullptr otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00201">201</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00217">217</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
 
 </div>
 </div>
@@ -1865,7 +1889,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00231">231</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00247">247</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
 
 </div>
 </div>
@@ -1905,7 +1929,7 @@ template&lt;class T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a> of the variable if it exists or nullptr otherwise </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="namespaceOGF.html#a8dbb5b018ca89d435492b001bc0d93de" title="Gets the MetaType associated with a variable.">ogf_dynamic_type</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00217">217</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00233">233</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
 
 </div>
 </div>
@@ -1952,7 +1976,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00451">451</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00478">478</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -2482,7 +2506,7 @@ template&lt;class FT &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

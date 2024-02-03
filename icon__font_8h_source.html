@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Graphite: geogram_gfx/ImGui_ext/icon_font.h Source File</title>
+<title>Graphite: geogram_gfx/imgui_ext/icon_font.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -87,7 +94,7 @@ $(document).ready(function(){initNavTree('icon__font_8h_source.html',''); initRe
 <div class="title">icon_font.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="icon__font_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> *  Copyright (c) 2000-2022 Inria</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *  All rights reserved.</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
@@ -139,9 +146,9 @@ $(document).ready(function(){initNavTree('icon__font_8h_source.html',''); initRe
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="icon__font_8h.html#a9d09b9e4cd66a65642f2aed27ff80309">   64</a></span>&#160;<span class="keywordtype">wchar_t</span> <a class="code" href="gfx_2api_2defs_8h.html#a6db1f5359a6e2a475177dfef560d3215">GEOGRAM_GFX_API</a> <a class="code" href="icon__font_8h.html#a9d09b9e4cd66a65642f2aed27ff80309">icon_wchar</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* name);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">wchar_t</span> <a class="code" href="gfx_2api_2defs_8h.html#a6db1f5359a6e2a475177dfef560d3215">GEOGRAM_GFX_API</a> icon_wchar(<span class="keyword">const</span> <span class="keywordtype">char</span>* name);</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="icon__font_8h.html#a5924e576fe55f2540fe70262f108c127">   71</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="gfx_2api_2defs_8h.html#a6db1f5359a6e2a475177dfef560d3215">GEOGRAM_GFX_API</a> <a class="code" href="icon__font_8h.html#a5924e576fe55f2540fe70262f108c127">init_icon_table</a>();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keywordtype">void</span> <a class="code" href="gfx_2api_2defs_8h.html#a6db1f5359a6e2a475177dfef560d3215">GEOGRAM_GFX_API</a> init_icon_table();</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    </div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
@@ -160,16 +167,14 @@ $(document).ready(function(){initNavTree('icon__font_8h_source.html',''); initRe
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
 <div class="ttc" id="agfx_2api_2defs_8h_html"><div class="ttname"><a href="gfx_2api_2defs_8h.html">defs.h</a></div><div class="ttdoc">Basic definitions for the Geogram C API.</div></div>
 <div class="ttc" id="agfx_2api_2defs_8h_html_a6db1f5359a6e2a475177dfef560d3215"><div class="ttname"><a href="gfx_2api_2defs_8h.html#a6db1f5359a6e2a475177dfef560d3215">GEOGRAM_GFX_API</a></div><div class="ttdeci">#define GEOGRAM_GFX_API</div><div class="ttdoc">Linkage declaration for geogram symbols.</div><div class="ttdef"><b>Definition:</b> <a href="gfx_2api_2defs_8h_source.html#l00055">defs.h:55</a></div></div>
-<div class="ttc" id="aicon__font_8h_html_a5924e576fe55f2540fe70262f108c127"><div class="ttname"><a href="icon__font_8h.html#a5924e576fe55f2540fe70262f108c127">init_icon_table</a></div><div class="ttdeci">void init_icon_table()</div><div class="ttdoc">Initializes the icon table.</div></div>
-<div class="ttc" id="aicon__font_8h_html_a9d09b9e4cd66a65642f2aed27ff80309"><div class="ttname"><a href="icon__font_8h.html#a9d09b9e4cd66a65642f2aed27ff80309">icon_wchar</a></div><div class="ttdeci">wchar_t icon_wchar(const char *name)</div><div class="ttdoc">Gets an icon by name.</div></div>
 <div class="ttc" id="anamespaceGEO_html"><div class="ttname"><a href="namespaceGEO.html">GEO</a></div><div class="ttdoc">Global Vorpaline namespace.</div><div class="ttdef"><b>Definition:</b> <a href="lua__grob__shader_8h_source.html#l00053">lua_grob_shader.h:53</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_20037eb6270bb31b4654a405ea4434e9.html">geogram_gfx</a></li><li class="navelem"><a class="el" href="dir_b87bc7f77115aad4270d7ddcbecc9cab.html">ImGui_ext</a></li><li class="navelem"><a class="el" href="icon__font_8h.html">icon_font.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="navelem"><a class="el" href="dir_20037eb6270bb31b4654a405ea4434e9.html">geogram_gfx</a></li><li class="navelem"><a class="el" href="dir_1a05db92e5cc7192f39890d598d2a059.html">imgui_ext</a></li><li class="navelem"><b>icon_font.h</b></li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

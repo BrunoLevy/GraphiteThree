@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['t_5fmarked_5fflag_9112',['T_MARKED_FLAG',['../classGEO_1_1CDTBase2d.html#ace5f36b6d887a37914c9b715302ca7b1a7f2d743e835a38d514d2932c392aeeb9',1,'GEO::CDTBase2d']]]
+  ['vertex_5fat_5finfinity_9440',['VERTEX_AT_INFINITY',['../convex__cell_8h.html#a962a1aed318a4620980ac7d3868f00caae95ad91c205aa3a92903f293ec267a53',1,'VBW']]]
 ];

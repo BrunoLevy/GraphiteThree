@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -142,61 +149,65 @@ $(document).ready(function(){initNavTree('scene__graph__devel__commands_8h_sourc
 <div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classOGF_1_1SceneGraphDevelCommands.html#a0e26854250145d04446a5ffd2d418970">   68</a></span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classOGF_1_1SceneGraphDevelCommands.html#a0e26854250145d04446a5ffd2d418970">~SceneGraphDevelCommands</a>();</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    gom_slots:</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordtype">void</span> load_plugin(<span class="keyword">const</span> std::string&amp; plugin_name);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classOGF_1_1SceneGraphDevelCommands.html#ade2860b74c3ce5f8d475939fe9185a2d">   86</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1SceneGraphDevelCommands.html#ade2860b74c3ce5f8d475939fe9185a2d">create_plugin</a>(</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keyword">const</span> std::string&amp; plugin_name,</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <span class="keyword">const</span> std::string&amp; author = <span class="stringliteral">&quot;Nicolas Bourbaki&quot;</span>,</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            <span class="keyword">const</span> std::string&amp; contact = <span class="stringliteral">&quot;&quot;</span>,</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <span class="keywordtype">bool</span> autoload = <span class="keyword">true</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        );</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="classOGF_1_1SceneGraphDevelCommands.html#aa23e0fec2bb61305e24fb66c100a7b01">  100</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1SceneGraphDevelCommands.html#aa23e0fec2bb61305e24fb66c100a7b01">create_commands</a>(</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">DynamicModuleName</a>&amp; plugin_name,</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">GrobClassName</a>&amp; type, </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            <span class="keyword">const</span> std::string&amp; name</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        );</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="classOGF_1_1SceneGraphDevelCommands.html#a3464c603002e10495b5cdd2311538cf3">  114</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1SceneGraphDevelCommands.html#a3464c603002e10495b5cdd2311538cf3">create_shader</a>(</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">DynamicModuleName</a>&amp; plugin_name, </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">GrobClassName</a>&amp; type,</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            <span class="keyword">const</span> std::string&amp; name,</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            <span class="keyword">const</span> std::string&amp; base_class_name=<span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordtype">void</span> load_plugin(<span class="keyword">const</span> std::string&amp; plugin_name);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="classOGF_1_1SceneGraphDevelCommands.html#ade2860b74c3ce5f8d475939fe9185a2d">   88</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1SceneGraphDevelCommands.html#ade2860b74c3ce5f8d475939fe9185a2d">create_plugin</a>(</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            <span class="keyword">const</span> std::string&amp; plugin_name,</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <span class="keyword">const</span> std::string&amp; author = <span class="stringliteral">&quot;Nicolas Bourbaki&quot;</span>,</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            <span class="keyword">const</span> std::string&amp; contact = <span class="stringliteral">&quot;&quot;</span>,</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            <span class="keywordtype">bool</span> autoload = <span class="keyword">true</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        );</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="classOGF_1_1SceneGraphDevelCommands.html#aa23e0fec2bb61305e24fb66c100a7b01">  103</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1SceneGraphDevelCommands.html#aa23e0fec2bb61305e24fb66c100a7b01">create_commands</a>(</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">DynamicModuleName</a>&amp; plugin_name,</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">GrobClassName</a>&amp; type, </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            <span class="keyword">const</span> std::string&amp; name</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        );</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="classOGF_1_1SceneGraphDevelCommands.html#a9c9e4ff86f213c73f9b2fc17126f0207">  116</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1SceneGraphDevelCommands.html#a9c9e4ff86f213c73f9b2fc17126f0207">create_scene_graph_commands</a>(</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">DynamicModuleName</a>&amp; plugin_name,</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            <span class="keyword">const</span> std::string&amp; name</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        );</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="classOGF_1_1SceneGraphDevelCommands.html#a19a0275bfad1d762201d66957829ec1a">  129</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1SceneGraphDevelCommands.html#a19a0275bfad1d762201d66957829ec1a">create_tool</a>(</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">DynamicModuleName</a>&amp; plugin_name,</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">GrobClassName</a>&amp; type,</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;            <span class="keyword">const</span> std::string&amp; name,            </div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;            <span class="keyword">const</span> std::string&amp; base_class_name = <span class="stringliteral">&quot;&quot;</span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        );</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
-<div class="line"><a name="l00145"></a><span class="lineno"><a class="line" href="classOGF_1_1SceneGraphDevelCommands.html#aa77504f8db201197dfd960a2741e83d2">  145</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1SceneGraphDevelCommands.html#aa77504f8db201197dfd960a2741e83d2">create_grob</a>(</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">DynamicModuleName</a>&amp; plugin_name,</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;            <span class="keyword">const</span> std::string&amp; grob_name,</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;            <span class="keyword">const</span> std::string&amp; file_extension = <span class="stringliteral">&quot;&quot;</span>,</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            <span class="keyword">const</span> std::string&amp; base_class_name = <span class="stringliteral">&quot;&quot;</span></div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        );</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        </div>
-<div class="line"><a name="l00159"></a><span class="lineno"><a class="line" href="classOGF_1_1SceneGraphDevelCommands.html#ad5282322ba0cb1ea8b7a450c477f0a4b">  159</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1SceneGraphDevelCommands.html#ad5282322ba0cb1ea8b7a450c477f0a4b">create_class</a>(</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">DynamicModuleName</a>&amp; plugin_name,</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            <span class="keyword">const</span> std::string&amp; subdirectory,</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            <span class="keyword">const</span> std::string&amp; class_name</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        );</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
-<div class="line"><a name="l00172"></a><span class="lineno"><a class="line" href="classOGF_1_1SceneGraphDevelCommands.html#ac963aa4ae8621dcb581e96c8cbfb61b9">  172</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1SceneGraphDevelCommands.html#ac963aa4ae8621dcb581e96c8cbfb61b9">create_file</a>(</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">DynamicModuleName</a>&amp; plugin_name,</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;            <span class="keyword">const</span> std::string&amp; subdirectory,</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;            <span class="keyword">const</span> std::string&amp; name</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        );</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        </div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    };</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;}</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160; </div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        </div>
+<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="classOGF_1_1SceneGraphDevelCommands.html#a3464c603002e10495b5cdd2311538cf3">  131</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1SceneGraphDevelCommands.html#a3464c603002e10495b5cdd2311538cf3">create_shader</a>(</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">DynamicModuleName</a>&amp; plugin_name, </div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">GrobClassName</a>&amp; type,</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;            <span class="keyword">const</span> std::string&amp; name,</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;            <span class="keyword">const</span> std::string&amp; base_class_name=<span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        );</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="classOGF_1_1SceneGraphDevelCommands.html#a19a0275bfad1d762201d66957829ec1a">  147</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1SceneGraphDevelCommands.html#a19a0275bfad1d762201d66957829ec1a">create_tool</a>(</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">DynamicModuleName</a>&amp; plugin_name,</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">GrobClassName</a>&amp; type,</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;            <span class="keyword">const</span> std::string&amp; name,            </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            <span class="keyword">const</span> std::string&amp; base_class_name = <span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        );</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
+<div class="line"><a name="l00164"></a><span class="lineno"><a class="line" href="classOGF_1_1SceneGraphDevelCommands.html#aa77504f8db201197dfd960a2741e83d2">  164</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1SceneGraphDevelCommands.html#aa77504f8db201197dfd960a2741e83d2">create_grob</a>(</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">DynamicModuleName</a>&amp; plugin_name,</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;            <span class="keyword">const</span> std::string&amp; grob_name,</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;            <span class="keyword">const</span> std::string&amp; file_extension = <span class="stringliteral">&quot;&quot;</span>,</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;            <span class="keyword">const</span> std::string&amp; base_class_name = <span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        );</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        </div>
+<div class="line"><a name="l00179"></a><span class="lineno"><a class="line" href="classOGF_1_1SceneGraphDevelCommands.html#ad5282322ba0cb1ea8b7a450c477f0a4b">  179</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1SceneGraphDevelCommands.html#ad5282322ba0cb1ea8b7a450c477f0a4b">create_class</a>(</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">DynamicModuleName</a>&amp; plugin_name,</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;            <span class="keyword">const</span> std::string&amp; subdirectory,</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            <span class="keyword">const</span> std::string&amp; class_name</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        );</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160; </div>
+<div class="line"><a name="l00193"></a><span class="lineno"><a class="line" href="classOGF_1_1SceneGraphDevelCommands.html#ac963aa4ae8621dcb581e96c8cbfb61b9">  193</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classOGF_1_1SceneGraphDevelCommands.html#ac963aa4ae8621dcb581e96c8cbfb61b9">create_file</a>(</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;            <span class="keyword">const</span> <a class="code" href="classOGF_1_1Name.html">DynamicModuleName</a>&amp; plugin_name,</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;            <span class="keyword">const</span> std::string&amp; subdirectory,</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;            <span class="keyword">const</span> std::string&amp; name</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;        );</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    };</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;}</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160; </div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160; </div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
 <div class="ttc" id="aclassOGF_1_1Name_html"><div class="ttname"><a href="classOGF_1_1Name.html">OGF::Name</a></div><div class="ttdoc">A template class for strings that need to have a specific type in the GOM system.</div><div class="ttdef"><b>Definition:</b> <a href="scene__graph_2types_2properties_8h_source.html#l00217">properties.h:217</a></div></div>
 <div class="ttc" id="aclassOGF_1_1SceneGraphCommands_html"><div class="ttname"><a href="classOGF_1_1SceneGraphCommands.html">OGF::SceneGraphCommands</a></div><div class="ttdoc">Base class for Commands that act on the whole SceneGraph.</div><div class="ttdef"><b>Definition:</b> <a href="scene__graph__commands_8h_source.html#l00055">scene_graph_commands.h:55</a></div></div>
 <div class="ttc" id="aclassOGF_1_1SceneGraphDevelCommands_html"><div class="ttname"><a href="classOGF_1_1SceneGraphDevelCommands.html">OGF::SceneGraphDevelCommands</a></div><div class="ttdoc">Commands to create new plugins, Grob class names, Tool, Commands and Shader.</div><div class="ttdef"><b>Definition:</b> <a href="scene__graph__devel__commands_8h_source.html#l00058">scene_graph_devel_commands.h:58</a></div></div>
@@ -204,6 +215,7 @@ $(document).ready(function(){initNavTree('scene__graph__devel__commands_8h_sourc
 <div class="ttc" id="aclassOGF_1_1SceneGraphDevelCommands_html_a19a0275bfad1d762201d66957829ec1a"><div class="ttname"><a href="classOGF_1_1SceneGraphDevelCommands.html#a19a0275bfad1d762201d66957829ec1a">OGF::SceneGraphDevelCommands::create_tool</a></div><div class="ttdeci">void create_tool(const DynamicModuleName &amp;plugin_name, const GrobClassName &amp;type, const std::string &amp;name, const std::string &amp;base_class_name=&quot;&quot;)</div><div class="ttdoc">Creates a new tool in a plugin.</div></div>
 <div class="ttc" id="aclassOGF_1_1SceneGraphDevelCommands_html_a3464c603002e10495b5cdd2311538cf3"><div class="ttname"><a href="classOGF_1_1SceneGraphDevelCommands.html#a3464c603002e10495b5cdd2311538cf3">OGF::SceneGraphDevelCommands::create_shader</a></div><div class="ttdeci">void create_shader(const DynamicModuleName &amp;plugin_name, const GrobClassName &amp;type, const std::string &amp;name, const std::string &amp;base_class_name=&quot;&quot;)</div><div class="ttdoc">Creates a new Shader class in a plugin.</div></div>
 <div class="ttc" id="aclassOGF_1_1SceneGraphDevelCommands_html_a5eec3cfd25a6dde0c4ad51a3cfccb784"><div class="ttname"><a href="classOGF_1_1SceneGraphDevelCommands.html#a5eec3cfd25a6dde0c4ad51a3cfccb784">OGF::SceneGraphDevelCommands::SceneGraphDevelCommands</a></div><div class="ttdeci">SceneGraphDevelCommands()</div><div class="ttdoc">SceneGraphDevelCommands constructor.</div></div>
+<div class="ttc" id="aclassOGF_1_1SceneGraphDevelCommands_html_a9c9e4ff86f213c73f9b2fc17126f0207"><div class="ttname"><a href="classOGF_1_1SceneGraphDevelCommands.html#a9c9e4ff86f213c73f9b2fc17126f0207">OGF::SceneGraphDevelCommands::create_scene_graph_commands</a></div><div class="ttdeci">void create_scene_graph_commands(const DynamicModuleName &amp;plugin_name, const std::string &amp;name)</div><div class="ttdoc">Creates a new Commands class for the SceneGraph in a plugin.</div></div>
 <div class="ttc" id="aclassOGF_1_1SceneGraphDevelCommands_html_aa23e0fec2bb61305e24fb66c100a7b01"><div class="ttname"><a href="classOGF_1_1SceneGraphDevelCommands.html#aa23e0fec2bb61305e24fb66c100a7b01">OGF::SceneGraphDevelCommands::create_commands</a></div><div class="ttdeci">void create_commands(const DynamicModuleName &amp;plugin_name, const GrobClassName &amp;type, const std::string &amp;name)</div><div class="ttdoc">Creates a new Commands class in a plugin.</div></div>
 <div class="ttc" id="aclassOGF_1_1SceneGraphDevelCommands_html_aa77504f8db201197dfd960a2741e83d2"><div class="ttname"><a href="classOGF_1_1SceneGraphDevelCommands.html#aa77504f8db201197dfd960a2741e83d2">OGF::SceneGraphDevelCommands::create_grob</a></div><div class="ttdeci">void create_grob(const DynamicModuleName &amp;plugin_name, const std::string &amp;grob_name, const std::string &amp;file_extension=&quot;&quot;, const std::string &amp;base_class_name=&quot;&quot;)</div><div class="ttdoc">Creates a new Grob class in a plugin.</div></div>
 <div class="ttc" id="aclassOGF_1_1SceneGraphDevelCommands_html_ac963aa4ae8621dcb581e96c8cbfb61b9"><div class="ttname"><a href="classOGF_1_1SceneGraphDevelCommands.html#ac963aa4ae8621dcb581e96c8cbfb61b9">OGF::SceneGraphDevelCommands::create_file</a></div><div class="ttdeci">void create_file(const DynamicModuleName &amp;plugin_name, const std::string &amp;subdirectory, const std::string &amp;name)</div><div class="ttdoc">Creates a new file in a plugin.</div></div>
@@ -219,7 +231,7 @@ $(document).ready(function(){initNavTree('scene__graph__devel__commands_8h_sourc
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_aef77abc1c70517fe3037d0ad81c1d82.html">OGF</a></li><li class="navelem"><a class="el" href="dir_dd537fb3103fe8ee61216baaff3babcb.html">devel</a></li><li class="navelem"><a class="el" href="dir_fef91b37271664836e54234c596850a3.html">commands</a></li><li class="navelem"><a class="el" href="scene__graph__devel__commands_8h.html">scene_graph_devel_commands.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

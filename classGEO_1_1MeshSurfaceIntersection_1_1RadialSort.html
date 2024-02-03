@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -100,9 +107,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a962735bacf257be56b7d73211c997a27"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a962735bacf257be56b7d73211c997a27">RadialSort</a> (const <a class="el" href="classGEO_1_1MeshSurfaceIntersection.html">MeshSurfaceIntersection</a> &amp;mesh)</td></tr>
 <tr class="memdesc:a962735bacf257be56b7d73211c997a27"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">RadialSort</a> constructor.  <a href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a962735bacf257be56b7d73211c997a27">More...</a><br /></td></tr>
 <tr class="separator:a962735bacf257be56b7d73211c997a27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a533e25e49d662eaef802d8bed4a9021e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a533e25e49d662eaef802d8bed4a9021e">set_approx_predicates</a> (bool x)</td></tr>
-<tr class="memdesc:a533e25e49d662eaef802d8bed4a9021e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies whether approximate predicates shoud be used.  <a href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a533e25e49d662eaef802d8bed4a9021e">More...</a><br /></td></tr>
-<tr class="separator:a533e25e49d662eaef802d8bed4a9021e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a17adefaec8a2e03a195cabaf0e8bd6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a3a17adefaec8a2e03a195cabaf0e8bd6">init</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> h_ref)</td></tr>
 <tr class="memdesc:a3a17adefaec8a2e03a195cabaf0e8bd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes radial sorting around a given halfedge.  <a href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a3a17adefaec8a2e03a195cabaf0e8bd6">More...</a><br /></td></tr>
 <tr class="separator:a3a17adefaec8a2e03a195cabaf0e8bd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -118,9 +122,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>test</b> (<a class="e
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:aa4fd1803cd11300e4c0ab5ca0567d472"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespaceGEO.html#afa3d378b37085c2547b79e71d015f149">vec3E</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#aa4fd1803cd11300e4c0ab5ca0567d472">exact_direction</a> (const <a class="el" href="structGEO_1_1vec3HE.html">vec3HE</a> &amp;p1, const <a class="el" href="structGEO_1_1vec3HE.html">vec3HE</a> &amp;p2)</td></tr>
-<tr class="memdesc:aa4fd1803cd11300e4c0ab5ca0567d472"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a vector of arbitrary length with its direction given by two points.  <a href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#aa4fd1803cd11300e4c0ab5ca0567d472">More...</a><br /></td></tr>
-<tr class="separator:aa4fd1803cd11300e4c0ab5ca0567d472"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23c0289211848214abfec75101423859"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespaceGEO_1_1exact.html#a7fef7cdd9cc4b9cff770ca2cf546ebf8">exact::vec3</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a23c0289211848214abfec75101423859">exact_direction</a> (const <a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a> &amp;p1, const <a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a> &amp;p2)</td></tr>
+<tr class="memdesc:a23c0289211848214abfec75101423859"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a vector of arbitrary length with its direction given by two points.  <a href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a23c0289211848214abfec75101423859">More...</a><br /></td></tr>
+<tr class="separator:a23c0289211848214abfec75101423859"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7e92b93cd566a7b725aaf7a8ab4a984"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespaceGEO.html#a20df795fadd12138794798ad9ad1ffc7">vec3I</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#ae7e92b93cd566a7b725aaf7a8ab4a984">exact_direction_I</a> (const <a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a> &amp;p1, const <a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a> &amp;p2)</td></tr>
+<tr class="memdesc:ae7e92b93cd566a7b725aaf7a8ab4a984"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes an interval vector of arbitrary length with its direction given by two points.  <a href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#ae7e92b93cd566a7b725aaf7a8ab4a984">More...</a><br /></td></tr>
+<tr class="separator:ae7e92b93cd566a7b725aaf7a8ab4a984"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -134,7 +141,7 @@ Protected Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class for sorting triangles around their common radial edge. </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection_8h_source.html#l00339">339</a> of file <a class="el" href="mesh__surface__intersection_8h_source.html">mesh_surface_intersection.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection_8h_source.html#l00426">426</a> of file <a class="el" href="mesh__surface__intersection_8h_source.html">mesh_surface_intersection.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a962735bacf257be56b7d73211c997a27"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a962735bacf257be56b7d73211c997a27">&#9670;&nbsp;</a></span>RadialSort()</h2>
@@ -168,7 +175,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection_8h_source.html#l00345">345</a> of file <a class="el" href="mesh__surface__intersection_8h_source.html">mesh_surface_intersection.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection_8h_source.html#l00432">432</a> of file <a class="el" href="mesh__surface__intersection_8h_source.html">mesh_surface_intersection.h</a>.</p>
 
 </div>
 </div>
@@ -205,12 +212,12 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection_8h_source.html#l00383">383</a> of file <a class="el" href="mesh__surface__intersection_8h_source.html">mesh_surface_intersection.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection_8h_source.html#l00460">460</a> of file <a class="el" href="mesh__surface__intersection_8h_source.html">mesh_surface_intersection.h</a>.</p>
 
 </div>
 </div>
-<a id="aa4fd1803cd11300e4c0ab5ca0567d472"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4fd1803cd11300e4c0ab5ca0567d472">&#9670;&nbsp;</a></span>exact_direction()</h2>
+<a id="a23c0289211848214abfec75101423859"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23c0289211848214abfec75101423859">&#9670;&nbsp;</a></span>exact_direction()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -219,15 +226,15 @@ Protected Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="namespaceGEO.html#afa3d378b37085c2547b79e71d015f149">vec3E</a> GEO::MeshSurfaceIntersection::RadialSort::exact_direction </td>
+          <td class="memname">static <a class="el" href="namespaceGEO_1_1exact.html#a7fef7cdd9cc4b9cff770ca2cf546ebf8">exact::vec3</a> GEO::MeshSurfaceIntersection::RadialSort::exact_direction </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structGEO_1_1vec3HE.html">vec3HE</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a> &amp;&#160;</td>
           <td class="paramname"><em>p1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structGEO_1_1vec3HE.html">vec3HE</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a> &amp;&#160;</td>
           <td class="paramname"><em>p2</em>&#160;</td>
         </tr>
         <tr>
@@ -251,6 +258,51 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a vector in cartesian coordinates with the same direction and orientation as <code>p2</code> - <code>p1</code> </dd></dl>
+
+</div>
+</div>
+<a id="ae7e92b93cd566a7b725aaf7a8ab4a984"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7e92b93cd566a7b725aaf7a8ab4a984">&#9670;&nbsp;</a></span>exact_direction_I()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="namespaceGEO.html#a20df795fadd12138794798ad9ad1ffc7">vec3I</a> GEO::MeshSurfaceIntersection::RadialSort::exact_direction_I </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a> &amp;&#160;</td>
+          <td class="paramname"><em>p1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a> &amp;&#160;</td>
+          <td class="paramname"><em>p2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes an interval vector of arbitrary length with its direction given by two points. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p1,p2</td><td>the two points in homogeneous coordinates </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>an interval vector in cartesian coordinates with the same direction and orientation as <code>p2</code> - <code>p1</code> </dd></dl>
 
 </div>
 </div>
@@ -404,42 +456,6 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a533e25e49d662eaef802d8bed4a9021e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a533e25e49d662eaef802d8bed4a9021e">&#9670;&nbsp;</a></span>set_approx_predicates()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void GEO::MeshSurfaceIntersection::RadialSort::set_approx_predicates </td>
-          <td>(</td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>x</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Specifies whether approximate predicates shoud be used. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>true if approximate predicates should be used, default is false (use exact predicates) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection_8h_source.html#l00359">359</a> of file <a class="el" href="mesh__surface__intersection_8h_source.html">mesh_surface_intersection.h</a>.</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>geogram/mesh/<a class="el" href="mesh__surface__intersection_8h_source.html">mesh_surface_intersection.h</a></li>
 </ul>
@@ -449,7 +465,7 @@ Protected Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1MeshSurfaceIntersection.html">MeshSurfaceIntersection</a></li><li class="navelem"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">RadialSort</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -88,6 +95,10 @@ $(document).ready(function(){initNavTree('functions_func_f.html',''); initResiza
 <h3><a id="index_f"></a>- f -</h3><ul>
 <li>facet()
 : <a class="el" href="classGEO_1_1MeshCellsStore.html#a0a6bcf434cdf0b1c14441c96319d3bb0">GEO::MeshCellsStore</a>
+, <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1Halfedges.html#a267367e60e1731a961164268dffa53e7">GEO::MeshSurfaceIntersection::Halfedges</a>
+</li>
+<li>facet_alpha3()
+: <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1Halfedges.html#ad66222ba36aa2cbd9a83b2123df8ce22">GEO::MeshSurfaceIntersection::Halfedges</a>
 </li>
 <li>facet_area()
 : <a class="el" href="classVBW_1_1ConvexCell.html#a65a452e711fb4ef0fa47a30b7b1d78da">VBW::ConvexCell</a>
@@ -209,7 +220,7 @@ $(document).ready(function(){initNavTree('functions_func_f.html',''); initResiza
 : <a class="el" href="classOGF_1_1Interpreter.html#a408a03be0cd87a0b0d197d5a46e16d99">OGF::Interpreter</a>
 </li>
 <li>find()
-: <a class="el" href="classGEOGen_1_1small__set.html#a61d88f898b8f77a265f0ed2eaf69c799">GEOGen::small_set&lt; T, DIM &gt;</a>
+: <a class="el" href="classGEOGen_1_1small__set.html#a1cb99bd01a39ee838f08ed9dd01a86aa">GEOGen::small_set&lt; T, DIM &gt;</a>
 , <a class="el" href="classOGF_1_1Grob.html#a7b1b44a1524ca112e0376e8b9c666fcf">OGF::Grob</a>
 , <a class="el" href="classOGF_1_1LuaGrob.html#ae14b163ebc58c7e6d5058b70e6b26a32">OGF::LuaGrob</a>
 , <a class="el" href="classOGF_1_1MeshGrob.html#a48fdbc3180f8a5d0644bd24a4ecd70dd">OGF::MeshGrob</a>
@@ -232,7 +243,7 @@ $(document).ready(function(){initNavTree('functions_func_f.html',''); initResiza
 : <a class="el" href="classOGF_1_1ArgList.html#aff8cf0b4968c61dc9283c6d7273f6cbf">OGF::ArgList</a>
 </li>
 <li>find_attribute()
-: <a class="el" href="structGEO_1_1GeoFile_1_1AttributeSetInfo.html#a479c3b7b27e2bc88e8bd6da7f8ec9cfb">GEO::GeoFile::AttributeSetInfo</a>
+: <a class="el" href="structGEO_1_1GeoFile_1_1AttributeSetInfo.html#a1ba0c6c54da880264962fb2c0e6df8c1">GEO::GeoFile::AttributeSetInfo</a>
 </li>
 <li>find_attribute_set()
 : <a class="el" href="classGEO_1_1GeoFile.html#a7bb64d17f6c27574cd9369fc062a0a98">GEO::GeoFile</a>
@@ -260,8 +271,14 @@ $(document).ready(function(){initNavTree('functions_func_f.html',''); initResiza
 : <a class="el" href="classGEO_1_1Delaunay2d.html#a001e9fa8f753007532e6a70f4b27a40a">GEO::Delaunay2d</a>
 , <a class="el" href="classGEO_1_1Delaunay3d.html#aafb5c42fbe7b9c5c21679c8cc58b8d5f">GEO::Delaunay3d</a>
 </li>
+<li>find_coplanar_facets()
+: <a class="el" href="classGEO_1_1CoplanarFacets.html#ad34eed9d40eb4f4b3c94b6cf3cd4b7ce">GEO::CoplanarFacets</a>
+</li>
 <li>find_creator()
 : <a class="el" href="classGEO_1_1Factory.html#af8a520d7ab6c22ad930ab21655d39140">GEO::Factory&lt; FactoryCreator &gt;</a>
+</li>
+<li>find_edge()
+: <a class="el" href="classGEO_1_1MeshFacets.html#a5770af82c0c74a9d295249b7d55e4526">GEO::MeshFacets</a>
 </li>
 <li>find_environment()
 : <a class="el" href="classGEO_1_1Environment.html#ab95cc6b6ad2cc53560ba9caf66c8c2b7">GEO::Environment</a>
@@ -297,7 +314,7 @@ $(document).ready(function(){initNavTree('functions_func_f.html',''); initResiza
 : <a class="el" href="classOGF_1_1MeshGrobEditor.html#a6b28de937a27a2d25b14a63efdbb1fe0">OGF::MeshGrobEditor</a>
 </li>
 <li>find_or_create_exact_vertex()
-: <a class="el" href="classGEO_1_1MeshSurfaceIntersection.html#a9c495d7b2b99636e3e73555105a8d324">GEO::MeshSurfaceIntersection</a>
+: <a class="el" href="classGEO_1_1MeshSurfaceIntersection.html#a6c0c0107d5ed82876037813776d0c6bb">GEO::MeshSurfaceIntersection</a>
 </li>
 <li>find_or_create_object()
 : <a class="el" href="classOGF_1_1SceneGraph.html#a04667b96a0260ad3e3aa5bb03b53c1eb">OGF::SceneGraph</a>
@@ -356,6 +373,9 @@ $(document).ready(function(){initNavTree('functions_func_f.html',''); initResiza
 </li>
 <li>finite_triangle_vertex()
 : <a class="el" href="classGEO_1_1Delaunay2d.html#ab99b2daa87c37bc990b9a95a78cbe1d8">GEO::Delaunay2d</a>
+</li>
+<li>first_file()
+: <a class="el" href="classGEO_1_1SimpleMeshApplication.html#a7a59d831483808e51c2e0b6606785cb6">GEO::SimpleMeshApplication</a>
 </li>
 <li>first_triangle()
 : <a class="el" href="classVBW_1_1ConvexCell.html#a5b749a01740783296131c4310db2b888">VBW::ConvexCell</a>
@@ -499,7 +519,7 @@ $(document).ready(function(){initNavTree('functions_func_f.html',''); initResiza
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:50 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:09 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

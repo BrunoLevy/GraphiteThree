@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -313,9 +320,9 @@ $(document).ready(function(){initNavTree('life__cycle_8h_source.html',''); initR
 <div class="ttc" id="aclassOGF_1_1LifeCycle_html_af49cfab0bec583582fb0362cd8512b9c"><div class="ttname"><a href="classOGF_1_1LifeCycle.html#af49cfab0bec583582fb0362cd8512b9c">OGF::LifeCycle::new_array</a></div><div class="ttdeci">virtual Memory::pointer new_array(index_t nb)=0</div><div class="ttdoc">Dynamically allocates an array of objects.</div></div>
 <div class="ttc" id="acounted_8h_html"><div class="ttname"><a href="counted_8h.html">counted.h</a></div><div class="ttdoc">Base class of reference-counted objects, to be used with smart pointers.</div></div>
 <div class="ttc" id="amemory_8h_html"><div class="ttname"><a href="memory_8h.html">memory.h</a></div><div class="ttdoc">Types and functions for memory manipulation.</div></div>
-<div class="ttc" id="anamespaceGEO_1_1Memory_html_a8a09fc59788ee63a6f8c3ab12d1ca62a"><div class="ttname"><a href="namespaceGEO_1_1Memory.html#a8a09fc59788ee63a6f8c3ab12d1ca62a">GEO::Memory::pointer</a></div><div class="ttdeci">byte * pointer</div><div class="ttdoc">Pointer to unsigned byte(s)</div><div class="ttdef"><b>Definition:</b> <a href="memory_8h_source.html#l00092">memory.h:92</a></div></div>
+<div class="ttc" id="anamespaceGEO_1_1Memory_html_a8a09fc59788ee63a6f8c3ab12d1ca62a"><div class="ttname"><a href="namespaceGEO_1_1Memory.html#a8a09fc59788ee63a6f8c3ab12d1ca62a">GEO::Memory::pointer</a></div><div class="ttdeci">byte * pointer</div><div class="ttdoc">Pointer to unsigned byte(s)</div><div class="ttdef"><b>Definition:</b> <a href="memory_8h_source.html#l00105">memory.h:105</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_a4ca5364c7e7832c0b3382f32ba5c92be"><div class="ttname"><a href="namespaceGEO.html#a4ca5364c7e7832c0b3382f32ba5c92be">GEO::geo_argused</a></div><div class="ttdeci">void geo_argused(const T &amp;)</div><div class="ttdoc">Suppresses compiler warnings about unused parameters.</div><div class="ttdef"><b>Definition:</b> <a href="argused_8h_source.html#l00060">argused.h:60</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
 <div class="ttc" id="anamespaceOGF_html"><div class="ttname"><a href="namespaceOGF.html">OGF</a></div><div class="ttdoc">Global Graphite namespace.</div><div class="ttdef"><b>Definition:</b> <a href="src_2lib_2OGF_2basic_2common_2common_8h_source.html#l00076">common.h:76</a></div></div>
 <div class="ttc" id="anamespaceOGF_html_a5a14fbec10594e05ff0d91b15f05fde5"><div class="ttname"><a href="namespaceOGF.html#a5a14fbec10594e05ff0d91b15f05fde5">OGF::LifeCycle_var</a></div><div class="ttdeci">SmartPointer&lt; LifeCycle &gt; LifeCycle_var</div><div class="ttdoc">A reference_counted pointer to a LifeCycle.</div><div class="ttdef"><b>Definition:</b> <a href="life__cycle_8h_source.html#l00205">life_cycle.h:205</a></div></div>
 <div class="ttc" id="asrc_2lib_2OGF_2gom_2common_2common_8h_html"><div class="ttname"><a href="src_2lib_2OGF_2gom_2common_2common_8h.html">common.h</a></div><div class="ttdoc">Definitions common to all include files in the gom library.</div></div>
@@ -325,7 +332,7 @@ $(document).ready(function(){initNavTree('life__cycle_8h_source.html',''); initR
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_aef77abc1c70517fe3037d0ad81c1d82.html">OGF</a></li><li class="navelem"><a class="el" href="dir_69b25135ad0c2c10dad56e08dbeec7e1.html">gom</a></li><li class="navelem"><a class="el" href="dir_24e0b3dcd0b80d3a6d99b3a50ffcb374.html">services</a></li><li class="navelem"><b>life_cycle.h</b></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

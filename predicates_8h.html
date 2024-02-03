@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -97,6 +104,7 @@ $(document).ready(function(){initNavTree('predicates_8h.html',''); initResizable
 <div class="textblock"><code>#include &lt;<a class="el" href="geogram_2src_2lib_2geogram_2basic_2common_8h_source.html">geogram/basic/common.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="numeric_8h_source.html">geogram/basic/numeric.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geogram/basic/geometry.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="PCK_8h_source.html">geogram/numerics/PCK.h</a>&gt;</code><br />
 </div>
 <p><a href="predicates_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -159,7 +167,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a17f99358b78490f7dacddcf8601138e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether a lifted 3d point is inside the circumscribed circle of a lifted 3d triangle.  <a href="namespaceGEO_1_1PCK.html#a17f99358b78490f7dacddcf8601138e6">More...</a><br /></td></tr>
 <tr class="separator:a17f99358b78490f7dacddcf8601138e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acbf4c85df02b31d71193ff71dabec591"><td class="memItemLeft" align="right" valign="top">Sign&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO_1_1PCK.html#acbf4c85df02b31d71193ff71dabec591">GEO::PCK::orient_2d</a> (const double *p0, const double *p1, const double *p2)</td></tr>
-<tr class="memdesc:acbf4c85df02b31d71193ff71dabec591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the orientation predicate in 3d.  <a href="namespaceGEO_1_1PCK.html#acbf4c85df02b31d71193ff71dabec591">More...</a><br /></td></tr>
+<tr class="memdesc:acbf4c85df02b31d71193ff71dabec591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the orientation predicate in 2d.  <a href="namespaceGEO_1_1PCK.html#acbf4c85df02b31d71193ff71dabec591">More...</a><br /></td></tr>
 <tr class="separator:acbf4c85df02b31d71193ff71dabec591"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62455ae77ef22b0f6f4370048995297b"><td class="memItemLeft" align="right" valign="top">Sign&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO_1_1PCK.html#a62455ae77ef22b0f6f4370048995297b">GEO::PCK::orient_2d</a> (const vec2 &amp;p0, const vec2 &amp;p1, const vec2 &amp;p2)</td></tr>
 <tr class="memdesc:a62455ae77ef22b0f6f4370048995297b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the orientation predicate in 2d.  <a href="namespaceGEO_1_1PCK.html#a62455ae77ef22b0f6f4370048995297b">More...</a><br /></td></tr>
@@ -238,7 +246,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_2f1f89047d188415f836e3f8a1ed4b93.html">numerics</a></li><li class="navelem"><a class="el" href="predicates_8h.html">predicates.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

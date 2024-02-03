@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -126,6 +133,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:aa23e0fec2bb61305e24fb66c100a7b01"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1SceneGraphDevelCommands.html#aa23e0fec2bb61305e24fb66c100a7b01">create_commands</a> (const <a class="el" href="namespaceOGF.html#aa1f41b63eaafba7c9e4b00b867e3931e">DynamicModuleName</a> &amp;plugin_name, const <a class="el" href="namespaceOGF.html#aaa0ea497c5f0c1da6d1e232c8a73bac1">GrobClassName</a> &amp;type, const std::string &amp;name)</td></tr>
 <tr class="memdesc:aa23e0fec2bb61305e24fb66c100a7b01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <a class="el" href="classOGF_1_1Commands.html" title="Represents a set of commands.">Commands</a> class in a plugin.  <a href="classOGF_1_1SceneGraphDevelCommands.html#aa23e0fec2bb61305e24fb66c100a7b01">More...</a><br /></td></tr>
 <tr class="separator:aa23e0fec2bb61305e24fb66c100a7b01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c9e4ff86f213c73f9b2fc17126f0207"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1SceneGraphDevelCommands.html#a9c9e4ff86f213c73f9b2fc17126f0207">create_scene_graph_commands</a> (const <a class="el" href="namespaceOGF.html#aa1f41b63eaafba7c9e4b00b867e3931e">DynamicModuleName</a> &amp;plugin_name, const std::string &amp;name)</td></tr>
+<tr class="memdesc:a9c9e4ff86f213c73f9b2fc17126f0207"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <a class="el" href="classOGF_1_1Commands.html" title="Represents a set of commands.">Commands</a> class for the <a class="el" href="classOGF_1_1SceneGraph.html" title="Represents the list of objects loaded in Graphite.">SceneGraph</a> in a plugin.  <a href="classOGF_1_1SceneGraphDevelCommands.html#a9c9e4ff86f213c73f9b2fc17126f0207">More...</a><br /></td></tr>
+<tr class="separator:a9c9e4ff86f213c73f9b2fc17126f0207"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3464c603002e10495b5cdd2311538cf3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1SceneGraphDevelCommands.html#a3464c603002e10495b5cdd2311538cf3">create_shader</a> (const <a class="el" href="namespaceOGF.html#aa1f41b63eaafba7c9e4b00b867e3931e">DynamicModuleName</a> &amp;plugin_name, const <a class="el" href="namespaceOGF.html#aaa0ea497c5f0c1da6d1e232c8a73bac1">GrobClassName</a> &amp;type, const std::string &amp;name, const std::string &amp;base_class_name=&quot;&quot;)</td></tr>
 <tr class="memdesc:a3464c603002e10495b5cdd2311538cf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <a class="el" href="classOGF_1_1Shader.html" title="Base class for Grob shader.">Shader</a> class in a plugin.  <a href="classOGF_1_1SceneGraphDevelCommands.html#a3464c603002e10495b5cdd2311538cf3">More...</a><br /></td></tr>
 <tr class="separator:a3464c603002e10495b5cdd2311538cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -391,7 +401,7 @@ Additional Inherited Members</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">plugin_name</td><td>the name of the plugin </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">subdirectory</td><td>relative path to the subdirectory where the class files should be created </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">class_name</td><td>the name of the class to be created </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">class_name</td><td>the name of the class to be created \menu /Devel </td></tr>
   </table>
   </dd>
 </dl>
@@ -435,7 +445,7 @@ Additional Inherited Members</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">plugin_name</td><td>the name of the plugin </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>the <a class="el" href="classOGF_1_1Grob.html" title="Base class for all 3D Graphite objects.">Grob</a> class the commands should be attached to </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>for instance "FooBar" for "OGF::MeshGrobFooBarCommands" </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>for instance "FooBar" for "OGF::MeshGrobFooBarCommands" \menu /Devel </td></tr>
   </table>
   </dd>
 </dl>
@@ -479,7 +489,7 @@ Additional Inherited Members</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">plugin_name</td><td>the name of the plugin </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">subdirectory</td><td>relative path to the subdirectory where the class files should be created </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>the name of the file to be created, without extension </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>the name of the file to be created, without extension \menu /Devel </td></tr>
   </table>
   </dd>
 </dl>
@@ -530,7 +540,7 @@ Additional Inherited Members</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">plugin_name</td><td>the name of the plugin </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">grob_name</td><td>the name of the <a class="el" href="classOGF_1_1Grob.html" title="Base class for all 3D Graphite objects.">Grob</a> class </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">file_extension</td><td>optional extension of the files used to save/load objects with this <a class="el" href="classOGF_1_1Grob.html" title="Base class for all 3D Graphite objects.">Grob</a> class, without the "." </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">base_class_name</td><td>optional base class (with the "OGF::" prefix) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">base_class_name</td><td>optional base class (with the "OGF::" prefix) \menu /Devel </td></tr>
   </table>
   </dd>
 </dl>
@@ -581,7 +591,44 @@ Additional Inherited Members</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">plugin_name</td><td>the name of the plugin </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">author</td><td>your name </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">contact</td><td>your contact info (only used to be included in the generated headers, you can leave blank if you wish) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">autoload</td><td>if true, the plugin will be loaded next time Graphite is started (once the plugin is compiled) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">autoload</td><td>if true, the plugin will be loaded next time Graphite is started (once the plugin is compiled) \menu /Devel </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9c9e4ff86f213c73f9b2fc17126f0207"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c9e4ff86f213c73f9b2fc17126f0207">&#9670;&nbsp;</a></span>create_scene_graph_commands()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OGF::SceneGraphDevelCommands::create_scene_graph_commands </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespaceOGF.html#aa1f41b63eaafba7c9e4b00b867e3931e">DynamicModuleName</a> &amp;&#160;</td>
+          <td class="paramname"><em>plugin_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a new <a class="el" href="classOGF_1_1Commands.html" title="Represents a set of commands.">Commands</a> class for the <a class="el" href="classOGF_1_1SceneGraph.html" title="Represents the list of objects loaded in Graphite.">SceneGraph</a> in a plugin. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">plugin_name</td><td>the name of the plugin </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>for instance "FooBar" for "OGF::SceneGraphFooBarCommands" \menu /Devel </td></tr>
   </table>
   </dd>
 </dl>
@@ -632,7 +679,7 @@ Additional Inherited Members</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">plugin_name</td><td>the name of the plugin </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>the <a class="el" href="classOGF_1_1Grob.html" title="Base class for all 3D Graphite objects.">Grob</a> class the shader should be attached to </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>for instance "FooBar" for "OGF::MeshGrobFooBarShader" </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">base_class_name</td><td>optional base class for the shader (with the "OGF::" prefix) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">base_class_name</td><td>optional base class for the shader (with the "OGF::" prefix) \menu /Devel </td></tr>
   </table>
   </dd>
 </dl>
@@ -682,8 +729,8 @@ Additional Inherited Members</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">plugin_name</td><td>the name of the plugin </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>the <a class="el" href="classOGF_1_1Grob.html" title="Base class for all 3D Graphite objects.">Grob</a> class the shader should be attached to </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>for instance "FooBar" for "OGF::MeshGrobFooBarShader" </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">base_class_name</td><td>optional base class for the shader (with the "OGF::" prefix) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>for instance "FooBar" for "OGF::MeshGrobFooBarTool" </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">base_class_name</td><td>optional base class for the shader (with the "OGF::" prefix) \menu /Devel </td></tr>
   </table>
   </dd>
 </dl>
@@ -699,7 +746,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1SceneGraphDevelCommands.html">SceneGraphDevelCommands</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

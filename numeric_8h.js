@@ -24,6 +24,7 @@ var numeric_8h =
       [ "POSITIVE", "numeric_8h.html#a9c97e58e4526cb2ab931b3fde0a3b002afd4ce942c8d5b86fcd788ac7500ccbf2", null ]
     ] ],
     [ "geo_clamp", "numeric_8h.html#a805127975ed6494e3b6e0c2432221c67", null ],
+    [ "geo_cmp", "numeric_8h.html#ab6ecbfbd3db6d0db916ba0a8ab039901", null ],
     [ "geo_sgn", "numeric_8h.html#a8e59d9c172507c159f0bee7a004f34f6", null ],
     [ "geo_sqr", "numeric_8h.html#a38306dc5e49d6eb82d7831c971db600a", null ],
     [ "is_nan", "numeric_8h.html#aedf9787c2efc83f5169a8ada84c079c1", null ],
@@ -35,9 +36,11 @@ var numeric_8h =
     [ "min_float32", "numeric_8h.html#ac4427788e2549a621df5a7521d88f8a4", null ],
     [ "min_float64", "numeric_8h.html#abfc33298edb6f9db917a43ce78cc4940", null ],
     [ "min_signed_index_t", "numeric_8h.html#a194370ec786c598bd8b5f2c72a2b7519", null ],
+    [ "optimize_number_representation", "numeric_8h.html#a971e7014d80caa7c54e12cfe10f19bd7", null ],
     [ "random_float32", "numeric_8h.html#a6e16e15e0f68105e1849b0ab1eea8120", null ],
     [ "random_float64", "numeric_8h.html#a84b4a558d230beff785928c464cde73e", null ],
     [ "random_int32", "numeric_8h.html#abd5caefab41ba9af647d243f6e00b689", null ],
     [ "random_reset", "numeric_8h.html#aa494b0fc6719ad7cd88c60037f761f65", null ],
+    [ "ratio_compare", "numeric_8h.html#a8498782c238137504b402b6fbe4d45b1", null ],
     [ "round", "numeric_8h.html#ae22897cf36b6315d684bf4b7de314f3b", null ]
 ];

@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -105,20 +112,23 @@ $(document).ready(function(){initNavTree('classGEO_1_1AttributesManager.html',''
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#ae1ec2a2b68aad64a56a2dcbc8813516a">find_attribute_store</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#ab7c8a786faab04469e617b850d924349">is_defined</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#a9b2522aa4b65c09602fe0b0a857dc665">list_attribute_names</a>(vector&lt; std::string &gt; &amp;names) const</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#a4ebaf22aaebf5d8bcaf8d3cad8c2a883">nb</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#a6b22f2f4bf435b2bf6f4ecc33be9d15b">rename_attribute</a>(const std::string &amp;old_name, const std::string &amp;new_name)</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#af893f9e1414aa34e2cc7d144e83f067f">reserve</a>(index_t new_capacity)</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#afb8503164520b84026176f2681de466a">resize</a>(index_t new_size)</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#ab44535a91421b74085602cc58c6cb94a">madd_item</a>(index_t to, double s, index_t from)</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#a4ebaf22aaebf5d8bcaf8d3cad8c2a883">nb</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#a6b22f2f4bf435b2bf6f4ecc33be9d15b">rename_attribute</a>(const std::string &amp;old_name, const std::string &amp;new_name)</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#af893f9e1414aa34e2cc7d144e83f067f">reserve</a>(index_t new_capacity)</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#afb8503164520b84026176f2681de466a">resize</a>(index_t new_size)</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#a854e5234b71931fe9d6d56a7292a4c77">scale_item</a>(index_t to, double s)</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#ac6a07653dbdeba562a39b04009b4f6f8">size</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#ab8bc1173eb9a9cdbfb956999697e3624">swap_items</a>(index_t i, index_t j)</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#ae739f64cf5544d2938892966d25dd1e7">zero</a>()</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#a9b50fffca34b00a337e67d4169ef6b18">~AttributesManager</a>()</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#a2454c4334a5d8e92c0fb92a19a94f258">zero_item</a>(index_t to)</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html#a9b50fffca34b00a337e67d4169ef6b18">~AttributesManager</a>()</td><td class="entry"><a class="el" href="classGEO_1_1AttributesManager.html">GEO::AttributesManager</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

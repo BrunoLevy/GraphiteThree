@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -107,7 +114,7 @@ Inheritance diagram for GEO::AttributeBase&lt; T &gt;:</div>
 <area href="classGEO_1_1Attribute.html" alt="GEO::Attribute&lt; double &gt;" shape="rect" coords="0,112,260,136"/>
 <area href="classGEO_1_1Attribute.html" alt="GEO::Attribute&lt; float &gt;" shape="rect" coords="270,112,530,136"/>
 <area href="classGEO_1_1Attribute.html" alt="GEO::Attribute&lt; int &gt;" shape="rect" coords="540,112,800,136"/>
-<area href="classGEO_1_1Attribute.html" alt="GEO::Attribute&lt; const GEO::vec3HE * &gt;" shape="rect" coords="810,112,1070,136"/>
+<area href="classGEO_1_1Attribute.html" alt="GEO::Attribute&lt; const GEO::vec3Hg * &gt;" shape="rect" coords="810,112,1070,136"/>
 <area href="classGEO_1_1Attribute.html" alt="GEO::Attribute&lt; index_t &gt;" shape="rect" coords="1080,112,1340,136"/>
 <area href="classGEO_1_1Attribute.html" alt="GEO::Attribute&lt; GEOGen::SymbolicVertex &gt;" shape="rect" coords="1350,112,1610,136"/>
 <area href="classGEO_1_1Attribute.html" title="Manages an attribute attached to a set of object." alt="GEO::Attribute&lt; T &gt;" shape="rect" coords="1620,112,1880,136"/>
@@ -230,7 +237,7 @@ class GEO::AttributeBase&lt; T &gt;</h3>
 
 <p>Base class for Attributes, that manipulates an attribute stored in an <a class="el" href="classGEO_1_1AttributesManager.html" title="Managers a set of attributes attached to an object.">AttributesManager</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l00981">981</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01107">1107</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a29b6daa751ad4646aa155ab0a2c2a373"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a29b6daa751ad4646aa155ab0a2c2a373">&#9670;&nbsp;</a></span>AttributeBase()</h2>
@@ -277,7 +284,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01001">1001</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01127">1127</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -309,7 +316,7 @@ template&lt;class T &gt; </div>
 <p><a class="el" href="classGEO_1_1Attribute.html" title="Manages an attribute attached to a set of object.">Attribute</a> destructor. </p>
 <p>The attribute is not destroyed, it can be retrieved later by binding with the same name. To destroy the attribute, use <a class="el" href="classGEO_1_1AttributeBase.html#a39ca3fcaa46f4d068c1c49c090de42da" title="Destroys this attribute in the AttributesManager.">destroy()</a> instead. </p>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01158">1158</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01284">1284</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -360,7 +367,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section pre"><dt>Precondition</dt><dd>!is_bound() </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01041">1041</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01167">1167</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -411,7 +418,7 @@ template&lt;class T &gt; </div>
 <dl class="section pre"><dt>Precondition</dt><dd>!is_bound() </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if this <a class="el" href="classGEO_1_1Attribute.html" title="Manages an attribute attached to a set of object.">Attribute</a> was successfully bound </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01085">1085</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01211">1211</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -462,7 +469,7 @@ template&lt;class T &gt; </div>
 <dl class="section pre"><dt>Precondition</dt><dd>!is_bound() </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if this <a class="el" href="classGEO_1_1Attribute.html" title="Manages an attribute attached to a set of object.">Attribute</a> was successfully bound </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01063">1063</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01189">1189</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -494,7 +501,7 @@ template&lt;class T &gt; </div>
 <p>Tests whether <a class="el" href="classGEO_1_1AttributeBase.html#a85b1b9f4b993085df3fc52ca4c16e2d3" title="Gets a reference to the internal vector&lt;T&gt; used to store the attribute.">get_vector()</a> can be called on this <a class="el" href="classGEO_1_1Attribute.html" title="Manages an attribute attached to a set of object.">Attribute</a>. </p>
 <p><a class="el" href="classGEO_1_1AttributeBase.html#a85b1b9f4b993085df3fc52ca4c16e2d3" title="Gets a reference to the internal vector&lt;T&gt; used to store the attribute.">get_vector()</a> can be called if this attribute is bound and if type T corresponds to the type used to create the attribute. </p><dl class="section note"><dt>Note</dt><dd>Advanced users only. Most client code will not need to use this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01210">1210</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01336">1336</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -550,7 +557,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01110">1110</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01236">1236</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -582,7 +589,7 @@ template&lt;class T &gt; </div>
 <p>Destroys this attribute in the <a class="el" href="classGEO_1_1AttributesManager.html" title="Managers a set of attributes attached to an object.">AttributesManager</a>. </p>
 <p>On exit, the attribute is no-longer accessible in the <a class="el" href="classGEO_1_1AttributesManager.html" title="Managers a set of attributes attached to an object.">AttributesManager</a>, its name is available again, and this attribute is in the unbound state. </p>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01129">1129</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01255">1255</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -615,7 +622,7 @@ template&lt;class T &gt; </div>
 <p>It is forbidden to modify the size of the returned vector. </p><dl class="section return"><dt>Returns</dt><dd>a reference to the vector&lt;T&gt; used to store the attribute. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Advanced users only. Most client code will not need to use this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01226">1226</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01352">1352</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -647,7 +654,7 @@ template&lt;class T &gt; </div>
 <p>Gets a const reference to the internal vector&lt;T&gt; used to store the attribute. </p>
 <dl class="section return"><dt>Returns</dt><dd>a const reference to the vector&lt;T&gt; used to store the attribute. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01239">1239</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01365">1365</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -685,7 +692,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01012">1012</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01138">1138</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -741,7 +748,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01172">1172</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01298">1298</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -773,7 +780,7 @@ template&lt;class T &gt; </div>
 <p>Gets the <a class="el" href="classGEO_1_1AttributesManager.html" title="Managers a set of attributes attached to an object.">AttributesManager</a> this <a class="el" href="classGEO_1_1Attribute.html" title="Manages an attribute attached to a set of object.">Attribute</a> is bound to. </p>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the attributes manager. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01250">1250</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01376">1376</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -811,7 +818,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01146">1146</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01272">1272</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -843,7 +850,7 @@ template&lt;class T &gt; </div>
 <p>Gets the size. </p>
 <dl class="section return"><dt>Returns</dt><dd>The number of items in this attribute. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01188">1188</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01314">1314</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -875,7 +882,7 @@ template&lt;class T &gt; </div>
 <p>Unbinds this <a class="el" href="classGEO_1_1Attribute.html" title="Manages an attribute attached to a set of object.">Attribute</a>. </p>
 <dl class="section pre"><dt>Precondition</dt><dd><a class="el" href="classGEO_1_1AttributeBase.html#a2d7bd58539363bf216d6100eafd4537b" title="Tests whether an Attribute is bound.">is_bound()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01020">1020</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="attributes_8h_source.html#l01146">1146</a> of file <a class="el" href="attributes_8h_source.html">attributes.h</a>.</p>
 
 </div>
 </div>
@@ -888,7 +895,7 @@ template&lt;class T &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1AttributeBase.html">AttributeBase</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

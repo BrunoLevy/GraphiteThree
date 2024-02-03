@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -102,12 +109,14 @@ $(document).ready(function(){initNavTree('classOGF_1_1ArgList.html',''); initRes
   <tr><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#aae00a2f447adffc728906ba4a1db7fea">create_arg</a>(const std::string &amp;name, const T &amp;value)</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#a3d92e9186cfe291e0f3ebaebda2d1432">create_arg</a>(const std::string &amp;name, const char *value)</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#a2429bf8dff96c790f2c9c64f3bbdad9d">create_arg</a>(const std::string &amp;name, const Any &amp;value)</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#a41699f85d94d571d601ae29980b2bf70">delete_ith_arg</a>(index_t index)</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#aff8cf0b4968c61dc9283c6d7273f6cbf">find_arg_index</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#ad7933856488c7c890d351a2122f36c33">get_arg</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#acbff43327e1b9f007c4e413fcf446d9b">get_arg</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#a0b9111882a5fa45de367319ac87f36a3">get_arg_type</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#a5f6b1370481564cc036de9331e3d4a0d">has_arg</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#a42fc91a4381bfda6f8d7973221b4e489">create_unnamed_arg</a>()</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#a41699f85d94d571d601ae29980b2bf70">delete_ith_arg</a>(index_t index)</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#aff8cf0b4968c61dc9283c6d7273f6cbf">find_arg_index</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#ad7933856488c7c890d351a2122f36c33">get_arg</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#acbff43327e1b9f007c4e413fcf446d9b">get_arg</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#a0b9111882a5fa45de367319ac87f36a3">get_arg_type</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#a5f6b1370481564cc036de9331e3d4a0d">has_arg</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#add7d49bac3ddb62d87571edc2e4757d6">has_unnamed_args</a>() const</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#a82ccd4912e4023fef6ff7621ecdf0127">ith_arg_name</a>(index_t i) const</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#acadf06b5bf3fafa51ca9fb19142d7462">ith_arg_type</a>(index_t i) const</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1ArgList.html#a97f3043d8c2495b58785b6e60906d9ce">ith_arg_value</a>(index_t i) const</td><td class="entry"><a class="el" href="classOGF_1_1ArgList.html">OGF::ArgList</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
@@ -126,7 +135,7 @@ $(document).ready(function(){initNavTree('classOGF_1_1ArgList.html',''); initRes
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -9,7 +9,7 @@ var classGEO_1_1MeshCells =
     [ "compute_borders", "classGEO_1_1MeshCells.html#ac3fe1eb04d48aed572ec01633b0b01ea", null ],
     [ "connect", "classGEO_1_1MeshCells.html#a663293518fa4c1566b52b4723fa34fe6", null ],
     [ "connect_tets", "classGEO_1_1MeshCells.html#ad94d967494dae569f91f41fd3942f0e8", null ],
-    [ "corners", "classGEO_1_1MeshCells.html#ad8fd1d45147955743790e09b879c583a", null ],
+    [ "corners", "classGEO_1_1MeshCells.html#a58ef473903a774b9dd2407425ec29115", null ],
     [ "create_cells", "classGEO_1_1MeshCells.html#a152b388233aa0e8680762ef9de13dd38", null ],
     [ "create_connector", "classGEO_1_1MeshCells.html#ac41c4a5cc9563b1c6090250ca1ad5401", null ],
     [ "create_connector", "classGEO_1_1MeshCells.html#a4fcd082aab18655fe9bcbe0b5dc84d2e", null ],

@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -123,7 +130,7 @@ class OGF::ogf_meta&lt; T &gt;</h3>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00241">241</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00257">257</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a29816a28ba15a42b09d3ee5db1038a1d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a29816a28ba15a42b09d3ee5db1038a1d">&#9670;&nbsp;</a></span>factory()</h2>
@@ -153,7 +160,7 @@ template&lt;class T &gt; </div>
 <p>Gets the <a class="el" href="classOGF_1_1Factory.html" title="Creates instances of a specific class.">Factory</a>. </p>
 <p><a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a> needs to be a <a class="el" href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository.">MetaClass</a> (i.e. T should be a class), else a warning message is issued. </p><dl class="section return"><dt>Returns</dt><dd>a pointer to the <a class="el" href="classOGF_1_1Serializer.html" title="Abstract base class for reading and writing values from/to streams.">Serializer</a> or nullptr if none is available </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00313">313</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00329">329</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
 
 </div>
 </div>
@@ -185,7 +192,7 @@ template&lt;class T &gt; </div>
 <p>Gets the <a class="el" href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository.">MetaClass</a>. </p>
 <p>Queries the <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a> and casts it to a <a class="el" href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository.">MetaClass</a> if it is a <a class="el" href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository.">MetaClass</a>, else issues a warning message. </p><dl class="section return"><dt>Returns</dt><dd>a pointer to the <a class="el" href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository.">MetaClass</a> or nullptr if the <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a> is not a <a class="el" href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository.">MetaClass</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00271">271</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00287">287</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
 
 </div>
 </div>
@@ -217,7 +224,7 @@ template&lt;class T &gt; </div>
 <p>Gets the <a class="el" href="classOGF_1_1Serializer.html" title="Abstract base class for reading and writing values from/to streams.">Serializer</a>. </p>
 <p>Queries the <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a> and gets the <a class="el" href="classOGF_1_1Serializer.html" title="Abstract base class for reading and writing values from/to streams.">Serializer</a> associated with it if any, else issues a warning message. </p><dl class="section return"><dt>Returns</dt><dd>a pointer to the <a class="el" href="classOGF_1_1Serializer.html" title="Abstract base class for reading and writing values from/to streams.">Serializer</a> or nullptr if none is available </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00293">293</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00309">309</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
 
 </div>
 </div>
@@ -249,7 +256,7 @@ template&lt;class T &gt; </div>
 <p>Gets the <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00248">248</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00264">264</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
 
 </div>
 </div>
@@ -262,7 +269,7 @@ template&lt;class T &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1ogf__meta.html">ogf_meta</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

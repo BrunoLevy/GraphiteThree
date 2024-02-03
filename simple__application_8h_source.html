@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -137,8 +144,8 @@ $(document).ready(function(){initNavTree('simple__application_8h_source.html',''
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="command_8h.html">geogram_gfx/gui/command.h</a>&gt;</span></div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="geogram_2src_2lib_2geogram__gfx_2gui_2arc__ball_8h.html">geogram_gfx/gui/arc_ball.h</a>&gt;</span></div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="geogram_2src_2lib_2geogram__gfx_2full__screen__effects_2full__screen__effect_8h.html">geogram_gfx/full_screen_effects/full_screen_effect.h</a>&gt;</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="imgui__ext_8h.html">geogram_gfx/ImGui_ext/imgui_ext.h</a>&gt;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="icon__font_8h.html">geogram_gfx/ImGui_ext/icon_font.h</a>&gt;</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;geogram_gfx/imgui_ext/imgui_ext.h&gt;</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;geogram_gfx/imgui_ext/icon_font.h&gt;</span></div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#include &lt;functional&gt;</span></div>
@@ -339,84 +346,88 @@ $(document).ready(function(){initNavTree('simple__application_8h_source.html',''
 <div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* default_layout() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* default_layout_android_vertical() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* default_layout_android_horizontal() <span class="keyword">const</span>;          </div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;        </div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160; </div>
 <div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;      <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;        <span class="keywordtype">bool</span> lighting_;</div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;        <span class="keywordtype">bool</span> edit_light_;</div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;        <span class="keywordtype">bool</span> clipping_;</div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;        GLUPclipMode clip_mode_;</div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;        <span class="keywordtype">bool</span> edit_clip_;</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;        <span class="keywordtype">bool</span> fixed_clip_;</div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;        GLenum effect_;</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;        <a class="code" href="classGEO_1_1vecng.html">vec4f</a> background_color_;</div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;        </div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;        <span class="keywordtype">bool</span> viewer_properties_visible_;</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;        <span class="keywordtype">bool</span> object_properties_visible_;</div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;        <span class="keywordtype">bool</span> console_visible_;</div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;        <span class="keywordtype">bool</span> text_editor_visible_;</div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;        <span class="keywordtype">bool</span> use_text_editor_;</div>
-<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160; </div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;        <a class="code" href="classGEO_1_1Box.html">Box</a> roi_;</div>
-<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;        <span class="keywordtype">double</span> roi_radius_;</div>
-<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;        <a class="code" href="classGEO_1_1vecng.html">vec3</a>    object_translation_;</div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;        <a class="code" href="classGEO_1_1ArcBall.html">ArcBall</a> object_rotation_;</div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;        <a class="code" href="classGEO_1_1ArcBall.html">ArcBall</a> light_rotation_;</div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;        <a class="code" href="classGEO_1_1ArcBall.html">ArcBall</a> clip_rotation_;</div>
-<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;        <a class="code" href="classGEO_1_1vecng.html">vec3</a>    clip_translation_;</div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;        <span class="keywordtype">bool</span>    three_D_;</div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;        <span class="keywordtype">double</span>  zoom_;</div>
-<div class="line"><a name="l00515"></a><span class="lineno"><a class="line" href="classGEO_1_1SimpleApplication.html#a1a76786cc4b1f6e4ad9785e9c0b1f4f7">  515</a></span>&#160;        <span class="keywordtype">double</span>  <a class="code" href="classGEO_1_1SimpleApplication.html#a1a76786cc4b1f6e4ad9785e9c0b1f4f7">zoom_down_</a>; </div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;        <span class="keywordtype">bool</span> props_pinned_;</div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;        </div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;        <span class="keyword">enum</span> MouseOp {</div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;            MOUSE_NOOP, MOUSE_ROTATE, MOUSE_TRANSLATE, MOUSE_ZOOM</div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;        } mouse_op_;</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> replay_latest_command();</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;        </div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;      <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;        <span class="keywordtype">bool</span> locked_; <span class="comment">// avoid starting command when command is running</span></div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;        <span class="keywordtype">bool</span> lighting_;</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;        <span class="keywordtype">bool</span> edit_light_;</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;        <span class="keywordtype">bool</span> clipping_;</div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;        GLUPclipMode clip_mode_;</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;        <span class="keywordtype">bool</span> edit_clip_;</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;        <span class="keywordtype">bool</span> fixed_clip_;</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;        GLenum effect_;</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;        <a class="code" href="classGEO_1_1vecng.html">vec4f</a> background_color_;</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;        </div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;        <span class="keywordtype">bool</span> viewer_properties_visible_;</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;        <span class="keywordtype">bool</span> object_properties_visible_;</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;        <span class="keywordtype">bool</span> console_visible_;</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;        <span class="keywordtype">bool</span> text_editor_visible_;</div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;        <span class="keywordtype">bool</span> use_text_editor_;</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160; </div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;        <a class="code" href="classGEO_1_1Box.html">Box</a> roi_;</div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;        <span class="keywordtype">double</span> roi_radius_;</div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;        <a class="code" href="classGEO_1_1vecng.html">vec3</a>    object_translation_;</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;        <a class="code" href="classGEO_1_1ArcBall.html">ArcBall</a> object_rotation_;</div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;        <a class="code" href="classGEO_1_1ArcBall.html">ArcBall</a> light_rotation_;</div>
+<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;        <a class="code" href="classGEO_1_1ArcBall.html">ArcBall</a> clip_rotation_;</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;        <a class="code" href="classGEO_1_1vecng.html">vec3</a>    clip_translation_;</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;        <span class="keywordtype">bool</span>    three_D_;</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;        <span class="keywordtype">double</span>  zoom_;</div>
+<div class="line"><a name="l00519"></a><span class="lineno"><a class="line" href="classGEO_1_1SimpleApplication.html#a1a76786cc4b1f6e4ad9785e9c0b1f4f7">  519</a></span>&#160;        <span class="keywordtype">double</span>  <a class="code" href="classGEO_1_1SimpleApplication.html#a1a76786cc4b1f6e4ad9785e9c0b1f4f7">zoom_down_</a>; </div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;        <span class="keywordtype">bool</span> props_pinned_;</div>
 <div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;        </div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;        <span class="keyword">enum</span> MouseTarget {</div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;            MOUSE_NOTARGET, MOUSE_OBJECT, MOUSE_LIGHT, MOUSE_CLIP</div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;        } mouse_target_;</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160; </div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;        <a class="code" href="namespaceGEO.html#ad7e1b53e52be6caed089a5f4f29d8057">vec2</a> mouse_down_xy_; <span class="comment">// in [-1,1] x [-1,1]</span></div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;        <a class="code" href="namespaceGEO.html#ad7e1b53e52be6caed089a5f4f29d8057">vec2</a> mouse_xy_;      <span class="comment">// in [-1,1] x [-1,1]</span></div>
-<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160; </div>
-<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;        <span class="comment">// Current transform, for picking</span></div>
-<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;        GLint viewport_[4];</div>
-<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;        <a class="code" href="namespaceGEO.html#a18708792ceea5d2737ac3b8492aa2b03">mat4</a> modelview_transpose_;</div>
-<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;        <a class="code" href="namespaceGEO.html#a18708792ceea5d2737ac3b8492aa2b03">mat4</a> project_transpose_;</div>
-<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;        </div>
-<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;        std::string path_;      </div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;        std::string current_file_;</div>
-<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;        <span class="keywordtype">char</span> filename_[geo_imgui_string_length]; <span class="comment">// Buffer for file dialog.</span></div>
-<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;        GLuint geogram_logo_texture_;</div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160; </div>
-<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;        Console_var console_;</div>
-<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;        StatusBar_var status_bar_;</div>
-<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;        TextEditor text_editor_;</div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;        <span class="keyword">enum</span> MouseOp {</div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;            MOUSE_NOOP, MOUSE_ROTATE, MOUSE_TRANSLATE, MOUSE_ZOOM</div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;        } mouse_op_;</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;        </div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;        <span class="keyword">enum</span> MouseTarget {</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;            MOUSE_NOTARGET, MOUSE_OBJECT, MOUSE_LIGHT, MOUSE_CLIP</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;        } mouse_target_;</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160; </div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;        <a class="code" href="namespaceGEO.html#ad7e1b53e52be6caed089a5f4f29d8057">vec2</a> mouse_down_xy_; <span class="comment">// in [-1,1] x [-1,1]</span></div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;        <a class="code" href="namespaceGEO.html#ad7e1b53e52be6caed089a5f4f29d8057">vec2</a> mouse_xy_;      <span class="comment">// in [-1,1] x [-1,1]</span></div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160; </div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;        <span class="comment">// Current transform, for picking</span></div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;        GLint viewport_[4];</div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;        <a class="code" href="namespaceGEO.html#a18708792ceea5d2737ac3b8492aa2b03">mat4</a> modelview_transpose_;</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;        <a class="code" href="namespaceGEO.html#a18708792ceea5d2737ac3b8492aa2b03">mat4</a> project_transpose_;</div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;        </div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;        std::string path_;      </div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;        std::string current_file_;</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;        <span class="keywordtype">char</span> filename_[geo_imgui_string_length]; <span class="comment">// Buffer for file dialog.</span></div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;        GLuint geogram_logo_texture_;</div>
 <div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160; </div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;        std::map&lt; std::string, std::function&lt;void()&gt; &gt; key_funcs_;</div>
-<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;        std::map&lt; std::string, std::string &gt; key_funcs_help_;</div>
-<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160; </div>
-<div class="line"><a name="l00547"></a><span class="lineno"><a class="line" href="structGEO_1_1SimpleApplication_1_1ColormapInfo.html">  547</a></span>&#160;        <span class="keyword">struct </span><a class="code" href="structGEO_1_1SimpleApplication_1_1ColormapInfo.html">ColormapInfo</a> {</div>
-<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;            <a class="code" href="structGEO_1_1SimpleApplication_1_1ColormapInfo.html">ColormapInfo</a>() : texture(0) {</div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;            }</div>
-<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;            GLuint texture;</div>
-<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;            std::string name;</div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;        };</div>
-<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160; </div>
-<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;        <a class="code" href="classGEO_1_1vector.html">vector&lt;ColormapInfo&gt;</a> colormaps_;</div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;        <a class="code" href="classGEO_1_1SmartPointer.html">FullScreenEffectImpl_var</a> full_screen_effect_;</div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160; </div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;        lua_State* lua_state_;</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;        <span class="keywordtype">bool</span> lua_error_occured_;</div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;    };</div>
+<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;        Console_var console_;</div>
+<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;        StatusBar_var status_bar_;</div>
+<div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160;        TextEditor text_editor_;</div>
+<div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160; </div>
+<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;        std::map&lt; std::string, std::function&lt;void()&gt; &gt; key_funcs_;</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;        std::map&lt; std::string, std::string &gt; key_funcs_help_;</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160; </div>
+<div class="line"><a name="l00551"></a><span class="lineno"><a class="line" href="structGEO_1_1SimpleApplication_1_1ColormapInfo.html">  551</a></span>&#160;        <span class="keyword">struct </span><a class="code" href="structGEO_1_1SimpleApplication_1_1ColormapInfo.html">ColormapInfo</a> {</div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;            <a class="code" href="structGEO_1_1SimpleApplication_1_1ColormapInfo.html">ColormapInfo</a>() : texture(0) {</div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;            }</div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;            GLuint texture;</div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;            std::string name;</div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;        };</div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160; </div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;        <a class="code" href="classGEO_1_1vector.html">vector&lt;ColormapInfo&gt;</a> colormaps_;</div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;        <a class="code" href="classGEO_1_1SmartPointer.html">FullScreenEffectImpl_var</a> full_screen_effect_;</div>
 <div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160; </div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;}</div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160; </div>
-<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;        lua_State* lua_state_;</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;        <span class="keywordtype">bool</span> lua_error_occured_;</div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;    };</div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160; </div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;}</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160; </div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassGEO_1_1Application_html"><div class="ttname"><a href="classGEO_1_1Application.html">GEO::Application</a></div><div class="ttdoc">Base class for all applications.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00066">application.h:66</a></div></div>
 <div class="ttc" id="aclassGEO_1_1Application_html_a249162db077d9f092b318f4a53a58da5"><div class="ttname"><a href="classGEO_1_1Application.html#a249162db077d9f092b318f4a53a58da5">GEO::Application::instance</a></div><div class="ttdeci">static Application * instance()</div><div class="ttdoc">Gets the instance.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00084">application.h:84</a></div></div>
 <div class="ttc" id="aclassGEO_1_1ArcBall_html"><div class="ttname"><a href="classGEO_1_1ArcBall.html">GEO::ArcBall</a></div><div class="ttdoc">Enables to interactively define a rotation.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram__gfx_2gui_2arc__ball_8h_source.html#l00066">arc_ball.h:66</a></div></div>
-<div class="ttc" id="aclassGEO_1_1Box_html"><div class="ttname"><a href="classGEO_1_1Box.html">GEO::Box</a></div><div class="ttdoc">Axis-aligned bounding box.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00640">geometry.h:640</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Box_html"><div class="ttname"><a href="classGEO_1_1Box.html">GEO::Box</a></div><div class="ttdoc">Axis-aligned bounding box.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00669">geometry.h:669</a></div></div>
 <div class="ttc" id="aclassGEO_1_1SimpleApplication_html"><div class="ttname"><a href="classGEO_1_1SimpleApplication.html">GEO::SimpleApplication</a></div><div class="ttdef"><b>Definition:</b> <a href="simple__application_8h_source.html#l00061">simple_application.h:61</a></div></div>
 <div class="ttc" id="aclassGEO_1_1SimpleApplication_html_a0175134b92abb433891f0a40cf338979"><div class="ttname"><a href="classGEO_1_1SimpleApplication.html#a0175134b92abb433891f0a40cf338979">GEO::SimpleApplication::draw_fileops_menu</a></div><div class="ttdeci">virtual void draw_fileops_menu()</div><div class="ttdoc">Draws other file operation menu.</div></div>
 <div class="ttc" id="aclassGEO_1_1SimpleApplication_html_a019cea0a76f7f7b0f32c9d5d8d57a25c"><div class="ttname"><a href="classGEO_1_1SimpleApplication.html#a019cea0a76f7f7b0f32c9d5d8d57a25c">GEO::SimpleApplication::draw_console</a></div><div class="ttdeci">virtual void draw_console()</div><div class="ttdoc">Draws the console.</div></div>
@@ -424,7 +435,7 @@ $(document).ready(function(){initNavTree('simple__application_8h_source.html',''
 <div class="ttc" id="aclassGEO_1_1SimpleApplication_html_a1157df200137be756afae363384a0ad6"><div class="ttname"><a href="classGEO_1_1SimpleApplication.html#a1157df200137be756afae363384a0ad6">GEO::SimpleApplication::draw_scene_begin</a></div><div class="ttdeci">virtual void draw_scene_begin()</div><div class="ttdoc">Setups OpenGL for scene drawing.</div></div>
 <div class="ttc" id="aclassGEO_1_1SimpleApplication_html_a161b0b3bd716017353b592de48b9b973"><div class="ttname"><a href="classGEO_1_1SimpleApplication.html#a161b0b3bd716017353b592de48b9b973">GEO::SimpleApplication::draw_application_menus</a></div><div class="ttdeci">virtual void draw_application_menus()</div><div class="ttdoc">Draws the application menus.</div></div>
 <div class="ttc" id="aclassGEO_1_1SimpleApplication_html_a174a3f02335fc92daf14a536cf84a2a5"><div class="ttname"><a href="classGEO_1_1SimpleApplication.html#a174a3f02335fc92daf14a536cf84a2a5">GEO::SimpleApplication::draw_load_menu</a></div><div class="ttdeci">virtual void draw_load_menu()</div><div class="ttdoc">Draws the load menu and browser.</div></div>
-<div class="ttc" id="aclassGEO_1_1SimpleApplication_html_a1a76786cc4b1f6e4ad9785e9c0b1f4f7"><div class="ttname"><a href="classGEO_1_1SimpleApplication.html#a1a76786cc4b1f6e4ad9785e9c0b1f4f7">GEO::SimpleApplication::zoom_down_</a></div><div class="ttdeci">double zoom_down_</div><div class="ttdef"><b>Definition:</b> <a href="simple__application_8h_source.html#l00515">simple_application.h:515</a></div></div>
+<div class="ttc" id="aclassGEO_1_1SimpleApplication_html_a1a76786cc4b1f6e4ad9785e9c0b1f4f7"><div class="ttname"><a href="classGEO_1_1SimpleApplication.html#a1a76786cc4b1f6e4ad9785e9c0b1f4f7">GEO::SimpleApplication::zoom_down_</a></div><div class="ttdeci">double zoom_down_</div><div class="ttdef"><b>Definition:</b> <a href="simple__application_8h_source.html#l00519">simple_application.h:519</a></div></div>
 <div class="ttc" id="aclassGEO_1_1SimpleApplication_html_a2f38cf3cc6f9c8b0d741f110e7279f0d"><div class="ttname"><a href="classGEO_1_1SimpleApplication.html#a2f38cf3cc6f9c8b0d741f110e7279f0d">GEO::SimpleApplication::drop_callback</a></div><div class="ttdeci">void drop_callback(int nb, const char **f) override</div><div class="ttdoc">Callback called whenever files are dropped in the window.</div></div>
 <div class="ttc" id="aclassGEO_1_1SimpleApplication_html_a3106090d600dc37936dfe673cdae408f"><div class="ttname"><a href="classGEO_1_1SimpleApplication.html#a3106090d600dc37936dfe673cdae408f">GEO::SimpleApplication::save</a></div><div class="ttdeci">virtual bool save(const std::string &amp;filename)</div><div class="ttdoc">Saves the current content to a file.</div></div>
 <div class="ttc" id="aclassGEO_1_1SimpleApplication_html_a377a0420923993aab1aec920543c31fb"><div class="ttname"><a href="classGEO_1_1SimpleApplication.html#a377a0420923993aab1aec920543c31fb">GEO::SimpleApplication::can_load</a></div><div class="ttdeci">virtual bool can_load(const std::string &amp;filename)</div><div class="ttdoc">Tests whether a file can be loaded.</div></div>
@@ -480,7 +491,7 @@ $(document).ready(function(){initNavTree('simple__application_8h_source.html',''
 <div class="ttc" id="aclassGEO_1_1SmartPointer_html"><div class="ttname"><a href="classGEO_1_1SmartPointer.html">GEO::SmartPointer&lt; FullScreenEffectImpl &gt;</a></div></div>
 <div class="ttc" id="aclassGEO_1_1TextEditor_html"><div class="ttname"><a href="classGEO_1_1TextEditor.html">GEO::TextEditor</a></div><div class="ttdoc">A minimalistic text editor.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram__gfx_2gui_2text__editor_8h_source.html#l00058">text_editor.h:58</a></div></div>
 <div class="ttc" id="aclassGEO_1_1vecng_html"><div class="ttname"><a href="classGEO_1_1vecng.html">GEO::vecng&lt; 3, Numeric::float64 &gt;</a></div></div>
-<div class="ttc" id="aclassGEO_1_1vector_html"><div class="ttname"><a href="classGEO_1_1vector.html">GEO::vector</a></div><div class="ttdoc">Vector with aligned memory allocation.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8h_source.html#l00623">memory.h:623</a></div></div>
+<div class="ttc" id="aclassGEO_1_1vector_html"><div class="ttname"><a href="classGEO_1_1vector.html">GEO::vector</a></div><div class="ttdoc">Vector with aligned memory allocation.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8h_source.html#l00636">memory.h:636</a></div></div>
 <div class="ttc" id="acommand_8h_html"><div class="ttname"><a href="command_8h.html">command.h</a></div><div class="ttdoc">A simple system to interface C++ functions with a ImGui interface. Used mainly by geobox.</div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram__gfx_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram__gfx_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram__gfx_2full__screen__effects_2full__screen__effect_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram__gfx_2full__screen__effects_2full__screen__effect_8h.html">full_screen_effect.h</a></div><div class="ttdoc">Low-level base class for full screen effects.</div></div>
@@ -489,22 +500,20 @@ $(document).ready(function(){initNavTree('simple__application_8h_source.html',''
 <div class="ttc" id="ageogram_2src_2lib_2geogram__gfx_2gui_2console_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram__gfx_2gui_2console_8h.html">console.h</a></div><div class="ttdoc">A console.</div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram__gfx_2gui_2text__editor_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram__gfx_2gui_2text__editor_8h.html">text_editor.h</a></div><div class="ttdoc">A simple text editor.</div></div>
 <div class="ttc" id="agfx_2api_2defs_8h_html_a6db1f5359a6e2a475177dfef560d3215"><div class="ttname"><a href="gfx_2api_2defs_8h.html#a6db1f5359a6e2a475177dfef560d3215">GEOGRAM_GFX_API</a></div><div class="ttdeci">#define GEOGRAM_GFX_API</div><div class="ttdoc">Linkage declaration for geogram symbols.</div><div class="ttdef"><b>Definition:</b> <a href="gfx_2api_2defs_8h_source.html#l00055">defs.h:55</a></div></div>
-<div class="ttc" id="aicon__font_8h_html"><div class="ttname"><a href="icon__font_8h.html">icon_font.h</a></div><div class="ttdoc">Maps symoblic icon names to 16 bits chars.</div></div>
-<div class="ttc" id="aimgui__ext_8h_html"><div class="ttname"><a href="imgui__ext_8h.html">imgui_ext.h</a></div><div class="ttdoc">Extension functions for ImGui.</div></div>
 <div class="ttc" id="anamespaceGEO_html"><div class="ttname"><a href="namespaceGEO.html">GEO</a></div><div class="ttdoc">Global Vorpaline namespace.</div><div class="ttdef"><b>Definition:</b> <a href="lua__grob__shader_8h_source.html#l00053">lua_grob_shader.h:53</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_a18708792ceea5d2737ac3b8492aa2b03"><div class="ttname"><a href="namespaceGEO.html#a18708792ceea5d2737ac3b8492aa2b03">GEO::mat4</a></div><div class="ttdeci">Matrix&lt; 4, Numeric::float64 &gt; mat4</div><div class="ttdoc">Represents a 4x4 matrix.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00133">geometry.h:133</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_a33703704d415101436638a3032e8ad3e"><div class="ttname"><a href="namespaceGEO.html#a33703704d415101436638a3032e8ad3e">GEO::vec4f</a></div><div class="ttdeci">vecng&lt; 4, Numeric::float32 &gt; vec4f</div><div class="ttdoc">Represents points and vectors in 4d with single-precision coordinates.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00092">geometry.h:92</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_ad7e1b53e52be6caed089a5f4f29d8057"><div class="ttname"><a href="namespaceGEO.html#ad7e1b53e52be6caed089a5f4f29d8057">GEO::vec2</a></div><div class="ttdeci">vecng&lt; 2, Numeric::float64 &gt; vec2</div><div class="ttdoc">Represents points and vectors in 2d.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00059">geometry.h:59</a></div></div>
 <div class="ttc" id="astatus__bar_8h_html"><div class="ttname"><a href="status__bar_8h.html">status_bar.h</a></div><div class="ttdoc">Implementation of the status bar.</div></div>
-<div class="ttc" id="astructGEO_1_1SimpleApplication_1_1ColormapInfo_html"><div class="ttname"><a href="structGEO_1_1SimpleApplication_1_1ColormapInfo.html">GEO::SimpleApplication::ColormapInfo</a></div><div class="ttdef"><b>Definition:</b> <a href="simple__application_8h_source.html#l00547">simple_application.h:547</a></div></div>
+<div class="ttc" id="astructGEO_1_1SimpleApplication_1_1ColormapInfo_html"><div class="ttname"><a href="structGEO_1_1SimpleApplication_1_1ColormapInfo.html">GEO::SimpleApplication::ColormapInfo</a></div><div class="ttdef"><b>Definition:</b> <a href="simple__application_8h_source.html#l00551">simple_application.h:551</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_20037eb6270bb31b4654a405ea4434e9.html">geogram_gfx</a></li><li class="navelem"><a class="el" href="dir_8bd9e63e3f99fdacb41b04655be2a67d.html">gui</a></li><li class="navelem"><b>simple_application.h</b></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

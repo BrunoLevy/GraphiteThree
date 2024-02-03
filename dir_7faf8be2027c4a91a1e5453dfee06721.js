@@ -5,6 +5,7 @@ var dir_7faf8be2027c4a91a1e5453dfee06721 =
     [ "mesh_AABB.h", "mesh__AABB_8h.html", "mesh__AABB_8h" ],
     [ "mesh_baking.h", "mesh__baking_8h.html", "mesh__baking_8h" ],
     [ "mesh_compare.h", "mesh__compare_8h.html", "mesh__compare_8h" ],
+    [ "mesh_CSG.h", "mesh__CSG_8h.html", "mesh__CSG_8h" ],
     [ "mesh_decimate.h", "mesh__decimate_8h.html", "mesh__decimate_8h" ],
     [ "mesh_degree3_vertices.h", "mesh__degree3__vertices_8h.html", "mesh__degree3__vertices_8h" ],
     [ "mesh_distance.h", "mesh__distance_8h.html", "mesh__distance_8h" ],
@@ -31,7 +32,8 @@ var dir_7faf8be2027c4a91a1e5453dfee06721 =
       [ "MeshInTriangle", "classGEO_1_1MeshInTriangle.html", "classGEO_1_1MeshInTriangle" ],
       [ "Edge", "classGEO_1_1MeshInTriangle_1_1Edge.html", "classGEO_1_1MeshInTriangle_1_1Edge" ],
       [ "Vertex", "classGEO_1_1MeshInTriangle_1_1Vertex.html", "classGEO_1_1MeshInTriangle_1_1Vertex" ],
-      [ "IsectInfo", "structGEO_1_1IsectInfo.html", "structGEO_1_1IsectInfo" ]
+      [ "IsectInfo", "structGEO_1_1IsectInfo.html", "structGEO_1_1IsectInfo" ],
+      [ "CoplanarFacets", "classGEO_1_1CoplanarFacets.html", "classGEO_1_1CoplanarFacets" ]
     ] ],
     [ "mesh_tetrahedralize.h", "mesh__tetrahedralize_8h.html", "mesh__tetrahedralize_8h" ],
     [ "mesh_topology.h", "mesh__topology_8h.html", "mesh__topology_8h" ],

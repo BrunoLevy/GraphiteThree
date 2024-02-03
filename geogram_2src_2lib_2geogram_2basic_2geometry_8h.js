@@ -27,6 +27,7 @@ var geogram_2src_2lib_2geogram_2basic_2geometry_8h =
     [ "cos_angle", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a99184d43fd0d2dfa2d0a7532243aca56", null ],
     [ "create_scaling_matrix", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a86bbd389477cf98711b2ed0e8ca543f4", null ],
     [ "create_translation_matrix", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#aa07d44e7af3bbbf5ed454978c6361bb2", null ],
+    [ "det", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a919a9190b6365c5d28377bfdb4151627", null ],
     [ "det", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a22f2f2181831330cefdaba95c5c64bf4", null ],
     [ "has_nan", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#aa44b3db0c63d561d344b4d198c2ed50a", null ],
     [ "perpendicular", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a8bcf6b5325899e61c2c314fb9afeea4f", null ],
@@ -35,6 +36,7 @@ var geogram_2src_2lib_2geogram_2basic_2geometry_8h =
     [ "tetra_signed_volume", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a6abf70e87c09ee76e8c07816cb2c72b7", null ],
     [ "tetra_signed_volume", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#ac07b56b007ec8680755bebe3de6f1ae0", null ],
     [ "tetra_volume", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a8a86bc7ce127ce0820a8cd9cafcfba69", null ],
+    [ "transform_point", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#aaf21bbf045947fa0eb8344ecb8a9504d", null ],
     [ "transform_point", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#af63deb18831d4b212bba82a997eecb67", null ],
     [ "transform_vector", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a87dea81e1426f227e57a2a5102b60086", null ],
     [ "transform_vector", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#ae6f5b7bf08392d3b89cd345657962586", null ],
@@ -45,7 +47,6 @@ var geogram_2src_2lib_2geogram_2basic_2geometry_8h =
     [ "triangle_circumcenter", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#af5bb27640b9135bee4fa6aed2d501045", null ],
     [ "triangle_mass", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a94d39ca64347ece1367a870d796e68f9", null ],
     [ "triangle_normal", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a8d60d892ddff8eaf632fa18f69f9b30a", null ],
-    [ "triangle_normal_axis", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#acd5f1c9bacaec4df14d52f5e4620ed77", null ],
     [ "triangle_signed_area", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a2e1cd28bf0c8c1b84afdd2637b0f84fd", null ],
     [ "triangle_signed_area_2d", "geogram_2src_2lib_2geogram_2basic_2geometry_8h.html#a9aa08d8cdaa85a71273b27c01503df18", null ]
 ];

@@ -20,8 +20,17 @@ var namespaceGEO_1_1Numeric =
     [ "max_float64", "namespaceGEO_1_1Numeric.html#a52d499ce3d358f905ce81f2981701e0c", null ],
     [ "min_float32", "namespaceGEO_1_1Numeric.html#ac4427788e2549a621df5a7521d88f8a4", null ],
     [ "min_float64", "namespaceGEO_1_1Numeric.html#abfc33298edb6f9db917a43ce78cc4940", null ],
+    [ "optimize_number_representation", "namespaceGEO_1_1Numeric.html#a9196082cc304ddd2b2a272c143781ac2", null ],
+    [ "optimize_number_representation", "namespaceGEO_1_1Numeric.html#a0682b22d8fb11b00c8a78cca333cad55", null ],
+    [ "optimize_number_representation", "namespaceGEO_1_1Numeric.html#a971e7014d80caa7c54e12cfe10f19bd7", null ],
+    [ "optimize_number_representation", "namespaceGEO_1_1Numeric.html#a3d8e406216eb95fa9ef3aad61ddea322", null ],
+    [ "optimize_number_representation", "namespaceGEO_1_1Numeric.html#af08ce81f3a66aeda12ef0222bbea600c", null ],
+    [ "optimize_number_representation", "namespaceGEO_1_1Numeric.html#a245e5cd26d440dbb57c902e7792a1272", null ],
+    [ "optimize_number_representation", "namespaceGEO_1_1Numeric.html#ad37a28727dff5fd25de3533055ee8189", null ],
     [ "random_float32", "namespaceGEO_1_1Numeric.html#a6e16e15e0f68105e1849b0ab1eea8120", null ],
     [ "random_float64", "namespaceGEO_1_1Numeric.html#a84b4a558d230beff785928c464cde73e", null ],
     [ "random_int32", "namespaceGEO_1_1Numeric.html#abd5caefab41ba9af647d243f6e00b689", null ],
-    [ "random_reset", "namespaceGEO_1_1Numeric.html#aa494b0fc6719ad7cd88c60037f761f65", null ]
+    [ "random_reset", "namespaceGEO_1_1Numeric.html#aa494b0fc6719ad7cd88c60037f761f65", null ],
+    [ "ratio_compare", "namespaceGEO_1_1Numeric.html#ad21220aefb2f809b7cb8429374822870", null ],
+    [ "ratio_compare", "namespaceGEO_1_1Numeric.html#a8498782c238137504b402b6fbe4d45b1", null ]
 ];

@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -396,7 +403,7 @@ $(document).ready(function(){initNavTree('RVD__callback_8h_source.html',''); ini
 <div class="ttc" id="aclassGEO_1_1BuildRVDMesh_html_aea72fdbc7becbec28626009fceed786c"><div class="ttname"><a href="classGEO_1_1BuildRVDMesh.html#aea72fdbc7becbec28626009fceed786c">GEO::BuildRVDMesh::set_shrink</a></div><div class="ttdeci">void set_shrink(double x)</div><div class="ttdoc">Defines the optional shrink factor for cells.</div></div>
 <div class="ttc" id="aclassGEO_1_1BuildRVDMesh_html_af21d487157fa638275ab9c0b7f3c1022"><div class="ttname"><a href="classGEO_1_1BuildRVDMesh.html#af21d487157fa638275ab9c0b7f3c1022">GEO::BuildRVDMesh::vertex</a></div><div class="ttdeci">void vertex(const double *geometry, const GEOGen::SymbolicVertex &amp;symb) override</div><div class="ttdoc">Called for each vertex of the current facet.</div></div>
 <div class="ttc" id="aclassGEO_1_1BuildRVDMesh_html_af87be32b72375600f4d92f910da4a76b"><div class="ttname"><a href="classGEO_1_1BuildRVDMesh.html#af87be32b72375600f4d92f910da4a76b">GEO::BuildRVDMesh::process_polyhedron_mesh</a></div><div class="ttdeci">void process_polyhedron_mesh() override</div><div class="ttdoc">If use_mesh is set, then this function is called for each generated mesh.</div></div>
-<div class="ttc" id="aclassGEO_1_1Mesh_html"><div class="ttname"><a href="classGEO_1_1Mesh.html">GEO::Mesh</a></div><div class="ttdoc">Represents a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="mesh_8h_source.html#l02648">mesh.h:2648</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Mesh_html"><div class="ttname"><a href="classGEO_1_1Mesh.html">GEO::Mesh</a></div><div class="ttdoc">Represents a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="mesh_8h_source.html#l02672">mesh.h:2672</a></div></div>
 <div class="ttc" id="aclassGEO_1_1RVDCallback_html"><div class="ttname"><a href="classGEO_1_1RVDCallback.html">GEO::RVDCallback</a></div><div class="ttdoc">Baseclass for user functions called for each element (polygon or polyhedron) of a restricted Voronoi ...</div><div class="ttdef"><b>Definition:</b> <a href="RVD__callback_8h_source.html#l00079">RVD_callback.h:79</a></div></div>
 <div class="ttc" id="aclassGEO_1_1RVDCallback_html_a524770ecf75e9e652708a168bad076eb"><div class="ttname"><a href="classGEO_1_1RVDCallback.html#a524770ecf75e9e652708a168bad076eb">GEO::RVDCallback::simplex</a></div><div class="ttdeci">index_t simplex() const</div><div class="ttdoc">Gets the index of the simplex that corresponds to the current polygon/polyhedron.</div><div class="ttdef"><b>Definition:</b> <a href="RVD__callback_8h_source.html#l00123">RVD_callback.h:123</a></div></div>
 <div class="ttc" id="aclassGEO_1_1RVDCallback_html_a7b27de3552f7c4f5cfd3aa708b20da76"><div class="ttname"><a href="classGEO_1_1RVDCallback.html#a7b27de3552f7c4f5cfd3aa708b20da76">GEO::RVDCallback::set_spinlocks</a></div><div class="ttdeci">void set_spinlocks(Process::SpinLockArray *spinlocks)</div><div class="ttdoc">Sets the spinlocks array.</div><div class="ttdef"><b>Definition:</b> <a href="RVD__callback_8h_source.html#l00134">RVD_callback.h:134</a></div></div>
@@ -442,7 +449,7 @@ $(document).ready(function(){initNavTree('RVD__callback_8h_source.html',''); ini
 <div class="ttc" id="amesh_8h_html"><div class="ttname"><a href="mesh_8h.html">mesh.h</a></div><div class="ttdoc">The class that represents a mesh.</div></div>
 <div class="ttc" id="anamespaceGEO_html"><div class="ttname"><a href="namespaceGEO.html">GEO</a></div><div class="ttdoc">Global Vorpaline namespace.</div><div class="ttdef"><b>Definition:</b> <a href="lua__grob__shader_8h_source.html#l00053">lua_grob_shader.h:53</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_a883362e7d302eb595cb6dfac32e694b5"><div class="ttname"><a href="namespaceGEO.html#a883362e7d302eb595cb6dfac32e694b5">GEO::SymbolicVertex</a></div><div class="ttdeci">GEOGen::SymbolicVertex SymbolicVertex</div><div class="ttdoc">Symbolic representation of a RestrictedVoronoiDiagram vertex.</div><div class="ttdef"><b>Definition:</b> <a href="generic__RVD_8h_source.html#l02520">generic_RVD.h:2520</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
 <div class="ttc" id="anumeric_8h_html"><div class="ttname"><a href="numeric_8h.html">numeric.h</a></div><div class="ttdoc">Types and functions for numbers manipulation.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -450,7 +457,7 @@ $(document).ready(function(){initNavTree('RVD__callback_8h_source.html',''); ini
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_9aa10bb0707570688f07880f39c28e9b.html">voronoi</a></li><li class="navelem"><a class="el" href="RVD__callback_8h.html">RVD_callback.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

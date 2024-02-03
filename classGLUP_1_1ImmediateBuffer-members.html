@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -91,26 +98,27 @@ $(document).ready(function(){initNavTree('classGLUP_1_1ImmediateBuffer.html','')
 <p>This is the complete list of members for <a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a>, including all inherited members.</p>
 <table class="directory">
   <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#aa6a03e2f3eb33ced14147cf8cc2dbb74">copy</a>(index_t to, index_t from)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#aa95eda5e616068bd428cccb5170d19cb">copy_current_to</a>(index_t v)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#a50401a5c5f9197df5a6668fb680b60ba">data</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#a847f72e853092651d01d145ee67c50d1">dimension</a>() const</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#ac3ddcddcaf623e10ca9b2ff79bc8e79e">disable</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#ac314f155243a9bb09fbbc924744aacf3">element_ptr</a>(index_t v)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#a767493ff579a5d003ba497bbaa7bcfd9">enable</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#af017e7de26851c5df2f6bbf68c3266ac">ImmediateBuffer</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#a8a1dfbaee67e94b0615930b18eaea740">ImmediateBuffer</a>(const ImmediateBuffer &amp;rhs)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>initialize</b>(index_t dim) (defined in <a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a>)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#a477d9d215f15054962147e1a67f8d481">is_enabled</a>() const</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#a6a83c24e31f52fa85dac4db6831604fc">set_current</a>(GLfloat x, GLfloat y, GLfloat z, GLfloat w)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#a74fcdc1b35f5775371f30b3d6694bdcf">size_in_bytes</a>() const</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#ae82725cff83fdd8903bad0730219dca1">VBO</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#a0d13c2768f48eafdb81ad6477fd66f8a">~ImmediateBuffer</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#a968854daa37c182c2dc89b82bfb25d29">copy</a>(index_t to, ImmediateBuffer &amp;from_buffer, index_t from)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#aa95eda5e616068bd428cccb5170d19cb">copy_current_to</a>(index_t v)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#a50401a5c5f9197df5a6668fb680b60ba">data</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#a847f72e853092651d01d145ee67c50d1">dimension</a>() const</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#ac3ddcddcaf623e10ca9b2ff79bc8e79e">disable</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#ac314f155243a9bb09fbbc924744aacf3">element_ptr</a>(index_t v)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#a767493ff579a5d003ba497bbaa7bcfd9">enable</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#af017e7de26851c5df2f6bbf68c3266ac">ImmediateBuffer</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#a8a1dfbaee67e94b0615930b18eaea740">ImmediateBuffer</a>(const ImmediateBuffer &amp;rhs)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>initialize</b>(index_t dim) (defined in <a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a>)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#a477d9d215f15054962147e1a67f8d481">is_enabled</a>() const</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#a6a83c24e31f52fa85dac4db6831604fc">set_current</a>(GLfloat x, GLfloat y, GLfloat z, GLfloat w)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#a74fcdc1b35f5775371f30b3d6694bdcf">size_in_bytes</a>() const</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#ae82725cff83fdd8903bad0730219dca1">VBO</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html#a0d13c2768f48eafdb81ad6477fd66f8a">~ImmediateBuffer</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateBuffer.html">GLUP::ImmediateBuffer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -161,13 +168,13 @@ $(document).ready(function(){initNavTree('mesh__partition_8h_source.html',''); i
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
-<div class="ttc" id="aclassGEO_1_1Mesh_html"><div class="ttname"><a href="classGEO_1_1Mesh.html">GEO::Mesh</a></div><div class="ttdoc">Represents a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="mesh_8h_source.html#l02648">mesh.h:2648</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Mesh_html"><div class="ttname"><a href="classGEO_1_1Mesh.html">GEO::Mesh</a></div><div class="ttdoc">Represents a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="mesh_8h_source.html#l02672">mesh.h:2672</a></div></div>
 <div class="ttc" id="aclassGEO_1_1vector_html"><div class="ttname"><a href="classGEO_1_1vector.html">GEO::vector&lt; index_t &gt;</a></div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
 <div class="ttc" id="amemory_8h_html"><div class="ttname"><a href="memory_8h.html">memory.h</a></div><div class="ttdoc">Types and functions for memory manipulation.</div></div>
 <div class="ttc" id="anamespaceGEO_html"><div class="ttname"><a href="namespaceGEO.html">GEO</a></div><div class="ttdoc">Global Vorpaline namespace.</div><div class="ttdef"><b>Definition:</b> <a href="lua__grob__shader_8h_source.html#l00053">lua_grob_shader.h:53</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_a279b7ffb9aa362ef529f4f51980f6a90"><div class="ttname"><a href="namespaceGEO.html#a279b7ffb9aa362ef529f4f51980f6a90">GEO::mesh_partition</a></div><div class="ttdeci">void mesh_partition(Mesh &amp;M, MeshPartitionMode mode, vector&lt; index_t &gt; &amp;facet_ptr, vector&lt; index_t &gt; &amp;tet_ptr, index_t nb_parts=0)</div><div class="ttdoc">Partitions a mesh into a fixed number of parts.</div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_ade090d92712c3e7690ae665df0d16dbf"><div class="ttname"><a href="namespaceGEO.html#ade090d92712c3e7690ae665df0d16dbf">GEO::MeshPartitionMode</a></div><div class="ttdeci">MeshPartitionMode</div><div class="ttdoc">Strategy for mesh partitioning.</div><div class="ttdef"><b>Definition:</b> <a href="mesh__partition_8h_source.html#l00059">mesh_partition.h:59</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_ade090d92712c3e7690ae665df0d16dbfae14da6161a1c78dc31e5d7de8e8822d2"><div class="ttname"><a href="namespaceGEO.html#ade090d92712c3e7690ae665df0d16dbfae14da6161a1c78dc31e5d7de8e8822d2">GEO::MESH_PARTITION_CONNECTED_COMPONENTS</a></div><div class="ttdeci">@ MESH_PARTITION_CONNECTED_COMPONENTS</div><div class="ttdef"><b>Definition:</b> <a href="mesh__partition_8h_source.html#l00065">mesh_partition.h:64</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_ade090d92712c3e7690ae665df0d16dbfaf1b888183b32d8c743d254e54e8f6426"><div class="ttname"><a href="namespaceGEO.html#ade090d92712c3e7690ae665df0d16dbfaf1b888183b32d8c743d254e54e8f6426">GEO::MESH_PARTITION_HILBERT</a></div><div class="ttdeci">@ MESH_PARTITION_HILBERT</div><div class="ttdef"><b>Definition:</b> <a href="mesh__partition_8h_source.html#l00061">mesh_partition.h:61</a></div></div>
@@ -178,7 +185,7 @@ $(document).ready(function(){initNavTree('mesh__partition_8h_source.html',''); i
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_7faf8be2027c4a91a1e5453dfee06721.html">mesh</a></li><li class="navelem"><a class="el" href="mesh__partition_8h.html">mesh_partition.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -109,11 +116,13 @@ $(document).ready(function(){initNavTree('classGEO_1_1vecng_3_012_00_01T_01_4.ht
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#ad097303c27a8f8b52291427d6da3cf83">operator/=</a>(T2 s)</td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#aa4e30895a46da01af759cd575ff18303">operator[]</a>(index_t i)</td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a467f337adbbccfcc9450e21969453a47">operator[]</a>(index_t i) const</td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a63f39a8b6b07e07839f76bc30f856aa5">value_type</a> typedef</td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a78c1e216eca20fa16000697684880001">vecng</a>()</td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a052524bad39fb676cdc6842b7b1b69ac">vecng</a>(T x_in, T y_in)</td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a5d651b1d3e795e41b65112325d0d353b">vecng</a>(const vecng&lt; dim, T2 &gt; &amp;v)</td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a9a22edadd72431bf69ce0450c1c296aa">vecng</a>(const T2 *v)</td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a596b8f88490d036ed1bef1b0f126940a">optimize</a>()</td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a63f39a8b6b07e07839f76bc30f856aa5">value_type</a> typedef</td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a78c1e216eca20fa16000697684880001">vecng</a>()</td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a052524bad39fb676cdc6842b7b1b69ac">vecng</a>(T x_in, T y_in)</td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a5d651b1d3e795e41b65112325d0d353b">vecng</a>(const vecng&lt; dim, T2 &gt; &amp;v)</td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a9a22edadd72431bf69ce0450c1c296aa">vecng</a>(const T2 *v)</td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a62cd56e5acf255895e2274f3aa252e29">vecng</a>(const std::initializer_list&lt; T &gt; &amp;Vi)</td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#adcfa96b1e92912933aa69dd5867582f8">vector_type</a> typedef</td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a5b5a07cc64a0b19e1d639c0ebe0a76f6">x</a></td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html#a296f22a220318952b946d6f22d80b40d">y</a></td><td class="entry"><a class="el" href="classGEO_1_1vecng_3_012_00_01T_01_4.html">GEO::vecng&lt; 2, T &gt;</a></td><td class="entry"></td></tr>
@@ -122,7 +131,7 @@ $(document).ready(function(){initNavTree('classGEO_1_1vecng_3_012_00_01T_01_4.ht
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

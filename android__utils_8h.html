@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -95,6 +102,8 @@ $(document).ready(function(){initNavTree('android__utils_8h.html',''); initResiz
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;<a class="el" href="geogram_2src_2lib_2geogram_2basic_2common_8h_source.html">geogram/basic/common.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="numeric_8h_source.html">geogram/basic/numeric.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="argused_8h_source.html">geogram/basic/argused.h</a>&gt;</code><br />
+<code>#include &lt;android/log.h&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 </div>
 <p><a href="android__utils_8h_source.html">Go to the source code of this file.</a></p>
@@ -125,12 +134,119 @@ Functions</h2></td></tr>
 <tr class="memitem:a7962e31228b115f8039f5950134dc43c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="android__utils_8h.html#a7962e31228b115f8039f5950134dc43c">GEO::AndroidUtils::temp_folder</a> (android_app *app)</td></tr>
 <tr class="memdesc:a7962e31228b115f8039f5950134dc43c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the path for temporary file.  <a href="android__utils_8h.html#a7962e31228b115f8039f5950134dc43c">More...</a><br /></td></tr>
 <tr class="separator:a7962e31228b115f8039f5950134dc43c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea6ce76976894867299020025309f13c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="android__utils_8h.html#aea6ce76976894867299020025309f13c">GEO::AndroidUtils::debug_log</a> (const char *str)</td></tr>
+<tr class="memdesc:aea6ce76976894867299020025309f13c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a message in the android log in Debug mode, ignored in Release mode.  <a href="android__utils_8h.html#aea6ce76976894867299020025309f13c">More...</a><br /></td></tr>
+<tr class="separator:aea6ce76976894867299020025309f13c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10a86422c96a8275f8ec8d0a72e6c857"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="android__utils_8h.html#a10a86422c96a8275f8ec8d0a72e6c857">GEO::AndroidUtils::debug_log</a> (const std::string &amp;str)</td></tr>
+<tr class="memdesc:a10a86422c96a8275f8ec8d0a72e6c857"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays a message in the android log in Debug mode, ignored in Release mode.  <a href="android__utils_8h.html#a10a86422c96a8275f8ec8d0a72e6c857">More...</a><br /></td></tr>
+<tr class="separator:a10a86422c96a8275f8ec8d0a72e6c857"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45343f14e8f745452666d040e905252b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="android__utils_8h.html#a45343f14e8f745452666d040e905252b">GEO::AndroidUtils::debug_show_event</a> (AInputEvent *event)</td></tr>
+<tr class="memdesc:a45343f14e8f745452666d040e905252b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays an android event in the android log in Debug mode, ignored in release mode.  <a href="android__utils_8h.html#a45343f14e8f745452666d040e905252b">More...</a><br /></td></tr>
+<tr class="separator:a45343f14e8f745452666d040e905252b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Functions for Android. </p>
 
 <p class="definition">Definition in file <a class="el" href="android__utils_8h_source.html">android_utils.h</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="aea6ce76976894867299020025309f13c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea6ce76976894867299020025309f13c">&#9670;&nbsp;</a></span>debug_log() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GEO::AndroidUtils::debug_log </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Displays a message in the android log in Debug mode, ignored in Release mode. </p>
+<p>The message can be displayed using 'adb logcat | grep GEOGRAM' </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>the message to be displayed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="android__utils_8h_source.html#l00125">125</a> of file <a class="el" href="android__utils_8h_source.html">android_utils.h</a>.</p>
+
+</div>
+</div>
+<a id="a10a86422c96a8275f8ec8d0a72e6c857"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10a86422c96a8275f8ec8d0a72e6c857">&#9670;&nbsp;</a></span>debug_log() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GEO::AndroidUtils::debug_log </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Displays a message in the android log in Debug mode, ignored in Release mode. </p>
+<p>The message can be displayed using 'adb logcat | grep GEOGRAM' </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>the message to be displayed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="android__utils_8h_source.html#l00141">141</a> of file <a class="el" href="android__utils_8h_source.html">android_utils.h</a>.</p>
+
+</div>
+</div>
+<a id="a45343f14e8f745452666d040e905252b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45343f14e8f745452666d040e905252b">&#9670;&nbsp;</a></span>debug_show_event()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GEO::AndroidUtils::debug_show_event </td>
+          <td>(</td>
+          <td class="paramtype">AInputEvent *&#160;</td>
+          <td class="paramname"><em>event</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Displays an android event in the android log in Debug mode, ignored in release mode. </p>
+<p>The message can be displayed using 'adb logcat | grep GEOGRAM' </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>the event to be displayed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ad2ecb7b88d6edf56f6672885fe69285d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad2ecb7b88d6edf56f6672885fe69285d">&#9670;&nbsp;</a></span>has_permission()</h2>
 
@@ -355,7 +471,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_4586f940cce2020c46fbc4f79c1663fc.html">basic</a></li><li class="navelem"><a class="el" href="android__utils_8h.html">android_utils.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

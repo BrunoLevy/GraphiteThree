@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -157,13 +164,13 @@ $(document).ready(function(){initNavTree('mesh__remesh_8h_source.html',''); init
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
-<div class="ttc" id="aclassGEO_1_1Mesh_html"><div class="ttname"><a href="classGEO_1_1Mesh.html">GEO::Mesh</a></div><div class="ttdoc">Represents a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="mesh_8h_source.html#l02648">mesh.h:2648</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Mesh_html"><div class="ttname"><a href="classGEO_1_1Mesh.html">GEO::Mesh</a></div><div class="ttdoc">Represents a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="mesh_8h_source.html#l02672">mesh.h:2672</a></div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
 <div class="ttc" id="anamespaceGEO_html"><div class="ttname"><a href="namespaceGEO.html">GEO</a></div><div class="ttdoc">Global Vorpaline namespace.</div><div class="ttdef"><b>Definition:</b> <a href="lua__grob__shader_8h_source.html#l00053">lua_grob_shader.h:53</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_a711770a06a3a60c84c874cadaf523fd0"><div class="ttname"><a href="namespaceGEO.html#a711770a06a3a60c84c874cadaf523fd0">GEO::remesh_smooth</a></div><div class="ttdeci">void remesh_smooth(Mesh &amp;M_in, Mesh &amp;M_out, index_t nb_points, coord_index_t dim=0, index_t nb_Lloyd_iter=5, index_t nb_Newton_iter=30, index_t Newton_m=7, bool adjust=true, double adjust_max_edge_distance=0.5)</div><div class="ttdoc">Remeshes a 'smooth' shape (that is, without management of sharp features).</div></div>
 <div class="ttc" id="anamespaceGEO_html_a797528127211ffd18fac6a8d1255a1d0"><div class="ttname"><a href="namespaceGEO.html#a797528127211ffd18fac6a8d1255a1d0">GEO::mesh_adjust_surface</a></div><div class="ttdeci">void mesh_adjust_surface(Mesh &amp;surface, Mesh &amp;reference, double max_edge_distance=0.5, bool project_borders=false)</div><div class="ttdoc">Adjusts a surface mesh in such a way that minimizes its distance to a reference surface mesh.</div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_ae771f961036ac7f98502ff145b99d424"><div class="ttname"><a href="namespaceGEO.html#ae771f961036ac7f98502ff145b99d424">GEO::coord_index_t</a></div><div class="ttdeci">geo_coord_index_t coord_index_t</div><div class="ttdoc">The type for storing coordinate indices, and iterating on the coordinates of a point.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00321">numeric.h:321</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_ae771f961036ac7f98502ff145b99d424"><div class="ttname"><a href="namespaceGEO.html#ae771f961036ac7f98502ff145b99d424">GEO::coord_index_t</a></div><div class="ttdeci">geo_coord_index_t coord_index_t</div><div class="ttdoc">The type for storing coordinate indices, and iterating on the coordinates of a point.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00363">numeric.h:363</a></div></div>
 <div class="ttc" id="anumeric_8h_html"><div class="ttname"><a href="numeric_8h.html">numeric.h</a></div><div class="ttdoc">Types and functions for numbers manipulation.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -171,7 +178,7 @@ $(document).ready(function(){initNavTree('mesh__remesh_8h_source.html',''); init
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_7faf8be2027c4a91a1e5453dfee06721.html">mesh</a></li><li class="navelem"><a class="el" href="mesh__remesh_8h.html">mesh_remesh.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

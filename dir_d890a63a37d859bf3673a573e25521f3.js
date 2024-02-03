@@ -1,5 +1,11 @@
 var dir_d890a63a37d859bf3673a573e25521f3 =
 [
+    [ "dynamic_object.h", "dynamic__object_8h.html", [
+      [ "DynamicObject", "classOGF_1_1DynamicObject.html", "classOGF_1_1DynamicObject" ],
+      [ "DynamicFactoryMetaClass", "classOGF_1_1DynamicFactoryMetaClass.html", "classOGF_1_1DynamicFactoryMetaClass" ],
+      [ "DynamicMetaSlot", "classOGF_1_1DynamicMetaSlot.html", "classOGF_1_1DynamicMetaSlot" ],
+      [ "DynamicMetaClass", "classOGF_1_1DynamicMetaClass.html", "classOGF_1_1DynamicMetaClass" ]
+    ] ],
     [ "meta.h", "meta_8h.html", "meta_8h" ],
     [ "meta_arg.h", "meta__arg_8h.html", "meta__arg_8h" ],
     [ "meta_builtin.h", "meta__builtin_8h.html", "meta__builtin_8h" ],

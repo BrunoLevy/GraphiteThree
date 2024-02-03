@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -97,7 +104,7 @@ $(document).ready(function(){initNavTree('classGEO_1_1MeshCells.html',''); initR
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html#a3326a9e4dd8d7ef72e817030b5edb7a9">assign_tet_mesh</a>(vector&lt; index_t &gt; &amp;tets, bool steal_args)</td><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html">GEO::MeshCells</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#ae9a3b82b8d505bb4004db54a3e54a81f">attributes</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>attributes_</b> (defined in <a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a>)</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#a67f4376427ba8ec9260b4b0cf443c2bb">begin</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#a14c17f9301486490b5034a9b5543e72f">begin</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>cell_corners_</b> (defined in <a class="el" href="classGEO_1_1MeshCells.html">GEO::MeshCells</a>)</td><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html">GEO::MeshCells</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr bgcolor="#f0f0f0"><td class="entry"><b>cell_facets_</b> (defined in <a class="el" href="classGEO_1_1MeshCells.html">GEO::MeshCells</a>)</td><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html">GEO::MeshCells</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>cell_ptr_</b> (defined in <a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a>)</td><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
@@ -112,7 +119,7 @@ $(document).ready(function(){initNavTree('classGEO_1_1MeshCells.html',''); initR
   <tr bgcolor="#f0f0f0"><td class="entry"><b>copy</b>(const MeshCellsStore &amp;rhs, bool copy_attributes=true) (defined in <a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a>)</td><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#ab7b5364007e33f90d7dbafd042be7931">GEO::MeshSubElementsStore::copy</a>(const MeshSubElementsStore &amp;rhs, bool copy_attributes=true)</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html#a3c6ee49834fd40c09020943a9917b908">corner</a>(index_t c, index_t lv) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html#ad8fd1d45147955743790e09b879c583a">corners</a>(index_t c) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html">GEO::MeshCells</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html#a58ef473903a774b9dd2407425ec29115">corners</a>(index_t c) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html">GEO::MeshCells</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html#abdbcd2badda0ffb05084406c69ade2f4">corners_begin</a>(index_t c) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html#a7274f29ea1a3f262c80f1b03d6afa87a">corners_end</a>(index_t c) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html#a152b388233aa0e8680762ef9de13dd38">create_cells</a>(index_t nb_cells, MeshCellType type)</td><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html">GEO::MeshCells</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
@@ -134,7 +141,7 @@ $(document).ready(function(){initNavTree('classGEO_1_1MeshCells.html',''); initR
   <tr><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html#aa76f78576f9458ac24954668bbd31e5b">descriptor</a>(index_t c) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html#aaf3159a42a88c4b73ff758fe522489d7">edge_adjacent_facet</a>(index_t c, index_t le, index_t lf) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html">GEO::MeshCells</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html#a60a3fa33aef04b96565331479ea0d65d">edge_vertex</a>(index_t c, index_t le, index_t lv) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html">GEO::MeshCells</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#ae44806c720e3c80fe106b484b2b816c0">end</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#ab42b425a3238796ba8ca8e0edfc8d690">end</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html#a0a6bcf434cdf0b1c14441c96319d3bb0">facet</a>(index_t c, index_t lf) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html#aa725bf2850aa005958f32448b55d235f">facet_corner</a>(index_t c, index_t lf, index_t lc) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html">GEO::MeshCells</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html#ae8321af8ee1fa9077f712bf405bba1f8">facet_nb_vertices</a>(index_t c, index_t lf) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshCells.html">GEO::MeshCells</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
@@ -184,7 +191,7 @@ $(document).ready(function(){initNavTree('classGEO_1_1MeshCells.html',''); initR
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

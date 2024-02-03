@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -96,7 +103,7 @@ $(document).ready(function(){initNavTree('classOGF_1_1MetaBuiltinType.html','');
   <tr><td class="entry"><a class="el" href="classOGF_1_1CustomAttributes.html#a6134102a7c792b6ee98c993039214b74">clear_custom_attributes</a>()</td><td class="entry"><a class="el" href="classOGF_1_1CustomAttributes.html">OGF::CustomAttributes</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1Object.html#afeb8b52740d27ffcbf7d6afbc83fe507">connect_signal_to_slot</a>(const std::string &amp;signal_name, Object *to, const std::string &amp;slot_name)</td><td class="entry"><a class="el" href="classOGF_1_1Object.html">OGF::Object</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1Counted.html#a457526cd0949d44317c891075b1af9bc">Counted</a>()</td><td class="entry"><a class="el" href="classGEO_1_1Counted.html">GEO::Counted</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1CustomAttributes.html#a3c1445adf5b93e5dcfaa4c6f3b56640b">create_custom_attribute</a>(const std::string &amp;name, const std::string &amp;value)</td><td class="entry"><a class="el" href="classOGF_1_1CustomAttributes.html">OGF::CustomAttributes</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1MetaInformation.html#aee59c43ca909fe9d3af26b2be317fdc0">create_custom_attribute</a>(const std::string &amp;name, const std::string &amp;value)</td><td class="entry"><a class="el" href="classOGF_1_1MetaInformation.html">OGF::MetaInformation</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classOGF_1_1MetaInformation.html#a761d91c3883227e4e409087cbf2a5400">custom_attribute_value</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="classOGF_1_1MetaInformation.html">OGF::MetaInformation</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1Object.html#ac68f75913d69aa57ef8f709bedbc2708">disable_signals</a>()</td><td class="entry"><a class="el" href="classOGF_1_1Object.html">OGF::Object</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classOGF_1_1Object.html#ac4bcab67b01e6ec24fa82ef7b8b846fd">disable_slots</a>()</td><td class="entry"><a class="el" href="classOGF_1_1Object.html">OGF::Object</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
@@ -135,7 +142,7 @@ $(document).ready(function(){initNavTree('classOGF_1_1MetaBuiltinType.html','');
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1Counted.html#ab1adaca35a986f3e3dc34062e50d427b">ref</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1Counted.html">GEO::Counted</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1Counted.html#a668146a39d3c440995f0f3c83da5e231">ref</a>(const Counted *counted)</td><td class="entry"><a class="el" href="classGEO_1_1Counted.html">GEO::Counted</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1MetaType.html#af3bf53293c22fec694452d2b06819960">serializer</a>() const</td><td class="entry"><a class="el" href="classOGF_1_1MetaType.html">OGF::MetaType</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classOGF_1_1CustomAttributes.html#a0ab40289b137c24b620559cfe9e0f09a">set_custom_attribute</a>(const std::string &amp;name, const std::string &amp;value)</td><td class="entry"><a class="el" href="classOGF_1_1CustomAttributes.html">OGF::CustomAttributes</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classOGF_1_1MetaInformation.html#ad5d002caa60526323488b52165142292">set_custom_attribute</a>(const std::string &amp;name, const std::string &amp;value)</td><td class="entry"><a class="el" href="classOGF_1_1MetaInformation.html">OGF::MetaInformation</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1Object.html#a0951198c8605a75268da3a6eb41c6986">set_element</a>(index_t i, const Any &amp;value)</td><td class="entry"><a class="el" href="classOGF_1_1Object.html">OGF::Object</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classOGF_1_1MetaType.html#ae55ed72de38324be9987f5dff0b5c649">set_life_cycle</a>(LifeCycle *life_cycle)</td><td class="entry"><a class="el" href="classOGF_1_1MetaType.html">OGF::MetaType</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classOGF_1_1Object.html#a988be8de277f09245d0843a519179794">set_meta_class</a>(MetaClass *mclass)</td><td class="entry"><a class="el" href="classOGF_1_1Object.html">OGF::Object</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
@@ -160,7 +167,7 @@ $(document).ready(function(){initNavTree('classOGF_1_1MetaBuiltinType.html','');
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

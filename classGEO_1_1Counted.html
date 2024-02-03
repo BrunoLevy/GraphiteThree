@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -106,33 +113,34 @@ Inheritance diagram for GEO::Counted:</div>
 <area href="classGEO_1_1Factory.html" alt="GEO::Factory&lt; FactoryCreator1&lt; Type, Param1 &gt; &gt;" shape="rect" coords="321,56,632,80"/>
 <area href="classGEO_1_1Factory.html" alt="GEO::Factory&lt; FactoryCreator0&lt; Type &gt; &gt;" shape="rect" coords="321,112,632,136"/>
 <area href="classGEO_1_1AttributeStoreCreator.html" title="Internal class for creating an AttributeStore from the type name of its elements." alt="GEO::AttributeStoreCreator" shape="rect" coords="321,168,632,192"/>
-<area href="classGEO_1_1Colormap.html" title="A Colormap." alt="GEO::Colormap" shape="rect" coords="321,224,632,248"/>
-<area href="classGEO_1_1Command.html" title="Manages the GUI of a command with ImGUI." alt="GEO::Command" shape="rect" coords="321,280,632,304"/>
-<area href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions." alt="GEO::CommandInvoker" shape="rect" coords="321,336,632,360"/>
-<area href="classGEO_1_1Delaunay.html" title="Abstract interface for Delaunay triangulation in Nd." alt="GEO::Delaunay" shape="rect" coords="321,392,632,416"/>
-<area href="classGEO_1_1Environment.html" title="Application environment." alt="GEO::Environment" shape="rect" coords="321,448,632,472"/>
-<area href="classGEO_1_1Factory.html" title="Factory of typed objects." alt="GEO::Factory&lt; FactoryCreator &gt;" shape="rect" coords="321,504,632,528"/>
-<area href="classGEO_1_1FileSystem_1_1Node.html" title="A Node in a FileSystem." alt="GEO::FileSystem::Node" shape="rect" coords="321,560,632,584"/>
-<area href="classGEO_1_1FullScreenEffectImpl.html" title="Implementation of full screen effects." alt="GEO::FullScreenEffectImpl" shape="rect" coords="321,616,632,640"/>
-<area href="classGEO_1_1Image.html" title="An image." alt="GEO::Image" shape="rect" coords="321,672,632,696"/>
-<area href="classGEO_1_1ImageSerializer.html" title="Loads and saves images." alt="GEO::ImageSerializer" shape="rect" coords="321,728,632,752"/>
-<area href="classGEO_1_1IntegrationSimplex.html" title="Computes an objective function and its gradient over a restricted Voronoi diagram." alt="GEO::IntegrationSimplex" shape="rect" coords="321,784,632,808"/>
-<area href="classGEO_1_1MeshIOHandler.html" title="Mesh loader and saver." alt="GEO::MeshIOHandler" shape="rect" coords="321,840,632,864"/>
-<area href="classGEO_1_1NearestNeighborSearch.html" title="Abstract interface for nearest neighbor search algorithms." alt="GEO::NearestNeighborSearch" shape="rect" coords="321,896,632,920"/>
-<area href="classGEO_1_1Optimizer.html" title="Optimizer minimizes a multivariate function." alt="GEO::Optimizer" shape="rect" coords="321,952,632,976"/>
-<area href="classGEO_1_1ProgressClient.html" title="Task progress listener." alt="GEO::ProgressClient" shape="rect" coords="321,1008,632,1032"/>
-<area href="classGEO_1_1RestrictedVoronoiDiagram.html" title="Computes a Restricted Voronoi Diagram (RVD)." alt="GEO::RestrictedVoronoiDiagram" shape="rect" coords="321,1064,632,1088"/>
-<area href="classGEO_1_1Thread.html" title="Platform-independent base class for running threads." alt="GEO::Thread" shape="rect" coords="321,1120,632,1144"/>
-<area href="classGEO_1_1ThreadManager.html" title="Platform-independent base class for running concurrent threads." alt="GEO::ThreadManager" shape="rect" coords="321,1176,632,1200"/>
-<area href="classOGF_1_1BasicFactory.html" alt="OGF::BasicFactory&lt; BASE &gt;" shape="rect" coords="321,1232,632,1256"/>
-<area href="classOGF_1_1BasicFactoryWithArg.html" alt="OGF::BasicFactoryWithArg&lt; BASE, ARG &gt;" shape="rect" coords="321,1288,632,1312"/>
-<area href="classOGF_1_1Factory.html" title="Creates instances of a specific class." alt="OGF::Factory" shape="rect" coords="321,1344,632,1368"/>
-<area href="classOGF_1_1LifeCycle.html" title="Manages the life cycle of an object." alt="OGF::LifeCycle" shape="rect" coords="321,1400,632,1424"/>
-<area href="classOGF_1_1Module.html" title="Represents information associated with a module (i.e. a plugin)." alt="OGF::Module" shape="rect" coords="321,1456,632,1480"/>
-<area href="classOGF_1_1Object.html" title="Base class for all objects in the GOM system." alt="OGF::Object" shape="rect" coords="321,1512,632,1536"/>
-<area href="classOGF_1_1RenderingContext.html" title="Helper class for OpenGL context management." alt="OGF::RenderingContext" shape="rect" coords="321,1568,632,1592"/>
-<area href="classOGF_1_1Serializer.html" title="Abstract base class for reading and writing values from/to streams." alt="OGF::Serializer" shape="rect" coords="321,1624,632,1648"/>
-<area href="classOGF_1_1Texture.html" title="An OpenGL texture." alt="OGF::Texture" shape="rect" coords="321,1680,632,1704"/>
+<area href="classGEO_1_1CSGMesh.html" title="A Mesh with reference counting and bounding box." alt="GEO::CSGMesh" shape="rect" coords="321,224,632,248"/>
+<area href="classGEO_1_1Colormap.html" title="A Colormap." alt="GEO::Colormap" shape="rect" coords="321,280,632,304"/>
+<area href="classGEO_1_1Command.html" title="Manages the GUI of a command with ImGUI." alt="GEO::Command" shape="rect" coords="321,336,632,360"/>
+<area href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions." alt="GEO::CommandInvoker" shape="rect" coords="321,392,632,416"/>
+<area href="classGEO_1_1Delaunay.html" title="Abstract interface for Delaunay triangulation in Nd." alt="GEO::Delaunay" shape="rect" coords="321,448,632,472"/>
+<area href="classGEO_1_1Environment.html" title="Application environment." alt="GEO::Environment" shape="rect" coords="321,504,632,528"/>
+<area href="classGEO_1_1Factory.html" title="Factory of typed objects." alt="GEO::Factory&lt; FactoryCreator &gt;" shape="rect" coords="321,560,632,584"/>
+<area href="classGEO_1_1FileSystem_1_1Node.html" title="A Node in a FileSystem." alt="GEO::FileSystem::Node" shape="rect" coords="321,616,632,640"/>
+<area href="classGEO_1_1FullScreenEffectImpl.html" title="Implementation of full screen effects." alt="GEO::FullScreenEffectImpl" shape="rect" coords="321,672,632,696"/>
+<area href="classGEO_1_1Image.html" title="An image." alt="GEO::Image" shape="rect" coords="321,728,632,752"/>
+<area href="classGEO_1_1ImageSerializer.html" title="Loads and saves images." alt="GEO::ImageSerializer" shape="rect" coords="321,784,632,808"/>
+<area href="classGEO_1_1IntegrationSimplex.html" title="Computes an objective function and its gradient over a restricted Voronoi diagram." alt="GEO::IntegrationSimplex" shape="rect" coords="321,840,632,864"/>
+<area href="classGEO_1_1MeshIOHandler.html" title="Mesh loader and saver." alt="GEO::MeshIOHandler" shape="rect" coords="321,896,632,920"/>
+<area href="classGEO_1_1NearestNeighborSearch.html" title="Abstract interface for nearest neighbor search algorithms." alt="GEO::NearestNeighborSearch" shape="rect" coords="321,952,632,976"/>
+<area href="classGEO_1_1Optimizer.html" title="Optimizer minimizes a multivariate function." alt="GEO::Optimizer" shape="rect" coords="321,1008,632,1032"/>
+<area href="classGEO_1_1ProgressClient.html" title="Task progress listener." alt="GEO::ProgressClient" shape="rect" coords="321,1064,632,1088"/>
+<area href="classGEO_1_1RestrictedVoronoiDiagram.html" title="Computes a Restricted Voronoi Diagram (RVD)." alt="GEO::RestrictedVoronoiDiagram" shape="rect" coords="321,1120,632,1144"/>
+<area href="classGEO_1_1Thread.html" title="Platform-independent base class for running threads." alt="GEO::Thread" shape="rect" coords="321,1176,632,1200"/>
+<area href="classGEO_1_1ThreadManager.html" title="Platform-independent base class for running concurrent threads." alt="GEO::ThreadManager" shape="rect" coords="321,1232,632,1256"/>
+<area href="classOGF_1_1BasicFactory.html" alt="OGF::BasicFactory&lt; BASE &gt;" shape="rect" coords="321,1288,632,1312"/>
+<area href="classOGF_1_1BasicFactoryWithArg.html" alt="OGF::BasicFactoryWithArg&lt; BASE, ARG &gt;" shape="rect" coords="321,1344,632,1368"/>
+<area href="classOGF_1_1Factory.html" title="Creates instances of a specific class." alt="OGF::Factory" shape="rect" coords="321,1400,632,1424"/>
+<area href="classOGF_1_1LifeCycle.html" title="Manages the life cycle of an object." alt="OGF::LifeCycle" shape="rect" coords="321,1456,632,1480"/>
+<area href="classOGF_1_1Module.html" title="Represents information associated with a module (i.e. a plugin)." alt="OGF::Module" shape="rect" coords="321,1512,632,1536"/>
+<area href="classOGF_1_1Object.html" title="Base class for all objects in the GOM system." alt="OGF::Object" shape="rect" coords="321,1568,632,1592"/>
+<area href="classOGF_1_1RenderingContext.html" title="Helper class for OpenGL context management." alt="OGF::RenderingContext" shape="rect" coords="321,1624,632,1648"/>
+<area href="classOGF_1_1Serializer.html" title="Abstract base class for reading and writing values from/to streams." alt="OGF::Serializer" shape="rect" coords="321,1680,632,1704"/>
+<area href="classOGF_1_1Texture.html" title="An OpenGL texture." alt="OGF::Texture" shape="rect" coords="321,1736,632,1760"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -437,7 +445,7 @@ Protected Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1Counted.html">Counted</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

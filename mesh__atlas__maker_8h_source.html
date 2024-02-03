@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -162,11 +169,11 @@ $(document).ready(function(){initNavTree('mesh__atlas__maker_8h_source.html','')
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
-<div class="ttc" id="aclassGEO_1_1Mesh_html"><div class="ttname"><a href="classGEO_1_1Mesh.html">GEO::Mesh</a></div><div class="ttdoc">Represents a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="mesh_8h_source.html#l02648">mesh.h:2648</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Mesh_html"><div class="ttname"><a href="classGEO_1_1Mesh.html">GEO::Mesh</a></div><div class="ttdoc">Represents a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="mesh_8h_source.html#l02672">mesh.h:2672</a></div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
 <div class="ttc" id="anamespaceGEO_html"><div class="ttname"><a href="namespaceGEO.html">GEO</a></div><div class="ttdoc">Global Vorpaline namespace.</div><div class="ttdef"><b>Definition:</b> <a href="lua__grob__shader_8h_source.html#l00053">lua_grob_shader.h:53</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_a2ff901b15250cfba4eac89020b30869c"><div class="ttname"><a href="namespaceGEO.html#a2ff901b15250cfba4eac89020b30869c">GEO::ChartParameterizer</a></div><div class="ttdeci">ChartParameterizer</div><div class="ttdoc">Parameterizer used to flatten individual charts.</div><div class="ttdef"><b>Definition:</b> <a href="mesh__atlas__maker_8h_source.html#l00058">mesh_atlas_maker.h:58</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_aeb0d14c87f89a463366d0f0783a1095e"><div class="ttname"><a href="namespaceGEO.html#aeb0d14c87f89a463366d0f0783a1095e">GEO::mesh_make_atlas</a></div><div class="ttdeci">void mesh_make_atlas(Mesh &amp;mesh, double hard_angles_threshold=45.0, ChartParameterizer param=PARAM_ABF, ChartPacker pack=PACK_XATLAS, bool verbose=false)</div><div class="ttdoc">Generates u,v coordinates for a given mesh.</div></div>
 <div class="ttc" id="anamespaceGEO_html_afbe9fbd00bf2940f30fa780156a4e747"><div class="ttname"><a href="namespaceGEO.html#afbe9fbd00bf2940f30fa780156a4e747">GEO::ChartPacker</a></div><div class="ttdeci">ChartPacker</div><div class="ttdoc">Packer used to organize the charts in texture space.</div><div class="ttdef"><b>Definition:</b> <a href="mesh__atlas__maker_8h_source.html#l00067">mesh_atlas_maker.h:67</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_afe7068ff852e3690bdb0a181826bab91"><div class="ttname"><a href="namespaceGEO.html#afe7068ff852e3690bdb0a181826bab91">GEO::mesh_get_charts</a></div><div class="ttdeci">index_t mesh_get_charts(Mesh &amp;mesh)</div><div class="ttdoc">Gets the charts attribute from a parameterized mesh.</div></div>
@@ -177,7 +184,7 @@ $(document).ready(function(){initNavTree('mesh__atlas__maker_8h_source.html','')
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_6050e2c325266c5e91d21027bfe6f20e.html">parameterization</a></li><li class="navelem"><b>mesh_atlas_maker.h</b></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

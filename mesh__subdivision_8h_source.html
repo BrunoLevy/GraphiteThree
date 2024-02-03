@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -187,14 +194,14 @@ $(document).ready(function(){initNavTree('mesh__subdivision_8h_source.html','');
 <div class="ttc" id="aclassGEO_1_1MeshSplitCallbacks_html_aa69c1f60e54ed8326c24786a576bf630"><div class="ttname"><a href="classGEO_1_1MeshSplitCallbacks.html#aa69c1f60e54ed8326c24786a576bf630">GEO::MeshSplitCallbacks::~MeshSplitCallbacks</a></div><div class="ttdeci">virtual ~MeshSplitCallbacks()</div><div class="ttdoc">MeshSplitCallbacks destructor.</div></div>
 <div class="ttc" id="aclassGEO_1_1MeshSplitCallbacks_html_ab8742e2cb6a86d369c6a550412b89f83"><div class="ttname"><a href="classGEO_1_1MeshSplitCallbacks.html#ab8742e2cb6a86d369c6a550412b89f83">GEO::MeshSplitCallbacks::madd_vertex</a></div><div class="ttdeci">virtual void madd_vertex(index_t v1, double s, index_t v2)</div><div class="ttdoc">Adds a scaled vertex to another one (v1 += s*v2).</div></div>
 <div class="ttc" id="aclassGEO_1_1MeshSplitCallbacks_html_ac890b53509be95d9234550fc0e2447d4"><div class="ttname"><a href="classGEO_1_1MeshSplitCallbacks.html#ac890b53509be95d9234550fc0e2447d4">GEO::MeshSplitCallbacks::create_vertex</a></div><div class="ttdeci">virtual index_t create_vertex()</div><div class="ttdoc">Creates a new vertex.</div></div>
-<div class="ttc" id="aclassGEO_1_1Mesh_html"><div class="ttname"><a href="classGEO_1_1Mesh.html">GEO::Mesh</a></div><div class="ttdoc">Represents a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="mesh_8h_source.html#l02648">mesh.h:2648</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Mesh_html"><div class="ttname"><a href="classGEO_1_1Mesh.html">GEO::Mesh</a></div><div class="ttdoc">Represents a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="mesh_8h_source.html#l02672">mesh.h:2672</a></div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
 <div class="ttc" id="amemory_8h_html"><div class="ttname"><a href="memory_8h.html">memory.h</a></div><div class="ttdoc">Types and functions for memory manipulation.</div></div>
 <div class="ttc" id="anamespaceGEO_html"><div class="ttname"><a href="namespaceGEO.html">GEO</a></div><div class="ttdoc">Global Vorpaline namespace.</div><div class="ttdef"><b>Definition:</b> <a href="lua__grob__shader_8h_source.html#l00053">lua_grob_shader.h:53</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_a195d61d301d14be18240f3ff0654a95b"><div class="ttname"><a href="namespaceGEO.html#a195d61d301d14be18240f3ff0654a95b">GEO::mesh_triangulate_center_vertex</a></div><div class="ttdeci">void mesh_triangulate_center_vertex(Mesh &amp;M, index_t facets_begin=0, index_t facets_end=index_t(-1), MeshSplitCallbacks *cb=nullptr)</div><div class="ttdoc">Splits each n-sided facet of a surface into n triangles by inserting a vertex in the center.</div></div>
 <div class="ttc" id="anamespaceGEO_html_a4fa92a3d2506d579ec16829da4855305"><div class="ttname"><a href="namespaceGEO.html#a4fa92a3d2506d579ec16829da4855305">GEO::mesh_split_triangles</a></div><div class="ttdeci">void mesh_split_triangles(Mesh &amp;M, index_t facets_begin=0, index_t facets_end=index_t(-1), MeshSplitCallbacks *cb=nullptr)</div><div class="ttdoc">Splits each triangle of a surface mesh into four.</div></div>
 <div class="ttc" id="anamespaceGEO_html_a505a661b16f91ec5998a8ff26d74abaa"><div class="ttname"><a href="namespaceGEO.html#a505a661b16f91ec5998a8ff26d74abaa">GEO::mesh_split_catmull_clark</a></div><div class="ttdeci">void mesh_split_catmull_clark(Mesh &amp;M, MeshSplitCallbacks *cb=nullptr)</div><div class="ttdoc">Splits a mesh using Catmull-Clark subdivision rule.</div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_ab94798c95e2459a2b1d6e802c345df65"><div class="ttname"><a href="namespaceGEO.html#ab94798c95e2459a2b1d6e802c345df65">GEO::mesh_split_quads</a></div><div class="ttdeci">void mesh_split_quads(Mesh &amp;M, index_t facets_begin=0, index_t facets_end=index_t(-1), MeshSplitCallbacks *cb=nullptr)</div><div class="ttdoc">Splits each facet of a surface mesh into quads.</div></div>
 <div class="ttc" id="anumeric_8h_html"><div class="ttname"><a href="numeric_8h.html">numeric.h</a></div><div class="ttdoc">Types and functions for numbers manipulation.</div></div>
 </div><!-- fragment --></div><!-- contents -->
@@ -203,7 +210,7 @@ $(document).ready(function(){initNavTree('mesh__subdivision_8h_source.html','');
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_7faf8be2027c4a91a1e5453dfee06721.html">mesh</a></li><li class="navelem"><a class="el" href="mesh__subdivision_8h.html">mesh_subdivision.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

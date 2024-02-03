@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -143,7 +150,7 @@ class GEO::vector&lt; T &gt;</h3>
 <p>Vector with aligned memory allocation. </p>
 <p>Class vector is a <code>std::vector</code> that uses a memory-aligned allocator Memory-aligned allocation makes it well suited for SSE/AVX/... vector code generation. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="classGEO_1_1Memory_1_1aligned__allocator.html" title="An allocator that performs aligned memory allocations.">Memory::aligned_allocator</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00623">623</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00636">636</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a8a91f4034a3208a695fe3be3a341c392"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8a91f4034a3208a695fe3be3a341c392">&#9670;&nbsp;</a></span>vector() <span class="overload">[1/2]</span></h2>
@@ -179,7 +186,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00643">643</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00656">656</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -228,7 +235,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00654">654</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00667">667</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -261,7 +268,7 @@ template&lt;class T &gt; </div>
 <p>Gets a pointer to the array of elements. </p>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the first element of the vector </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00762">762</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00775">775</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -293,7 +300,7 @@ template&lt;class T &gt; </div>
 <p>Gets a pointer to the array of elements. </p>
 <dl class="section return"><dt>Returns</dt><dd>a const pointer to the first element of the vector </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00770">770</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00783">783</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -332,7 +339,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A reference to the element at position <code>i</code> in the vector. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00675">675</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00688">688</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -371,7 +378,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A const reference to the element at position <code>i</code> in the vector. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00686">686</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00699">699</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -410,7 +417,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A reference to the element at position <code>i</code> in the vector. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00696">696</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00709">709</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -449,7 +456,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A const reference to the element at position <code>i</code> in the vector. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00707">707</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00720">720</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -481,7 +488,7 @@ template&lt;class T &gt; </div>
 <p>Gets the number of elements. </p>
 <dl class="section return"><dt>Returns</dt><dd>The actual number of elements in the vector </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00662">662</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00675">675</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -494,7 +501,7 @@ template&lt;class T &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1vector.html">vector</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

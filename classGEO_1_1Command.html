@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -88,7 +95,6 @@ $(document).ready(function(){initNavTree('classGEO_1_1Command.html',''); initRes
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
-<a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
 <a href="classGEO_1_1Command-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">GEO::Command Class Reference</div>  </div>
@@ -283,9 +289,19 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a07dc50bd53e9178dceb36b33d3f69ad4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Command.html#a07dc50bd53e9178dceb36b33d3f69ad4">flush_queue</a> ()</td></tr>
 <tr class="memdesc:a07dc50bd53e9178dceb36b33d3f69ad4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flushes the potentially queued command invokation.  <a href="classGEO_1_1Command.html#a07dc50bd53e9178dceb36b33d3f69ad4">More...</a><br /></td></tr>
 <tr class="separator:a07dc50bd53e9178dceb36b33d3f69ad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b9ce7ef217230e53df8817c679d1849"><td class="memItemLeft" align="right" valign="top"><a id="a7b9ce7ef217230e53df8817c679d1849"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Command.html#a7b9ce7ef217230e53df8817c679d1849">replay_latest</a> ()</td></tr>
+<tr class="memdesc:a7b9ce7ef217230e53df8817c679d1849"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replays the latest invoked command. <br /></td></tr>
+<tr class="separator:a7b9ce7ef217230e53df8817c679d1849"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a764d941b54840c05486a58da316efad5"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classGEO_1_1Command.html">Command</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Command.html#a764d941b54840c05486a58da316efad5">current</a> ()</td></tr>
 <tr class="memdesc:a764d941b54840c05486a58da316efad5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current command.  <a href="classGEO_1_1Command.html#a764d941b54840c05486a58da316efad5">More...</a><br /></td></tr>
 <tr class="separator:a764d941b54840c05486a58da316efad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebeaeebc1abc5df00f37f6239666dcff"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classGEO_1_1Command.html">Command</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Command.html#aebeaeebc1abc5df00f37f6239666dcff">latest</a> ()</td></tr>
+<tr class="memdesc:aebeaeebc1abc5df00f37f6239666dcff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the latest command.  <a href="classGEO_1_1Command.html#aebeaeebc1abc5df00f37f6239666dcff">More...</a><br /></td></tr>
+<tr class="separator:aebeaeebc1abc5df00f37f6239666dcff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28f915becca5f3bbd6440d66c6fb01b0"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classGEO_1_1Command.html">Command</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Command.html#a28f915becca5f3bbd6440d66c6fb01b0">queued</a> ()</td></tr>
+<tr class="memdesc:a28f915becca5f3bbd6440d66c6fb01b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the queued command.  <a href="classGEO_1_1Command.html#a28f915becca5f3bbd6440d66c6fb01b0">More...</a><br /></td></tr>
+<tr class="separator:a28f915becca5f3bbd6440d66c6fb01b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d8c85b2c574ca0b8283e587be7a3976"><td class="memItemLeft" align="right" valign="top"><a id="a9d8c85b2c574ca0b8283e587be7a3976"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Command.html#a9d8c85b2c574ca0b8283e587be7a3976">reset_current</a> ()</td></tr>
 <tr class="memdesc:a9d8c85b2c574ca0b8283e587be7a3976"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the current command. <br /></td></tr>
@@ -321,12 +337,6 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a0d8400deacbb400bd2591cbb4d4a7ef1 inherit pro_methods_classGEO_1_1Counted"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Counted.html#a0d8400deacbb400bd2591cbb4d4a7ef1">~Counted</a> ()</td></tr>
 <tr class="memdesc:a0d8400deacbb400bd2591cbb4d4a7ef1 inherit pro_methods_classGEO_1_1Counted"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys a reference counted object.  <a href="classGEO_1_1Counted.html#a0d8400deacbb400bd2591cbb4d4a7ef1">More...</a><br /></td></tr>
 <tr class="separator:a0d8400deacbb400bd2591cbb4d4a7ef1 inherit pro_methods_classGEO_1_1Counted"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
-Static Protected Member Functions</h2></td></tr>
-<tr class="memitem:a9800d7f649a110200580fdbfe82dc9ad"><td class="memItemLeft" align="right" valign="top"><a id="a9800d7f649a110200580fdbfe82dc9ad"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>set_queued</b> (<a class="el" href="classGEO_1_1Command.html">Command</a> *command)</td></tr>
-<tr class="separator:a9800d7f649a110200580fdbfe82dc9ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Manages the GUI of a command with ImGUI. </p>
@@ -420,7 +430,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01002">1002</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01027">1027</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -484,7 +494,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00985">985</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01010">1010</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -522,7 +532,7 @@ template&lt;class T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the value of the argument </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Regular client code should not need to use this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00337">337</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00362">362</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -576,7 +586,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01017">1017</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01042">1042</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -607,7 +617,7 @@ template&lt;class T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the current command </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Regular client code should not need to use this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00306">306</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00312">312</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -645,7 +655,7 @@ template&lt;class T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the value of the argument </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Regular client code should not need to use this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00392">392</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00417">417</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -711,7 +721,7 @@ template&lt;class T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the value of the argument </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Regular client code should not need to use this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00376">376</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00401">401</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -795,7 +805,7 @@ template&lt;&gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Regular client code should not need to use this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01215">1215</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01238">1238</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -851,7 +861,7 @@ template&lt;&gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Regular client code should not need to use this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01271">1271</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01294">1294</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -907,7 +917,7 @@ template&lt;&gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Regular client code should not need to use this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01257">1257</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01280">1280</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -963,7 +973,7 @@ template&lt;&gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Regular client code should not need to use this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01229">1229</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01252">1252</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1019,7 +1029,7 @@ template&lt;&gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Regular client code should not need to use this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01285">1285</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01308">1308</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1075,7 +1085,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Regular client code should not need to use this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00422">422</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00447">447</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1131,7 +1141,7 @@ template&lt;&gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Regular client code should not need to use this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01243">1243</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01266">1266</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1216,7 +1226,7 @@ template&lt;class T , class ARG0 &gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00464">464</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00489">489</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1273,7 +1283,7 @@ template&lt;class T , class ARG0 , class ARG1 &gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00489">489</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00514">514</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1330,7 +1340,7 @@ template&lt;class T , class ARG0 , class ARG1 , class ARG2 &gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00517">517</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00542">542</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1387,7 +1397,7 @@ template&lt;class T , class ARG0 , class ARG1 , class ARG2 , class ARG3 &gt; </d
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00547">547</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00572">572</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1444,7 +1454,7 @@ template&lt;class T , class ARG0 , class ARG1 , class ARG2 , class ARG3 , class 
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00580">580</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00605">605</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1501,7 +1511,7 @@ template&lt;class T , class ARG0 , class ARG1 , class ARG2 , class ARG3 , class 
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00615">615</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00640">640</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1558,7 +1568,7 @@ template&lt;class T , class ARG0 , class ARG1 , class ARG2 , class ARG3 , class 
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00652">652</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00677">677</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1615,7 +1625,7 @@ template&lt;class T , class ARG0 , class ARG1 , class ARG2 , class ARG3 , class 
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00691">691</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00716">716</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1671,7 +1681,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00442">442</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00467">467</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1716,7 +1726,7 @@ template&lt;class ARG0 &gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00747">747</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00772">772</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1761,7 +1771,7 @@ template&lt;class ARG0 , class ARG1 &gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00769">769</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00794">794</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1806,7 +1816,7 @@ template&lt;class ARG0 , class ARG1 , class ARG2 &gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00793">793</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00818">818</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1851,7 +1861,7 @@ template&lt;class ARG0 , class ARG1 , class ARG2 , class ARG3 &gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00819">819</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00844">844</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1896,7 +1906,7 @@ template&lt;class ARG0 , class ARG1 , class ARG2 , class ARG3 , class ARG4 &gt; 
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00848">848</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00873">873</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1941,7 +1951,7 @@ template&lt;class ARG0 , class ARG1 , class ARG2 , class ARG3 , class ARG4 , cla
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00879">879</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00904">904</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -1986,7 +1996,7 @@ template&lt;class ARG0 , class ARG1 , class ARG2 , class ARG3 , class ARG4 , cla
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00912">912</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00937">937</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -2031,7 +2041,7 @@ template&lt;class ARG0 , class ARG1 , class ARG2 , class ARG3 , class ARG4 , cla
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00947">947</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00972">972</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -2068,7 +2078,7 @@ template&lt;class ARG0 , class ARG1 , class ARG2 , class ARG3 , class ARG4 , cla
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Used by internal <a class="el" href="classGEO_1_1CommandInvoker.html" title="Abstract class for calling functions or calling member functions.">CommandInvoker</a> mechanism. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00727">727</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00752">752</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -2104,7 +2114,7 @@ template&lt;class ARG0 , class ARG1 , class ARG2 , class ARG3 , class ARG4 , cla
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00259">259</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00265">265</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -2134,7 +2144,38 @@ template&lt;class ARG0 , class ARG1 , class ARG2 , class ARG3 , class ARG4 , cla
 <p>Gets a pointer to the visibility flag of this command. </p>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the visibility flag </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00268">268</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00274">274</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+
+</div>
+</div>
+<a id="aebeaeebc1abc5df00f37f6239666dcff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebeaeebc1abc5df00f37f6239666dcff">&#9670;&nbsp;</a></span>latest()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classGEO_1_1Command.html">Command</a>* GEO::Command::latest </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the latest command. </p>
+<dl class="section return"><dt>Returns</dt><dd>a pointer to the command that was last executed.</dd></dl>
+<p>Used by playback mechanism ('F5' in applications). </p>
+
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00322">322</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -2164,7 +2205,37 @@ template&lt;class ARG0 , class ARG1 , class ARG2 , class ARG3 , class ARG4 , cla
 <p>Gets the name of this command. </p>
 <dl class="section return"><dt>Returns</dt><dd>a const reference to the name of this command. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00229">229</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00235">235</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+
+</div>
+</div>
+<a id="a28f915becca5f3bbd6440d66c6fb01b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28f915becca5f3bbd6440d66c6fb01b0">&#9670;&nbsp;</a></span>queued()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classGEO_1_1Command.html">Command</a>* GEO::Command::queued </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the queued command. </p>
+<dl class="section return"><dt>Returns</dt><dd>a pointer to the command that is about to be executed </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00330">330</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -2229,7 +2300,7 @@ template&lt;class ARG0 , class ARG1 , class ARG2 , class ARG3 , class ARG4 , cla
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Regular client code should not need to use this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00323">323</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00348">348</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -2281,7 +2352,7 @@ template&lt;class FPTR &gt; </div>
 <div class="line">       &amp;my_command_impl</div>
 <div class="line">    )</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassGEO_1_1Command_html_ac7b43e9ce7742b280ef062fd9ffe528d"><div class="ttname"><a href="classGEO_1_1Command.html#ac7b43e9ce7742b280ef062fd9ffe528d">GEO::Command::set_current</a></div><div class="ttdeci">static void set_current(const std::string &amp;prototype, FPTR tfun)</div><div class="ttdoc">Binds the current command to a function.</div><div class="ttdef"><b>Definition:</b> <a href="command_8h_source.html#l01394">command.h:1394</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Command_html_ac7b43e9ce7742b280ef062fd9ffe528d"><div class="ttname"><a href="classGEO_1_1Command.html#ac7b43e9ce7742b280ef062fd9ffe528d">GEO::Command::set_current</a></div><div class="ttdeci">static void set_current(const std::string &amp;prototype, FPTR tfun)</div><div class="ttdoc">Binds the current command to a function.</div><div class="ttdef"><b>Definition:</b> <a href="command_8h_source.html#l01417">command.h:1417</a></div></div>
 </div><!-- fragment --><p> The first argument (the string with the function prototype) is necessary to retrieve the names of the parameters. In addition, default values and tooltips may be specified, as follows: </p><div class="fragment"><div class="line"><a class="code" href="classGEO_1_1Command.html#ac7b43e9ce7742b280ef062fd9ffe528d">GEO::Command::set_current</a>(</div>
 <div class="line">   <span class="stringliteral">&quot;void my_command_impl(                        &quot;</span></div>
 <div class="line">   <span class="stringliteral">&quot;   float x=0 [this is the x coordinate],     &quot;</span></div>
@@ -2304,7 +2375,7 @@ template&lt;class FPTR &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01394">1394</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01417">1417</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -2389,7 +2460,7 @@ template&lt;class T , class TFPTR &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01406">1406</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l01429">1429</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -2426,7 +2497,7 @@ template&lt;class T , class TFPTR &gt; </div>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Regular client code should not need to use this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00241">241</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00247">247</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -2464,7 +2535,7 @@ template&lt;class T , class TFPTR &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the value of the argument </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Regular client code should not need to use this function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00405">405</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="command_8h_source.html#l00430">430</a> of file <a class="el" href="command_8h_source.html">command.h</a>.</p>
 
 </div>
 </div>
@@ -2505,7 +2576,7 @@ template&lt;class T , class TFPTR &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1Command.html">Command</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

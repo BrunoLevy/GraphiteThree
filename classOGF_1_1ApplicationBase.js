@@ -12,6 +12,8 @@ var classOGF_1_1ApplicationBase =
     [ "end", "classOGF_1_1ApplicationBase.html#a007e18c1e5f0edbdd9339153597e53ca", null ],
     [ "err", "classOGF_1_1ApplicationBase.html#a18486e92d0f767f06b9369f84891fa7e", null ],
     [ "find_file", "classOGF_1_1ApplicationBase.html#a60f32d019f7061832379b17858a8dc35", null ],
+    [ "for", "classOGF_1_1ApplicationBase.html#a3bdd251b58835bfbc1b94edb44c75223", null ],
+    [ "get_tooltip", "classOGF_1_1ApplicationBase.html#a750966317d806f3046ec37f012d39d22", null ],
     [ "interpreter", "classOGF_1_1ApplicationBase.html#a623b3a04995b8658a9247ada4a951b59", null ],
     [ "load_preferences", "classOGF_1_1ApplicationBase.html#af5dccdec775fc66bf1fbabde0ccb6bdc", null ],
     [ "notify_progress", "classOGF_1_1ApplicationBase.html#a89fd48ab9ec2cb8709f7c2a5ecbce8d0", null ],
@@ -28,8 +30,10 @@ var classOGF_1_1ApplicationBase =
     [ "update", "classOGF_1_1ApplicationBase.html#afd4955c40f414d80d6627704ce30d5ce", null ],
     [ "warn", "classOGF_1_1ApplicationBase.html#af7c2b68e4e852fcff72765edb5569d0d", null ],
     [ "__pad0__", "classOGF_1_1ApplicationBase.html#a38dff4d48ec4737f2bd97471fba08dee", null ],
-    [ "__pad1__", "classOGF_1_1ApplicationBase.html#a2c16feb633a03762f3b7a309a9c077bd", null ],
+    [ "__pad1__", "classOGF_1_1ApplicationBase.html#afd047d50310aa98db82e4ea0ae9901af", null ],
+    [ "__pad2__", "classOGF_1_1ApplicationBase.html#af19a5b993c04ddcfeba90476454af0be", null ],
     [ "interpreter_", "classOGF_1_1ApplicationBase.html#a751b950f23d6fe13866a7346e886f0c1", null ],
     [ "logger_client_", "classOGF_1_1ApplicationBase.html#a80808ab85275c0b228f2f07f4516c03c", null ],
-    [ "progress_client_", "classOGF_1_1ApplicationBase.html#a6b005067530acd45cb1279c43758018f", null ]
+    [ "progress_client_", "classOGF_1_1ApplicationBase.html#a6b005067530acd45cb1279c43758018f", null ],
+    [ "tooltip_", "classOGF_1_1ApplicationBase.html#ac12a5d84329c151b0d651873bdf94554", null ]
 ];

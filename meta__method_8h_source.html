@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -330,12 +337,12 @@ $(document).ready(function(){initNavTree('meta__method_8h_source.html',''); init
 <div class="ttc" id="aclassOGF_1_1MetaMethod_html_aecb030d84ee79bd02ee64891fb51f38a"><div class="ttname"><a href="classOGF_1_1MetaMethod.html#aecb030d84ee79bd02ee64891fb51f38a">OGF::MetaMethod::MetaMethod</a></div><div class="ttdeci">MetaMethod(const std::string &amp;name, MetaClass *container, MetaType *return_type)</div><div class="ttdoc">MetaMethod constructor.</div></div>
 <div class="ttc" id="aclassOGF_1_1MetaMethod_html_aeed76971a024132578fce8cb657a9844"><div class="ttname"><a href="classOGF_1_1MetaMethod.html#aeed76971a024132578fce8cb657a9844">OGF::MetaMethod::emit_signal</a></div><div class="ttdeci">bool emit_signal(const std::string &amp;signal_name, const ArgList &amp;args, bool called_from_slot=true) override</div><div class="ttdoc">Emits a signal from this MetaMethod.</div><div class="ttdef"><b>Definition:</b> <a href="meta__method_8h_source.html#l00418">meta_method.h:418</a></div></div>
 <div class="ttc" id="aclassOGF_1_1MetaMethod_html_aff00b351640ce5349a55740797c0fee1"><div class="ttname"><a href="classOGF_1_1MetaMethod.html#aff00b351640ce5349a55740797c0fee1">OGF::MetaMethod::ith_arg_jth_custom_attribute_name</a></div><div class="ttdeci">std::string ith_arg_jth_custom_attribute_name(index_t i, index_t j)</div><div class="ttdoc">Gets a custom attribute name of an argument by index.</div></div>
-<div class="ttc" id="aclassOGF_1_1MetaType_html"><div class="ttname"><a href="classOGF_1_1MetaType.html">OGF::MetaType</a></div><div class="ttdoc">The representation of a type in the Meta repository.</div><div class="ttdef"><b>Definition:</b> <a href="meta__type_8h_source.html#l00194">meta_type.h:194</a></div></div>
+<div class="ttc" id="aclassOGF_1_1MetaType_html"><div class="ttname"><a href="classOGF_1_1MetaType.html">OGF::MetaType</a></div><div class="ttdoc">The representation of a type in the Meta repository.</div><div class="ttdef"><b>Definition:</b> <a href="meta__type_8h_source.html#l00207">meta_type.h:207</a></div></div>
 <div class="ttc" id="aclassOGF_1_1Object_html"><div class="ttname"><a href="classOGF_1_1Object.html">OGF::Object</a></div><div class="ttdoc">Base class for all objects in the GOM system.</div><div class="ttdef"><b>Definition:</b> <a href="object_8h_source.html#l00065">object.h:65</a></div></div>
 <div class="ttc" id="aclassOGF_1_1Object_html_af0d89252c10e8b6f18f9230537694b5d"><div class="ttname"><a href="classOGF_1_1Object.html#af0d89252c10e8b6f18f9230537694b5d">OGF::Object::invoke_method</a></div><div class="ttdeci">virtual bool invoke_method(const std::string &amp;method_name, const ArgList &amp;args, Any &amp;ret_val)</div><div class="ttdoc">Invokes a method by method name and argument list, and gets the return value.</div></div>
 <div class="ttc" id="ameta__arg_8h_html"><div class="ttname"><a href="meta__arg_8h.html">meta_arg.h</a></div><div class="ttdoc">Meta-information attached to arguments.</div></div>
 <div class="ttc" id="ameta__member_8h_html"><div class="ttname"><a href="meta__member_8h.html">meta_member.h</a></div><div class="ttdoc">Meta-information attached to class members.</div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
 <div class="ttc" id="anamespaceOGF_html"><div class="ttname"><a href="namespaceOGF.html">OGF</a></div><div class="ttdoc">Global Graphite namespace.</div><div class="ttdef"><b>Definition:</b> <a href="src_2lib_2OGF_2basic_2common_2common_8h_source.html#l00076">common.h:76</a></div></div>
 <div class="ttc" id="anamespaceOGF_html_a4f851c9a268a4d207d2b0f04e10d80c9"><div class="ttname"><a href="namespaceOGF.html#a4f851c9a268a4d207d2b0f04e10d80c9">OGF::gom_method_adapter</a></div><div class="ttdeci">bool(* gom_method_adapter)(Object *target, const std::string &amp;method_name, const ArgList &amp;args, Any &amp;ret_val)</div><div class="ttdoc">Function pointer types for method adapters.</div><div class="ttdef"><b>Definition:</b> <a href="meta__method_8h_source.html#l00063">meta_method.h:63</a></div></div>
 <div class="ttc" id="anamespaceOGF_html_a5d01bd05e6eacfd9e59f4cd5bfec9183"><div class="ttname"><a href="namespaceOGF.html#a5d01bd05e6eacfd9e59f4cd5bfec9183">OGF::MetaArgList</a></div><div class="ttdeci">std::vector&lt; MetaArg &gt; MetaArgList</div><div class="ttdoc">Meta representation of a list of arguments.</div><div class="ttdef"><b>Definition:</b> <a href="meta__arg_8h_source.html#l00137">meta_arg.h:137</a></div></div>
@@ -347,7 +354,7 @@ $(document).ready(function(){initNavTree('meta__method_8h_source.html',''); init
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_aef77abc1c70517fe3037d0ad81c1d82.html">OGF</a></li><li class="navelem"><a class="el" href="dir_69b25135ad0c2c10dad56e08dbeec7e1.html">gom</a></li><li class="navelem"><a class="el" href="dir_d890a63a37d859bf3673a573e25521f3.html">reflection</a></li><li class="navelem"><a class="el" href="meta__method_8h.html">meta_method.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

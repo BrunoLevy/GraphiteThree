@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -494,11 +501,11 @@ $(document).ready(function(){initNavTree('kd__tree_8h_source.html',''); initResi
 <div class="ttc" id="aclassGEO_1_1NearestNeighborSearch_html"><div class="ttname"><a href="classGEO_1_1NearestNeighborSearch.html">GEO::NearestNeighborSearch</a></div><div class="ttdoc">Abstract interface for nearest neighbor search algorithms.</div><div class="ttdef"><b>Definition:</b> <a href="nn__search_8h_source.html#l00069">nn_search.h:69</a></div></div>
 <div class="ttc" id="aclassGEO_1_1vector_html"><div class="ttname"><a href="classGEO_1_1vector.html">GEO::vector&lt; index_t &gt;</a></div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
-<div class="ttc" id="anamespaceGEO_1_1Numeric_html_a52d499ce3d358f905ce81f2981701e0c"><div class="ttname"><a href="namespaceGEO_1_1Numeric.html#a52d499ce3d358f905ce81f2981701e0c">GEO::Numeric::max_float64</a></div><div class="ttdeci">float64 max_float64()</div><div class="ttdoc">Gets 64 bits float maximum positive value.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00127">numeric.h:127</a></div></div>
-<div class="ttc" id="anamespaceGEO_1_1Numeric_html_abfc33298edb6f9db917a43ce78cc4940"><div class="ttname"><a href="namespaceGEO_1_1Numeric.html#abfc33298edb6f9db917a43ce78cc4940">GEO::Numeric::min_float64</a></div><div class="ttdeci">float64 min_float64()</div><div class="ttdoc">Gets 64 bits float minimum negative value.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00134">numeric.h:134</a></div></div>
+<div class="ttc" id="anamespaceGEO_1_1Numeric_html_a52d499ce3d358f905ce81f2981701e0c"><div class="ttname"><a href="namespaceGEO_1_1Numeric.html#a52d499ce3d358f905ce81f2981701e0c">GEO::Numeric::max_float64</a></div><div class="ttdeci">float64 max_float64()</div><div class="ttdoc">Gets 64 bits float maximum positive value.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00172">numeric.h:172</a></div></div>
+<div class="ttc" id="anamespaceGEO_1_1Numeric_html_abfc33298edb6f9db917a43ce78cc4940"><div class="ttname"><a href="namespaceGEO_1_1Numeric.html#abfc33298edb6f9db917a43ce78cc4940">GEO::Numeric::min_float64</a></div><div class="ttdeci">float64 min_float64()</div><div class="ttdoc">Gets 64 bits float minimum negative value.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00179">numeric.h:179</a></div></div>
 <div class="ttc" id="anamespaceGEO_html"><div class="ttname"><a href="namespaceGEO.html">GEO</a></div><div class="ttdoc">Global Vorpaline namespace.</div><div class="ttdef"><b>Definition:</b> <a href="lua__grob__shader_8h_source.html#l00053">lua_grob_shader.h:53</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_ae771f961036ac7f98502ff145b99d424"><div class="ttname"><a href="namespaceGEO.html#ae771f961036ac7f98502ff145b99d424">GEO::coord_index_t</a></div><div class="ttdeci">geo_coord_index_t coord_index_t</div><div class="ttdoc">The type for storing coordinate indices, and iterating on the coordinates of a point.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00321">numeric.h:321</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_ae771f961036ac7f98502ff145b99d424"><div class="ttname"><a href="namespaceGEO.html#ae771f961036ac7f98502ff145b99d424">GEO::coord_index_t</a></div><div class="ttdeci">geo_coord_index_t coord_index_t</div><div class="ttdoc">The type for storing coordinate indices, and iterating on the coordinates of a point.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00363">numeric.h:363</a></div></div>
 <div class="ttc" id="ann__search_8h_html"><div class="ttname"><a href="nn__search_8h.html">nn_search.h</a></div><div class="ttdoc">Abstract interface for nearest neighbor searching.</div></div>
 <div class="ttc" id="astructGEO_1_1KdTree_1_1NearestNeighbors_html"><div class="ttname"><a href="structGEO_1_1KdTree_1_1NearestNeighbors.html">GEO::KdTree::NearestNeighbors</a></div><div class="ttdoc">The context for traversing a KdTree.</div><div class="ttdef"><b>Definition:</b> <a href="kd__tree_8h_source.html#l00108">kd_tree.h:108</a></div></div>
 <div class="ttc" id="astructGEO_1_1KdTree_1_1NearestNeighbors_html_a314ac303ac9346cf86951468aed2b56a"><div class="ttname"><a href="structGEO_1_1KdTree_1_1NearestNeighbors.html#a314ac303ac9346cf86951468aed2b56a">GEO::KdTree::NearestNeighbors::copy_from_user</a></div><div class="ttdeci">void copy_from_user()</div><div class="ttdoc">Copies the user neighbors and distances into the work zone and initializes nb_neighbors to max_nb_nei...</div><div class="ttdef"><b>Definition:</b> <a href="kd__tree_8h_source.html#l00204">kd_tree.h:204</a></div></div>
@@ -520,7 +527,7 @@ $(document).ready(function(){initNavTree('kd__tree_8h_source.html',''); initResi
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_2100fc6f6559c23cd26478d001297968.html">points</a></li><li class="navelem"><a class="el" href="kd__tree_8h.html">kd_tree.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

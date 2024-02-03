@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -135,9 +142,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1RenderArea.html#ae6d37fa255fe726e337c444a80de82ce">draw_memorized_frame</a> ()</td></tr>
 <tr class="memdesc:ae6d37fa255fe726e337c444a80de82ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the latest memorized frame. <br /></td></tr>
 <tr class="separator:ae6d37fa255fe726e337c444a80de82ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c55630829abb8810f3f8c00e5c513ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1RenderArea.html#a0c55630829abb8810f3f8c00e5c513ad">snapshot</a> (const std::string &amp;filename, bool make_current=true)</td></tr>
-<tr class="memdesc:a0c55630829abb8810f3f8c00e5c513ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves a snapshot of this rendering area to an image file.  <a href="classOGF_1_1RenderArea.html#a0c55630829abb8810f3f8c00e5c513ad">More...</a><br /></td></tr>
-<tr class="separator:a0c55630829abb8810f3f8c00e5c513ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a478ddca10a9a54f6988068ed07d1e982"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1RenderArea.html#a478ddca10a9a54f6988068ed07d1e982">snapshot</a> (const std::string &amp;filename, bool make_current=true, bool with_gui=false)</td></tr>
+<tr class="memdesc:a478ddca10a9a54f6988068ed07d1e982"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves a snapshot of this rendering area to an image file.  <a href="classOGF_1_1RenderArea.html#a478ddca10a9a54f6988068ed07d1e982">More...</a><br /></td></tr>
+<tr class="separator:a478ddca10a9a54f6988068ed07d1e982"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa09567677c3a33e44d82ef54e0984298"><td class="memItemLeft" align="right" valign="top"><a id="aa09567677c3a33e44d82ef54e0984298"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1RenderArea.html#aa09567677c3a33e44d82ef54e0984298">update_view_parameters</a> ()</td></tr>
 <tr class="memdesc:aa09567677c3a33e44d82ef54e0984298"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call this function if perspective mode is changed. <br /></td></tr>
@@ -649,7 +656,7 @@ Additional Inherited Members</h2></td></tr>
 </ul>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="render__area_8h_source.html#l00303">303</a> of file <a class="el" href="render__area_8h_source.html">render_area.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="render__area_8h_source.html#l00307">307</a> of file <a class="el" href="render__area_8h_source.html">render_area.h</a>.</p>
 
 </div>
 </div>
@@ -679,7 +686,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Gets the height of the window. </p>
 <dl class="section return"><dt>Returns</dt><dd>the height of the frame buffer in pixels. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="render__area_8h_source.html#l00184">184</a> of file <a class="el" href="render__area_8h_source.html">render_area.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="render__area_8h_source.html#l00188">188</a> of file <a class="el" href="render__area_8h_source.html">render_area.h</a>.</p>
 
 </div>
 </div>
@@ -709,7 +716,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Gets the width of the window. </p>
 <dl class="section return"><dt>Returns</dt><dd>the width of the frame buffer in pixels. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="render__area_8h_source.html#l00176">176</a> of file <a class="el" href="render__area_8h_source.html">render_area.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="render__area_8h_source.html#l00180">180</a> of file <a class="el" href="render__area_8h_source.html">render_area.h</a>.</p>
 
 </div>
 </div>
@@ -779,7 +786,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Gets the height of the window. </p>
 <dl class="section return"><dt>Returns</dt><dd>the height of the window. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="render__area_8h_source.html#l00168">168</a> of file <a class="el" href="render__area_8h_source.html">render_area.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="render__area_8h_source.html#l00172">172</a> of file <a class="el" href="render__area_8h_source.html">render_area.h</a>.</p>
 
 </div>
 </div>
@@ -1385,7 +1392,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="render__area_8h_source.html#l00317">317</a> of file <a class="el" href="render__area_8h_source.html">render_area.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="render__area_8h_source.html#l00321">321</a> of file <a class="el" href="render__area_8h_source.html">render_area.h</a>.</p>
 
 </div>
 </div>
@@ -1467,8 +1474,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a0c55630829abb8810f3f8c00e5c513ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c55630829abb8810f3f8c00e5c513ad">&#9670;&nbsp;</a></span>snapshot()</h2>
+<a id="a478ddca10a9a54f6988068ed07d1e982"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a478ddca10a9a54f6988068ed07d1e982">&#9670;&nbsp;</a></span>snapshot()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1483,7 +1490,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>make_current</em> = <code>true</code>&#160;</td>
+          <td class="paramname"><em>make_current</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>with_gui</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1498,6 +1511,7 @@ Additional Inherited Members</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">filename</td><td>a string with the name of the image file. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">make_current</td><td>if true, makes the associated rendering context current, else use the current rendering context. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">with_gui</td><td>if set, the gui of graphite is rendereed in the image with the 3D objects, else only the 3D objects are rendered </td></tr>
   </table>
   </dd>
 </dl>
@@ -1571,7 +1585,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1RenderArea.html">RenderArea</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:50 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:09 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

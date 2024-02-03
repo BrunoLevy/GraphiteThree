@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -102,10 +109,6 @@ $(document).ready(function(){initNavTree('classGEO_1_1expansion__nt.html',''); i
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a833181fac9c59147ecd094fbe90384a2"><td class="memItemLeft" align="right" valign="top"><a id="a833181fac9c59147ecd094fbe90384a2"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion__nt.html#a833181fac9c59147ecd094fbe90384a2">UninitializedType</a> { <b>UNINITIALIZED</b>
- }</td></tr>
-<tr class="memdesc:a833181fac9c59147ecd094fbe90384a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">This type is used to overload expression_nt constructors with a version that does not create an expansion. <br /></td></tr>
-<tr class="separator:a833181fac9c59147ecd094fbe90384a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac5eaea0a39d36260560b600ef5cffa67"><td class="memItemLeft" align="right" valign="top"><a id="ac5eaea0a39d36260560b600ef5cffa67"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion__nt.html#ac5eaea0a39d36260560b600ef5cffa67">Operation</a> { <b>SUM</b>
 , <b>DIFF</b>
 , <b>PRODUCT</b>
@@ -115,13 +118,13 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7bbe873365ea1c3b44ddb362417acc70"><td class="memItemLeft" align="right" valign="top"><a id="a7bbe873365ea1c3b44ddb362417acc70"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion__nt.html#a7bbe873365ea1c3b44ddb362417acc70">expansion_nt</a> (<a class="el" href="classGEO_1_1expansion__nt.html#a833181fac9c59147ecd094fbe90384a2">UninitializedType</a> uninitialized)</td></tr>
-<tr class="memdesc:a7bbe873365ea1c3b44ddb362417acc70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an uninitialized <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a>. <br /></td></tr>
-<tr class="separator:a7bbe873365ea1c3b44ddb362417acc70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a042e3304f32e018e919a0d9b0c09c02d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion__nt.html#a042e3304f32e018e919a0d9b0c09c02d">expansion_nt</a> (double x=0.0)</td></tr>
-<tr class="memdesc:a042e3304f32e018e919a0d9b0c09c02d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> from a double.  <a href="classGEO_1_1expansion__nt.html#a042e3304f32e018e919a0d9b0c09c02d">More...</a><br /></td></tr>
-<tr class="separator:a042e3304f32e018e919a0d9b0c09c02d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a907557095c3d97c8aad312ae9110fc0c"><td class="memItemLeft" align="right" valign="top"><a id="a907557095c3d97c8aad312ae9110fc0c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion__nt.html#a907557095c3d97c8aad312ae9110fc0c">expansion_nt</a> ()</td></tr>
+<tr class="memdesc:a907557095c3d97c8aad312ae9110fc0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an uninitialized <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a>. <br /></td></tr>
+<tr class="separator:a907557095c3d97c8aad312ae9110fc0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae12591c7aca375b586f5281957ac7081"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion__nt.html#ae12591c7aca375b586f5281957ac7081">expansion_nt</a> (double x)</td></tr>
+<tr class="memdesc:ae12591c7aca375b586f5281957ac7081"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> from a double.  <a href="classGEO_1_1expansion__nt.html#ae12591c7aca375b586f5281957ac7081">More...</a><br /></td></tr>
+<tr class="separator:ae12591c7aca375b586f5281957ac7081"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a928f8a6e1a723a3b6eef6a089c57c288"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion__nt.html#a928f8a6e1a723a3b6eef6a089c57c288">expansion_nt</a> (const <a class="el" href="classGEO_1_1expansion.html">expansion</a> &amp;rhs)</td></tr>
 <tr class="memdesc:a928f8a6e1a723a3b6eef6a089c57c288"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> from an expansion.  <a href="classGEO_1_1expansion__nt.html#a928f8a6e1a723a3b6eef6a089c57c288">More...</a><br /></td></tr>
 <tr class="separator:a928f8a6e1a723a3b6eef6a089c57c288"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -155,6 +158,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa6b6be3679cbefc17754b03ac6fe880e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion__nt.html#aa6b6be3679cbefc17754b03ac6fe880e">optimize</a> ()</td></tr>
 <tr class="memdesc:aa6b6be3679cbefc17754b03ac6fe880e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optimizes the internal representation without changing the represented value.  <a href="classGEO_1_1expansion__nt.html#aa6b6be3679cbefc17754b03ac6fe880e">More...</a><br /></td></tr>
 <tr class="separator:aa6b6be3679cbefc17754b03ac6fe880e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf89933d662945ffc09074603f113c97"><td class="memItemLeft" align="right" valign="top"><a id="adf89933d662945ffc09074603f113c97"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion__nt.html#adf89933d662945ffc09074603f113c97">negate</a> ()</td></tr>
+<tr class="memdesc:adf89933d662945ffc09074603f113c97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flips the sign of an expansion. <br /></td></tr>
+<tr class="separator:adf89933d662945ffc09074603f113c97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76f2139ee4402b784c790d7260a4ca6d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1expansion__nt.html">expansion_nt</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion__nt.html#a76f2139ee4402b784c790d7260a4ca6d">operator+=</a> (const <a class="el" href="classGEO_1_1expansion__nt.html">expansion_nt</a> &amp;rhs)</td></tr>
 <tr class="memdesc:a76f2139ee4402b784c790d7260a4ca6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> to this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a>.  <a href="classGEO_1_1expansion__nt.html#a76f2139ee4402b784c790d7260a4ca6d">More...</a><br /></td></tr>
 <tr class="separator:a76f2139ee4402b784c790d7260a4ca6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -261,9 +268,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
-<tr class="memitem:ada2b562c894ec8c66ae8b4654162182b"><td class="memItemLeft" align="right" valign="top"><a id="ada2b562c894ec8c66ae8b4654162182b"></a>
-class&#160;</td><td class="memItemRight" valign="bottom"><b>rational_nt</b></td></tr>
-<tr class="separator:ada2b562c894ec8c66ae8b4654162182b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3072dbd1ababbec4f3f8a2abd9df40f"><td class="memItemLeft" align="right" valign="top"><a id="af3072dbd1ababbec4f3f8a2abd9df40f"></a>
 <a class="el" href="classGEO_1_1expansion__nt.html">expansion_nt</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (double a, const <a class="el" href="classGEO_1_1expansion__nt.html">expansion_nt</a> &amp;b)</td></tr>
 <tr class="separator:af3072dbd1ababbec4f3f8a2abd9df40f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -318,8 +322,8 @@ Related Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00070">70</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a042e3304f32e018e919a0d9b0c09c02d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a042e3304f32e018e919a0d9b0c09c02d">&#9670;&nbsp;</a></span>expansion_nt() <span class="overload">[1/9]</span></h2>
+<a id="ae12591c7aca375b586f5281957ac7081"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae12591c7aca375b586f5281957ac7081">&#9670;&nbsp;</a></span>expansion_nt() <span class="overload">[1/9]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -331,7 +335,7 @@ Related Functions</h2></td></tr>
           <td class="memname">GEO::expansion_nt::expansion_nt </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>x</em> = <code>0.0</code></td><td>)</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -350,7 +354,7 @@ Related Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00102">102</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00091">91</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -386,7 +390,7 @@ Related Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00114">114</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00103">103</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -439,7 +443,7 @@ Related Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00132">132</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00121">121</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -498,7 +502,7 @@ Related Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00170">170</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00159">159</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -563,7 +567,7 @@ Related Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00206">206</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00195">195</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -616,7 +620,7 @@ Related Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00245">245</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00235">235</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -652,7 +656,7 @@ Related Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00272">272</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00262">262</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -688,7 +692,7 @@ Related Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00281">281</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00271">271</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -718,7 +722,7 @@ Related Functions</h2></td></tr>
 <p>Expansion_nt destructor. </p>
 <p>The stored expansion is deallocated whenever reference counting reaches 0. </p>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00317">317</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00307">307</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -755,7 +759,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>most client code will not need to use this (advanced use only). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00588">588</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00585">585</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -787,7 +791,7 @@ Related Functions</h2></td></tr>
 <p>Compares two <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>the sign of this expansion minus rhs </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00437">437</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00434">434</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -818,7 +822,7 @@ Related Functions</h2></td></tr>
 <p>Compares an <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> with a double. </p>
 <dl class="section return"><dt>Returns</dt><dd>the sign of this expansion minus rhs </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00445">445</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00442">442</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -857,7 +861,7 @@ Related Functions</h2></td></tr>
 <dl class="section pre"><dt>Precondition</dt><dd>i &lt; <a class="el" href="classGEO_1_1expansion__nt.html#aa558d28e98e5a0499217ffd447dc1cfc" title="Gets the length of this expansion.">length()</a> </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>most client code will not need to use this (advanced use only). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00575">575</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00572">572</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -893,7 +897,7 @@ Related Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00635">635</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00632">632</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -923,7 +927,7 @@ Related Functions</h2></td></tr>
 <p>Computes an approximation of the stored value in this expansion. </p>
 <dl class="section return"><dt>Returns</dt><dd>an approximation of the stored value. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00544">544</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00541">541</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -954,7 +958,7 @@ Related Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the number of components used internally to represend this expansion </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>most client code will not need to use this (advanced use only). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00563">563</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00560">560</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1329,7 +1333,7 @@ Related Functions</h2></td></tr>
 <p>Compares this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> with another one. </p>
 <p>Internally computes the sign of the difference between this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> and <code>rhs</code>. </p><dl class="section return"><dt>Returns</dt><dd>true if this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> is smaller than <code>rhs</code>, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00478">478</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00475">475</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1360,7 +1364,7 @@ Related Functions</h2></td></tr>
 <p>Compares this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> with another one. </p>
 <p>Internally computes the sign of the difference between this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> and <code>rhs</code>. </p><dl class="section return"><dt>Returns</dt><dd>true if this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> is smaller than <code>rhs</code>, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00522">522</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00519">519</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1391,7 +1395,7 @@ Related Functions</h2></td></tr>
 <p>Compares this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> with another one. </p>
 <p>Internally computes the sign of the difference between this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> and <code>rhs</code>. </p><dl class="section return"><dt>Returns</dt><dd>true if this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> is smaller or equal than <code>rhs</code>, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00489">489</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00486">486</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1422,7 +1426,7 @@ Related Functions</h2></td></tr>
 <p>Compares this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> with another one. </p>
 <p>Internally computes the sign of the difference between this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> and <code>rhs</code>. </p><dl class="section return"><dt>Returns</dt><dd>true if this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> is smaller or equal than <code>rhs</code>, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00533">533</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00530">530</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1459,7 +1463,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the new value of this expansion (rhs) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00291">291</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00281">281</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1496,7 +1500,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the new value of this expansion (rhs) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00304">304</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00294">294</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1527,7 +1531,7 @@ Related Functions</h2></td></tr>
 <p>Compares this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> with another one. </p>
 <p>Internally computes the sign of the difference between this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> and <code>rhs</code>. </p><dl class="section return"><dt>Returns</dt><dd>true if this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> is greater than <code>rhs</code>, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00456">456</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00453">453</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1558,7 +1562,7 @@ Related Functions</h2></td></tr>
 <p>Compares this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> with another one. </p>
 <p>Internally computes the sign of the difference between this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> and <code>rhs</code>. </p><dl class="section return"><dt>Returns</dt><dd>true if this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> is greater than <code>rhs</code>, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00500">500</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00497">497</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1589,7 +1593,7 @@ Related Functions</h2></td></tr>
 <p>Compares this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> with another one. </p>
 <p>Internally computes the sign of the difference between this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> and <code>rhs</code>. </p><dl class="section return"><dt>Returns</dt><dd>true if this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> is greater or equal than <code>rhs</code>, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00467">467</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00464">464</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1620,7 +1624,7 @@ Related Functions</h2></td></tr>
 <p>Compares this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> with another one. </p>
 <p>Internally computes the sign of the difference between this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> and <code>rhs</code>. </p><dl class="section return"><dt>Returns</dt><dd>true if this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> is greater or equal than <code>rhs</code>, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00511">511</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00508">508</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1650,7 +1654,7 @@ Related Functions</h2></td></tr>
 <p>Optimizes the internal representation without changing the represented value. </p>
 <p>this function can reduce the length of an expansion </p>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00326">326</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00316">316</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1681,7 +1685,7 @@ Related Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>a reference to the expansion that represents this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>most client code will not need to use this (advanced use only). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00600">600</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00597">597</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1712,7 +1716,7 @@ Related Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>a const reference to the expansion that represents this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>most client code will not need to use this (advanced use only). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00612">612</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00609">609</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1742,7 +1746,7 @@ Related Functions</h2></td></tr>
 <p>Gets the sign of this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>the sign of this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a>, computed exactly. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00552">552</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00549">549</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1772,7 +1776,7 @@ Related Functions</h2></td></tr>
 <p>Gets a string representation of this expansion. </p>
 <dl class="section return"><dt>Returns</dt><dd>a string with the length and components or "null" if this <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> was explicitely set to uninitialized. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00621">621</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00618">618</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1835,7 +1839,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> that represents the exact dot product (<code>a</code> - <code>c</code>).(<code>b</code> - <code>c</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00810">810</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00807">807</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1890,7 +1894,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> that represent the exact squared distance between <code>a</code> and <code>b</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00789">789</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00786">786</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1931,7 +1935,7 @@ Related Functions</h2></td></tr>
 <p>Tests whether two <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a>s differ. </p>
 <p>Implemented by testing whether the difference between <code>a</code> and <code>b</code> is different from 0. </p><dl class="section return"><dt>Returns</dt><dd>true if <code>a</code> and <code>b</code> do not represent the same exact value, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00751">751</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00748">748</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -1972,7 +1976,7 @@ Related Functions</h2></td></tr>
 <p>Tests whether an <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> differs from a double. </p>
 <p>Implemented by testing whether the difference between <code>a</code> and <code>b</code> is different from 0. </p><dl class="section return"><dt>Returns</dt><dd>true if <code>a</code> and <code>b</code> do not represent the same exact value, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00763">763</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00760">760</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -2013,7 +2017,7 @@ Related Functions</h2></td></tr>
 <p>Tests whether a double differs from an <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a>. </p>
 <p>Implemented by testing whether the difference between <code>a</code> and <code>b</code> is different from 0. </p><dl class="section return"><dt>Returns</dt><dd>true if <code>a</code> and <code>b</code> do not represent the same exact value, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00775">775</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00772">772</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -2061,7 +2065,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> that represents <code>a</code> * <code>b</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00703">703</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00700">700</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -2109,7 +2113,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> that represents <code>a</code> + <code>b</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00679">679</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00676">676</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -2157,7 +2161,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> that represents <code>a</code> - <code>b</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00690">690</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00687">687</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -2198,7 +2202,7 @@ Related Functions</h2></td></tr>
 <p>Tests equality between two <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a>s. </p>
 <p>Implemented by testing whether the difference between <code>a</code> and <code>b</code> is 0. </p><dl class="section return"><dt>Returns</dt><dd>true if <code>a</code> and <code>b</code> represent exactly the same value, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00715">715</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00712">712</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -2239,7 +2243,7 @@ Related Functions</h2></td></tr>
 <p>Tests equality between an <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> and a double. </p>
 <p>Implemented by testing whether the difference between <code>a</code> and <code>b</code> is 0. </p><dl class="section return"><dt>Returns</dt><dd>true if <code>a</code> and <code>b</code> represent exactly the same value, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00727">727</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00724">724</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -2280,7 +2284,7 @@ Related Functions</h2></td></tr>
 <p>Tests equality between a double and an <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a>. </p>
 <p>Implemented by testing whether the difference between <code>a</code> and <code>b</code> is 0. </p><dl class="section return"><dt>Returns</dt><dd>true if <code>a</code> and <code>b</code> represent exactly the same value, false otherwise </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00739">739</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00736">736</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -2293,7 +2297,7 @@ Related Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1expansion__nt.html">expansion_nt</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

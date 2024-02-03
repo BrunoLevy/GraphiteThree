@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -338,7 +345,7 @@ $(document).ready(function(){initNavTree('grob_8h_source.html',''); initResizabl
 <div class="ttc" id="aclassOGF_1_1Grob_html_ae156ae30532d37cf8e5f0fa71dd82d44"><div class="ttname"><a href="classOGF_1_1Grob.html#ae156ae30532d37cf8e5f0fa71dd82d44">OGF::Grob::set_filename</a></div><div class="ttdeci">void set_filename(const std::string &amp;value)</div><div class="ttdoc">Sets the name of this Grob.</div><div class="ttdef"><b>Definition:</b> <a href="grob_8h_source.html#l00365">grob.h:365</a></div></div>
 <div class="ttc" id="aclassOGF_1_1Grob_html_aeaaf93e92ba2d1e2371c858f72980474"><div class="ttname"><a href="classOGF_1_1Grob.html#aeaaf93e92ba2d1e2371c858f72980474">OGF::Grob::clear</a></div><div class="ttdeci">virtual void clear()</div><div class="ttdoc">Clears this Grob.</div></div>
 <div class="ttc" id="aclassOGF_1_1InputGraphiteFile_html"><div class="ttname"><a href="classOGF_1_1InputGraphiteFile.html">OGF::InputGraphiteFile</a></div><div class="ttdoc">An extension of InputGeoFile for storing a complete Graphite scenegraph in a structured binary file.</div><div class="ttdef"><b>Definition:</b> <a href="src_2lib_2OGF_2scene__graph_2types_2geofile_8h_source.html#l00067">geofile.h:67</a></div></div>
-<div class="ttc" id="aclassOGF_1_1Interpreter_html"><div class="ttname"><a href="classOGF_1_1Interpreter.html">OGF::Interpreter</a></div><div class="ttdoc">Abstract base class for the GOM interpreter.</div><div class="ttdef"><b>Definition:</b> <a href="interpreter_8h_source.html#l00174">interpreter.h:174</a></div></div>
+<div class="ttc" id="aclassOGF_1_1Interpreter_html"><div class="ttname"><a href="classOGF_1_1Interpreter.html">OGF::Interpreter</a></div><div class="ttdoc">Abstract base class for the GOM interpreter.</div><div class="ttdef"><b>Definition:</b> <a href="interpreter_8h_source.html#l00215">interpreter.h:215</a></div></div>
 <div class="ttc" id="aclassOGF_1_1Name_html"><div class="ttname"><a href="classOGF_1_1Name.html">OGF::Name</a></div><div class="ttdoc">A template class for strings that need to have a specific type in the GOM system.</div><div class="ttdef"><b>Definition:</b> <a href="scene__graph_2types_2properties_8h_source.html#l00217">properties.h:217</a></div></div>
 <div class="ttc" id="aclassOGF_1_1Node_html"><div class="ttname"><a href="classOGF_1_1Node.html">OGF::Node</a></div><div class="ttdoc">A composite object in the GOM system.</div><div class="ttdef"><b>Definition:</b> <a href="node_8h_source.html#l00058">node.h:58</a></div></div>
 <div class="ttc" id="aclassOGF_1_1Object_html"><div class="ttname"><a href="classOGF_1_1Object.html">OGF::Object</a></div><div class="ttdoc">Base class for all objects in the GOM system.</div><div class="ttdef"><b>Definition:</b> <a href="object_8h_source.html#l00065">object.h:65</a></div></div>
@@ -347,7 +354,7 @@ $(document).ready(function(){initNavTree('grob_8h_source.html',''); initResizabl
 <div class="ttc" id="aclassOGF_1_1SceneGraph_html"><div class="ttname"><a href="classOGF_1_1SceneGraph.html">OGF::SceneGraph</a></div><div class="ttdoc">Represents the list of objects loaded in Graphite.</div><div class="ttdef"><b>Definition:</b> <a href="scene__graph_8h_source.html#l00063">scene_graph.h:63</a></div></div>
 <div class="ttc" id="aclassOGF_1_1ShaderManager_html"><div class="ttname"><a href="classOGF_1_1ShaderManager.html">OGF::ShaderManager</a></div><div class="ttdoc">Manages the Shader objects associated with a Grob.</div><div class="ttdef"><b>Definition:</b> <a href="shader__manager_8h_source.html#l00058">shader_manager.h:58</a></div></div>
 <div class="ttc" id="aclassOGF_1_1Shader_html"><div class="ttname"><a href="classOGF_1_1Shader.html">OGF::Shader</a></div><div class="ttdoc">Base class for Grob shader.</div><div class="ttdef"><b>Definition:</b> <a href="shader_8h_source.html#l00064">shader.h:64</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
 <div class="ttc" id="anamespaceOGF_html"><div class="ttname"><a href="namespaceOGF.html">OGF</a></div><div class="ttdoc">Global Graphite namespace.</div><div class="ttdef"><b>Definition:</b> <a href="src_2lib_2OGF_2basic_2common_2common_8h_source.html#l00076">common.h:76</a></div></div>
 <div class="ttc" id="anamespaceOGF_html_abde55a37ba7de38734947ace7fbb467a"><div class="ttname"><a href="namespaceOGF.html#abde55a37ba7de38734947ace7fbb467a">OGF::Grob_var</a></div><div class="ttdeci">SmartPointer&lt; Grob &gt; Grob_var</div><div class="ttdoc">An automatic reference-counted pointer to a Grob.</div><div class="ttdef"><b>Definition:</b> <a href="grob_8h_source.html#l00470">grob.h:470</a></div></div>
 <div class="ttc" id="anode_8h_html"><div class="ttname"><a href="node_8h.html">node.h</a></div><div class="ttdoc">The base class for all composite objects in the GOM system.</div></div>
@@ -360,7 +367,7 @@ $(document).ready(function(){initNavTree('grob_8h_source.html',''); initResizabl
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_aef77abc1c70517fe3037d0ad81c1d82.html">OGF</a></li><li class="navelem"><a class="el" href="dir_3f96eb1eea7fd21c7da1bec97c74da2c.html">scene_graph</a></li><li class="navelem"><a class="el" href="dir_1f2e83ca6cf68ca1d342e9e23ece9e92.html">grob</a></li><li class="navelem"><a class="el" href="grob_8h.html">grob.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

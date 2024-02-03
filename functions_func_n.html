@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -108,7 +115,11 @@ $(document).ready(function(){initNavTree('functions_func_n.html',''); initResiza
 </li>
 <li>nb()
 : <a class="el" href="classGEO_1_1AttributesManager.html#a4ebaf22aaebf5d8bcaf8d3cad8c2a883">GEO::AttributesManager</a>
+, <a class="el" href="classGEO_1_1index__range.html#a246b5d31d1132ab8e1cca576de673f3b">GEO::index_range</a>
 , <a class="el" href="classGEO_1_1MeshSubElementsStore.html#a9a4920ee5f049ca1e6fdb5398530ceff">GEO::MeshSubElementsStore</a>
+, <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1Halfedges.html#ae39385218346687aeca6c412e4368d4a">GEO::MeshSurfaceIntersection::Halfedges</a>
+, <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialBundles.html#a30067c169b834e44bbbf96325f380b06">GEO::MeshSurfaceIntersection::RadialBundles</a>
+, <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialPolylines.html#aa03d582d88a61426197c86b0ebfbb566">GEO::MeshSurfaceIntersection::RadialPolylines</a>
 </li>
 <li>nb_args()
 : <a class="el" href="classOGF_1_1ArgList.html#af05a5b91a1c3dc29f7559816c2e72b0b">OGF::ArgList</a>
@@ -123,6 +134,9 @@ $(document).ready(function(){initNavTree('functions_func_n.html',''); initResiza
 </li>
 <li>nb_boundary_facets()
 : <a class="el" href="classGEOGen_1_1SymbolicVertex.html#a59a9ba6f939550e9eb0df677900f2dee">GEOGen::SymbolicVertex</a>
+</li>
+<li>nb_bundles_around_vertex()
+: <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialBundles.html#ad81c4900df56fd75afe20fb987a9d374">GEO::MeshSurfaceIntersection::RadialBundles</a>
 </li>
 <li>nb_cells()
 : <a class="el" href="classGEO_1_1Delaunay.html#a32f2fd33627d95576b53e13253c573cb">GEO::Delaunay</a>
@@ -155,6 +169,7 @@ $(document).ready(function(){initNavTree('functions_func_n.html',''); initResiza
 </li>
 <li>nb_facets()
 : <a class="el" href="classGEO_1_1Cavity.html#a1cf32cb4789b7839615a0490dacf5187">GEO::Cavity</a>
+, <a class="el" href="classGEO_1_1CoplanarFacets.html#a7b5bc0dd981b3a2a83b82a80c9832fd1">GEO::CoplanarFacets</a>
 , <a class="el" href="classGEO_1_1MeshCellsStore.html#a656f079d3cb4540fcf2dd487ecae2a5c">GEO::MeshCellsStore</a>
 </li>
 <li>nb_facets_in_range()
@@ -165,6 +180,9 @@ $(document).ready(function(){initNavTree('functions_func_n.html',''); initResiza
 </li>
 <li>nb_finite_cells()
 : <a class="el" href="classGEO_1_1Delaunay.html#aa613d8550d6f8d9ace7c8ed5c36addd1">GEO::Delaunay</a>
+</li>
+<li>nb_halfedges()
+: <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialBundles.html#ad6d0f818e340e836f8ea9820d465b389">GEO::MeshSurfaceIntersection::RadialBundles</a>
 </li>
 <li>nb_members()
 : <a class="el" href="classOGF_1_1MetaClass.html#a6d301a19d861d02900584c0811fa1fc7">OGF::MetaClass</a>
@@ -264,6 +282,7 @@ $(document).ready(function(){initNavTree('functions_func_n.html',''); initResiza
 </li>
 <li>negate()
 : <a class="el" href="classGEO_1_1expansion.html#a07005e5c31253e94003b588f4149a2e0">GEO::expansion</a>
+, <a class="el" href="classGEO_1_1expansion__nt.html#adf89933d662945ffc09074603f113c97">GEO::expansion_nt</a>
 </li>
 <li>new_array()
 : <a class="el" href="classOGF_1_1GenericLifeCycle.html#a7b13569552eb29cb2eaece894b742ffd">OGF::GenericLifeCycle&lt; T &gt;</a>
@@ -285,8 +304,8 @@ $(document).ready(function(){initNavTree('functions_func_n.html',''); initResiza
 : <a class="el" href="classGEO_1_1AdaptiveKdTree.html#a90573f15df627974089c016d012368ac">GEO::AdaptiveKdTree</a>
 </li>
 <li>new_object()
-: <a class="el" href="classOGF_1_1GenericLifeCycle.html#a36e9cc62b4bd7ab6644fbc211b9e88b7">OGF::GenericLifeCycle&lt; T &gt;</a>
-, <a class="el" href="classOGF_1_1LifeCycle.html#a64502bf61203b2042d2b73d64e486f9c">OGF::LifeCycle</a>
+: <a class="el" href="classOGF_1_1GenericLifeCycle.html#a283ed56d4681dd28487693c1c4e28808">OGF::GenericLifeCycle&lt; T &gt;</a>
+, <a class="el" href="classOGF_1_1LifeCycle.html#a889ba30171ed66e76535f0a9fe5dcd92">OGF::LifeCycle</a>
 </li>
 <li>new_tetrahedron()
 : <a class="el" href="classGEO_1_1Delaunay3d.html#ad80f24e95dbbc6cea34411c7285c40cf">GEO::Delaunay3d</a>
@@ -310,17 +329,33 @@ $(document).ready(function(){initNavTree('functions_func_n.html',''); initResiza
 <li>next()
 : <a class="el" href="classGEO_1_1ProgressTask.html#a3bba6d02a4ce89cefc3993e45efc3fdd">GEO::ProgressTask</a>
 </li>
+<li>next_along_polyline()
+: <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialBundles.html#ab890676e4362d2d56b869e8560b42e5c">GEO::MeshSurfaceIntersection::RadialBundles</a>
+</li>
 <li>next_around_halfedge()
 : <a class="el" href="classGEO_1_1Delaunay3d.html#a1abae70364cce5284e2963c094670092">GEO::Delaunay3d</a>
 </li>
 <li>next_around_vertex()
 : <a class="el" href="classGEO_1_1Delaunay.html#ada46e2f945d872b20ee0b3144c45dd03">GEO::Delaunay</a>
+, <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialBundles.html#a5ba271a36372fed25aa9a13ecb8c1a36">GEO::MeshSurfaceIntersection::RadialBundles</a>
 </li>
 <li>next_chunk()
 : <a class="el" href="classGEO_1_1InputGeoFile.html#a9b20d995fd5f68aa88811b9a44164310">GEO::InputGeoFile</a>
 </li>
 <li>next_corner_around_facet()
 : <a class="el" href="classGEO_1_1MeshFacets.html#afc0b912471a322d9b462c9df7c741b3f">GEO::MeshFacets</a>
+</li>
+<li>next_file()
+: <a class="el" href="classGEO_1_1SimpleMeshApplication.html#abfcb047c0428f0ca760be1c7f370bcaa">GEO::SimpleMeshApplication</a>
+</li>
+<li>next_token()
+: <a class="el" href="classGEO_1_1CSGCompiler.html#af6097a3834db36923732580de952c4b1">GEO::CSGCompiler</a>
+</li>
+<li>next_token_check()
+: <a class="el" href="classGEO_1_1CSGCompiler.html#a5bffa2f24140e5c27c601cdee5f6efbc">GEO::CSGCompiler</a>
+</li>
+<li>next_token_internal()
+: <a class="el" href="classGEO_1_1CSGCompiler.html#a15a1aa58f0ad5916d08323180cdeb047">GEO::CSGCompiler</a>
 </li>
 <li>next_triangle()
 : <a class="el" href="classGEOGen_1_1ConvexCell.html#ae0df9b2787d5ca4556afa17f6e2348bc">GEOGen::ConvexCell</a>
@@ -477,7 +512,7 @@ $(document).ready(function(){initNavTree('functions_func_n.html',''); initResiza
 : <a class="el" href="classOGF_1_1VoxelGrob.html#adde8406a93af43bf1173df0a8c8d79f7">OGF::VoxelGrob</a>
 </li>
 <li>num()
-: <a class="el" href="classGEO_1_1rational__nt.html#a0a250ab1051afd3f496730fb61456ac8">GEO::rational_nt</a>
+: <a class="el" href="classGEO_1_1rationalg.html#a39cc984fa78baf02da867399bff06648">GEO::rationalg&lt; T &gt;</a>
 </li>
 <li>nv()
 : <a class="el" href="classGEO_1_1CDTBase2d.html#a0d27fc37d7f129609e69deffcaef9af9">GEO::CDTBase2d</a>
@@ -492,7 +527,7 @@ $(document).ready(function(){initNavTree('functions_func_n.html',''); initResiza
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:50 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:09 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

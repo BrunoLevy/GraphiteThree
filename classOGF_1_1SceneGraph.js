@@ -28,6 +28,7 @@ var classOGF_1_1SceneGraph =
     [ "is_serializable", "classOGF_1_1SceneGraph.html#ae9b5c5cc7ab86f27bd686f1432fae616", null ],
     [ "load_object", "classOGF_1_1SceneGraph.html#ad5bfc7d1b20559addb5e35aa913dbe94", null ],
     [ "load_objects", "classOGF_1_1SceneGraph.html#afd88f7a2d55b0e99ae404dcdd06ea3c8", null ],
+    [ "register_grob_commands", "classOGF_1_1SceneGraph.html#ace820113dae859f7a2be1891e27464fa", null ],
     [ "save_current_object", "classOGF_1_1SceneGraph.html#a862b0074bd2439ef765d34dddc31e25b", null ],
     [ "serialize_grob_read", "classOGF_1_1SceneGraph.html#a1abb996363049f76aaf01a794916138b", null ],
     [ "serialize_grob_write", "classOGF_1_1SceneGraph.html#a7156078937311451afbaa3a487f907fb", null ],

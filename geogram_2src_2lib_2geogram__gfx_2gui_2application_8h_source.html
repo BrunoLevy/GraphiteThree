@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -282,113 +289,114 @@ $(document).ready(function(){initNavTree('geogram_2src_2lib_2geogram__gfx_2gui_2
 <div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;            soft_keyboard_visible_ = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;        }</div>
 <div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    </div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160; </div>
-<div class="line"><a name="l00431"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a1a39ded66244c6365465058211b2f203">  431</a></span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classGEO_1_1Application.html#a1a39ded66244c6365465058211b2f203">key_to_string</a>(<span class="keywordtype">int</span> key);</div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;    </div>
-<div class="line"><a name="l00438"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#ab642bcae03c14702fe351232ae5b8259">  438</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#ab642bcae03c14702fe351232ae5b8259">draw_gui</a>();</div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160; </div>
-<div class="line"><a name="l00446"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#aea6c71f25e2de0147a90dae1cd8824dc">  446</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#aea6c71f25e2de0147a90dae1cd8824dc">draw_graphics</a>();</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;    </div>
-<div class="line"><a name="l00453"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a7384baf7fc335c0a9de20358b0f28b55">  453</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a7384baf7fc335c0a9de20358b0f28b55">pre_draw</a>();</div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160; </div>
-<div class="line"><a name="l00459"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#aa2a213172fca9d8c30743bb53fe37a7c">  459</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#aa2a213172fca9d8c30743bb53fe37a7c">post_draw</a>();</div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;    </div>
-<div class="line"><a name="l00466"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#ae0d3306d7d0d76517a703b292fc614cf">  466</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classGEO_1_1Application.html#ae0d3306d7d0d76517a703b292fc614cf">needs_to_redraw</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160; </div>
-<div class="line"><a name="l00471"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#aaabd19f2e2095df53fc99338b9348b49">  471</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#aaabd19f2e2095df53fc99338b9348b49">create_window</a>();</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160; </div>
-<div class="line"><a name="l00476"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#ab75df614f9d96dc58deb1cc9cbb132e2">  476</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#ab75df614f9d96dc58deb1cc9cbb132e2">delete_window</a>();</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160; </div>
-<div class="line"><a name="l00486"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a7d5e347fb4b3773f1833f2b838df1212">  486</a></span>&#160;         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a7d5e347fb4b3773f1833f2b838df1212">resize</a>(<a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> w, <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> h, <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> fb_w, <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> fb_h);</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160; </div>
-<div class="line"><a name="l00492"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a7c477f904bb41161e13aca686a2c8440">  492</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a7c477f904bb41161e13aca686a2c8440">one_frame</a>();</div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160; </div>
-<div class="line"><a name="l00500"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a03d2a7179658242633dac851d875d297">  500</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a03d2a7179658242633dac851d875d297">main_loop</a>();</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160; </div>
-<div class="line"><a name="l00505"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#ad8eca262437129dd0593ddd843860cd0">  505</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#ad8eca262437129dd0593ddd843860cd0">GL_initialize</a>();</div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160; </div>
-<div class="line"><a name="l00510"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a463bda8e0aeb1a3438e67cbac2543e13">  510</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a463bda8e0aeb1a3438e67cbac2543e13">GL_terminate</a>();</div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160; </div>
-<div class="line"><a name="l00515"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a7c31b7a4e0f0235e7b0817c3549f4c4a">  515</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a7c31b7a4e0f0235e7b0817c3549f4c4a">ImGui_initialize</a>();</div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160; </div>
-<div class="line"><a name="l00520"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a23e544298b0c2ac126d51ce9f97717e8">  520</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a23e544298b0c2ac126d51ce9f97717e8">ImGui_load_fonts</a>();</div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;        </div>
-<div class="line"><a name="l00525"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a434116a0accf94c55740d85748c139c5">  525</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a434116a0accf94c55740d85748c139c5">ImGui_terminate</a>();</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160; </div>
-<div class="line"><a name="l00530"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#ad6e8fbc64f95c79cc2f4ec42745521d3">  530</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#ad6e8fbc64f95c79cc2f4ec42745521d3">ImGui_new_frame</a>();</div>
-<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160; </div>
-<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;        <span class="comment">/*</span></div>
-<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;<span class="comment">         * \param[in] argc , argv command line parameters, used</span></div>
-<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;<span class="comment">         *  to initialize geogram.</span></div>
-<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;<span class="comment">         */</span></div>
-<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> geogram_initialize(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv);</div>
-<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;    </div>
-<div class="line"><a name="l00541"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a8b0bbf47ee97e8c197fcce35fba749b4">  541</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a8b0bbf47ee97e8c197fcce35fba749b4">callbacks_initialize</a>();</div>
-<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160; </div>
-<div class="line"><a name="l00547"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a13259d9c2f9513fd2497b8a81bc48627">  547</a></span>&#160;        <span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; <a class="code" href="classGEO_1_1Application.html#a13259d9c2f9513fd2497b8a81bc48627">filenames</a>()<span class="keyword"> const  </span>{</div>
-<div class="line"><a name="l00548"></a><span class="lineno">  548</span>&#160;            <span class="keywordflow">return</span> filenames_;</div>
-<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;        }</div>
-<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160; </div>
-<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;        <span class="keywordtype">bool</span> animate()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;            <span class="keywordflow">return</span> animate_;</div>
-<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;        }</div>
-<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160; </div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;        <span class="keywordtype">bool</span>* animate_ptr() {</div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;            <span class="keywordflow">return</span> &amp;animate_;</div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;        }</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;    </div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;        <span class="keywordtype">void</span> start_animation() {</div>
-<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;            animate_ = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;        }</div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160; </div>
-<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;        <span class="keywordtype">void</span> stop_animation() {</div>
-<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;            animate_ = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;        }</div>
-<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160; </div>
-<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;      <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;        <span class="keyword">static</span> Application* instance_; </div>
-<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;        ApplicationData* data_;        </div>
-<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> width_;                </div>
-<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> height_;               </div>
-<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> frame_buffer_width_;   </div>
-<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> frame_buffer_height_;  </div>
-<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;        <span class="keywordtype">bool</span> in_main_loop_;            </div>
-<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;        <span class="keywordtype">bool</span> accept_drops_;            </div>
-<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;        <span class="keywordtype">double</span> scaling_;               </div>
-<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb_update_locks_;      </div>
-<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;        std::string style_;            </div>
-<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;        <span class="keywordtype">bool</span> ImGui_restart_;           </div>
-<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;        <span class="keywordtype">bool</span> ImGui_reload_font_;       </div>
-<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;        <span class="keywordtype">bool</span> ImGui_initialized_;       </div>
-<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> font_size_;            </div>
-<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb_frames_update_;     </div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;        <span class="keywordtype">double</span> hidpi_scaling_;         </div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;        <span class="keywordtype">double</span> pixel_ratio_;           </div>
-<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;        std::string name_;             </div>
-<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;        <span class="keywordtype">bool</span> currently_drawing_gui_;   </div>
-<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;        std::vector&lt;std::string&gt; filenames_; </div>
-<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;        <span class="keywordtype">bool</span> animate_;                 </div>
-<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;      <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00593"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#aa12b982fcdfbe1d2dc0beb82c06c66a1">  593</a></span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classGEO_1_1Application.html#aa12b982fcdfbe1d2dc0beb82c06c66a1">ImGui_firsttime_init_</a>;  </div>
-<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;        <span class="keywordtype">bool</span> menubar_visible_;</div>
-<div class="line"><a name="l00595"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a7ceba659f2c796c47159b775843709f5">  595</a></span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classGEO_1_1Application.html#a7ceba659f2c796c47159b775843709f5">phone_screen_</a>;          </div>
-<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;        <span class="keywordtype">bool</span> soft_keyboard_visible_;</div>
-<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160; </div>
-<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;<span class="preprocessor">#ifdef GEO_OS_EMSCRIPTEN</span></div>
-<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;       <span class="keyword">friend</span> <span class="keywordtype">void</span> emscripten_one_frame();</div>
-<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;    };</div>
-<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160; </div>
-<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;}</div>
-<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160; </div>
-<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160; </div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;        <span class="comment">//protected:</span></div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160; </div>
+<div class="line"><a name="l00432"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a1a39ded66244c6365465058211b2f203">  432</a></span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classGEO_1_1Application.html#a1a39ded66244c6365465058211b2f203">key_to_string</a>(<span class="keywordtype">int</span> key);</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    </div>
+<div class="line"><a name="l00439"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#ab642bcae03c14702fe351232ae5b8259">  439</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#ab642bcae03c14702fe351232ae5b8259">draw_gui</a>();</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160; </div>
+<div class="line"><a name="l00447"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#aea6c71f25e2de0147a90dae1cd8824dc">  447</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#aea6c71f25e2de0147a90dae1cd8824dc">draw_graphics</a>();</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;    </div>
+<div class="line"><a name="l00454"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a7384baf7fc335c0a9de20358b0f28b55">  454</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a7384baf7fc335c0a9de20358b0f28b55">pre_draw</a>();</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160; </div>
+<div class="line"><a name="l00460"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#aa2a213172fca9d8c30743bb53fe37a7c">  460</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#aa2a213172fca9d8c30743bb53fe37a7c">post_draw</a>();</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;    </div>
+<div class="line"><a name="l00467"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#ae0d3306d7d0d76517a703b292fc614cf">  467</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classGEO_1_1Application.html#ae0d3306d7d0d76517a703b292fc614cf">needs_to_redraw</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160; </div>
+<div class="line"><a name="l00472"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#aaabd19f2e2095df53fc99338b9348b49">  472</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#aaabd19f2e2095df53fc99338b9348b49">create_window</a>();</div>
+<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160; </div>
+<div class="line"><a name="l00477"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#ab75df614f9d96dc58deb1cc9cbb132e2">  477</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#ab75df614f9d96dc58deb1cc9cbb132e2">delete_window</a>();</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160; </div>
+<div class="line"><a name="l00487"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a7d5e347fb4b3773f1833f2b838df1212">  487</a></span>&#160;         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a7d5e347fb4b3773f1833f2b838df1212">resize</a>(<a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> w, <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> h, <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> fb_w, <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> fb_h);</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160; </div>
+<div class="line"><a name="l00493"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a7c477f904bb41161e13aca686a2c8440">  493</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a7c477f904bb41161e13aca686a2c8440">one_frame</a>();</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160; </div>
+<div class="line"><a name="l00501"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a03d2a7179658242633dac851d875d297">  501</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a03d2a7179658242633dac851d875d297">main_loop</a>();</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160; </div>
+<div class="line"><a name="l00506"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#ad8eca262437129dd0593ddd843860cd0">  506</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#ad8eca262437129dd0593ddd843860cd0">GL_initialize</a>();</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160; </div>
+<div class="line"><a name="l00511"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a463bda8e0aeb1a3438e67cbac2543e13">  511</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a463bda8e0aeb1a3438e67cbac2543e13">GL_terminate</a>();</div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160; </div>
+<div class="line"><a name="l00516"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a7c31b7a4e0f0235e7b0817c3549f4c4a">  516</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a7c31b7a4e0f0235e7b0817c3549f4c4a">ImGui_initialize</a>();</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160; </div>
+<div class="line"><a name="l00521"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a23e544298b0c2ac126d51ce9f97717e8">  521</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a23e544298b0c2ac126d51ce9f97717e8">ImGui_load_fonts</a>();</div>
+<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;        </div>
+<div class="line"><a name="l00526"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a434116a0accf94c55740d85748c139c5">  526</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a434116a0accf94c55740d85748c139c5">ImGui_terminate</a>();</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160; </div>
+<div class="line"><a name="l00531"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#ad6e8fbc64f95c79cc2f4ec42745521d3">  531</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#ad6e8fbc64f95c79cc2f4ec42745521d3">ImGui_new_frame</a>();</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160; </div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;        <span class="comment">/*</span></div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;<span class="comment">         * \param[in] argc , argv command line parameters, used</span></div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;<span class="comment">         *  to initialize geogram.</span></div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;<span class="comment">         */</span></div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> geogram_initialize(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv);</div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;    </div>
+<div class="line"><a name="l00542"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a8b0bbf47ee97e8c197fcce35fba749b4">  542</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classGEO_1_1Application.html#a8b0bbf47ee97e8c197fcce35fba749b4">callbacks_initialize</a>();</div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160; </div>
+<div class="line"><a name="l00548"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a13259d9c2f9513fd2497b8a81bc48627">  548</a></span>&#160;        <span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; <a class="code" href="classGEO_1_1Application.html#a13259d9c2f9513fd2497b8a81bc48627">filenames</a>()<span class="keyword"> const  </span>{</div>
+<div class="line"><a name="l00549"></a><span class="lineno">  549</span>&#160;            <span class="keywordflow">return</span> filenames_;</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;        }</div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160; </div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;        <span class="keywordtype">bool</span> animate()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;            <span class="keywordflow">return</span> animate_;</div>
+<div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;        }</div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160; </div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;        <span class="keywordtype">bool</span>* animate_ptr() {</div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;            <span class="keywordflow">return</span> &amp;animate_;</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;        }</div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;    </div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;        <span class="keywordtype">void</span> start_animation() {</div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;            animate_ = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;        }</div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160; </div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;        <span class="keywordtype">void</span> stop_animation() {</div>
+<div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;            animate_ = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;        }</div>
+<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160; </div>
+<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;      <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;        <span class="keyword">static</span> Application* instance_; </div>
+<div class="line"><a name="l00570"></a><span class="lineno">  570</span>&#160;        ApplicationData* data_;        </div>
+<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> width_;                </div>
+<div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> height_;               </div>
+<div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> frame_buffer_width_;   </div>
+<div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> frame_buffer_height_;  </div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;        <span class="keywordtype">bool</span> in_main_loop_;            </div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;        <span class="keywordtype">bool</span> accept_drops_;            </div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;        <span class="keywordtype">double</span> scaling_;               </div>
+<div class="line"><a name="l00578"></a><span class="lineno">  578</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb_update_locks_;      </div>
+<div class="line"><a name="l00579"></a><span class="lineno">  579</span>&#160;        std::string style_;            </div>
+<div class="line"><a name="l00580"></a><span class="lineno">  580</span>&#160;        <span class="keywordtype">bool</span> ImGui_restart_;           </div>
+<div class="line"><a name="l00581"></a><span class="lineno">  581</span>&#160;        <span class="keywordtype">bool</span> ImGui_reload_font_;       </div>
+<div class="line"><a name="l00582"></a><span class="lineno">  582</span>&#160;        <span class="keywordtype">bool</span> ImGui_initialized_;       </div>
+<div class="line"><a name="l00583"></a><span class="lineno">  583</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> font_size_;            </div>
+<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;        <a class="code" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb_frames_update_;     </div>
+<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;        <span class="keywordtype">double</span> hidpi_scaling_;         </div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;        <span class="keywordtype">double</span> pixel_ratio_;           </div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;        std::string name_;             </div>
+<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;        <span class="keywordtype">bool</span> currently_drawing_gui_;   </div>
+<div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;        std::vector&lt;std::string&gt; filenames_; </div>
+<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;        <span class="keywordtype">bool</span> animate_;                 </div>
+<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;      <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00594"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#aa12b982fcdfbe1d2dc0beb82c06c66a1">  594</a></span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classGEO_1_1Application.html#aa12b982fcdfbe1d2dc0beb82c06c66a1">ImGui_firsttime_init_</a>;  </div>
+<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;        <span class="keywordtype">bool</span> menubar_visible_;</div>
+<div class="line"><a name="l00596"></a><span class="lineno"><a class="line" href="classGEO_1_1Application.html#a7ceba659f2c796c47159b775843709f5">  596</a></span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classGEO_1_1Application.html#a7ceba659f2c796c47159b775843709f5">phone_screen_</a>;          </div>
+<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;        <span class="keywordtype">bool</span> soft_keyboard_visible_;</div>
+<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160; </div>
+<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;<span class="preprocessor">#ifdef GEO_OS_EMSCRIPTEN</span></div>
+<div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;       <span class="keyword">friend</span> <span class="keywordtype">void</span> emscripten_one_frame();</div>
+<div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00602"></a><span class="lineno">  602</span>&#160;    };</div>
+<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160; </div>
+<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;}</div>
+<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160; </div>
+<div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160; </div>
 <div class="ttc" id="aclassGEO_1_1Application_html"><div class="ttname"><a href="classGEO_1_1Application.html">GEO::Application</a></div><div class="ttdoc">Base class for all applications.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00066">application.h:66</a></div></div>
 <div class="ttc" id="aclassGEO_1_1Application_html_a03a10db2146263ef9abdd7a458e4d04b"><div class="ttname"><a href="classGEO_1_1Application.html#a03a10db2146263ef9abdd7a458e4d04b">GEO::Application::set_full_screen</a></div><div class="ttdeci">void set_full_screen(bool x)</div><div class="ttdoc">Sets full-screen mode.</div></div>
 <div class="ttc" id="aclassGEO_1_1Application_html_a03d2a7179658242633dac851d875d297"><div class="ttname"><a href="classGEO_1_1Application.html#a03d2a7179658242633dac851d875d297">GEO::Application::main_loop</a></div><div class="ttdeci">virtual void main_loop()</div><div class="ttdoc">Enters the main application loop.</div></div>
 <div class="ttc" id="aclassGEO_1_1Application_html_a07d2172ecb34e1dfaade5b5477ca32a7"><div class="ttname"><a href="classGEO_1_1Application.html#a07d2172ecb34e1dfaade5b5477ca32a7">GEO::Application::get_font_size</a></div><div class="ttdeci">index_t get_font_size() const</div><div class="ttdoc">Gets the font size.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00143">application.h:143</a></div></div>
-<div class="ttc" id="aclassGEO_1_1Application_html_a13259d9c2f9513fd2497b8a81bc48627"><div class="ttname"><a href="classGEO_1_1Application.html#a13259d9c2f9513fd2497b8a81bc48627">GEO::Application::filenames</a></div><div class="ttdeci">const std::vector&lt; std::string &gt; &amp; filenames() const</div><div class="ttdoc">Gets all the filenames specified on the command line.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00547">application.h:547</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Application_html_a13259d9c2f9513fd2497b8a81bc48627"><div class="ttname"><a href="classGEO_1_1Application.html#a13259d9c2f9513fd2497b8a81bc48627">GEO::Application::filenames</a></div><div class="ttdeci">const std::vector&lt; std::string &gt; &amp; filenames() const</div><div class="ttdoc">Gets all the filenames specified on the command line.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00548">application.h:548</a></div></div>
 <div class="ttc" id="aclassGEO_1_1Application_html_a1a39ded66244c6365465058211b2f203"><div class="ttname"><a href="classGEO_1_1Application.html#a1a39ded66244c6365465058211b2f203">GEO::Application::key_to_string</a></div><div class="ttdeci">const char * key_to_string(int key)</div><div class="ttdoc">Converts a key to a symbolic string with the name of the key.</div></div>
 <div class="ttc" id="aclassGEO_1_1Application_html_a1e4d006a2649f90dfadbbab5ba056a7e"><div class="ttname"><a href="classGEO_1_1Application.html#a1e4d006a2649f90dfadbbab5ba056a7e">GEO::Application::restart_gui</a></div><div class="ttdeci">void restart_gui()</div><div class="ttdoc">Restarts the gui.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00374">application.h:374</a></div></div>
 <div class="ttc" id="aclassGEO_1_1Application_html_a1e8080fa75db3ae52e8750a60ae65393"><div class="ttname"><a href="classGEO_1_1Application.html#a1e8080fa75db3ae52e8750a60ae65393">GEO::Application::hidpi_scaling</a></div><div class="ttdeci">double hidpi_scaling() const</div><div class="ttdoc">MacOS non-sense.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00401">application.h:401</a></div></div>
@@ -417,7 +425,7 @@ $(document).ready(function(){initNavTree('geogram_2src_2lib_2geogram__gfx_2gui_2
 <div class="ttc" id="aclassGEO_1_1Application_html_a765eaf851f206cec45c46808ec249eef"><div class="ttname"><a href="classGEO_1_1Application.html#a765eaf851f206cec45c46808ec249eef">GEO::Application::iconify</a></div><div class="ttdeci">void iconify()</div><div class="ttdoc">Iconifies this application.</div></div>
 <div class="ttc" id="aclassGEO_1_1Application_html_a7c31b7a4e0f0235e7b0817c3549f4c4a"><div class="ttname"><a href="classGEO_1_1Application.html#a7c31b7a4e0f0235e7b0817c3549f4c4a">GEO::Application::ImGui_initialize</a></div><div class="ttdeci">virtual void ImGui_initialize()</div><div class="ttdoc">Initializes the ImGui library.</div></div>
 <div class="ttc" id="aclassGEO_1_1Application_html_a7c477f904bb41161e13aca686a2c8440"><div class="ttname"><a href="classGEO_1_1Application.html#a7c477f904bb41161e13aca686a2c8440">GEO::Application::one_frame</a></div><div class="ttdeci">virtual void one_frame()</div><div class="ttdoc">Draws one frame.</div></div>
-<div class="ttc" id="aclassGEO_1_1Application_html_a7ceba659f2c796c47159b775843709f5"><div class="ttname"><a href="classGEO_1_1Application.html#a7ceba659f2c796c47159b775843709f5">GEO::Application::phone_screen_</a></div><div class="ttdeci">bool phone_screen_</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00595">application.h:595</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Application_html_a7ceba659f2c796c47159b775843709f5"><div class="ttname"><a href="classGEO_1_1Application.html#a7ceba659f2c796c47159b775843709f5">GEO::Application::phone_screen_</a></div><div class="ttdeci">bool phone_screen_</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00596">application.h:596</a></div></div>
 <div class="ttc" id="aclassGEO_1_1Application_html_a7d5e347fb4b3773f1833f2b838df1212"><div class="ttname"><a href="classGEO_1_1Application.html#a7d5e347fb4b3773f1833f2b838df1212">GEO::Application::resize</a></div><div class="ttdeci">virtual void resize(index_t w, index_t h, index_t fb_w, index_t fb_h)</div><div class="ttdoc">Called whenever window size changes.</div></div>
 <div class="ttc" id="aclassGEO_1_1Application_html_a7d730d338cdd7605f85e8d71f96028c0"><div class="ttname"><a href="classGEO_1_1Application.html#a7d730d338cdd7605f85e8d71f96028c0">GEO::Application::drop_callback</a></div><div class="ttdeci">virtual void drop_callback(int nb, const char **f)</div><div class="ttdoc">Callback called whenever files are dropped in the window.</div></div>
 <div class="ttc" id="aclassGEO_1_1Application_html_a85d7aecc9902c983996fb63944678be7"><div class="ttname"><a href="classGEO_1_1Application.html#a85d7aecc9902c983996fb63944678be7">GEO::Application::update</a></div><div class="ttdeci">virtual void update()</div><div class="ttdoc">Indicates that the main window should be redrawn.</div></div>
@@ -428,7 +436,7 @@ $(document).ready(function(){initNavTree('geogram_2src_2lib_2geogram__gfx_2gui_2
 <div class="ttc" id="aclassGEO_1_1Application_html_a90d0b25602bb1b3d2fcb1efe73057268"><div class="ttname"><a href="classGEO_1_1Application.html#a90d0b25602bb1b3d2fcb1efe73057268">GEO::Application::start</a></div><div class="ttdeci">virtual void start(int argc=0, char **argv=nullptr)</div><div class="ttdoc">Starts the main event loop of the application.</div></div>
 <div class="ttc" id="aclassGEO_1_1Application_html_a96a0f0e4b6b976b8fb0684d813c36867"><div class="ttname"><a href="classGEO_1_1Application.html#a96a0f0e4b6b976b8fb0684d813c36867">GEO::Application::set_gui_state</a></div><div class="ttdeci">void set_gui_state(std::string x)</div><div class="ttdoc">Sets the gui state.</div></div>
 <div class="ttc" id="aclassGEO_1_1Application_html_a9f1a184ba40a834ac977dfdf7a0ea367"><div class="ttname"><a href="classGEO_1_1Application.html#a9f1a184ba40a834ac977dfdf7a0ea367">GEO::Application::pixel_ratio</a></div><div class="ttdeci">double pixel_ratio() const</div><div class="ttdoc">More MacOS non-sense.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00413">application.h:413</a></div></div>
-<div class="ttc" id="aclassGEO_1_1Application_html_aa12b982fcdfbe1d2dc0beb82c06c66a1"><div class="ttname"><a href="classGEO_1_1Application.html#aa12b982fcdfbe1d2dc0beb82c06c66a1">GEO::Application::ImGui_firsttime_init_</a></div><div class="ttdeci">bool ImGui_firsttime_init_</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00593">application.h:593</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Application_html_aa12b982fcdfbe1d2dc0beb82c06c66a1"><div class="ttname"><a href="classGEO_1_1Application.html#aa12b982fcdfbe1d2dc0beb82c06c66a1">GEO::Application::ImGui_firsttime_init_</a></div><div class="ttdeci">bool ImGui_firsttime_init_</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00594">application.h:594</a></div></div>
 <div class="ttc" id="aclassGEO_1_1Application_html_aa2a213172fca9d8c30743bb53fe37a7c"><div class="ttname"><a href="classGEO_1_1Application.html#aa2a213172fca9d8c30743bb53fe37a7c">GEO::Application::post_draw</a></div><div class="ttdeci">virtual void post_draw()</div><div class="ttdoc">This function is called after all drawing operations.</div></div>
 <div class="ttc" id="aclassGEO_1_1Application_html_aa5c919d093f820c3080574a834fcd159"><div class="ttname"><a href="classGEO_1_1Application.html#aa5c919d093f820c3080574a834fcd159">GEO::Application::name</a></div><div class="ttdeci">const std::string &amp; name() const</div><div class="ttdoc">Gets the name of this application.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00093">application.h:93</a></div></div>
 <div class="ttc" id="aclassGEO_1_1Application_html_aaabd19f2e2095df53fc99338b9348b49"><div class="ttname"><a href="classGEO_1_1Application.html#aaabd19f2e2095df53fc99338b9348b49">GEO::Application::create_window</a></div><div class="ttdeci">virtual void create_window()</div><div class="ttdoc">Creates the window using GLFW.</div></div>
@@ -455,14 +463,14 @@ $(document).ready(function(){initNavTree('geogram_2src_2lib_2geogram__gfx_2gui_2
 <div class="ttc" id="ageogram_2src_2lib_2geogram__gfx_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram__gfx_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
 <div class="ttc" id="agfx_2api_2defs_8h_html_a6db1f5359a6e2a475177dfef560d3215"><div class="ttname"><a href="gfx_2api_2defs_8h.html#a6db1f5359a6e2a475177dfef560d3215">GEOGRAM_GFX_API</a></div><div class="ttdeci">#define GEOGRAM_GFX_API</div><div class="ttdoc">Linkage declaration for geogram symbols.</div><div class="ttdef"><b>Definition:</b> <a href="gfx_2api_2defs_8h_source.html#l00055">defs.h:55</a></div></div>
 <div class="ttc" id="anamespaceGEO_html"><div class="ttname"><a href="namespaceGEO.html">GEO</a></div><div class="ttdoc">Global Vorpaline namespace.</div><div class="ttdef"><b>Definition:</b> <a href="lua__grob__shader_8h_source.html#l00053">lua_grob_shader.h:53</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_20037eb6270bb31b4654a405ea4434e9.html">geogram_gfx</a></li><li class="navelem"><a class="el" href="dir_8bd9e63e3f99fdacb41b04655be2a67d.html">gui</a></li><li class="navelem"><a class="el" href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h.html">application.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

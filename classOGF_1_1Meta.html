@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -118,6 +125,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a854440412125f9036d266f8993f45a5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOGF_1_1MetaType.html">MetaType</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Meta.html#a854440412125f9036d266f8993f45a5c">resolve_meta_type</a> (const std::string &amp;type_name) const</td></tr>
 <tr class="memdesc:a854440412125f9036d266f8993f45a5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds a <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a> by type name.  <a href="classOGF_1_1Meta.html#a854440412125f9036d266f8993f45a5c">More...</a><br /></td></tr>
 <tr class="separator:a854440412125f9036d266f8993f45a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a354358e2d5c624085c618b839785d455"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOGF_1_1MetaClass.html">MetaClass</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Meta.html#a354358e2d5c624085c618b839785d455">resolve_meta_class</a> (const std::string &amp;type_name) const</td></tr>
+<tr class="memdesc:a354358e2d5c624085c618b839785d455"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds a <a class="el" href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository.">MetaClass</a> by type name.  <a href="classOGF_1_1Meta.html#a354358e2d5c624085c618b839785d455">More...</a><br /></td></tr>
+<tr class="separator:a354358e2d5c624085c618b839785d455"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0081f0b64b6608ba2f9497975f2bd815"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOGF_1_1MetaType.html">MetaType</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Meta.html#a0081f0b64b6608ba2f9497975f2bd815">resolve_meta_type_by_typeid_name</a> (const std::string &amp;typeid_name) const</td></tr>
 <tr class="memdesc:a0081f0b64b6608ba2f9497975f2bd815"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds a <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a> by typeid name.  <a href="classOGF_1_1Meta.html#a0081f0b64b6608ba2f9497975f2bd815">More...</a><br /></td></tr>
 <tr class="separator:a0081f0b64b6608ba2f9497975f2bd815"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,6 +137,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a72842fc368ba91d02a956bfda57a80b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Meta.html#a72842fc368ba91d02a956bfda57a80b9">list_types</a> (std::vector&lt; <a class="el" href="classOGF_1_1MetaType.html">MetaType</a> * &gt; &amp;types)</td></tr>
 <tr class="memdesc:a72842fc368ba91d02a956bfda57a80b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the list of all <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a> objects declared to the system.  <a href="classOGF_1_1Meta.html#a72842fc368ba91d02a956bfda57a80b9">More...</a><br /></td></tr>
 <tr class="separator:a72842fc368ba91d02a956bfda57a80b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b6e3b0e1a40fef040fe27187481cd93"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Meta.html#a7b6e3b0e1a40fef040fe27187481cd93">list_type_names</a> (std::vector&lt; std::string &gt; &amp;type_names)</td></tr>
+<tr class="memdesc:a7b6e3b0e1a40fef040fe27187481cd93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the list of all type names declared to the system.  <a href="classOGF_1_1Meta.html#a7b6e3b0e1a40fef040fe27187481cd93">More...</a><br /></td></tr>
+<tr class="separator:a7b6e3b0e1a40fef040fe27187481cd93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -265,6 +278,32 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a7b6e3b0e1a40fef040fe27187481cd93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b6e3b0e1a40fef040fe27187481cd93">&#9670;&nbsp;</a></span>list_type_names()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OGF::Meta::list_type_names </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>type_names</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the list of all type names declared to the system. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">type_names</td><td>a vector of all type names, including aliases. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a72842fc368ba91d02a956bfda57a80b9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a72842fc368ba91d02a956bfda57a80b9">&#9670;&nbsp;</a></span>list_types()</h2>
 
@@ -321,6 +360,43 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a354358e2d5c624085c618b839785d455"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a354358e2d5c624085c618b839785d455">&#9670;&nbsp;</a></span>resolve_meta_class()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOGF_1_1MetaClass.html">MetaClass</a>* OGF::Meta::resolve_meta_class </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>type_name</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Finds a <a class="el" href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository.">MetaClass</a> by type name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">type_name</td><td>type name </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the <a class="el" href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository.">MetaClass</a> associated with <code>type_name</code> if it exists or nullptr otherwise </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="meta_8h_source.html#l00139">139</a> of file <a class="el" href="meta_8h_source.html">meta.h</a>.</p>
 
 </div>
 </div>
@@ -481,7 +557,7 @@ Static Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1Meta.html">Meta</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -138,14 +145,15 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 : <a class="el" href="classGEO_1_1GeoFile.html#a4f038ab5b57a8ce863ffbb14dbf797eb">GEO::GeoFile</a>
 </li>
 <li>GeoFileException()
-: <a class="el" href="classGEO_1_1GeoFileException.html#a52c2ce6c2a5e8bc60213f9718086838a">GEO::GeoFileException</a>
+: <a class="el" href="classGEO_1_1GeoFileException.html#a099fa0923732ffb65b8a20aef5f3e298">GEO::GeoFileException</a>
 </li>
 <li>geogram_initialize()
 : <a class="el" href="classGEO_1_1SimpleApplication.html#ae82e03b0158610c8f64797b260d1b748">GEO::SimpleApplication</a>
 , <a class="el" href="classGEO_1_1SimpleMeshApplication.html#a8971db7b8347783921853fb758cd6cf3">GEO::SimpleMeshApplication</a>
 </li>
 <li>get()
-: <a class="el" href="classGEO_1_1SmartPointer.html#ab3f7871ed88c739ea385331755ce7d39">GEO::SmartPointer&lt; T &gt;</a>
+: <a class="el" href="classGEO_1_1CoplanarFacets.html#af4f07ee48ee1371427bd8fe252a0b779">GEO::CoplanarFacets</a>
+, <a class="el" href="classGEO_1_1SmartPointer.html#ab3f7871ed88c739ea385331755ce7d39">GEO::SmartPointer&lt; T &gt;</a>
 , <a class="el" href="classGLUP_1_1StateVariable.html#ad0d856e5c9149701e05b17fbde513718">GLUP::StateVariable&lt; T &gt;</a>
 , <a class="el" href="classGLUP_1_1VectorStateVariable.html#a81c5e10cd499eef660e880ec85d58a11">GLUP::VectorStateVariable</a>
 </li>
@@ -161,7 +169,7 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 : <a class="el" href="classOGF_1_1SceneGraph.html#a1e983e4e0df4ca7a85cfa921784b1a31">OGF::SceneGraph</a>
 </li>
 <li>get_arg()
-: <a class="el" href="classOGF_1_1ArgList.html#acbff43327e1b9f007c4e413fcf446d9b">OGF::ArgList</a>
+: <a class="el" href="classOGF_1_1ArgList.html#ad7933856488c7c890d351a2122f36c33">OGF::ArgList</a>
 </li>
 <li>get_arg_by_index()
 : <a class="el" href="classGEO_1_1Command.html#a0a100a819090c0ceb416e4e8aef778b7">GEO::Command</a>
@@ -344,10 +352,10 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 , <a class="el" href="classOGF_1_1SceneGraphShaderManager.html#a2b1a9689d3a79f600650e61810ff2a4b">OGF::SceneGraphShaderManager</a>
 </li>
 <li>get_edge_edge_intersection()
-: <a class="el" href="classGEO_1_1MeshInTriangle.html#a41359c2c59d380dbf618956ee1bd8293">GEO::MeshInTriangle</a>
+: <a class="el" href="classGEO_1_1MeshInTriangle.html#a08bdacf3595968bfcb3439346d41f766">GEO::MeshInTriangle</a>
 </li>
 <li>get_edge_edge_intersection_2D()
-: <a class="el" href="classGEO_1_1MeshInTriangle.html#a9f52d98f21ac73e2c0e0f3fef8145d48">GEO::MeshInTriangle</a>
+: <a class="el" href="classGEO_1_1MeshInTriangle.html#a6414de7cb84170702b470fb38f7c5af9">GEO::MeshInTriangle</a>
 </li>
 <li>get_edges_style()
 : <a class="el" href="classOGF_1_1PlainMeshGrobShader.html#a6d232e1aa29b7d674d331c73c6b0dbbf">OGF::PlainMeshGrobShader</a>
@@ -421,6 +429,9 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>get_fragment_shader_preamble_pseudo_file()
 : <a class="el" href="classGEO_1_1FullScreenEffectImpl.html#a5e79e1dee8ac13a70fc0383f784d87f7">GEO::FullScreenEffectImpl</a>
 , <a class="el" href="classGLUP_1_1Context.html#aaf4ebe7ad6b85a30a902dbb00d98ba4a">GLUP::Context</a>
+</li>
+<li>get_fragments_from_r()
+: <a class="el" href="classGEO_1_1CSGBuilder.html#a0acfd9a73e86b75f17d561378711e281">GEO::CSGBuilder</a>
 </li>
 <li>get_frame_buffer_height()
 : <a class="el" href="classGEO_1_1Application.html#ac1e13a3cfaa8659efcdacbcc85de44b8">GEO::Application</a>
@@ -508,7 +519,7 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 : <a class="el" href="classOGF_1_1MeshGrobShader.html#ad46b605b7ee4f9c97018ead0e825d0e3">OGF::MeshGrobShader</a>
 </li>
 <li>get_keys()
-: <a class="el" href="classOGF_1_1Interpreter.html#a6b74a8317540c347ea2ccd161a388769">OGF::Interpreter</a>
+: <a class="el" href="classOGF_1_1Interpreter.html#aeceba22fb7df61dd6de1a299a8bf9e2b">OGF::Interpreter</a>
 , <a class="el" href="classOGF_1_1LuaInterpreter.html#a0c76babdcd6a3b0fc6f0e7022e7bc578">OGF::LuaInterpreter</a>
 </li>
 <li>get_language()
@@ -596,6 +607,9 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>get_meta_class()
 : <a class="el" href="classOGF_1_1Object.html#a306ba805006d193142f108c38a8af627">OGF::Object</a>
 </li>
+<li>get_meta_types()
+: <a class="el" href="classOGF_1_1Interpreter.html#ad180d6987c08bc86a9629c572d9bf0ea">OGF::Interpreter</a>
+</li>
 <li>get_methods()
 : <a class="el" href="classOGF_1_1MetaClass.html#a9c2f7ab3812f9b807998a892557f26bd">OGF::MetaClass</a>
 </li>
@@ -664,7 +678,7 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 </li>
 <li>get_neighbors_internal()
 : <a class="el" href="classGEO_1_1Delaunay.html#a2c8ceed12544f33fb86fb8e35f2425c2">GEO::Delaunay</a>
-, <a class="el" href="classGEO_1_1Delaunay__NearestNeighbors.html#a6008eac87a3ca352b42251226af65d54">GEO::Delaunay_NearestNeighbors</a>
+, <a class="el" href="classGEO_1_1Delaunay__NearestNeighbors.html#a8bbef20d4a0f9c728112fbc863e310fe">GEO::Delaunay_NearestNeighbors</a>
 </li>
 <li>get_node()
 : <a class="el" href="classGEO_1_1AdaptiveKdTree.html#aef80b5fe4c19049448925a5ec9290698">GEO::AdaptiveKdTree</a>
@@ -702,7 +716,7 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 : <a class="el" href="classGEO_1_1MeshGfx.html#af895195857c53dc09919f4b52a95cc28">GEO::MeshGfx</a>
 </li>
 <li>get_pointer()
-: <a class="el" href="classGLUP_1_1FloatsArrayStateVariable.html#aec0910c96dd46c478585e5bda946fb90">GLUP::FloatsArrayStateVariable</a>
+: <a class="el" href="classGLUP_1_1FloatsArrayStateVariable.html#a681948ca3d21e1df53b5fb492d325bf9">GLUP::FloatsArrayStateVariable</a>
 </li>
 <li>get_points_color()
 : <a class="el" href="classGEO_1_1MeshGfx.html#a0a0a2b3038dc648a2c4824f333ad4f35">GEO::MeshGfx</a>
@@ -730,7 +744,8 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 : <a class="el" href="classOGF_1_1MetaClass.html#a61c610665c4ebf15915c4728a1e47ea3">OGF::MetaClass</a>
 </li>
 <li>get_property()
-: <a class="el" href="classOGF_1_1Object.html#ad5e389b194a649b1a23c4c2ffff6fe63">OGF::Object</a>
+: <a class="el" href="classOGF_1_1DynamicObject.html#ab2a101b0123c16b915bb51cc4a8c0543">OGF::DynamicObject</a>
+, <a class="el" href="classOGF_1_1Object.html#ad5e389b194a649b1a23c4c2ffff6fe63">OGF::Object</a>
 </li>
 <li>get_pyramids()
 : <a class="el" href="classOGF_1_1PlainMeshGrobShader.html#a90417a59318980fae823cfc171c5abf0">OGF::PlainMeshGrobShader</a>
@@ -796,11 +811,17 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>get_size()
 : <a class="el" href="classOGF_1_1NL_1_1Vector.html#ad690fb617037c29439fec97f34b47fc7">OGF::NL::Vector</a>
 </li>
+<li>get_skeleton()
+: <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialPolylines.html#aeb110729e4214960853f716adff013b3">GEO::MeshSurfaceIntersection::RadialPolylines</a>
+</li>
 <li>get_slots()
 : <a class="el" href="classOGF_1_1MetaClass.html#adce641b17b66d64365f5738a5b9337f2">OGF::MetaClass</a>
 </li>
 <li>get_slots_enabled()
 : <a class="el" href="classOGF_1_1Object.html#ac7b5c69ed3740c5dcd8dc13ed3a9d2a0">OGF::Object</a>
+</li>
+<li>get_sorted_incident_charts()
+: <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialBundles.html#a4cb47eb27286dc89d310e499062583b8">GEO::MeshSurfaceIntersection::RadialBundles</a>
 </li>
 <li>get_source()
 : <a class="el" href="classOGF_1_1LuaGrob.html#a676fc4c8259b2fa3b3065efdabf516af">OGF::LuaGrob</a>
@@ -890,6 +911,9 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>get_tool()
 : <a class="el" href="classOGF_1_1MultiTool.html#a18094809c4139b835c6f7e1ef1ffd347">OGF::MultiTool</a>
 </li>
+<li>get_tooltip()
+: <a class="el" href="classOGF_1_1ApplicationBase.html#a750966317d806f3046ec37f012d39d22">OGF::ApplicationBase</a>
+</li>
 <li>get_triangle()
 : <a class="el" href="classVBW_1_1ConvexCell.html#a86bac1db592ceb18a9cec069d06a4f46">VBW::ConvexCell</a>
 </li>
@@ -924,7 +948,7 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 : <a class="el" href="classGEO_1_1ArcBall.html#a9cd26f38b87051f3105069e834933f44">GEO::ArcBall</a>
 , <a class="el" href="classGEO_1_1Environment.html#a1fe80b83783105d954ee27337fb7e6c0">GEO::Environment</a>
 , <a class="el" href="classOGF_1_1Any.html#a5be03c471b92cea388f8036d819cce1c">OGF::Any</a>
-, <a class="el" href="classOGF_1_1MetaProperty.html#a8bf4552b6c9488c0259d979b489255de">OGF::MetaProperty</a>
+, <a class="el" href="classOGF_1_1MetaProperty.html#ab049de942373f8bb838e59f5d86242f3">OGF::MetaProperty</a>
 </li>
 <li>get_value_by_name()
 : <a class="el" href="classOGF_1_1MetaEnum.html#a037cf09edd5d8e3d5b97d2b1496e6a97">OGF::MetaEnum</a>
@@ -1009,6 +1033,7 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>GL_terminate()
 : <a class="el" href="classGEO_1_1Application.html#a463bda8e0aeb1a3438e67cbac2543e13">GEO::Application</a>
 , <a class="el" href="classGEO_1_1SimpleApplication.html#ad75d2b4d6051383d3c4ba394297b3bfb">GEO::SimpleApplication</a>
+, <a class="el" href="classGEO_1_1SimpleMeshApplication.html#a081a7d09bd4ad4bb5e4372f1e2153bd0">GEO::SimpleMeshApplication</a>
 , <a class="el" href="classOGF_1_1RenderArea.html#a0a0bbd4b6e4defe3088494adde9e8451">OGF::RenderArea</a>
 </li>
 <li>gl_vendor()
@@ -1115,6 +1140,9 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>GrobSelect()
 : <a class="el" href="classOGF_1_1GrobSelect.html#a1c19b9c9315686a0c4eee9ecb4206432">OGF::GrobSelect</a>
 </li>
+<li>group()
+: <a class="el" href="classGEO_1_1CSGBuilder.html#a49c549b2142e21e88593ed3479ed1820">GEO::CSGBuilder</a>
+</li>
 <li>grow()
 : <a class="el" href="classGEOGen_1_1ConvexCell.html#a1b0d17aecdcb3c002d9df9dfcbd5ef4a">GEOGen::ConvexCell</a>
 , <a class="el" href="classGEOGen_1_1PointAllocator.html#a70e7761dbd702c89bf0e748dc501c3a0">GEOGen::PointAllocator</a>
@@ -1132,7 +1160,7 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:50 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:09 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

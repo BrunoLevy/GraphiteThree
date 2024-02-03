@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -86,7 +93,6 @@ $(document).ready(function(){initNavTree('classGEO_1_1Application.html',''); ini
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classGEO_1_1Application-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -248,18 +254,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a3a23f578c82f5aa1467c8e6b8371767c">reset_soft_keyboard_flag</a> ()</td></tr>
 <tr class="memdesc:a3a23f578c82f5aa1467c8e6b8371767c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used internally. <br /></td></tr>
 <tr class="separator:a3a23f578c82f5aa1467c8e6b8371767c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a249162db077d9f092b318f4a53a58da5"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classGEO_1_1Application.html">Application</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a249162db077d9f092b318f4a53a58da5">instance</a> ()</td></tr>
-<tr class="memdesc:a249162db077d9f092b318f4a53a58da5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the instance.  <a href="classGEO_1_1Application.html#a249162db077d9f092b318f4a53a58da5">More...</a><br /></td></tr>
-<tr class="separator:a249162db077d9f092b318f4a53a58da5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed0031d52135fbf99d12987c419fdf36"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#aed0031d52135fbf99d12987c419fdf36">get_styles</a> ()</td></tr>
-<tr class="memdesc:aed0031d52135fbf99d12987c419fdf36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the possible styles.  <a href="classGEO_1_1Application.html#aed0031d52135fbf99d12987c419fdf36">More...</a><br /></td></tr>
-<tr class="separator:aed0031d52135fbf99d12987c419fdf36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
 <tr class="memitem:a1a39ded66244c6365465058211b2f203"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a1a39ded66244c6365465058211b2f203">key_to_string</a> (int key)</td></tr>
 <tr class="memdesc:a1a39ded66244c6365465058211b2f203"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a key to a symbolic string with the name of the key.  <a href="classGEO_1_1Application.html#a1a39ded66244c6365465058211b2f203">More...</a><br /></td></tr>
 <tr class="separator:a1a39ded66244c6365465058211b2f203"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -341,6 +335,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>start_animation</b> (
 <tr class="memitem:a9425b2bd8f81cbf1981c00e52ebc1467"><td class="memItemLeft" align="right" valign="top"><a id="a9425b2bd8f81cbf1981c00e52ebc1467"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>stop_animation</b> ()</td></tr>
 <tr class="separator:a9425b2bd8f81cbf1981c00e52ebc1467"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a249162db077d9f092b318f4a53a58da5"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classGEO_1_1Application.html">Application</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#a249162db077d9f092b318f4a53a58da5">instance</a> ()</td></tr>
+<tr class="memdesc:a249162db077d9f092b318f4a53a58da5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the instance.  <a href="classGEO_1_1Application.html#a249162db077d9f092b318f4a53a58da5">More...</a><br /></td></tr>
+<tr class="separator:a249162db077d9f092b318f4a53a58da5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed0031d52135fbf99d12987c419fdf36"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Application.html#aed0031d52135fbf99d12987c419fdf36">get_styles</a> ()</td></tr>
+<tr class="memdesc:aed0031d52135fbf99d12987c419fdf36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the possible styles.  <a href="classGEO_1_1Application.html#aed0031d52135fbf99d12987c419fdf36">More...</a><br /></td></tr>
+<tr class="separator:aed0031d52135fbf99d12987c419fdf36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -523,7 +526,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -553,7 +556,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -630,7 +633,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -638,7 +641,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
 <p>Gets all the filenames specified on the command line. </p>
 <dl class="section return"><dt>Returns</dt><dd>a const reference to a vector of strings with the filenames. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00547">547</a> of file <a class="el" href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html">application.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00548">548</a> of file <a class="el" href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html">application.h</a>.</p>
 
 </div>
 </div>
@@ -1108,9 +1111,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">const char* GEO::Application::key_to_string </td>
@@ -1120,11 +1120,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Converts a key to a symbolic string with the name of the key. </p>
@@ -1206,7 +1201,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1325,7 +1320,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1359,7 +1354,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1417,7 +1412,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1447,7 +1442,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1498,7 +1493,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1942,7 +1937,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
 </div><div class="memdoc">
 <p>true if ImGui was once initialized </p>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00593">593</a> of file <a class="el" href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html">application.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00594">594</a> of file <a class="el" href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html">application.h</a>.</p>
 
 </div>
 </div>
@@ -1967,7 +1962,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
 </div><div class="memdoc">
 <p>true if running on a phone </p>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00595">595</a> of file <a class="el" href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html">application.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html#l00596">596</a> of file <a class="el" href="geogram_2src_2lib_2geogram__gfx_2gui_2application_8h_source.html">application.h</a>.</p>
 
 </div>
 </div>
@@ -1980,7 +1975,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>soft_keyboard_visible
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1Application.html">Application</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

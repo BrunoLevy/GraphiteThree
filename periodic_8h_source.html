@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -226,10 +233,10 @@ $(document).ready(function(){initNavTree('periodic_8h_source.html',''); initResi
 <div class="ttc" id="aclassGEO_1_1Periodic_html_aa1c392d989dae3883cb56536c95c2c8d"><div class="ttname"><a href="classGEO_1_1Periodic.html#aa1c392d989dae3883cb56536c95c2c8d">GEO::Periodic::periodic_vertex_real</a></div><div class="ttdeci">signed_index_t periodic_vertex_real(signed_index_t pv) const</div><div class="ttdoc">Gets the real vertex from a periodic vertex.</div><div class="ttdef"><b>Definition:</b> <a href="periodic_8h_source.html#l00082">periodic.h:82</a></div></div>
 <div class="ttc" id="aclassGEO_1_1Periodic_html_aef6fe776fb3f23844286d8890730105e"><div class="ttname"><a href="classGEO_1_1Periodic.html#aef6fe776fb3f23844286d8890730105e">GEO::Periodic::periodic_vertex_set_T</a></div><div class="ttdeci">void periodic_vertex_set_T(index_t &amp;pv, int Tx, int Ty, int Tz) const</div><div class="ttdoc">Sets the translation in a periodic vertex.</div><div class="ttdef"><b>Definition:</b> <a href="periodic_8h_source.html#l00131">periodic.h:131</a></div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
-<div class="ttc" id="anamespaceGEO_1_1Numeric_html_a709b9e865f51e98312c609af91cf26cb"><div class="ttname"><a href="namespaceGEO_1_1Numeric.html#a709b9e865f51e98312c609af91cf26cb">GEO::Numeric::uint32</a></div><div class="ttdeci">uint32_t uint32</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00096">numeric.h:96</a></div></div>
+<div class="ttc" id="anamespaceGEO_1_1Numeric_html_a709b9e865f51e98312c609af91cf26cb"><div class="ttname"><a href="namespaceGEO_1_1Numeric.html#a709b9e865f51e98312c609af91cf26cb">GEO::Numeric::uint32</a></div><div class="ttdeci">uint32_t uint32</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00141">numeric.h:141</a></div></div>
 <div class="ttc" id="anamespaceGEO_html"><div class="ttname"><a href="namespaceGEO.html">GEO</a></div><div class="ttdoc">Global Vorpaline namespace.</div><div class="ttdef"><b>Definition:</b> <a href="lua__grob__shader_8h_source.html#l00053">lua_grob_shader.h:53</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a545c8df15809d86c5efeea8500b1d14c"><div class="ttname"><a href="namespaceGEO.html#a545c8df15809d86c5efeea8500b1d14c">GEO::signed_index_t</a></div><div class="ttdeci">geo_signed_index_t signed_index_t</div><div class="ttdoc">The type for storing and manipulating indices differences.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00301">numeric.h:301</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a545c8df15809d86c5efeea8500b1d14c"><div class="ttname"><a href="namespaceGEO.html#a545c8df15809d86c5efeea8500b1d14c">GEO::signed_index_t</a></div><div class="ttdeci">geo_signed_index_t signed_index_t</div><div class="ttdoc">The type for storing and manipulating indices differences.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00343">numeric.h:343</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
 <div class="ttc" id="astring_8h_html"><div class="ttname"><a href="string_8h.html">string.h</a></div><div class="ttdoc">Functions for string manipulation.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -237,7 +244,7 @@ $(document).ready(function(){initNavTree('periodic_8h_source.html',''); initResi
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_e22fc903d939dcd7d839b25755c4ff81.html">delaunay</a></li><li class="navelem"><a class="el" href="periodic_8h.html">periodic.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:45 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:06 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -136,9 +143,9 @@ $(document).ready(function(){initNavTree('meta__slot_8h_source.html',''); initRe
 <div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="classOGF_1_1MetaSlot.html">   55</a></span>&#160;    gom_class GOM_API <a class="code" href="classOGF_1_1MetaSlot.html">MetaSlot</a> : <span class="keyword">public</span> <a class="code" href="classOGF_1_1MetaMethod.html">MetaMethod</a> {</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classOGF_1_1MetaSlot.html#a409c0303a026137b52adcb911014aac3">   65</a></span>&#160;        <a class="code" href="classOGF_1_1MetaSlot.html#a409c0303a026137b52adcb911014aac3">MetaSlot</a>(</div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classOGF_1_1MetaSlot.html#ae164434d6047bd2bfcb6c9402e0f4e83">   65</a></span>&#160;        <a class="code" href="classOGF_1_1MetaSlot.html#ae164434d6047bd2bfcb6c9402e0f4e83">MetaSlot</a>(</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keyword">const</span> std::string&amp; name, <a class="code" href="classOGF_1_1MetaClass.html">MetaClass</a>* container,</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keyword">const</span> std::string&amp; return_type_name </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keyword">const</span> std::string&amp; return_type_name = <span class="stringliteral">&quot;void&quot;</span></div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        ) ;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
 <div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="classOGF_1_1MetaSlot.html#a892b79caabc077449228ff63fb35a66d">   77</a></span>&#160;        <a class="code" href="classOGF_1_1MetaSlot.html#a892b79caabc077449228ff63fb35a66d">MetaSlot</a>(</div>
@@ -161,9 +168,9 @@ $(document).ready(function(){initNavTree('meta__slot_8h_source.html',''); initRe
 <div class="ttc" id="aclassOGF_1_1MetaMethod_html"><div class="ttname"><a href="classOGF_1_1MetaMethod.html">OGF::MetaMethod</a></div><div class="ttdoc">The representation of a method in the Meta repository.</div><div class="ttdef"><b>Definition:</b> <a href="meta__method_8h_source.html#l00072">meta_method.h:72</a></div></div>
 <div class="ttc" id="aclassOGF_1_1MetaSlot_html"><div class="ttname"><a href="classOGF_1_1MetaSlot.html">OGF::MetaSlot</a></div><div class="ttdoc">The representation of a slot in the Meta repository.</div><div class="ttdef"><b>Definition:</b> <a href="meta__slot_8h_source.html#l00055">meta_slot.h:55</a></div></div>
 <div class="ttc" id="aclassOGF_1_1MetaSlot_html_a0ee00ababb4fe83472ef4a45048c8237"><div class="ttname"><a href="classOGF_1_1MetaSlot.html#a0ee00ababb4fe83472ef4a45048c8237">OGF::MetaSlot::~MetaSlot</a></div><div class="ttdeci">virtual ~MetaSlot()</div><div class="ttdoc">MetaSlot destructor.</div></div>
-<div class="ttc" id="aclassOGF_1_1MetaSlot_html_a409c0303a026137b52adcb911014aac3"><div class="ttname"><a href="classOGF_1_1MetaSlot.html#a409c0303a026137b52adcb911014aac3">OGF::MetaSlot::MetaSlot</a></div><div class="ttdeci">MetaSlot(const std::string &amp;name, MetaClass *container, const std::string &amp;return_type_name)</div><div class="ttdoc">MetaSlot constructor.</div></div>
 <div class="ttc" id="aclassOGF_1_1MetaSlot_html_a892b79caabc077449228ff63fb35a66d"><div class="ttname"><a href="classOGF_1_1MetaSlot.html#a892b79caabc077449228ff63fb35a66d">OGF::MetaSlot::MetaSlot</a></div><div class="ttdeci">MetaSlot(const std::string &amp;name, MetaClass *container, MetaType *return_type)</div><div class="ttdoc">MetaSlot constructor.</div></div>
-<div class="ttc" id="aclassOGF_1_1MetaType_html"><div class="ttname"><a href="classOGF_1_1MetaType.html">OGF::MetaType</a></div><div class="ttdoc">The representation of a type in the Meta repository.</div><div class="ttdef"><b>Definition:</b> <a href="meta__type_8h_source.html#l00194">meta_type.h:194</a></div></div>
+<div class="ttc" id="aclassOGF_1_1MetaSlot_html_ae164434d6047bd2bfcb6c9402e0f4e83"><div class="ttname"><a href="classOGF_1_1MetaSlot.html#ae164434d6047bd2bfcb6c9402e0f4e83">OGF::MetaSlot::MetaSlot</a></div><div class="ttdeci">MetaSlot(const std::string &amp;name, MetaClass *container, const std::string &amp;return_type_name=&quot;void&quot;)</div><div class="ttdoc">MetaSlot constructor.</div></div>
+<div class="ttc" id="aclassOGF_1_1MetaType_html"><div class="ttname"><a href="classOGF_1_1MetaType.html">OGF::MetaType</a></div><div class="ttdoc">The representation of a type in the Meta repository.</div><div class="ttdef"><b>Definition:</b> <a href="meta__type_8h_source.html#l00207">meta_type.h:207</a></div></div>
 <div class="ttc" id="ameta__arg_8h_html"><div class="ttname"><a href="meta__arg_8h.html">meta_arg.h</a></div><div class="ttdoc">Meta-information attached to arguments.</div></div>
 <div class="ttc" id="ameta__method_8h_html"><div class="ttname"><a href="meta__method_8h.html">meta_method.h</a></div><div class="ttdoc">Meta-information attached to class methods.</div></div>
 <div class="ttc" id="anamespaceOGF_html"><div class="ttname"><a href="namespaceOGF.html">OGF</a></div><div class="ttdoc">Global Graphite namespace.</div><div class="ttdef"><b>Definition:</b> <a href="src_2lib_2OGF_2basic_2common_2common_8h_source.html#l00076">common.h:76</a></div></div>
@@ -175,7 +182,7 @@ $(document).ready(function(){initNavTree('meta__slot_8h_source.html',''); initRe
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_aef77abc1c70517fe3037d0ad81c1d82.html">OGF</a></li><li class="navelem"><a class="el" href="dir_69b25135ad0c2c10dad56e08dbeec7e1.html">gom</a></li><li class="navelem"><a class="el" href="dir_d890a63a37d859bf3673a573e25521f3.html">reflection</a></li><li class="navelem"><a class="el" href="meta__slot_8h.html">meta_slot.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

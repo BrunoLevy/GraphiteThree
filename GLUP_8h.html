@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -421,19 +428,20 @@ GLUPboolean GLUP_API&#160;</td><td class="memItemRight" valign="bottom"><b>glupI
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader">GLUP drawing functions</h2></td></tr>
 <tr class="memitem:afdd46b78a37fb93e1ff7d37ab55742c5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="GLUP_8h.html#afdd46b78a37fb93e1ff7d37ab55742c5">GLUPprimitive</a> { <br />
-&#160;&#160;<b>GLUP_POINTS</b> =0
-, <b>GLUP_LINES</b> =1
-, <b>GLUP_TRIANGLES</b> =2
-, <b>GLUP_QUADS</b> =3
+&#160;&#160;<b>GLUP_POINTS</b> = 0
+, <b>GLUP_LINES</b> = 1
+, <b>GLUP_TRIANGLES</b> = 2
+, <b>GLUP_QUADS</b> = 3
 , <br />
-&#160;&#160;<b>GLUP_TETRAHEDRA</b> =4
-, <b>GLUP_HEXAHEDRA</b> =5
-, <b>GLUP_PRISMS</b> =6
-, <b>GLUP_PYRAMIDS</b> =7
+&#160;&#160;<b>GLUP_TETRAHEDRA</b> = 4
+, <b>GLUP_HEXAHEDRA</b> = 5
+, <b>GLUP_PRISMS</b> = 6
+, <b>GLUP_PYRAMIDS</b> = 7
 , <br />
-&#160;&#160;<b>GLUP_CONNECTORS</b> =8
-, <b>GLUP_SPHERES</b> =9
-, <b>GLUP_NB_PRIMITIVES</b> = 10
+&#160;&#160;<b>GLUP_CONNECTORS</b> = 8
+, <b>GLUP_SPHERES</b> = 9
+, <b>GLUP_RESERVED_PRIMITIVE_1</b> = 10
+, <b>GLUP_NB_PRIMITIVES</b> = 11
 <br />
  }</td></tr>
 <tr class="memdesc:afdd46b78a37fb93e1ff7d37ab55742c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Symbolic values corresponding to GLUP primitive types.  <a href="GLUP_8h.html#afdd46b78a37fb93e1ff7d37ab55742c5">More...</a><br /></td></tr>
@@ -1254,7 +1262,7 @@ typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_20037eb6270bb31b4654a405ea4434e9.html">geogram_gfx</a></li><li class="navelem"><a class="el" href="dir_6ee10e88a74785d72493f3d7d7c0b76b.html">GLUP</a></li><li class="navelem"><a class="el" href="GLUP_8h.html">GLUP.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

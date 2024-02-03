@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -168,6 +175,9 @@ typedef Box&#160;</td><td class="memItemRight" valign="bottom"><b>GEO::Box3d</b>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a919a9190b6365c5d28377bfdb4151627"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a919a9190b6365c5d28377bfdb4151627">GEO::det</a> (const mat2 &amp;M)</td></tr>
+<tr class="memdesc:a919a9190b6365c5d28377bfdb4151627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the determinant of a 2x2 matrix.  <a href="namespaceGEO.html#a919a9190b6365c5d28377bfdb4151627">More...</a><br /></td></tr>
+<tr class="separator:a919a9190b6365c5d28377bfdb4151627"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3f9eec631d7c53d6bd9df5213a986f7"><td class="memItemLeft" align="right" valign="top">vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO_1_1Geom.html#af3f9eec631d7c53d6bd9df5213a986f7">GEO::Geom::barycenter</a> (const vec3 &amp;p1, const vec3 &amp;p2)</td></tr>
 <tr class="memdesc:af3f9eec631d7c53d6bd9df5213a986f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the barycenter of two points in 3d.  <a href="namespaceGEO_1_1Geom.html#af3f9eec631d7c53d6bd9df5213a986f7">More...</a><br /></td></tr>
 <tr class="separator:af3f9eec631d7c53d6bd9df5213a986f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -186,9 +196,6 @@ Functions</h2></td></tr>
 <tr class="memitem:a8d60d892ddff8eaf632fa18f69f9b30a"><td class="memItemLeft" align="right" valign="top">vec3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO_1_1Geom.html#a8d60d892ddff8eaf632fa18f69f9b30a">GEO::Geom::triangle_normal</a> (const vec3 &amp;p1, const vec3 &amp;p2, const vec3 &amp;p3)</td></tr>
 <tr class="memdesc:a8d60d892ddff8eaf632fa18f69f9b30a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the normal of a 3d triangle.  <a href="namespaceGEO_1_1Geom.html#a8d60d892ddff8eaf632fa18f69f9b30a">More...</a><br /></td></tr>
 <tr class="separator:a8d60d892ddff8eaf632fa18f69f9b30a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd5f1c9bacaec4df14d52f5e4620ed77"><td class="memItemLeft" align="right" valign="top">coord_index_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO_1_1Geom.html#acd5f1c9bacaec4df14d52f5e4620ed77">GEO::Geom::triangle_normal_axis</a> (const vec3 &amp;p1, const vec3 &amp;p2, const vec3 &amp;p3)</td></tr>
-<tr class="memdesc:acd5f1c9bacaec4df14d52f5e4620ed77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the axis that is most normal to a triangle.  <a href="namespaceGEO_1_1Geom.html#acd5f1c9bacaec4df14d52f5e4620ed77">More...</a><br /></td></tr>
-<tr class="separator:acd5f1c9bacaec4df14d52f5e4620ed77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab41768b8831c2200675a98ceef0ef2a0"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO_1_1Geom.html#ab41768b8831c2200675a98ceef0ef2a0">GEO::Geom::triangle_area_3d</a> (const double *p1, const double *p2, const double *p3)</td></tr>
 <tr class="memdesc:ab41768b8831c2200675a98ceef0ef2a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the area of a 3d triangle.  <a href="namespaceGEO_1_1Geom.html#ab41768b8831c2200675a98ceef0ef2a0">More...</a><br /></td></tr>
 <tr class="separator:ab41768b8831c2200675a98ceef0ef2a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -254,6 +261,10 @@ Functions</h2></td></tr>
 <tr class="memitem:af63deb18831d4b212bba82a997eecb67"><td class="memTemplItemLeft" align="right" valign="top">vecng&lt; 3, FT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#af63deb18831d4b212bba82a997eecb67">GEO::transform_point</a> (const vecng&lt; 3, FT &gt; &amp;v, const Matrix&lt; 4, FT &gt; &amp;m)</td></tr>
 <tr class="memdesc:af63deb18831d4b212bba82a997eecb67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies a 3d transform to a 3d point.  <a href="namespaceGEO.html#af63deb18831d4b212bba82a997eecb67">More...</a><br /></td></tr>
 <tr class="separator:af63deb18831d4b212bba82a997eecb67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf21bbf045947fa0eb8344ecb8a9504d"><td class="memTemplParams" colspan="2">template&lt;class FT &gt; </td></tr>
+<tr class="memitem:aaf21bbf045947fa0eb8344ecb8a9504d"><td class="memTemplItemLeft" align="right" valign="top">vecng&lt; 3, FT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#aaf21bbf045947fa0eb8344ecb8a9504d">GEO::transform_point</a> (const Matrix&lt; 4, FT &gt; &amp;m, const vecng&lt; 3, FT &gt; &amp;v)</td></tr>
+<tr class="memdesc:aaf21bbf045947fa0eb8344ecb8a9504d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies a 3d transform to a 3d point.  <a href="namespaceGEO.html#aaf21bbf045947fa0eb8344ecb8a9504d">More...</a><br /></td></tr>
+<tr class="separator:aaf21bbf045947fa0eb8344ecb8a9504d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae6f5b7bf08392d3b89cd345657962586"><td class="memTemplParams" colspan="2">template&lt;class FT &gt; </td></tr>
 <tr class="memitem:ae6f5b7bf08392d3b89cd345657962586"><td class="memTemplItemLeft" align="right" valign="top">vecng&lt; 4, FT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#ae6f5b7bf08392d3b89cd345657962586">GEO::transform_vector</a> (const vecng&lt; 4, FT &gt; &amp;v, const Matrix&lt; 4, FT &gt; &amp;m)</td></tr>
 <tr class="memdesc:ae6f5b7bf08392d3b89cd345657962586"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies a 4d transform to a 4d point.  <a href="namespaceGEO.html#ae6f5b7bf08392d3b89cd345657962586">More...</a><br /></td></tr>
@@ -275,7 +286,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_4586f940cce2020c46fbc4f79c1663fc.html">basic</a></li><li class="navelem"><a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h.html">geometry.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

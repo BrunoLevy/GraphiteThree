@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -96,6 +103,8 @@ $(document).ready(function(){initNavTree('CDT__2d_8h.html',''); initResizable();
 <div class="textblock"><code>#include &lt;<a class="el" href="geogram_2src_2lib_2geogram_2basic_2common_8h_source.html">geogram/basic/common.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html">geogram/basic/geometry.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="predicates_8h_source.html">geogram/numerics/predicates.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="exact__geometry_8h_source.html">geogram/numerics/exact_geometry.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="index_8h_source.html">geogram/mesh/index.h</a>&gt;</code><br />
 <code>#include &lt;functional&gt;</code><br />
 </div>
 <p><a href="CDT__2d_8h_source.html">Go to the source code of this file.</a></p>
@@ -110,6 +119,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1CDT2d.html">GEO::CDT2d</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constrained <a class="el" href="classGEO_1_1Delaunay.html" title="Abstract interface for Delaunay triangulation in Nd.">Delaunay</a> triangulation.  <a href="classGEO_1_1CDT2d.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1ExactCDT2d.html">GEO::ExactCDT2d</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constrained <a class="el" href="classGEO_1_1Delaunay.html" title="Abstract interface for Delaunay triangulation in Nd.">Delaunay</a> Triangulation with vertices that are exact points. Can be used to implement 2D CSG.  <a href="classGEO_1_1ExactCDT2d.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -129,7 +141,7 @@ Namespaces</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_e22fc903d939dcd7d839b25755c4ff81.html">delaunay</a></li><li class="navelem"><a class="el" href="CDT__2d_8h.html">CDT_2d.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

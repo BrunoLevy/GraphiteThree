@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -153,12 +160,12 @@ $(document).ready(function(){initNavTree('co3ne_8h_source.html',''); initResizab
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="ttc" id="aclassGEO_1_1Mesh_html"><div class="ttname"><a href="classGEO_1_1Mesh.html">GEO::Mesh</a></div><div class="ttdoc">Represents a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="mesh_8h_source.html#l02648">mesh.h:2648</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Mesh_html"><div class="ttname"><a href="classGEO_1_1Mesh.html">GEO::Mesh</a></div><div class="ttdoc">Represents a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="mesh_8h_source.html#l02672">mesh.h:2672</a></div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
 <div class="ttc" id="anamespaceGEO_html"><div class="ttname"><a href="namespaceGEO.html">GEO</a></div><div class="ttdoc">Global Vorpaline namespace.</div><div class="ttdef"><b>Definition:</b> <a href="lua__grob__shader_8h_source.html#l00053">lua_grob_shader.h:53</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_a84d1e6014ddd9887177419f95b4fd307"><div class="ttname"><a href="namespaceGEO.html#a84d1e6014ddd9887177419f95b4fd307">GEO::Co3Ne_smooth</a></div><div class="ttdeci">void Co3Ne_smooth(Mesh &amp;M, index_t nb_neighbors, index_t nb_iterations)</div><div class="ttdoc">Smoothes a point set by projection onto the nearest neighbors best approximating plane.</div></div>
 <div class="ttc" id="anamespaceGEO_html_a853d560456f44373e723d018351c12d1"><div class="ttname"><a href="namespaceGEO.html#a853d560456f44373e723d018351c12d1">GEO::Co3Ne_reconstruct</a></div><div class="ttdeci">void Co3Ne_reconstruct(Mesh &amp;M, double radius)</div><div class="ttdoc">Given a pointset with normals stored in the &quot;normal&quot; vertex attribute, reconstruct the triangles.</div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_ab6ef6ec758bdc919f2a1ad617585f80f"><div class="ttname"><a href="namespaceGEO.html#ab6ef6ec758bdc919f2a1ad617585f80f">GEO::Co3Ne_compute_normals</a></div><div class="ttdeci">bool Co3Ne_compute_normals(Mesh &amp;M, index_t nb_neighbors, bool reorient=false)</div><div class="ttdoc">Computes the normals to a point set. The normal is obtained from the nearest neighbors best approxima...</div></div>
 <div class="ttc" id="anamespaceGEO_html_adb0f495226189a61a90579bd6d68391b"><div class="ttname"><a href="namespaceGEO.html#adb0f495226189a61a90579bd6d68391b">GEO::Co3Ne_smooth_and_reconstruct</a></div><div class="ttdeci">void Co3Ne_smooth_and_reconstruct(Mesh &amp;M, index_t nb_neighbors, index_t nb_iterations, double radius)</div><div class="ttdoc">Computes the normals and reconstructs the triangles of a pointset.</div></div>
 <div class="ttc" id="anumeric_8h_html"><div class="ttname"><a href="numeric_8h.html">numeric.h</a></div><div class="ttdoc">Types and functions for numbers manipulation.</div></div>
@@ -168,7 +175,7 @@ $(document).ready(function(){initNavTree('co3ne_8h_source.html',''); initResizab
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_2100fc6f6559c23cd26478d001297968.html">points</a></li><li class="navelem"><a class="el" href="co3ne_8h.html">co3ne.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

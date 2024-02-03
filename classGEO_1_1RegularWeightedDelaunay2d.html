@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -555,7 +562,7 @@ typedef <a class="el" href="classGEO_1_1SmartPointer.html">SmartPointer</a>&lt; 
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Regular <a class="el" href="classGEO_1_1Delaunay.html" title="Abstract interface for Delaunay triangulation in Nd.">Delaunay</a> triangulation of weighted points. </p>
 <ul>
-<li>the input points are 2d points, were the third coordinate of point <img class="formulaInl" alt="$ i $" src="form_6.png"/> is <img class="formulaInl" alt="$ \sqrt{W - w_i} $" src="form_7.png"/> where <img class="formulaInl" alt="$ W $" src="form_8.png"/> is the maximum of the weights of all the points and \d$ w_i $ is the weight associated with vertex <img class="formulaInl" alt="$ i $" src="form_6.png"/>.</li>
+<li>the input points are 2d points, were the third coordinate of point \( i \) is \( \sqrt{W - w_i} \) where \( W \) is the maximum of the weights of all the points and \d$ w_i $ is the weight associated with vertex \( i \).</li>
 <li>the constructed combinatorics is a triangulated surface (2d and not 3d although <a class="el" href="classGEO_1_1Delaunay.html#a5128b000308c83786e848fa3a98b17cb" title="Gets the dimension of this Delaunay.">dimension()</a> returns 3). This triangulated surface corresponds to the regular triangulation of the weighted points. </li>
 </ul>
 
@@ -602,7 +609,7 @@ typedef <a class="el" href="classGEO_1_1SmartPointer.html">SmartPointer</a>&lt; 
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1RegularWeightedDelaunay2d.html">RegularWeightedDelaunay2d</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

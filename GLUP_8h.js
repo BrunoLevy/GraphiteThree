@@ -44,6 +44,7 @@ var GLUP_8h =
       [ "GLUP_PYRAMIDS", "GLUP_8h.html#afdd46b78a37fb93e1ff7d37ab55742c5a22ebc197f39e74dc11bbb7a2cb529b48", null ],
       [ "GLUP_CONNECTORS", "GLUP_8h.html#afdd46b78a37fb93e1ff7d37ab55742c5a62b2df5f1bafd7b3963abadf505adf88", null ],
       [ "GLUP_SPHERES", "GLUP_8h.html#afdd46b78a37fb93e1ff7d37ab55742c5ab513359f03a707118860726de10a34d7", null ],
+      [ "GLUP_RESERVED_PRIMITIVE_1", "GLUP_8h.html#afdd46b78a37fb93e1ff7d37ab55742c5a3277e5a1dfff5238dfb72a9dbf249cad", null ],
       [ "GLUP_NB_PRIMITIVES", "GLUP_8h.html#afdd46b78a37fb93e1ff7d37ab55742c5a069ce58ed436c027410b884bc629d19c", null ]
     ] ],
     [ "GLUPtextureMode", "GLUP_8h.html#acec02b4639e3f7293b8924b3d81dd35e", [

@@ -8,6 +8,7 @@ var classGEO_1_1MeshGfx =
     [ "bind_attribute_buffer_object", "classGEO_1_1MeshGfx.html#a1bda022fa044c11ad20c8470c02c005e", null ],
     [ "bind_vertices_VBO", "classGEO_1_1MeshGfx.html#aeaf6a2b940ef5d8e303ad62fe17c91ef", null ],
     [ "can_use_array_mode", "classGEO_1_1MeshGfx.html#a6b307de29ff09460970d9290daebdf44", null ],
+    [ "cleanup", "classGEO_1_1MeshGfx.html#a1da86f2d0f165129d16963615bd319b7", null ],
     [ "draw_attribute_as_tex_coord", "classGEO_1_1MeshGfx.html#a2d23d636cf5926df0bd423a05bd8bc0b", null ],
     [ "draw_edges", "classGEO_1_1MeshGfx.html#a8d4f89b7fb9428f76fc5af52898f8be7", null ],
     [ "draw_edges_array", "classGEO_1_1MeshGfx.html#a518990a8c6e0af4f5c2e48f6f3960555", null ],

@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -93,7 +100,10 @@ $(document).ready(function(){initNavTree('functions_func_h.html',''); initResiza
 : <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a2b2a2df9d59f6afcb921f25f596c6e98">GEO::MeshSurfaceIntersection::RadialSort</a>
 </li>
 <li>Halfedge()
-: <a class="el" href="structGEO_1_1MeshHalfedges_1_1Halfedge.html#a2263e8b894c0ae9f50f7473459b71448">GEO::MeshHalfedges::Halfedge</a>
+: <a class="el" href="structGEO_1_1MeshHalfedges_1_1Halfedge.html#aac2224c122698b37baa79f5f892da0ce">GEO::MeshHalfedges::Halfedge</a>
+</li>
+<li>halfedge()
+: <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialBundles.html#ab4f619277b3b61156fcf2030ba2859c2">GEO::MeshSurfaceIntersection::RadialBundles</a>
 </li>
 <li>halfedge_is_border()
 : <a class="el" href="classGEO_1_1MeshHalfedges.html#a0743d9310fed562d15f5422ab54284f0">GEO::MeshHalfedges</a>
@@ -103,6 +113,12 @@ $(document).ready(function(){initNavTree('functions_func_h.html',''); initResiza
 </li>
 <li>HalfedgeAction()
 : <a class="el" href="classGEOGen_1_1RestrictedVoronoiDiagram_1_1HalfedgeAction.html#a1ed9457c7d187ea409935a2a21854ec7">GEOGen::RestrictedVoronoiDiagram&lt; DIM &gt;::HalfedgeAction&lt; ACTION &gt;</a>
+</li>
+<li>Halfedges()
+: <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1Halfedges.html#add19f9a79ca32a156c44d1a970afc8d2">GEO::MeshSurfaceIntersection::Halfedges</a>
+</li>
+<li>halfedges()
+: <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialBundles.html#a60d864ad269cbc4945d3a1160752cbea">GEO::MeshSurfaceIntersection::RadialBundles</a>
 </li>
 <li>handle_periodic_boundaries()
 : <a class="el" href="classGEO_1_1PeriodicDelaunay3d.html#a22aa7968411e2f85d938f5aa57b22893">GEO::PeriodicDelaunay3d</a>
@@ -157,10 +173,13 @@ $(document).ready(function(){initNavTree('functions_func_h.html',''); initResiza
 : <a class="el" href="classGEO_1_1BinaryStream.html#a0ea32b712e5c7c2a37c18ecf0b24f0a6">GEO::BinaryStream</a>
 </li>
 <li>has_same_denom()
-: <a class="el" href="classGEO_1_1rational__nt.html#ac673f8ed6a5fa19703792a927d69b334">GEO::rational_nt</a>
+: <a class="el" href="classGEO_1_1rationalg.html#a86b86481142c218f00eae1493be189a8">GEO::rationalg&lt; T &gt;</a>
 </li>
 <li>has_tflags()
 : <a class="el" href="classVBW_1_1ConvexCell.html#aed37da5808ca18042714431675d64564">VBW::ConvexCell</a>
+</li>
+<li>has_unnamed_args()
+: <a class="el" href="classOGF_1_1ArgList.html#add7d49bac3ddb62d87571edc2e4757d6">OGF::ArgList</a>
 </li>
 <li>has_v_global_index()
 : <a class="el" href="classVBW_1_1ConvexCell.html#a7faab59b8fdcd676fd2646c3c31d2eda">VBW::ConvexCell</a>
@@ -235,6 +254,9 @@ $(document).ready(function(){initNavTree('functions_func_h.html',''); initResiza
 <li>home_directory()
 : <a class="el" href="classGEO_1_1FileSystem_1_1Node.html#a5b9bf5b5525cbfdf7e79773b1414f12b">GEO::FileSystem::Node</a>
 </li>
+<li>hull()
+: <a class="el" href="classGEO_1_1CSGBuilder.html#ac584a41a4e7249db63a1f6f26fc54ac2">GEO::CSGBuilder</a>
+</li>
 <li>hw_filtering_supported()
 : <a class="el" href="classGEO_1_1MeshGfx.html#afa46e2c334878ddc297f5fc61628a936">GEO::MeshGfx</a>
 </li>
@@ -244,7 +266,7 @@ $(document).ready(function(){initNavTree('functions_func_h.html',''); initResiza
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:50 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:09 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

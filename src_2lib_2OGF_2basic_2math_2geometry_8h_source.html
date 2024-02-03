@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -317,9 +324,9 @@ $(document).ready(function(){initNavTree('src_2lib_2OGF_2basic_2math_2geometry_8
 <div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;}</div>
 <div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160; </div>
 <div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclassGEO_1_1Box_html"><div class="ttname"><a href="classGEO_1_1Box.html">GEO::Box</a></div><div class="ttdoc">Axis-aligned bounding box.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00640">geometry.h:640</a></div></div>
-<div class="ttc" id="aclassGEO_1_1Matrix_html"><div class="ttname"><a href="classGEO_1_1Matrix.html">GEO::Matrix</a></div><div class="ttdoc">A matrix type.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00065">matrix.h:65</a></div></div>
-<div class="ttc" id="aclassGEO_1_1vecng_html"><div class="ttname"><a href="classGEO_1_1vecng.html">GEO::vecng</a></div><div class="ttdoc">Generic maths vector.</div><div class="ttdef"><b>Definition:</b> <a href="vecg_8h_source.html#l00069">vecg.h:69</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Box_html"><div class="ttname"><a href="classGEO_1_1Box.html">GEO::Box</a></div><div class="ttdoc">Axis-aligned bounding box.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00669">geometry.h:669</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Matrix_html"><div class="ttname"><a href="classGEO_1_1Matrix.html">GEO::Matrix</a></div><div class="ttdoc">A matrix type.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00066">matrix.h:66</a></div></div>
+<div class="ttc" id="aclassGEO_1_1vecng_html"><div class="ttname"><a href="classGEO_1_1vecng.html">GEO::vecng</a></div><div class="ttdoc">Generic maths vector.</div><div class="ttdef"><b>Definition:</b> <a href="vecg_8h_source.html#l00070">vecg.h:70</a></div></div>
 <div class="ttc" id="aclassOGF_1_1Box2d_html"><div class="ttname"><a href="classOGF_1_1Box2d.html">OGF::Box2d</a></div><div class="ttdoc">A 2d axis aligned box.</div><div class="ttdef"><b>Definition:</b> <a href="src_2lib_2OGF_2basic_2math_2geometry_8h_source.html#l00107">geometry.h:107</a></div></div>
 <div class="ttc" id="aclassOGF_1_1Box2d_html_a145fc8a64dda0f824c6ac25f327f2d4a"><div class="ttname"><a href="classOGF_1_1Box2d.html#a145fc8a64dda0f824c6ac25f327f2d4a">OGF::Box2d::add_box</a></div><div class="ttdeci">void add_box(const Box2d &amp;B)</div><div class="ttdoc">Adds a box to this Box2d.</div><div class="ttdef"><b>Definition:</b> <a href="src_2lib_2OGF_2basic_2math_2geometry_8h_source.html#l00140">geometry.h:140</a></div></div>
 <div class="ttc" id="aclassOGF_1_1Box2d_html_a3304eec2a47217e687996b47c467453d"><div class="ttname"><a href="classOGF_1_1Box2d.html#a3304eec2a47217e687996b47c467453d">OGF::Box2d::x_min</a></div><div class="ttdeci">double x_min() const</div><div class="ttdoc">Gets the minimum x coordinate in this box.</div><div class="ttdef"><b>Definition:</b> <a href="src_2lib_2OGF_2basic_2math_2geometry_8h_source.html#l00170">geometry.h:170</a></div></div>
@@ -347,9 +354,9 @@ $(document).ready(function(){initNavTree('src_2lib_2OGF_2basic_2math_2geometry_8
 <div class="ttc" id="aclassOGF_1_1Box3d_html_af2682e2b4f88a40e5d37d11cbb436a38"><div class="ttname"><a href="classOGF_1_1Box3d.html#af2682e2b4f88a40e5d37d11cbb436a38">OGF::Box3d::x_max</a></div><div class="ttdeci">double x_max() const</div><div class="ttdoc">Gets the maximum x coordinate in this box.</div><div class="ttdef"><b>Definition:</b> <a href="src_2lib_2OGF_2basic_2math_2geometry_8h_source.html#l00352">geometry.h:352</a></div></div>
 <div class="ttc" id="aclassOGF_1_1Box3d_html_af72a1c53c220449c35eacff032241bf7"><div class="ttname"><a href="classOGF_1_1Box3d.html#af72a1c53c220449c35eacff032241bf7">OGF::Box3d::center</a></div><div class="ttdeci">vec3 center() const</div><div class="ttdoc">Gets the center of this Box3d.</div><div class="ttdef"><b>Definition:</b> <a href="src_2lib_2OGF_2basic_2math_2geometry_8h_source.html#l00291">geometry.h:291</a></div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2geometry_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h.html">geometry.h</a></div><div class="ttdoc">Geometric functions in 2d and 3d.</div></div>
-<div class="ttc" id="anamespaceGEO_1_1Geom_html"><div class="ttname"><a href="namespaceGEO_1_1Geom.html">GEO::Geom</a></div><div class="ttdoc">Geometric functions and utilities.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00140">geometry.h:140</a></div></div>
+<div class="ttc" id="anamespaceGEO_1_1Geom_html"><div class="ttname"><a href="namespaceGEO_1_1Geom.html">GEO::Geom</a></div><div class="ttdoc">Geometric functions and utilities.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00181">geometry.h:181</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_a6044ad0fa5784ccde33b7bb3fa0e1459"><div class="ttname"><a href="namespaceGEO.html#a6044ad0fa5784ccde33b7bb3fa0e1459">GEO::vec3</a></div><div class="ttdeci">vecng&lt; 3, Numeric::float64 &gt; vec3</div><div class="ttdoc">Represents points and vectors in 3d.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00065">geometry.h:65</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_ad7e1b53e52be6caed089a5f4f29d8057"><div class="ttname"><a href="namespaceGEO.html#ad7e1b53e52be6caed089a5f4f29d8057">GEO::vec2</a></div><div class="ttdeci">vecng&lt; 2, Numeric::float64 &gt; vec2</div><div class="ttdoc">Represents points and vectors in 2d.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00059">geometry.h:59</a></div></div>
 <div class="ttc" id="anamespaceOGF_html"><div class="ttname"><a href="namespaceOGF.html">OGF</a></div><div class="ttdoc">Global Graphite namespace.</div><div class="ttdef"><b>Definition:</b> <a href="src_2lib_2OGF_2basic_2common_2common_8h_source.html#l00076">common.h:76</a></div></div>
 <div class="ttc" id="anamespaceOGF_html_a6841100a736f18f99ac07e76c15c1226"><div class="ttname"><a href="namespaceOGF.html#a6841100a736f18f99ac07e76c15c1226">OGF::transform_point</a></div><div class="ttdeci">vecng&lt; 2, FT &gt; transform_point(const vecng&lt; 2, FT &gt; &amp;v, const Matrix&lt; 4, FT &gt; &amp;m)</div><div class="ttdoc">Applies a 3d transform to a 2d point.</div><div class="ttdef"><b>Definition:</b> <a href="src_2lib_2OGF_2basic_2math_2geometry_8h_source.html#l00074">geometry.h:74</a></div></div>
@@ -360,7 +367,7 @@ $(document).ready(function(){initNavTree('src_2lib_2OGF_2basic_2math_2geometry_8
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_aef77abc1c70517fe3037d0ad81c1d82.html">OGF</a></li><li class="navelem"><a class="el" href="dir_68fa964ce585ca61e1572d9cc67717bd.html">basic</a></li><li class="navelem"><a class="el" href="dir_a69f527df085a2409361032f4c2b8a98.html">math</a></li><li class="navelem"><a class="el" href="src_2lib_2OGF_2basic_2math_2geometry_8h.html">geometry.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

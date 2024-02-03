@@ -11,5 +11,7 @@ var dir_c9edd2b2c3cc4723caefec51894f671a =
     [ "spheres_vertex_shader.h", "GLUPGLSL_2spheres__vertex__shader_8h_source.html", null ],
     [ "state.h", "state_8h_source.html", null ],
     [ "tess_evaluation_shader.h", "tess__evaluation__shader_8h_source.html", null ],
+    [ "thick_lines_fragment_shader.h", "GLUPGLSL_2thick__lines__fragment__shader_8h_source.html", null ],
+    [ "thick_lines_geometry_shader.h", "thick__lines__geometry__shader_8h_source.html", null ],
     [ "vertex_shader.h", "GLUPGLSL_2vertex__shader_8h_source.html", null ]
 ];

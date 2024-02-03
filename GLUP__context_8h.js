@@ -38,6 +38,5 @@ var GLUP__context_8h =
     [ "show_vector", "GLUP__context_8h.html#ae61bfa5048db91704762fa9cfad58e10", null ],
     [ "show_vector", "GLUP__context_8h.html#ace3e349926385102cc146d86ffbb3722", null ],
     [ "transpose_matrix", "GLUP__context_8h.html#a14539497bfd70696735d7597c6595ee8", null ],
-    [ "transpose_matrix", "GLUP__context_8h.html#a83a813cde6f27b1fcc7693414cca596d", null ],
-    [ "nb_vertices_per_primitive", "GLUP__context_8h.html#a5dfc0e981af683d402437cd7c6337d8d", null ]
+    [ "transpose_matrix", "GLUP__context_8h.html#a83a813cde6f27b1fcc7693414cca596d", null ]
 ];

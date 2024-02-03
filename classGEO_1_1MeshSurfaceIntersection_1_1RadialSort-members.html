@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -91,20 +98,20 @@ $(document).ready(function(){initNavTree('classGEO_1_1MeshSurfaceIntersection_1_
 <p>This is the complete list of members for <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a>, including all inherited members.</p>
 <table class="directory">
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a5d5ba22a30b171b02d2125756451dfc5">degenerate</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#aa4fd1803cd11300e4c0ab5ca0567d472">exact_direction</a>(const vec3HE &amp;p1, const vec3HE &amp;p2)</td><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a12815fa52b7ac35e13a4a79f6a94dca4">h_orient</a>(index_t h1, index_t h2) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a2b2a2df9d59f6afcb921f25f596c6e98">h_refNorient</a>(index_t h2) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a3a17adefaec8a2e03a195cabaf0e8bd6">init</a>(index_t h_ref)</td><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#ae10ac6dade84840cd1bd7ac7edca899d">operator()</a>(index_t h1, index_t h2) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a962735bacf257be56b7d73211c997a27">RadialSort</a>(const MeshSurfaceIntersection &amp;mesh)</td><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a533e25e49d662eaef802d8bed4a9021e">set_approx_predicates</a>(bool x)</td><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a23c0289211848214abfec75101423859">exact_direction</a>(const ExactPoint &amp;p1, const ExactPoint &amp;p2)</td><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#ae7e92b93cd566a7b725aaf7a8ab4a984">exact_direction_I</a>(const ExactPoint &amp;p1, const ExactPoint &amp;p2)</td><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a12815fa52b7ac35e13a4a79f6a94dca4">h_orient</a>(index_t h1, index_t h2) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a2b2a2df9d59f6afcb921f25f596c6e98">h_refNorient</a>(index_t h2) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a3a17adefaec8a2e03a195cabaf0e8bd6">init</a>(index_t h_ref)</td><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#ae10ac6dade84840cd1bd7ac7edca899d">operator()</a>(index_t h1, index_t h2) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a962735bacf257be56b7d73211c997a27">RadialSort</a>(const MeshSurfaceIntersection &amp;mesh)</td><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>test</b>(index_t h1, index_t h2) (defined in <a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a>)</td><td class="entry"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

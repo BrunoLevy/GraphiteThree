@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -94,7 +101,7 @@ $(document).ready(function(){initNavTree('classGEO_1_1MeshCellsStore.html',''); 
   <tr><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html#a199053278c76b6f2a35326ea7978fe5a">are_simplices</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#ae9a3b82b8d505bb4004db54a3e54a81f">attributes</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr bgcolor="#f0f0f0"><td class="entry"><b>attributes_</b> (defined in <a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a>)</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#a67f4376427ba8ec9260b4b0cf443c2bb">begin</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#a14c17f9301486490b5034a9b5543e72f">begin</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr bgcolor="#f0f0f0"><td class="entry"><b>cell_ptr_</b> (defined in <a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a>)</td><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>cell_type_</b> (defined in <a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a>)</td><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html#ae4cf14c0de9fdfbe4313cca9425f3bef">cell_type_to_cell_descriptor</a>(MeshCellType t)</td><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
@@ -109,7 +116,7 @@ $(document).ready(function(){initNavTree('classGEO_1_1MeshCellsStore.html',''); 
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>create_sub_elements</b>(index_t nb, MeshCellType type) (defined in <a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a>)</td><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#a8941bddb67b092a8ed5e520f44156c1b">GEO::MeshSubElementsStore::create_sub_elements</a>(index_t nb)</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html#aa76f78576f9458ac24954668bbd31e5b">descriptor</a>(index_t c) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#ae44806c720e3c80fe106b484b2b816c0">end</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#ab42b425a3238796ba8ca8e0edfc8d690">end</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html#a0a6bcf434cdf0b1c14441c96319d3bb0">facet</a>(index_t c, index_t lf) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html#afdda13676e738c9e1d39c6b54407bd2e">facets_begin</a>(index_t c) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html#a8b476b61dd1536cf1d0fb338bd9ad7ea">facets_end</a>(index_t c) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshCellsStore.html">GEO::MeshCellsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
@@ -132,7 +139,7 @@ $(document).ready(function(){initNavTree('classGEO_1_1MeshCellsStore.html',''); 
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -14,5 +14,7 @@ var classGEO_1_1MeshIOFlags =
     [ "set_dimension", "classGEO_1_1MeshIOFlags.html#a7e3d6ca882d5495347cd389661c78f3f", null ],
     [ "set_element", "classGEO_1_1MeshIOFlags.html#a1442a73c6d5704cfa1372d11980ba09c", null ],
     [ "set_elements", "classGEO_1_1MeshIOFlags.html#a7ee2884a70b860c640ccb01ac31ef0eb", null ],
-    [ "set_texture_filename", "classGEO_1_1MeshIOFlags.html#adf99d0b222bf82584455961cd05d9dff", null ]
+    [ "set_texture_filename", "classGEO_1_1MeshIOFlags.html#adf99d0b222bf82584455961cd05d9dff", null ],
+    [ "set_verbose", "classGEO_1_1MeshIOFlags.html#ac410d7600dbc6b0f3d011e9b1f77810f", null ],
+    [ "verbose", "classGEO_1_1MeshIOFlags.html#af70377f32ef4a56a3f0c809baabfffd8", null ]
 ];

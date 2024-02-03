@@ -13,7 +13,6 @@ var multi__precision_8h =
     [ "expansion_product3", "multi__precision_8h.html#ac913c076c8e4b366370f80a9414abbf7", null ],
     [ "expansion_sq_dist", "multi__precision_8h.html#a15a0de5971b77f33c741f4a99fe3cb18", null ],
     [ "expansion_square", "multi__precision_8h.html#aada7054594502d16a17a3b5afadeee4c", null ],
-    [ "expansion_sub_product", "multi__precision_8h.html#a0cc4c1e7635ff72f37dc871a41e06708", null ],
     [ "expansion_sum", "multi__precision_8h.html#a5bba2bca1de9687fbfa4042f8b964bfd", null ],
     [ "expansion_sum3", "multi__precision_8h.html#aea50321cf9cfa98bf80372610cda75b3", null ],
     [ "expansion_sum4", "multi__precision_8h.html#a599143157fa294f32dd42940cc542426", null ],

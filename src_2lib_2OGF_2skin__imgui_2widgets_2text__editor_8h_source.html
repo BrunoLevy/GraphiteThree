@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -205,7 +212,7 @@ $(document).ready(function(){initNavTree('src_2lib_2OGF_2skin__imgui_2widgets_2t
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;}</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160; </div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclassOGF_1_1Interpreter_html"><div class="ttname"><a href="classOGF_1_1Interpreter.html">OGF::Interpreter</a></div><div class="ttdoc">Abstract base class for the GOM interpreter.</div><div class="ttdef"><b>Definition:</b> <a href="interpreter_8h_source.html#l00174">interpreter.h:174</a></div></div>
+<div class="ttc" id="aclassOGF_1_1Interpreter_html"><div class="ttname"><a href="classOGF_1_1Interpreter.html">OGF::Interpreter</a></div><div class="ttdoc">Abstract base class for the GOM interpreter.</div><div class="ttdef"><b>Definition:</b> <a href="interpreter_8h_source.html#l00215">interpreter.h:215</a></div></div>
 <div class="ttc" id="aclassOGF_1_1Object_html"><div class="ttname"><a href="classOGF_1_1Object.html">OGF::Object</a></div><div class="ttdoc">Base class for all objects in the GOM system.</div><div class="ttdef"><b>Definition:</b> <a href="object_8h_source.html#l00065">object.h:65</a></div></div>
 <div class="ttc" id="aclassOGF_1_1TextEditor_html"><div class="ttname"><a href="classOGF_1_1TextEditor.html">OGF::TextEditor</a></div><div class="ttdoc">A TextEditor for writing LUA functions.</div><div class="ttdef"><b>Definition:</b> <a href="src_2lib_2OGF_2skin__imgui_2widgets_2text__editor_8h_source.html#l00051">text_editor.h:51</a></div></div>
 <div class="ttc" id="aclassOGF_1_1TextEditor_html_a07e8c5a5c1fd139c5b3bb42a5ca8eb03"><div class="ttname"><a href="classOGF_1_1TextEditor.html#a07e8c5a5c1fd139c5b3bb42a5ca8eb03">OGF::TextEditor::load</a></div><div class="ttdeci">void load(const std::string &amp;filename)</div><div class="ttdoc">Loads a file in the editor.</div></div>
@@ -224,8 +231,8 @@ $(document).ready(function(){initNavTree('src_2lib_2OGF_2skin__imgui_2widgets_2t
 <div class="ttc" id="aclassOGF_1_1TextEditor_html_af31e634af48268be85bdfb961800f285"><div class="ttname"><a href="classOGF_1_1TextEditor.html#af31e634af48268be85bdfb961800f285">OGF::TextEditor::~TextEditor</a></div><div class="ttdeci">~TextEditor() override</div><div class="ttdoc">TextEditor destructor.</div></div>
 <div class="ttc" id="aclassOGF_1_1TextEditor_html_afbdf6cb8894089feb7fe5ad9773caaab"><div class="ttname"><a href="classOGF_1_1TextEditor.html#afbdf6cb8894089feb7fe5ad9773caaab">OGF::TextEditor::get_selection</a></div><div class="ttdeci">std::string get_selection() const</div><div class="ttdoc">Gets the selected text.</div></div>
 <div class="ttc" id="aclassOGF_1_1TextEditor_html_afd197fbca55306c10afe36410eeaa242"><div class="ttname"><a href="classOGF_1_1TextEditor.html#afd197fbca55306c10afe36410eeaa242">OGF::TextEditor::get_language</a></div><div class="ttdeci">const std::string &amp; get_language() const</div><div class="ttdoc">Gets the language used for syntax highlighting.</div></div>
-<div class="ttc" id="anamespaceGEO_1_1Memory_html_aa7aa50d9a8a45fea5e342c00e4f5b3b5"><div class="ttname"><a href="namespaceGEO_1_1Memory.html#aa7aa50d9a8a45fea5e342c00e4f5b3b5">GEO::Memory::clear</a></div><div class="ttdeci">void clear(void *addr, size_t size)</div><div class="ttdoc">Clears a memory block.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8h_source.html#l00104">memory.h:104</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
+<div class="ttc" id="anamespaceGEO_1_1Memory_html_aa7aa50d9a8a45fea5e342c00e4f5b3b5"><div class="ttname"><a href="namespaceGEO_1_1Memory.html#aa7aa50d9a8a45fea5e342c00e4f5b3b5">GEO::Memory::clear</a></div><div class="ttdeci">void clear(void *addr, size_t size)</div><div class="ttdoc">Clears a memory block.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8h_source.html#l00117">memory.h:117</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
 <div class="ttc" id="anamespaceOGF_html"><div class="ttname"><a href="namespaceOGF.html">OGF</a></div><div class="ttdoc">Global Graphite namespace.</div><div class="ttdef"><b>Definition:</b> <a href="src_2lib_2OGF_2basic_2common_2common_8h_source.html#l00076">common.h:76</a></div></div>
 <div class="ttc" id="anode_8h_html"><div class="ttname"><a href="node_8h.html">node.h</a></div><div class="ttdoc">The base class for all composite objects in the GOM system.</div></div>
 <div class="ttc" id="asrc_2lib_2OGF_2skin__imgui_2common_2common_8h_html"><div class="ttname"><a href="src_2lib_2OGF_2skin__imgui_2common_2common_8h.html">common.h</a></div><div class="ttdoc">Definitions common to all include files in the skin_imgui library.</div></div>
@@ -235,7 +242,7 @@ $(document).ready(function(){initNavTree('src_2lib_2OGF_2skin__imgui_2widgets_2t
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_aef77abc1c70517fe3037d0ad81c1d82.html">OGF</a></li><li class="navelem"><a class="el" href="dir_60555eabc424d81696217dbaa6e591d1.html">skin_imgui</a></li><li class="navelem"><a class="el" href="dir_6d499230b413c0dafcfa27f0705e4816.html">widgets</a></li><li class="navelem"><b>text_editor.h</b></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

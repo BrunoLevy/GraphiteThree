@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -94,7 +101,7 @@ $(document).ready(function(){initNavTree('classGEO_1_1MeshFacetsStore.html','');
   <tr><td class="entry"><a class="el" href="classGEO_1_1MeshFacetsStore.html#aa9deb9a731c2744db680ea4f7837eef5">are_simplices</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshFacetsStore.html">GEO::MeshFacetsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#ae9a3b82b8d505bb4004db54a3e54a81f">attributes</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr bgcolor="#f0f0f0"><td class="entry"><b>attributes_</b> (defined in <a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a>)</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#a67f4376427ba8ec9260b4b0cf443c2bb">begin</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#a14c17f9301486490b5034a9b5543e72f">begin</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1MeshFacetsStore.html#a7ea9bf196e61147f939bf59f7cc7b97e">clear_store</a>(bool keep_attributes, bool keep_memory=false) override</td><td class="entry"><a class="el" href="classGEO_1_1MeshFacetsStore.html">GEO::MeshFacetsStore</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>copy</b>(const MeshFacetsStore &amp;rhs, bool copy_attributes=true) (defined in <a class="el" href="classGEO_1_1MeshFacetsStore.html">GEO::MeshFacetsStore</a>)</td><td class="entry"><a class="el" href="classGEO_1_1MeshFacetsStore.html">GEO::MeshFacetsStore</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#ab7b5364007e33f90d7dbafd042be7931">GEO::MeshSubElementsStore::copy</a>(const MeshSubElementsStore &amp;rhs, bool copy_attributes=true)</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
@@ -104,7 +111,7 @@ $(document).ready(function(){initNavTree('classGEO_1_1MeshFacetsStore.html','');
   <tr><td class="entry"><a class="el" href="classGEO_1_1MeshFacetsStore.html#a3dd7fe79b4471c62ff317f648a146fd5">corners_end</a>(index_t f) const</td><td class="entry"><a class="el" href="classGEO_1_1MeshFacetsStore.html">GEO::MeshFacetsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>create_sub_element</b>() (defined in <a class="el" href="classGEO_1_1MeshFacetsStore.html">GEO::MeshFacetsStore</a>)</td><td class="entry"><a class="el" href="classGEO_1_1MeshFacetsStore.html">GEO::MeshFacetsStore</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
   <tr bgcolor="#f0f0f0"><td class="entry"><b>create_sub_elements</b>(index_t nb) (defined in <a class="el" href="classGEO_1_1MeshFacetsStore.html">GEO::MeshFacetsStore</a>)</td><td class="entry"><a class="el" href="classGEO_1_1MeshFacetsStore.html">GEO::MeshFacetsStore</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#ae44806c720e3c80fe106b484b2b816c0">end</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#ab42b425a3238796ba8ca8e0edfc8d690">end</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1MeshSubElementsStore.html">GEO::MeshSubElementsStore</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr bgcolor="#f0f0f0"><td class="entry"><b>facet_ptr_</b> (defined in <a class="el" href="classGEO_1_1MeshFacetsStore.html">GEO::MeshFacetsStore</a>)</td><td class="entry"><a class="el" href="classGEO_1_1MeshFacetsStore.html">GEO::MeshFacetsStore</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>GeogramIOHandler</b> (defined in <a class="el" href="classGEO_1_1MeshFacetsStore.html">GEO::MeshFacetsStore</a>)</td><td class="entry"><a class="el" href="classGEO_1_1MeshFacetsStore.html">GEO::MeshFacetsStore</a></td><td class="entry"><span class="mlabel">friend</span></td></tr>
   <tr bgcolor="#f0f0f0"><td class="entry"><b>is_simplicial_</b> (defined in <a class="el" href="classGEO_1_1MeshFacetsStore.html">GEO::MeshFacetsStore</a>)</td><td class="entry"><a class="el" href="classGEO_1_1MeshFacetsStore.html">GEO::MeshFacetsStore</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
@@ -122,7 +129,7 @@ $(document).ready(function(){initNavTree('classGEO_1_1MeshFacetsStore.html','');
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -173,6 +180,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:ac4328e358cfb763cbddd09e8e0fb9f2b inherit pub_methods_classOGF_1_1Interpreter"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classOGF_1_1MetaType.html">MetaType</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Interpreter.html#ac4328e358cfb763cbddd09e8e0fb9f2b">resolve_meta_type</a> (const std::string &amp;type_name) const</td></tr>
 <tr class="memdesc:ac4328e358cfb763cbddd09e8e0fb9f2b inherit pub_methods_classOGF_1_1Interpreter"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds a <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a> by name.  <a href="classOGF_1_1Interpreter.html#ac4328e358cfb763cbddd09e8e0fb9f2b">More...</a><br /></td></tr>
 <tr class="separator:ac4328e358cfb763cbddd09e8e0fb9f2b inherit pub_methods_classOGF_1_1Interpreter"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d90b9a415f577d114ac823d34ea2578 inherit pub_methods_classOGF_1_1Interpreter"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Interpreter.html#a3d90b9a415f577d114ac823d34ea2578">bind_meta_type</a> (<a class="el" href="classOGF_1_1MetaType.html">MetaType</a> *mtype)</td></tr>
+<tr class="memdesc:a3d90b9a415f577d114ac823d34ea2578 inherit pub_methods_classOGF_1_1Interpreter"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binds a <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a>.  <a href="classOGF_1_1Interpreter.html#a3d90b9a415f577d114ac823d34ea2578">More...</a><br /></td></tr>
+<tr class="separator:a3d90b9a415f577d114ac823d34ea2578 inherit pub_methods_classOGF_1_1Interpreter"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0383b49314feebb31a7f34258c191fb inherit pub_methods_classOGF_1_1Interpreter"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classOGF_1_1Object.html">Object</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Interpreter.html#af0383b49314feebb31a7f34258c191fb">create</a> (const <a class="el" href="classOGF_1_1ArgList.html">ArgList</a> &amp;args)</td></tr>
 <tr class="memdesc:af0383b49314feebb31a7f34258c191fb inherit pub_methods_classOGF_1_1Interpreter"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an object.  <a href="classOGF_1_1Interpreter.html#af0383b49314feebb31a7f34258c191fb">More...</a><br /></td></tr>
 <tr class="separator:af0383b49314feebb31a7f34258c191fb inherit pub_methods_classOGF_1_1Interpreter"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -218,6 +228,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a5d21134cda76d26ab46e1faeb0c317aa inherit pub_methods_classOGF_1_1Interpreter"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOGF_1_1Scope.html">Scope</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Interpreter.html#a5d21134cda76d26ab46e1faeb0c317aa">get_globals</a> () const</td></tr>
 <tr class="memdesc:a5d21134cda76d26ab46e1faeb0c317aa inherit pub_methods_classOGF_1_1Interpreter"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the <a class="el" href="classOGF_1_1Scope.html" title="A naming scope in an Interpreter.">Scope</a> with the global variables.  <a href="classOGF_1_1Interpreter.html#a5d21134cda76d26ab46e1faeb0c317aa">More...</a><br /></td></tr>
 <tr class="separator:a5d21134cda76d26ab46e1faeb0c317aa inherit pub_methods_classOGF_1_1Interpreter"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad180d6987c08bc86a9629c572d9bf0ea inherit pub_methods_classOGF_1_1Interpreter"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOGF_1_1Scope.html">Scope</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Interpreter.html#ad180d6987c08bc86a9629c572d9bf0ea">get_meta_types</a> () const</td></tr>
+<tr class="memdesc:ad180d6987c08bc86a9629c572d9bf0ea inherit pub_methods_classOGF_1_1Interpreter"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the <a class="el" href="classOGF_1_1Scope.html" title="A naming scope in an Interpreter.">Scope</a> with the meta types.  <a href="classOGF_1_1Interpreter.html#ad180d6987c08bc86a9629c572d9bf0ea">More...</a><br /></td></tr>
+<tr class="separator:ad180d6987c08bc86a9629c572d9bf0ea inherit pub_methods_classOGF_1_1Interpreter"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d9f540333a9acee33474c63eeee8765 inherit pub_methods_classOGF_1_1Interpreter"><td class="memItemLeft" align="right" valign="top"><a id="a2d9f540333a9acee33474c63eeee8765"></a>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Interpreter.html#a2d9f540333a9acee33474c63eeee8765">~Interpreter</a> ()</td></tr>
 <tr class="memdesc:a2d9f540333a9acee33474c63eeee8765 inherit pub_methods_classOGF_1_1Interpreter"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOGF_1_1Interpreter.html" title="Abstract base class for the GOM interpreter.">Interpreter</a> destructor. <br /></td></tr>
@@ -471,7 +484,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extension_</b>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The main class that interfaces the Python interpreter with Graphite. </p>
 
-<p class="definition">Definition at line <a class="el" href="lua__interpreter_8h_source.html#l00091">91</a> of file <a class="el" href="lua__interpreter_8h_source.html">lua_interpreter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lua__interpreter_8h_source.html#l00094">94</a> of file <a class="el" href="lua__interpreter_8h_source.html">lua_interpreter.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a9b8c1ef50d8ad00dca17e5fcd7c4a2b6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9b8c1ef50d8ad00dca17e5fcd7c4a2b6">&#9670;&nbsp;</a></span>adjust_lua_state()</h2>
@@ -843,7 +856,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extension_</b>
 <p>Gets the LUA state. </p>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the LUA state. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="lua__interpreter_8h_source.html#l00141">141</a> of file <a class="el" href="lua__interpreter_8h_source.html">lua_interpreter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="lua__interpreter_8h_source.html#l00144">144</a> of file <a class="el" href="lua__interpreter_8h_source.html">lua_interpreter.h</a>.</p>
 
 </div>
 </div>
@@ -970,7 +983,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extension_</b>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1LuaInterpreter.html">LuaInterpreter</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

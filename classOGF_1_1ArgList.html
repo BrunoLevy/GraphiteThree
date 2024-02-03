@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -111,6 +118,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af05a5b91a1c3dc29f7559816c2e72b0b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1ArgList.html#af05a5b91a1c3dc29f7559816c2e72b0b">nb_args</a> () const</td></tr>
 <tr class="memdesc:af05a5b91a1c3dc29f7559816c2e72b0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of arguments.  <a href="classOGF_1_1ArgList.html#af05a5b91a1c3dc29f7559816c2e72b0b">More...</a><br /></td></tr>
 <tr class="separator:af05a5b91a1c3dc29f7559816c2e72b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add7d49bac3ddb62d87571edc2e4757d6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1ArgList.html#add7d49bac3ddb62d87571edc2e4757d6">has_unnamed_args</a> () const</td></tr>
+<tr class="memdesc:add7d49bac3ddb62d87571edc2e4757d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether this <a class="el" href="classOGF_1_1ArgList.html" title="Represents a list of name-value pairs.">ArgList</a> has unnamed args.  <a href="classOGF_1_1ArgList.html#add7d49bac3ddb62d87571edc2e4757d6">More...</a><br /></td></tr>
+<tr class="separator:add7d49bac3ddb62d87571edc2e4757d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f6b1370481564cc036de9331e3d4a0d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1ArgList.html#a5f6b1370481564cc036de9331e3d4a0d">has_arg</a> (const std::string &amp;name) const</td></tr>
 <tr class="memdesc:a5f6b1370481564cc036de9331e3d4a0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether an argument of a given name exists in this <a class="el" href="classOGF_1_1ArgList.html" title="Represents a list of name-value pairs.">ArgList</a>.  <a href="classOGF_1_1ArgList.html#a5f6b1370481564cc036de9331e3d4a0d">More...</a><br /></td></tr>
 <tr class="separator:a5f6b1370481564cc036de9331e3d4a0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,6 +155,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a41b3abbf3af8562ee2fe9d3f6679a87a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOGF_1_1Any.html">Any</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1ArgList.html#a41b3abbf3af8562ee2fe9d3f6679a87a">create_arg</a> (const std::string &amp;name)</td></tr>
 <tr class="memdesc:a41b3abbf3af8562ee2fe9d3f6679a87a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an uninitialized argument.  <a href="classOGF_1_1ArgList.html#a41b3abbf3af8562ee2fe9d3f6679a87a">More...</a><br /></td></tr>
 <tr class="separator:a41b3abbf3af8562ee2fe9d3f6679a87a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42fc91a4381bfda6f8d7973221b4e489"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOGF_1_1Any.html">Any</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1ArgList.html#a42fc91a4381bfda6f8d7973221b4e489">create_unnamed_arg</a> ()</td></tr>
+<tr class="memdesc:a42fc91a4381bfda6f8d7973221b4e489"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an uninitialized unnamed argument.  <a href="classOGF_1_1ArgList.html#a42fc91a4381bfda6f8d7973221b4e489">More...</a><br /></td></tr>
+<tr class="separator:a42fc91a4381bfda6f8d7973221b4e489"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae00a2f447adffc728906ba4a1db7fea"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:aae00a2f447adffc728906ba4a1db7fea"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOGF_1_1ArgList.html#aae00a2f447adffc728906ba4a1db7fea">create_arg</a> (const std::string &amp;name, const T &amp;value)</td></tr>
 <tr class="memdesc:aae00a2f447adffc728906ba4a1db7fea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an argument.  <a href="classOGF_1_1ArgList.html#aae00a2f447adffc728906ba4a1db7fea">More...</a><br /></td></tr>
@@ -393,7 +406,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>serialize</b> (std::o
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a modifiable reference to the argument value at index <code>i</code>, wrapped in an <a class="el" href="classOGF_1_1Any.html" title="A class that stores a variable of arbitrary type.">Any</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00207">207</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00225">225</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -431,7 +444,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>serialize</b> (std::o
 <dl class="section return"><dt>Returns</dt><dd>a const reference to the argument value at index <code>i</code>, wrapped in an <a class="el" href="classOGF_1_1Any.html" title="A class that stores a variable of arbitrary type.">Any</a>. </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>has_arg(name) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00194">194</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00212">212</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -469,7 +482,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>serialize</b> (std::o
 <dl class="section return"><dt>Returns</dt><dd>a reference to the <a class="el" href="classOGF_1_1Any.html" title="A class that stores a variable of arbitrary type.">Any</a> that will store the argument. </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>!has_arg(name) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00231">231</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00249">249</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -517,7 +530,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>serialize</b> (std::o
 </dl>
 <dl class="section pre"><dt>Precondition</dt><dd>!has_arg(name) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00273">273</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00300">300</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -565,7 +578,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>serialize</b> (std::o
 </dl>
 <dl class="section pre"><dt>Precondition</dt><dd>!has_arg(name) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00261">261</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00288">288</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -621,7 +634,38 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section pre"><dt>Precondition</dt><dd>!has_arg(name) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00246">246</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00273">273</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+
+</div>
+</div>
+<a id="a42fc91a4381bfda6f8d7973221b4e489"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42fc91a4381bfda6f8d7973221b4e489">&#9670;&nbsp;</a></span>create_unnamed_arg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOGF_1_1Any.html">Any</a>&amp; OGF::ArgList::create_unnamed_arg </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an uninitialized unnamed argument. </p>
+<dl class="section return"><dt>Returns</dt><dd>a reference to the <a class="el" href="classOGF_1_1Any.html" title="A class that stores a variable of arbitrary type.">Any</a> that will store the argument. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd><a class="el" href="classOGF_1_1ArgList.html#af05a5b91a1c3dc29f7559816c2e72b0b" title="Gets the number of arguments.">nb_args()</a> == 0 || <a class="el" href="classOGF_1_1ArgList.html#add7d49bac3ddb62d87571edc2e4757d6" title="Tests whether this ArgList has unnamed args.">has_unnamed_args()</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00261">261</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -658,7 +702,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section pre"><dt>Precondition</dt><dd><code>i</code> &lt; <a class="el" href="classOGF_1_1ArgList.html#af05a5b91a1c3dc29f7559816c2e72b0b" title="Gets the number of arguments.">nb_args()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00122">122</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00140">140</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -723,7 +767,7 @@ template&lt;class T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>the string representation of the argument </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>has_arg(name) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00359">359</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00386">386</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -769,7 +813,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00375">375</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00402">402</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -807,7 +851,7 @@ template&lt;class T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the type of the argument </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd>has_arg(name) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00391">391</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00418">418</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -850,7 +894,43 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00104">104</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00122">122</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+
+</div>
+</div>
+<a id="add7d49bac3ddb62d87571edc2e4757d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add7d49bac3ddb62d87571edc2e4757d6">&#9670;&nbsp;</a></span>has_unnamed_args()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool OGF::ArgList::has_unnamed_args </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tests whether this <a class="el" href="classOGF_1_1ArgList.html" title="Represents a list of name-value pairs.">ArgList</a> has unnamed args. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>if this <a class="el" href="classOGF_1_1ArgList.html" title="Represents a list of name-value pairs.">ArgList</a> has unnamed args </td></tr>
+    <tr><td class="paramname">false</td><td>otherwise </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00101">101</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -888,7 +968,7 @@ template&lt;class T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a const reference to the name of argument at index <code>i</code> </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd><code>i</code> &lt; <a class="el" href="classOGF_1_1ArgList.html#af05a5b91a1c3dc29f7559816c2e72b0b" title="Gets the number of arguments.">nb_args()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00135">135</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00153">153</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -926,7 +1006,7 @@ template&lt;class T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the type of the argument </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd><code>i</code> &lt; <a class="el" href="classOGF_1_1ArgList.html#af05a5b91a1c3dc29f7559816c2e72b0b" title="Gets the number of arguments.">nb_args()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00220">220</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00238">238</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -964,7 +1044,7 @@ template&lt;class T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a modifiable reference to the argument value at index <code>i</code>, wrapped in an <a class="el" href="classOGF_1_1Any.html" title="A class that stores a variable of arbitrary type.">Any</a>. </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd><code>i</code> &lt; <a class="el" href="classOGF_1_1ArgList.html#af05a5b91a1c3dc29f7559816c2e72b0b" title="Gets the number of arguments.">nb_args()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00181">181</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00199">199</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -1010,7 +1090,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section pre"><dt>Precondition</dt><dd><code>i</code> &lt; <a class="el" href="classOGF_1_1ArgList.html#af05a5b91a1c3dc29f7559816c2e72b0b" title="Gets the number of arguments.">nb_args()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00151">151</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00169">169</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -1048,7 +1128,7 @@ template&lt;class T &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>a const reference to the argument value at index <code>i</code>, wrapped in an <a class="el" href="classOGF_1_1Any.html" title="A class that stores a variable of arbitrary type.">Any</a>. </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd><code>i</code> &lt; <a class="el" href="classOGF_1_1ArgList.html#af05a5b91a1c3dc29f7559816c2e72b0b" title="Gets the number of arguments.">nb_args()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00168">168</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00186">186</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -1078,7 +1158,7 @@ template&lt;class T &gt; </div>
 <p>Gets the number of arguments. </p>
 <dl class="section return"><dt>Returns</dt><dd>the number of arguments in this <a class="el" href="classOGF_1_1ArgList.html" title="Represents a list of name-value pairs.">ArgList</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00091">91</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00092">92</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -1114,7 +1194,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00081">81</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00082">82</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -1161,7 +1241,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00322">322</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00349">349</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -1208,7 +1288,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00309">309</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00336">336</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -1263,7 +1343,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00290">290</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00317">317</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -1310,7 +1390,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00349">349</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00376">376</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -1365,7 +1445,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00338">338</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="arg__list_8h_source.html#l00365">365</a> of file <a class="el" href="arg__list_8h_source.html">arg_list.h</a>.</p>
 
 </div>
 </div>
@@ -1378,7 +1458,7 @@ template&lt;class T &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1ArgList.html">ArgList</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -123,9 +130,9 @@ Functions</h2></td></tr>
 <tr class="memitem:af10149ff831242b94bf3c92ac233111a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#af10149ff831242b94bf3c92ac233111a">GEO::mesh_repair</a> (Mesh &amp;M, MeshRepairMode mode=MESH_REPAIR_DEFAULT, double colocate_epsilon=0.0)</td></tr>
 <tr class="memdesc:af10149ff831242b94bf3c92ac233111a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fixes some defaults in a mesh.  <a href="namespaceGEO.html#af10149ff831242b94bf3c92ac233111a">More...</a><br /></td></tr>
 <tr class="separator:af10149ff831242b94bf3c92ac233111a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00380e7b8879dc36cace9ba5bc77c09c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a00380e7b8879dc36cace9ba5bc77c09c">GEO::mesh_postprocess_RDT</a> (Mesh &amp;M)</td></tr>
-<tr class="memdesc:a00380e7b8879dc36cace9ba5bc77c09c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Post-processes a Restricted <a class="el" href="classGEO_1_1Delaunay.html" title="Abstract interface for Delaunay triangulation in Nd.">Delaunay</a> Triangulation.  <a href="namespaceGEO.html#a00380e7b8879dc36cace9ba5bc77c09c">More...</a><br /></td></tr>
-<tr class="separator:a00380e7b8879dc36cace9ba5bc77c09c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea88e7b9b637b9cd6f60c1963b81be8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#aea88e7b9b637b9cd6f60c1963b81be8a">GEO::mesh_postprocess_RDT</a> (Mesh &amp;M, bool verbose=false)</td></tr>
+<tr class="memdesc:aea88e7b9b637b9cd6f60c1963b81be8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Post-processes a Restricted <a class="el" href="classGEO_1_1Delaunay.html" title="Abstract interface for Delaunay triangulation in Nd.">Delaunay</a> Triangulation.  <a href="namespaceGEO.html#aea88e7b9b637b9cd6f60c1963b81be8a">More...</a><br /></td></tr>
+<tr class="separator:aea88e7b9b637b9cd6f60c1963b81be8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a246ee321d6dfc778cc4591e4e536b486"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a246ee321d6dfc778cc4591e4e536b486">GEO::mesh_reorient</a> (Mesh &amp;M, vector&lt; index_t &gt; *moebius_facets=nullptr)</td></tr>
 <tr class="memdesc:a246ee321d6dfc778cc4591e4e536b486"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reorients the facets of a mesh coherently.  <a href="namespaceGEO.html#a246ee321d6dfc778cc4591e4e536b486">More...</a><br /></td></tr>
 <tr class="separator:a246ee321d6dfc778cc4591e4e536b486"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,9 +145,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a3c3b43383745bbec680747ad0cf6f7e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a3c3b43383745bbec680747ad0cf6f7e1">GEO::mesh_detect_degenerate_facets</a> (const Mesh &amp;M, vector&lt; index_t &gt; &amp;f_is_degenerate)</td></tr>
 <tr class="memdesc:a3c3b43383745bbec680747ad0cf6f7e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detects degenerate facets in a mesh.  <a href="namespaceGEO.html#a3c3b43383745bbec680747ad0cf6f7e1">More...</a><br /></td></tr>
 <tr class="separator:a3c3b43383745bbec680747ad0cf6f7e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad24b6350a75249b05435d0f536a753d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#ad24b6350a75249b05435d0f536a753d9">GEO::mesh_colocate_vertices_no_check</a> (Mesh &amp;M, double colocate_epsilon=0.0)</td></tr>
-<tr class="memdesc:ad24b6350a75249b05435d0f536a753d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merges the vertices of a mesh that are at the same geometric location.  <a href="namespaceGEO.html#ad24b6350a75249b05435d0f536a753d9">More...</a><br /></td></tr>
-<tr class="separator:ad24b6350a75249b05435d0f536a753d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6a7bfa43a71dbefd5e44dbf9340c0cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#ab6a7bfa43a71dbefd5e44dbf9340c0cd">GEO::mesh_colocate_vertices_no_check</a> (Mesh &amp;M, double colocate_epsilon=0.0, bool verbose=false)</td></tr>
+<tr class="memdesc:ab6a7bfa43a71dbefd5e44dbf9340c0cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merges the vertices of a mesh that are at the same geometric location.  <a href="namespaceGEO.html#ab6a7bfa43a71dbefd5e44dbf9340c0cd">More...</a><br /></td></tr>
+<tr class="separator:ab6a7bfa43a71dbefd5e44dbf9340c0cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33843cbd38391c9b2cb21ed2bdc7bcc8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a33843cbd38391c9b2cb21ed2bdc7bcc8">GEO::mesh_remove_bad_facets_no_check</a> (Mesh &amp;M, bool check_duplicates=true)</td></tr>
 <tr class="memdesc:a33843cbd38391c9b2cb21ed2bdc7bcc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the degenerate and the duplicated facets in a surface mesh.  <a href="namespaceGEO.html#a33843cbd38391c9b2cb21ed2bdc7bcc8">More...</a><br /></td></tr>
 <tr class="separator:a33843cbd38391c9b2cb21ed2bdc7bcc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -154,7 +161,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_7faf8be2027c4a91a1e5453dfee06721.html">mesh</a></li><li class="navelem"><a class="el" href="mesh__repair_8h.html">mesh_repair.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

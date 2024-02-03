@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -355,7 +362,7 @@ $(document).ready(function(){initNavTree('generic__RVD__utils_8h_source.html',''
 <div class="ttc" id="aclassGEOGen_1_1VectorStack_html_a3679e211cb63cee0828239322647e271"><div class="ttname"><a href="classGEOGen_1_1VectorStack.html#a3679e211cb63cee0828239322647e271">GEOGen::VectorStack::top</a></div><div class="ttdeci">const T &amp; top() const</div><div class="ttdoc">Gets the item on the top.</div><div class="ttdef"><b>Definition:</b> <a href="generic__RVD__utils_8h_source.html#l00091">generic_RVD_utils.h:91</a></div></div>
 <div class="ttc" id="aclassGEOGen_1_1VectorStack_html_a477cb4976e5a95c305cbcd39dc8b4c3a"><div class="ttname"><a href="classGEOGen_1_1VectorStack.html#a477cb4976e5a95c305cbcd39dc8b4c3a">GEOGen::VectorStack::push</a></div><div class="ttdeci">void push(const T &amp;x)</div><div class="ttdoc">Pushes a new item onto the stack.</div><div class="ttdef"><b>Definition:</b> <a href="generic__RVD__utils_8h_source.html#l00074">generic_RVD_utils.h:74</a></div></div>
 <div class="ttc" id="aclassGEOGen_1_1VectorStack_html_a831cffea6e5146b9905a99fbce62f7f7"><div class="ttname"><a href="classGEOGen_1_1VectorStack.html#a831cffea6e5146b9905a99fbce62f7f7">GEOGen::VectorStack::empty</a></div><div class="ttdeci">bool empty() const</div><div class="ttdoc">Tests whether the stack is empty.</div><div class="ttdef"><b>Definition:</b> <a href="generic__RVD__utils_8h_source.html#l00098">generic_RVD_utils.h:98</a></div></div>
-<div class="ttc" id="aclassGEO_1_1vector_html"><div class="ttname"><a href="classGEO_1_1vector.html">GEO::vector</a></div><div class="ttdoc">Vector with aligned memory allocation.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8h_source.html#l00623">memory.h:623</a></div></div>
+<div class="ttc" id="aclassGEO_1_1vector_html"><div class="ttname"><a href="classGEO_1_1vector.html">GEO::vector</a></div><div class="ttdoc">Vector with aligned memory allocation.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8h_source.html#l00636">memory.h:636</a></div></div>
 <div class="ttc" id="ageneric__RVD__cell_8h_html"><div class="ttname"><a href="generic__RVD__cell_8h.html">generic_RVD_cell.h</a></div><div class="ttdoc">Internal representation of polyhedra for GEO::GenericVoronoiDiagram.</div></div>
 <div class="ttc" id="ageneric__RVD__polygon_8h_html"><div class="ttname"><a href="generic__RVD__polygon_8h.html">generic_RVD_polygon.h</a></div><div class="ttdoc">Internal representation of polygons for GenericVoronoiDiagram.</div></div>
 <div class="ttc" id="ageneric__RVD__utils_8h_html_a4a32a1e39bbb16dba1e820ae3fadb9c0"><div class="ttname"><a href="generic__RVD__utils_8h.html#a4a32a1e39bbb16dba1e820ae3fadb9c0">GEOGen::TetSeedStack</a></div><div class="ttdeci">std::stack&lt; TetSeed &gt; TetSeedStack</div><div class="ttdoc">A stack of TetSeed.</div><div class="ttdef"><b>Definition:</b> <a href="generic__RVD__utils_8h_source.html#l00195">generic_RVD_utils.h:195</a></div></div>
@@ -364,8 +371,8 @@ $(document).ready(function(){initNavTree('generic__RVD__utils_8h_source.html',''
 <div class="ttc" id="ageneric__RVD__vertex_8h_html"><div class="ttname"><a href="generic__RVD__vertex_8h.html">generic_RVD_vertex.h</a></div><div class="ttdoc">Types and utilities for manipulating vertices in geometric and symbolic forms in restricted Voronoi d...</div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
 <div class="ttc" id="amemory_8h_html"><div class="ttname"><a href="memory_8h.html">memory.h</a></div><div class="ttdoc">Types and functions for memory manipulation.</div></div>
-<div class="ttc" id="anamespaceGEO_html_a545c8df15809d86c5efeea8500b1d14c"><div class="ttname"><a href="namespaceGEO.html#a545c8df15809d86c5efeea8500b1d14c">GEO::signed_index_t</a></div><div class="ttdeci">geo_signed_index_t signed_index_t</div><div class="ttdoc">The type for storing and manipulating indices differences.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00301">numeric.h:301</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a545c8df15809d86c5efeea8500b1d14c"><div class="ttname"><a href="namespaceGEO.html#a545c8df15809d86c5efeea8500b1d14c">GEO::signed_index_t</a></div><div class="ttdeci">geo_signed_index_t signed_index_t</div><div class="ttdoc">The type for storing and manipulating indices differences.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00343">numeric.h:343</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
 <div class="ttc" id="astructGEOGen_1_1FacetSeed_html"><div class="ttname"><a href="structGEOGen_1_1FacetSeed.html">GEOGen::FacetSeed</a></div><div class="ttdoc">A (facet,seed) pair.</div><div class="ttdef"><b>Definition:</b> <a href="generic__RVD__utils_8h_source.html#l00114">generic_RVD_utils.h:114</a></div></div>
 <div class="ttc" id="astructGEOGen_1_1FacetSeed_html_a5a3735e379340827b0be942df67c9a34"><div class="ttname"><a href="structGEOGen_1_1FacetSeed.html#a5a3735e379340827b0be942df67c9a34">GEOGen::FacetSeed::FacetSeed</a></div><div class="ttdeci">FacetSeed()</div><div class="ttdoc">Creates a new uninitialized FacetSeed.</div><div class="ttdef"><b>Definition:</b> <a href="generic__RVD__utils_8h_source.html#l00130">generic_RVD_utils.h:130</a></div></div>
 <div class="ttc" id="astructGEOGen_1_1FacetSeed_html_aaa56fbca04e2a3c14cff863f95c4a0e5"><div class="ttname"><a href="structGEOGen_1_1FacetSeed.html#aaa56fbca04e2a3c14cff863f95c4a0e5">GEOGen::FacetSeed::operator&lt;</a></div><div class="ttdeci">bool operator&lt;(const FacetSeed &amp;rhs) const</div><div class="ttdoc">Compares two facet seeds using lexicographic order.</div><div class="ttdef"><b>Definition:</b> <a href="generic__RVD__utils_8h_source.html#l00138">generic_RVD_utils.h:138</a></div></div>
@@ -376,7 +383,7 @@ $(document).ready(function(){initNavTree('generic__RVD__utils_8h_source.html',''
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_9aa10bb0707570688f07880f39c28e9b.html">voronoi</a></li><li class="navelem"><a class="el" href="generic__RVD__utils_8h.html">generic_RVD_utils.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

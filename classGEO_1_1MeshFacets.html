@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -145,6 +152,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:adc764d89401f52196d0a37b4f029d658"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshFacets.html#adc764d89401f52196d0a37b4f029d658">prev_corner_around_facet</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> f, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> c) const</td></tr>
 <tr class="memdesc:adc764d89401f52196d0a37b4f029d658"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the predecessor of a corner around a facet.  <a href="classGEO_1_1MeshFacets.html#adc764d89401f52196d0a37b4f029d658">More...</a><br /></td></tr>
 <tr class="separator:adc764d89401f52196d0a37b4f029d658"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5770af82c0c74a9d295249b7d55e4526"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshFacets.html#a5770af82c0c74a9d295249b7d55e4526">find_edge</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> f, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> v1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> v2)</td></tr>
+<tr class="memdesc:a5770af82c0c74a9d295249b7d55e4526"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds an edge by vertex indices.  <a href="classGEO_1_1MeshFacets.html#a5770af82c0c74a9d295249b7d55e4526">More...</a><br /></td></tr>
+<tr class="separator:a5770af82c0c74a9d295249b7d55e4526"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a708b30046d6582200744fc1ae67cc8bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshFacets.html#a708b30046d6582200744fc1ae67cc8bd">delete_elements</a> (<a class="el" href="classGEO_1_1vector.html">vector</a>&lt; <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> &gt; &amp;to_delete, bool remove_isolated_vertices=true) override</td></tr>
 <tr class="memdesc:a708b30046d6582200744fc1ae67cc8bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes a set of elements.  <a href="classGEO_1_1MeshFacets.html#a708b30046d6582200744fc1ae67cc8bd">More...</a><br /></td></tr>
 <tr class="separator:a708b30046d6582200744fc1ae67cc8bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -202,9 +212,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>assign_triangle_mesh<
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshFacets.html#aa161c4a1d5621ee89335d2bd3feff6d3">pop</a> () override</td></tr>
 <tr class="memdesc:aa161c4a1d5621ee89335d2bd3feff6d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the last element. <br /></td></tr>
 <tr class="separator:aa161c4a1d5621ee89335d2bd3feff6d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a736ad3c84174e1be75bf43b8f13886e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1range.html">range</a>&lt; <a class="el" href="classGEO_1_1no__iterator.html">no_iterator</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshFacets.html#a736ad3c84174e1be75bf43b8f13886e5">corners</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> f) const</td></tr>
-<tr class="memdesc:a736ad3c84174e1be75bf43b8f13886e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the corners of a facet.  <a href="classGEO_1_1MeshFacets.html#a736ad3c84174e1be75bf43b8f13886e5">More...</a><br /></td></tr>
-<tr class="separator:a736ad3c84174e1be75bf43b8f13886e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0d6035ba52c8dfcb1bb58b933d5e763"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1index__range.html">index_range</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshFacets.html#aa0d6035ba52c8dfcb1bb58b933d5e763">corners</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> f) const</td></tr>
+<tr class="memdesc:aa0d6035ba52c8dfcb1bb58b933d5e763"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the corners of a facet.  <a href="classGEO_1_1MeshFacets.html#aa0d6035ba52c8dfcb1bb58b933d5e763">More...</a><br /></td></tr>
+<tr class="separator:aa0d6035ba52c8dfcb1bb58b933d5e763"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classGEO_1_1MeshFacetsStore"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classGEO_1_1MeshFacetsStore')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classGEO_1_1MeshFacetsStore.html">GEO::MeshFacetsStore</a></td></tr>
 <tr class="memitem:a576298bfbaf97e6287370450c80ebb7b inherit pub_methods_classGEO_1_1MeshFacetsStore"><td class="memItemLeft" align="right" valign="top"><a id="a576298bfbaf97e6287370450c80ebb7b"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>MeshFacetsStore</b> (<a class="el" href="classGEO_1_1Mesh.html">Mesh</a> &amp;mesh)</td></tr>
@@ -241,12 +251,12 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:ae9a3b82b8d505bb4004db54a3e54a81f inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1AttributesManager.html">AttributesManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#ae9a3b82b8d505bb4004db54a3e54a81f">attributes</a> () const</td></tr>
 <tr class="memdesc:ae9a3b82b8d505bb4004db54a3e54a81f inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the attributes manager.  <a href="classGEO_1_1MeshSubElementsStore.html#ae9a3b82b8d505bb4004db54a3e54a81f">More...</a><br /></td></tr>
 <tr class="separator:ae9a3b82b8d505bb4004db54a3e54a81f inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67f4376427ba8ec9260b4b0cf443c2bb inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1no__iterator.html">no_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#a67f4376427ba8ec9260b4b0cf443c2bb">begin</a> () const</td></tr>
-<tr class="memdesc:a67f4376427ba8ec9260b4b0cf443c2bb inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by range-based for.  <a href="classGEO_1_1MeshSubElementsStore.html#a67f4376427ba8ec9260b4b0cf443c2bb">More...</a><br /></td></tr>
-<tr class="separator:a67f4376427ba8ec9260b4b0cf443c2bb inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae44806c720e3c80fe106b484b2b816c0 inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1no__iterator.html">no_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#ae44806c720e3c80fe106b484b2b816c0">end</a> () const</td></tr>
-<tr class="memdesc:ae44806c720e3c80fe106b484b2b816c0 inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by range-based for.  <a href="classGEO_1_1MeshSubElementsStore.html#ae44806c720e3c80fe106b484b2b816c0">More...</a><br /></td></tr>
-<tr class="separator:ae44806c720e3c80fe106b484b2b816c0 inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14c17f9301486490b5034a9b5543e72f inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1index__as__iterator.html">index_as_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#a14c17f9301486490b5034a9b5543e72f">begin</a> () const</td></tr>
+<tr class="memdesc:a14c17f9301486490b5034a9b5543e72f inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by range-based for.  <a href="classGEO_1_1MeshSubElementsStore.html#a14c17f9301486490b5034a9b5543e72f">More...</a><br /></td></tr>
+<tr class="separator:a14c17f9301486490b5034a9b5543e72f inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab42b425a3238796ba8ca8e0edfc8d690 inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1index__as__iterator.html">index_as_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#ab42b425a3238796ba8ca8e0edfc8d690">end</a> () const</td></tr>
+<tr class="memdesc:ab42b425a3238796ba8ca8e0edfc8d690 inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by range-based for.  <a href="classGEO_1_1MeshSubElementsStore.html#ab42b425a3238796ba8ca8e0edfc8d690">More...</a><br /></td></tr>
+<tr class="separator:ab42b425a3238796ba8ca8e0edfc8d690 inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -510,8 +520,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a736ad3c84174e1be75bf43b8f13886e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a736ad3c84174e1be75bf43b8f13886e5">&#9670;&nbsp;</a></span>corners()</h2>
+<a id="aa0d6035ba52c8dfcb1bb58b933d5e763"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0d6035ba52c8dfcb1bb58b933d5e763">&#9670;&nbsp;</a></span>corners()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -520,7 +530,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classGEO_1_1range.html">range</a>&lt;<a class="el" href="classGEO_1_1no__iterator.html">no_iterator</a>&gt; GEO::MeshFacets::corners </td>
+          <td class="memname"><a class="el" href="classGEO_1_1index__range.html">index_range</a> GEO::MeshFacets::corners </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td>
           <td class="paramname"><em>f</em></td><td>)</td>
@@ -543,7 +553,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a range with all the corners of the facet. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01367">1367</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01391">1391</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -591,7 +601,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the index of the first facet </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01172">1172</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01192">1192</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -628,7 +638,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the index of the created facet </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01300">1300</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01323">1323</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -665,7 +675,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the index of the created facet </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01256">1256</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01279">1279</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -713,7 +723,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the index of the created facet </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01278">1278</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01301">1301</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -772,7 +782,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the index of the created quad </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01238">1238</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01261">1261</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -809,7 +819,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the index of the first quad </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01211">1211</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01231">1231</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -862,7 +872,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the index of the created triangle </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01220">1220</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01240">1240</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -899,7 +909,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the index of the first triangle </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01202">1202</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01222">1222</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -992,7 +1002,7 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>le such that adjacent(f,le) == f2 or NO_FACET if f and f2 are not adjacent. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>le such that adjacent(f,le) == f2 or NO_INDEX if f and f2 are not adjacent. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01108">1108</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
@@ -1042,6 +1052,60 @@ Additional Inherited Members</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the local index in <code>f1</code> of a vertex present in <code>f2</code>, or NO_VERTEX if there is no such vertex. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01080">1080</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+
+</div>
+</div>
+<a id="a5770af82c0c74a9d295249b7d55e4526"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5770af82c0c74a9d295249b7d55e4526">&#9670;&nbsp;</a></span>find_edge()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> GEO::MeshFacets::find_edge </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td>
+          <td class="paramname"><em>v1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td>
+          <td class="paramname"><em>v2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Finds an edge by vertex indices. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>a facet </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">v1,v2</td><td>two vertex indices </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the edge le such that vertex(f,le) = v1 and vertex(f, (le+1)nb_vertices(f)) == v2 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01161">1161</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1145,7 +1209,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Indicates that the stored elements are no longer only triangles. </p>
 <p>Creates the facet pointers for the pre-existing triangles if any. </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01394">1394</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01418">1418</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1551,7 +1615,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1MeshFacets.html">MeshFacets</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

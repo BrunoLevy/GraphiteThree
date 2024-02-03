@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -158,6 +165,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:ac4328e358cfb763cbddd09e8e0fb9f2b"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classOGF_1_1MetaType.html">MetaType</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Interpreter.html#ac4328e358cfb763cbddd09e8e0fb9f2b">resolve_meta_type</a> (const std::string &amp;type_name) const</td></tr>
 <tr class="memdesc:ac4328e358cfb763cbddd09e8e0fb9f2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds a <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a> by name.  <a href="classOGF_1_1Interpreter.html#ac4328e358cfb763cbddd09e8e0fb9f2b">More...</a><br /></td></tr>
 <tr class="separator:ac4328e358cfb763cbddd09e8e0fb9f2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d90b9a415f577d114ac823d34ea2578"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Interpreter.html#a3d90b9a415f577d114ac823d34ea2578">bind_meta_type</a> (<a class="el" href="classOGF_1_1MetaType.html">MetaType</a> *mtype)</td></tr>
+<tr class="memdesc:a3d90b9a415f577d114ac823d34ea2578"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binds a <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a>.  <a href="classOGF_1_1Interpreter.html#a3d90b9a415f577d114ac823d34ea2578">More...</a><br /></td></tr>
+<tr class="separator:a3d90b9a415f577d114ac823d34ea2578"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0383b49314feebb31a7f34258c191fb"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classOGF_1_1Object.html">Object</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Interpreter.html#af0383b49314feebb31a7f34258c191fb">create</a> (const <a class="el" href="classOGF_1_1ArgList.html">ArgList</a> &amp;args)</td></tr>
 <tr class="memdesc:af0383b49314feebb31a7f34258c191fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an object.  <a href="classOGF_1_1Interpreter.html#af0383b49314feebb31a7f34258c191fb">More...</a><br /></td></tr>
 <tr class="separator:af0383b49314feebb31a7f34258c191fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -209,6 +219,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a5d21134cda76d26ab46e1faeb0c317aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOGF_1_1Scope.html">Scope</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Interpreter.html#a5d21134cda76d26ab46e1faeb0c317aa">get_globals</a> () const</td></tr>
 <tr class="memdesc:a5d21134cda76d26ab46e1faeb0c317aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the <a class="el" href="classOGF_1_1Scope.html" title="A naming scope in an Interpreter.">Scope</a> with the global variables.  <a href="classOGF_1_1Interpreter.html#a5d21134cda76d26ab46e1faeb0c317aa">More...</a><br /></td></tr>
 <tr class="separator:a5d21134cda76d26ab46e1faeb0c317aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad180d6987c08bc86a9629c572d9bf0ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOGF_1_1Scope.html">Scope</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Interpreter.html#ad180d6987c08bc86a9629c572d9bf0ea">get_meta_types</a> () const</td></tr>
+<tr class="memdesc:ad180d6987c08bc86a9629c572d9bf0ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the <a class="el" href="classOGF_1_1Scope.html" title="A naming scope in an Interpreter.">Scope</a> with the meta types.  <a href="classOGF_1_1Interpreter.html#ad180d6987c08bc86a9629c572d9bf0ea">More...</a><br /></td></tr>
+<tr class="separator:ad180d6987c08bc86a9629c572d9bf0ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d9f540333a9acee33474c63eeee8765"><td class="memItemLeft" align="right" valign="top"><a id="a2d9f540333a9acee33474c63eeee8765"></a>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Interpreter.html#a2d9f540333a9acee33474c63eeee8765">~Interpreter</a> ()</td></tr>
 <tr class="memdesc:a2d9f540333a9acee33474c63eeee8765"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOGF_1_1Interpreter.html" title="Abstract base class for the GOM interpreter.">Interpreter</a> destructor. <br /></td></tr>
@@ -456,7 +469,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extension_</b>
 <div class="textblock"><p>Abstract base class for the GOM interpreter. </p>
 <p>It is completely independent of the used interpreted language. It is implemented in the gel_lua (and upcoming gel_python libraries). </p>
 
-<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00174">174</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00215">215</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ae03dfbaa69b21421adf2d7d982b57dfa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae03dfbaa69b21421adf2d7d982b57dfa">&#9670;&nbsp;</a></span>add_to_history()</h2>
@@ -627,6 +640,47 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extension_</b>
 </dl>
 
 <p>Implemented in <a class="el" href="classOGF_1_1LuaInterpreter.html#a7ca7729a06aa73a737d26ad28c1f883f">OGF::LuaInterpreter</a>.</p>
+
+</div>
+</div>
+<a id="a3d90b9a415f577d114ac823d34ea2578"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d90b9a415f577d114ac823d34ea2578">&#9670;&nbsp;</a></span>bind_meta_type()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool OGF::Interpreter::bind_meta_type </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classOGF_1_1MetaType.html">MetaType</a> *&#160;</td>
+          <td class="paramname"><em>mtype</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Binds a <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">mtype</td><td>the <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a> to be bound </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>if the <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a> could be bound </td></tr>
+    <tr><td class="paramname">false</td><td>otherwise. This can happen if a <a class="el" href="classOGF_1_1MetaType.html" title="The representation of a type in the Meta repository.">MetaType</a> with the same name was already bound </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1211,7 +1265,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extension_</b>
 <p>Gets the filename extensions for the interpreted language. </p>
 <dl class="section return"><dt>Returns</dt><dd>the extension without the dot ("lua" for Lua, "py" for Python). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00473">473</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00523">523</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
 
 </div>
 </div>
@@ -1241,7 +1295,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extension_</b>
 <p>Gets the <a class="el" href="classOGF_1_1Scope.html" title="A naming scope in an Interpreter.">Scope</a> with the global variables. </p>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the <a class="el" href="classOGF_1_1Scope.html" title="A naming scope in an Interpreter.">Scope</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00481">481</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00531">531</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
 
 </div>
 </div>
@@ -1363,7 +1417,37 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extension_</b>
 <p>Gets the name of the interpreted language. </p>
 <dl class="section return"><dt>Returns</dt><dd>The name of the interpreted language ("Lua" for Lua, "Python" for Python ...). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00464">464</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00514">514</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
+
+</div>
+</div>
+<a id="ad180d6987c08bc86a9629c572d9bf0ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad180d6987c08bc86a9629c572d9bf0ea">&#9670;&nbsp;</a></span>get_meta_types()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOGF_1_1Scope.html">Scope</a>* OGF::Interpreter::get_meta_types </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the <a class="el" href="classOGF_1_1Scope.html" title="A naming scope in an Interpreter.">Scope</a> with the meta types. </p>
+<dl class="section return"><dt>Returns</dt><dd>a pointer to the <a class="el" href="classOGF_1_1Scope.html" title="A naming scope in an Interpreter.">Scope</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00539">539</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
 
 </div>
 </div>
@@ -1400,7 +1484,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extension_</b>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the l th command in the history, as a string </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00599">599</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00657">657</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
 
 </div>
 </div>
@@ -1430,7 +1514,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extension_</b>
 <p>Gets the size of the history. </p>
 <dl class="section return"><dt>Returns</dt><dd>the number of command lines in the history. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00590">590</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00648">648</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
 
 </div>
 </div>
@@ -1738,7 +1822,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extension_</b>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00438">438</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00488">488</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
 
 </div>
 </div>
@@ -1774,7 +1858,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extension_</b>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00446">446</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00496">496</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
 
 </div>
 </div>
@@ -2207,7 +2291,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extension_</b>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00683">683</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00741">741</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
 
 </div>
 </div>
@@ -2243,7 +2327,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extension_</b>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00675">675</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="interpreter_8h_source.html#l00733">733</a> of file <a class="el" href="interpreter_8h_source.html">interpreter.h</a>.</p>
 
 </div>
 </div>
@@ -2443,7 +2527,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extension_</b>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1Interpreter.html">Interpreter</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

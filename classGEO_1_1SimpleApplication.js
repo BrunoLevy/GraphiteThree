@@ -103,6 +103,7 @@ var classGEO_1_1SimpleApplication =
     [ "key_funcs_help_", "classGEO_1_1SimpleApplication.html#a7371730cab6ac338358efca467b80f42", null ],
     [ "light_rotation_", "classGEO_1_1SimpleApplication.html#a7a8f3ff8d97f5af3f1e74101ff5bb178", null ],
     [ "lighting_", "classGEO_1_1SimpleApplication.html#af4a5d4a64f6fe63e3f78ec7823742313", null ],
+    [ "locked_", "classGEO_1_1SimpleApplication.html#a428842d85c4f1846d3428e7a77f091db", null ],
     [ "lua_error_occured_", "classGEO_1_1SimpleApplication.html#af260e508a5968b5654383c39fdc826a5", null ],
     [ "lua_state_", "classGEO_1_1SimpleApplication.html#ab1ed5214be0c319337420afc91b41290", null ],
     [ "modelview_transpose_", "classGEO_1_1SimpleApplication.html#af0f7443682fc134f62a07cbd78e8fb15", null ],

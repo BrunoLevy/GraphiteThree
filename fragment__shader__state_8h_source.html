@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -132,21 +139,22 @@ $(document).ready(function(){initNavTree('fragment__shader__state_8h_source.html
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">bool</span>  vertex_normals_enabled;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">bool</span>  primitive_filtering_enabled;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;};                                  </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;uniform <a class="code" href="structUniformState.html">UniformState</a> GLUP;          </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;uniform sampler2D texture1Dsampler;                 </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;uniform sampler2D texture2Dsampler;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#ifndef GLUP_NO_TEXTURE_3D</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;uniform sampler3D texture3Dsampler;         </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">// TODO:</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">// requires</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">//  #version 140 or</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">//  #extension GL_EXT_gpu_shader4 enable</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">// uniform samplerBuffer texturePrimitiveFiltersampler;</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordtype">bool</span>  thick_lines_enabled;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;};                                  </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;uniform <a class="code" href="structUniformState.html">UniformState</a> GLUP;          </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;uniform sampler2D texture1Dsampler;                 </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;uniform sampler2D texture2Dsampler;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#ifndef GLUP_NO_TEXTURE_3D</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;uniform sampler3D texture3Dsampler;         </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">// TODO:</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">// requires</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">//  #version 140 or</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">//  #extension GL_EXT_gpu_shader4 enable</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="comment">// uniform samplerBuffer texturePrimitiveFiltersampler;</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
 <div class="ttc" id="anamespaceGEO_html_a18708792ceea5d2737ac3b8492aa2b03"><div class="ttname"><a href="namespaceGEO.html#a18708792ceea5d2737ac3b8492aa2b03">GEO::mat4</a></div><div class="ttdeci">Matrix&lt; 4, Numeric::float64 &gt; mat4</div><div class="ttdoc">Represents a 4x4 matrix.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00133">geometry.h:133</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_a6044ad0fa5784ccde33b7bb3fa0e1459"><div class="ttname"><a href="namespaceGEO.html#a6044ad0fa5784ccde33b7bb3fa0e1459">GEO::vec3</a></div><div class="ttdeci">vecng&lt; 3, Numeric::float64 &gt; vec3</div><div class="ttdoc">Represents points and vectors in 3d.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00065">geometry.h:65</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_a9ccb76276219a82b23fd62196cfe4596"><div class="ttname"><a href="namespaceGEO.html#a9ccb76276219a82b23fd62196cfe4596">GEO::vec4</a></div><div class="ttdeci">vecng&lt; 4, Numeric::float64 &gt; vec4</div><div class="ttdoc">Represents points and vectors in 4d.</div><div class="ttdef"><b>Definition:</b> <a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h_source.html#l00071">geometry.h:71</a></div></div>
@@ -158,7 +166,7 @@ $(document).ready(function(){initNavTree('fragment__shader__state_8h_source.html
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_20037eb6270bb31b4654a405ea4434e9.html">geogram_gfx</a></li><li class="navelem"><a class="el" href="dir_6ee10e88a74785d72493f3d7d7c0b76b.html">GLUP</a></li><li class="navelem"><a class="el" href="dir_4d3ab1102c0731354964a39120f98db1.html">shaders</a></li><li class="navelem"><a class="el" href="dir_0781b7967d18f5c1485f8b5852b19d72.html">GLUPES</a></li><li class="navelem"><b>fragment_shader_state.h</b></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

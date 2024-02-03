@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -314,7 +321,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Computes a linear combination of two vectors. </p>
-<p>In formula: <img class="formulaInl" alt="$ y \leftarrow a x + y $" src="form_1.png"/> </p><dl class="params"><dt>Parameters</dt><dd>
+<p>In formula: \( y \leftarrow a x + y \) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">blas</td><td>a handle to the BLAS abstraction layer </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>dimension of the vectors </td></tr>
@@ -344,7 +351,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Copies a vector. </p>
-<p>In formula: <img class="formulaInl" alt="$ y \leftarrow x $" src="form_27.png"/> </p><dl class="params"><dt>Parameters</dt><dd>
+<p>In formula: \( y \leftarrow x \) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">blas</td><td>a handle to the BLAS abstraction layer </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>dimension of the vector </td></tr>
@@ -404,19 +411,19 @@ Functions</h2></td></tr>
 
 <p>Computes a matrix-vector product. </p>
 <p>performs one of the matrix-vector operations <br  />
- <img class="formulaInl" alt="$ y = \alpha A x + \beta y $" src="form_28.png"/> or <img class="formulaInl" alt="$ y = \alpha A^t x + \beta y $" src="form_29.png"/>, where <img class="formulaInl" alt="$ \alpha $" src="form_30.png"/> and <img class="formulaInl" alt="$ \beta $" src="form_31.png"/> are scalars, x and y are vectors and A is an m by n matrix. <br  />
+ \( y = \alpha A x + \beta y \) or \( y = \alpha A^t x + \beta y \), where \( \alpha \) and \( \beta \) are scalars, x and y are vectors and A is an m by n matrix. <br  />
  </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">blas</td><td>a handle to the BLAS abstraction layer </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">trans</td><td>one of (NoTranspose, Transpose, ConjugateTranspose), specifies the operation to be performed as follows:<ul>
-<li>NoTranspose: <img class="formulaInl" alt="$ y = \alpha A x + \beta y $" src="form_28.png"/></li>
-<li>Transpose: <img class="formulaInl" alt="$ y = \alpha A^t x + \beta y $" src="form_29.png"/></li>
-<li>ConjugateTranspose: <img class="formulaInl" alt="$ y = \alpha A^t x + \beta y $" src="form_29.png"/> </li>
+<li>NoTranspose: \( y = \alpha A x + \beta y \)</li>
+<li>Transpose: \( y = \alpha A^t x + \beta y \)</li>
+<li>ConjugateTranspose: \( y = \alpha A^t x + \beta y \) </li>
 </ul>
 </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">m</td><td>number of rows of the matrix A </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>number of columns of the matrix A </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">alpha</td><td>the scalar <img class="formulaInl" alt="$ \alpha $" src="form_30.png"/> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">alpha</td><td>the scalar \( \alpha \) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>an array of dimension (ldA,n). On entry, the leading m by n part of the array A must contain the array of coefficients. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ldA</td><td>specifies the first dimension of A as declared by the caller. ldA must be at least max(1,m). <br  />
  </td></tr>
@@ -426,7 +433,7 @@ Functions</h2></td></tr>
  vector x. <br  />
  </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">incx</td><td>the increment for the elements of x </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">beta</td><td>the scalar <img class="formulaInl" alt="$ \beta $" src="form_31.png"/> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">beta</td><td>the scalar \( \beta \) </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">y</td><td>an array of dimension ( 1 + ( m - 1 )*abs( incy ) ) when trans = NoTranspose and at least ( 1 + ( n - 1 )*abs( incy ) ) otherwise. <br  />
  Before entry with beta non-zero, the incremented array y must contain the vector y. On exit, y is overwritten by the updated vector y. <br  />
  </td></tr>
@@ -480,7 +487,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Scales a vector. </p>
-<p>In formula: <img class="formulaInl" alt="$ x \leftarrow a x $" src="form_0.png"/> </p><dl class="params"><dt>Parameters</dt><dd>
+<p>In formula: \( x \leftarrow a x \) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">blas</td><td>a handle to the BLAS abstraction layer </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>dimension of the vector </td></tr>
@@ -508,7 +515,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Solves a linear system. </p>
-<p>Solves one of the systems of equations <img class="formulaInl" alt="$ A x = b $" src="form_32.png"/> or <img class="formulaInl" alt="$ A^t x = b $" src="form_33.png"/> where b and x are n element vectors and A is an n by n unit, or non-unit, upper or lower triangular matrix, supplied in packed form. No test for singularity or near-singularity is included in this routine. Such tests must be performed before calling this routine. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Solves one of the systems of equations \( A x = b \) or \( A^t x = b \) where b and x are n element vectors and A is an n by n unit, or non-unit, upper or lower triangular matrix, supplied in packed form. No test for singularity or near-singularity is included in this routine. Such tests must be performed before calling this routine. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">blas</td><td>a handle to the BLAS abstraction layer </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">uplo</td><td>one of (UpperTriangle, LowerTriangle), specifies whether A is an upper or lower triangular matrix as follows:<ul>
@@ -517,9 +524,9 @@ Functions</h2></td></tr>
 </ul>
 </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">trans</td><td>one of (NoTranspose, Transpose, ConjugateTranspose), specifies the equations to be solved as follows:<ul>
-<li>NoTranspose: <img class="formulaInl" alt="$ A x = b $" src="form_32.png"/></li>
-<li>Transpose: <img class="formulaInl" alt="$ A^t x = b $" src="form_33.png"/></li>
-<li>ConjugateTranspose: <img class="formulaInl" alt="$ A^t x = b $" src="form_33.png"/> </li>
+<li>NoTranspose: \( A x = b \)</li>
+<li>Transpose: \( A^t x = b \)</li>
+<li>ConjugateTranspose: \( A^t x = b \) </li>
 </ul>
 </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">diag</td><td>one of (UnitTriangular, NotUnitTriangular), specifies whether or not A is unit triangular as follows:<ul>
@@ -885,7 +892,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_53d5e9858254fface141430feef69984.html">NL</a></li><li class="navelem"><a class="el" href="nl__blas_8h.html">nl_blas.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

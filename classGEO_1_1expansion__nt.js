@@ -5,11 +5,8 @@ var classGEO_1_1expansion__nt =
       [ "DIFF", "classGEO_1_1expansion__nt.html#ac5eaea0a39d36260560b600ef5cffa67a3098b6a87f05e585b9d8b4282818d7bd", null ],
       [ "PRODUCT", "classGEO_1_1expansion__nt.html#ac5eaea0a39d36260560b600ef5cffa67a61837e1917412bcd6ead04029867e9d7", null ]
     ] ],
-    [ "UninitializedType", "classGEO_1_1expansion__nt.html#a833181fac9c59147ecd094fbe90384a2", [
-      [ "UNINITIALIZED", "classGEO_1_1expansion__nt.html#a833181fac9c59147ecd094fbe90384a2a5715901d7fbfec8edd8959b6d09a1978", null ]
-    ] ],
-    [ "expansion_nt", "classGEO_1_1expansion__nt.html#a7bbe873365ea1c3b44ddb362417acc70", null ],
-    [ "expansion_nt", "classGEO_1_1expansion__nt.html#a042e3304f32e018e919a0d9b0c09c02d", null ],
+    [ "expansion_nt", "classGEO_1_1expansion__nt.html#a907557095c3d97c8aad312ae9110fc0c", null ],
+    [ "expansion_nt", "classGEO_1_1expansion__nt.html#ae12591c7aca375b586f5281957ac7081", null ],
     [ "expansion_nt", "classGEO_1_1expansion__nt.html#a928f8a6e1a723a3b6eef6a089c57c288", null ],
     [ "expansion_nt", "classGEO_1_1expansion__nt.html#aa7a01693f7ab1e5093d16c94d382e77b", null ],
     [ "expansion_nt", "classGEO_1_1expansion__nt.html#a7e86f38ec78b0ffcfe97bf6d165cf578", null ],
@@ -26,6 +23,7 @@ var classGEO_1_1expansion__nt =
     [ "copy", "classGEO_1_1expansion__nt.html#a1f559b54117001c8768ee14a4291dc0b", null ],
     [ "estimate", "classGEO_1_1expansion__nt.html#a08485fa973c284e5e64a2a292d1865d1", null ],
     [ "length", "classGEO_1_1expansion__nt.html#aa558d28e98e5a0499217ffd447dc1cfc", null ],
+    [ "negate", "classGEO_1_1expansion__nt.html#adf89933d662945ffc09074603f113c97", null ],
     [ "operator*", "classGEO_1_1expansion__nt.html#a1db9f6fb2f1715517133158735a38272", null ],
     [ "operator*", "classGEO_1_1expansion__nt.html#ab57dee367904b800dbf572243c869317", null ],
     [ "operator*=", "classGEO_1_1expansion__nt.html#a272a63163519b3e602b8ed8e536d134e", null ],
@@ -67,6 +65,5 @@ var classGEO_1_1expansion__nt =
     [ "operator-", "classGEO_1_1expansion__nt.html#af3072dbd1ababbec4f3f8a2abd9df40f", null ],
     [ "operator==", "classGEO_1_1expansion__nt.html#a84003ff88fc0cf317f61fc9157baee99", null ],
     [ "operator==", "classGEO_1_1expansion__nt.html#a9f64832c71ba0c97e9358acfc44459b6", null ],
-    [ "operator==", "classGEO_1_1expansion__nt.html#a3c7aa1fff1274bf701c364aad559dfc0", null ],
-    [ "rational_nt", "classGEO_1_1expansion__nt.html#ada2b562c894ec8c66ae8b4654162182b", null ]
+    [ "operator==", "classGEO_1_1expansion__nt.html#a3c7aa1fff1274bf701c364aad559dfc0", null ]
 ];

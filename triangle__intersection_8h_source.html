@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -233,7 +240,7 @@ $(document).ready(function(){initNavTree('triangle__intersection_8h_source.html'
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160; </div>
 <div class="ttc" id="aclassGEO_1_1vecng_html"><div class="ttname"><a href="classGEO_1_1vecng.html">GEO::vecng&lt; 3, Numeric::float64 &gt;</a></div></div>
-<div class="ttc" id="aclassGEO_1_1vector_html"><div class="ttname"><a href="classGEO_1_1vector.html">GEO::vector</a></div><div class="ttdoc">Vector with aligned memory allocation.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8h_source.html#l00623">memory.h:623</a></div></div>
+<div class="ttc" id="aclassGEO_1_1vector_html"><div class="ttname"><a href="classGEO_1_1vector.html">GEO::vector</a></div><div class="ttdoc">Vector with aligned memory allocation.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8h_source.html#l00636">memory.h:636</a></div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2geometry_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h.html">geometry.h</a></div><div class="ttdoc">Geometric functions in 2d and 3d.</div></div>
 <div class="ttc" id="amemory_8h_html"><div class="ttname"><a href="memory_8h.html">memory.h</a></div><div class="ttdoc">Types and functions for memory manipulation.</div></div>
@@ -249,7 +256,7 @@ $(document).ready(function(){initNavTree('triangle__intersection_8h_source.html'
 <div class="ttc" id="anamespaceGEO_html_ad52bba1dc23d9b3cf4da0a6471bb6fe9"><div class="ttname"><a href="namespaceGEO.html#ad52bba1dc23d9b3cf4da0a6471bb6fe9">GEO::get_edge_vertices</a></div><div class="ttdeci">void get_edge_vertices(TriangleRegion E, TriangleRegion &amp;q0, TriangleRegion &amp;q1)</div><div class="ttdoc">Gets the vertices of an edge.</div></div>
 <div class="ttc" id="anamespaceGEO_html_ad6e4609602dbc7b9d8d66c679cbc0014"><div class="ttname"><a href="namespaceGEO.html#ad6e4609602dbc7b9d8d66c679cbc0014">GEO::get_triangle_vertices</a></div><div class="ttdeci">void get_triangle_vertices(TriangleRegion T, TriangleRegion &amp;p0, TriangleRegion &amp;p1, TriangleRegion &amp;p2)</div><div class="ttdoc">Gets the vertices of a triangle.</div></div>
 <div class="ttc" id="anamespaceGEO_html_adacc6e8540792f5dadd7ca842dc23f0a"><div class="ttname"><a href="namespaceGEO.html#adacc6e8540792f5dadd7ca842dc23f0a">GEO::region_to_string</a></div><div class="ttdeci">std::string region_to_string(TriangleRegion rgn)</div><div class="ttdoc">Converts a triangle region code to a string.</div></div>
-<div class="ttc" id="anamespaceGEO_html_ae771f961036ac7f98502ff145b99d424"><div class="ttname"><a href="namespaceGEO.html#ae771f961036ac7f98502ff145b99d424">GEO::coord_index_t</a></div><div class="ttdeci">geo_coord_index_t coord_index_t</div><div class="ttdoc">The type for storing coordinate indices, and iterating on the coordinates of a point.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00321">numeric.h:321</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_ae771f961036ac7f98502ff145b99d424"><div class="ttname"><a href="namespaceGEO.html#ae771f961036ac7f98502ff145b99d424">GEO::coord_index_t</a></div><div class="ttdeci">geo_coord_index_t coord_index_t</div><div class="ttdoc">The type for storing coordinate indices, and iterating on the coordinates of a point.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00363">numeric.h:363</a></div></div>
 <div class="ttc" id="anamespaceGEO_html_aeea6d705e79fbb50658042cb810e8390"><div class="ttname"><a href="namespaceGEO.html#aeea6d705e79fbb50658042cb810e8390">GEO::triangles_intersections</a></div><div class="ttdeci">bool triangles_intersections(const vec3 &amp;p0, const vec3 &amp;p1, const vec3 &amp;p2, const vec3 &amp;q0, const vec3 &amp;q1, const vec3 &amp;q2, vector&lt; TriangleIsect &gt; &amp;result)</div><div class="ttdoc">Triangle-triangle intersection with symbolic information.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -257,7 +264,7 @@ $(document).ready(function(){initNavTree('triangle__intersection_8h_source.html'
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_7faf8be2027c4a91a1e5453dfee06721.html">mesh</a></li><li class="navelem"><a class="el" href="triangle__intersection_8h.html">triangle_intersection.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

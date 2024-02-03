@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -241,6 +248,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ab7b0f9de37d5483a058ad3bc0036fb88"><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion.html#ab7b0f9de37d5483a058ad3bc0036fb88">bytes</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> capa)</td></tr>
 <tr class="memdesc:ab7b0f9de37d5483a058ad3bc0036fb88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the amount of memory required to store an expansion.  <a href="classGEO_1_1expansion.html#ab7b0f9de37d5483a058ad3bc0036fb88">More...</a><br /></td></tr>
 <tr class="separator:ab7b0f9de37d5483a058ad3bc0036fb88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaeef9303082d00caae32469e3b5d1bbf"><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion.html#aaeef9303082d00caae32469e3b5d1bbf">bytes_on_stack</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> capa)</td></tr>
+<tr class="memdesc:aaeef9303082d00caae32469e3b5d1bbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the amount of memory required to store an expansion on the stack.  <a href="classGEO_1_1expansion.html#aaeef9303082d00caae32469e3b5d1bbf">More...</a><br /></td></tr>
+<tr class="separator:aaeef9303082d00caae32469e3b5d1bbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab68805bb772ef033901310bf2cfcba18"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classGEO_1_1expansion.html">expansion</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion.html#ab68805bb772ef033901310bf2cfcba18">new_expansion_on_heap</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> capa)</td></tr>
 <tr class="memdesc:ab68805bb772ef033901310bf2cfcba18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates an expansion on the heap.  <a href="classGEO_1_1expansion.html#ab68805bb772ef033901310bf2cfcba18">More...</a><br /></td></tr>
 <tr class="separator:ab68805bb772ef033901310bf2cfcba18"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -310,12 +320,24 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a476b38063531ee86b819db23b5e88201"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion.html#a476b38063531ee86b819db23b5e88201">initialize</a> ()</td></tr>
 <tr class="memdesc:a476b38063531ee86b819db23b5e88201"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the expansion class.  <a href="classGEO_1_1expansion.html#a476b38063531ee86b819db23b5e88201">More...</a><br /></td></tr>
 <tr class="separator:a476b38063531ee86b819db23b5e88201"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac718788736e63820bd2deb99cbbb9c86"><td class="memItemLeft" align="right" valign="top"><a id="ac718788736e63820bd2deb99cbbb9c86"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion.html#ac718788736e63820bd2deb99cbbb9c86">show_all_stats</a> ()</td></tr>
+<tr class="memdesc:ac718788736e63820bd2deb99cbbb9c86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Show global statistics. <br /></td></tr>
+<tr class="separator:ac718788736e63820bd2deb99cbbb9c86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a31583e8eb5a4b5d5b107e77a57fa6b40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1expansion.html">expansion</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion.html#a31583e8eb5a4b5d5b107e77a57fa6b40">assign_sub_product</a> (const double *a, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> a_length, const <a class="el" href="classGEO_1_1expansion.html">expansion</a> &amp;b)</td></tr>
 <tr class="memdesc:a31583e8eb5a4b5d5b107e77a57fa6b40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns a sub-product to this expansion.  <a href="classGEO_1_1expansion.html#a31583e8eb5a4b5d5b107e77a57fa6b40">More...</a><br /></td></tr>
 <tr class="separator:a31583e8eb5a4b5d5b107e77a57fa6b40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaabaf29dbd0f9b7d77aabf2aa86858a8"><td class="memItemLeft" align="right" valign="top"><a id="aaabaf29dbd0f9b7d77aabf2aa86858a8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion.html#aaabaf29dbd0f9b7d77aabf2aa86858a8">expansion</a> (const <a class="el" href="classGEO_1_1expansion.html">expansion</a> &amp;rhs)=delete</td></tr>
+<tr class="memdesc:aaabaf29dbd0f9b7d77aabf2aa86858a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expansions cannot be copied. <br /></td></tr>
+<tr class="separator:aaabaf29dbd0f9b7d77aabf2aa86858a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc8652ab5e00a3d208648790195281e1"><td class="memItemLeft" align="right" valign="top"><a id="acc8652ab5e00a3d208648790195281e1"></a>
+<a class="el" href="classGEO_1_1expansion.html">expansion</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion.html#acc8652ab5e00a3d208648790195281e1">operator=</a> (const <a class="el" href="classGEO_1_1expansion.html">expansion</a> &amp;rhs)=delete</td></tr>
+<tr class="memdesc:acc8652ab5e00a3d208648790195281e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expansions cannot be copied. <br /></td></tr>
+<tr class="separator:acc8652ab5e00a3d208648790195281e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
 Static Protected Member Functions</h2></td></tr>
@@ -348,12 +370,9 @@ Related Functions</h2></td></tr>
 <tr class="memitem:a54587c63ec4a28c796e002a80a38acac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion.html#a54587c63ec4a28c796e002a80a38acac">square</a> (double a, double &amp;x, double &amp;y)</td></tr>
 <tr class="memdesc:a54587c63ec4a28c796e002a80a38acac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Squares a number into a length 2 expansion.  <a href="classGEO_1_1expansion.html#a54587c63ec4a28c796e002a80a38acac">More...</a><br /></td></tr>
 <tr class="separator:a54587c63ec4a28c796e002a80a38acac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08bf469c6cbb6900eb04f1f98e6e64f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion.html#a08bf469c6cbb6900eb04f1f98e6e64f5">new_expansion_on_stack</a>(capa)&#160;&#160;&#160;    (new (alloca(<a class="el" href="classGEO_1_1expansion.html#ab7b0f9de37d5483a058ad3bc0036fb88">expansion::bytes</a>(capa)))<a class="el" href="classGEO_1_1expansion.html">expansion</a>(capa))</td></tr>
+<tr class="memitem:a08bf469c6cbb6900eb04f1f98e6e64f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion.html#a08bf469c6cbb6900eb04f1f98e6e64f5">new_expansion_on_stack</a>(capa)&#160;&#160;&#160;    (new (alloca(<a class="el" href="classGEO_1_1expansion.html#aaeef9303082d00caae32469e3b5d1bbf">expansion::bytes_on_stack</a>(capa)))<a class="el" href="classGEO_1_1expansion.html">expansion</a>(capa))</td></tr>
 <tr class="memdesc:a08bf469c6cbb6900eb04f1f98e6e64f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates an expansion on the stack.  <a href="classGEO_1_1expansion.html#a08bf469c6cbb6900eb04f1f98e6e64f5">More...</a><br /></td></tr>
 <tr class="separator:a08bf469c6cbb6900eb04f1f98e6e64f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cc4c1e7635ff72f37dc871a41e06708"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion.html#a0cc4c1e7635ff72f37dc871a41e06708">expansion_sub_product</a>(a,  a_length,  b)</td></tr>
-<tr class="memdesc:a0cc4c1e7635ff72f37dc871a41e06708"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes an expansion that represents the exact product of its arguments (a[0]+a[1]+ ... +a[length-1])*b.  <a href="classGEO_1_1expansion.html#a0cc4c1e7635ff72f37dc871a41e06708">More...</a><br /></td></tr>
-<tr class="separator:a0cc4c1e7635ff72f37dc871a41e06708"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac73b16e5c143290e3864bd29083f43d0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion.html#ac73b16e5c143290e3864bd29083f43d0">expansion_create</a>(a)&#160;&#160;&#160;    <a class="el" href="classGEO_1_1expansion.html#a08bf469c6cbb6900eb04f1f98e6e64f5">new_expansion_on_stack</a>(1)-&gt;<a class="el" href="classGEO_1_1expansion.html#ad64c0ccbe03f05554b4bf2dcb05d03a4">assign</a>(a)</td></tr>
 <tr class="memdesc:ac73b16e5c143290e3864bd29083f43d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an expansion from a double.  <a href="classGEO_1_1expansion.html#ac73b16e5c143290e3864bd29083f43d0">More...</a><br /></td></tr>
 <tr class="separator:ac73b16e5c143290e3864bd29083f43d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -438,7 +457,7 @@ Related Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00299">299</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00315">315</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -476,7 +495,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the new value of this expansion (<code>rhs</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00355">355</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00371">371</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -513,7 +532,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the new value of this expansion (<code>a</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00344">344</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00360">360</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -550,7 +569,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the new value of this expansion that is, abs(<code>rhs</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00369">369</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00385">385</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -869,7 +888,7 @@ Related Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the new value of this expansion (<code>a</code> - <code>b</code>) </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd><a class="el" href="classGEO_1_1expansion.html#a62f68f3113dde08f36cd698dd12298db" title="Gets the capacity of this expansion.">capacity()</a> &gt;= diff_capacity(a,b) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00435">435</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00451">451</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -1137,7 +1156,7 @@ Related Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the new value of this expansion (<code>a</code> * <code>b</code>) </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd><a class="el" href="classGEO_1_1expansion.html#a62f68f3113dde08f36cd698dd12298db" title="Gets the capacity of this expansion.">capacity()</a> &gt;= product_capacity(a,b) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00467">467</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00483">483</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -1249,7 +1268,7 @@ Related Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the new value of this expansion (<code>a</code> * <code>a</code>) </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd><a class="el" href="classGEO_1_1expansion.html#a62f68f3113dde08f36cd698dd12298db" title="Gets the capacity of this expansion.">capacity()</a> &gt;= square_capacity(a) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00496">496</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00512">512</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -1294,7 +1313,7 @@ Related Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Assigns a sub-product to this expansion. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Used by <a class="el" href="classGEO_1_1expansion.html#a5ad4b03cb3db8629bb06267248950d35" title="Assigns the product of two doubles to this expansion (should not be used by client code).">assign_product()</a> when operating in balanced distillation mode. Recursively assembles sub-sums. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>a pointer to the first component of the first term </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">a_length</td><td>number of components in first term </td></tr>
@@ -1528,7 +1547,7 @@ Related Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the new value of this expansion (<code>a</code> + <code>b</code>) </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd><a class="el" href="classGEO_1_1expansion.html#a62f68f3113dde08f36cd698dd12298db" title="Gets the capacity of this expansion.">capacity()</a> &gt;= sum_capacity(a,b) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00403">403</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00419">419</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -1566,6 +1585,43 @@ Related Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the total number of bytes required to store an expansion of capacity <code>capa</code>. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00279">279</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+
+</div>
+</div>
+<a id="aaeef9303082d00caae32469e3b5d1bbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaeef9303082d00caae32469e3b5d1bbf">&#9670;&nbsp;</a></span>bytes_on_stack()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static size_t GEO::expansion::bytes_on_stack </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td>
+          <td class="paramname"><em>capa</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the amount of memory required to store an expansion on the stack. </p>
+<p>Behaves like <a class="el" href="classGEO_1_1expansion.html#ab7b0f9de37d5483a058ad3bc0036fb88" title="Computes the amount of memory required to store an expansion.">bytes()</a> but in debug mode checks that this will fit on the stack. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">capa</td><td>the required capacity </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the total number of bytes required to store an expansion of capacity <code>capa</code>. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00299">299</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -1791,7 +1847,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact determinant <code>a11</code> * <code>a22</code> - <code>a21</code> * <code>a12</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00791">791</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00807">807</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -1880,7 +1936,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact value of the determinant </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00823">823</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00839">839</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -1951,7 +2007,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact value of the determinant </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00866">866</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00882">882</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -1999,7 +2055,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact difference between <code>a</code> and <code>b</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00685">685</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00701">701</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -2048,7 +2104,7 @@ Related Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact difference of <code>a</code> and <code>b</code> </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The result does not depend on the value of the double argument <code>b</code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00541">541</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00557">557</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -2097,7 +2153,7 @@ Related Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact difference of two doubles </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The result does not depend on the values of the two numbers. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00419">419</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00435">435</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -2134,7 +2190,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the dot product between two <code>dim%-dimensional</code> vectors specified by differences of doubles. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00930">930</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00946">946</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -2171,7 +2227,7 @@ Related Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01075">1075</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01091">1091</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -2208,7 +2264,7 @@ Related Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01085">1085</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01101">1101</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -2238,7 +2294,7 @@ Related Functions</h2></td></tr>
 <p>Computes an approximation of the stored value in this expansion. </p>
 <dl class="section return"><dt>Returns</dt><dd>an approximation of the stored value. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01018">1018</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01034">1034</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -2403,7 +2459,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the capacity required to store the squared norm of [x,y,z] </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00959">959</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00975">975</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -2433,7 +2489,7 @@ Related Functions</h2></td></tr>
 <p>Changes the sign of an expansion. </p>
 <dl class="section return"><dt>Returns</dt><dd>the new value of this expansion </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00991">991</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01007">1007</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -2598,7 +2654,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact product of <code>a</code> and <code>b</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00709">709</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00725">725</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -2653,7 +2709,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact product of <code>a</code>, <code>b</code> and <code>c</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00736">736</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00752">752</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -2702,7 +2758,7 @@ Related Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact product between <code>a</code> and <code>b</code> </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The result does not depend on the value of the double argument <code>b</code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00568">568</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00584">584</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -2751,7 +2807,7 @@ Related Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact product of two doubles </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The result does not depend on the values of the two numbers. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00451">451</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00467">467</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -2790,7 +2846,7 @@ Related Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>Does not check for overflows/underflows </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd><code>s</code> should be a (possibly negative) power of two. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01005">1005</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01021">1021</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -2863,7 +2919,7 @@ Related Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01094">1094</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01110">1110</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -2893,7 +2949,7 @@ Related Functions</h2></td></tr>
 <p>Gets the sign of the expansion. </p>
 <dl class="section return"><dt>Returns</dt><dd>the sign of this expansion, computed exactly. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01030">1030</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01046">1046</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -2930,7 +2986,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact squared distance between points of dimension <code>dim</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00902">902</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00918">918</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -2967,7 +3023,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact square <code>a</code> * <code>a</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00764">764</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00780">780</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3005,7 +3061,7 @@ Related Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact square of a double. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The result does not depend on the value of the number <code>a</code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00482">482</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00498">498</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3053,7 +3109,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact product of two expansions of lengths <code>a_length</code> and <code>b_length</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01130">1130</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01151">1151</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3101,7 +3157,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact sum of <code>a</code> and <code>b</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00597">597</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00613">613</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3156,7 +3212,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact sum of <code>a</code>, <code>b</code> and <code>c</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00622">622</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00638">638</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3218,7 +3274,7 @@ Related Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact sum of <code>a</code>, <code>b</code>, <code>c</code> and <code>d</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00653">653</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00669">669</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3267,7 +3323,7 @@ Related Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact sum of <code>a</code> and <code>b</code> </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The result does not depend on the value of the double argument <code>b</code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00514">514</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00530">530</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3316,7 +3372,7 @@ Related Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the required capacity of an expansion to store the exact sum of two doubles </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The result does not depend on the values of the two numbers. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00387">387</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00403">403</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3346,7 +3402,7 @@ Related Functions</h2></td></tr>
 <p>Gets a string representation of this expansion. </p>
 <dl class="section return"><dt>Returns</dt><dd>a string with the length and components </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01107">1107</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01123">1123</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3383,12 +3439,12 @@ Related Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to an expansion, allocated on the stack. <div class="fragment"><div class="line"><span class="keyword">const</span> <a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e1 = <a class="code" href="classGEO_1_1expansion.html#aa0a528d06bacc9e57b59b6ae802256be">expansion_abs</a>(e);</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_aa0a528d06bacc9e57b59b6ae802256be"><div class="ttname"><a href="classGEO_1_1expansion.html#aa0a528d06bacc9e57b59b6ae802256be">GEO::expansion::expansion_abs</a></div><div class="ttdeci">#define expansion_abs(e)</div><div class="ttdoc">Creates an expansion from the absolute value of another expansion.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01218">multi_precision.h:1218</a></div></div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_aa6e3ed2a184bfae2aa45a540479d96eb"><div class="ttname"><a href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">GEO::expansion::expansion</a></div><div class="ttdeci">expansion(index_t capa)</div><div class="ttdoc">Client code should not use this constructor.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00299">multi_precision.h:299</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_aa0a528d06bacc9e57b59b6ae802256be"><div class="ttname"><a href="classGEO_1_1expansion.html#aa0a528d06bacc9e57b59b6ae802256be">GEO::expansion::expansion_abs</a></div><div class="ttdeci">#define expansion_abs(e)</div><div class="ttdoc">Creates an expansion from the absolute value of another expansion.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01220">multi_precision.h:1220</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_aa6e3ed2a184bfae2aa45a540479d96eb"><div class="ttname"><a href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">GEO::expansion::expansion</a></div><div class="ttdeci">expansion(index_t capa)</div><div class="ttdoc">Client code should not use this constructor.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00315">multi_precision.h:315</a></div></div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Do not return or use the returned reference outside the calling function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01218">1218</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01220">1220</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3424,11 +3480,11 @@ Related Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to an expansion, allocated on the stack. <div class="fragment"><div class="line"><span class="keyword">const</span> <a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e1 = <a class="code" href="classGEO_1_1expansion.html#ac73b16e5c143290e3864bd29083f43d0">expansion_create</a>(a);</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_ac73b16e5c143290e3864bd29083f43d0"><div class="ttname"><a href="classGEO_1_1expansion.html#ac73b16e5c143290e3864bd29083f43d0">GEO::expansion::expansion_create</a></div><div class="ttdeci">#define expansion_create(a)</div><div class="ttdoc">Creates an expansion from a double.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01201">multi_precision.h:1201</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_ac73b16e5c143290e3864bd29083f43d0"><div class="ttname"><a href="classGEO_1_1expansion.html#ac73b16e5c143290e3864bd29083f43d0">GEO::expansion::expansion_create</a></div><div class="ttdeci">#define expansion_create(a)</div><div class="ttdoc">Creates an expansion from a double.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01203">multi_precision.h:1203</a></div></div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Do not return or use the returned reference outside the calling function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01201">1201</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01203">1203</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3480,8 +3536,8 @@ Related Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">    <a class="code" href="classGEO_1_1expansion.html#a08bf469c6cbb6900eb04f1f98e6e64f5">new_expansion_on_stack</a>(                        \</div>
 <div class="line">        <a class="code" href="classGEO_1_1expansion.html#aa3f7e2e0f4656b3569a2b053626b7821">expansion::det2x2_capacity</a>(a11, a12, a21, a22) \</div>
 <div class="line">    )-&gt;assign_det2x2(a11, a12, a21, a22)</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_a08bf469c6cbb6900eb04f1f98e6e64f5"><div class="ttname"><a href="classGEO_1_1expansion.html#a08bf469c6cbb6900eb04f1f98e6e64f5">GEO::expansion::new_expansion_on_stack</a></div><div class="ttdeci">#define new_expansion_on_stack(capa)</div><div class="ttdoc">Allocates an expansion on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00317">multi_precision.h:317</a></div></div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_aa3f7e2e0f4656b3569a2b053626b7821"><div class="ttname"><a href="classGEO_1_1expansion.html#aa3f7e2e0f4656b3569a2b053626b7821">GEO::expansion::det2x2_capacity</a></div><div class="ttdeci">static index_t det2x2_capacity(const expansion &amp;a11, const expansion &amp;a12, const expansion &amp;a21, const expansion &amp;a22)</div><div class="ttdoc">Computes the required capacity of an expansion to store an exact 2x2 determinant.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00791">multi_precision.h:791</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_a08bf469c6cbb6900eb04f1f98e6e64f5"><div class="ttname"><a href="classGEO_1_1expansion.html#a08bf469c6cbb6900eb04f1f98e6e64f5">GEO::expansion::new_expansion_on_stack</a></div><div class="ttdeci">#define new_expansion_on_stack(capa)</div><div class="ttdoc">Allocates an expansion on the stack.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00333">multi_precision.h:333</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_aa3f7e2e0f4656b3569a2b053626b7821"><div class="ttname"><a href="classGEO_1_1expansion.html#aa3f7e2e0f4656b3569a2b053626b7821">GEO::expansion::det2x2_capacity</a></div><div class="ttdeci">static index_t det2x2_capacity(const expansion &amp;a11, const expansion &amp;a12, const expansion &amp;a21, const expansion &amp;a22)</div><div class="ttdoc">Computes the required capacity of an expansion to store an exact 2x2 determinant.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00807">multi_precision.h:807</a></div></div>
 </div><!-- fragment -->
 <p>Computes an expansion that represents the exact 2x2 determinant of its arguments. </p>
 <dl class="section return"><dt>Returns</dt><dd>a reference to an expansion, allocated on the stack. <div class="fragment"><div class="line"><span class="keyword">const</span> <a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; a11 = ...;</div>
@@ -3491,7 +3547,7 @@ Related Functions</h2></td></tr>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; d12 = expansion_set2x2(a11,a12,a21,a22);</div>
 </div><!-- fragment --> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01391">1391</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01393">1393</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3573,7 +3629,7 @@ Related Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">    <a class="code" href="classGEO_1_1expansion.html#a08bf469c6cbb6900eb04f1f98e6e64f5">new_expansion_on_stack</a>(                                             \</div>
 <div class="line">        <a class="code" href="classGEO_1_1expansion.html#abc2c77924adac68bfa2ac1bc4f3d082b">expansion::det3x3_capacity</a>(a11,a12,a13,a21,a22,a23,a31,a32,a33) \</div>
 <div class="line">    )-&gt;assign_det3x3(a11, a12, a13, a21, a22, a23, a31, a32, a33)</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_abc2c77924adac68bfa2ac1bc4f3d082b"><div class="ttname"><a href="classGEO_1_1expansion.html#abc2c77924adac68bfa2ac1bc4f3d082b">GEO::expansion::det3x3_capacity</a></div><div class="ttdeci">static index_t det3x3_capacity(const expansion &amp;a11, const expansion &amp;a12, const expansion &amp;a13, const expansion &amp;a21, const expansion &amp;a22, const expansion &amp;a23, const expansion &amp;a31, const expansion &amp;a32, const expansion &amp;a33)</div><div class="ttdoc">Computes the required capacity of an expansion to store an exact 3x3 determinant.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00823">multi_precision.h:823</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_abc2c77924adac68bfa2ac1bc4f3d082b"><div class="ttname"><a href="classGEO_1_1expansion.html#abc2c77924adac68bfa2ac1bc4f3d082b">GEO::expansion::det3x3_capacity</a></div><div class="ttdeci">static index_t det3x3_capacity(const expansion &amp;a11, const expansion &amp;a12, const expansion &amp;a13, const expansion &amp;a21, const expansion &amp;a22, const expansion &amp;a23, const expansion &amp;a31, const expansion &amp;a32, const expansion &amp;a33)</div><div class="ttdoc">Computes the required capacity of an expansion to store an exact 3x3 determinant.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00839">multi_precision.h:839</a></div></div>
 </div><!-- fragment -->
 <p>Computes an expansion that represents the exact 3x3 determinant of its arguments. </p>
 <dl class="section return"><dt>Returns</dt><dd>a reference to an expansion, allocated on the stack. <div class="fragment"><div class="line"><span class="keyword">const</span> <a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; a11 = ...;</div>
@@ -3582,11 +3638,11 @@ Related Functions</h2></td></tr>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; d = <a class="code" href="classGEO_1_1expansion.html#accb53ab149390dda8821488793dce0e7">expansion_det3x3</a>(</div>
 <div class="line">    a11,a12,a13,a21,a22,a23,a31,a32,a33</div>
 <div class="line">);</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_accb53ab149390dda8821488793dce0e7"><div class="ttname"><a href="classGEO_1_1expansion.html#accb53ab149390dda8821488793dce0e7">GEO::expansion::expansion_det3x3</a></div><div class="ttdeci">#define expansion_det3x3(a11, a12, a13, a21, a22, a23, a31, a32, a33)</div><div class="ttdoc">Computes an expansion that represents the exact 3x3 determinant of its arguments.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01412">multi_precision.h:1412</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_accb53ab149390dda8821488793dce0e7"><div class="ttname"><a href="classGEO_1_1expansion.html#accb53ab149390dda8821488793dce0e7">GEO::expansion::expansion_det3x3</a></div><div class="ttdeci">#define expansion_det3x3(a11, a12, a13, a21, a22, a23, a31, a32, a33)</div><div class="ttdoc">Computes an expansion that represents the exact 3x3 determinant of its arguments.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01414">multi_precision.h:1414</a></div></div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Do not return or use the returned reference outside the calling function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01412">1412</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01414">1414</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3650,7 +3706,7 @@ Related Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">    <a class="code" href="classGEO_1_1expansion.html#a08bf469c6cbb6900eb04f1f98e6e64f5">new_expansion_on_stack</a>(                                      \</div>
 <div class="line">        <a class="code" href="classGEO_1_1expansion.html#a9f836bec69c9e84f7137e1a5eb252394">expansion::det_111_2x3_capacity</a>(a21, a22, a23, a31, a32, a33) \</div>
 <div class="line">    )-&gt;assign_det_111_2x3(a21, a22, a23, a31, a32, a33)</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_a9f836bec69c9e84f7137e1a5eb252394"><div class="ttname"><a href="classGEO_1_1expansion.html#a9f836bec69c9e84f7137e1a5eb252394">GEO::expansion::det_111_2x3_capacity</a></div><div class="ttdeci">static index_t det_111_2x3_capacity(const expansion &amp;a21, const expansion &amp;a22, const expansion &amp;a23, const expansion &amp;a31, const expansion &amp;a32, const expansion &amp;a33)</div><div class="ttdoc">Computes the required capacity of an expansion to store an exact 3x3 determinant where the first row ...</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00866">multi_precision.h:866</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_a9f836bec69c9e84f7137e1a5eb252394"><div class="ttname"><a href="classGEO_1_1expansion.html#a9f836bec69c9e84f7137e1a5eb252394">GEO::expansion::det_111_2x3_capacity</a></div><div class="ttdeci">static index_t det_111_2x3_capacity(const expansion &amp;a21, const expansion &amp;a22, const expansion &amp;a23, const expansion &amp;a31, const expansion &amp;a32, const expansion &amp;a33)</div><div class="ttdoc">Computes the required capacity of an expansion to store an exact 3x3 determinant where the first row ...</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00882">multi_precision.h:882</a></div></div>
 </div><!-- fragment -->
 <p>Computes an expansion that represents the exact 3x3 determinant of its arguments where the first row is 1 1 1. </p>
 <dl class="section return"><dt>Returns</dt><dd>a reference to an expansion, allocated on the stack. <div class="fragment"><div class="line"><span class="keyword">const</span> <a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; a21 = ...;</div>
@@ -3659,11 +3715,11 @@ Related Functions</h2></td></tr>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; d = <a class="code" href="classGEO_1_1expansion.html#acdf7b388e520e3acf0e8504e03ecb1ac">expansion_det_111_2x3</a>(</div>
 <div class="line">    a21,a22,a23,a31,a32,a33</div>
 <div class="line">);</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_acdf7b388e520e3acf0e8504e03ecb1ac"><div class="ttname"><a href="classGEO_1_1expansion.html#acdf7b388e520e3acf0e8504e03ecb1ac">GEO::expansion::expansion_det_111_2x3</a></div><div class="ttdeci">#define expansion_det_111_2x3(a21, a22, a23, a31, a32, a33)</div><div class="ttdoc">Computes an expansion that represents the exact 3x3 determinant of its arguments where the first row ...</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01434">multi_precision.h:1434</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_acdf7b388e520e3acf0e8504e03ecb1ac"><div class="ttname"><a href="classGEO_1_1expansion.html#acdf7b388e520e3acf0e8504e03ecb1ac">GEO::expansion::expansion_det_111_2x3</a></div><div class="ttdeci">#define expansion_det_111_2x3(a21, a22, a23, a31, a32, a33)</div><div class="ttdoc">Computes an expansion that represents the exact 3x3 determinant of its arguments where the first row ...</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01436">multi_precision.h:1436</a></div></div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Do not return or use the returned reference outside the calling function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01434">1434</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01436">1436</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3703,7 +3759,7 @@ Related Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">    <a class="code" href="classGEO_1_1expansion.html#a08bf469c6cbb6900eb04f1f98e6e64f5">new_expansion_on_stack</a>(             \</div>
 <div class="line">        <a class="code" href="classGEO_1_1expansion.html#a55748b4bd66bc2aaeeeedc4ed0736490">expansion::diff_capacity</a>(a, b)   \</div>
 <div class="line">    )-&gt;assign_diff(a, b)</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_a55748b4bd66bc2aaeeeedc4ed0736490"><div class="ttname"><a href="classGEO_1_1expansion.html#a55748b4bd66bc2aaeeeedc4ed0736490">GEO::expansion::diff_capacity</a></div><div class="ttdeci">static index_t diff_capacity(double a, double b)</div><div class="ttdoc">Computes the required capacity of an expansion to store the exact difference of two doubles.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00419">multi_precision.h:419</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_a55748b4bd66bc2aaeeeedc4ed0736490"><div class="ttname"><a href="classGEO_1_1expansion.html#a55748b4bd66bc2aaeeeedc4ed0736490">GEO::expansion::diff_capacity</a></div><div class="ttdeci">static index_t diff_capacity(double a, double b)</div><div class="ttdoc">Computes the required capacity of an expansion to store the exact difference of two doubles.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00435">multi_precision.h:435</a></div></div>
 </div><!-- fragment -->
 <p>Computes an expansion that represents the exact difference of its arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -3718,11 +3774,11 @@ Related Functions</h2></td></tr>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e3 = <a class="code" href="classGEO_1_1expansion.html#a5c2f8df68157d2ffb321716a83bb7934">expansion_diff</a>(e1,e2);</div>
 <div class="line"><span class="keywordtype">double</span> x = ...;</div>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e4 = <a class="code" href="classGEO_1_1expansion.html#a5c2f8df68157d2ffb321716a83bb7934">expansion_diff</a>(e1,x);</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_a5c2f8df68157d2ffb321716a83bb7934"><div class="ttname"><a href="classGEO_1_1expansion.html#a5c2f8df68157d2ffb321716a83bb7934">GEO::expansion::expansion_diff</a></div><div class="ttdeci">#define expansion_diff(a, b)</div><div class="ttdoc">Computes an expansion that represents the exact difference of its arguments.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01307">multi_precision.h:1307</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_a5c2f8df68157d2ffb321716a83bb7934"><div class="ttname"><a href="classGEO_1_1expansion.html#a5c2f8df68157d2ffb321716a83bb7934">GEO::expansion::expansion_diff</a></div><div class="ttdeci">#define expansion_diff(a, b)</div><div class="ttdoc">Computes an expansion that represents the exact difference of its arguments.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01309">multi_precision.h:1309</a></div></div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Do not return or use the returned reference outside the calling function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01307">1307</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01309">1309</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3774,7 +3830,7 @@ Related Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">    <a class="code" href="classGEO_1_1expansion.html#a08bf469c6cbb6900eb04f1f98e6e64f5">new_expansion_on_stack</a>(                   \</div>
 <div class="line">        <a class="code" href="classGEO_1_1expansion.html#aca410f4a11b37a7a289ecff22bd4700d">expansion::dot_at_capacity</a>(dim)       \</div>
 <div class="line">    )-&gt;assign_dot_at(a, b, c, dim)</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_aca410f4a11b37a7a289ecff22bd4700d"><div class="ttname"><a href="classGEO_1_1expansion.html#aca410f4a11b37a7a289ecff22bd4700d">GEO::expansion::dot_at_capacity</a></div><div class="ttdeci">static index_t dot_at_capacity(coord_index_t dim)</div><div class="ttdoc">Computes the required capacity of an expansion to store the exact dot product between two vectors.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00930">multi_precision.h:930</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_aca410f4a11b37a7a289ecff22bd4700d"><div class="ttname"><a href="classGEO_1_1expansion.html#aca410f4a11b37a7a289ecff22bd4700d">GEO::expansion::dot_at_capacity</a></div><div class="ttdeci">static index_t dot_at_capacity(coord_index_t dim)</div><div class="ttdoc">Computes the required capacity of an expansion to store the exact dot product between two vectors.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00946">multi_precision.h:946</a></div></div>
 </div><!-- fragment -->
 <p>Computes an expansion that represents the exact dot product dot(a-c,b-c) </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -3790,11 +3846,11 @@ Related Functions</h2></td></tr>
 <div class="line"><span class="keyword">const</span> <span class="keywordtype">double</span>* p2 = ...;</div>
 <div class="line"><span class="keyword">const</span> <span class="keywordtype">double</span>* p0 = ...;</div>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; dot12 = <a class="code" href="classGEO_1_1expansion.html#a639417ebc66fc3a60c1cb0707c1eb755">expansion_dot_at</a>(p1,p2,p0,3);</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_a639417ebc66fc3a60c1cb0707c1eb755"><div class="ttname"><a href="classGEO_1_1expansion.html#a639417ebc66fc3a60c1cb0707c1eb755">GEO::expansion::expansion_dot_at</a></div><div class="ttdeci">#define expansion_dot_at(a, b, c, dim)</div><div class="ttdoc">Computes an expansion that represents the exact dot product dot(a-c,b-c)</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01480">multi_precision.h:1480</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_a639417ebc66fc3a60c1cb0707c1eb755"><div class="ttname"><a href="classGEO_1_1expansion.html#a639417ebc66fc3a60c1cb0707c1eb755">GEO::expansion::expansion_dot_at</a></div><div class="ttdeci">#define expansion_dot_at(a, b, c, dim)</div><div class="ttdoc">Computes an expansion that represents the exact dot product dot(a-c,b-c)</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01482">multi_precision.h:1482</a></div></div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Do not return or use the returned reference outside the calling function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01480">1480</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01482">1482</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3840,7 +3896,7 @@ Related Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">    <a class="code" href="classGEO_1_1expansion.html#a08bf469c6cbb6900eb04f1f98e6e64f5">new_expansion_on_stack</a>(                   \</div>
 <div class="line">       <a class="code" href="classGEO_1_1expansion.html#a005b48df884c20837f8222e65b29dcad">expansion::length2_capacity</a>(x,y,z)     \</div>
 <div class="line">    )-&gt;assign_length2(x,y,z)</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_a005b48df884c20837f8222e65b29dcad"><div class="ttname"><a href="classGEO_1_1expansion.html#a005b48df884c20837f8222e65b29dcad">GEO::expansion::length2_capacity</a></div><div class="ttdeci">static index_t length2_capacity(const expansion &amp;x, const expansion &amp;y, const expansion &amp;z)</div><div class="ttdoc">Computes the required capacity to store the length of a 3d vector.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00959">multi_precision.h:959</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_a005b48df884c20837f8222e65b29dcad"><div class="ttname"><a href="classGEO_1_1expansion.html#a005b48df884c20837f8222e65b29dcad">GEO::expansion::length2_capacity</a></div><div class="ttdeci">static index_t length2_capacity(const expansion &amp;x, const expansion &amp;y, const expansion &amp;z)</div><div class="ttdoc">Computes the required capacity to store the length of a 3d vector.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00975">multi_precision.h:975</a></div></div>
 </div><!-- fragment -->
 <p>Computes an expansion that represents the exact squared length of a 3d vector. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -3853,11 +3909,11 @@ Related Functions</h2></td></tr>
 <div class="line"><span class="keyword">const</span> <a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; y = ...;</div>
 <div class="line"><span class="keyword">const</span> <a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; z = ...;</div>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; l = <a class="code" href="classGEO_1_1expansion.html#ac2cec624877109117b496a5742fb6840">expansion_length2</a>(x,y,z);</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_ac2cec624877109117b496a5742fb6840"><div class="ttname"><a href="classGEO_1_1expansion.html#ac2cec624877109117b496a5742fb6840">GEO::expansion::expansion_length2</a></div><div class="ttdeci">#define expansion_length2(x, y, z)</div><div class="ttdoc">Computes an expansion that represents the exact squared length of a 3d vector.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01501">multi_precision.h:1501</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_ac2cec624877109117b496a5742fb6840"><div class="ttname"><a href="classGEO_1_1expansion.html#ac2cec624877109117b496a5742fb6840">GEO::expansion::expansion_length2</a></div><div class="ttdeci">#define expansion_length2(x, y, z)</div><div class="ttdoc">Computes an expansion that represents the exact squared length of a 3d vector.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01503">multi_precision.h:1503</a></div></div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Do not return or use the returned reference outside the calling function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01501">1501</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01503">1503</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3897,7 +3953,7 @@ Related Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">    <a class="code" href="classGEO_1_1expansion.html#a08bf469c6cbb6900eb04f1f98e6e64f5">new_expansion_on_stack</a>(               \</div>
 <div class="line">        <a class="code" href="classGEO_1_1expansion.html#a0621018a27707cb66e6b7fbc85bf0c8f">expansion::product_capacity</a>(a, b)  \</div>
 <div class="line">    )-&gt;assign_product(a, b)</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_a0621018a27707cb66e6b7fbc85bf0c8f"><div class="ttname"><a href="classGEO_1_1expansion.html#a0621018a27707cb66e6b7fbc85bf0c8f">GEO::expansion::product_capacity</a></div><div class="ttdeci">static index_t product_capacity(double a, double b)</div><div class="ttdoc">Computes the required capacity of an expansion to store the exact product of two doubles.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00451">multi_precision.h:451</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_a0621018a27707cb66e6b7fbc85bf0c8f"><div class="ttname"><a href="classGEO_1_1expansion.html#a0621018a27707cb66e6b7fbc85bf0c8f">GEO::expansion::product_capacity</a></div><div class="ttdeci">static index_t product_capacity(double a, double b)</div><div class="ttdoc">Computes the required capacity of an expansion to store the exact product of two doubles.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00467">multi_precision.h:467</a></div></div>
 </div><!-- fragment -->
 <p>Computes an expansion that represents the exact product of its arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -3912,11 +3968,11 @@ Related Functions</h2></td></tr>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e3 = <a class="code" href="classGEO_1_1expansion.html#a561715f1b6e114d32363a454dafadddb">expansion_product</a>(e1,e2);</div>
 <div class="line"><span class="keywordtype">double</span> x = ...;</div>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e4 = <a class="code" href="classGEO_1_1expansion.html#a561715f1b6e114d32363a454dafadddb">expansion_product</a>(e1,x);</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_a561715f1b6e114d32363a454dafadddb"><div class="ttname"><a href="classGEO_1_1expansion.html#a561715f1b6e114d32363a454dafadddb">GEO::expansion::expansion_product</a></div><div class="ttdeci">#define expansion_product(a, b)</div><div class="ttdoc">Computes an expansion that represents the exact product of its arguments.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01329">multi_precision.h:1329</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_a561715f1b6e114d32363a454dafadddb"><div class="ttname"><a href="classGEO_1_1expansion.html#a561715f1b6e114d32363a454dafadddb">GEO::expansion::expansion_product</a></div><div class="ttdeci">#define expansion_product(a, b)</div><div class="ttdoc">Computes an expansion that represents the exact product of its arguments.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01331">multi_precision.h:1331</a></div></div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Do not return or use the returned reference outside the calling function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01329">1329</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01331">1331</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -3976,11 +4032,11 @@ Related Functions</h2></td></tr>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e2 = ...;</div>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e3 = ...;</div>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e4 = <a class="code" href="classGEO_1_1expansion.html#ac913c076c8e4b366370f80a9414abbf7">expansion_product3</a>(e1,e2,e3);</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_ac913c076c8e4b366370f80a9414abbf7"><div class="ttname"><a href="classGEO_1_1expansion.html#ac913c076c8e4b366370f80a9414abbf7">GEO::expansion::expansion_product3</a></div><div class="ttdeci">#define expansion_product3(a, b, c)</div><div class="ttdoc">Computes an expansion that represents the exact product of its arguments.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01351">multi_precision.h:1351</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_ac913c076c8e4b366370f80a9414abbf7"><div class="ttname"><a href="classGEO_1_1expansion.html#ac913c076c8e4b366370f80a9414abbf7">GEO::expansion::expansion_product3</a></div><div class="ttdeci">#define expansion_product3(a, b, c)</div><div class="ttdoc">Computes an expansion that represents the exact product of its arguments.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01353">multi_precision.h:1353</a></div></div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Do not return or use the returned reference outside the calling function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01351">1351</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01353">1353</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -4026,7 +4082,7 @@ Related Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">    <a class="code" href="classGEO_1_1expansion.html#a08bf469c6cbb6900eb04f1f98e6e64f5">new_expansion_on_stack</a>(                  \</div>
 <div class="line">        <a class="code" href="classGEO_1_1expansion.html#aaf7b7dd6a178fecdfd452c1f5b54c10e">expansion::sq_dist_capacity</a>(dim)     \</div>
 <div class="line">    )-&gt;assign_sq_dist(a, b, dim)</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_aaf7b7dd6a178fecdfd452c1f5b54c10e"><div class="ttname"><a href="classGEO_1_1expansion.html#aaf7b7dd6a178fecdfd452c1f5b54c10e">GEO::expansion::sq_dist_capacity</a></div><div class="ttdeci">static index_t sq_dist_capacity(coord_index_t dim)</div><div class="ttdoc">Computes the required capacity of an expansion to store the exact squared distance between two points...</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00902">multi_precision.h:902</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_aaf7b7dd6a178fecdfd452c1f5b54c10e"><div class="ttname"><a href="classGEO_1_1expansion.html#aaf7b7dd6a178fecdfd452c1f5b54c10e">GEO::expansion::sq_dist_capacity</a></div><div class="ttdeci">static index_t sq_dist_capacity(coord_index_t dim)</div><div class="ttdoc">Computes the required capacity of an expansion to store the exact squared distance between two points...</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00918">multi_precision.h:918</a></div></div>
 </div><!-- fragment -->
 <p>Computes an expansion that represents the exact squared distance between its argument. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -4040,11 +4096,11 @@ Related Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>a reference to an expansion, allocated on the stack. <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">double</span>* p1 = ...;</div>
 <div class="line"><span class="keyword">const</span> <span class="keywordtype">double</span>* p2 = ...;</div>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; d12 = <a class="code" href="classGEO_1_1expansion.html#a15a0de5971b77f33c741f4a99fe3cb18">expansion_sq_dist</a>(p1,p2,3);</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_a15a0de5971b77f33c741f4a99fe3cb18"><div class="ttname"><a href="classGEO_1_1expansion.html#a15a0de5971b77f33c741f4a99fe3cb18">GEO::expansion::expansion_sq_dist</a></div><div class="ttdeci">#define expansion_sq_dist(a, b, dim)</div><div class="ttdoc">Computes an expansion that represents the exact squared distance between its argument.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01457">multi_precision.h:1457</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_a15a0de5971b77f33c741f4a99fe3cb18"><div class="ttname"><a href="classGEO_1_1expansion.html#a15a0de5971b77f33c741f4a99fe3cb18">GEO::expansion::expansion_sq_dist</a></div><div class="ttdeci">#define expansion_sq_dist(a, b, dim)</div><div class="ttdoc">Computes an expansion that represents the exact squared distance between its argument.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01459">multi_precision.h:1459</a></div></div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Do not return or use the returned reference outside the calling function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01457">1457</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01459">1459</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -4074,7 +4130,7 @@ Related Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">    <a class="code" href="classGEO_1_1expansion.html#a08bf469c6cbb6900eb04f1f98e6e64f5">new_expansion_on_stack</a>(             \</div>
 <div class="line">        <a class="code" href="classGEO_1_1expansion.html#ac38baa01b911a5fb547f941619138934">expansion::square_capacity</a>(a)   \</div>
 <div class="line">    )-&gt;assign_square(a)</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_ac38baa01b911a5fb547f941619138934"><div class="ttname"><a href="classGEO_1_1expansion.html#ac38baa01b911a5fb547f941619138934">GEO::expansion::square_capacity</a></div><div class="ttdeci">static index_t square_capacity(double a)</div><div class="ttdoc">Computes the required capacity of an expansion to store the exact square of a double.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00482">multi_precision.h:482</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_ac38baa01b911a5fb547f941619138934"><div class="ttname"><a href="classGEO_1_1expansion.html#ac38baa01b911a5fb547f941619138934">GEO::expansion::square_capacity</a></div><div class="ttdeci">static index_t square_capacity(double a)</div><div class="ttdoc">Computes the required capacity of an expansion to store the exact square of a double.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00498">multi_precision.h:498</a></div></div>
 </div><!-- fragment -->
 <p>Computes an expansion that represents the exact square of its argument. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -4087,72 +4143,11 @@ Related Functions</h2></td></tr>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e2 = <a class="code" href="classGEO_1_1expansion.html#aada7054594502d16a17a3b5afadeee4c">expansion_square</a>(e1);</div>
 <div class="line"><span class="keywordtype">double</span> x = ...;</div>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e3 = <a class="code" href="classGEO_1_1expansion.html#aada7054594502d16a17a3b5afadeee4c">expansion_square</a>(x);</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_aada7054594502d16a17a3b5afadeee4c"><div class="ttname"><a href="classGEO_1_1expansion.html#aada7054594502d16a17a3b5afadeee4c">GEO::expansion::expansion_square</a></div><div class="ttdeci">#define expansion_square(a)</div><div class="ttdoc">Computes an expansion that represents the exact square of its argument.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01371">multi_precision.h:1371</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_aada7054594502d16a17a3b5afadeee4c"><div class="ttname"><a href="classGEO_1_1expansion.html#aada7054594502d16a17a3b5afadeee4c">GEO::expansion::expansion_square</a></div><div class="ttdeci">#define expansion_square(a)</div><div class="ttdoc">Computes an expansion that represents the exact square of its argument.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01373">multi_precision.h:1373</a></div></div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Do not return or use the returned reference outside the calling function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01371">1371</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
-
-</div>
-</div>
-<a id="a0cc4c1e7635ff72f37dc871a41e06708"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0cc4c1e7635ff72f37dc871a41e06708">&#9670;&nbsp;</a></span>expansion_sub_product</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define expansion_sub_product</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">a, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">a_length, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">b&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">related</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <a class="code" href="classGEO_1_1expansion.html#a08bf469c6cbb6900eb04f1f98e6e64f5">new_expansion_on_stack</a>(                       \</div>
-<div class="line">        <a class="code" href="classGEO_1_1expansion.html#a2da16fc07bdc09f494fd7c778d34847b">sub_product_capacity</a>(a_length, b.length()) \</div>
-<div class="line">    )-&gt;assign_sub_product(a, a_length, b)</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_a2da16fc07bdc09f494fd7c778d34847b"><div class="ttname"><a href="classGEO_1_1expansion.html#a2da16fc07bdc09f494fd7c778d34847b">GEO::expansion::sub_product_capacity</a></div><div class="ttdeci">static index_t sub_product_capacity(index_t a_length, index_t b_length)</div><div class="ttdoc">Computes the required capacity of an expansion to store an exact sub-product.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01130">multi_precision.h:1130</a></div></div>
-</div><!-- fragment -->
-<p>Computes an expansion that represents the exact product of its arguments (a[0]+a[1]+ ... +a[length-1])*b. </p>
-<p>Used internally to implement product ("distillation", see Shewchuk's paper).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>an expansion, specified as a const double* </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">a_length</td><td>number of coefficients in a </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>an expansion, specified as a const expansion&amp;</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>a reference to an expansion, allocated on the stack. </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>Do not return or use the returned reference outside the calling function. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01163">1163</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01373">1373</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -4192,7 +4187,7 @@ Related Functions</h2></td></tr>
 <b>Value:</b><div class="fragment"><div class="line">    <a class="code" href="classGEO_1_1expansion.html#a08bf469c6cbb6900eb04f1f98e6e64f5">new_expansion_on_stack</a>(           \</div>
 <div class="line">        <a class="code" href="classGEO_1_1expansion.html#a277747aace2cbc513dc279f709092fba">expansion::sum_capacity</a>(a, b)   \</div>
 <div class="line">    )-&gt;assign_sum(a, b)</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_a277747aace2cbc513dc279f709092fba"><div class="ttname"><a href="classGEO_1_1expansion.html#a277747aace2cbc513dc279f709092fba">GEO::expansion::sum_capacity</a></div><div class="ttdeci">static index_t sum_capacity(double a, double b)</div><div class="ttdoc">Computes the required capacity to store the sum of two doubles.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00387">multi_precision.h:387</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_a277747aace2cbc513dc279f709092fba"><div class="ttname"><a href="classGEO_1_1expansion.html#a277747aace2cbc513dc279f709092fba">GEO::expansion::sum_capacity</a></div><div class="ttdeci">static index_t sum_capacity(double a, double b)</div><div class="ttdoc">Computes the required capacity to store the sum of two doubles.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l00403">multi_precision.h:403</a></div></div>
 </div><!-- fragment -->
 <p>Computes an expansion that represents the exact sum of its arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -4207,11 +4202,11 @@ Related Functions</h2></td></tr>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e3 = <a class="code" href="classGEO_1_1expansion.html#a5bba2bca1de9687fbfa4042f8b964bfd">expansion_sum</a>(e1,e2);</div>
 <div class="line"><span class="keywordtype">double</span> x = ...;</div>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e4 = <a class="code" href="classGEO_1_1expansion.html#a5bba2bca1de9687fbfa4042f8b964bfd">expansion_sum</a>(e1,x);</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_a5bba2bca1de9687fbfa4042f8b964bfd"><div class="ttname"><a href="classGEO_1_1expansion.html#a5bba2bca1de9687fbfa4042f8b964bfd">GEO::expansion::expansion_sum</a></div><div class="ttdeci">#define expansion_sum(a, b)</div><div class="ttdoc">Computes an expansion that represents the exact sum of its arguments.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01238">multi_precision.h:1238</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_a5bba2bca1de9687fbfa4042f8b964bfd"><div class="ttname"><a href="classGEO_1_1expansion.html#a5bba2bca1de9687fbfa4042f8b964bfd">GEO::expansion::expansion_sum</a></div><div class="ttdeci">#define expansion_sum(a, b)</div><div class="ttdoc">Computes an expansion that represents the exact sum of its arguments.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01240">multi_precision.h:1240</a></div></div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Do not return or use the returned reference outside the calling function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01238">1238</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01240">1240</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -4271,11 +4266,11 @@ Related Functions</h2></td></tr>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e2 = ...;</div>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e3 = ...;</div>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e4 = <a class="code" href="classGEO_1_1expansion.html#aea50321cf9cfa98bf80372610cda75b3">expansion_sum3</a>(e1,e2,e3);</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_aea50321cf9cfa98bf80372610cda75b3"><div class="ttname"><a href="classGEO_1_1expansion.html#aea50321cf9cfa98bf80372610cda75b3">GEO::expansion::expansion_sum3</a></div><div class="ttdeci">#define expansion_sum3(a, b, c)</div><div class="ttdoc">Computes an expansion that represents the exact sum of its arguments.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01260">multi_precision.h:1260</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_aea50321cf9cfa98bf80372610cda75b3"><div class="ttname"><a href="classGEO_1_1expansion.html#aea50321cf9cfa98bf80372610cda75b3">GEO::expansion::expansion_sum3</a></div><div class="ttdeci">#define expansion_sum3(a, b, c)</div><div class="ttdoc">Computes an expansion that represents the exact sum of its arguments.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01262">multi_precision.h:1262</a></div></div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Do not return or use the returned reference outside the calling function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01260">1260</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01262">1262</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -4343,11 +4338,11 @@ Related Functions</h2></td></tr>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e3 = ...;</div>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e4 = ...;</div>
 <div class="line"><a class="code" href="classGEO_1_1expansion.html#aa6e3ed2a184bfae2aa45a540479d96eb">expansion</a>&amp; e5 = <a class="code" href="classGEO_1_1expansion.html#a599143157fa294f32dd42940cc542426">expansion_sum4</a>(e1,e2,e3,e4);</div>
-<div class="ttc" id="aclassGEO_1_1expansion_html_a599143157fa294f32dd42940cc542426"><div class="ttname"><a href="classGEO_1_1expansion.html#a599143157fa294f32dd42940cc542426">GEO::expansion::expansion_sum4</a></div><div class="ttdeci">#define expansion_sum4(a, b, c, d)</div><div class="ttdoc">Computes an expansion that represents the exact sum of its arguments.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01285">multi_precision.h:1285</a></div></div>
+<div class="ttc" id="aclassGEO_1_1expansion_html_a599143157fa294f32dd42940cc542426"><div class="ttname"><a href="classGEO_1_1expansion.html#a599143157fa294f32dd42940cc542426">GEO::expansion::expansion_sum4</a></div><div class="ttdeci">#define expansion_sum4(a, b, c, d)</div><div class="ttdoc">Computes an expansion that represents the exact sum of its arguments.</div><div class="ttdef"><b>Definition:</b> <a href="multi__precision_8h_source.html#l01287">multi_precision.h:1287</a></div></div>
 </div><!-- fragment --> </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Do not return or use the returned reference outside the calling function. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01285">1285</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l01287">1287</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -4365,7 +4360,7 @@ Related Functions</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">capa</td><td>)</td>
-          <td>&#160;&#160;&#160;    (new (alloca(<a class="el" href="classGEO_1_1expansion.html#ab7b0f9de37d5483a058ad3bc0036fb88">expansion::bytes</a>(capa)))<a class="el" href="classGEO_1_1expansion.html">expansion</a>(capa))</td>
+          <td>&#160;&#160;&#160;    (new (alloca(<a class="el" href="classGEO_1_1expansion.html#aaeef9303082d00caae32469e3b5d1bbf">expansion::bytes_on_stack</a>(capa)))<a class="el" href="classGEO_1_1expansion.html">expansion</a>(capa))</td>
         </tr>
       </table>
   </td>
@@ -4380,7 +4375,7 @@ Related Functions</h2></td></tr>
 <li>capa required capacity of the expansion. </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00317">317</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="multi__precision_8h_source.html#l00333">333</a> of file <a class="el" href="multi__precision_8h_source.html">multi_precision.h</a>.</p>
 
 </div>
 </div>
@@ -4684,7 +4679,7 @@ Related Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1expansion.html">expansion</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

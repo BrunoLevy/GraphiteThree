@@ -6,6 +6,7 @@ var classGEO_1_1vecng =
     [ "vecng", "classGEO_1_1vecng.html#ac4609626768665613f4fa1698de880ad", null ],
     [ "vecng", "classGEO_1_1vecng.html#aeb5f6aaee211e9c8686001e1b74ccc1b", null ],
     [ "vecng", "classGEO_1_1vecng.html#ae5c74dc420e700d9688843991e1d2a32", null ],
+    [ "vecng", "classGEO_1_1vecng.html#ad87191c1e3ec8e62c79d753ffae73b15", null ],
     [ "data", "classGEO_1_1vecng.html#a82827640581e76a73207954b7e87fb37", null ],
     [ "data", "classGEO_1_1vecng.html#a8dac7a3361970dfc0fcd377240ed5e3b", null ],
     [ "dimension", "classGEO_1_1vecng.html#a61783ad22be74bc161752b8ab455f72a", null ],

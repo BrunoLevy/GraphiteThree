@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -92,13 +99,15 @@ $(document).ready(function(){initNavTree('mesh__surface__intersection_8h.html','
 </div><!--header-->
 <div class="contents">
 
-<p>Functions for computing intersections between surfacic meshes and boolean operations.  
+<p>Functions for computing intersections between surfacic meshes and for boolean operations.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;<a class="el" href="geogram_2src_2lib_2geogram_2basic_2common_8h_source.html">geogram/basic/common.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="mesh_8h_source.html">geogram/mesh/mesh.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="mesh__io_8h_source.html">geogram/mesh/mesh_io.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="exact__geometry_8h_source.html">geogram/numerics/exact_geometry.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="process_8h_source.html">geogram/basic/process.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="attributes_8h_source.html">geogram/basic/attributes.h</a>&gt;</code><br />
+<code>#include &lt;geogram/basic/debug_stream.h&gt;</code><br />
 <code>#include &lt;functional&gt;</code><br />
 </div>
 <p><a href="mesh__surface__intersection_8h_source.html">Go to the source code of this file.</a></p>
@@ -110,6 +119,14 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html">GEO::MeshSurfaceIntersection::RadialSort</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1Halfedges.html">GEO::MeshSurfaceIntersection::Halfedges</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Halfedfge-like API wrappers on top of a triangulated mesh.  <a href="classGEO_1_1MeshSurfaceIntersection_1_1Halfedges.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialBundles.html">GEO::MeshSurfaceIntersection::RadialBundles</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the set of radial halfedge bundles.  <a href="classGEO_1_1MeshSurfaceIntersection_1_1RadialBundles.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSurfaceIntersection_1_1RadialPolylines.html">GEO::MeshSurfaceIntersection::RadialPolylines</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -119,34 +136,27 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a8bbc94f20a80ebe510c1263da822ba08"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a8bbc94f20a80ebe510c1263da822ba08">GEO::mesh_classify_intersections</a> (Mesh &amp;M, std::function&lt; bool(index_t)&gt; eqn, const std::string &amp;attribute=&quot;&quot;, bool reorder=true)</td></tr>
-<tr class="memdesc:a8bbc94f20a80ebe510c1263da822ba08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classifies the facets of the result of mesh_intersect_surface() based on a boolean function.  <a href="namespaceGEO.html#a8bbc94f20a80ebe510c1263da822ba08">More...</a><br /></td></tr>
-<tr class="separator:a8bbc94f20a80ebe510c1263da822ba08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add31b7ea21d8d333b86bb96600256156"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#add31b7ea21d8d333b86bb96600256156">GEO::mesh_classify_intersections</a> (Mesh &amp;M, const std::string &amp;expr, const std::string &amp;attribute=&quot;&quot;, bool reorder=true)</td></tr>
-<tr class="memdesc:add31b7ea21d8d333b86bb96600256156"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classifies the facets of the result of mesh_intersect_surface() based on a boolean function.  <a href="namespaceGEO.html#add31b7ea21d8d333b86bb96600256156">More...</a><br /></td></tr>
-<tr class="separator:add31b7ea21d8d333b86bb96600256156"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c36383b35b5b997e72c0fe977440722"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a2c36383b35b5b997e72c0fe977440722">GEO::mesh_boolean_operation</a> (Mesh &amp;result, Mesh &amp;A, Mesh &amp;B, const std::string &amp;operation)</td></tr>
-<tr class="memdesc:a2c36383b35b5b997e72c0fe977440722"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the union of two surface meshes.  <a href="namespaceGEO.html#a2c36383b35b5b997e72c0fe977440722">More...</a><br /></td></tr>
-<tr class="separator:a2c36383b35b5b997e72c0fe977440722"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa620f919a909c50496afca315ba17905"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#aa620f919a909c50496afca315ba17905">GEO::mesh_union</a> (Mesh &amp;result, Mesh &amp;A, Mesh &amp;B)</td></tr>
-<tr class="memdesc:aa620f919a909c50496afca315ba17905"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the union of two surface meshes.  <a href="namespaceGEO.html#aa620f919a909c50496afca315ba17905">More...</a><br /></td></tr>
-<tr class="separator:aa620f919a909c50496afca315ba17905"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e9bd7ead4bc073fd16b04166b9f8d96"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a5e9bd7ead4bc073fd16b04166b9f8d96">GEO::mesh_intersection</a> (Mesh &amp;result, Mesh &amp;A, Mesh &amp;B)</td></tr>
-<tr class="memdesc:a5e9bd7ead4bc073fd16b04166b9f8d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the intersection of two surface meshes.  <a href="namespaceGEO.html#a5e9bd7ead4bc073fd16b04166b9f8d96">More...</a><br /></td></tr>
-<tr class="separator:a5e9bd7ead4bc073fd16b04166b9f8d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad07349e452fdaad5c82cfbec4a5106c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#ad07349e452fdaad5c82cfbec4a5106c5">GEO::mesh_difference</a> (Mesh &amp;result, Mesh &amp;A, Mesh &amp;B)</td></tr>
-<tr class="memdesc:ad07349e452fdaad5c82cfbec4a5106c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the difference of two surface meshes.  <a href="namespaceGEO.html#ad07349e452fdaad5c82cfbec4a5106c5">More...</a><br /></td></tr>
-<tr class="separator:ad07349e452fdaad5c82cfbec4a5106c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7e2674779e29d48f7130b8d94c120e3"><td class="memItemLeft" align="right" valign="top"><a id="ae7e2674779e29d48f7130b8d94c120e3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#ae7e2674779e29d48f7130b8d94c120e3">GEO::mesh_remove_intersections</a> (Mesh &amp;M, index_t max_iter=3)</td></tr>
-<tr class="memdesc:ae7e2674779e29d48f7130b8d94c120e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to make a surface mesh conformal by removing intersecting facets and re-triangulating the holes. <br /></td></tr>
-<tr class="separator:ae7e2674779e29d48f7130b8d94c120e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04f1087fc923457b52ca56e8fdb39a09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a04f1087fc923457b52ca56e8fdb39a09">GEO::mesh_boolean_operation</a> (Mesh &amp;result, Mesh &amp;A, Mesh &amp;B, const std::string &amp;operation, bool verbose=false)</td></tr>
+<tr class="memdesc:a04f1087fc923457b52ca56e8fdb39a09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a boolean operation with two surface meshes.  <a href="namespaceGEO.html#a04f1087fc923457b52ca56e8fdb39a09">More...</a><br /></td></tr>
+<tr class="separator:a04f1087fc923457b52ca56e8fdb39a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b826c6c0585f60a644e7d7e54f459f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a2b826c6c0585f60a644e7d7e54f459f9">GEO::mesh_union</a> (Mesh &amp;result, Mesh &amp;A, Mesh &amp;B, bool verbose=false)</td></tr>
+<tr class="memdesc:a2b826c6c0585f60a644e7d7e54f459f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the union of two surface meshes.  <a href="namespaceGEO.html#a2b826c6c0585f60a644e7d7e54f459f9">More...</a><br /></td></tr>
+<tr class="separator:a2b826c6c0585f60a644e7d7e54f459f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61d92a7c236085d84b91a766ef14c032"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a61d92a7c236085d84b91a766ef14c032">GEO::mesh_intersection</a> (Mesh &amp;result, Mesh &amp;A, Mesh &amp;B, bool verbose=false)</td></tr>
+<tr class="memdesc:a61d92a7c236085d84b91a766ef14c032"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the intersection of two surface meshes.  <a href="namespaceGEO.html#a61d92a7c236085d84b91a766ef14c032">More...</a><br /></td></tr>
+<tr class="separator:a61d92a7c236085d84b91a766ef14c032"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad07cf9a2ace3935b7604b5b4f2e3ca78"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#ad07cf9a2ace3935b7604b5b4f2e3ca78">GEO::mesh_difference</a> (Mesh &amp;result, Mesh &amp;A, Mesh &amp;B, bool verbose=false)</td></tr>
+<tr class="memdesc:ad07cf9a2ace3935b7604b5b4f2e3ca78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the difference of two surface meshes.  <a href="namespaceGEO.html#ad07cf9a2ace3935b7604b5b4f2e3ca78">More...</a><br /></td></tr>
+<tr class="separator:ad07cf9a2ace3935b7604b5b4f2e3ca78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa7e21935ec064840b12e5d26b43f9cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#aaa7e21935ec064840b12e5d26b43f9cc">GEO::mesh_remove_intersections</a> (Mesh &amp;M, index_t max_iter=3, bool verbose=false)</td></tr>
+<tr class="memdesc:aaa7e21935ec064840b12e5d26b43f9cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to make a surface mesh conformal by removing intersecting facets and re-triangulating the holes.  <a href="namespaceGEO.html#aaa7e21935ec064840b12e5d26b43f9cc">More...</a><br /></td></tr>
+<tr class="separator:aaa7e21935ec064840b12e5d26b43f9cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e19a60ac956fe8234dc0b6db8aab059"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a0e19a60ac956fe8234dc0b6db8aab059">GEO::mesh_facets_have_intersection</a> (Mesh &amp;M, index_t f1, index_t f2)</td></tr>
 <tr class="memdesc:a0e19a60ac956fe8234dc0b6db8aab059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether two mesh facets have a non-degenerate intersection.  <a href="namespaceGEO.html#a0e19a60ac956fe8234dc0b6db8aab059">More...</a><br /></td></tr>
 <tr class="separator:a0e19a60ac956fe8234dc0b6db8aab059"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Functions for computing intersections between surfacic meshes and boolean operations. </p>
+<div class="textblock"><p>Functions for computing intersections between surfacic meshes and for boolean operations. </p>
 
 <p class="definition">Definition in file <a class="el" href="mesh__surface__intersection_8h_source.html">mesh_surface_intersection.h</a>.</p>
 </div></div><!-- contents -->
@@ -155,7 +165,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="name
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_7faf8be2027c4a91a1e5453dfee06721.html">mesh</a></li><li class="navelem"><a class="el" href="mesh__surface__intersection_8h.html">mesh_surface_intersection.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

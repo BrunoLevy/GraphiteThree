@@ -42,7 +42,7 @@ var classOGF_1_1RenderArea =
     [ "set_lighting_matrix", "classOGF_1_1RenderArea.html#aba421554324af908c3ea95947e4b9fb2", null ],
     [ "set_projection_matrix", "classOGF_1_1RenderArea.html#a2528a60f9f05de777f1c3b8f0197afaa", null ],
     [ "set_viewing_matrix", "classOGF_1_1RenderArea.html#afcaf3b044562240e5048e49c7fbaee00", null ],
-    [ "snapshot", "classOGF_1_1RenderArea.html#a0c55630829abb8810f3f8c00e5c513ad", null ],
+    [ "snapshot", "classOGF_1_1RenderArea.html#a478ddca10a9a54f6988068ed07d1e982", null ],
     [ "update", "classOGF_1_1RenderArea.html#a3dc8e2ce1482c8a56f5ab1f48822f5c6", null ],
     [ "update_background_image_from_data", "classOGF_1_1RenderArea.html#a2afe09e0c1def50be9d44030bd611873", null ],
     [ "update_clipping_config", "classOGF_1_1RenderArea.html#abb3af5b9edde3ce436312e042e3effd0", null ],

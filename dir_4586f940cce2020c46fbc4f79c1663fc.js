@@ -13,12 +13,16 @@ var dir_4586f940cce2020c46fbc4f79c1663fc =
       [ "BinaryInputStream", "classGEO_1_1BinaryInputStream.html", "classGEO_1_1BinaryInputStream" ],
       [ "BinaryOutputStream", "classGEO_1_1BinaryOutputStream.html", "classGEO_1_1BinaryOutputStream" ]
     ] ],
+    [ "boolean_expression.h", "boolean__expression_8h.html", [
+      [ "BooleanExpression", "classGEO_1_1BooleanExpression.html", "classGEO_1_1BooleanExpression" ]
+    ] ],
     [ "command_line.h", "command__line_8h.html", "command__line_8h" ],
     [ "command_line_args.h", "command__line__args_8h.html", "command__line__args_8h" ],
     [ "common.h", "geogram_2src_2lib_2geogram_2basic_2common_8h.html", "geogram_2src_2lib_2geogram_2basic_2common_8h" ],
     [ "counted.h", "counted_8h.html", [
       [ "Counted", "classGEO_1_1Counted.html", "classGEO_1_1Counted" ]
     ] ],
+    [ "debug_stream.h", "debug__stream_8h_source.html", null ],
     [ "determinant.h", "determinant_8h.html", "determinant_8h" ],
     [ "environment.h", "environment_8h.html", [
       [ "VariableObserver", "classGEO_1_1VariableObserver.html", "classGEO_1_1VariableObserver" ],
@@ -48,9 +52,14 @@ var dir_4586f940cce2020c46fbc4f79c1663fc =
     [ "psm.h", "psm_8h.html", "psm_8h" ],
     [ "quaternion.h", "quaternion_8h.html", "quaternion_8h" ],
     [ "range.h", "range_8h.html", [
-      [ "no_iterator", "classGEO_1_1no__iterator.html", "classGEO_1_1no__iterator" ],
-      [ "range", "classGEO_1_1range.html", "classGEO_1_1range" ]
+      [ "index_as_iterator", "classGEO_1_1index__as__iterator.html", "classGEO_1_1index__as__iterator" ],
+      [ "index_range", "classGEO_1_1index__range.html", "classGEO_1_1index__range" ],
+      [ "const_index_ptr_in_array", "classGEO_1_1const__index__ptr__in__array.html", "classGEO_1_1const__index__ptr__in__array" ],
+      [ "index_ptr_in_array", "classGEO_1_1index__ptr__in__array.html", "classGEO_1_1index__ptr__in__array" ],
+      [ "index_ptr_range", "classGEO_1_1index__ptr__range.html", "classGEO_1_1index__ptr__range" ],
+      [ "const_index_ptr_range", "classGEO_1_1const__index__ptr__range.html", "classGEO_1_1const__index__ptr__range" ]
     ] ],
+    [ "rationalg.h", "rationalg_8h.html", "rationalg_8h" ],
     [ "smart_pointer.h", "smart__pointer_8h.html", [
       [ "SmartPointer", "classGEO_1_1SmartPointer.html", "classGEO_1_1SmartPointer" ]
     ] ],
@@ -61,10 +70,6 @@ var dir_4586f940cce2020c46fbc4f79c1663fc =
     ] ],
     [ "string.h", "string_8h.html", "string_8h" ],
     [ "thread_sync.h", "thread__sync_8h.html", "thread__sync_8h" ],
-    [ "vecg.h", "vecg_8h.html", [
-      [ "vecng", "classGEO_1_1vecng.html", "classGEO_1_1vecng" ],
-      [ "vecng< 2, T >", "classGEO_1_1vecng_3_012_00_01T_01_4.html", "classGEO_1_1vecng_3_012_00_01T_01_4" ],
-      [ "vecng< 3, T >", "classGEO_1_1vecng_3_013_00_01T_01_4.html", "classGEO_1_1vecng_3_013_00_01T_01_4" ],
-      [ "vecng< 4, T >", "classGEO_1_1vecng_3_014_00_01T_01_4.html", "classGEO_1_1vecng_3_014_00_01T_01_4" ]
-    ] ]
+    [ "vecg.h", "vecg_8h.html", "vecg_8h" ],
+    [ "vechg.h", "vechg_8h.html", "vechg_8h" ]
 ];

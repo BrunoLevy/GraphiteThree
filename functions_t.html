@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -92,11 +99,14 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 <li>T_
 : <a class="el" href="classGEO_1_1CDTBase2d.html#ac1963ce8000768c1839a171fcd3713dc">GEO::CDTBase2d</a>
 </li>
-<li>T_MARKED_FLAG
-: <a class="el" href="classGEO_1_1CDTBase2d.html#ace5f36b6d887a37914c9b715302ca7b1a7f2d743e835a38d514d2932c392aeeb9">GEO::CDTBase2d</a>
-</li>
 <li>T_to_instance()
 : <a class="el" href="classGEO_1_1Periodic.html#a55c319ac2441cabe24cc66fedbee06cd">GEO::Periodic</a>
+</li>
+<li>Tadd_edge_cnstr()
+: <a class="el" href="classGEO_1_1CDTBase2d.html#abb40853cb6d5f61fdd829929f9f9f710">GEO::CDTBase2d</a>
+</li>
+<li>Tadd_edge_cnstr_with_neighbor()
+: <a class="el" href="classGEO_1_1CDTBase2d.html#a7555b100cc1d473a9f7c78e86593ec0c">GEO::CDTBase2d</a>
 </li>
 <li>Tadj()
 : <a class="el" href="classGEO_1_1CDTBase2d.html#af28ee1b0fa0b679296c867ead8b4920b">GEO::CDTBase2d</a>
@@ -123,11 +133,14 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 <li>Tcheck()
 : <a class="el" href="classGEO_1_1CDTBase2d.html#ad5de7e491083ef66509cdbfd0c8b9abe">GEO::CDTBase2d</a>
 </li>
-<li>Tecnstr_
-: <a class="el" href="classGEO_1_1CDTBase2d.html#ac3d74f6e78bd828f8ec80d6736849564">GEO::CDTBase2d</a>
+<li>Tecnstr_first_
+: <a class="el" href="classGEO_1_1CDTBase2d.html#a437e428668ce995aa31730ed56bf6932">GEO::CDTBase2d</a>
 </li>
-<li>Tedge_cnstr()
-: <a class="el" href="classGEO_1_1CDTBase2d.html#aac9f6c77d3beb46d05c62eb1ef825676">GEO::CDTBase2d</a>
+<li>Tedge_cnstr_first()
+: <a class="el" href="classGEO_1_1CDTBase2d.html#a2079b41410aae52f1b1b00ee72e4f7d0">GEO::CDTBase2d</a>
+</li>
+<li>Tedge_cnstr_nb()
+: <a class="el" href="classGEO_1_1CDTBase2d.html#aedb65fc282c15ed78b852d8bf32cfa93">GEO::CDTBase2d</a>
 </li>
 <li>Tedge_is_constrained()
 : <a class="el" href="classGEO_1_1CDTBase2d.html#a3300d38ac5afe7c5a67a8e6e4f653aae">GEO::CDTBase2d</a>
@@ -140,6 +153,12 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 </li>
 <li>temp_eigen_value
 : <a class="el" href="structNLContextStruct.html#a1a1295e9e935f7ce5051e9358750171b">NLContextStruct</a>
+</li>
+<li>tentatively_classify_component_vertex()
+: <a class="el" href="classGEO_1_1MeshSurfaceIntersection.html#ab1df83e608577b3210e255816845c1bb">GEO::MeshSurfaceIntersection</a>
+</li>
+<li>tentatively_classify_component_vertex_fast()
+: <a class="el" href="classGEO_1_1MeshSurfaceIntersection.html#a172f48dec7b61329aca02535fc0f218d">GEO::MeshSurfaceIntersection</a>
 </li>
 <li>terminate()
 : <a class="el" href="classGEO_1_1Environment.html#ac9ae976da80eba48ccb9fcc5ab7dabc7">GEO::Environment</a>
@@ -304,6 +323,9 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 : <a class="el" href="classGEOGen_1_1VectorStack.html#a3679e211cb63cee0828239322647e271">GEOGen::VectorStack&lt; T &gt;</a>
 , <a class="el" href="classGLUP_1_1MatrixStack.html#a84f2d930267b4291dec85379806bd36d">GLUP::MatrixStack</a>
 </li>
+<li>Topp()
+: <a class="el" href="classGEO_1_1CDTBase2d.html#a6a5e60d394232ab16d69ee6f872d643c">GEO::CDTBase2d</a>
+</li>
 <li>touch()
 : <a class="el" href="classGEO_1_1FileSystem_1_1Node.html#a565817b89f26f6a9b0f4bb6745f86885">GEO::FileSystem::Node</a>
 </li>
@@ -345,7 +367,7 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 : <a class="el" href="classGEO_1_1CDTBase2d.html#adbc7729eb5f174019deb08452953fd95">GEO::CDTBase2d</a>
 </li>
 <li>triangle()
-: <a class="el" href="classGEO_1_1ImageRasterizer.html#acca717f6757127bd9dddd9a8d2a21800">GEO::ImageRasterizer</a>
+: <a class="el" href="classGEO_1_1ImageRasterizer.html#a13e80235121f05d644beba4526730e9a">GEO::ImageRasterizer</a>
 </li>
 <li>Triangle()
 : <a class="el" href="structGEOGen_1_1ConvexCell_1_1Triangle.html#a48f20bea12a2062dc5d5811cba490cd7">GEOGen::ConvexCell::Triangle</a>
@@ -417,6 +439,9 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 <li>triangle_next()
 : <a class="el" href="classGEO_1_1Delaunay2d.html#a29f303393eef9bb8f092dfea3c9a3e9c">GEO::Delaunay2d</a>
 </li>
+<li>triangle_normal_axis()
+: <a class="el" href="classGEO_1_1CoplanarFacets.html#aeb3fc32a938bf9c42ccf11ed84abf918">GEO::CoplanarFacets</a>
+</li>
 <li>triangle_point()
 : <a class="el" href="classVBW_1_1ConvexCell.html#a1642b41431e66260ae27feaf929af8e4">VBW::ConvexCell</a>
 </li>
@@ -440,6 +465,9 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 <li>TriangleAction()
 : <a class="el" href="classGEOGen_1_1RestrictedVoronoiDiagram_1_1TriangleAction.html#adde6391ae03864e43adcdc262ee6b2e0">GEOGen::RestrictedVoronoiDiagram&lt; DIM &gt;::TriangleAction&lt; ACTION &gt;</a>
 </li>
+<li>triangles_are_coplanar()
+: <a class="el" href="classGEO_1_1CoplanarFacets.html#aba53a88708925e039623a742c45e2341">GEO::CoplanarFacets</a>
+</li>
 <li>TriangleStatus
 : <a class="el" href="classGEOGen_1_1ConvexCell.html#a695f7373a32c9555574816b2f1233866">GEOGen::ConvexCell</a>
 </li>
@@ -450,7 +478,9 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 : <a class="el" href="classGEO_1_1MeshCells.html#a4c1e8dbce257bccb36c68f415b6d5573">GEO::MeshCells</a>
 </li>
 <li>triangulate()
-: <a class="el" href="classGEO_1_1MeshFacets.html#a3c354b78fc8f5755b8d9800722d9200a">GEO::MeshFacets</a>
+: <a class="el" href="classGEO_1_1CoplanarFacets.html#ae5a25234d3485c8d1144c419077d59cf">GEO::CoplanarFacets</a>
+, <a class="el" href="classGEO_1_1CSGBuilder.html#a6de184d6e6860960268ce794454bfcf2">GEO::CSGBuilder</a>
+, <a class="el" href="classGEO_1_1MeshFacets.html#a3c354b78fc8f5755b8d9800722d9200a">GEO::MeshFacets</a>
 , <a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#a3c71cb571c2cf73b56a07b2ef3c8ab46">OGF::MeshGrobSurfaceCommands</a>
 </li>
 <li>triangulate_center_vertex()
@@ -468,11 +498,8 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 <li>Tset()
 : <a class="el" href="classGEO_1_1CDTBase2d.html#accef2d6dd6bbe2dc308f51eeb971c49d">GEO::CDTBase2d</a>
 </li>
-<li>Tset_edge_cnstr()
-: <a class="el" href="classGEO_1_1CDTBase2d.html#ab9e5cbf117ac01fdd2bade7b932879c6">GEO::CDTBase2d</a>
-</li>
-<li>Tset_edge_cnstr_with_neighbor()
-: <a class="el" href="classGEO_1_1CDTBase2d.html#a69758c06db025cd4b410bc910be7293f">GEO::CDTBase2d</a>
+<li>Tset_edge_cnstr_first()
+: <a class="el" href="classGEO_1_1CDTBase2d.html#abc18cc0fde177439ecffd5340d404198">GEO::CDTBase2d</a>
 </li>
 <li>Tset_flag()
 : <a class="el" href="classGEO_1_1CDTBase2d.html#a7ebf61bbfc53ee4e6323e92909c72249">GEO::CDTBase2d</a>
@@ -532,7 +559,7 @@ $(document).ready(function(){initNavTree('functions_t.html',''); initResizable()
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:50 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:09 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

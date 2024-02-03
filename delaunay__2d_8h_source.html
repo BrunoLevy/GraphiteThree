@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -422,7 +429,7 @@ $(document).ready(function(){initNavTree('delaunay__2d_8h_source.html',''); init
 <div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;                    <span class="comment">// Orientation is obtained by replacing vertex lf</span></div>
 <div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;                    <span class="comment">// with p.</span></div>
 <div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;                    pv[le] = p;</div>
-<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;                    <a class="code" href="namespaceGEO.html#a9c97e58e4526cb2ab931b3fde0a3b002">Sign</a> sign = PCK::orient_2d(pv[0],pv[1],pv[2]);</div>
+<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;                    <a class="code" href="namespaceGEO.html#a9c97e58e4526cb2ab931b3fde0a3b002">Sign</a> sign = <a class="code" href="namespaceGEO_1_1PCK.html#a75ba8ce218957a755450083288fccb02">PCK::orient_2d</a>(pv[0],pv[1],pv[2]);</div>
 <div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160; </div>
 <div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;                    <span class="keywordflow">if</span>(sign &gt; 0) {</div>
 <div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;                        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
@@ -465,7 +472,7 @@ $(document).ready(function(){initNavTree('delaunay__2d_8h_source.html',''); init
 <div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;                    (p - vertex_ptr(0)) / <span class="keywordtype">int</span>(vertex_stride_)</div>
 <div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;                );</div>
 <div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;                <span class="keywordtype">double</span> h = heights_[pindex];</div>
-<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;                <span class="keywordflow">return</span> (<a class="code" href="namespaceGEO_1_1PCK.html#a8f580fdf432600719d89d3d4e32b1461">PCK::orient_2dlifted_SOS</a>(</div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;                <span class="keywordflow">return</span> (<a class="code" href="namespaceGEO_1_1PCK.html#a4ab7d63f5b3fa71f1b8eec2782078c3e">PCK::orient_2dlifted_SOS</a>(</div>
 <div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;                            pv[0],pv[1],pv[2],p,h0,h1,h2,h</div>
 <div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;                       ) &gt; 0) ;</div>
 <div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;            }</div>
@@ -597,12 +604,13 @@ $(document).ready(function(){initNavTree('delaunay__2d_8h_source.html',''); init
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2geometry_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h.html">geometry.h</a></div><div class="ttdoc">Geometric functions in 2d and 3d.</div></div>
 <div class="ttc" id="anamespaceGEO_1_1PCK_html_a3c4b0e0199df2438227743b9b05ded73"><div class="ttname"><a href="namespaceGEO_1_1PCK.html#a3c4b0e0199df2438227743b9b05ded73">GEO::PCK::in_circle_2d_SOS</a></div><div class="ttdeci">Sign in_circle_2d_SOS(const double *p0, const double *p1, const double *p2, const double *p3)</div><div class="ttdoc">Tests whether a 2d point is inside the circumscribed circle of a 3d triangle.</div></div>
-<div class="ttc" id="anamespaceGEO_1_1PCK_html_a8f580fdf432600719d89d3d4e32b1461"><div class="ttname"><a href="namespaceGEO_1_1PCK.html#a8f580fdf432600719d89d3d4e32b1461">GEO::PCK::orient_2dlifted_SOS</a></div><div class="ttdeci">Sign orient_2dlifted_SOS(const vec2HE &amp;p0, const vec2HE &amp;p1, const vec2HE &amp;p2, const vec2HE &amp;p3, double h0, double h1, double h2, double h3)</div><div class="ttdoc">Computes the 3d orientation test with lifted points.</div></div>
+<div class="ttc" id="anamespaceGEO_1_1PCK_html_a4ab7d63f5b3fa71f1b8eec2782078c3e"><div class="ttname"><a href="namespaceGEO_1_1PCK.html#a4ab7d63f5b3fa71f1b8eec2782078c3e">GEO::PCK::orient_2dlifted_SOS</a></div><div class="ttdeci">Sign orient_2dlifted_SOS(const double *p0, const double *p1, const double *p2, const double *p3, double h0, double h1, double h2, double h3)</div><div class="ttdoc">Computes the 3d orientation test with lifted points.</div></div>
+<div class="ttc" id="anamespaceGEO_1_1PCK_html_a75ba8ce218957a755450083288fccb02"><div class="ttname"><a href="namespaceGEO_1_1PCK.html#a75ba8ce218957a755450083288fccb02">GEO::PCK::orient_2d</a></div><div class="ttdeci">Sign orient_2d(const vec2HE &amp;p0, const vec2HE &amp;p1, const vec2HE &amp;p2)</div><div class="ttdoc">Computes the orientation predicate in 2d.</div></div>
 <div class="ttc" id="anamespaceGEO_html"><div class="ttname"><a href="namespaceGEO.html">GEO</a></div><div class="ttdoc">Global Vorpaline namespace.</div><div class="ttdef"><b>Definition:</b> <a href="lua__grob__shader_8h_source.html#l00053">lua_grob_shader.h:53</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a545c8df15809d86c5efeea8500b1d14c"><div class="ttname"><a href="namespaceGEO.html#a545c8df15809d86c5efeea8500b1d14c">GEO::signed_index_t</a></div><div class="ttdeci">geo_signed_index_t signed_index_t</div><div class="ttdoc">The type for storing and manipulating indices differences.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00301">numeric.h:301</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a9c97e58e4526cb2ab931b3fde0a3b002"><div class="ttname"><a href="namespaceGEO.html#a9c97e58e4526cb2ab931b3fde0a3b002">GEO::Sign</a></div><div class="ttdeci">Sign</div><div class="ttdoc">Integer constants that represent the sign of a value.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00224">numeric.h:224</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_ae771f961036ac7f98502ff145b99d424"><div class="ttname"><a href="namespaceGEO.html#ae771f961036ac7f98502ff145b99d424">GEO::coord_index_t</a></div><div class="ttdeci">geo_coord_index_t coord_index_t</div><div class="ttdoc">The type for storing coordinate indices, and iterating on the coordinates of a point.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00321">numeric.h:321</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a545c8df15809d86c5efeea8500b1d14c"><div class="ttname"><a href="namespaceGEO.html#a545c8df15809d86c5efeea8500b1d14c">GEO::signed_index_t</a></div><div class="ttdeci">geo_signed_index_t signed_index_t</div><div class="ttdoc">The type for storing and manipulating indices differences.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00343">numeric.h:343</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a9c97e58e4526cb2ab931b3fde0a3b002"><div class="ttname"><a href="namespaceGEO.html#a9c97e58e4526cb2ab931b3fde0a3b002">GEO::Sign</a></div><div class="ttdeci">Sign</div><div class="ttdoc">Integer constants that represent the sign of a value.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00068">numeric.h:68</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_ae771f961036ac7f98502ff145b99d424"><div class="ttname"><a href="namespaceGEO.html#ae771f961036ac7f98502ff145b99d424">GEO::coord_index_t</a></div><div class="ttdeci">geo_coord_index_t coord_index_t</div><div class="ttdoc">The type for storing coordinate indices, and iterating on the coordinates of a point.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00363">numeric.h:363</a></div></div>
 <div class="ttc" id="apredicates_8h_html"><div class="ttname"><a href="predicates_8h.html">predicates.h</a></div><div class="ttdoc">Filtered exact predicates for restricted Voronoi diagrams.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -610,7 +618,7 @@ $(document).ready(function(){initNavTree('delaunay__2d_8h_source.html',''); init
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_e22fc903d939dcd7d839b25755c4ff81.html">delaunay</a></li><li class="navelem"><a class="el" href="delaunay__2d_8h.html">delaunay_2d.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:45 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:06 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -146,9 +153,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aaf3159a42a88c4b73ff758fe522489d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshCells.html#aaf3159a42a88c4b73ff758fe522489d7">edge_adjacent_facet</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> c, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> le, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> lf) const</td></tr>
 <tr class="memdesc:aaf3159a42a88c4b73ff758fe522489d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a cell local facet index by local edge index and local facet index in the edge.  <a href="classGEO_1_1MeshCells.html#aaf3159a42a88c4b73ff758fe522489d7">More...</a><br /></td></tr>
 <tr class="separator:aaf3159a42a88c4b73ff758fe522489d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8fd1d45147955743790e09b879c583a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1range.html">range</a>&lt; <a class="el" href="classGEO_1_1no__iterator.html">no_iterator</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshCells.html#ad8fd1d45147955743790e09b879c583a">corners</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> c) const</td></tr>
-<tr class="memdesc:ad8fd1d45147955743790e09b879c583a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the corners of a cell.  <a href="classGEO_1_1MeshCells.html#ad8fd1d45147955743790e09b879c583a">More...</a><br /></td></tr>
-<tr class="separator:ad8fd1d45147955743790e09b879c583a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58ef473903a774b9dd2407425ec29115"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1index__range.html">index_range</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshCells.html#a58ef473903a774b9dd2407425ec29115">corners</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> c) const</td></tr>
+<tr class="memdesc:a58ef473903a774b9dd2407425ec29115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the corners of a cell.  <a href="classGEO_1_1MeshCells.html#a58ef473903a774b9dd2407425ec29115">More...</a><br /></td></tr>
+<tr class="separator:a58ef473903a774b9dd2407425ec29115"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad0d6a9d67bafb8ce633f204d3be21df2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshCells.html#ad0d6a9d67bafb8ce633f204d3be21df2">clear</a> (bool keep_attributes=true, bool keep_memory=false) override</td></tr>
 <tr class="memdesc:ad0d6a9d67bafb8ce633f204d3be21df2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all the elements and attributes.  <a href="classGEO_1_1MeshCells.html#ad0d6a9d67bafb8ce633f204d3be21df2">More...</a><br /></td></tr>
 <tr class="separator:ad0d6a9d67bafb8ce633f204d3be21df2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -280,12 +287,12 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:ae9a3b82b8d505bb4004db54a3e54a81f inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1AttributesManager.html">AttributesManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#ae9a3b82b8d505bb4004db54a3e54a81f">attributes</a> () const</td></tr>
 <tr class="memdesc:ae9a3b82b8d505bb4004db54a3e54a81f inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the attributes manager.  <a href="classGEO_1_1MeshSubElementsStore.html#ae9a3b82b8d505bb4004db54a3e54a81f">More...</a><br /></td></tr>
 <tr class="separator:ae9a3b82b8d505bb4004db54a3e54a81f inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67f4376427ba8ec9260b4b0cf443c2bb inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1no__iterator.html">no_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#a67f4376427ba8ec9260b4b0cf443c2bb">begin</a> () const</td></tr>
-<tr class="memdesc:a67f4376427ba8ec9260b4b0cf443c2bb inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by range-based for.  <a href="classGEO_1_1MeshSubElementsStore.html#a67f4376427ba8ec9260b4b0cf443c2bb">More...</a><br /></td></tr>
-<tr class="separator:a67f4376427ba8ec9260b4b0cf443c2bb inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae44806c720e3c80fe106b484b2b816c0 inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1no__iterator.html">no_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#ae44806c720e3c80fe106b484b2b816c0">end</a> () const</td></tr>
-<tr class="memdesc:ae44806c720e3c80fe106b484b2b816c0 inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by range-based for.  <a href="classGEO_1_1MeshSubElementsStore.html#ae44806c720e3c80fe106b484b2b816c0">More...</a><br /></td></tr>
-<tr class="separator:ae44806c720e3c80fe106b484b2b816c0 inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14c17f9301486490b5034a9b5543e72f inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1index__as__iterator.html">index_as_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#a14c17f9301486490b5034a9b5543e72f">begin</a> () const</td></tr>
+<tr class="memdesc:a14c17f9301486490b5034a9b5543e72f inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by range-based for.  <a href="classGEO_1_1MeshSubElementsStore.html#a14c17f9301486490b5034a9b5543e72f">More...</a><br /></td></tr>
+<tr class="separator:a14c17f9301486490b5034a9b5543e72f inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab42b425a3238796ba8ca8e0edfc8d690 inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1index__as__iterator.html">index_as_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshSubElementsStore.html#ab42b425a3238796ba8ca8e0edfc8d690">end</a> () const</td></tr>
+<tr class="memdesc:ab42b425a3238796ba8ca8e0edfc8d690 inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by range-based for.  <a href="classGEO_1_1MeshSubElementsStore.html#ab42b425a3238796ba8ca8e0edfc8d690">More...</a><br /></td></tr>
+<tr class="separator:ab42b425a3238796ba8ca8e0edfc8d690 inherit pub_methods_classGEO_1_1MeshSubElementsStore"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -405,7 +412,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The cells of a mesh. </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01882">1882</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01906">1906</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5d82c370dafc633dab66bdbc412def89"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5d82c370dafc633dab66bdbc412def89">&#9670;&nbsp;</a></span>MeshCells()</h2>
@@ -478,7 +485,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the cell adjacent to <code>c</code> along facet <code>lf</code> or NO_CELL if no such cell exists </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01926">1926</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01950">1950</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -680,8 +687,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ad8fd1d45147955743790e09b879c583a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad8fd1d45147955743790e09b879c583a">&#9670;&nbsp;</a></span>corners()</h2>
+<a id="a58ef473903a774b9dd2407425ec29115"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58ef473903a774b9dd2407425ec29115">&#9670;&nbsp;</a></span>corners()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -690,7 +697,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classGEO_1_1range.html">range</a>&lt;<a class="el" href="classGEO_1_1no__iterator.html">no_iterator</a>&gt; GEO::MeshCells::corners </td>
+          <td class="memname"><a class="el" href="classGEO_1_1index__range.html">index_range</a> GEO::MeshCells::corners </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td>
           <td class="paramname"><em>c</em></td><td>)</td>
@@ -713,7 +720,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a range with all the corners of the facet. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02016">2016</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02040">2040</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -761,7 +768,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the first created cell </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02043">2043</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02067">2067</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -898,7 +905,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the created connector </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02281">2281</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02305">2305</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1018,7 +1025,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the created hexahedron </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02164">2164</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02188">2188</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1055,7 +1062,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the first created hexahedron </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02102">2102</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02126">2126</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1157,7 +1164,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the created prism </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02206">2206</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02230">2230</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1194,7 +1201,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the first created prism </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02111">2111</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02135">2135</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1290,7 +1297,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the created pyramid </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02244">2244</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02268">2268</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1327,7 +1334,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the first created pyramid </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02120">2120</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02144">2144</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1411,7 +1418,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the created tetrahedron </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02132">2132</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02156">2156</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1448,7 +1455,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the first created tetrahedron </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02093">2093</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02117">2117</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1554,7 +1561,7 @@ Additional Inherited Members</h2></td></tr>
 </ul>
 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02005">2005</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02029">2029</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1609,7 +1616,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>vertex <code>lv</code> of edge <code>le</code> in cell <code>c</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01987">1987</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02011">2011</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1664,7 +1671,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>corner <code>lc</code> of facet <code>lf</code> in cell <code>c</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01974">1974</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01998">1998</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1712,7 +1719,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the number of vertices of facet <code>lf</code> in cell <code>c</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01947">1947</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01971">1971</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1767,7 +1774,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>vertex <code>lv</code> of facet <code>lf</code> in cell <code>c</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01960">1960</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01984">1984</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1888,7 +1895,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the local index (in 0 .. cell_nb_facets(c1)) of the facet of <code>c1</code> that has the same vertices as <code>f2</code> in <code>c2</code> in reverse order, modulo a circular permutation, or NO_FACET if such a facet does not exist in <code>c1</code>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02533">2533</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02557">2557</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1936,7 +1943,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the local index (in 0..cell_nb_vertices(c)-1) of the vertex in cell <code>c</code> or NO_VERTEX if <code>c</code> is not incident to <code>v</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02511">2511</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02535">2535</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -1999,7 +2006,7 @@ Additional Inherited Members</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the local index (0,1,2 or 3) of the facet of <code>t</code> that has <code>v1</code>, <code>v2</code>, <code>v3</code> as vertices modulo a circular permutation, or NO_FACET if such a facet does not exist in <code>t</code>. </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd><a class="el" href="classGEO_1_1MeshCellsStore.html#a199053278c76b6f2a35326ea7978fe5a" title="Tests whether all the cells are tetrahedra.">are_simplices()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02436">2436</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02460">2460</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -2029,7 +2036,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Indicates that the stored elements are no longer only tetrahedra. </p>
 <p>Creates the cell pointers and cell types for the pre-existing cells if any. </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02477">2477</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02501">2501</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -2077,7 +2084,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the local vertex index (0,1,2 or 3) of the <code>lvth</code> vertex in facet <code>lf</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02463">2463</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02487">2487</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -2114,7 +2121,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the number of vertices of cell <code>c</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01895">1895</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01919">1919</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -2202,7 +2209,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01937">1937</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01961">1961</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -2256,7 +2263,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01915">1915</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01939">1939</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -2312,7 +2319,7 @@ Additional Inherited Members</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>the global index of vertex <code>lv</code> in facet <code>lf</code> of tetrahedron <code>t</code> </dd></dl>
 <dl class="section pre"><dt>Precondition</dt><dd><a class="el" href="classGEO_1_1MeshCellsStore.html#a199053278c76b6f2a35326ea7978fe5a" title="Tests whether all the cells are tetrahedra.">are_simplices()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02411">2411</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l02435">2435</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -2506,7 +2513,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the vertex <code>lv</code> of cell <code>c</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01905">1905</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh_8h_source.html#l01929">1929</a> of file <a class="el" href="mesh_8h_source.html">mesh.h</a>.</p>
 
 </div>
 </div>
@@ -2519,7 +2526,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1MeshCells.html">MeshCells</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

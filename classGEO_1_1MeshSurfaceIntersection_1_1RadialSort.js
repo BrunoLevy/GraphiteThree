@@ -6,6 +6,5 @@ var classGEO_1_1MeshSurfaceIntersection_1_1RadialSort =
     [ "h_refNorient", "classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a2b2a2df9d59f6afcb921f25f596c6e98", null ],
     [ "init", "classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a3a17adefaec8a2e03a195cabaf0e8bd6", null ],
     [ "operator()", "classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#ae10ac6dade84840cd1bd7ac7edca899d", null ],
-    [ "set_approx_predicates", "classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#a533e25e49d662eaef802d8bed4a9021e", null ],
     [ "test", "classGEO_1_1MeshSurfaceIntersection_1_1RadialSort.html#ad91371f5101f2f513579c2a33d803f30", null ]
 ];

@@ -2,6 +2,7 @@ var string_8h =
 [
     [ "ConversionError", "classGEO_1_1String_1_1ConversionError.html", "classGEO_1_1String_1_1ConversionError" ],
     [ "char_to_string", "string_8h.html#a192691ea72adc428ae837ac8c28b5638", null ],
+    [ "format", "string_8h.html#a672e8a64544fd4d95b0ff174a5d5476c", null ],
     [ "from_string", "string_8h.html#a5cadf3dad61622912efbb2f644631814", null ],
     [ "from_string", "string_8h.html#a8666d80da9e1aaf1257babbd1707dbae", null ],
     [ "from_string", "string_8h.html#ad80ff8b15a5681c0336fd6f47dbbbfb7", null ],

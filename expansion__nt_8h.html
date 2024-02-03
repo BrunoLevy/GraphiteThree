@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -86,6 +93,7 @@ $(document).ready(function(){initNavTree('expansion__nt_8h.html',''); initResiza
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">expansion_nt.h File Reference</div>  </div>
@@ -97,6 +105,7 @@ $(document).ready(function(){initNavTree('expansion__nt_8h.html',''); initResiza
 <div class="textblock"><code>#include &lt;<a class="el" href="geogram_2src_2lib_2geogram_2basic_2common_8h_source.html">geogram/basic/common.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="multi__precision_8h_source.html">geogram/numerics/multi_precision.h</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">geogram/basic/matrix.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="rationalg_8h_source.html">geogram/basic/rationalg.h</a>&gt;</code><br />
 </div>
 <p><a href="expansion__nt_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -105,15 +114,21 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1expansion__nt.html">GEO::expansion_nt</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.  <a href="classGEO_1_1expansion__nt.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1rational__nt.html">GEO::rational_nt</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rational_nt (rational Number Type) is used to compute the sign of rational fractions exactly.  <a href="classGEO_1_1rational__nt.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespaceGEO"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html">GEO</a></td></tr>
 <tr class="memdesc:namespaceGEO"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global Vorpaline namespace. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespaceGEO_1_1Numeric"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO_1_1Numeric.html">GEO::Numeric</a></td></tr>
+<tr class="memdesc:namespaceGEO_1_1Numeric"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines numeric types used in Vorpaline. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:add0d134becf9a8eb8f6f41406ff1ffd5"><td class="memItemLeft" align="right" valign="top"><a id="add0d134becf9a8eb8f6f41406ff1ffd5"></a>
+typedef rationalg&lt; expansion_nt &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GEO::rational_nt</b></td></tr>
+<tr class="separator:add0d134becf9a8eb8f6f41406ff1ffd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -121,6 +136,10 @@ Functions</h2></td></tr>
 <tr class="memitem:a6d5d73335ff272e3d9627dbc88119e82"><td class="memTemplItemLeft" align="right" valign="top">Sign&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a6d5d73335ff272e3d9627dbc88119e82">GEO::geo_sgn</a> (const expansion_nt &amp;x)</td></tr>
 <tr class="memdesc:a6d5d73335ff272e3d9627dbc88119e82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization of <a class="el" href="namespaceGEO.html#a8e59d9c172507c159f0bee7a004f34f6" title="Gets the sign of a value.">geo_sgn()</a> for <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a>.  <a href="namespaceGEO.html#a6d5d73335ff272e3d9627dbc88119e82">More...</a><br /></td></tr>
 <tr class="separator:a6d5d73335ff272e3d9627dbc88119e82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac595b8a5286d484afc691e12c4172667"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:ac595b8a5286d484afc691e12c4172667"><td class="memTemplItemLeft" align="right" valign="top">Sign&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#ac595b8a5286d484afc691e12c4172667">GEO::geo_cmp</a> (const expansion_nt &amp;x, const expansion_nt &amp;y)</td></tr>
+<tr class="memdesc:ac595b8a5286d484afc691e12c4172667"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization of <a class="el" href="namespaceGEO.html#ab6ecbfbd3db6d0db916ba0a8ab039901" title="Compares two values.">geo_cmp()</a> for <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a>.  <a href="namespaceGEO.html#ac595b8a5286d484afc691e12c4172667">More...</a><br /></td></tr>
+<tr class="separator:ac595b8a5286d484afc691e12c4172667"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a006726e0904763cbb67d0c507eba1df2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a006726e0904763cbb67d0c507eba1df2">GEO::expansion_nt_is_zero</a> (const expansion_nt &amp;x)</td></tr>
 <tr class="memdesc:a006726e0904763cbb67d0c507eba1df2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether an <a class="el" href="classGEO_1_1expansion__nt.html" title="Expansion_nt (expansion Number Type) is used to compute the sign of polynoms exactly.">expansion_nt</a> is zero.  <a href="namespaceGEO.html#a006726e0904763cbb67d0c507eba1df2">More...</a><br /></td></tr>
 <tr class="separator:a006726e0904763cbb67d0c507eba1df2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -142,28 +161,20 @@ Functions</h2></td></tr>
 <tr class="memitem:a7d6181eff332516058851b51f6e4bff9"><td class="memItemLeft" align="right" valign="top">expansion_nt&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a7d6181eff332516058851b51f6e4bff9">GEO::expansion_nt_determinant</a> (const expansion_nt &amp;a00, const expansion_nt &amp;a01, const expansion_nt &amp;a02, const expansion_nt &amp;a03, const expansion_nt &amp;a10, const expansion_nt &amp;a11, const expansion_nt &amp;a12, const expansion_nt &amp;a13, const expansion_nt &amp;a20, const expansion_nt &amp;a21, const expansion_nt &amp;a22, const expansion_nt &amp;a23, const expansion_nt &amp;a30, const expansion_nt &amp;a31, const expansion_nt &amp;a32, const expansion_nt &amp;a33)</td></tr>
 <tr class="memdesc:a7d6181eff332516058851b51f6e4bff9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a 4x4 determinant.  <a href="namespaceGEO.html#a7d6181eff332516058851b51f6e4bff9">More...</a><br /></td></tr>
 <tr class="separator:a7d6181eff332516058851b51f6e4bff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a485ab4bba40dc685bd428bcfe02b8f0b"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:a485ab4bba40dc685bd428bcfe02b8f0b"><td class="memTemplItemLeft" align="right" valign="top">expansion_nt&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a485ab4bba40dc685bd428bcfe02b8f0b">GEO::det2x2</a> (const expansion_nt &amp;a11, const expansion_nt &amp;a12, const expansion_nt &amp;a21, const expansion_nt &amp;a22)</td></tr>
-<tr class="memdesc:a485ab4bba40dc685bd428bcfe02b8f0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization of det2x2.  <a href="namespaceGEO.html#a485ab4bba40dc685bd428bcfe02b8f0b">More...</a><br /></td></tr>
-<tr class="separator:a485ab4bba40dc685bd428bcfe02b8f0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c3d2b1be22b1597cdb665f5d2580778"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:a5c3d2b1be22b1597cdb665f5d2580778"><td class="memTemplItemLeft" align="right" valign="top">expansion_nt&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a5c3d2b1be22b1597cdb665f5d2580778">GEO::det3x3</a> (const expansion_nt &amp;a11, const expansion_nt &amp;a12, const expansion_nt &amp;a13, const expansion_nt &amp;a21, const expansion_nt &amp;a22, const expansion_nt &amp;a23, const expansion_nt &amp;a31, const expansion_nt &amp;a32, const expansion_nt &amp;a33)</td></tr>
-<tr class="memdesc:a5c3d2b1be22b1597cdb665f5d2580778"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization of det3x3.  <a href="namespaceGEO.html#a5c3d2b1be22b1597cdb665f5d2580778">More...</a><br /></td></tr>
-<tr class="separator:a5c3d2b1be22b1597cdb665f5d2580778"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7655c39347c1089c193a9409d66a206f"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:a7655c39347c1089c193a9409d66a206f"><td class="memTemplItemLeft" align="right" valign="top">expansion_nt&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a7655c39347c1089c193a9409d66a206f">GEO::det4x4</a> (const expansion_nt &amp;a11, const expansion_nt &amp;a12, const expansion_nt &amp;a13, const expansion_nt &amp;a14, const expansion_nt &amp;a21, const expansion_nt &amp;a22, const expansion_nt &amp;a23, const expansion_nt &amp;a24, const expansion_nt &amp;a31, const expansion_nt &amp;a32, const expansion_nt &amp;a33, const expansion_nt &amp;a34, const expansion_nt &amp;a41, const expansion_nt &amp;a42, const expansion_nt &amp;a43, const expansion_nt &amp;a44)</td></tr>
-<tr class="memdesc:a7655c39347c1089c193a9409d66a206f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization of det4x4.  <a href="namespaceGEO.html#a7655c39347c1089c193a9409d66a206f">More...</a><br /></td></tr>
-<tr class="separator:a7655c39347c1089c193a9409d66a206f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22111de4bc9bc3747a3026a7f3fb99bd"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="expansion__nt_8h.html#a22111de4bc9bc3747a3026a7f3fb99bd">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="classGEO_1_1expansion__nt.html">GEO::expansion_nt</a> &amp;a)</td></tr>
 <tr class="memdesc:a22111de4bc9bc3747a3026a7f3fb99bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays the approximated value of an expansion_nt to a stream.  <a href="expansion__nt_8h.html#a22111de4bc9bc3747a3026a7f3fb99bd">More...</a><br /></td></tr>
 <tr class="separator:a22111de4bc9bc3747a3026a7f3fb99bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac98d12aa7095b8f4e19b7e21635fda2c"><td class="memItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="expansion__nt_8h.html#ac98d12aa7095b8f4e19b7e21635fda2c">operator&gt;&gt;</a> (std::istream &amp;is, <a class="el" href="classGEO_1_1expansion__nt.html">GEO::expansion_nt</a> &amp;a)</td></tr>
 <tr class="memdesc:ac98d12aa7095b8f4e19b7e21635fda2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a double precision number from a stream and converts it to an approximation.  <a href="expansion__nt_8h.html#ac98d12aa7095b8f4e19b7e21635fda2c">More...</a><br /></td></tr>
 <tr class="separator:ac98d12aa7095b8f4e19b7e21635fda2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af356a766627e6a280cd32f5ba9d4412b"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
-<tr class="memitem:af356a766627e6a280cd32f5ba9d4412b"><td class="memTemplItemLeft" align="right" valign="top">Sign&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#af356a766627e6a280cd32f5ba9d4412b">GEO::geo_sgn</a> (const rational_nt &amp;x)</td></tr>
-<tr class="memdesc:af356a766627e6a280cd32f5ba9d4412b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization of <a class="el" href="namespaceGEO.html#a8e59d9c172507c159f0bee7a004f34f6" title="Gets the sign of a value.">geo_sgn()</a> for <a class="el" href="classGEO_1_1rational__nt.html" title="Rational_nt (rational Number Type) is used to compute the sign of rational fractions exactly.">rational_nt</a>.  <a href="namespaceGEO.html#af356a766627e6a280cd32f5ba9d4412b">More...</a><br /></td></tr>
-<tr class="separator:af356a766627e6a280cd32f5ba9d4412b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9196082cc304ddd2b2a272c143781ac2"><td class="memItemLeft" align="right" valign="top"><a id="a9196082cc304ddd2b2a272c143781ac2"></a>
+template&lt;&gt; </td></tr>
+<tr class="memitem:a9196082cc304ddd2b2a272c143781ac2"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>GEO::Numeric::optimize_number_representation</b> (expansion_nt &amp;x)</td></tr>
+<tr class="separator:a9196082cc304ddd2b2a272c143781ac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad21220aefb2f809b7cb8429374822870"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
+<tr class="memitem:ad21220aefb2f809b7cb8429374822870"><td class="memTemplItemLeft" align="right" valign="top">Sign&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceGEO_1_1Numeric.html#ad21220aefb2f809b7cb8429374822870">GEO::Numeric::ratio_compare</a> (const expansion_nt &amp;a_num, const expansion_nt &amp;a_denom, const expansion_nt &amp;b_num, const expansion_nt &amp;b_denom)</td></tr>
+<tr class="memdesc:ad21220aefb2f809b7cb8429374822870"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares two rational numbers given as separate numerators and denominators. Specialization for exact_nt.  <a href="namespaceGEO_1_1Numeric.html#ad21220aefb2f809b7cb8429374822870">More...</a><br /></td></tr>
+<tr class="separator:ad21220aefb2f809b7cb8429374822870"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>High-level interface to multi-precision arithmetics. </p>
@@ -215,7 +226,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to the stream </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l00996">996</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l01010">1010</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -263,7 +274,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to the stream </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l01009">1009</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="expansion__nt_8h_source.html#l01023">1023</a> of file <a class="el" href="expansion__nt_8h_source.html">expansion_nt.h</a>.</p>
 
 </div>
 </div>
@@ -273,7 +284,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_2f1f89047d188415f836e3f8a1ed4b93.html">numerics</a></li><li class="navelem"><a class="el" href="expansion__nt_8h.html">expansion_nt.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

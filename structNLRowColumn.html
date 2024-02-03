@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -189,7 +196,7 @@ Related Functions</h2></td></tr>
 
 <p>Adds a coefficient to an <a class="el" href="structNLRowColumn.html" title="Represents a row or a column of a sparse matrix.">NLRowColumn</a>. <br  />
  </p>
-<p>Performs the following operation: <img class="formulaInl" alt="$ a_i \leftarrow a_i + value $" src="form_36.png"/>. If the <a class="el" href="structNLRowColumn.html" title="Represents a row or a column of a sparse matrix.">NLRowColumn</a> already has a coefficient with index <code>index</code>, then the value is added to that coefficient, else a new coefficient is created. Additional storage is allocated as need be. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Performs the following operation: \( a_i \leftarrow a_i + value \). If the <a class="el" href="structNLRowColumn.html" title="Represents a row or a column of a sparse matrix.">NLRowColumn</a> already has a coefficient with index <code>index</code>, then the value is added to that coefficient, else a new coefficient is created. Additional storage is allocated as need be. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">c</td><td>a pointer to an <a class="el" href="structNLRowColumn.html" title="Represents a row or a column of a sparse matrix.">NLRowColumn</a> </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>index of the coefficient </td></tr>
@@ -465,7 +472,7 @@ Related Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structNLRowColumn.html">NLRowColumn</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

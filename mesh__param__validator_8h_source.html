@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -240,7 +247,7 @@ $(document).ready(function(){initNavTree('mesh__param__validator_8h_source.html'
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aattributes_8h_html"><div class="ttname"><a href="attributes_8h.html">attributes.h</a></div><div class="ttdoc">Generic mechanism for attributes.</div></div>
 <div class="ttc" id="aclassGEO_1_1Attribute_html"><div class="ttname"><a href="classGEO_1_1Attribute.html">GEO::Attribute&lt; double &gt;</a></div></div>
-<div class="ttc" id="aclassGEO_1_1Mesh_html"><div class="ttname"><a href="classGEO_1_1Mesh.html">GEO::Mesh</a></div><div class="ttdoc">Represents a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="mesh_8h_source.html#l02648">mesh.h:2648</a></div></div>
+<div class="ttc" id="aclassGEO_1_1Mesh_html"><div class="ttname"><a href="classGEO_1_1Mesh.html">GEO::Mesh</a></div><div class="ttdoc">Represents a mesh.</div><div class="ttdef"><b>Definition:</b> <a href="mesh_8h_source.html#l02672">mesh.h:2672</a></div></div>
 <div class="ttc" id="aclassGEO_1_1ParamValidator_html"><div class="ttname"><a href="classGEO_1_1ParamValidator.html">GEO::ParamValidator</a></div><div class="ttdoc">Tests whether texture coordinates attached to a surface mesh define a valid parameterization.</div><div class="ttdef"><b>Definition:</b> <a href="mesh__param__validator_8h_source.html#l00061">mesh_param_validator.h:61</a></div></div>
 <div class="ttc" id="aclassGEO_1_1ParamValidator_html_a0994dab60f6e3e7f5fa7f3bd62ac729b"><div class="ttname"><a href="classGEO_1_1ParamValidator.html#a0994dab60f6e3e7f5fa7f3bd62ac729b">GEO::ParamValidator::end_rasterizer</a></div><div class="ttdeci">void end_rasterizer()</div><div class="ttdoc">Terminates the software rasterizer.</div></div>
 <div class="ttc" id="aclassGEO_1_1ParamValidator_html_a1a0c914fd25d69c82f61f18afac1715e"><div class="ttname"><a href="classGEO_1_1ParamValidator.html#a1a0c914fd25d69c82f61f18afac1715e">GEO::ParamValidator::~ParamValidator</a></div><div class="ttdeci">~ParamValidator()</div><div class="ttdoc">ParamValidator destructor.</div></div>
@@ -265,7 +272,7 @@ $(document).ready(function(){initNavTree('mesh__param__validator_8h_source.html'
 <div class="ttc" id="aclassGEO_1_1vecng_html"><div class="ttname"><a href="classGEO_1_1vecng.html">GEO::vecng&lt; 2, Numeric::float64 &gt;</a></div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2geometry_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h.html">geometry.h</a></div><div class="ttdoc">Geometric functions in 2d and 3d.</div></div>
-<div class="ttc" id="anamespaceGEO_1_1Numeric_html_a10c083442de46256356949e839c1e198"><div class="ttname"><a href="namespaceGEO_1_1Numeric.html#a10c083442de46256356949e839c1e198">GEO::Numeric::uint8</a></div><div class="ttdeci">uint8_t uint8</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00090">numeric.h:90</a></div></div>
+<div class="ttc" id="anamespaceGEO_1_1Numeric_html_a10c083442de46256356949e839c1e198"><div class="ttname"><a href="namespaceGEO_1_1Numeric.html#a10c083442de46256356949e839c1e198">GEO::Numeric::uint8</a></div><div class="ttdeci">uint8_t uint8</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00135">numeric.h:135</a></div></div>
 <div class="ttc" id="anamespaceGEO_html"><div class="ttname"><a href="namespaceGEO.html">GEO</a></div><div class="ttdoc">Global Vorpaline namespace.</div><div class="ttdef"><b>Definition:</b> <a href="lua__grob__shader_8h_source.html#l00053">lua_grob_shader.h:53</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -273,7 +280,7 @@ $(document).ready(function(){initNavTree('mesh__param__validator_8h_source.html'
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_6050e2c325266c5e91d21027bfe6f20e.html">parameterization</a></li><li class="navelem"><b>mesh_param_validator.h</b></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

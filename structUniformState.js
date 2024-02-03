@@ -29,6 +29,7 @@ var structUniformState =
     [ "texture_mode", "structUniformState.html#ac8e2f4a724fee3d2cdaade362ef5ab96", null ],
     [ "texture_type", "structUniformState.html#ad0188492493f3397c44359b657fa24da", null ],
     [ "texturing_enabled", "structUniformState.html#a5f45a3dedd9dc994caa4f9e54b59b4d9", null ],
+    [ "thick_lines_enabled", "structUniformState.html#af7844a204d570acfa4693b2995feef29", null ],
     [ "vertex_colors_enabled", "structUniformState.html#a2b7076b2d1ddc4b7618752f98ecd5408", null ],
     [ "vertex_normals_enabled", "structUniformState.html#a8ab90c292939beb8c75916a4992882c8", null ],
     [ "viewport", "structUniformState.html#a29371fe30c213561a954fb8610cd9f49", null ],

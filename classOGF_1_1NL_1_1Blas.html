@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -321,7 +328,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Computes a linear combination of two vectors. </p>
-<p>In formula: <img class="formulaInl" alt="$ y \leftarrow a x + y $" src="form_1.png"/> </p><dl class="params"><dt>Parameters</dt><dd>
+<p>In formula: \( y \leftarrow a x + y \) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>scaling coefficient </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>source vector to be scaled and added </td></tr>
@@ -424,7 +431,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Scales a vector. </p>
-<p>In formula: <img class="formulaInl" alt="$ x \leftarrow a x $" src="form_0.png"/> </p><dl class="params"><dt>Parameters</dt><dd>
+<p>In formula: \( x \leftarrow a x \) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>scaling coefficient </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">x</td><td>vector to be scaled </td></tr>
@@ -443,7 +450,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><b>NL</b></li><li class="navelem"><a class="el" href="classOGF_1_1NL_1_1Blas.html">Blas</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:50 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:09 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

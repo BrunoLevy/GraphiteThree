@@ -64,8 +64,7 @@ var namespaces_dup =
       [ "show_vector", "GLUP__context_8h.html#ace3e349926385102cc146d86ffbb3722", null ],
       [ "transpose_matrix", "GLUP__context_8h.html#a14539497bfd70696735d7597c6595ee8", null ],
       [ "transpose_matrix", "GLUP__context_8h.html#a83a813cde6f27b1fcc7693414cca596d", null ],
-      [ "current_context_", "GLUP__private_8h.html#a094cb0cee7eb999e67fcdb85ea5ea4f3", null ],
-      [ "nb_vertices_per_primitive", "GLUP__context_8h.html#a5dfc0e981af683d402437cd7c6337d8d", null ]
+      [ "current_context_", "GLUP__private_8h.html#a094cb0cee7eb999e67fcdb85ea5ea4f3", null ]
     ] ],
     [ "ImGui", null, [
       [ "BeginMenu", "imgui__ext_8h.html#a1beabcdc361f3972f8bb030323b567ae", null ],

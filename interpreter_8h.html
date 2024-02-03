@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -114,6 +121,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1InterfaceScope.html">OGF::InterfaceScope</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classOGF_1_1Scope.html" title="A naming scope in an Interpreter.">Scope</a> that contains all interfaces of an object.  <a href="classOGF_1_1InterfaceScope.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MetaTypesScope.html">OGF::MetaTypesScope</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classOGF_1_1Scope.html" title="A naming scope in an Interpreter.">Scope</a> that contains all interfaces of an object.  <a href="classOGF_1_1MetaTypesScope.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1Interpreter.html">OGF::Interpreter</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract base class for the GOM interpreter.  <a href="classOGF_1_1Interpreter.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -129,6 +139,9 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a0e1aeab644a317b9da20a3b8bee0e870"><td class="memItemLeft" align="right" valign="top"><a id="a0e1aeab644a317b9da20a3b8bee0e870"></a>
 typedef SmartPointer&lt; Scope &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OGF::Scope_var</b></td></tr>
 <tr class="separator:a0e1aeab644a317b9da20a3b8bee0e870"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e4129bcdf325b2892bd48ef6ad8a2f8"><td class="memItemLeft" align="right" valign="top"><a id="a9e4129bcdf325b2892bd48ef6ad8a2f8"></a>
+typedef SmartPointer&lt; Interpreter &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>OGF::Interpreter_var</b></td></tr>
+<tr class="separator:a9e4129bcdf325b2892bd48ef6ad8a2f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The abstract base class for the GOM interpreter. </p>
@@ -140,7 +153,7 @@ typedef SmartPointer&lt; Scope &gt;&#160;</td><td class="memItemRight" valign="b
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_aef77abc1c70517fe3037d0ad81c1d82.html">OGF</a></li><li class="navelem"><a class="el" href="dir_69b25135ad0c2c10dad56e08dbeec7e1.html">gom</a></li><li class="navelem"><a class="el" href="dir_a3252d4fb9c3adfc6640e89fdccdf9ce.html">interpreter</a></li><li class="navelem"><a class="el" href="interpreter_8h.html">interpreter.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

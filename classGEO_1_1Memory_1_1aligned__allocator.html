@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -170,7 +177,7 @@ class GEO::Memory::aligned_allocator&lt; T, ALIGN &gt;</h3>
 <p>An allocator that performs aligned memory allocations. </p>
 <p>The allocator can be used as a template argument for STL containers. It is required for efficient vectorization of the code using vector processing units (SSE,AVX or AVX-512). </p>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00444">444</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00457">457</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ac74a74f145dcf1c56bb9ebc2c7c92cbe"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac74a74f145dcf1c56bb9ebc2c7c92cbe">&#9670;&nbsp;</a></span>address() <span class="overload">[1/2]</span></h2>
@@ -207,7 +214,7 @@ template&lt;class T , int ALIGN = GEO_MEMORY_ALIGNMENT&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a const_pointer to <code>x</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00491">491</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00504">504</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -246,7 +253,7 @@ template&lt;class T , int ALIGN = GEO_MEMORY_ALIGNMENT&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to <code>x</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00482">482</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00495">495</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -296,7 +303,7 @@ template&lt;class T , int ALIGN = GEO_MEMORY_ALIGNMENT&gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the initial element in the block of storage </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00512">512</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00525">525</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -346,7 +353,7 @@ template&lt;class T , int ALIGN = GEO_MEMORY_ALIGNMENT&gt; </div>
 </dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classGEO_1_1Memory_1_1aligned__allocator.html#a62f9d1790bfee5db1dbbd8d3e183ae1f" title="Allocates a block of storage.">allocate()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00561">561</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00574">574</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -396,7 +403,7 @@ template&lt;class T , int ALIGN = GEO_MEMORY_ALIGNMENT&gt; </div>
 </dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classGEO_1_1Memory_1_1aligned__allocator.html#a62f9d1790bfee5db1dbbd8d3e183ae1f" title="Allocates a block of storage.">allocate()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00533">533</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00546">546</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -435,7 +442,7 @@ template&lt;class T , int ALIGN = GEO_MEMORY_ALIGNMENT&gt; </div>
 </dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classGEO_1_1Memory_1_1aligned__allocator.html#ae68fc025f8b7386e7f0269d23fd5e665" title="Releases a block of storage.">deallocate()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00573">573</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00586">586</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -467,7 +474,7 @@ template&lt;class T , int ALIGN = GEO_MEMORY_ALIGNMENT&gt; </div>
 <p>Gets the maximum size possible to allocate. </p>
 <dl class="section return"><dt>Returns</dt><dd>the maximum number of elements, each of member type <code>value_type</code> that could potentially be allocated by a call to member <a class="el" href="classGEO_1_1Memory_1_1aligned__allocator.html#a62f9d1790bfee5db1dbbd8d3e183ae1f" title="Allocates a block of storage.">allocate()</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00544">544</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00557">557</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -501,7 +508,7 @@ template&lt;class T2 , int A2&gt; </div>
 <p>Conversion operator to different <a class="el" href="classGEO_1_1Memory_1_1aligned__allocator.html" title="An allocator that performs aligned memory allocations.">aligned_allocator</a>. </p>
 <p>Required when compiling under MSVC version &lt;= 2010 </p>
 
-<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00584">584</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="memory_8h_source.html#l00597">597</a> of file <a class="el" href="memory_8h_source.html">memory.h</a>.</p>
 
 </div>
 </div>
@@ -514,7 +521,7 @@ template&lt;class T2 , int A2&gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="namespaceGEO_1_1Memory.html">Memory</a></li><li class="navelem"><a class="el" href="classGEO_1_1Memory_1_1aligned__allocator.html">aligned_allocator</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -182,6 +189,14 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a8e59d9c172507c159f0bee7a004f34f6"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a8e59d9c172507c159f0bee7a004f34f6"><td class="memTemplItemLeft" align="right" valign="top">Sign&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a8e59d9c172507c159f0bee7a004f34f6">GEO::geo_sgn</a> (const T &amp;x)</td></tr>
+<tr class="memdesc:a8e59d9c172507c159f0bee7a004f34f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the sign of a value.  <a href="namespaceGEO.html#a8e59d9c172507c159f0bee7a004f34f6">More...</a><br /></td></tr>
+<tr class="separator:a8e59d9c172507c159f0bee7a004f34f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6ecbfbd3db6d0db916ba0a8ab039901"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:ab6ecbfbd3db6d0db916ba0a8ab039901"><td class="memTemplItemLeft" align="right" valign="top">Sign&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#ab6ecbfbd3db6d0db916ba0a8ab039901">GEO::geo_cmp</a> (const T &amp;a, const T &amp;b)</td></tr>
+<tr class="memdesc:ab6ecbfbd3db6d0db916ba0a8ab039901"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares two values.  <a href="namespaceGEO.html#ab6ecbfbd3db6d0db916ba0a8ab039901">More...</a><br /></td></tr>
+<tr class="separator:ab6ecbfbd3db6d0db916ba0a8ab039901"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a563dbae28bbe5d82c90a04e106d8fb6b"><td class="memItemLeft" align="right" valign="top"><a id="a563dbae28bbe5d82c90a04e106d8fb6b"></a>
 float32&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO_1_1Numeric.html#a563dbae28bbe5d82c90a04e106d8fb6b">GEO::Numeric::max_float32</a> ()</td></tr>
 <tr class="memdesc:a563dbae28bbe5d82c90a04e106d8fb6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets 32 bits float maximum positive value. <br /></td></tr>
@@ -222,10 +237,14 @@ float32&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="n
 float64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGEO_1_1Numeric.html#a84b4a558d230beff785928c464cde73e">GEO::Numeric::random_float64</a> ()</td></tr>
 <tr class="memdesc:a84b4a558d230beff785928c464cde73e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a 64 bits float between 0 and 1. <br /></td></tr>
 <tr class="separator:a84b4a558d230beff785928c464cde73e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e59d9c172507c159f0bee7a004f34f6"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a8e59d9c172507c159f0bee7a004f34f6"><td class="memTemplItemLeft" align="right" valign="top">Sign&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a8e59d9c172507c159f0bee7a004f34f6">GEO::geo_sgn</a> (const T &amp;x)</td></tr>
-<tr class="memdesc:a8e59d9c172507c159f0bee7a004f34f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the sign of a value.  <a href="namespaceGEO.html#a8e59d9c172507c159f0bee7a004f34f6">More...</a><br /></td></tr>
-<tr class="separator:a8e59d9c172507c159f0bee7a004f34f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a971e7014d80caa7c54e12cfe10f19bd7"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a971e7014d80caa7c54e12cfe10f19bd7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceGEO_1_1Numeric.html#a971e7014d80caa7c54e12cfe10f19bd7">GEO::Numeric::optimize_number_representation</a> (T &amp;x)</td></tr>
+<tr class="memdesc:a971e7014d80caa7c54e12cfe10f19bd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">place holder for optimizing internal number representation  <a href="namespaceGEO_1_1Numeric.html#a971e7014d80caa7c54e12cfe10f19bd7">More...</a><br /></td></tr>
+<tr class="separator:a971e7014d80caa7c54e12cfe10f19bd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8498782c238137504b402b6fbe4d45b1"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a8498782c238137504b402b6fbe4d45b1"><td class="memTemplItemLeft" align="right" valign="top">Sign&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceGEO_1_1Numeric.html#a8498782c238137504b402b6fbe4d45b1">GEO::Numeric::ratio_compare</a> (const T &amp;a_num, const T &amp;a_denom, const T &amp;b_num, const T &amp;b_denom)</td></tr>
+<tr class="memdesc:a8498782c238137504b402b6fbe4d45b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares two rational numbers given as separate numerators and denominators.  <a href="namespaceGEO_1_1Numeric.html#a8498782c238137504b402b6fbe4d45b1">More...</a><br /></td></tr>
+<tr class="separator:a8498782c238137504b402b6fbe4d45b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a38306dc5e49d6eb82d7831c971db600a"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:a38306dc5e49d6eb82d7831c971db600a"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceGEO.html#a38306dc5e49d6eb82d7831c971db600a">GEO::geo_sqr</a> (T x)</td></tr>
 <tr class="memdesc:a38306dc5e49d6eb82d7831c971db600a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the square value of a value.  <a href="namespaceGEO.html#a38306dc5e49d6eb82d7831c971db600a">More...</a><br /></td></tr>
@@ -259,7 +278,7 @@ signed_index_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_4586f940cce2020c46fbc4f79c1663fc.html">basic</a></li><li class="navelem"><a class="el" href="numeric_8h.html">numeric.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

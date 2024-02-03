@@ -10,6 +10,8 @@ var classOGF_1_1MetaClass =
     [ "append_signals", "classOGF_1_1MetaClass.html#aed9014ffafbadb3abdcea5b62d93ec82", null ],
     [ "append_slots", "classOGF_1_1MetaClass.html#a36098b681a1d4aa629f2501114d24ad5", null ],
     [ "best_constructor", "classOGF_1_1MetaClass.html#a5aff2ffb299afe895c9758b4a24fb000", null ],
+    [ "create", "classOGF_1_1MetaClass.html#a654d31be0746a62ca1e80b2af072266b", null ],
+    [ "create_subclass", "classOGF_1_1MetaClass.html#a872e808a2fc690611e2af190bccca443", null ],
     [ "factory", "classOGF_1_1MetaClass.html#ad9aa99a9a88056e6ae9ba5be84a86eed", null ],
     [ "find_member", "classOGF_1_1MetaClass.html#aef78531ff105a953c28476ae4e6ba967", null ],
     [ "find_method", "classOGF_1_1MetaClass.html#a441f3563877b59f5309ce70388d52531", null ],

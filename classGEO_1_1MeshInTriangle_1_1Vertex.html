@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -116,9 +123,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4c719b23ca2db4ea9b1373f1838a484e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle_1_1Vertex.html#a4c719b23ca2db4ea9b1373f1838a484e">Vertex</a> (<a class="el" href="classGEO_1_1MeshInTriangle.html">MeshInTriangle</a> *M, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> f1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> f2, <a class="el" href="namespaceGEO.html#a2aa39253e2c170b7f336966395258641">TriangleRegion</a> R1, <a class="el" href="namespaceGEO.html#a2aa39253e2c170b7f336966395258641">TriangleRegion</a> R2)</td></tr>
 <tr class="memdesc:a4c719b23ca2db4ea9b1373f1838a484e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for intersections with other facets.  <a href="classGEO_1_1MeshInTriangle_1_1Vertex.html#a4c719b23ca2db4ea9b1373f1838a484e">More...</a><br /></td></tr>
 <tr class="separator:a4c719b23ca2db4ea9b1373f1838a484e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b4ac54281a14c488cad059073bb377b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle_1_1Vertex.html#a7b4ac54281a14c488cad059073bb377b">Vertex</a> (<a class="el" href="classGEO_1_1MeshInTriangle.html">MeshInTriangle</a> *M, const <a class="el" href="structGEO_1_1vec3HE.html">vec3HE</a> &amp;point_exact_in)</td></tr>
-<tr class="memdesc:a7b4ac54281a14c488cad059073bb377b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for intersections between constraints.  <a href="classGEO_1_1MeshInTriangle_1_1Vertex.html#a7b4ac54281a14c488cad059073bb377b">More...</a><br /></td></tr>
-<tr class="separator:a7b4ac54281a14c488cad059073bb377b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace41998e8a260656c3915ccb76885650"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle_1_1Vertex.html#ace41998e8a260656c3915ccb76885650">Vertex</a> (<a class="el" href="classGEO_1_1MeshInTriangle.html">MeshInTriangle</a> *M, const <a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a> &amp;point_exact_in)</td></tr>
+<tr class="memdesc:ace41998e8a260656c3915ccb76885650"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for intersections between constraints.  <a href="classGEO_1_1MeshInTriangle_1_1Vertex.html#ace41998e8a260656c3915ccb76885650">More...</a><br /></td></tr>
+<tr class="separator:ace41998e8a260656c3915ccb76885650"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0d7da89e6a27f7e4b50feddd30580d9"><td class="memItemLeft" align="right" valign="top"><a id="af0d7da89e6a27f7e4b50feddd30580d9"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle_1_1Vertex.html#af0d7da89e6a27f7e4b50feddd30580d9">Vertex</a> ()</td></tr>
 <tr class="memdesc:af0d7da89e6a27f7e4b50feddd30580d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
@@ -141,12 +148,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:af6d6c9db45de648919838df6e9156700"><td class="memItemLeft" align="right" valign="top"><a id="af6d6c9db45de648919838df6e9156700"></a>
 <a class="el" href="classGEO_1_1MeshInTriangle.html">MeshInTriangle</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>mit</b></td></tr>
 <tr class="separator:af6d6c9db45de648919838df6e9156700"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41c85e430cddb5c3f0fcd22285e6976b"><td class="memItemLeft" align="right" valign="top"><a id="a41c85e430cddb5c3f0fcd22285e6976b"></a>
-<a class="el" href="structGEO_1_1vec3HE.html">vec3HE</a>&#160;</td><td class="memItemRight" valign="bottom"><b>point_exact</b></td></tr>
-<tr class="separator:a41c85e430cddb5c3f0fcd22285e6976b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaeb3df8d1ca6801bd83e587b91bf4462"><td class="memItemLeft" align="right" valign="top"><a id="aaeb3df8d1ca6801bd83e587b91bf4462"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>h_approx</b></td></tr>
-<tr class="separator:aaeb3df8d1ca6801bd83e587b91bf4462"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b936c88e43b0370390b288be373fdd2"><td class="memItemLeft" align="right" valign="top"><a id="a7b936c88e43b0370390b288be373fdd2"></a>
+<a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><b>point_exact</b></td></tr>
+<tr class="separator:a7b936c88e43b0370390b288be373fdd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93c1e608f650e0e97cc2fa5536c263e4"><td class="memItemLeft" align="right" valign="top"><a id="a93c1e608f650e0e97cc2fa5536c263e4"></a>
 Type&#160;</td><td class="memItemRight" valign="bottom"><b>type</b></td></tr>
 <tr class="separator:a93c1e608f650e0e97cc2fa5536c263e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,25 +173,28 @@ struct {</td></tr>
 <tr class="separator:a512d2d5faf0fb75eb4a5517c0f8cbcf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af256d0741916e33c251bdd0bab40ec70"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>sym</b></td></tr>
 <tr class="separator:af256d0741916e33c251bdd0bab40ec70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9dbe64888dca5e53e2147ad502a1acf"><td class="memItemLeft" align="right" valign="top"><a id="ae9dbe64888dca5e53e2147ad502a1acf"></a>
+double&#160;</td><td class="memItemRight" valign="bottom"><b>l</b></td></tr>
+<tr class="separator:ae9dbe64888dca5e53e2147ad502a1acf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a6205d05a87ab0affc68e50705035c0b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle_1_1Vertex.html#a6205d05a87ab0affc68e50705035c0b9">init_sym</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> f1, <a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> f2, <a class="el" href="namespaceGEO.html#a2aa39253e2c170b7f336966395258641">TriangleRegion</a> R1, <a class="el" href="namespaceGEO.html#a2aa39253e2c170b7f336966395258641">TriangleRegion</a> R2)</td></tr>
 <tr class="memdesc:a6205d05a87ab0affc68e50705035c0b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the symbolic information of this <a class="el" href="classGEO_1_1MeshInTriangle_1_1Vertex.html" title="A vertex of the triangulation.">Vertex</a>.  <a href="classGEO_1_1MeshInTriangle_1_1Vertex.html#a6205d05a87ab0affc68e50705035c0b9">More...</a><br /></td></tr>
 <tr class="separator:a6205d05a87ab0affc68e50705035c0b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae2b8bac4fc3f3d7d359738f76fe14a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structGEO_1_1vec3HE.html">vec3HE</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle_1_1Vertex.html#aae2b8bac4fc3f3d7d359738f76fe14a1">compute_geometry</a> ()</td></tr>
-<tr class="memdesc:aae2b8bac4fc3f3d7d359738f76fe14a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the geometry of this vertex.  <a href="classGEO_1_1MeshInTriangle_1_1Vertex.html#aae2b8bac4fc3f3d7d359738f76fe14a1">More...</a><br /></td></tr>
-<tr class="separator:aae2b8bac4fc3f3d7d359738f76fe14a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b4519fa33c3ff345beb71b911dfc059"><td class="memItemLeft" align="right" valign="top"><a id="a3b4519fa33c3ff345beb71b911dfc059"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle_1_1Vertex.html#a3b4519fa33c3ff345beb71b911dfc059">init_geometry</a> (const <a class="el" href="structGEO_1_1vec3HE.html">vec3HE</a> &amp;P)</td></tr>
-<tr class="memdesc:a3b4519fa33c3ff345beb71b911dfc059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optimizes exact numbers in generated points and computes approximate coordinates. <br /></td></tr>
-<tr class="separator:a3b4519fa33c3ff345beb71b911dfc059"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae92d83c57871de24c62e26a567cba758"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle_1_1Vertex.html#ae92d83c57871de24c62e26a567cba758">compute_geometry</a> ()</td></tr>
+<tr class="memdesc:ae92d83c57871de24c62e26a567cba758"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the geometry of this vertex.  <a href="classGEO_1_1MeshInTriangle_1_1Vertex.html#ae92d83c57871de24c62e26a567cba758">More...</a><br /></td></tr>
+<tr class="separator:ae92d83c57871de24c62e26a567cba758"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a014af45c19e261b6bc9375121437b1ed"><td class="memItemLeft" align="right" valign="top"><a id="a014af45c19e261b6bc9375121437b1ed"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1MeshInTriangle_1_1Vertex.html#a014af45c19e261b6bc9375121437b1ed">init_geometry</a> (const <a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a> &amp;P)</td></tr>
+<tr class="memdesc:a014af45c19e261b6bc9375121437b1ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optimizes exact numbers in generated points and computes approximate coordinates. <br /></td></tr>
+<tr class="separator:a014af45c19e261b6bc9375121437b1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A vertex of the triangulation. </p>
 <p>Stores geometric information in exact precision, both in 3D and in local 2D coordinates. It also stores symbolic information, that is, facet indices and regions that generated the vertex. </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection__internal_8h_source.html#l00110">110</a> of file <a class="el" href="mesh__surface__intersection__internal_8h_source.html">mesh_surface_intersection_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection__internal_8h_source.html#l00112">112</a> of file <a class="el" href="mesh__surface__intersection__internal_8h_source.html">mesh_surface_intersection_internal.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af219b73dce297ffb3c6b5cb2657fb2e7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af219b73dce297ffb3c6b5cb2657fb2e7">&#9670;&nbsp;</a></span>Vertex() <span class="overload">[1/3]</span></h2>
@@ -238,7 +245,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection__internal_8h_source.html#l00123">123</a> of file <a class="el" href="mesh__surface__intersection__internal_8h_source.html">mesh_surface_intersection_internal.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__surface__intersection__internal_8h_source.html#l00125">125</a> of file <a class="el" href="mesh__surface__intersection__internal_8h_source.html">mesh_surface_intersection_internal.h</a>.</p>
 
 </div>
 </div>
@@ -307,8 +314,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a id="a7b4ac54281a14c488cad059073bb377b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b4ac54281a14c488cad059073bb377b">&#9670;&nbsp;</a></span>Vertex() <span class="overload">[3/3]</span></h2>
+<a id="ace41998e8a260656c3915ccb76885650"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace41998e8a260656c3915ccb76885650">&#9670;&nbsp;</a></span>Vertex() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -325,7 +332,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structGEO_1_1vec3HE.html">vec3HE</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a> &amp;&#160;</td>
           <td class="paramname"><em>point_exact_in</em>&#160;</td>
         </tr>
         <tr>
@@ -354,8 +361,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aae2b8bac4fc3f3d7d359738f76fe14a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae2b8bac4fc3f3d7d359738f76fe14a1">&#9670;&nbsp;</a></span>compute_geometry()</h2>
+<a id="ae92d83c57871de24c62e26a567cba758"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae92d83c57871de24c62e26a567cba758">&#9670;&nbsp;</a></span>compute_geometry()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -364,7 +371,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structGEO_1_1vec3HE.html">vec3HE</a> GEO::MeshInTriangle::Vertex::compute_geometry </td>
+          <td class="memname"><a class="el" href="classGEO_1_1vec3Hg.html">ExactPoint</a> GEO::MeshInTriangle::Vertex::compute_geometry </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -536,7 +543,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1MeshInTriangle.html">MeshInTriangle</a></li><li class="navelem"><a class="el" href="classGEO_1_1MeshInTriangle_1_1Vertex.html">Vertex</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

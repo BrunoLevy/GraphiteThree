@@ -6,6 +6,7 @@ var classGEO_1_1vecng_3_012_00_01T_01_4 =
     [ "vecng", "classGEO_1_1vecng_3_012_00_01T_01_4.html#a052524bad39fb676cdc6842b7b1b69ac", null ],
     [ "vecng", "classGEO_1_1vecng_3_012_00_01T_01_4.html#a5d651b1d3e795e41b65112325d0d353b", null ],
     [ "vecng", "classGEO_1_1vecng_3_012_00_01T_01_4.html#a9a22edadd72431bf69ce0450c1c296aa", null ],
+    [ "vecng", "classGEO_1_1vecng_3_012_00_01T_01_4.html#a62cd56e5acf255895e2274f3aa252e29", null ],
     [ "data", "classGEO_1_1vecng_3_012_00_01T_01_4.html#acdf8bbdf3415da2949a008a0668f0d1e", null ],
     [ "data", "classGEO_1_1vecng_3_012_00_01T_01_4.html#a46ae80152369f352120e9295892e9457", null ],
     [ "dimension", "classGEO_1_1vecng_3_012_00_01T_01_4.html#a35bfeb66e53f43d1fa05f6d7570cfaad", null ],
@@ -24,6 +25,7 @@ var classGEO_1_1vecng_3_012_00_01T_01_4 =
     [ "operator/=", "classGEO_1_1vecng_3_012_00_01T_01_4.html#ad097303c27a8f8b52291427d6da3cf83", null ],
     [ "operator[]", "classGEO_1_1vecng_3_012_00_01T_01_4.html#aa4e30895a46da01af759cd575ff18303", null ],
     [ "operator[]", "classGEO_1_1vecng_3_012_00_01T_01_4.html#a467f337adbbccfcc9450e21969453a47", null ],
+    [ "optimize", "classGEO_1_1vecng_3_012_00_01T_01_4.html#a596b8f88490d036ed1bef1b0f126940a", null ],
     [ "x", "classGEO_1_1vecng_3_012_00_01T_01_4.html#a5b5a07cc64a0b19e1d639c0ebe0a76f6", null ],
     [ "y", "classGEO_1_1vecng_3_012_00_01T_01_4.html#a296f22a220318952b946d6f22d80b40d", null ]
 ];

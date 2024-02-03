@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -90,18 +97,18 @@ $(document).ready(function(){initNavTree('classGLUP_1_1ImmediateState.html','');
 
 <p>This is the complete list of members for <a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html#a30948db204afafac6e2e8b20c3dd797d">begin</a>(GLUPprimitive primitive)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html#a1a4251b2eb174bd9d264e01d77463042">begin</a>(GLUPprimitive primitive, index_t max_current_vertex=0)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr bgcolor="#f0f0f0"><td class="entry"><b>buffer</b> (defined in <a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a>)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html#afaba6b7c7d885caf955e2aafe36652b6">buffers_are_full</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html#a761df9343b52dc6082a6fd23922bba18">copy_element</a>(index_t to, index_t from)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html#ad6357aa27541ade02d895a0eba7043b2">ImmediateState</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html#a889bf514949a703be3b178417517db3f">ImmediateState</a>(index_t *nb_vertices_per_primitive)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html#aaffd5bca6cb7a0e90f0b3dd3292a2597">max_current_vertex</a>() const</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>NB_IMMEDIATE_BUFFERS</b> enum value (defined in <a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a>)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html#a938b030bcdb233bbeb1d74da8089dbd0">nb_primitives</a>() const</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html#abc9f77662ef341d72e1e421e246eab49">nb_vertices</a>() const</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html#ae31b6419637629e25fc3eb20dab09b8f">next_vertex</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html#a2a1847ac10564eba3bad5fed8e9e0cd6">primitive</a>() const</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html#a35b634c91beafeefaaa7d7d675d581fd">reset</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html#a81a2819788cd18d5c8001a34d12f23cf">reset</a>(index_t new_current_vertex=0)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html#a2e4ac1363d181139cc32a947b80dfdd4">set_current_vertex</a>(index_t v)</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html#a1a074b1f4f6eb80e588875f1587d339a">VAO</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html#ad4eed64d02bb66e6be126b2b16c251a9">~ImmediateState</a>()</td><td class="entry"><a class="el" href="classGLUP_1_1ImmediateState.html">GLUP::ImmediateState</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
@@ -110,7 +117,7 @@ $(document).ready(function(){initNavTree('classGLUP_1_1ImmediateState.html','');
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

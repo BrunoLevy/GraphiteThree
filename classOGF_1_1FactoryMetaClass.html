@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -101,8 +108,9 @@ Inheritance diagram for OGF::FactoryMetaClass:</div>
  <div class="center">
   <img src="classOGF_1_1FactoryMetaClass.png" usemap="#OGF::FactoryMetaClass_map" alt=""/>
   <map id="OGF::FactoryMetaClass_map" name="OGF::FactoryMetaClass_map">
-<area href="classOGF_1_1Factory.html" title="Creates instances of a specific class." alt="OGF::Factory" shape="rect" coords="0,56,148,80"/>
-<area href="classGEO_1_1Counted.html" title="Base class for reference-counted objects." alt="GEO::Counted" shape="rect" coords="0,0,148,24"/>
+<area href="classOGF_1_1Factory.html" title="Creates instances of a specific class." alt="OGF::Factory" shape="rect" coords="0,56,197,80"/>
+<area href="classGEO_1_1Counted.html" title="Base class for reference-counted objects." alt="GEO::Counted" shape="rect" coords="0,0,197,24"/>
+<area href="classOGF_1_1DynamicFactoryMetaClass.html" alt="OGF::DynamicFactoryMetaClass" shape="rect" coords="0,168,197,192"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -160,7 +168,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A <a class="el" href="classOGF_1_1Factory.html" title="Creates instances of a specific class.">Factory</a> that uses a <a class="el" href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository.">MetaClass</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="meta__class_8h_source.html#l00498">498</a> of file <a class="el" href="meta__class_8h_source.html">meta_class.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta__class_8h_source.html#l00519">519</a> of file <a class="el" href="meta__class_8h_source.html">meta_class.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa7f474efa2076f48b928e22307b0b130"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa7f474efa2076f48b928e22307b0b130">&#9670;&nbsp;</a></span>FactoryMetaClass()</h2>
@@ -194,7 +202,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="meta__class_8h_source.html#l00504">504</a> of file <a class="el" href="meta__class_8h_source.html">meta_class.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta__class_8h_source.html#l00525">525</a> of file <a class="el" href="meta__class_8h_source.html">meta_class.h</a>.</p>
 
 </div>
 </div>
@@ -235,6 +243,8 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="classOGF_1_1Factory.html#aba0fb86b789ad7cf8275a09d2f83a8db">OGF::Factory</a>.</p>
 
+<p>Reimplemented in <a class="el" href="classOGF_1_1DynamicFactoryMetaClass.html#ab74ca0d727d2f08b5360b65b2ad6f3bf">OGF::DynamicFactoryMetaClass</a>.</p>
+
 </div>
 </div>
 <a id="af366bade357ab148b67be4276f16e9dd"></a>
@@ -263,7 +273,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Gets the <a class="el" href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository.">MetaClass</a>. </p>
 <dl class="section return"><dt>Returns</dt><dd>a pointer to the <a class="el" href="classOGF_1_1MetaClass.html" title="The representation of a class in the Meta repository.">MetaClass</a>. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="meta__class_8h_source.html#l00521">521</a> of file <a class="el" href="meta__class_8h_source.html">meta_class.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="meta__class_8h_source.html#l00542">542</a> of file <a class="el" href="meta__class_8h_source.html">meta_class.h</a>.</p>
 
 </div>
 </div>
@@ -276,7 +286,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1FactoryMetaClass.html">FactoryMetaClass</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -381,9 +388,9 @@ $(document).ready(function(){initNavTree('gom__implementation_8h_source.html',''
 <div class="ttc" id="aclassOGF_1_1GenericSerializer_html"><div class="ttname"><a href="classOGF_1_1GenericSerializer.html">OGF::GenericSerializer</a></div><div class="ttdoc">Generic implementation of Serializer.</div><div class="ttdef"><b>Definition:</b> <a href="serializer_8h_source.html#l00206">serializer.h:206</a></div></div>
 <div class="ttc" id="aclassOGF_1_1MetaBuiltinType_html"><div class="ttname"><a href="classOGF_1_1MetaBuiltinType.html">OGF::MetaBuiltinType</a></div><div class="ttdoc">MetaType for builting types.</div><div class="ttdef"><b>Definition:</b> <a href="meta__builtin_8h_source.html#l00055">meta_builtin.h:55</a></div></div>
 <div class="ttc" id="aclassOGF_1_1MetaClass_html"><div class="ttname"><a href="classOGF_1_1MetaClass.html">OGF::MetaClass</a></div><div class="ttdoc">The representation of a class in the Meta repository.</div><div class="ttdef"><b>Definition:</b> <a href="meta__class_8h_source.html#l00064">meta_class.h:64</a></div></div>
-<div class="ttc" id="aclassOGF_1_1MetaClass_html_a95dba849c6d960480978d9781c9f213b"><div class="ttname"><a href="classOGF_1_1MetaClass.html#a95dba849c6d960480978d9781c9f213b">OGF::MetaClass::set_abstract</a></div><div class="ttdeci">void set_abstract(bool b)</div><div class="ttdoc">Indicate that the class is abstract.</div><div class="ttdef"><b>Definition:</b> <a href="meta__class_8h_source.html#l00280">meta_class.h:280</a></div></div>
+<div class="ttc" id="aclassOGF_1_1MetaClass_html_a95dba849c6d960480978d9781c9f213b"><div class="ttname"><a href="classOGF_1_1MetaClass.html#a95dba849c6d960480978d9781c9f213b">OGF::MetaClass::set_abstract</a></div><div class="ttdeci">void set_abstract(bool b)</div><div class="ttdoc">Indicate that the class is abstract.</div><div class="ttdef"><b>Definition:</b> <a href="meta__class_8h_source.html#l00301">meta_class.h:301</a></div></div>
 <div class="ttc" id="aclassOGF_1_1MetaEnum_html"><div class="ttname"><a href="classOGF_1_1MetaEnum.html">OGF::MetaEnum</a></div><div class="ttdoc">MetaType for enums.</div><div class="ttdef"><b>Definition:</b> <a href="meta__enum_8h_source.html#l00056">meta_enum.h:56</a></div></div>
-<div class="ttc" id="aclassOGF_1_1MetaType_html_ae55ed72de38324be9987f5dff0b5c649"><div class="ttname"><a href="classOGF_1_1MetaType.html#ae55ed72de38324be9987f5dff0b5c649">OGF::MetaType::set_life_cycle</a></div><div class="ttdeci">void set_life_cycle(LifeCycle *life_cycle)</div><div class="ttdoc">Sets the LifeCycle associated with the type.</div><div class="ttdef"><b>Definition:</b> <a href="meta__type_8h_source.html#l00249">meta_type.h:249</a></div></div>
+<div class="ttc" id="aclassOGF_1_1MetaType_html_ae55ed72de38324be9987f5dff0b5c649"><div class="ttname"><a href="classOGF_1_1MetaType.html#ae55ed72de38324be9987f5dff0b5c649">OGF::MetaType::set_life_cycle</a></div><div class="ttdeci">void set_life_cycle(LifeCycle *life_cycle)</div><div class="ttdoc">Sets the LifeCycle associated with the type.</div><div class="ttdef"><b>Definition:</b> <a href="meta__type_8h_source.html#l00262">meta_type.h:262</a></div></div>
 <div class="ttc" id="aclassOGF_1_1Meta_html_a1bc205db5df29aac427dd4d7ddaaaaa0"><div class="ttname"><a href="classOGF_1_1Meta.html#a1bc205db5df29aac427dd4d7ddaaaaa0">OGF::Meta::instance</a></div><div class="ttdeci">static Meta * instance()</div><div class="ttdoc">Gets the instance.</div></div>
 <div class="ttc" id="aclassOGF_1_1Meta_html_a4f94badded2bbefe377863afa18878f8"><div class="ttname"><a href="classOGF_1_1Meta.html#a4f94badded2bbefe377863afa18878f8">OGF::Meta::bind_meta_type</a></div><div class="ttdeci">bool bind_meta_type(MetaType *meta_type)</div><div class="ttdoc">Declares a MetaType to the system.</div></div>
 <div class="ttc" id="aclassOGF_1_1Meta_html_a854440412125f9036d266f8993f45a5c"><div class="ttname"><a href="classOGF_1_1Meta.html#a854440412125f9036d266f8993f45a5c">OGF::Meta::resolve_meta_type</a></div><div class="ttdeci">MetaType * resolve_meta_type(const std::string &amp;type_name) const</div><div class="ttdoc">Finds a MetaType by type name.</div></div>
@@ -420,7 +427,7 @@ $(document).ready(function(){initNavTree('gom__implementation_8h_source.html',''
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_aef77abc1c70517fe3037d0ad81c1d82.html">OGF</a></li><li class="navelem"><a class="el" href="dir_69b25135ad0c2c10dad56e08dbeec7e1.html">gom</a></li><li class="navelem"><a class="el" href="dir_cc79fc0c97a203573873e62ae76c3870.html">types</a></li><li class="navelem"><a class="el" href="gom__implementation_8h.html">gom_implementation.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

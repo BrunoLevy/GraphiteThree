@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -532,7 +539,7 @@ $(document).ready(function(){initNavTree('delaunay__3d_8h_source.html',''); init
 <div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;                    <span class="comment">// Orientation is obtained by replacing vertex lf</span></div>
 <div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;                    <span class="comment">// with p.</span></div>
 <div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160;                    pv[lf] = p;</div>
-<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;                    <a class="code" href="namespaceGEO.html#a9c97e58e4526cb2ab931b3fde0a3b002">Sign</a> sign = PCK::orient_3d(pv[0],pv[1],pv[2],pv[3]);</div>
+<div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;                    <a class="code" href="namespaceGEO.html#a9c97e58e4526cb2ab931b3fde0a3b002">Sign</a> sign = <a class="code" href="namespaceGEO_1_1PCK.html#ad26d70112ff966e7d8596b01bba307b4">PCK::orient_3d</a>(pv[0],pv[1],pv[2],pv[3]);</div>
 <div class="line"><a name="l00974"></a><span class="lineno">  974</span>&#160; </div>
 <div class="line"><a name="l00975"></a><span class="lineno">  975</span>&#160;                    <span class="keywordflow">if</span>(sign &gt; 0) {</div>
 <div class="line"><a name="l00976"></a><span class="lineno">  976</span>&#160;                        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
@@ -788,14 +795,15 @@ $(document).ready(function(){initNavTree('delaunay__3d_8h_source.html',''); init
 <div class="ttc" id="adelaunay_8h_html"><div class="ttname"><a href="delaunay_8h.html">delaunay.h</a></div><div class="ttdoc">Abstract interface for Delaunay.</div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2common_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2common_8h.html">common.h</a></div><div class="ttdoc">Common include file, providing basic definitions. Should be included before anything else by all head...</div></div>
 <div class="ttc" id="ageogram_2src_2lib_2geogram_2basic_2geometry_8h_html"><div class="ttname"><a href="geogram_2src_2lib_2geogram_2basic_2geometry_8h.html">geometry.h</a></div><div class="ttdoc">Geometric functions in 2d and 3d.</div></div>
-<div class="ttc" id="anamespaceGEO_1_1Numeric_html_a10c083442de46256356949e839c1e198"><div class="ttname"><a href="namespaceGEO_1_1Numeric.html#a10c083442de46256356949e839c1e198">GEO::Numeric::uint8</a></div><div class="ttdeci">uint8_t uint8</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00090">numeric.h:90</a></div></div>
+<div class="ttc" id="anamespaceGEO_1_1Numeric_html_a10c083442de46256356949e839c1e198"><div class="ttname"><a href="namespaceGEO_1_1Numeric.html#a10c083442de46256356949e839c1e198">GEO::Numeric::uint8</a></div><div class="ttdeci">uint8_t uint8</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00135">numeric.h:135</a></div></div>
 <div class="ttc" id="anamespaceGEO_1_1PCK_html_a37767010717fca40fe0d8e933c8f6cd6"><div class="ttname"><a href="namespaceGEO_1_1PCK.html#a37767010717fca40fe0d8e933c8f6cd6">GEO::PCK::orient_3dlifted_SOS</a></div><div class="ttdeci">Sign orient_3dlifted_SOS(const double *p0, const double *p1, const double *p2, const double *p3, const double *p4, double h0, double h1, double h2, double h3, double h4)</div><div class="ttdoc">Computes the 4d orientation test with symbolic perturbation.</div></div>
 <div class="ttc" id="anamespaceGEO_1_1PCK_html_a5e48727a7e73a6cf22db7773b5d50d69"><div class="ttname"><a href="namespaceGEO_1_1PCK.html#a5e48727a7e73a6cf22db7773b5d50d69">GEO::PCK::in_sphere_3d_SOS</a></div><div class="ttdeci">Sign in_sphere_3d_SOS(const double *p0, const double *p1, const double *p2, const double *p3, const double *p4)</div><div class="ttdoc">Tests whether a 3d point is inside the circumscribed sphere of a 3d tetrahedron.</div></div>
+<div class="ttc" id="anamespaceGEO_1_1PCK_html_ad26d70112ff966e7d8596b01bba307b4"><div class="ttname"><a href="namespaceGEO_1_1PCK.html#ad26d70112ff966e7d8596b01bba307b4">GEO::PCK::orient_3d</a></div><div class="ttdeci">Sign orient_3d(const vec3HE &amp;p0, const vec3HE &amp;p1, const vec3HE &amp;p2, const vec3HE &amp;p3)</div><div class="ttdoc">Computes the orientation predicate in 3d.</div></div>
 <div class="ttc" id="anamespaceGEO_html"><div class="ttname"><a href="namespaceGEO.html">GEO</a></div><div class="ttdoc">Global Vorpaline namespace.</div><div class="ttdef"><b>Definition:</b> <a href="lua__grob__shader_8h_source.html#l00053">lua_grob_shader.h:53</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a545c8df15809d86c5efeea8500b1d14c"><div class="ttname"><a href="namespaceGEO.html#a545c8df15809d86c5efeea8500b1d14c">GEO::signed_index_t</a></div><div class="ttdeci">geo_signed_index_t signed_index_t</div><div class="ttdoc">The type for storing and manipulating indices differences.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00301">numeric.h:301</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a9c97e58e4526cb2ab931b3fde0a3b002"><div class="ttname"><a href="namespaceGEO.html#a9c97e58e4526cb2ab931b3fde0a3b002">GEO::Sign</a></div><div class="ttdeci">Sign</div><div class="ttdoc">Integer constants that represent the sign of a value.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00224">numeric.h:224</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_ae771f961036ac7f98502ff145b99d424"><div class="ttname"><a href="namespaceGEO.html#ae771f961036ac7f98502ff145b99d424">GEO::coord_index_t</a></div><div class="ttdeci">geo_coord_index_t coord_index_t</div><div class="ttdoc">The type for storing coordinate indices, and iterating on the coordinates of a point.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00321">numeric.h:321</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a545c8df15809d86c5efeea8500b1d14c"><div class="ttname"><a href="namespaceGEO.html#a545c8df15809d86c5efeea8500b1d14c">GEO::signed_index_t</a></div><div class="ttdeci">geo_signed_index_t signed_index_t</div><div class="ttdoc">The type for storing and manipulating indices differences.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00343">numeric.h:343</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a9c97e58e4526cb2ab931b3fde0a3b002"><div class="ttname"><a href="namespaceGEO.html#a9c97e58e4526cb2ab931b3fde0a3b002">GEO::Sign</a></div><div class="ttdeci">Sign</div><div class="ttdoc">Integer constants that represent the sign of a value.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00068">numeric.h:68</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_ae771f961036ac7f98502ff145b99d424"><div class="ttname"><a href="namespaceGEO.html#ae771f961036ac7f98502ff145b99d424">GEO::coord_index_t</a></div><div class="ttdeci">geo_coord_index_t coord_index_t</div><div class="ttdoc">The type for storing coordinate indices, and iterating on the coordinates of a point.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00363">numeric.h:363</a></div></div>
 <div class="ttc" id="apredicates_8h_html"><div class="ttname"><a href="predicates_8h.html">predicates.h</a></div><div class="ttdoc">Filtered exact predicates for restricted Voronoi diagrams.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -803,7 +811,7 @@ $(document).ready(function(){initNavTree('delaunay__3d_8h_source.html',''); init
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_e22fc903d939dcd7d839b25755c4ff81.html">delaunay</a></li><li class="navelem"><a class="el" href="delaunay__3d_8h.html">delaunay_3d.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:45 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:06 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

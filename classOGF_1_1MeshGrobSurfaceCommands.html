@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -168,6 +175,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8303c7ff28a2c9903a287bc9707695bb"><td class="memItemLeft" align="right" valign="top"><a id="a8303c7ff28a2c9903a287bc9707695bb"></a>
 B A void&#160;</td><td class="memItemRight" valign="bottom"><b>compute_boolean_operation</b> (const <a class="el" href="namespaceOGF.html#a0ac7de7c0f9799cd5c4405fdf025fac4">MeshGrobName</a> &amp;other, const <a class="el" href="namespaceOGF.html#ab6f4e46c4c17608b487155ab73b52ddf">NewMeshGrobName</a> &amp;result=&quot;result&quot;, const std::string &amp;operation=&quot;A+B&quot;, bool pre_process=false, bool post_process=false)</td></tr>
 <tr class="separator:a8303c7ff28a2c9903a287bc9707695bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc9464621bd9b7ad66aea68efc4284e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#acc9464621bd9b7ad66aea68efc4284e9">intersect</a> (bool remove_internal_shells=true, bool simplify_coplanar_facets=true, double coplanar_angle_tolerance=0.001, bool interpolate_attributes=false)</td></tr>
+<tr class="memdesc:acc9464621bd9b7ad66aea68efc4284e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes intersections in a surface mesh.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#acc9464621bd9b7ad66aea68efc4284e9">More...</a><br /></td></tr>
+<tr class="separator:acc9464621bd9b7ad66aea68efc4284e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae53210e49b56a54976b58216cc4faa3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html#aae53210e49b56a54976b58216cc4faa3">decimate</a> (<a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a> nb_bins=100, bool remove_deg3_vrtx=true, bool keep_borders=true, bool repair=true)</td></tr>
 <tr class="memdesc:aae53210e49b56a54976b58216cc4faa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simplifies a surface using vertex clustering.  <a href="classOGF_1_1MeshGrobSurfaceCommands.html#aae53210e49b56a54976b58216cc4faa3">More...</a><br /></td></tr>
 <tr class="separator:aae53210e49b56a54976b58216cc4faa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1031,6 +1041,57 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a id="acc9464621bd9b7ad66aea68efc4284e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc9464621bd9b7ad66aea68efc4284e9">&#9670;&nbsp;</a></span>intersect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OGF::MeshGrobSurfaceCommands::intersect </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>remove_internal_shells</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>simplify_coplanar_facets</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>coplanar_angle_tolerance</em> = <code>0.001</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>interpolate_attributes</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes intersections in a surface mesh. </p>
+<p>\menu Boolean operations </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">remove_internal_shells</td><td>keep only facets on external hull </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">simplify_coplanar_facets</td><td>retriangulates planar zones </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">coplanar_angle_tolerance</td><td>in degrees </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">interpolate_attributes</td><td>interpolate facet corner attributes on generated intersections. Deactivates coplanar facets simplification if set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ac6ac371ec645118ab861348b933adb41"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac6ac371ec645118ab861348b933adb41">&#9670;&nbsp;</a></span>make_texture_atlas()</h2>
 
@@ -1639,7 +1700,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Triangulates all the facets. </p>
 <p>\menu Subdivision </p>
 
-<p class="definition">Definition at line <a class="el" href="mesh__grob__surface__commands_8h_source.html#l00379">379</a> of file <a class="el" href="mesh__grob__surface__commands_8h_source.html">mesh_grob_surface_commands.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mesh__grob__surface__commands_8h_source.html#l00395">395</a> of file <a class="el" href="mesh__grob__surface__commands_8h_source.html">mesh_grob_surface_commands.h</a>.</p>
 
 </div>
 </div>
@@ -1737,7 +1798,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceOGF.html">OGF</a></li><li class="navelem"><a class="el" href="classOGF_1_1MeshGrobSurfaceCommands.html">MeshGrobSurfaceCommands</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:49 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

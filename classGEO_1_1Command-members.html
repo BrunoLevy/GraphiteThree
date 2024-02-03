@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -131,17 +138,19 @@ $(document).ready(function(){initNavTree('classGEO_1_1Command.html',''); initRes
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1Counted.html#a4e386db78edae7cfb09665ad11339373">is_shared</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1Counted.html">GEO::Counted</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1Command.html#a0d0b0148f3289781dc343479a6334a6d">is_visible</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1Command.html#a4fe47da7a98a7ccd811c13000c557a1f">is_visible_ptr</a>()</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGEO_1_1Command.html#a2ba27540142bb348b3637842d0708807">name</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1Counted.html#ad65d101b5f7315b44d4507103fb6bfda">nb_refs</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1Counted.html">GEO::Counted</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1Command.html#aebeaeebc1abc5df00f37f6239666dcff">latest</a>()</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1Command.html#a2ba27540142bb348b3637842d0708807">name</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1Counted.html#ad65d101b5f7315b44d4507103fb6bfda">nb_refs</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1Counted.html">GEO::Counted</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1Command.html#a28f915becca5f3bbd6440d66c6fb01b0">queued</a>()</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1Counted.html#ab1adaca35a986f3e3dc34062e50d427b">ref</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1Counted.html">GEO::Counted</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1Counted.html#a668146a39d3c440995f0f3c83da5e231">ref</a>(const Counted *counted)</td><td class="entry"><a class="el" href="classGEO_1_1Counted.html">GEO::Counted</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGEO_1_1Command.html#a9d8c85b2c574ca0b8283e587be7a3976">reset_current</a>()</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1Command.html#a19c9fd0ed237d5aecf921d5a66e8f567">reset_factory_settings</a>()</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGEO_1_1Command.html#ac7b43e9ce7742b280ef062fd9ffe528d">set_current</a>(const std::string &amp;prototype, FPTR tfun)</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1Command.html#a6d98e90fbd486e5f19434e8bea3e3909">set_current</a>(const std::string &amp;prototype, T *target, TFPTR tfun)</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classGEO_1_1Command.html#a4d7489f1fd4f26e835d4db04a1e2f23e">set_current</a>(Command *command)</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1Command.html#a4ea381bfc8dfc89edeba47e1a6df3c6e">set_invoker</a>(CommandInvoker *invoker)</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>set_queued</b>(Command *command) (defined in <a class="el" href="classGEO_1_1Command.html">GEO::Command</a>)</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1Command.html#a7b9ce7ef217230e53df8817c679d1849">replay_latest</a>()</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1Command.html#a9d8c85b2c574ca0b8283e587be7a3976">reset_current</a>()</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1Command.html#a19c9fd0ed237d5aecf921d5a66e8f567">reset_factory_settings</a>()</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1Command.html#ac7b43e9ce7742b280ef062fd9ffe528d">set_current</a>(const std::string &amp;prototype, FPTR tfun)</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1Command.html#a6d98e90fbd486e5f19434e8bea3e3909">set_current</a>(const std::string &amp;prototype, T *target, TFPTR tfun)</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1Command.html#a4d7489f1fd4f26e835d4db04a1e2f23e">set_current</a>(Command *command)</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classGEO_1_1Command.html#a4ea381bfc8dfc89edeba47e1a6df3c6e">set_invoker</a>(CommandInvoker *invoker)</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1Command.html#aaef51ef18e8bcd60573fb14392bfae74">string_arg_by_index</a>(index_t i) const</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classGEO_1_1Command.html#aecfc53e705f1165e2328436253c530c6">uint_arg_by_index</a>(index_t i) const</td><td class="entry"><a class="el" href="classGEO_1_1Command.html">GEO::Command</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGEO_1_1Counted.html#a7cc0da6a4f3ca45ea76044bd8f8d682a">unref</a>() const</td><td class="entry"><a class="el" href="classGEO_1_1Counted.html">GEO::Counted</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
@@ -153,7 +162,7 @@ $(document).ready(function(){initNavTree('classGEO_1_1Command.html',''); initRes
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:48 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:08 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

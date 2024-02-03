@@ -20,6 +20,7 @@ var classOGF_1_1MeshGrobSurfaceCommands =
     [ "fix_facets_orientation", "classOGF_1_1MeshGrobSurfaceCommands.html#af962436b35b94f2255a62f808de4f4d8", null ],
     [ "get_charts", "classOGF_1_1MeshGrobSurfaceCommands.html#a695cd274973056d0e60b8927af8c3bfe", null ],
     [ "gom_arg_attribute", "classOGF_1_1MeshGrobSurfaceCommands.html#a912a4dc6cd626fd0fac7e70e5bad761d", null ],
+    [ "intersect", "classOGF_1_1MeshGrobSurfaceCommands.html#acc9464621bd9b7ad66aea68efc4284e9", null ],
     [ "make_texture_atlas", "classOGF_1_1MeshGrobSurfaceCommands.html#ac6ac371ec645118ab861348b933adb41", null ],
     [ "merge_vertices", "classOGF_1_1MeshGrobSurfaceCommands.html#a77fcde896d3b2584008085fef05f4e9b", null ],
     [ "pack_texture_space", "classOGF_1_1MeshGrobSurfaceCommands.html#ada2238dc14fb29924e784c0487380a9a", null ],

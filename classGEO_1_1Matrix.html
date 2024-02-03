@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -114,6 +121,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1cbffef1bfbf56bc40860baa754461a7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Matrix.html#a1cbffef1bfbf56bc40860baa754461a7">Matrix</a> (const FT *vals)</td></tr>
 <tr class="memdesc:a1cbffef1bfbf56bc40860baa754461a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a matrix from an array of values.  <a href="classGEO_1_1Matrix.html#a1cbffef1bfbf56bc40860baa754461a7">More...</a><br /></td></tr>
 <tr class="separator:a1cbffef1bfbf56bc40860baa754461a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87630935be753ca8b52d62326e9d8233"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Matrix.html#a87630935be753ca8b52d62326e9d8233">Matrix</a> (const std::initializer_list&lt; std::initializer_list&lt; FT &gt; &gt; &amp;Mi)</td></tr>
+<tr class="memdesc:a87630935be753ca8b52d62326e9d8233"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a matrix from 2d array of initializers.  <a href="classGEO_1_1Matrix.html#a87630935be753ca8b52d62326e9d8233">More...</a><br /></td></tr>
+<tr class="separator:a87630935be753ca8b52d62326e9d8233"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3dc635b94650cd20aa2c03605111b74b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">index_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGEO_1_1Matrix.html#a3dc635b94650cd20aa2c03605111b74b">dimension</a> () const</td></tr>
 <tr class="memdesc:a3dc635b94650cd20aa2c03605111b74b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the matrix dimension.  <a href="classGEO_1_1Matrix.html#a3dc635b94650cd20aa2c03605111b74b">More...</a><br /></td></tr>
 <tr class="separator:a3dc635b94650cd20aa2c03605111b74b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -213,7 +223,7 @@ class GEO::Matrix&lt; DIM, FT &gt;</h3>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00065">65</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00066">66</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a41e37e34f381711d2166e0eeea48931b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a41e37e34f381711d2166e0eeea48931b">&#9670;&nbsp;</a></span>matrix_type</h2>
@@ -230,7 +240,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 </div><div class="memdoc">
 <p>This matrix type </p>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00068">68</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00069">69</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -249,13 +259,13 @@ template&lt;index_t DIM, class FT &gt; </div>
 </div><div class="memdoc">
 <p>The type of the values </p>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00071">71</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00072">72</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aca63ac7946bd231913f121ebebac4781"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca63ac7946bd231913f121ebebac4781">&#9670;&nbsp;</a></span>Matrix() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aca63ac7946bd231913f121ebebac4781">&#9670;&nbsp;</a></span>Matrix() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -282,12 +292,12 @@ template&lt;index_t DIM, class FT &gt; </div>
 <p>Default constructor. </p>
 <p>This initializes the matrix to the identity matrix </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="classGEO_1_1Matrix.html#ac9dbfcb9647493cf70181c320f0b81e9" title="Sets the matrix to identity.">load_identity()</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00081">81</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00082">82</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
 <a id="a1cbffef1bfbf56bc40860baa754461a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1cbffef1bfbf56bc40860baa754461a7">&#9670;&nbsp;</a></span>Matrix() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cbffef1bfbf56bc40860baa754461a7">&#9670;&nbsp;</a></span>Matrix() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -320,7 +330,45 @@ template&lt;index_t DIM, class FT &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00091">91</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00092">92</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+
+</div>
+</div>
+<a id="a87630935be753ca8b52d62326e9d8233"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87630935be753ca8b52d62326e9d8233">&#9670;&nbsp;</a></span>Matrix() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;index_t DIM, class FT &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGEO_1_1Matrix.html">GEO::Matrix</a>&lt; DIM, FT &gt;::<a class="el" href="classGEO_1_1Matrix.html">Matrix</a> </td>
+          <td>(</td>
+          <td class="paramtype">const std::initializer_list&lt; std::initializer_list&lt; FT &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>Mi</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a matrix from 2d array of initializers. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">Mi</td><td>a 2d array of values to be copied to the matrix. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00105">105</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -366,7 +414,7 @@ template&lt;index_t DIM, class FT &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00330">330</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00350">350</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -398,7 +446,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 <p>Gets modifiable matrix data. </p>
 <p>For interfacing with Fortran, OpenGL etc... </p><dl class="section return"><dt>Returns</dt><dd>a pointer to the first element of the matrix </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00411">411</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00431">431</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -430,7 +478,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 <p>Gets non-modifiable matrix data. </p>
 <p>For interfacing with Fortran, OpenGL etc... </p><dl class="section return"><dt>Returns</dt><dd>a const pointer to the first element of the matrix </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00401">401</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00421">421</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -462,7 +510,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 <p>Gets the matrix dimension. </p>
 <dl class="section return"><dt>Returns</dt><dd>the value of <code>DIM</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00104">104</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00124">124</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -500,7 +548,7 @@ template&lt;index_t DIM, class FT &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00422">422</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00442">442</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -532,7 +580,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 <p>Computes the inverse matrix. </p>
 <p>Computes matrix <code>M</code> such that (<code>this</code> * <code>M</code>) = identity </p><dl class="section return"><dt>Returns</dt><dd>the inverse matrix </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00315">315</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00335">335</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -570,7 +618,7 @@ template&lt;index_t DIM, class FT &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00138">138</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00158">158</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -602,7 +650,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 <p>Sets the matrix to identity. </p>
 <p>This sets all coefficients of this matrix to be equal to <code>DIM</code> x <code>DIM</code> identity matrix. </p>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00125">125</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00145">145</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -634,7 +682,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 <p>Clears the matrix. </p>
 <p>This resets all values to 0 (zero) </p>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00112">112</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00132">132</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -684,7 +732,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to the element at coordinates (<code>i</code>, <code>j</code>). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00158">158</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00178">178</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -734,7 +782,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a const reference to the element at coordinates (<code>i</code>, <code>j</code>). </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00172">172</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00192">192</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -773,7 +821,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the matrix (<code>this</code> * <code>m</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00297">297</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00317">317</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -812,7 +860,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the resulting matrix </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00271">271</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00291">291</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -851,7 +899,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to this matrix </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00215">215</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00235">235</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -890,7 +938,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the matrix (<code>this</code> + <code>m</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00246">246</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00266">266</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -929,7 +977,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to this matrix </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00184">184</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00204">204</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -968,7 +1016,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the matrix (<code>this</code> + <code>m</code>) </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00258">258</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00278">278</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -1007,7 +1055,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to this matrix </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00199">199</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00219">219</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -1046,7 +1094,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the resulting matrix </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00284">284</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00304">304</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -1085,7 +1133,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to this matrix </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00231">231</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00251">251</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -1117,7 +1165,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 <p>Computes the transposed matrix. </p>
 <dl class="section return"><dt>Returns</dt><dd>the transposed matrix </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00385">385</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00405">405</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -1181,7 +1229,7 @@ template&lt;index_t DIM, class FT &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00496">496</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00516">516</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -1231,7 +1279,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to the output stream <code>output</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00446">446</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00466">466</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -1281,7 +1329,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a reference to the input stream <code>input</code> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00469">469</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00489">489</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -1309,7 +1357,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 </div><div class="memdoc">
 <p>The dimension of the matrix </p>
 
-<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00074">74</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html#l00075">75</a> of file <a class="el" href="geogram_2src_2lib_2geogram_2basic_2matrix_8h_source.html">matrix.h</a>.</p>
 
 </div>
 </div>
@@ -1322,7 +1370,7 @@ template&lt;index_t DIM, class FT &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceGEO.html">GEO</a></li><li class="navelem"><a class="el" href="classGEO_1_1Matrix.html">Matrix</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:47 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

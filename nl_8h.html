@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -122,10 +129,10 @@ Macros</h2></td></tr>
 <tr class="memdesc:a96c5904f4039ebf1ad839c384ad33b23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Symbolic constant for <a class="el" href="nl_8h.html#aa5a6bc65d2084a6df59c34a2cc8f901b" title="Specifies an integer solver parameter.">nlSolverParameteri()</a> to specify the maximum number of iterations before the iterative solver is stopped.  <a href="nl_8h.html#a96c5904f4039ebf1ad839c384ad33b23">More...</a><br /></td></tr>
 <tr class="separator:a96c5904f4039ebf1ad839c384ad33b23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c458de7a0be304725341a3fe03f2e9f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">NL_THRESHOLD</a>&#160;&#160;&#160;0x104</td></tr>
-<tr class="memdesc:a9c458de7a0be304725341a3fe03f2e9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Symbolic constant for <a class="el" href="nl_8h.html#aab7caf5c9ecd67f840a0abfc540bb9ab" title="Specifies a floating-point solver parameter.">nlSolverParameterd()</a> to specify the maximum threshold <img class="formulaInl" alt="$ \| Ax - b \| / \| b \| $" src="form_15.png"/> before the iterative solver is stopped.  <a href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">More...</a><br /></td></tr>
+<tr class="memdesc:a9c458de7a0be304725341a3fe03f2e9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Symbolic constant for <a class="el" href="nl_8h.html#aab7caf5c9ecd67f840a0abfc540bb9ab" title="Specifies a floating-point solver parameter.">nlSolverParameterd()</a> to specify the maximum threshold \( \| Ax - b \| / \| b \| \) before the iterative solver is stopped.  <a href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">More...</a><br /></td></tr>
 <tr class="separator:a9c458de7a0be304725341a3fe03f2e9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aabaaa63844465ddf7391179a846b93f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nl_8h.html#aabaaa63844465ddf7391179a846b93f2">NL_OMEGA</a>&#160;&#160;&#160;0x105</td></tr>
-<tr class="memdesc:aabaaa63844465ddf7391179a846b93f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Symbolic constant for <a class="el" href="nl_8h.html#aab7caf5c9ecd67f840a0abfc540bb9ab" title="Specifies a floating-point solver parameter.">nlSolverParameterd()</a> to specify the relaxation parameter <img class="formulaInl" alt="$ \omega \in (0,\ldots 2) $" src="form_16.png"/> used by the SSOR preconditioner.  <a href="nl_8h.html#aabaaa63844465ddf7391179a846b93f2">More...</a><br /></td></tr>
+<tr class="memdesc:aabaaa63844465ddf7391179a846b93f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Symbolic constant for <a class="el" href="nl_8h.html#aab7caf5c9ecd67f840a0abfc540bb9ab" title="Specifies a floating-point solver parameter.">nlSolverParameterd()</a> to specify the relaxation parameter \( \omega \in (0,\ldots 2) \) used by the SSOR preconditioner.  <a href="nl_8h.html#aabaaa63844465ddf7391179a846b93f2">More...</a><br /></td></tr>
 <tr class="separator:aabaaa63844465ddf7391179a846b93f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a283a58ef73ceced29a80358ff050d519"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nl_8h.html#a283a58ef73ceced29a80358ff050d519">NL_SYMMETRIC</a>&#160;&#160;&#160;0x106</td></tr>
 <tr class="memdesc:a283a58ef73ceced29a80358ff050d519"><td class="mdescLeft">&#160;</td><td class="mdescRight">Symbolic constant for <a class="el" href="nl_8h.html#aa5a6bc65d2084a6df59c34a2cc8f901b" title="Specifies an integer solver parameter.">nlSolverParameteri()</a> to specify whether the constructed matrix is symmetric.  <a href="nl_8h.html#a283a58ef73ceced29a80358ff050d519">More...</a><br /></td></tr>
@@ -488,7 +495,7 @@ NLAPI void NLAPIENTRY&#160;</td><td class="memItemRight" valign="bottom"><a clas
 <p>The purpose of the example programs shown below is to demonstrate OpenNL programs that are as simple as possible. Note that for such small linear systems, the sparse iterative solvers in OpenNL will work, but they are completely inappropriate, one would normally solve the system directly.</p>
 <h1><a class="anchor" id="autotoc_md0"></a>
 Example 1 (a simple linear system)</h1>
-<p>Solve <img class="formulaInl" alt="$ \left[ \begin{array}{ll} 1 &amp; 2 \\ 3 &amp; 4 \end{array} \right] \left[ \begin{array}{l} x \\ y \end{array} \right] = \left[ \begin{array}{l} 5 \\ 6 \end{array} \right] $" src="form_10.png"/> </p><div class="fragment"><div class="line"><span class="keywordtype">double</span> x,y; <span class="comment">// Solution of the system</span></div>
+<p>Solve \( \left[ \begin{array}{ll} 1 &amp; 2 \\ 3 &amp; 4 \end{array} \right] \left[ \begin{array}{l} x \\ y \end{array} \right] = \left[ \begin{array}{l} 5 \\ 6 \end{array} \right] \) </p><div class="fragment"><div class="line"><span class="keywordtype">double</span> x,y; <span class="comment">// Solution of the system</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Create and initialize OpenNL context</span></div>
 <div class="line"><a class="code" href="nl_8h.html#aaf754795d656ab372e0711b54e169fdd">nlNewContext</a>();</div>
@@ -533,7 +540,7 @@ Example 1 (a simple linear system)</h1>
 <div class="ttc" id="anl_8h_html_afc8ad9366a4e9d569a597d3a9234a0b2"><div class="ttname"><a href="nl_8h.html#afc8ad9366a4e9d569a597d3a9234a0b2">nlDeleteContext</a></div><div class="ttdeci">NLAPI void NLAPIENTRY nlDeleteContext(NLContext context)</div><div class="ttdoc">Destroys an existing OpenNL context.</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md1"></a>
 Example 2 (least squares regression)</h1>
-<p>Reads <img class="formulaInl" alt="$ (X,Y) $" src="form_11.png"/> coordinates from a file and finds the parameters <img class="formulaInl" alt="$ a,b $" src="form_12.png"/> of the straight line <img class="formulaInl" alt="$ y = ax + b $" src="form_13.png"/> that best fits the data points. </p><div class="fragment"><div class="line">FILE* input = fopen(<span class="stringliteral">&quot;datapoints.dat&quot;</span>, <span class="stringliteral">&quot;r&quot;</span>);</div>
+<p>Reads \( (X,Y) \) coordinates from a file and finds the parameters \( a,b \) of the straight line \( y = ax + b \) that best fits the data points. </p><div class="fragment"><div class="line">FILE* input = fopen(<span class="stringliteral">&quot;datapoints.dat&quot;</span>, <span class="stringliteral">&quot;r&quot;</span>);</div>
 <div class="line"><span class="keywordtype">double</span> X,Y; <span class="comment">// current datapoint</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Create and initialize OpenNL context</span></div>
@@ -569,7 +576,7 @@ Example 2 (least squares regression)</h1>
 <div class="ttc" id="anl_8h_html_ab803a6e79704c5027f50a830dc341d0c"><div class="ttname"><a href="nl_8h.html#ab803a6e79704c5027f50a830dc341d0c">NL_TRUE</a></div><div class="ttdeci">#define NL_TRUE</div><div class="ttdoc">Constant for true NLbooleans.</div><div class="ttdef"><b>Definition:</b> <a href="nl_8h_source.html#l00316">nl.h:316</a></div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md2"></a>
 Example 3 (least squares regression with locked variable)</h1>
-<p>As in the previous example, reads <img class="formulaInl" alt="$ (X,Y) $" src="form_11.png"/> coordinates from a file and finds the parameters <img class="formulaInl" alt="$ a,b $" src="form_12.png"/> of the straight line <img class="formulaInl" alt="$ y = ax + b $" src="form_13.png"/> that best fits the data points, but this time subject to the constraint <img class="formulaInl" alt="$ a = 1 $" src="form_14.png"/>. </p><div class="fragment"><div class="line">FILE* input = fopen(<span class="stringliteral">&quot;datapoints.dat&quot;</span>, <span class="stringliteral">&quot;r&quot;</span>);</div>
+<p>As in the previous example, reads \( (X,Y) \) coordinates from a file and finds the parameters \( a,b \) of the straight line \( y = ax + b \) that best fits the data points, but this time subject to the constraint \( a = 1 \). </p><div class="fragment"><div class="line">FILE* input = fopen(<span class="stringliteral">&quot;datapoints.dat&quot;</span>, <span class="stringliteral">&quot;r&quot;</span>);</div>
 <div class="line"><span class="keywordtype">double</span> X,Y; <span class="comment">// current datapoint</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// Create and initialize OpenNL context</span></div>
@@ -695,7 +702,7 @@ Example 4 (fine tuning)</h1>
 </div><div class="memdoc">
 
 <p>Symbolic constant for <a class="el" href="nl_8h.html#a87a6bc4c327732489204ddc77258ed64" title="Gets the value of a double-precision floating-point parameter.">nlGetDoublev()</a> to obtain the error after <a class="el" href="nl_8h.html#aac215232a82e110132b68d74b8435022" title="Solves the linear system in the current context.">nlSolve()</a> is called. </p>
-<p>Gets <img class="formulaInl" alt="$ \| Ax - b \| / \| b \| $" src="form_15.png"/>. Usage: </p><div class="fragment"><div class="line"><a class="code" href="nl_8h.html#a76325b3c3d61908603a0da93ee45b60e">NLdouble</a> error;</div>
+<p>Gets \( \| Ax - b \| / \| b \| \). Usage: </p><div class="fragment"><div class="line"><a class="code" href="nl_8h.html#a76325b3c3d61908603a0da93ee45b60e">NLdouble</a> error;</div>
 <div class="line"><a class="code" href="nl_8h.html#a87a6bc4c327732489204ddc77258ed64">nlGetDoublev</a>(<a class="code" href="nl_8h.html#a5ecd0f9865869c2c7f61d7aef08d025d">NL_ERROR</a>, &amp;error);</div>
 <div class="ttc" id="anl_8h_html_a5ecd0f9865869c2c7f61d7aef08d025d"><div class="ttname"><a href="nl_8h.html#a5ecd0f9865869c2c7f61d7aef08d025d">NL_ERROR</a></div><div class="ttdeci">#define NL_ERROR</div><div class="ttdoc">Symbolic constant for nlGetDoublev() to obtain the error after nlSolve() is called.</div><div class="ttdef"><b>Definition:</b> <a href="nl_8h_source.html#l00445">nl.h:445</a></div></div>
 </div><!-- fragment --> 
@@ -1051,8 +1058,8 @@ Example 4 (fine tuning)</h1>
 </div><div class="memdoc">
 
 <p>Symbolic constant for <a class="el" href="nl_8h.html#a06e0418ea3d53baf92a68456a2cc50db" title="Sets a boolean parameter to NL_TRUE.">nlEnable()</a> / <a class="el" href="nl_8h.html#aa5821015a0acf1c12a1430164a52d285" title="Sets a boolean parameter to NL_FALSE.">nlDisable()</a> to enable or disable rows normalization. </p>
-<p>When row normalization is enabled, each time a row is completed with nlEnd(NL_ROW), the coefficients of the current row and its right hand side are divided by the length <img class="formulaInl" alt="$ L $" src="form_17.png"/> of the current row (and multiplied by the NL_ROW_SCALING <img class="formulaInl" alt="$ s $" src="form_18.png"/> if one was specified): </p><p class="formulaDsp">
-<img class="formulaDsp" alt="\[ \begin{array}{lcl} L &amp; \leftarrow &amp; \sqrt{\sum_{j} a_{i,j}^2} \\ a_{i,j} &amp; \leftarrow &amp; a_{i,j} \times s / L \\ b_i &amp; \leftarrow &amp; b_i \times s / L \end{array} \]" src="form_19.png"/>
+<p>When row normalization is enabled, each time a row is completed with nlEnd(NL_ROW), the coefficients of the current row and its right hand side are divided by the length \( L \) of the current row (and multiplied by the NL_ROW_SCALING \( s \) if one was specified): </p><p class="formulaDsp">
+\[ \begin{array}{lcl} L &amp; \leftarrow &amp; \sqrt{\sum_{j} a_{i,j}^2} \\ a_{i,j} &amp; \leftarrow &amp; a_{i,j} \times s / L \\ b_i &amp; \leftarrow &amp; b_i \times s / L \end{array} \]
 </p>
 <p> Usage: </p><div class="fragment"><div class="line"><a class="code" href="nl_8h.html#a06e0418ea3d53baf92a68456a2cc50db">nlEnable</a>(<a class="code" href="nl_8h.html#ac76278dc2d31199bc1fec94f47eb6626">NL_NORMALIZE_ROWS</a>);</div>
 <div class="ttc" id="anl_8h_html_ac76278dc2d31199bc1fec94f47eb6626"><div class="ttname"><a href="nl_8h.html#ac76278dc2d31199bc1fec94f47eb6626">NL_NORMALIZE_ROWS</a></div><div class="ttdeci">#define NL_NORMALIZE_ROWS</div><div class="ttdoc">Symbolic constant for nlEnable() / nlDisable() to enable or disable rows normalization.</div><div class="ttdef"><b>Definition:</b> <a href="nl_8h_source.html#l00674">nl.h:674</a></div></div>
@@ -1075,7 +1082,7 @@ Example 4 (fine tuning)</h1>
       </table>
 </div><div class="memdoc">
 
-<p>Symbolic constant for <a class="el" href="nl_8h.html#aab7caf5c9ecd67f840a0abfc540bb9ab" title="Specifies a floating-point solver parameter.">nlSolverParameterd()</a> to specify the relaxation parameter <img class="formulaInl" alt="$ \omega \in (0,\ldots 2) $" src="form_16.png"/> used by the SSOR preconditioner. </p>
+<p>Symbolic constant for <a class="el" href="nl_8h.html#aab7caf5c9ecd67f840a0abfc540bb9ab" title="Specifies a floating-point solver parameter.">nlSolverParameterd()</a> to specify the relaxation parameter \( \omega \in (0,\ldots 2) \) used by the SSOR preconditioner. </p>
 <p>Usage: </p><div class="fragment"><div class="line"><a class="code" href="nl_8h.html#aab7caf5c9ecd67f840a0abfc540bb9ab">nlSolverParameterd</a>(<a class="code" href="nl_8h.html#aabaaa63844465ddf7391179a846b93f2">NL_OMEGA</a>, omega)</div>
 <div class="ttc" id="anl_8h_html_aabaaa63844465ddf7391179a846b93f2"><div class="ttname"><a href="nl_8h.html#aabaaa63844465ddf7391179a846b93f2">NL_OMEGA</a></div><div class="ttdeci">#define NL_OMEGA</div><div class="ttdoc">Symbolic constant for nlSolverParameterd() to specify the relaxation parameter  used by the SSOR prec...</div><div class="ttdef"><b>Definition:</b> <a href="nl_8h_source.html#l00400">nl.h:400</a></div></div>
 </div><!-- fragment --> <dl class="section see"><dt>See also</dt><dd><a class="el" href="nl_8h.html#acf579670854d07356c91aec371ec8b0b" title="Symbolic constant for nlSolverParameteri() to use the SSOR (Successive Over Relaxation) preconditione...">NL_PRECOND_SSOR</a> </dd></dl>
@@ -1297,7 +1304,7 @@ Example 4 (fine tuning)</h1>
       </table>
 </div><div class="memdoc">
 
-<p>Symbolic constant for <a class="el" href="nl_8h.html#aab7caf5c9ecd67f840a0abfc540bb9ab" title="Specifies a floating-point solver parameter.">nlSolverParameterd()</a> to specify the maximum threshold <img class="formulaInl" alt="$ \| Ax - b \| / \| b \| $" src="form_15.png"/> before the iterative solver is stopped. </p>
+<p>Symbolic constant for <a class="el" href="nl_8h.html#aab7caf5c9ecd67f840a0abfc540bb9ab" title="Specifies a floating-point solver parameter.">nlSolverParameterd()</a> to specify the maximum threshold \( \| Ax - b \| / \| b \| \) before the iterative solver is stopped. </p>
 <p>Usage: </p><div class="fragment"><div class="line"><a class="code" href="nl_8h.html#aab7caf5c9ecd67f840a0abfc540bb9ab">nlSolverParameterd</a>(<a class="code" href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">NL_THRESHOLD</a>, epsilon);</div>
 </div><!-- fragment --><p> If the solver is left unspecified or is set to <a class="el" href="nl_8h.html#ac1f333dba3357f7acf5f16521bf76297">NL_SOLVER_DEFAULT</a>, then a reasonable value is used (1e-6). </p>
 
@@ -1337,7 +1344,7 @@ Example 4 (fine tuning)</h1>
 </div><div class="memdoc">
 
 <p>Symbolic constant for <a class="el" href="nl_8h.html#a0bd4ff61f75f901f096a5f65f7d4c632" title="Gets the value of an integer parameter.">nlGetIntegerv()</a> to obtain the used number of iteration. </p>
-<p>The solver exits whenever the maximum number of iterations (<a class="el" href="nl_8h.html#a96c5904f4039ebf1ad839c384ad33b23">NL_MAX_ITERATIONS</a>) is reached or whenever <img class="formulaInl" alt="$ \| Ax - b \| / \| b \| $" src="form_15.png"/> gets smaller than <a class="el" href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">NL_THRESHOLD</a>. Usage: </p><div class="fragment"><div class="line"><a class="code" href="nl_8h.html#a9138fd24f9d2960d69ada6ecd7e7b14e">NLint</a> used_iter;</div>
+<p>The solver exits whenever the maximum number of iterations (<a class="el" href="nl_8h.html#a96c5904f4039ebf1ad839c384ad33b23">NL_MAX_ITERATIONS</a>) is reached or whenever \( \| Ax - b \| / \| b \| \) gets smaller than <a class="el" href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">NL_THRESHOLD</a>. Usage: </p><div class="fragment"><div class="line"><a class="code" href="nl_8h.html#a9138fd24f9d2960d69ada6ecd7e7b14e">NLint</a> used_iter;</div>
 <div class="line"><a class="code" href="nl_8h.html#a0bd4ff61f75f901f096a5f65f7d4c632">nlGetIntegerv</a>(<a class="code" href="nl_8h.html#a8c4e3622ccaa750945545411e2c81000">NL_USED_ITERATIONS</a>, &amp;used_iter);</div>
 <div class="ttc" id="anl_8h_html_a0bd4ff61f75f901f096a5f65f7d4c632"><div class="ttname"><a href="nl_8h.html#a0bd4ff61f75f901f096a5f65f7d4c632">nlGetIntegerv</a></div><div class="ttdeci">NLAPI void NLAPIENTRY nlGetIntegerv(NLenum pname, NLint *params)</div><div class="ttdoc">Gets the value of an integer parameter.</div></div>
 <div class="ttc" id="anl_8h_html_a8c4e3622ccaa750945545411e2c81000"><div class="ttname"><a href="nl_8h.html#a8c4e3622ccaa750945545411e2c81000">NL_USED_ITERATIONS</a></div><div class="ttdeci">#define NL_USED_ITERATIONS</div><div class="ttdoc">Symbolic constant for nlGetIntegerv() to obtain the used number of iteration.</div><div class="ttdef"><b>Definition:</b> <a href="nl_8h_source.html#l00433">nl.h:433</a></div></div>
@@ -2494,12 +2501,12 @@ Example 4 (fine tuning)</h1>
 
 <p>Sets the right-hand side of the current row. </p>
 <ul>
-<li>In regular mode, this corresponds to the right-hand side <img class="formulaInl" alt="$ b_i $" src="form_22.png"/> of equation: <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ \sum_j a_{i,j} x_j = b_i \]" src="form_23.png"/>
+<li>In regular mode, this corresponds to the right-hand side \( b_i \) of equation: <p class="formulaDsp">
+\[ \sum_j a_{i,j} x_j = b_i \]
 </p>
 </li>
-<li>In least-squares mode (<a class="el" href="nl_8h.html#ab52121ea76b6a5130531959d4213b0a5">NL_LEAST_SQUARES</a>), this correspond to the term <img class="formulaInl" alt="$ b_i $" src="form_22.png"/> in: <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ \left( \sum_j a_{i,j} x_j - b_i \right)^2 \]" src="form_24.png"/>
+<li>In least-squares mode (<a class="el" href="nl_8h.html#ab52121ea76b6a5130531959d4213b0a5">NL_LEAST_SQUARES</a>), this correspond to the term \( b_i \) in: <p class="formulaDsp">
+\[ \left( \sum_j a_{i,j} x_j - b_i \right)^2 \]
 </p>
  Usage: <div class="fragment"><div class="line">nlRowParameterd(NL_RIGHT_HAND_SIDE, bi);</div>
 <div class="line"><a class="code" href="nl_8h.html#ae540286aef7b045f2dac79b28c14c29e">nlBegin</a>(<a class="code" href="nl_8h.html#ac926cb1c6a6d15abb6d5abd1184f75ce">NL_ROW</a>);</div>
@@ -2536,12 +2543,12 @@ Example 4 (fine tuning)</h1>
 
 <p>Sets the row scaling for the next row. </p>
 <ul>
-<li>if <a class="el" href="nl_8h.html#ac76278dc2d31199bc1fec94f47eb6626">NL_NORMALIZE_ROWS</a> is not enabled, then the coefficients are multiplied by the specified row scaling coefficient <img class="formulaInl" alt="$ s $" src="form_18.png"/> as follows when the row is completed: <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ \begin{array}{lcl} a_{i,j} &amp; \leftarrow &amp; a_{i,j} \times s \\ b_i &amp; \leftarrow &amp; b_i \times s \end{array} \]" src="form_25.png"/>
+<li>if <a class="el" href="nl_8h.html#ac76278dc2d31199bc1fec94f47eb6626">NL_NORMALIZE_ROWS</a> is not enabled, then the coefficients are multiplied by the specified row scaling coefficient \( s \) as follows when the row is completed: <p class="formulaDsp">
+\[ \begin{array}{lcl} a_{i,j} &amp; \leftarrow &amp; a_{i,j} \times s \\ b_i &amp; \leftarrow &amp; b_i \times s \end{array} \]
 </p>
 </li>
-<li>if <a class="el" href="nl_8h.html#ac76278dc2d31199bc1fec94f47eb6626">NL_NORMALIZE_ROWS</a> is enabled, then the coefficients are divided by the row length <img class="formulaInl" alt="$ L $" src="form_17.png"/> and multiplied by the specified row scaling coefficient <img class="formulaInl" alt="$ s $" src="form_18.png"/> as follows when the row is completed: <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ \begin{array}{lcl} L &amp; \leftarrow &amp; \sqrt{\sum_{j} a_{i,j}^2} \\ a_{i,j} &amp; \leftarrow &amp; a_{i,j} \times s / L\\ b_i &amp; \leftarrow &amp; b_i \times s / L \end{array} \]" src="form_26.png"/>
+<li>if <a class="el" href="nl_8h.html#ac76278dc2d31199bc1fec94f47eb6626">NL_NORMALIZE_ROWS</a> is enabled, then the coefficients are divided by the row length \( L \) and multiplied by the specified row scaling coefficient \( s \) as follows when the row is completed: <p class="formulaDsp">
+\[ \begin{array}{lcl} L &amp; \leftarrow &amp; \sqrt{\sum_{j} a_{i,j}^2} \\ a_{i,j} &amp; \leftarrow &amp; a_{i,j} \times s / L\\ b_i &amp; \leftarrow &amp; b_i \times s / L \end{array} \]
 </p>
  <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2721,7 +2728,7 @@ Example 4 (fine tuning)</h1>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pname</td><td>the symbolic name of the parameter, one of (<a class="el" href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">NL_THRESHOLD</a>, <a class="el" href="nl_8h.html#aabaaa63844465ddf7391179a846b93f2">NL_OMEGA</a>). </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">param</td><td>the double-precision floating-point value of the parameter. <ul>
-<li><code>If</code> pname = <a class="el" href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">NL_THRESHOLD</a>, then <code>param</code> is the maximum value of <img class="formulaInl" alt="$ \| Ax - b \| / \| b \| $" src="form_15.png"/> before iterations are stopped; </li>
+<li><code>If</code> pname = <a class="el" href="nl_8h.html#a9c458de7a0be304725341a3fe03f2e9f">NL_THRESHOLD</a>, then <code>param</code> is the maximum value of \( \| Ax - b \| / \| b \| \) before iterations are stopped; </li>
 <li><code>if</code> pname = <a class="el" href="nl_8h.html#aabaaa63844465ddf7391179a846b93f2">NL_OMEGA</a> and the specified preconditioner is NL_SSOR, then <code>param</code> is the relaxation parameter, in (0.0 .. 2.0) excluded, for the SSOR preconditioner. </li>
 </ul>
 </td></tr>
@@ -2764,7 +2771,7 @@ Example 4 (fine tuning)</h1>
     <tr><td class="paramdir">[in]</td><td class="paramname">param</td><td>the integer value of the parameter. <ul>
 <li>If <code>pname</code> = <a class="el" href="nl_8h.html#a8d9cc96bab7b573830c234cf52ceb8bc">NL_SOLVER</a> then <code>param</code> is the symbolic constant that specifies the solver, i.e. one of (NL_CG, NL_BICGSTAB, NL_GMRES) or one of the extended solvers if supported (NL_xxx_SUPERLU_EXT, NL_CNC_xxx); </li>
 <li>if <code>pname</code> = <a class="el" href="nl_8h.html#a18fe83c4c3c6b38100da3898d8c717ed">NL_NB_VARIABLES</a> then <code>param</code> specifies the number of variables; </li>
-<li>if <code>pname</code> = <a class="el" href="nl_8h.html#ab52121ea76b6a5130531959d4213b0a5">NL_LEAST_SQUARES</a> then <code>param</code> is a boolean value (NL_TRUE or NL_FALSE) that specifies whether least squares mode should be used (solves <img class="formulaInl" alt="$ A^t A x = A^t b $" src="form_20.png"/> with a possibly non-square matrix <img class="formulaInl" alt="$ A $" src="form_21.png"/>); </li>
+<li>if <code>pname</code> = <a class="el" href="nl_8h.html#ab52121ea76b6a5130531959d4213b0a5">NL_LEAST_SQUARES</a> then <code>param</code> is a boolean value (NL_TRUE or NL_FALSE) that specifies whether least squares mode should be used (solves \( A^t A x = A^t b \) with a possibly non-square matrix \( A \)); </li>
 <li>if <code>pname</code> = <a class="el" href="nl_8h.html#a96c5904f4039ebf1ad839c384ad33b23">NL_MAX_ITERATIONS</a> then <code>param</code> is the maximum number of iterations; </li>
 <li>if <code>pname</code> = <a class="el" href="nl_8h.html#a283a58ef73ceced29a80358ff050d519">NL_SYMMETRIC</a> then <code>param</code> is a boolean value (NL_TRUE or NL_FALSE) that specifies whether the constructed matrix is symmetric. This is a hint for OpenNL that allows using more efficient data structures / solvers. Behavior is undefined if you lied and specify then a non-symmetric matrix ! </li>
 <li>if <code>pname</code> = <a class="el" href="nl_8h.html#a34956f2b0fd8dd2b4f5dd25970449f7d">NL_INNER_ITERATIONS</a> and the solver is NL_GMRES, then <code>param</code> is the number of inner-loop iterations / number of intermediate vectors used by GMRES; </li>
@@ -2873,7 +2880,7 @@ Example 4 (fine tuning)</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_b3a6cc1a5f137d3d08b45a2f5b5806b4.html">geogram</a></li><li class="navelem"><a class="el" href="dir_53d5e9858254fface141430feef69984.html">NL</a></li><li class="navelem"><a class="el" href="nl_8h.html">nl.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

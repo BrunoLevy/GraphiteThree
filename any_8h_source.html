@@ -16,6 +16,13 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -572,12 +579,12 @@ $(document).ready(function(){initNavTree('any_8h_source.html',''); initResizable
 <div class="ttc" id="aclassOGF_1_1Any_html_adb64e2215ca8f58cdcfb8b67d6f51347"><div class="ttname"><a href="classOGF_1_1Any.html#adb64e2215ca8f58cdcfb8b67d6f51347">OGF::Any::get_value</a></div><div class="ttdeci">bool get_value(double &amp;value) const</div><div class="ttdoc">Gets the stored value (double overload).</div><div class="ttdef"><b>Definition:</b> <a href="any_8h_source.html#l00354">any.h:354</a></div></div>
 <div class="ttc" id="aclassOGF_1_1Any_html_aefbbd6b514d0a68629960415b7e4792f"><div class="ttname"><a href="classOGF_1_1Any.html#aefbbd6b514d0a68629960415b7e4792f">OGF::Any::convert_from_string</a></div><div class="ttdeci">static void convert_from_string(MetaType *meta_type, const std::string &amp;string, Memory::pointer value)</div><div class="ttdoc">Converts a string into an object of a given type.</div></div>
 <div class="ttc" id="aclassOGF_1_1LifeCycle_html"><div class="ttname"><a href="classOGF_1_1LifeCycle.html">OGF::LifeCycle</a></div><div class="ttdoc">Manages the life cycle of an object.</div><div class="ttdef"><b>Definition:</b> <a href="life__cycle_8h_source.html#l00059">life_cycle.h:59</a></div></div>
-<div class="ttc" id="aclassOGF_1_1MetaType_html"><div class="ttname"><a href="classOGF_1_1MetaType.html">OGF::MetaType</a></div><div class="ttdoc">The representation of a type in the Meta repository.</div><div class="ttdef"><b>Definition:</b> <a href="meta__type_8h_source.html#l00194">meta_type.h:194</a></div></div>
-<div class="ttc" id="anamespaceGEO_1_1Memory_html_a17d6fea3bece2482a9a8e07ffce88831"><div class="ttname"><a href="namespaceGEO_1_1Memory.html#a17d6fea3bece2482a9a8e07ffce88831">GEO::Memory::byte</a></div><div class="ttdeci">unsigned char byte</div><div class="ttdoc">Unsigned byte type.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8h_source.html#l00080">memory.h:80</a></div></div>
-<div class="ttc" id="anamespaceGEO_1_1Memory_html_a8a09fc59788ee63a6f8c3ab12d1ca62a"><div class="ttname"><a href="namespaceGEO_1_1Memory.html#a8a09fc59788ee63a6f8c3ab12d1ca62a">GEO::Memory::pointer</a></div><div class="ttdeci">byte * pointer</div><div class="ttdoc">Pointer to unsigned byte(s)</div><div class="ttdef"><b>Definition:</b> <a href="memory_8h_source.html#l00092">memory.h:92</a></div></div>
-<div class="ttc" id="anamespaceGEO_1_1Memory_html_afb8df1c2d6cf20a6a234d88c2f1ad2e5"><div class="ttname"><a href="namespaceGEO_1_1Memory.html#afb8df1c2d6cf20a6a234d88c2f1ad2e5">GEO::Memory::copy</a></div><div class="ttdeci">void copy(void *to, const void *from, size_t size)</div><div class="ttdoc">Copies a memory block.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8h_source.html#l00117">memory.h:117</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a545c8df15809d86c5efeea8500b1d14c"><div class="ttname"><a href="namespaceGEO.html#a545c8df15809d86c5efeea8500b1d14c">GEO::signed_index_t</a></div><div class="ttdeci">geo_signed_index_t signed_index_t</div><div class="ttdoc">The type for storing and manipulating indices differences.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00301">numeric.h:301</a></div></div>
-<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00287">numeric.h:287</a></div></div>
+<div class="ttc" id="aclassOGF_1_1MetaType_html"><div class="ttname"><a href="classOGF_1_1MetaType.html">OGF::MetaType</a></div><div class="ttdoc">The representation of a type in the Meta repository.</div><div class="ttdef"><b>Definition:</b> <a href="meta__type_8h_source.html#l00207">meta_type.h:207</a></div></div>
+<div class="ttc" id="anamespaceGEO_1_1Memory_html_a17d6fea3bece2482a9a8e07ffce88831"><div class="ttname"><a href="namespaceGEO_1_1Memory.html#a17d6fea3bece2482a9a8e07ffce88831">GEO::Memory::byte</a></div><div class="ttdeci">unsigned char byte</div><div class="ttdoc">Unsigned byte type.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8h_source.html#l00093">memory.h:93</a></div></div>
+<div class="ttc" id="anamespaceGEO_1_1Memory_html_a8a09fc59788ee63a6f8c3ab12d1ca62a"><div class="ttname"><a href="namespaceGEO_1_1Memory.html#a8a09fc59788ee63a6f8c3ab12d1ca62a">GEO::Memory::pointer</a></div><div class="ttdeci">byte * pointer</div><div class="ttdoc">Pointer to unsigned byte(s)</div><div class="ttdef"><b>Definition:</b> <a href="memory_8h_source.html#l00105">memory.h:105</a></div></div>
+<div class="ttc" id="anamespaceGEO_1_1Memory_html_afb8df1c2d6cf20a6a234d88c2f1ad2e5"><div class="ttname"><a href="namespaceGEO_1_1Memory.html#afb8df1c2d6cf20a6a234d88c2f1ad2e5">GEO::Memory::copy</a></div><div class="ttdeci">void copy(void *to, const void *from, size_t size)</div><div class="ttdoc">Copies a memory block.</div><div class="ttdef"><b>Definition:</b> <a href="memory_8h_source.html#l00130">memory.h:130</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a545c8df15809d86c5efeea8500b1d14c"><div class="ttname"><a href="namespaceGEO.html#a545c8df15809d86c5efeea8500b1d14c">GEO::signed_index_t</a></div><div class="ttdeci">geo_signed_index_t signed_index_t</div><div class="ttdoc">The type for storing and manipulating indices differences.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00343">numeric.h:343</a></div></div>
+<div class="ttc" id="anamespaceGEO_html_a915b0eb4dd0c3efe278d558468383534"><div class="ttname"><a href="namespaceGEO.html#a915b0eb4dd0c3efe278d558468383534">GEO::index_t</a></div><div class="ttdeci">geo_index_t index_t</div><div class="ttdoc">The type for storing and manipulating indices.</div><div class="ttdef"><b>Definition:</b> <a href="numeric_8h_source.html#l00329">numeric.h:329</a></div></div>
 <div class="ttc" id="anamespaceOGF_html"><div class="ttname"><a href="namespaceOGF.html">OGF</a></div><div class="ttdoc">Global Graphite namespace.</div><div class="ttdef"><b>Definition:</b> <a href="src_2lib_2OGF_2basic_2common_2common_8h_source.html#l00076">common.h:76</a></div></div>
 <div class="ttc" id="asrc_2lib_2OGF_2gom_2common_2common_8h_html"><div class="ttname"><a href="src_2lib_2OGF_2gom_2common_2common_8h.html">common.h</a></div><div class="ttdoc">Definitions common to all include files in the gom library.</div></div>
 </div><!-- fragment --></div><!-- contents -->
@@ -586,7 +593,7 @@ $(document).ready(function(){initNavTree('any_8h_source.html',''); initResizable
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_aef77abc1c70517fe3037d0ad81c1d82.html">OGF</a></li><li class="navelem"><a class="el" href="dir_69b25135ad0c2c10dad56e08dbeec7e1.html">gom</a></li><li class="navelem"><a class="el" href="dir_cc79fc0c97a203573873e62ae76c3870.html">types</a></li><li class="navelem"><a class="el" href="any_8h.html">any.h</a></li>
-    <li class="footer">Generated on Tue Jun 27 2023 06:45:46 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Generated on Sat Feb 3 2024 15:19:07 for Graphite by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>
