@@ -55,7 +55,8 @@ namespace OGF {
     Interpreter::Interpreter() {
 	globals_ = new GlobalScope(this);
         MetaTypesScope* meta_types = new MetaTypesScope();
-        meta_types->create_subscope("OGF");
+        MetaTypesScope* OGF = meta_types->create_subscope("OGF");
+        OGF->create_subscope("NL");
         meta_types->create_subscope("std");
         meta_types_ = meta_types;
     }
