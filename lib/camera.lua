@@ -150,8 +150,6 @@ function camera_gui.draw_menu()
      camera_gui.home()
   end
   imgui.Separator()
-  camera_gui.projection_dialog()
-  imgui.Separator()
   if imgui.BeginMenu('Properties...') then
      autogui.properties_editor(main.camera())
      imgui.EndMenu()
@@ -192,6 +190,10 @@ function camera_gui.draw_menu()
      end
      imgui.EndMenu()
   end
+  imgui.Separator()
+  imgui.NewLine()
+  camera_gui.projection_dialog()
+  imgui.NewLine()  
 end
 
 function camera_gui.draw_extra()
@@ -326,22 +328,29 @@ function camera_gui.projection_dialog()
        imgui.PopStyleColor()
     end
 
-    imgui.Text(' ')
-    imgui.SameLine(45)
-    axis_button('+Z',b)
+    local offset = 45
+        if(imgui.GetWindowWidth() > 20) then
+       offset = offset + (imgui.GetWindowWidth() - 120)/2
+    end
 
+    imgui.Text(' ')
+    imgui.SameLine(offset)
+    axis_button('+Z',b)
+    imgui.NewLine()
+ 
+    imgui.SameLine(offset-37)
     axis_button('-X',r)
-    imgui.SameLine(45)
+    imgui.SameLine(offset)
     axis_button('+Y',g)
-    imgui.SameLine(82)
+    imgui.SameLine(offset+37)
     axis_button('+X',r)
 
     imgui.Text(' ')
-    imgui.SameLine(45)
+    imgui.SameLine(offset)
     axis_button('-Z',b)
 
     imgui.Text(' ')
-    imgui.SameLine(45)
+    imgui.SameLine(offset)
     axis_button('-Y',g)
 
     imgui.PopStyleVar()

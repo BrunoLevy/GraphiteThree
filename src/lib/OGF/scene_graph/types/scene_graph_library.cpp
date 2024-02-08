@@ -191,10 +191,6 @@ namespace OGF {
         const std::string& commands_class_name
     ) {
 	register_grob_interface(grob_class_name, commands_class_name);
-	/*
-        if(grob_class_name == "SceneGraph") {
-            scene_graph_commands_.push_back(commands_class_name);
-	} else */
 	{
             auto it = grob_infos_.find(grob_class_name);
             ogf_assert(it != grob_infos_.end());

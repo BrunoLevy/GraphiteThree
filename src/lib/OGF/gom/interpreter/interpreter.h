@@ -368,7 +368,7 @@ namespace OGF {
          *   name was already bound
          */
         virtual bool bind_meta_type(MetaType* mtype);
-        
+
 	/**
 	 * \brief Creates an object.
 	 * \param[in] args the ArgList, with at least an argument classname. 
