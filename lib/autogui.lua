@@ -942,6 +942,10 @@ function autogui.args_to_string(mmethod,args)
          result = result .. name .. '=' .. value 
       end
    end
+   if #result > 1 then
+       result = result .. ','
+   end
+   result = result .. '_invoked_from_gui=true'
    result = result .. '}'
    return result
 end

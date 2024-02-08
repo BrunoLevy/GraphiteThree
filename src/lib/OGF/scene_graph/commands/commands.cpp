@@ -77,7 +77,7 @@ namespace OGF {
 
     bool Commands::invoke_method(
         const std::string& method_name,
-        const ArgList& args, Any& ret_val
+        const ArgList& args_in, Any& ret_val
     ) {
 
         if(command_is_running_) {
@@ -94,9 +94,32 @@ namespace OGF {
             return true ;
         }
 
+
+        bool invoked_from_gui = false;
+        
+        // Copy argument list, ignore arguments that start with '_'
+        ArgList args;
+        for(index_t i=0; i<args_in.nb_args(); ++i) {
+            const std::string& name = args_in.ith_arg_name(i);
+            const Any& value = args_in.ith_arg_value(i);
+            if(name.length() > 0 && name[0] == '_') {
+                if(name == "invoked_from_gui_" && value.as_string() == "true") {
+                    invoked_from_gui = true;
+                }
+                continue;
+            } 
+            args.create_arg(name, value);
+        }
+
+        // TODO: implement Graphite GUI setting @invoked_from_gui.
+        // TODO: take into account '_invoked_from_gui' here, to
+        // play with the undo/redo mechanism.
+        
         if(interpreter() != nullptr) {
-	    bool interp_is_lua = (CmdLine::get_arg("gel") == "gel_lua");
+	    bool interp_is_lua = (CmdLine::get_arg("gel") == "Lua");
 	    std::ostringstream out ;
+
+            // TODO: use new .I.xxx. instead of query_interface()
 	    if(get_grob()->meta_class()->name() == "OGF::SceneGraph") {
 		out << "scene_graph.query_interface(\"" 
 		    << meta_class()->name() 
@@ -113,6 +136,7 @@ namespace OGF {
 	    } else {
 		out << "(" ;
 	    }
+
 	    // TODO: do not add quotes around integers, floating point
 	    // numbers and truth values.
 	    for(unsigned int i=0; i<args.nb_args(); i++) {
@@ -122,6 +146,7 @@ namespace OGF {
 		    out << ", " ;
 		}
 	    }
+            
 	    if(interp_is_lua) {
 		// name-value pairs call: '}' = create LUA table.
 		out << "})" << std::endl ;
