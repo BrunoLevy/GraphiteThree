@@ -433,11 +433,11 @@ function scene_graph_gui.scene_graph_menu(with_file_menu)
     if gom.get_environment_value('gui:undo') == 'true' then
         imgui.Separator()
         if imgui.MenuItem(imgui.font_icon('undo')..' undo') then
-           main.restore_state()
+           main.undo()
         end
---      if imgui.MenuItem(imgui.font_icon('redo')..' redo') then
---         main.restore_state()
---      end
+        if imgui.MenuItem(imgui.font_icon('redo')..' redo') then
+           main.redo();
+        end
     end
 end
 

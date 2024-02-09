@@ -177,24 +177,28 @@ namespace OGF {
     void ApplicationBase::update() {
     }
 
-    void ApplicationBase::save_state() {
+    void ApplicationBase::save_state(const std::string& filename_in) {
         if(Environment::instance()->get_value("gui:undo") != "true") {
-            std::cerr << "undo deactivated" << std::endl;
             return;
+        }
+        std::string filename = filename_in;
+        if(filename == "") {
+            filename = "graphite_state.graphite";
         }
         Object* scene_graph = interpreter()->resolve_object("scene_graph");
         if(scene_graph != nullptr) {
             ArgList args;
-            args.create_arg("value","graphite_state.graphite");
+            args.create_arg("value",filename);
             scene_graph->invoke_method("save", args);
         }
     }
 
-    void ApplicationBase::restore_state() {
+    
+    void ApplicationBase::restore_state(const std::string& filename) {
         if(Environment::instance()->get_value("gui:undo") != "true") {
             return;
         }
-        if(!FileSystem::is_file("graphite_state.graphite")) {
+        if(!FileSystem::is_file(filename)) {
             Logger::err("App") << "No saved state to restore"
                                << std::endl;
             return;
@@ -204,9 +208,30 @@ namespace OGF {
         if(scene_graph != nullptr) {
             ArgList args;
             scene_graph->invoke_method("clear",args);
-            args.create_arg("value","graphite_state.graphite");
+            args.create_arg("value",filename);
             scene_graph->invoke_method("load_object", args);
         }
+    }
+
+
+    void ApplicationBase::undo() {
+        if(!FileSystem::is_file("graphite_state.graphite")) {
+            Logger::err("undo") << "no saved state";
+            return;
+        }
+        save_state("graphite_undo_state.graphite");
+        restore_state("graphite_state.graphite");
+        FileSystem::delete_file("graphite_state.graphite");
+    }
+
+    void ApplicationBase::redo() {
+        if(!FileSystem::is_file("graphite_undo_state.graphite")) {
+            Logger::err("redo") << "no saved state";
+            return;
+        }
+        save_state("graphite_state.graphite");        
+        restore_state("graphite_undo_state.graphite");
+        FileSystem::delete_file("graphite_undo_state.graphite");
     }
     
 /**************************************************************/

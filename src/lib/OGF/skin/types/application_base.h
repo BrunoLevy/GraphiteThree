@@ -232,12 +232,23 @@ namespace OGF {
         /**
          * \brief Saves Graphite state to a file.
          */
-        virtual void save_state();
+        virtual void save_state(const std::string& filename="");
 
+        /**
+         * \brief Saves Graphite state to a file.
+         */
+        virtual void restore_state(const std::string& filename);
+        
         /**
          * \brief Restores latest saved state.
          */
-        virtual void restore_state();
+        virtual void undo();
+
+
+        /**
+         * \brief Restores latest saved state saved by undo()
+         */
+        virtual void redo();
         
     gom_signals:
         /**
