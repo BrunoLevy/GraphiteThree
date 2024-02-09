@@ -214,12 +214,11 @@ preferences_window['draw_Appearance and rendering'] = function()
       main.camera().effect = effect
    end
    gom.set_environment_value('gfx:default_full_screen_effect', effect)
-   if preferences_window.edit_preference_boolean(
-       'Perspective', 'perspective'
-   ) then
-      main.render_area.update_view_parameters()
-   end
    
+   preferences_window.edit_preference_boolean(
+       'Enable undo (saves state before each command)', 'gui:undo'
+   )
+
 end
 
 -- \brief Draws the 'Startup' pane

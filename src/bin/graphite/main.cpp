@@ -266,13 +266,14 @@ namespace {
         Preferences::declare_preference_variable(
 	    "gui:tooltips", true, "Display tooltips on commands and arguments"
 	);	    
-	
+
+        Preferences::declare_preference_variable(
+	    "gui:undo", false, "Support undo for all commands"
+	);	    
+        
         Preferences::declare_preference_variable(
 	    "gfx:default_full_screen_effect", "Plain",
 	    "full-screen effect enabled by default"
-	);
-        Preferences::declare_preference_variable(
-	    "gfx:perspective", false, "Orthographic or perspective view"
 	);
         Preferences::declare_preference_variable("gfx:GL_debug");
         Preferences::declare_preference_variable("gfx:GL_profile");

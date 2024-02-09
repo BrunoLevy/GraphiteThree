@@ -177,6 +177,38 @@ namespace OGF {
     void ApplicationBase::update() {
     }
 
+    void ApplicationBase::save_state() {
+        if(Environment::instance()->get_value("gui:undo") != "true") {
+            std::cerr << "undo deactivated" << std::endl;
+            return;
+        }
+        Object* scene_graph = interpreter()->resolve_object("scene_graph");
+        if(scene_graph != nullptr) {
+            ArgList args;
+            args.create_arg("value","graphite_state.graphite");
+            scene_graph->invoke_method("save", args);
+        }
+    }
+
+    void ApplicationBase::restore_state() {
+        if(Environment::instance()->get_value("gui:undo") != "true") {
+            return;
+        }
+        if(!FileSystem::is_file("graphite_state.graphite")) {
+            Logger::err("App") << "No saved state to restore"
+                               << std::endl;
+            return;
+        }
+        
+        Object* scene_graph = interpreter()->resolve_object("scene_graph");
+        if(scene_graph != nullptr) {
+            ArgList args;
+            scene_graph->invoke_method("clear",args);
+            args.create_arg("value","graphite_state.graphite");
+            scene_graph->invoke_method("load_object", args);
+        }
+    }
+    
 /**************************************************************/
     
     ApplicationBase::

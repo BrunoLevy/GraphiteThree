@@ -41,7 +41,6 @@
 #include <OGF/gom/interpreter/interpreter.h>
 #include <OGF/gom/reflection/meta.h>
 #include <OGF/gom/reflection/meta_class.h>
-#include <OGF/gom/interpreter/interpreter.h>
 #include <geogram/basic/stopwatch.h>
 #include <geogram/basic/command_line.h>
 #include <sstream>
@@ -103,7 +102,7 @@ namespace OGF {
             const std::string& name = args_in.ith_arg_name(i);
             const Any& value = args_in.ith_arg_value(i);
             if(name.length() > 0 && name[0] == '_') {
-                if(name == "invoked_from_gui_" && value.as_string() == "true") {
+                if(name == "_invoked_from_gui" && value.as_string() == "true") {
                     invoked_from_gui = true;
                 }
                 continue;
@@ -111,11 +110,14 @@ namespace OGF {
             args.create_arg(name, value);
         }
 
-        // TODO: implement Graphite GUI setting @invoked_from_gui.
-        // TODO: take into account '_invoked_from_gui' here, to
-        // play with the undo/redo mechanism.
         
         if(interpreter() != nullptr) {
+
+            if(invoked_from_gui) {
+                Object* main = interpreter()->resolve_object("main");
+                main->invoke_method("save_state");
+            }
+            
 	    bool interp_is_lua = (CmdLine::get_arg("gel") == "Lua");
 	    std::ostringstream out ;
 

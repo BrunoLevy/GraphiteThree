@@ -227,7 +227,18 @@ namespace OGF {
 	 *  such file was found.
 	 */
 	std::string find_file(const std::string& filename) const;
-	
+
+
+        /**
+         * \brief Saves Graphite state to a file.
+         */
+        virtual void save_state();
+
+        /**
+         * \brief Restores latest saved state.
+         */
+        virtual void restore_state();
+        
     gom_signals:
         /**
          * \brief A signal that is triggered after the Graphite
