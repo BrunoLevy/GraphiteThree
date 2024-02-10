@@ -797,6 +797,7 @@ namespace OGF {
     }
    
     void MeshGrobPaint::grab(const RayPick& raypick) {
+        MeshGrobPaintTool::grab(raypick);
         latest_ndc_ = raypick.p_ndc;
         if(stroke_mode_) {
             stroke_.push_back(ndc_to_dc(raypick.p_ndc));
@@ -970,6 +971,7 @@ namespace OGF {
     }
    
     void MeshGrobPaintRect::grab(const RayPick& p_ndc) {
+        MeshGrobPaintTool::grab(p_ndc);
         p_ = ndc_to_dc(p_ndc.p_ndc);
         active_ = true;
     }
@@ -1192,6 +1194,7 @@ namespace OGF {
     }
 
     void MeshGrobPaintFreeform::grab(const RayPick& raypick) {
+        MeshGrobPaintTool::grab(raypick);
         selection_.push_back(ndc_to_dc(raypick.p_ndc));
         active_ = true;
     }
@@ -1296,6 +1299,7 @@ namespace OGF {
     }
     
     void MeshGrobPaintConnected::grab(const RayPick& raypick) {
+        MeshGrobPaintTool::grab(raypick);
         PaintOp op = PAINT_SET;
         MeshElementsFlags where;
         std::string attribute_name;

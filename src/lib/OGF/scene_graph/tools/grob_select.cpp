@@ -50,6 +50,10 @@ namespace OGF {
     //_________________________________________________________________________
 
     void GrobSelect::grab(const RayPick& rp) {
+       
+        // Do not call Tool::grab(), no need to
+	// save state to undo/redo buffers.
+	
         rendering_context()->begin_picking(rp.p_ndc);
         rendering_context()->begin_frame();
 

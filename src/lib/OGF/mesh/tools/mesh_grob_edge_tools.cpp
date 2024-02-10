@@ -45,6 +45,7 @@
 namespace OGF {
     
     void MeshGrobCreateEdge::grab(const RayPick& p_ndc) {
+        MeshGrobTool::grab(p_ndc);
         if(v1_ == NO_VERTEX) {
             v1_ = pick_vertex(p_ndc);
             if(v1_ == NO_VERTEX) {

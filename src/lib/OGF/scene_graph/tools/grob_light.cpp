@@ -47,6 +47,10 @@ namespace OGF {
     // context. It is quite ugly (but at least it works)
 
     void GrobLight::grab(const RayPick& r) {
+
+        // Do not call Tool::grab(), no need to
+	// save state to undo/redo buffers.
+       
         RenderingContext* context =
             tools_manager()->manager()->rendering_context();
 

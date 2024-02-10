@@ -43,6 +43,7 @@
 namespace OGF {
 
     void MeshGrobSelectVertex::grab(const RayPick& p_ndc) {
+        MeshGrobTool::grab(p_ndc);
         vertex_ = pick_vertex(p_ndc);
         if(vertex_ != NO_VERTEX) {
             Attribute<bool> v_selection(
@@ -66,6 +67,7 @@ namespace OGF {
     }
     
     void MeshGrobUnselectVertex::grab(const RayPick& p_ndc) {
+        MeshGrobTool::grab(p_ndc);
         index_t v = pick_vertex(p_ndc);
         if(v != NO_VERTEX) {
             Attribute<bool> v_selection(

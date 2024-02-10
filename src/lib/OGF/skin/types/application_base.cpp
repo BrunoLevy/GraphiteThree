@@ -232,7 +232,7 @@ namespace OGF {
     }
 
     std::string ApplicationBase::state_buffer_filename(index_t i) const {
-        return String::format("graphite_state_%0d.graphite",int(i));
+        return String::format("graphite_state_%02d.graphite",int(i));
     }
 
     bool ApplicationBase::get_can_undo() const {

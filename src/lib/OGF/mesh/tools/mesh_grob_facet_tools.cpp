@@ -177,6 +177,7 @@ namespace {
 namespace OGF {
 
     void MeshGrobCreateCenterVertex::grab(const RayPick& p_ndc) {
+        MeshGrobTool::grab(p_ndc);
         index_t picked_facet = pick_facet(p_ndc);
         if(picked_facet != NO_FACET) {
             new_vertex_ = mesh_grob()->vertices.create_vertex(
@@ -247,6 +248,7 @@ namespace OGF {
 
 
     void MeshGrobRemoveCenterVertex::grab(const RayPick& p_ndc) {
+        MeshGrobTool::grab(p_ndc);
         index_t picked_v = pick_vertex(p_ndc);
         if(picked_v == NO_VERTEX) {
             return;
@@ -332,6 +334,7 @@ namespace OGF {
     /*************************************************************/
     
     void MeshGrobRemoveIncidentFacets::grab(const RayPick& p_ndc) {
+        MeshGrobTool::grab(p_ndc);
         index_t picked_vertex = pick_vertex(p_ndc);
         if(picked_vertex != NO_VERTEX) {
             vector<index_t> to_delete(mesh_grob()->facets.nb(),0);
@@ -363,6 +366,7 @@ namespace OGF {
     /****************************************************************/
     
     void MeshGrobRemoveFacet::grab(const RayPick& p_ndc) {
+        MeshGrobTool::grab(p_ndc);
         index_t result = pick_facet(p_ndc);
         if(result != index_t(-1)) {        
             if(result > mesh_grob()->facets.nb()) {
@@ -379,6 +383,7 @@ namespace OGF {
     /****************************************************************/
 
     void MeshGrobFillHole::grab(const RayPick& p_ndc) {
+        MeshGrobTool::grab(p_ndc);
         index_t facet,corner;
         if(pick_facet_edge(p_ndc,facet,corner)) {
             if(mesh_grob()->facet_corners.adjacent_facet(corner) != NO_FACET) {
@@ -486,6 +491,7 @@ namespace OGF {
     /****************************************************************/
 
     void MeshGrobJoinFacets::grab(const RayPick& p_ndc) {
+        MeshGrobTool::grab(p_ndc);
         index_t picked_f = NO_FACET;
         index_t picked_c = NO_CORNER;
         if(!pick_facet_edge(p_ndc, picked_f, picked_c)) {
@@ -560,6 +566,7 @@ namespace OGF {
 
 
     void MeshGrobSplitFacet::grab(const RayPick& p_ndc) {
+        MeshGrobTool::grab(p_ndc);
         if(v1_ == NO_VERTEX) {
             v1_ = pick_vertex(p_ndc);
             if(v1_ == NO_VERTEX) {

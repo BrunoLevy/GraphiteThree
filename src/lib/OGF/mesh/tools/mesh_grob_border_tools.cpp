@@ -88,6 +88,7 @@ namespace {
 namespace OGF {
 
     void MeshGrobGlueEdges::grab(const RayPick& p_ndc) {
+        MeshGrobTool::grab(p_ndc);
         index_t f[2];
         index_t c[2];
         if(!pick_facet_edge(p_ndc, f[0], c[0])) {
@@ -137,6 +138,7 @@ namespace OGF {
     }
 
     void MeshGrobUnglueEdges::grab(const RayPick& p_ndc) {
+        MeshGrobTool::grab(p_ndc);
 
         // Step 1: pick edge (f1,c1) and determine opposite edge (f2,c2)
         
@@ -159,6 +161,7 @@ namespace OGF {
 
 
     void MeshGrobZipEdges::grab(const RayPick& p_ndc) {
+        MeshGrobTool::grab(p_ndc);
         index_t v = pick_vertex(p_ndc);
         if(v == NO_VERTEX) {
             return;
@@ -228,6 +231,7 @@ namespace OGF {
 
     
     void MeshGrobConnectEdges::grab(const RayPick& p_ndc) {
+        MeshGrobTool::grab(p_ndc);
         if(f_ == NO_FACET || c_ == NO_CORNER) {
             pick_facet_edge(p_ndc, f_, c_);
             
