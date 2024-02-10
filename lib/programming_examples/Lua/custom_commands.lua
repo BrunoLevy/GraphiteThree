@@ -45,6 +45,9 @@ end
 -- the vertices of a mesh.
 
 function randomize(args)
+
+    main.save_state() -- needed by undo()/redo() 
+
    -- get our OGF::MeshGrobCustomCommands
    -- (it is args.self)
    local cmd = args.self
@@ -160,6 +163,8 @@ scene_graph.register_grob_commands(gom.meta_types.OGF.MeshGrob,mclass)
 function create_shape(args) 
     print('create shape, args='..tostring(args))
     print('self='..tostring(args.self))
+
+    main.save_state() -- needed by undo()/redo() 
 
     local o = scene_graph.create_object({
         classname='OGF::MeshGrob',name=args.name

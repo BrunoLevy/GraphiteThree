@@ -231,6 +231,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       end
 
       if imgui.MenuItem(imgui.font_icon('clone')..'  duplicate') then
+         main.save_state()
          scene_graph.current_object = name
          local dup = scene_graph.duplicate_current()
          autogui.rename_old = dup.name
@@ -239,6 +240,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       end
       
       if imgui.MenuItem(imgui.font_icon('window-close')..'  delete') then
+         main.save_state()
          main.picked_grob = nil
          scene_graph.current_object = name
          scene_graph.delete_current_object()
@@ -525,6 +527,7 @@ function scene_graph_gui.draw()
 		  ImGuiInputTextFlags_AutoSelectAll
              )
 	     if sel then
+                main.save_state()             
 		scene_graph.current_object = name
 		local o = scene_graph.current()
 		o.rename(autogui.rename_new)

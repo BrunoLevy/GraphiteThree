@@ -270,6 +270,10 @@ namespace {
         Preferences::declare_preference_variable(
 	    "gui:undo", false, "Support undo for all commands"
 	);	    
+
+        Preferences::declare_preference_variable(
+	    "gui:undo_depth", 4, "number of memorized states for undo"
+	);	    
         
         Preferences::declare_preference_variable(
 	    "gfx:default_full_screen_effect", "Plain",

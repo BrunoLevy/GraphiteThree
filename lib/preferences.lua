@@ -219,6 +219,22 @@ preferences_window['draw_Appearance and rendering'] = function()
        'Enable undo (saves state before each command)', 'gui:undo'
    )
 
+   if gom.get_environment_value('gui:undo') == 'true' then
+      local undo_depth = tonumber(gom.get_environment_value('gui:undo_depth'))
+      if undo_depth == nil then
+         undo_depth = 4
+      end
+      imgui.Text('Undo depth')
+      imgui.SameLine()
+      local sel
+      imgui.PushItemWidth(-1)
+      sel,undo_depth = imgui.InputInt('##undo_depth',undo_depth)
+      imgui.PopItemWidth()
+      if sel then
+         gom.set_environment_value('gui:undo_depth',undo_depth)
+      end
+   end
+
 end
 
 -- \brief Draws the 'Startup' pane

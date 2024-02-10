@@ -65,7 +65,7 @@ namespace OGF {
 	progress_client_ = new ApplicationBaseProgressClient(this);
 	Logger::instance()->register_client(logger_client_);
 	Progress::set_client(progress_client_);
-        state_buffer_size_    = 4;
+        state_buffer_size_    = CmdLine::get_arg_uint("gui:undo_depth");
         state_buffer_begin_   = 0;
         state_buffer_end_     = 0;
         state_buffer_current_ = 0;
