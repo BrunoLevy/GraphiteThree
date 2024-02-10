@@ -157,6 +157,29 @@ function graphite_main_window.draw_contents()
      camera_gui.projection_dialog()
      imgui.EndPopup()
   end
+  if gom.get_environment_value('gui:undo') == 'true' then
+     imgui.Separator()
+     local ImGuiStyleVar_Alpha = 0
+     if(not main.can_undo) then
+        imgui.PushStyleVar(ImGuiStyleVar_Alpha, 0.3);
+     end
+     if imgui.Button(imgui.font_icon('undo')..' undo') then
+        main.undo()
+     end
+     if(not main.can_undo) then
+        imgui.PopStyleVar()
+     end
+     imgui.SameLine()
+     if(not main.can_redo) then
+        imgui.PushStyleVar(ImGuiStyleVar_Alpha, 0.3);
+     end
+     if imgui.Button(imgui.font_icon('redo')..' redo') then
+        main.redo();
+     end
+     if(not main.can_redo) then
+        imgui.PopStyleVar()
+     end
+  end  
   imgui.Separator()
   for index,module in ipairs(graphite_main_window.modules_by_index) do
      graphite_main_window.draw_module(module)

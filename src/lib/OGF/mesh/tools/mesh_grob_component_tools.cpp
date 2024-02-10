@@ -228,6 +228,7 @@ namespace {
 namespace OGF {
 
     void MeshGrobRemoveComponent::grab(const RayPick& p_ndc) {
+        MeshGrobTool::grab(p_ndc);
         vector<bool> v_is_picked;
         if(pick_component(this, p_ndc, v_is_picked)) {
             if(mesh_grob()->facets.nb() != 0) {
@@ -439,6 +440,7 @@ namespace OGF {
     /*********************************************************/
 
     void MeshGrobFlipComponent::grab(const RayPick& rp) {
+        MeshGrobTool::grab(rp);
 	index_t picked_facet = pick_facet(rp);
 	if(picked_facet != NO_CELL) {
 	    vector<bool> f_is_marked(mesh_grob()->facets.nb(), false);

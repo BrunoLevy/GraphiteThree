@@ -37,6 +37,7 @@
 #include <OGF/scene_graph/tools/tool.h>
 #include <OGF/scene_graph/tools/tools_manager.h>
 #include <OGF/scene_graph/types/scene_graph_tools_manager.h>
+#include <OGF/skin/types/application_base.h>
 
 namespace OGF {
 
@@ -47,6 +48,7 @@ namespace OGF {
     }
     
     void Tool::grab(const RayPick&) {
+        ApplicationBase::instance()->save_state();
     }
     
     void Tool::drag(const RayPick&) {

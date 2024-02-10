@@ -192,6 +192,7 @@ namespace OGF {
     }
 
     void MeshGrobTransformSubset::grab(const RayPick& p_ndc) {
+        MeshGrobTool::grab(p_ndc);
         transform_tool_->pick_subset(this, p_ndc);
     }
 

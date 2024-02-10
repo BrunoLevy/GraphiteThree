@@ -65,9 +65,25 @@ namespace OGF {
 	progress_client_ = new ApplicationBaseProgressClient(this);
 	Logger::instance()->register_client(logger_client_);
 	Progress::set_client(progress_client_);
+        state_buffer_size_    = 4;
+        state_buffer_begin_   = 0;
+        state_buffer_end_     = 0;
+        state_buffer_current_ = 0;
+        undo_redo_called_ = false;
     }
 
     ApplicationBase::~ApplicationBase() {
+        
+        // Cleanup saved states for undo and redo
+        if(Environment::instance()->get_value("gui:undo") == "true") {
+            for(index_t i=0; i<state_buffer_size_; ++i) {
+                std::string filename = state_buffer_filename(i);
+                if(FileSystem::is_file(filename)) {
+                    FileSystem::delete_file(filename);
+                }
+            }
+        }
+        
         geo_assert(instance_ == this);
 	if(logger_client_ != nullptr) {
 	    Logger::instance()->unregister_client(logger_client_);
@@ -177,14 +193,17 @@ namespace OGF {
     void ApplicationBase::update() {
     }
 
-    void ApplicationBase::save_state(const std::string& filename_in) {
+    
+    void ApplicationBase::save_state_to_file(const std::string& filename) {
         if(Environment::instance()->get_value("gui:undo") != "true") {
             return;
         }
-        std::string filename = filename_in;
-        if(filename == "") {
-            filename = "graphite_state.graphite";
+        // If latest command is undo or redo, state is already saved
+        if(undo_redo_called_) {
+            undo_redo_called_ = false;
+            return;
         }
+
         Object* scene_graph = interpreter()->resolve_object("scene_graph");
         if(scene_graph != nullptr) {
             ArgList args;
@@ -192,9 +211,8 @@ namespace OGF {
             scene_graph->invoke_method("save", args);
         }
     }
-
     
-    void ApplicationBase::restore_state(const std::string& filename) {
+    void ApplicationBase::load_state_from_file(const std::string& filename) {
         if(Environment::instance()->get_value("gui:undo") != "true") {
             return;
         }
@@ -203,7 +221,7 @@ namespace OGF {
                                << std::endl;
             return;
         }
-        
+
         Object* scene_graph = interpreter()->resolve_object("scene_graph");
         if(scene_graph != nullptr) {
             ArgList args;
@@ -213,27 +231,64 @@ namespace OGF {
         }
     }
 
+    std::string ApplicationBase::state_buffer_filename(index_t i) const {
+        return String::format("graphite_state_%0d.graphite",int(i));
+    }
 
-    void ApplicationBase::undo() {
-        if(!FileSystem::is_file("graphite_state.graphite")) {
-            Logger::err("undo") << "no saved state";
+    bool ApplicationBase::get_can_undo() const {
+        return (state_buffer_current_ != state_buffer_begin_);
+    }
+
+    bool ApplicationBase::get_can_redo() const {
+        return (state_buffer_current_ != state_buffer_end_);
+    }
+
+
+    void ApplicationBase::save_state() {
+        if(Environment::instance()->get_value("gui:undo") != "true") {
             return;
         }
-        save_state("graphite_undo_state.graphite");
-        restore_state("graphite_state.graphite");
-        FileSystem::delete_file("graphite_state.graphite");
+        
+        save_state_to_file(state_buffer_filename(state_buffer_current_));
+        state_buffer_current_ = (state_buffer_current_ + 1) % state_buffer_size_;
+        state_buffer_end_ = state_buffer_current_;
+        if(state_buffer_current_ == state_buffer_begin_) {
+            state_buffer_begin_ = (state_buffer_begin_+1) % state_buffer_size_;
+        }
+    }
+    
+    void ApplicationBase::undo() {
+        if(Environment::instance()->get_value("gui:undo") != "true") {
+            return;
+        }
+        if(!get_can_undo()) {
+            return;
+        }
+
+
+        // Make it possible to call redo()
+        if(state_buffer_current_ == state_buffer_end_) {
+            save_state_to_file(state_buffer_filename(state_buffer_current_));
+        }
+        
+        state_buffer_current_ =
+            (state_buffer_current_ + state_buffer_size_ - 1) % state_buffer_size_;
+        load_state_from_file(state_buffer_filename(state_buffer_current_));
+        undo_redo_called_ = true;
     }
 
     void ApplicationBase::redo() {
-        if(!FileSystem::is_file("graphite_undo_state.graphite")) {
-            Logger::err("redo") << "no saved state";
+        if(Environment::instance()->get_value("gui:undo") != "true") {
             return;
         }
-        save_state("graphite_state.graphite");        
-        restore_state("graphite_undo_state.graphite");
-        FileSystem::delete_file("graphite_undo_state.graphite");
+        if(!get_can_redo()) {
+            return;
+        }
+        state_buffer_current_ = (state_buffer_current_ + 1) % state_buffer_size_;
+        load_state_from_file(state_buffer_filename(state_buffer_current_));
+        undo_redo_called_ = true;
     }
-    
+
 /**************************************************************/
     
     ApplicationBase::
