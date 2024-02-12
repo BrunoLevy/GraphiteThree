@@ -432,15 +432,6 @@ function scene_graph_gui.scene_graph_menu(with_file_menu)
        imgui.Separator()
        scene_graph_gui.file_menu()
     end
-    if gom.get_environment_value('gui:undo') == 'true' then
-        imgui.Separator()
-        if imgui.MenuItem(imgui.font_icon('undo')..' undo') then
-           main.undo()
-        end
-        if imgui.MenuItem(imgui.font_icon('redo')..' redo') then
-           main.redo();
-        end
-    end
 end
 
 -- \brief Handles the scene-graph operations menu
