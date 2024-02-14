@@ -1199,7 +1199,8 @@ function autogui.command_menu_item(object,mmethod,object_as_string)
           mmethod.name
       ) then
          main.exec_command(
-             object_as_string..'.'..mmethod.name..'()', false
+             object_as_string..'.'..mmethod.name..
+             '({_invoked_from_gui=true})', false
           )
       end
       autogui.tooltip(autogui.help(mmethod))
