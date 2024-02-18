@@ -56,7 +56,7 @@ namespace OGF {
         ogf_declare_builtin_type<void>("void");
         ogf_declare_builtin_type<bool>("bool");
         ogf_declare_builtin_type<int>("int");
-        ogf_declare_builtin_type<long>("long");	
+        ogf_declare_builtin_type<long>("long");
         ogf_declare_builtin_type<unsigned int>("unsigned int");
         ogf_declare_builtin_type<unsigned long>("unsigned long");
         ogf_declare_builtin_type<float>("float");	
@@ -71,6 +71,18 @@ namespace OGF {
         ogf_declare_builtin_type<index_t>("OGF::index_t");
         ogf_declare_builtin_type<size_t>("size_t");        
 
+        ogf_declare_builtin_type<Numeric::uint8>("Numeric::uint8");
+        ogf_declare_builtin_type<Numeric::int8>("Numeric::int8");	
+        ogf_declare_builtin_type<Numeric::uint16>("Numeric::uint16");
+        ogf_declare_builtin_type<Numeric::int16>("Numeric::int16");	
+        ogf_declare_builtin_type<Numeric::uint32>("Numeric::uint32");
+        ogf_declare_builtin_type<Numeric::int32>("Numeric::int32");
+        ogf_declare_builtin_type<Numeric::uint64>("Numeric::uint64");
+        ogf_declare_builtin_type<Numeric::int64>("Numeric::int64");	
+        ogf_declare_builtin_type<Numeric::float32>("Numeric::float32");
+        ogf_declare_builtin_type<Numeric::float64>("Numeric::float64");	
+
+        
         //_____________________________________________________________
 
         Module* module_info = new Module ;

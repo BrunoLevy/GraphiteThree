@@ -266,6 +266,91 @@ namespace OGF {
     bool MeshGrob::serialize_write(OutputGraphiteFile& geofile) {
         return mesh_save(*this, geofile); 
     }
+
+
+    std::string MeshGrob::list_attributes(
+        const std::string& localisations_in,
+        const std::string& types_in,
+        const std::string& dims_in
+    ) {
+        std::string all_attributes = get_attributes();
+        if(localisations_in == "" && types_in == "" && dims_in == "") {
+            return all_attributes;
+        }
+
+        std::vector<std::string> localisations;
+        String::split_string(localisations_in,';',localisations);
+
+        std::vector<std::string> types;
+        String::split_string(types_in,';',types);
+
+        std::vector<std::string> dims;
+        String::split_string(dims_in,';',dims);
+
+        
+        std::vector<std::string> attributes;
+        String::split_string(all_attributes,';',attributes);
+        std::string result;
+        for(const std::string& full_attribute_name: attributes) {
+            MeshElementsFlags where;
+            std::string attribute_name;
+            index_t component;
+            Mesh::parse_attribute_name(
+                full_attribute_name, where, attribute_name, component
+            );
+
+            MeshSubElementsStore& subelements = get_subelements_by_type(where);
+
+            AttributeStore* attribute_store =
+                subelements.attributes().find_attribute_store(attribute_name);
+
+            if(attribute_store == nullptr) {
+                std::cerr << "nil attr: " << full_attribute_name << std::endl;
+                continue;
+            }
+            
+            bool localisation_ok = (localisations_in == "");
+            for(const std::string& localisation: localisations) {
+                if(Mesh::subelements_type_to_name(where) == localisation) {
+                    localisation_ok = true;
+                    break;
+                }
+            }
+            
+            bool type_ok = (types_in == "");
+            for(const std::string& type: types) {
+                MetaType* mtype = Meta::instance()->resolve_meta_type(type);
+                if(mtype == nullptr) {
+                    std::cerr << "nil type: " << type << std::endl;
+                    continue;
+                }
+                if(
+                    attribute_store->elements_type_matches(mtype->typeid_name())
+                ) {
+                    type_ok = true;
+                    break;
+                }
+            }
+            
+            bool dim_ok = (dims_in == "");
+            for(const std::string& dim: dims) {
+                if(String::to_string(attribute_store->dimension()) == dim) {
+                    dim_ok = true;
+                    break;
+                }
+            }
+
+            if(localisation_ok && type_ok && dim_ok) {
+                if(result != "") {
+                    result += ";";
+                }
+                result += full_attribute_name;
+            }
+            
+        }
+
+        return result;
+    }
     
 }
 

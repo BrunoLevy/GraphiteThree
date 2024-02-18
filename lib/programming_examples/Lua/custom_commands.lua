@@ -41,6 +41,11 @@ function foobar2(args)
     print('self='..tostring(args.self))
 end
 
+function foobar3(args)
+    print('foobar3 args='..tostring(args))
+    print('self='..tostring(args.self))
+end
+
 -- This function applies random perturbations to
 -- the vertices of a mesh.
 
@@ -126,6 +131,20 @@ mfoobar2.add_arg('x',gom.meta_types.double,1)
 mfoobar2.add_arg('y',gom.meta_types.double,2)
 mfoobar2.add_arg('z',gom.meta_types.double,3)
 mfoobar2.create_custom_attribute('menu','Foobars')
+
+-- And another command, with a parameter that selects attributes attached to facets
+mfoobar3 = mclass.add_slot('foobar3', foobar3)
+mfoobar3.add_arg('attribute', gom.meta_types.std.string)
+mfoobar3.create_arg_custom_attribute('attribute','handler','combo_box')
+-- It means we want to see a pulldown menu with all the facet attributes of
+-- type uint8 or type uint32 of dimension 1
+-- For each parameter, you can use a ';'-separated list of alternatives
+-- or "" to say that you accept anything. 
+mfoobar3.create_arg_custom_attribute(
+    'attribute','values',
+    '$grob.list_attributes("facets","Numeric::uint8;Numeric::uint32","1")'
+)
+
 
 -- And finally our 'randomize' command
 mrandomize = mclass.add_slot('randomize', randomize)
@@ -257,4 +276,5 @@ scene_graph.register_grob_commands(gom.meta_types.OGF.SceneGraph, mclass)
 -- Your new command classes are a "citizen" of the Graphite Object Model,
 -- with the same "rights" as the ones implemented in C++ (can be scripted
 -- and invoked from the gui)
+
 

@@ -139,6 +139,21 @@ namespace OGF {
          *  name is prefixed by the subelement is is bound to.
          */
         std::string get_filters() const;
+
+    gom_slots:
+        /**
+         * \brief Gets the list of attributes
+         * \param[in] localisations  ';'-separated list of dimensions
+         * \param[in] types optional ';'-separated list of types
+         * \param[in] dims  optional ';'-separated list of dimensions
+         * \return ';'-separated list of attributes
+         */
+        std::string list_attributes(
+            const std::string& localisations="",
+            const std::string& types="",
+            const std::string& dims=""
+        );
+
         
     public:
         /**
