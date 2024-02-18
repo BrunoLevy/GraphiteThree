@@ -861,7 +861,7 @@ namespace OGF {
 	if(glupCurrentContext() == nullptr) {
 	    return;
 	}
-	glsl_start_time_ = SystemStopwatch::now();
+	glsl_start_time_ = Stopwatch::now();
 	glsl_frame_ = 0;
 	GEO_CHECK_GL();
 	if(glsl_program_ != 0) {
@@ -961,7 +961,7 @@ namespace OGF {
 	GLint iTime_loc = glGetUniformLocation(glsl_program_, "iTime");
 	if(iTime_loc != -1) {
 	    glUniform1f(
-		iTime_loc, float(SystemStopwatch::now() - glsl_start_time_)
+		iTime_loc, float(Stopwatch::now() - glsl_start_time_)
 	    );
 	    update();
 	}

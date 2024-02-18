@@ -172,7 +172,7 @@ namespace OGF {
 
                 std::string full_name =
                     meta_class()->name() + "::" + method_name ;
-                SystemStopwatch timer ;
+                Stopwatch timer ;
                 Logger::out("timings")
                     << "(" << full_name << ") starting ..." << std::endl ;
                 bool result = Interface::invoke_method(
@@ -180,7 +180,7 @@ namespace OGF {
                 ) ;
                 Logger::out("timings")
                     << "(" << full_name << ") Elapsed time: " 
-                    << timer.elapsed_user_time() << std::endl ;
+                    << timer.elapsed_time() << std::endl ;
 
 		// TODO: re-enable changing current object here.
 
