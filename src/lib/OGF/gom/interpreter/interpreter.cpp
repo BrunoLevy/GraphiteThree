@@ -56,8 +56,8 @@ namespace OGF {
 	globals_ = new GlobalScope(this);
         MetaTypesScope* meta_types = new MetaTypesScope();
         MetaTypesScope* OGF = meta_types->create_subscope("OGF");
-        OGF->create_subscope("Numeric");
         OGF->create_subscope("NL");
+        OGF->create_subscope("Numeric");
         meta_types->create_subscope("std");
         meta_types_ = meta_types;
     }

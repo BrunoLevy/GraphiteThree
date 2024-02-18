@@ -138,11 +138,13 @@ mfoobar3.add_arg('attribute', gom.meta_types.std.string)
 mfoobar3.create_arg_custom_attribute('attribute','handler','combo_box')
 -- It means we want to see a pulldown menu with all the facet attributes of
 -- type uint8 or type uint32 of dimension 1
+-- (Note: for boolean attributes, use uint8, it is how they are stored
+--  internally)
 -- For each parameter, you can use a ';'-separated list of alternatives
 -- or "" to say that you accept anything. 
 mfoobar3.create_arg_custom_attribute(
     'attribute','values',
-    '$grob.list_attributes("facets","Numeric::uint8;Numeric::uint32","1")'
+    '$grob.list_attributes("facets","OGF::Numeric::uint8;OGF::Numeric::uint32","1")'
 )
 
 

@@ -71,16 +71,16 @@ namespace OGF {
         ogf_declare_builtin_type<index_t>("OGF::index_t");
         ogf_declare_builtin_type<size_t>("size_t");        
 
-        ogf_declare_builtin_type<Numeric::uint8>("Numeric::uint8");
-        ogf_declare_builtin_type<Numeric::int8>("Numeric::int8");	
-        ogf_declare_builtin_type<Numeric::uint16>("Numeric::uint16");
-        ogf_declare_builtin_type<Numeric::int16>("Numeric::int16");	
-        ogf_declare_builtin_type<Numeric::uint32>("Numeric::uint32");
-        ogf_declare_builtin_type<Numeric::int32>("Numeric::int32");
-        ogf_declare_builtin_type<Numeric::uint64>("Numeric::uint64");
-        ogf_declare_builtin_type<Numeric::int64>("Numeric::int64");	
-        ogf_declare_builtin_type<Numeric::float32>("Numeric::float32");
-        ogf_declare_builtin_type<Numeric::float64>("Numeric::float64");	
+        ogf_declare_builtin_type<Numeric::uint8>("OGF::Numeric::uint8");
+        ogf_declare_builtin_type<Numeric::int8>("OGF::Numeric::int8");	
+        ogf_declare_builtin_type<Numeric::uint16>("OGF::Numeric::uint16");
+        ogf_declare_builtin_type<Numeric::int16>("OGF::Numeric::int16");	
+        ogf_declare_builtin_type<Numeric::uint32>("OGF::Numeric::uint32");
+        ogf_declare_builtin_type<Numeric::int32>("OGF::Numeric::int32");
+        ogf_declare_builtin_type<Numeric::uint64>("OGF::Numeric::uint64");
+        ogf_declare_builtin_type<Numeric::int64>("OGF::Numeric::int64");	
+        ogf_declare_builtin_type<Numeric::float32>("OGF::Numeric::float32");
+        ogf_declare_builtin_type<Numeric::float64>("OGF::Numeric::float64");	
 
         
         //_____________________________________________________________
