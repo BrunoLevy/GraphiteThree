@@ -158,6 +158,11 @@ namespace OGF {
          * \menu Facets
          */
         void select_duplicated_facets();
+
+        /**
+         * \brief Selects the facets incident to the border
+         */
+        void select_facets_on_border();
         
         /**
          * \brief Selects facets that have all their vertices selected

@@ -549,6 +549,22 @@ namespace OGF {
 	mesh_grob()->update();
     }
     
+    void MeshGrobSelectionsCommands::select_facets_on_border() {
+        Attribute<bool> selection(mesh_grob()->facets.attributes(), "selection");
+        for(index_t f: mesh_grob()->facets) {
+            selection[f] = false;
+        }
+        for(index_t f: mesh_grob()->facets) {
+            for(index_t le=0; le<mesh_grob()->facets.nb_vertices(f); ++le) {
+                if(mesh_grob()->facets.adjacent(f,le) == NO_INDEX) {
+                    selection[f] = true;
+                }
+            }
+        }
+        show_facets_selection();        
+	mesh_grob()->update();
+    }
+
     void MeshGrobSelectionsCommands::show_cells_selection() {
         Attribute<bool> sel(mesh_grob()->cells.attributes(),"selection");
         show_attribute("cells.selection");
