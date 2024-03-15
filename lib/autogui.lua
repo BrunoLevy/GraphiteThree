@@ -440,7 +440,9 @@ autogui.colormaps = {
   {'random', false},
   {'blue_red', false},
   {'blue_white', false},
-  {'transparent', false}
+  {'black-blue-white', false},
+  {'transparent', false},
+  {'grayscale', true}
 }
 
 -- \brief Edits a colormap name
