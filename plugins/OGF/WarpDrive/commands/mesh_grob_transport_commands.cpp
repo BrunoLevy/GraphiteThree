@@ -3253,4 +3253,26 @@ namespace OGF {
 	mesh_grob()->update();
     }
 
+    void MeshGrobTransportCommands::extract_trajectories() {
+        if(mesh_grob()->vertices.dimension() != 6) {
+            Logger::err("Transport") << "Mesh has no trajectory data"
+                                     << std::endl;
+            return;
+        }
+        MeshGrob* trajectories = MeshGrob::find_or_create(scene_graph(),"trajectories");
+        trajectories->clear();
+        trajectories->vertices.set_dimension(3);
+        for(index_t v: mesh_grob()->vertices) {
+            vec3 p1(mesh_grob()->vertices.point_ptr(v));
+            vec3 p2(mesh_grob()->vertices.point_ptr(v)+3);
+            trajectories->vertices.create_vertex(p1.data());
+            trajectories->vertices.create_vertex(p2.data());
+            trajectories->edges.create_edge(
+                trajectories->vertices.nb()-2,
+                trajectories->vertices.nb()-1
+            );
+        }
+        trajectories->update();
+    }
+    
 }

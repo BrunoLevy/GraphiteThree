@@ -685,6 +685,12 @@ namespace OGF {
 	 */
 	void normalize_transported_volume();
 
+	/**
+	 * \menu Post-processing
+	 * \brief For tet6 files, extract trajectories
+	 */
+	void extract_trajectories();
+        
 
         /**
 	 * \menu Pre-processing
