@@ -95,8 +95,8 @@ namespace OGF {
         );
 
         float pw = float(
-            point_weight_ / (
-                4.0 * pow(double(mesh_grob()->vertices.nb()), 0.333)
+            20.0 *point_weight_ / (
+                pow(double(mesh_grob()->vertices.nb()), 0.666)
             )
         );
 
@@ -221,7 +221,7 @@ namespace OGF {
             for(int dx = -int(point_size_); dx <= int(point_size_); ++dx) {
                 for(int dy = -int(point_size_); dy <= int(point_size_); ++dy) {
                     float r = ::sqrtf(float(dx*dx)+float(dy*dy));
-                    point_weights_.push_back(r <= R ? r : 0.0f);
+                    point_weights_.push_back(r <= R ? R-r : 0.0f);
                 }
             }
             float S = 0;

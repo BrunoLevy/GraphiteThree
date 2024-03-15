@@ -99,11 +99,11 @@ namespace OGF {
             return colormap_style_;
         }
 
-        void set_lockz(bool x) {
+        void set_lock_slab(bool x) {
             lock_z_ = x;
         }
 
-        bool get_lockz() const {
+        bool get_lock_slab() const {
             return lock_z_;
         }
         
