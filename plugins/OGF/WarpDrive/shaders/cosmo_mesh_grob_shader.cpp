@@ -42,20 +42,26 @@
 #include <OGF/WarpDrive/shaders/cosmo_mesh_grob_shader.h>
 #include <OGF/renderer/context/rendering_context.h>
 #include <OGF/gom/interpreter/interpreter.h>
+#include <OGF/basic/os/file_manager.h>
+#include <geogram/image/image_library.h>
 
 namespace OGF {
 
     CosmoMeshGrobShader::CosmoMeshGrobShader(
         OGF::MeshGrob* grob
     ) : MeshGrobShader(grob) {
-        point_size_ = 0.5;
+        point_size_ = 0;
+        point_weight_ = 50.0;
+        log_  = 0.0;
         minx_ = 0.0;
         miny_ = 0.0;
         minz_ = 0.0;
         maxx_ = 1.0;
         maxy_ = 1.0;
         maxz_ = 1.0;
+        lock_z_ = false;
         texture_ = 0;
+        colormap_style_.colormap_name = "inferno";
     }
         
     CosmoMeshGrobShader::~CosmoMeshGrobShader() {
@@ -73,45 +79,85 @@ namespace OGF {
     }
 
     void CosmoMeshGrobShader::draw_points() {
-        FOR(y, image_->height()) {
-            FOR(x, image_->width()) {
-                Memory::byte* p = image_->pixel_base(x,y);
-                p[0] = 0;
-                p[1] = 0;
-                p[2] = 0;
-                p[3] = 255;
-            }
-        }
-        for(index_t v: mesh_grob()->vertices) {
-            const double* p = mesh_grob()->vertices.point_ptr(v);
 
-            if(
-                p[0] < minx_ || p[0] > maxx_ ||
-                p[1] < miny_ || p[1] > maxy_ ||
-                p[2] < minz_ || p[2] > maxz_
-            ) {
-                continue;
-            }
+        if(colormap_image_.is_null()) {
+            std::string filename =
+                "icons/colormaps/" +
+                std::string(colormap_style_.colormap_name) + ".xpm" ;
+            FileManager::instance()->find_file(filename) ;
+            colormap_image_ = ImageLibrary::instance()->load_image(filename) ;
+        }
+        
+        Memory::clear(
+            intensity_image_->base_mem(),
+            sizeof(float) *
+            intensity_image_->width()*intensity_image_->height()
+        );
+
+        float pw = float(
+            point_weight_ / (
+                4.0 * pow(double(mesh_grob()->vertices.nb()), 0.333)
+            )
+        );
+
+        parallel_for(
+            0, mesh_grob()->vertices.nb(),
+            [&](index_t v) {
+                const double* p = mesh_grob()->vertices.point_ptr(v);
+                if(
+                    p[0] < minx_ || p[0] > maxx_ ||
+                    p[1] < miny_ || p[1] > maxy_ ||
+                    p[2] < minz_ || p[2] > maxz_
+                ) {
+                    return;
+                }
                
             
-            double X,Y,Z;
-            glupProject(
-                p[0], p[1], p[2],
-                modelview_,
-                project_,
-                viewport_,
-                &X, &Y, &Z
-            );
-            if(
-                X >= 0.0 && X < double(image_->width()-1) &&
-                Y >= 0.0 && Y < double(image_->width()-1)
-            ) {
-                Memory::byte* p = image_->pixel_base(index_t(X),index_t(Y));
-                ++p[0];
-                ++p[1];
-                ++p[2];
+                double X,Y,Z;
+                glupProject(
+                    p[0], p[1], p[2],
+                    modelview_,
+                    project_,
+                    viewport_,
+                    &X, &Y, &Z
+                );
+
+                if(point_size_ == 0) {
+                    splat(X,Y,pw);
+                } else {
+                    auto it = point_weights_.begin();
+                    int D = int(point_size_);
+                    for(int dx = -D; dx <= D; ++dx) {
+                        for(int dy = -D; dy <= D; ++dy) {
+                            splat(X+double(dx), Y+double(dy), (*it++)*pw);
+                        }
+                    }
+                }
             }
-        }
+        );
+
+        parallel_for(
+            0, image_->height(),
+            [&](index_t y) {
+                FOR(x, image_->width()) {
+                    float g = *intensity_image_->pixel_base_float32_ptr(x,y);
+                    geo_clamp(g, 0.0f, 1.0f);
+                    if(log_ != 0.0 && g != 0.0f) {
+                        g = logf(g * float(log_)+1.0f) / logf(float(log_+1.0));
+                    }
+                    if(colormap_style_.flip) {
+                        g = 1.0f - g;
+                    }
+                    index_t G = index_t(g*float(colormap_image_->width()-1));
+                    Memory::byte* p = image_->pixel_base(x,y);
+                    Numeric::uint8* rgb = colormap_image_->pixel_base(G,0);
+                    p[0] = rgb[0];
+                    p[1] = rgb[1];
+                    p[2] = rgb[2];
+                    p[3] = 255;
+                }
+            }
+        );
     }
 
     void CosmoMeshGrobShader::create_or_resize_image_if_needed() {
@@ -132,6 +178,7 @@ namespace OGF {
 	   image_->width() != w ||
 	   image_->height() != h
 	) {
+            intensity_image_ = new Image(Image::GRAY, Image::FLOAT32, w, h);
 	    image_ = new Image(Image::RGBA, Image::BYTE, w, h);
 	}
     }
@@ -164,6 +211,28 @@ namespace OGF {
 	draw_unit_textured_quad();
 	glDisable(GL_BLEND);
 	glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+    void CosmoMeshGrobShader::set_s(index_t size) {
+        point_weights_.resize(0);
+        point_size_ = size;
+        if(size > 0) {
+            float R = float(point_size_);
+            for(int dx = -int(point_size_); dx <= int(point_size_); ++dx) {
+                for(int dy = -int(point_size_); dy <= int(point_size_); ++dy) {
+                    float r = ::sqrtf(float(dx*dx)+float(dy*dy));
+                    point_weights_.push_back(r <= R ? r : 0.0f);
+                }
+            }
+            float S = 0;
+            for(float w: point_weights_) {
+                S += w;
+            }
+            for(float& w: point_weights_) {
+                w /= S;
+            }
+        }
+        update();
     }
     
 }

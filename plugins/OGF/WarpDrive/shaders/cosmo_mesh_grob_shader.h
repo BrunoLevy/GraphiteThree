@@ -59,25 +59,121 @@ namespace OGF {
 
     gom_properties:
 
+        void set_s(index_t size);
+
+        index_t get_s() const {
+            return point_size_;
+        }
+        
 	gom_attribute(handler, "slider_int")
 	gom_attribute(min, "0")
 	gom_attribute(max, "100")
-        void set_psize(index_t point_size) {
-            point_size_ = double(point_size)/100.0;
+        void set_w(index_t point_weight) {
+            point_weight_ = double(point_weight);
             update();
         }
 
-        index_t get_psize() const {
-            return index_t(point_size_ * 100.0);
+        index_t get_w() const {
+            return index_t(point_weight_);
         }
-        
+
+	gom_attribute(handler, "slider_int")
+	gom_attribute(min, "0")
+	gom_attribute(max, "300")
+        void set_log(index_t x) {
+            log_ = double(x);
+            update();
+        }
+
+        index_t get_log() const {
+            return index_t(log_);
+        }
+
         void set_colormap(const ColormapStyle& x) {
             colormap_style_ = x;
+            colormap_image_.reset();
             update();
         }
 
         const ColormapStyle& get_colormap() const {
             return colormap_style_;
+        }
+
+        void set_lockz(bool x) {
+            lock_z_ = x;
+        }
+
+        bool get_lockz() const {
+            return lock_z_;
+        }
+        
+	gom_attribute(handler, "slider_int")
+	gom_attribute(min, "0")
+	gom_attribute(max, "100")
+        void set_minz(double minz) {
+            double d = maxz_ - minz_;
+            minz_ = double(minz)/100.0;    
+            maxz_ = std::max(maxz_, minz_);
+            if(lock_z_) {
+                maxz_ = minz_ + d;
+                if(maxz_ > 1.0) {
+                    minz_ -= (maxz_ - 1.0);
+                    maxz_ = 1.0;
+                }
+            }
+            update();
+        }
+
+        index_t get_minz() const {
+            return index_t(minz_*100.0);
+        }
+
+
+	gom_attribute(handler, "slider_int")
+	gom_attribute(min, "0")
+	gom_attribute(max, "100")
+        void set_maxz(double maxz) {
+            double d = maxz_ - minz_;
+            maxz_ = double(maxz)/100.0;
+            minz_ = std::min(minz_, maxz_);
+            if(lock_z_) {
+                minz_ = maxz_ - d;
+                if(minz_ < 0.0) {
+                    maxz_ -= minz_;
+                    minz_ = 0.0;
+                }
+            }
+            update();
+        }
+
+        index_t get_maxz() const {
+            return index_t(maxz_*100.0);
+        }
+
+	gom_attribute(handler, "slider_int")
+	gom_attribute(min, "0")
+	gom_attribute(max, "100")
+        void set_miny(double miny) {
+            miny_ = double(miny)/100.0;
+            maxy_ = std::max(maxy_, miny_);
+            update();
+        }
+
+        index_t get_miny() const {
+            return index_t(miny_*100.0);
+        }
+
+	gom_attribute(handler, "slider_int")
+	gom_attribute(min, "0")
+	gom_attribute(max, "100")
+        void set_maxy(double maxy) {
+            maxy_ = double(maxy)/100.0;
+            miny_ = std::min(miny_, maxy_);
+            update();
+        }
+
+        index_t get_maxy() const {
+            return index_t(maxy_*100.0);
         }
         
 	gom_attribute(handler, "slider_int")
@@ -106,61 +202,6 @@ namespace OGF {
             return index_t(maxx_*100.0);
         }
 
-	gom_attribute(handler, "slider_int")
-	gom_attribute(min, "0")
-	gom_attribute(max, "100")
-        void set_miny(double miny) {
-            miny_ = double(miny)/100.0;
-            maxy_ = std::max(maxy_, miny_);
-            update();
-        }
-
-        index_t get_miny() const {
-            return index_t(miny_*100.0);
-        }
-
-
-	gom_attribute(handler, "slider_int")
-	gom_attribute(min, "0")
-	gom_attribute(max, "100")
-        void set_maxy(double maxy) {
-            maxy_ = double(maxy)/100.0;
-            miny_ = std::min(miny_, maxy_);
-            update();
-        }
-
-        index_t get_maxy() const {
-            return index_t(maxy_*100.0);
-        }
-
-	gom_attribute(handler, "slider_int")
-	gom_attribute(min, "0")
-	gom_attribute(max, "100")
-        void set_minz(double minz) {
-            minz_ = double(minz)/100.0;
-            maxz_ = std::max(maxz_, minz_);
-            update();
-        }
-
-        index_t get_minz() const {
-            return index_t(minz_*100.0);
-        }
-
-
-	gom_attribute(handler, "slider_int")
-	gom_attribute(min, "0")
-	gom_attribute(max, "100")
-        void set_maxz(double maxz) {
-            maxz_ = double(maxz)/100.0;
-            minz_ = std::min(minz_, maxz_);
-            update();
-        }
-
-        index_t get_maxz() const {
-            return index_t(maxz_*100.0);
-        }
-        
-
     protected:
         /**
 	 * \brief Creates the image the first time, then resizes it 
@@ -183,19 +224,54 @@ namespace OGF {
          * \brief Draws the points to the image
          */
         void draw_points();
+
+        void splat(int u, int v, float val) {
+            if(
+                u < 0 || u >= int(intensity_image_->width()) ||
+                v < 0 || v >= int(intensity_image_->height())
+            ) {
+                return;
+            }
+            *intensity_image_->pixel_base_float32_ptr(index_t(u),index_t(v))
+                += val;
+        }
+
+        void splat(double u, double v, float val) {
+            int iu = int(u);
+            int iv = int(v);
+            if(colormap_style_.smooth) {
+                float uu = float(u - floor(u));
+                float uv = float(v - floor(v));
+                float lu = 1.0f - uu;
+                float lv = 1.0f - uv;
+                splat(iu,iv,lu*lv*val);
+                splat(iu+1,iv,uu*lv*val);
+                splat(iu,iv+1,lu*uv*val);
+                splat(iu+1,iv+1,uu*uv*val);
+            } else {
+                splat(iu,iv,val);
+            }
+        }
+
         
     private:
-        double point_size_;
+        index_t point_size_;
+        vector<float> point_weights_;
+        double point_weight_;
+        double log_;
         ColormapStyle colormap_style_;
-        double minx_;
-        double miny_;
+        Image_var colormap_image_;
+        bool lock_z_;
         double minz_;
-        double maxx_;
-        double maxy_;
         double maxz_;
+        double miny_;
+        double maxy_;
+        double minx_;
+        double maxx_;
         GLUPdouble modelview_[16];
         GLUPdouble project_[16];
         GLUPint viewport_[4];
+        Image_var intensity_image_;
         Image_var image_;        
         GLuint texture_;
     };
