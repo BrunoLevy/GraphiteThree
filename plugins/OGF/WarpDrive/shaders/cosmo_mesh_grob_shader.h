@@ -49,6 +49,10 @@ namespace OGF {
 
     /**
      * \brief A shader to display cosmological simulations
+     * \details Displays a pointset as a density field by
+     *  accumulating point splats in software. Multithreaded 
+     *  to keep interactivity reasonable. Lags a bit starting
+     *  from a few tenth million points.
      */
     gom_class WarpDrive_API CosmoMeshGrobShader : public MeshGrobShader {
     public:
@@ -59,9 +63,9 @@ namespace OGF {
 
     gom_properties:
 
-        void set_s(index_t size);
+        void set_splat_size(index_t size);
 
-        index_t get_s() const {
+        index_t get_splat_size() const {
             return point_size_;
         }
         
@@ -225,6 +229,12 @@ namespace OGF {
          */
         void draw_points();
 
+        /**
+         * \brief Accumulates a point in the floating point image
+         * \param[in] u , v the integer coordinates of the points,
+         *  in 0 .. width-1, 1 .. height-1
+         * \param[in] val the floating-point value to be accumulated
+         */
         void splat(int u, int v, float val) {
             if(
                 u < 0 || u >= int(intensity_image_->width()) ||
@@ -236,6 +246,13 @@ namespace OGF {
                 += val;
         }
 
+        /**
+         * \brief Accumulates a point in the floating point image, and
+         *  does sub-pixel interpolation
+         * \param[in] u , v the floating-point coordinates of the points,
+         *  in 0 .. width-1, 1 .. height-1
+         * \param[in] val the floating-point value to be accumulated
+         */
         void splat(double u, double v, float val) {
             int iu = int(u);
             int iv = int(v);

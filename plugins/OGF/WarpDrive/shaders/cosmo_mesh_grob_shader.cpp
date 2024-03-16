@@ -80,6 +80,7 @@ namespace OGF {
 
     void CosmoMeshGrobShader::draw_points() {
 
+        // Get colormap image 
         if(colormap_image_.is_null()) {
             std::string filename =
                 "icons/colormaps/" +
@@ -87,23 +88,28 @@ namespace OGF {
             FileManager::instance()->find_file(filename) ;
             colormap_image_ = ImageLibrary::instance()->load_image(filename) ;
         }
-        
+
+        // Clear floating point image
         Memory::clear(
             intensity_image_->base_mem(),
             sizeof(float) *
             intensity_image_->width()*intensity_image_->height()
         );
 
+        // Scale point weight according to number of points in mesh
         float pw = float(
             20.0 *point_weight_ / (
                 pow(double(mesh_grob()->vertices.nb()), 0.666)
             )
         );
 
+        // Splat the points into the floating-point image
         parallel_for(
             0, mesh_grob()->vertices.nb(),
             [&](index_t v) {
                 const double* p = mesh_grob()->vertices.point_ptr(v);
+
+                // Discard points outside of selection window
                 if(
                     p[0] < minx_ || p[0] > maxx_ ||
                     p[1] < miny_ || p[1] > maxy_ ||
@@ -111,17 +117,17 @@ namespace OGF {
                 ) {
                     return;
                 }
-               
-            
+
+                // Project points onto image, using modelview, projection
+                // and viewport transform read from GLUP
                 double X,Y,Z;
                 glupProject(
                     p[0], p[1], p[2],
-                    modelview_,
-                    project_,
-                    viewport_,
+                    modelview_, project_, viewport_,
                     &X, &Y, &Z
                 );
 
+                // Splat point onto floating point image
                 if(point_size_ == 0) {
                     splat(X,Y,pw);
                 } else {
@@ -136,6 +142,8 @@ namespace OGF {
             }
         );
 
+        // Map the floating-point image to colors (could be done by GPU
+        // in a shader, but well, it is easier to do that here)
         parallel_for(
             0, image_->height(),
             [&](index_t y) {
@@ -213,7 +221,23 @@ namespace OGF {
 	glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-    void CosmoMeshGrobShader::set_s(index_t size) {
+    /**
+     * \brief Smoothstep from 0 to R as a function of r
+     * \return R if r = 0, 0 if r >= R, and a smooth
+     *  interpolation inbetween.
+     */
+    static inline float smoothstep(float r, float R) {
+        if(r > R) {
+            return 0.0;
+        }
+        float x = r/R;
+        return R*(1.0f-x*x*(3.0f-2.0f*x));
+    }
+    
+    void CosmoMeshGrobShader::set_splat_size(index_t size) {
+        // Computes splatting weights.
+        // Used splat is a little radial smoothstep function
+        // (cubic interpolation)
         point_weights_.resize(0);
         point_size_ = size;
         if(size > 0) {
@@ -221,7 +245,7 @@ namespace OGF {
             for(int dx = -int(point_size_); dx <= int(point_size_); ++dx) {
                 for(int dy = -int(point_size_); dy <= int(point_size_); ++dy) {
                     float r = ::sqrtf(float(dx*dx)+float(dy*dy));
-                    point_weights_.push_back(r <= R ? R-r : 0.0f);
+                    point_weights_.push_back(smoothstep(r,R));
                 }
             }
             float S = 0;
