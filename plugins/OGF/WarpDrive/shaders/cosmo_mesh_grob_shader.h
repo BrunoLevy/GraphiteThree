@@ -217,8 +217,13 @@ namespace OGF {
 	 * \brief Gets the viewing parameters from the current GLUP state.
 	 * \details Gets the viewport, modelview and projection matrices.
 	 */
-	void update_viewing_parameters();
-
+	void get_viewing_parameters();
+        
+        /**
+         * \brief Restores viewing parameters after 2d image was drawn.
+         */
+        void restore_viewing_parameters();
+        
 	/**
 	 * \brief Draws the generated image on the screen.
 	 */

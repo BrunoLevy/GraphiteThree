@@ -702,7 +702,13 @@ namespace OGF {
 	    double R1 = 0.0,
 	    index_t nb_rings = 0
 	);
-	
+
+        /**
+         * \menu IO
+         * \brief Loads a file in Hydra file format
+         */
+        void load_Hydra(const FileName& filename);
+        
     };
 }
 

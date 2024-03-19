@@ -73,9 +73,10 @@ namespace OGF {
 
     void CosmoMeshGrobShader::draw() {
         create_or_resize_image_if_needed();
-	update_viewing_parameters();
+	get_viewing_parameters();
 	draw_points();
 	draw_image();
+        restore_viewing_parameters();
     }
 
     void CosmoMeshGrobShader::draw_points() {
@@ -191,10 +192,18 @@ namespace OGF {
 	}
     }
 
-    void CosmoMeshGrobShader::update_viewing_parameters() {
+    void CosmoMeshGrobShader::get_viewing_parameters() {
 	glGetIntegerv(GL_VIEWPORT, viewport_);
 	glupGetMatrixdv(GLUP_MODELVIEW_MATRIX, modelview_);
 	glupGetMatrixdv(GLUP_PROJECTION_MATRIX, project_);
+    }
+
+    void CosmoMeshGrobShader::restore_viewing_parameters() {
+        glViewport(viewport_[0], viewport_[1], viewport_[2], viewport_[3]);
+        glupMatrixMode(GLUP_PROJECTION_MATRIX);
+        glupLoadMatrixd(project_);
+        glupMatrixMode(GLUP_MODELVIEW_MATRIX);
+        glupLoadMatrixd(modelview_);
     }
 
     void CosmoMeshGrobShader::draw_image() {
@@ -218,6 +227,7 @@ namespace OGF {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	draw_unit_textured_quad();
 	glDisable(GL_BLEND);
+        glEnable(GL_DEPTH_TEST);
 	glBindTexture(GL_TEXTURE_2D, 0);
     }
 

@@ -3259,7 +3259,8 @@ namespace OGF {
                                      << std::endl;
             return;
         }
-        MeshGrob* trajectories = MeshGrob::find_or_create(scene_graph(),"trajectories");
+        MeshGrob* trajectories =
+            MeshGrob::find_or_create(scene_graph(),"trajectories");
         trajectories->clear();
         trajectories->vertices.set_dimension(3);
         for(index_t v: mesh_grob()->vertices) {
@@ -3274,5 +3275,72 @@ namespace OGF {
         }
         trajectories->update();
     }
-    
+}
+
+namespace {
+
+    static Numeric::uint32 record_marker;
+    Numeric::uint32 begin_fortran_record(FILE* f) {
+        fread(&record_marker, sizeof(Numeric::uint32), 1, f);
+        return record_marker;
+    }
+
+    Numeric::uint32 end_fortran_record(FILE* f) {
+        Numeric::uint32 check;
+        fread(&check, sizeof(Numeric::uint32), 1, f);
+        if(check != record_marker) {
+            fprintf(
+                stderr,"invalid FORTRAN record: expected %d got %d\n",
+                record_marker, check
+            );
+            exit(0);
+        }
+        return check;
+    }
+
+    Numeric::uint32 skip_fortran_record(FILE* f) {
+        Numeric::uint32 size = begin_fortran_record(f);
+        fseek(f, size, SEEK_CUR);
+        return end_fortran_record(f);
+    }
+}
+
+namespace OGF {
+    void MeshGrobTransportCommands::load_Hydra(const FileName& filename) {
+        mesh_grob()->clear();
+
+        FILE* f = fopen(std::string(filename).c_str(),"rb");
+        if (f==nullptr) {
+            Logger::err("Hydra") << "Can't open " << filename << std::endl;
+            return;
+        }
+
+        Logger::out("Hydra") << "read version" << std::endl;
+        skip_fortran_record(f); // version1 version2 version3
+        Logger::out("Hydra") << "read ibuf" << std::endl;
+        skip_fortran_record(f); // ibuf1[100] ibuf2[100] ibuf3[200]
+        
+        Logger::out("Hydra") << "read itype" << std::endl;
+        index_t NPART = index_t(skip_fortran_record(f)/sizeof(Numeric::uint32));
+        Logger::out("Hydra") <<  "  nb particles=" << NPART << std::endl;
+
+        mesh_grob()->vertices.set_dimension(3);
+        mesh_grob()->vertices.create_vertices(NPART);
+        
+        Logger::out("Hydra") << "read rm" << std::endl;
+        skip_fortran_record(f); // rm
+        
+        Logger::out("Hydra") << "read r" << std::endl;   
+        begin_fortran_record(f);
+        for(index_t i=0; i<NPART; ++i) {
+            float xyz[3];
+            fread(xyz, sizeof(float), 3, f);
+            mesh_grob()->vertices.point_ptr(i)[0] = double(xyz[0]);
+            mesh_grob()->vertices.point_ptr(i)[1] = double(xyz[1]);
+            mesh_grob()->vertices.point_ptr(i)[2] = double(xyz[2]);
+        }
+        end_fortran_record(f);
+        fclose(f);
+    }
+
 }
