@@ -3281,26 +3281,35 @@ namespace {
 
     static Numeric::uint32 record_marker;
     Numeric::uint32 begin_fortran_record(FILE* f) {
-        fread(&record_marker, sizeof(Numeric::uint32), 1, f);
+        if(fread(&record_marker, sizeof(Numeric::uint32), 1, f) != 1) {
+            throw(std::logic_error("begin_fortran_record(): fread() error"));
+        }
         return record_marker;
     }
 
     Numeric::uint32 end_fortran_record(FILE* f) {
         Numeric::uint32 check;
-        fread(&check, sizeof(Numeric::uint32), 1, f);
+        if(fread(&check, sizeof(Numeric::uint32), 1, f) != 1) {
+            throw(std::logic_error("end_fortran_record(): fread() error"));
+        }
         if(check != record_marker) {
-            fprintf(
-                stderr,"invalid FORTRAN record: expected %d got %d\n",
-                record_marker, check
+            throw(
+                std::logic_error(
+                    String::format(
+                        "invalid FORTRAN record: expected %d got %d",
+                        record_marker,check
+                    )
+                )
             );
-            exit(0);
         }
         return check;
     }
 
     Numeric::uint32 skip_fortran_record(FILE* f) {
         Numeric::uint32 size = begin_fortran_record(f);
-        fseek(f, size, SEEK_CUR);
+        if(fseek(f, size, SEEK_CUR) != 0) {
+            throw(std::logic_error("skip_fortran_record(): fseek() error"));
+        }
         return end_fortran_record(f);
     }
 }
@@ -3315,32 +3324,44 @@ namespace OGF {
             return;
         }
 
-        Logger::out("Hydra") << "read version" << std::endl;
-        skip_fortran_record(f); // version1 version2 version3
-        Logger::out("Hydra") << "read ibuf" << std::endl;
-        skip_fortran_record(f); // ibuf1[100] ibuf2[100] ibuf3[200]
-        
-        Logger::out("Hydra") << "read itype" << std::endl;
-        index_t NPART = index_t(skip_fortran_record(f)/sizeof(Numeric::uint32));
-        Logger::out("Hydra") <<  "  nb particles=" << NPART << std::endl;
-
-        mesh_grob()->vertices.set_dimension(3);
-        mesh_grob()->vertices.create_vertices(NPART);
-        
-        Logger::out("Hydra") << "read rm" << std::endl;
-        skip_fortran_record(f); // rm
-        
-        Logger::out("Hydra") << "read r" << std::endl;   
-        begin_fortran_record(f);
-        for(index_t i=0; i<NPART; ++i) {
-            float xyz[3];
-            fread(xyz, sizeof(float), 3, f);
-            mesh_grob()->vertices.point_ptr(i)[0] = double(xyz[0]);
-            mesh_grob()->vertices.point_ptr(i)[1] = double(xyz[1]);
-            mesh_grob()->vertices.point_ptr(i)[2] = double(xyz[2]);
+        try {
+            Logger::out("Hydra") << "read version" << std::endl;
+            skip_fortran_record(f); // version1 version2 version3
+            Logger::out("Hydra") << "read ibuf" << std::endl;
+            skip_fortran_record(f); // ibuf1[100] ibuf2[100] ibuf3[200]
+            
+            Logger::out("Hydra") << "read itype" << std::endl;
+            index_t NPART =
+                index_t(skip_fortran_record(f)/sizeof(Numeric::uint32));
+            Logger::out("Hydra") <<  "  nb particles=" << NPART << std::endl;
+            
+            mesh_grob()->vertices.set_dimension(3);
+            mesh_grob()->vertices.create_vertices(NPART);
+            
+            Logger::out("Hydra") << "read rm" << std::endl;
+            skip_fortran_record(f); // rm
+            
+            Logger::out("Hydra") << "read r" << std::endl;   
+            begin_fortran_record(f);
+            for(index_t i=0; i<NPART; ++i) {
+                float xyz[3];
+                if(fread(xyz, sizeof(float), 3, f) != 3) {
+                    throw(std::logic_error("error while reading rm"));
+                }
+                mesh_grob()->vertices.point_ptr(i)[0] = double(xyz[0]);
+                mesh_grob()->vertices.point_ptr(i)[1] = double(xyz[1]);
+                mesh_grob()->vertices.point_ptr(i)[2] = double(xyz[2]);
+            }
+            end_fortran_record(f);
+            fclose(f);
+        } catch(std::logic_error& err) {
+            Logger::err("Hydra") << err.what() << std::endl;
+            return;
         }
-        end_fortran_record(f);
-        fclose(f);
+
+        if(mesh_grob()->get_shader() != nullptr) {
+            mesh_grob()->set_shader("Cosmo");
+        }
     }
 
 }
