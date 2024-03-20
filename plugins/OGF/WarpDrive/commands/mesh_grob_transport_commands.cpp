@@ -3364,4 +3364,44 @@ namespace OGF {
         }
     }
 
+
+    void MeshGrobTransportCommands::create_box() {
+        MeshGrob* box = MeshGrob::find_or_create(scene_graph(), "box");
+        box->clear();
+
+        double x1 = 0.0;
+        double y1 = 0.0;
+        double z1 = 0.0;
+
+        double x2 = 1.0;
+        double y2 = 1.0;
+        double z2 = 1.0;
+        
+        index_t v0 = box->vertices.create_vertex(vec3(x1,y1,z1).data());
+        index_t v1 = box->vertices.create_vertex(vec3(x1,y1,z2).data());
+        index_t v2 = box->vertices.create_vertex(vec3(x1,y2,z1).data());
+        index_t v3 = box->vertices.create_vertex(vec3(x1,y2,z2).data());
+        index_t v4 = box->vertices.create_vertex(vec3(x2,y1,z1).data());
+        index_t v5 = box->vertices.create_vertex(vec3(x2,y1,z2).data());
+        index_t v6 = box->vertices.create_vertex(vec3(x2,y2,z1).data());        
+        index_t v7 = box->vertices.create_vertex(vec3(x2,y2,z2).data());
+
+        box->facets.create_quad(v3,v7,v6,v2);
+        box->facets.create_quad(v0,v1,v3,v2);
+        box->facets.create_quad(v1,v5,v7,v3);
+        box->facets.create_quad(v5,v4,v6,v7);
+        box->facets.create_quad(v0,v4,v5,v1);
+        box->facets.create_quad(v2,v6,v4,v0);
+
+        box->facets.connect();
+
+        
+        Shader* shd = box->get_shader();
+        if(shd != nullptr) {
+            shd->set_property("surface_style", "true;0 0 0 0");
+            shd->set_property("mesh_style", "true;1 1 1;3");
+            shd->set_property("culling_mode","CULL_BACK");
+        }
+    }
+
 }

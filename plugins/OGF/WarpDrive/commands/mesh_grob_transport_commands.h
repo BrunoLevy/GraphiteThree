@@ -704,10 +704,17 @@ namespace OGF {
 	);
 
         /**
-         * \menu IO
+         * \menu Cosmo
          * \brief Loads a file in Hydra file format
          */
         void load_Hydra(const FileName& filename);
+
+        /**
+         * \menu Cosmo
+         * \brief Creates a box
+         */
+        void create_box();
+
         
     };
 }
