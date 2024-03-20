@@ -81,6 +81,9 @@ namespace OGF {
 
     void CosmoMeshGrobShader::draw_points() {
 
+        std::cerr << project_[15] << std::endl;
+        std::cerr << modelview_[15] << std::endl;
+        
         // Get colormap image 
         if(colormap_image_.is_null()) {
             std::string filename =
@@ -104,6 +107,10 @@ namespace OGF {
             )
         );
 
+        // Scale point weight according to window size and zooming factor
+        pw *= float(geo_sqr(double(viewport_[3]/1000.0)/double(modelview_[15])));
+
+        
         // Splat the points into the floating-point image
         parallel_for(
             0, mesh_grob()->vertices.nb(),
