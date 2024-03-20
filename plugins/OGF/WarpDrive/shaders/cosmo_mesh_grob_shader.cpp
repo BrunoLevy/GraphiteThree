@@ -81,9 +81,6 @@ namespace OGF {
 
     void CosmoMeshGrobShader::draw_points() {
 
-        std::cerr << project_[15] << std::endl;
-        std::cerr << modelview_[15] << std::endl;
-        
         // Get colormap image 
         if(colormap_image_.is_null()) {
             std::string filename =
