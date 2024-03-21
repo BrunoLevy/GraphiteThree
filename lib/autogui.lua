@@ -1437,7 +1437,20 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
          scene_graph.current_object = current_bkp
       end
       autogui.tooltip('Applies graphic attributes to all objects')      
-   end   
+   end
+   if is_shader then
+      imgui.Separator()
+      if imgui.Button(
+        imgui.font_icon('check')..      
+        "  Apply to visible".."##ops##"..name,-1,autogui.icon_size()+6
+      ) then
+         local current_bkp = scene_graph.current_object
+         scene_graph.current_object = name
+         scene_graph.scene_graph_shader_manager.apply_to_scene_graph(true)
+         scene_graph.current_object = current_bkp
+      end
+      autogui.tooltip('Applies graphic attributes to visible objects only')
+   end
    
    autogui.property_editor_state[k].width_,
    autogui.property_editor_state[k].height_ = imgui.GetWindowSize()

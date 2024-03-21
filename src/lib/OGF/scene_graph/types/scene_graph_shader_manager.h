@@ -147,7 +147,7 @@ namespace OGF {
          *  other Shaders in the SceneGraph associated with objects
          *  that have the same class as the current object.
          */
-        void apply_to_scene_graph();
+        void apply_to_scene_graph(bool visible_only = false);
 
         /**
          * \brief Gets the shader of the current object.
