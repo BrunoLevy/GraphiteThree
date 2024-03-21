@@ -3277,83 +3277,291 @@ namespace OGF {
     }
 }
 
+/****************** class to read Fortran files ****************************/
+
 namespace {
 
-    static Numeric::uint32 record_marker;
-    Numeric::uint32 begin_fortran_record(FILE* f) {
-        if(fread(&record_marker, sizeof(Numeric::uint32), 1, f) != 1) {
-            throw(std::logic_error("begin_fortran_record(): fread() error"));
-        }
-        return record_marker;
-    }
+    /**
+     * \brief Class to load data from Fortran files
+     * \details Fortran files are organized into records. Each record
+     *  corresponds to a WRITE statement in format. Each record starts
+     *  and ends with a record marker, that contains the length of the
+     *  record, in bytes, encoded as a 32 bits integer.
+     */
+    class FortranFile {
+    public:
 
-    Numeric::uint32 end_fortran_record(FILE* f) {
-        Numeric::uint32 check;
-        if(fread(&check, sizeof(Numeric::uint32), 1, f) != 1) {
-            throw(std::logic_error("end_fortran_record(): fread() error"));
+        /**
+         * \brief FortranFile constructor
+         * \param[in] filename the file to be read
+         * \details Throws an exception if file cannot be opened
+         */
+        FortranFile(const std::string &filename) {
+            f_ = fopen(filename.c_str(),"rb");
+            if(f_ == nullptr) {
+                throw(std::logic_error(
+                          "FortranFile: could not open " + filename
+                ));
+            }
+            record_size_ = 0;
         }
-        if(check != record_marker) {
-            throw(
-                std::logic_error(
-                    String::format(
-                        "invalid FORTRAN record: expected %d got %d",
-                        record_marker,check
+
+        /**
+         * \brief FortranFile destructor
+         */
+        ~FortranFile() {
+            if(f_ != nullptr) {
+                fclose(f_);
+                f_ = nullptr;
+            }
+        }
+
+        /**
+         * \brief Forbids copy
+         */
+        FortranFile(const FortranFile&) = delete;
+
+        /**
+         * \brief Forbids copy
+         */
+        FortranFile& operator=(const FortranFile&) = delete;
+
+        /**
+         * \brief Tests whether a record is open
+         * \details A record is open if we are between a begin_record()
+         *  and end_record() call
+         * \retval true if a record is open
+         * \retval false otherwise
+         */
+        bool record_is_open() const {
+            return record_size_ != 0;
+        }
+        
+        /**
+         * \brief Opens a FORTRAN record, and reads record size.
+         * \return the length of the record, in bytes
+         * \pre !record_is_open()
+         */
+        Numeric::uint32 begin_record() {
+            geo_assert(!record_is_open());
+            if(fread(&record_size_, sizeof(Numeric::uint32), 1, f_) != 1) {
+                throw(std::logic_error(
+                          "FortranFile::begin_record(): fread() error"
+                ));
+            }
+            record_start_pos_ = size_t(ftell(f_));
+            return record_size_;
+        }
+
+        /**
+         * \brief Closes a FORTRAN record
+         * \details Tests whether the record markers match. Throws an
+         *  exception if it is not the case.
+         * \return the length of the record, in bytes
+         * \pre record_is_open()
+         */
+        Numeric::uint32 end_record() {
+            geo_assert(record_is_open());
+            Numeric::uint32 check;
+            if(fread(&check, sizeof(Numeric::uint32), 1, f_) != 1) {
+                throw(std::logic_error(
+                          "FortranFile::end_record(): fread() error"
+                ));
+            }
+            if(check != record_size_) {
+                throw(
+                    std::logic_error(
+                        String::format(
+                            "invalid FORTRAN record size:expected %d got %d",
+                            record_size_, check
+                        )
                     )
-                )
-            );
+                );
+            }
+            record_size_= 0;
+            return check;
         }
-        return check;
-    }
 
-    Numeric::uint32 skip_fortran_record(FILE* f) {
-        Numeric::uint32 size = begin_fortran_record(f);
-        if(fseek(f, size, SEEK_CUR) != 0) {
-            throw(std::logic_error("skip_fortran_record(): fseek() error"));
+        /**
+         * \brief Skips the contents of the currently open record and
+         *  closes it
+         * \return the length of the record in bytes
+         * \pre record_is_open()
+         */
+        Numeric::uint32 skip_end_record() {
+            geo_assert(record_is_open());
+            if(
+                fseek(
+                    f_, (long int)(record_start_pos_+record_size_), SEEK_SET
+                ) != 0
+            ) {
+                throw(std::logic_error(
+                          "FortranFile::skip_end_record(): fseek() error"
+                ));
+            }
+            return end_record();
         }
-        return end_fortran_record(f);
-    }
+
+        /**
+         * \brief Opens, skips and closes a record.
+         * \pre !record_is_open()
+         */
+        Numeric::uint32 skip_record() {
+            begin_record();
+            return skip_end_record();
+        }
+
+        /**
+         * \brief Reads data of arbitrary type
+         */
+        template <class T> void read(T& out) {
+            if(fread(&out, sizeof(T), 1, f_) != 1) {
+                throw(std::logic_error(
+                          "FortranFile::read(): fread() error"
+                ));
+            }
+        }
+        
+    private:
+        FILE* f_;
+        Numeric::uint32 record_size_;
+        size_t record_start_pos_;
+    };
 }
+
+/************************************************************************/
+
 
 namespace OGF {
     void MeshGrobTransportCommands::load_Hydra(const FileName& filename) {
+        
         mesh_grob()->clear();
 
-        FILE* f = fopen(std::string(filename).c_str(),"rb");
-        if (f==nullptr) {
-            Logger::err("Hydra") << "Can't open " << filename << std::endl;
-            return;
-        }
-
         try {
-            Logger::out("Hydra") << "read version" << std::endl;
-            skip_fortran_record(f); // version1 version2 version3
-            Logger::out("Hydra") << "read ibuf" << std::endl;
-            skip_fortran_record(f); // ibuf1[100] ibuf2[100] ibuf3[200]
+            FortranFile in(filename);
+            
+            {
+                Logger::out("Hydra") << "read version" << std::endl;
+                in.begin_record();
+                int32_t ver[3];
+                in.read(ver);
+                in.end_record();
+                Logger::out("Hydra") << String::format(" - Hydra v %d.%d%d",ver[0], ver[1], ver[2])
+                                     << std::endl;
+            }
+
+
+            {
+                Logger::out("Hydra") << "read ibuf" << std::endl;
+
+                struct {
+                    union {
+                        int32_t I[100];
+                        struct {
+                            int32_t itime;    /**< timestep */
+                            int32_t itstop;   /**< timestep to stop at */
+                            int32_t itdump;   /**< dump (ie backup) every itdump timesteps */
+                            int32_t itout;    /**< next timestep to output results at */
+                            float time;       /**< simulation time */
+                            float atime;      /**< expansion factor */
+                            float htime;      /**< Hubble parameter */
+                            float dtime;      /**< current timestep */
+                            float Est;        /**< start energy */
+                            float T;          /**< kinetic energy */
+                            float Th;         /**< thermal energy */
+                            float U;          /**< potential energy */
+                            float Radiation;  /**< radiated energy */
+                            float Esum;       /**< energy integral */
+                            float Rsum;       /**< total radiated energy */
+                            float cputo;      /**< cpu time */
+                            float tstop;      /**< time to stop at */
+                            float tout;       /**< next time to output result at */
+                            int32_t icdump;   /**< index of list of requested output times, tout1 */
+                            int32_t pad1;     /**< padding */
+                            float Tlost;      /**< kinetic energy of escaping particles */
+                            float Qlost;      /**< thermal energy of escaping particles */
+                            float Ulost;      /**< potential energy of escaping particles */
+                            int32_t pad2;     /**< padding */
+                            float soft2;      /**< current Plummer softening squared */
+                            float dta;        /**< minimum timestepfrom acceleration */
+                            float dtcs;       /**< minimum timestep from sound speed */
+                            float dtv;        /**< minimum timestep from velocity */
+                        } d;
+                    };
+                } ibuf1;
+
+                struct {
+                    union {
+                        int32_t I[100];
+                        struct {
+                            int32_t irun;   /**< run number */
+                            int32_t nobj;   /**< total number of particles */
+                            int32_t ngas;   /**< number of gas particles (MUST BE FIRST IN LIST) */
+                            int32_t ndark;  /**< number of dark matter particles */
+                            int32_t intl;   /**< must be 0 (1 for interlacing) */
+                            int32_t nlmx;   /**< maximum number of refinement levels */
+                            float perr;     /**< percentage error for gravity, use 7.7 or 2.0 */
+                            float dtnorm;   /**< mult for tstep, use 1 unless prticles go haywire */
+                            float sft0;     /**< z=0 softening */
+                            float sftmin;   /**< minimum softening */
+                            float sftmax;   /**< maximum softening */
+                            int32_t pad3;   /**< padding */
+                            float h100;     /**< Hubble parameter in units of 100 km/s/Mpc */
+                            float box100;   /**< z=0 boxsize in Mpc/h100 */
+                            float zmet0;    /**< metallicity of gas relative to solar, if const */
+                            float lcool;    /**< cooling switch (1=on) */
+                            float rmbary;   /**< baryonic particle mass (grid units) */
+                            float rmnorm0;  /**< intermediate in normalisation of gravity force */
+                            int32_t pad4;   /**< padding */
+                            int32_t pad5;   /**< padding */
+                            float tstart;   /**< time of initial conditions */
+                            float omega0;   /**< z=0 value of omega */
+                            float xlambda0; /**< z=0 value of lambda */
+                            float h0t0;     /**< z=0 value of Hubble param times age of universe */
+                            float rcen[3];  /**< middle of the box in input co-ordinates */
+                            float rmax2;    /**< sq of max dist from ctr in isolated simulations */
+                        } d;
+                    };
+                } ibuf2;
+                
+
+                struct {
+                    union {
+                        int32_t I[200];
+                        struct {
+                            float tout1[50]; /**< list of desired output times */
+                        } d;
+                    };
+                } ibuf3;
+
+                in.begin_record();
+                in.read(ibuf1);
+                in.read(ibuf2);
+                in.read(ibuf3);
+                in.end_record();
+            }
             
             Logger::out("Hydra") << "read itype" << std::endl;
             index_t NPART =
-                index_t(skip_fortran_record(f)/sizeof(Numeric::uint32));
+                index_t(in.skip_record()/sizeof(Numeric::uint32));
             Logger::out("Hydra") <<  "  nb particles=" << NPART << std::endl;
             
             mesh_grob()->vertices.set_dimension(3);
             mesh_grob()->vertices.create_vertices(NPART);
             
             Logger::out("Hydra") << "read rm" << std::endl;
-            skip_fortran_record(f); // rm
+            in.skip_record(); // rm
             
             Logger::out("Hydra") << "read r" << std::endl;   
-            begin_fortran_record(f);
+            in.begin_record();
             for(index_t i=0; i<NPART; ++i) {
-                float xyz[3];
-                if(fread(xyz, sizeof(float), 3, f) != 3) {
-                    throw(std::logic_error("error while reading rm"));
+                float p[3];
+                in.read(p);
+                for(index_t coord=0; coord<3; ++coord) {
+                    mesh_grob()->vertices.point_ptr(i)[coord] = double(p[coord]);
                 }
-                mesh_grob()->vertices.point_ptr(i)[0] = double(xyz[0]);
-                mesh_grob()->vertices.point_ptr(i)[1] = double(xyz[1]);
-                mesh_grob()->vertices.point_ptr(i)[2] = double(xyz[2]);
             }
-            end_fortran_record(f);
-            fclose(f);
+            in.end_record();
         } catch(std::logic_error& err) {
             Logger::err("Hydra") << err.what() << std::endl;
             return;
@@ -3383,7 +3591,7 @@ namespace OGF {
         index_t v3 = box->vertices.create_vertex(vec3(x1,y2,z2).data());
         index_t v4 = box->vertices.create_vertex(vec3(x2,y1,z1).data());
         index_t v5 = box->vertices.create_vertex(vec3(x2,y1,z2).data());
-        index_t v6 = box->vertices.create_vertex(vec3(x2,y2,z1).data());        
+        index_t v6 = box->vertices.create_vertex(vec3(x2,y2,z1).data());
         index_t v7 = box->vertices.create_vertex(vec3(x2,y2,z2).data());
 
         box->facets.create_quad(v3,v7,v6,v2);
