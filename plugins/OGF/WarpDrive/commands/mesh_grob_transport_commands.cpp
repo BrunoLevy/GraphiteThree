@@ -35,7 +35,11 @@
  *  following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
+#ifdef __GNUC__
+#pragma GCC diagnostic ignored "-Wdouble-promotion"
+#endif
+
 #include <OGF/WarpDrive/commands/mesh_grob_transport_commands.h>
 #include <OGF/WarpDrive/algo/VSDM.h>
 
@@ -3450,10 +3454,8 @@ namespace OGF {
                                      << std::endl;
             }
 
-
+            index_t NPART = 0; // number of particles
             {
-                Logger::out("Hydra") << "read ibuf" << std::endl;
-
                 struct {
                     union {
                         int32_t I[100];
@@ -3532,22 +3534,54 @@ namespace OGF {
                             float tout1[50]; /**< list of desired output times */
                         } d;
                     };
-                } ibuf3;
+                } ibuf;
 
+                Logger::out("Hydra") << "read ibuf1,ibuf2,ibuf3" << std::endl;
                 in.begin_record();
+
+                in.read(ibuf);
                 in.read(ibuf1);
                 in.read(ibuf2);
-                in.read(ibuf3);
+
+                Logger::out("Hydra") << String::format(" - irun    =%d",ibuf2.d.irun)     << std::endl;
+                Logger::out("Hydra") << String::format(" - nobj    =%d",ibuf2.d.nobj)     << std::endl;
+                Logger::out("Hydra") << String::format(" - ngas    =%d",ibuf2.d.ngas)     << std::endl;
+                Logger::out("Hydra") << String::format(" - ndark   =%d",ibuf2.d.ndark)    << std::endl;
+                Logger::out("Hydra") << String::format(" - h100    =%f",ibuf2.d.h100)     << std::endl;
+                Logger::out("Hydra") << String::format(" - box100  =%f",ibuf2.d.box100)   << std::endl;
+                Logger::out("Hydra") << String::format(" - tstart  =%f",ibuf2.d.tstart)   << std::endl;
+                Logger::out("Hydra") << String::format(" - omega0  =%f",ibuf2.d.omega0)   << std::endl;
+                Logger::out("Hydra") << String::format(" - xlambda0=%f",ibuf2.d.xlambda0) << std::endl;
+                Logger::out("Hydra") << String::format(" - h0t0    =%f",ibuf2.d.h0t0)     << std::endl;
+                
+                Logger::out("Hydra") << String::format(" - itime =%d",ibuf1.d.itime)  << std::endl;
+                Logger::out("Hydra") << String::format(" - itstop=%d",ibuf1.d.itstop) << std::endl;
+                Logger::out("Hydra") << String::format(" - itdump=%d",ibuf1.d.itdump) << std::endl;
+                Logger::out("Hydra") << String::format(" - itout =%d",ibuf1.d.itout)  << std::endl;
+
+                Logger::out("Hydra") << String::format(" -  time =%f",ibuf1.d.time)   << std::endl;
+                Logger::out("Hydra") << String::format(" - atime =%f",ibuf1.d.atime)  << std::endl;
+                Logger::out("Hydra") << String::format(" - htime =%f",ibuf1.d.htime)  << std::endl;
+                Logger::out("Hydra") << String::format(" - dtime =%f",ibuf1.d.dtime)  << std::endl;
+
+                Logger::out("Hydra") << String::format(" - tstop =%f",ibuf1.d.tstop)  << std::endl;
+                Logger::out("Hydra") << String::format(" - tout  =%f",ibuf1.d.tout)   << std::endl;
+                Logger::out("Hydra") << String::format(" - icdump=%d",ibuf1.d.icdump) << std::endl;
+                
                 in.end_record();
+                
+                NPART = index_t(ibuf2.d.nobj);
             }
-            
-            Logger::out("Hydra") << "read itype" << std::endl;
-            index_t NPART =
-                index_t(in.skip_record()/sizeof(Numeric::uint32));
-            Logger::out("Hydra") <<  "  nb particles=" << NPART << std::endl;
-            
+
+            Logger::out("Hydra") <<  " ---> nb particles=" << NPART << std::endl;
             mesh_grob()->vertices.set_dimension(3);
             mesh_grob()->vertices.create_vertices(NPART);
+            
+            Logger::out("Hydra") << "read itype" << std::endl;
+            if(index_t(in.skip_record()/sizeof(Numeric::uint32)) != NPART) {
+                throw(std::logic_error("Invalid itype size"));
+            }
+            
             
             Logger::out("Hydra") << "read rm" << std::endl;
             in.skip_record(); // rm
