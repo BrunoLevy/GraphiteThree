@@ -3,8 +3,8 @@
  * Bruno Levy, March 2024
  */
 
-#ifndef H_OGF_HYDRA_H
-#define H_OGF_HYDRA_H
+#ifndef H_READ_HYDRA_H
+#define H_READ_HYDRA_H
 
 #include <stdint.h>
 #include <stdio.h>
@@ -13,6 +13,10 @@
 #include <cstdio>
 #include <cstring>
 #include <cassert>
+
+#ifndef READ_HYDRA_LIB_ONLY
+#define WITH_READ_HYDRA
+#endif
 
 #ifdef WITH_READ_HYDRA
 #define geo_assert(x) assert(x)

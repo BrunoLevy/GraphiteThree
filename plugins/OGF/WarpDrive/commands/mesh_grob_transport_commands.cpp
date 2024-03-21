@@ -42,7 +42,9 @@
 
 #include <OGF/WarpDrive/commands/mesh_grob_transport_commands.h>
 #include <OGF/WarpDrive/algo/VSDM.h>
-#include <OGF/WarpDrive/IO/hydra.h>
+
+#define READ_HYDRA_LIB_ONLY
+#include <OGF/WarpDrive/IO/read_hydra.h>
 
 #include <exploragram/optimal_transport/sampling.h>
 #include <exploragram/optimal_transport/optimal_transport_3d.h>
@@ -3352,7 +3354,49 @@ namespace OGF {
         }
     }
 
+    void MeshGrobTransportCommands::load_binary(const FileName& filename) {
+        try {
+            FILE* f = fopen(std::string(filename).c_str(),"rb");
+            if(f == nullptr) {
+                throw(std::logic_error(
+                          "Could not open " + std::string(filename)
+                ));
+            }
+            
+            fseek(f, 0L, SEEK_END);
+            size_t filesize = size_t(ftell(f));
+            rewind(f);
 
+            if(filesize % 12 != 0) {
+                throw(std::logic_error("Invalid file size"));
+            }
+
+            index_t N = index_t(filesize/12);
+
+            mesh_grob()->clear();
+            mesh_grob()->vertices.set_dimension(3);
+            mesh_grob()->vertices.create_vertices(N);
+            for(index_t i=0; i<N; ++i) {
+                float xyz[3];
+                if(fread(xyz, sizeof(xyz), 1, f) != 1) {
+                    throw(std::logic_error("Error while reading file"));
+                }
+                mesh_grob()->vertices.point_ptr(i)[0] = double(xyz[0]);
+                mesh_grob()->vertices.point_ptr(i)[1] = double(xyz[1]);
+                mesh_grob()->vertices.point_ptr(i)[2] = double(xyz[2]);
+            }
+            
+            fclose(f);
+        } catch (std::logic_error& err) {
+            Logger::err("Cosmo") << err.what() << std::endl;
+            return;
+        }
+        
+        if(mesh_grob()->get_shader() != nullptr) {
+            mesh_grob()->set_shader("Cosmo");
+        }
+    }
+    
     void MeshGrobTransportCommands::create_box() {
         MeshGrob* box = MeshGrob::find_or_create(scene_graph(), "box");
         box->clear();

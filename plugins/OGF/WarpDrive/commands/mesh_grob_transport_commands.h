@@ -711,6 +711,12 @@ namespace OGF {
 
         /**
          * \menu /Cosmo
+         * \brief Loads a flat floating point binary file
+         */
+        void load_binary(const FileName& filename);
+        
+        /**
+         * \menu /Cosmo
          * \brief Creates a box
          */
         void create_box();
