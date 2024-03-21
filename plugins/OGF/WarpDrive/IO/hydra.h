@@ -1,0 +1,313 @@
+/*
+ * C++ classes for loading Hydra binary files
+ * Bruno Levy, March 2024
+ */
+
+#ifndef H_OGF_HYDRA_H
+#define H_OGF_HYDRA_H
+
+#include <stdint.h>
+#include <stdio.h>
+#include <string>
+
+namespace GEO {
+
+    /******************************************************************/
+    
+    /**
+     * \brief Class to load data from Fortran files
+     * \details Fortran files are organized into records. Each record
+     *  corresponds to a WRITE statement in format. Each record starts
+     *  and ends with a record marker, that contains the length of the
+     *  record, in bytes, encoded as a 32 bits integer.
+     */
+    class FortranFile {
+    public:
+
+        /**
+         * \brief FortranFile constructor
+         * \param[in] filename the file to be read
+         * \details Throws an exception if file cannot be opened
+         */
+        FortranFile(const std::string &filename) {
+            f_ = fopen(filename.c_str(),"rb");
+            if(f_ == nullptr) {
+                throw(std::logic_error(
+                          "FortranFile: could not open " + filename
+                ));
+            }
+            record_size_ = 0;
+        }
+
+        /**
+         * \brief FortranFile destructor
+         */
+        ~FortranFile() {
+            if(f_ != nullptr) {
+                fclose(f_);
+                f_ = nullptr;
+            }
+        }
+
+        /**
+         * \brief Forbids copy
+         */
+        FortranFile(const FortranFile&) = delete;
+
+        /**
+         * \brief Forbids copy
+         */
+        FortranFile& operator=(const FortranFile&) = delete;
+
+        /**
+         * \brief Tests whether a record is open
+         * \details A record is open if we are between a begin_record()
+         *  and end_record() call
+         * \retval true if a record is open
+         * \retval false otherwise
+         */
+        bool record_is_open() const {
+            return record_size_ != 0;
+        }
+        
+        /**
+         * \brief Opens a FORTRAN record, and reads record size.
+         * \return the length of the record, in bytes
+         * \pre !record_is_open()
+         */
+        uint32_t begin_record() {
+            geo_assert(!record_is_open());
+            if(fread(&record_size_, sizeof(uint32_t), 1, f_) != 1) {
+                throw(std::logic_error(
+                          "FortranFile::begin_record(): fread() error"
+                ));
+            }
+            record_start_pos_ = size_t(ftell(f_));
+            return record_size_;
+        }
+
+        /**
+         * \brief Closes a FORTRAN record
+         * \details Tests whether the record markers match. Throws an
+         *  exception if it is not the case.
+         * \return the length of the record, in bytes
+         * \pre record_is_open()
+         */
+        uint32_t end_record() {
+            geo_assert(record_is_open());
+            uint32_t check;
+            if(fread(&check, sizeof(uint32_t), 1, f_) != 1) {
+                throw(std::logic_error(
+                          "FortranFile::end_record(): fread() error"
+                ));
+            }
+            if(check != record_size_) {
+                throw(
+                    std::logic_error(
+                        String::format(
+                            "invalid FORTRAN record size:expected %d got %d",
+                            record_size_, check
+                        )
+                    )
+                );
+            }
+            record_size_= 0;
+            return check;
+        }
+
+        /**
+         * \brief Skips the contents of the currently open record and
+         *  closes it
+         * \return the length of the record in bytes
+         * \pre record_is_open()
+         */
+        uint32_t skip_end_record() {
+            geo_assert(record_is_open());
+            if(
+                fseek(
+                    f_, (long int)(record_start_pos_+record_size_), SEEK_SET
+                ) != 0
+            ) {
+                throw(std::logic_error(
+                          "FortranFile::skip_end_record(): fseek() error"
+                ));
+            }
+            return end_record();
+        }
+
+        /**
+         * \brief Opens, skips and closes a record.
+         * \pre !record_is_open()
+         */
+        uint32_t skip_record() {
+            begin_record();
+            return skip_end_record();
+        }
+
+        /**
+         * \brief Reads data of arbitrary type
+         */
+        template <class T> void read(T& out) {
+            if(fread(&out, sizeof(T), 1, f_) != 1) {
+                throw(std::logic_error(
+                          "FortranFile::read(): fread() error"
+                ));
+            }
+        }
+        
+    private:
+        FILE* f_;
+        uint32_t record_size_;
+        size_t record_start_pos_;
+    };
+
+    /************************************************************/
+
+    /**
+     * loads binary files generated by the Hydra cosmological simulator
+     */
+    class HydraFile : public FortranFile {
+    public:
+        HydraFile(const std::string& filename) : FortranFile(filename) {
+            memset(ver,    0, sizeof(ver));
+            memset(&ibuf,  0, sizeof(ibuf));
+            memset(&ibuf1, 0, sizeof(ibuf1));
+            memset(&ibuf2, 0, sizeof(ibuf2));
+        }
+
+        HydraFile(const HydraFile& rhs) = delete;
+        HydraFile& operator=(const HydraFile& rhs) = delete;
+        
+        uint32_t nb_particles() const {
+            return uint32_t(ibuf2.d.nobj);
+        }
+
+        float version() const {
+            return float(ver[0]) + 0.1f * float(ver[1]) + 0.01f * float(ver[2]);
+        }
+
+        void load_header() {
+            begin_record();
+            read(ver);
+            end_record();
+            
+            begin_record();
+            read(ibuf);
+            read(ibuf1);
+            read(ibuf2);
+            end_record();
+        }
+
+        void skip_itype() {
+            if(skip_record()/sizeof(uint32_t) != nb_particles()) {
+                throw(std::logic_error("Invalid itype size"));
+            }
+        }
+
+        void skip_rm() {
+            if(skip_record()/sizeof(float) != nb_particles()) {
+                throw(std::logic_error("Invalid rm size"));
+            }
+        }
+
+        void skip_r() {
+            if(skip_record()/(3*sizeof(float)) != nb_particles()) {
+                throw(std::logic_error("Invalid r size"));
+            }
+        }
+
+        void skip_v() {
+            if(skip_record()/(3*sizeof(float)) != nb_particles()) {
+                throw(std::logic_error("Invalid v size"));
+            }
+        }
+        
+    public:
+        int32_t ver[3];
+        struct {
+            union {
+                int32_t I[100];
+                struct {
+                    int32_t itime;    /**< timestep */
+                    int32_t itstop;   /**< timestep to stop at */
+                    int32_t itdump;   /**< dump (ie backup) every itdump timesteps */
+                    int32_t itout;    /**< next timestep to output results at */
+                    float time;       /**< simulation time */
+                    float atime;      /**< expansion factor */
+                    float htime;      /**< Hubble parameter */
+                    float dtime;      /**< current timestep */
+                    float Est;        /**< start energy */
+                    float T;          /**< kinetic energy */
+                    float Th;         /**< thermal energy */
+                    float U;          /**< potential energy */
+                    float Radiation;  /**< radiated energy */
+                    float Esum;       /**< energy integral */
+                    float Rsum;       /**< total radiated energy */
+                    float cputo;      /**< cpu time */
+                    float tstop;      /**< time to stop at */
+                    float tout;       /**< next time to output result at */
+                    int32_t icdump;   /**< index of list of requested output times, tout1 */
+                    int32_t pad1;     /**< padding */
+                    float Tlost;      /**< kinetic energy of escaping particles */
+                    float Qlost;      /**< thermal energy of escaping particles */
+                    float Ulost;      /**< potential energy of escaping particles */
+                    int32_t pad2;     /**< padding */
+                    float soft2;      /**< current Plummer softening squared */
+                    float dta;        /**< minimum timestepfrom acceleration */
+                    float dtcs;       /**< minimum timestep from sound speed */
+                    float dtv;        /**< minimum timestep from velocity */
+                } d;
+            };
+        } ibuf1;
+        
+        struct {
+            union {
+                int32_t I[100];
+                struct {
+                    int32_t irun;   /**< run number */
+                    int32_t nobj;   /**< total number of particles */
+                    int32_t ngas;   /**< number of gas particles (MUST BE FIRST IN LIST) */
+                    int32_t ndark;  /**< number of dark matter particles */
+                    int32_t intl;   /**< must be 0 (1 for interlacing) */
+                    int32_t nlmx;   /**< maximum number of refinement levels */
+                    float perr;     /**< percentage error for gravity, use 7.7 or 2.0 */
+                    float dtnorm;   /**< mult for tstep, use 1 unless prticles go haywire */
+                    float sft0;     /**< z=0 softening */
+                    float sftmin;   /**< minimum softening */
+                    float sftmax;   /**< maximum softening */
+                    int32_t pad3;   /**< padding */
+                    float h100;     /**< Hubble parameter in units of 100 km/s/Mpc */
+                    float box100;   /**< z=0 boxsize in Mpc/h100 */
+                    float zmet0;    /**< metallicity of gas relative to solar, if const */
+                    float lcool;    /**< cooling switch (1=on) */
+                    float rmbary;   /**< baryonic particle mass (grid units) */
+                    float rmnorm0;  /**< intermediate in normalisation of gravity force */
+                    int32_t pad4;   /**< padding */
+                    int32_t pad5;   /**< padding */
+                    float tstart;   /**< time of initial conditions */
+                    float omega0;   /**< z=0 value of omega */
+                    float xlambda0; /**< z=0 value of lambda */
+                    float h0t0;     /**< z=0 value of Hubble param times age of universe */
+                    float rcen[3];  /**< middle of the box in input co-ordinates */
+                    float rmax2;    /**< sq of max dist from ctr in isolated simulations */
+                } d;
+            };
+        } ibuf2;
+        
+        
+        struct {
+            union {
+                int32_t I[200];
+                struct {
+                    float tout1[50]; /**< list of desired output times */
+                } d;
+            };
+        } ibuf;
+    };
+    
+
+    /************************************************************/
+}
+
+#endif
+

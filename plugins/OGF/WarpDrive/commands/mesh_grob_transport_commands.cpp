@@ -42,6 +42,7 @@
 
 #include <OGF/WarpDrive/commands/mesh_grob_transport_commands.h>
 #include <OGF/WarpDrive/algo/VSDM.h>
+#include <OGF/WarpDrive/IO/hydra.h>
 
 #include <exploragram/optimal_transport/sampling.h>
 #include <exploragram/optimal_transport/optimal_transport_3d.h>
@@ -74,8 +75,6 @@
 #ifdef __clang__
 #pragma GCC diagnostic ignored "-Wweak-vtables"
 #endif
-
-
 
 namespace {
     using namespace OGF;
@@ -3281,158 +3280,6 @@ namespace OGF {
     }
 }
 
-/****************** class to read Fortran files ****************************/
-
-namespace {
-
-    /**
-     * \brief Class to load data from Fortran files
-     * \details Fortran files are organized into records. Each record
-     *  corresponds to a WRITE statement in format. Each record starts
-     *  and ends with a record marker, that contains the length of the
-     *  record, in bytes, encoded as a 32 bits integer.
-     */
-    class FortranFile {
-    public:
-
-        /**
-         * \brief FortranFile constructor
-         * \param[in] filename the file to be read
-         * \details Throws an exception if file cannot be opened
-         */
-        FortranFile(const std::string &filename) {
-            f_ = fopen(filename.c_str(),"rb");
-            if(f_ == nullptr) {
-                throw(std::logic_error(
-                          "FortranFile: could not open " + filename
-                ));
-            }
-            record_size_ = 0;
-        }
-
-        /**
-         * \brief FortranFile destructor
-         */
-        ~FortranFile() {
-            if(f_ != nullptr) {
-                fclose(f_);
-                f_ = nullptr;
-            }
-        }
-
-        /**
-         * \brief Forbids copy
-         */
-        FortranFile(const FortranFile&) = delete;
-
-        /**
-         * \brief Forbids copy
-         */
-        FortranFile& operator=(const FortranFile&) = delete;
-
-        /**
-         * \brief Tests whether a record is open
-         * \details A record is open if we are between a begin_record()
-         *  and end_record() call
-         * \retval true if a record is open
-         * \retval false otherwise
-         */
-        bool record_is_open() const {
-            return record_size_ != 0;
-        }
-        
-        /**
-         * \brief Opens a FORTRAN record, and reads record size.
-         * \return the length of the record, in bytes
-         * \pre !record_is_open()
-         */
-        Numeric::uint32 begin_record() {
-            geo_assert(!record_is_open());
-            if(fread(&record_size_, sizeof(Numeric::uint32), 1, f_) != 1) {
-                throw(std::logic_error(
-                          "FortranFile::begin_record(): fread() error"
-                ));
-            }
-            record_start_pos_ = size_t(ftell(f_));
-            return record_size_;
-        }
-
-        /**
-         * \brief Closes a FORTRAN record
-         * \details Tests whether the record markers match. Throws an
-         *  exception if it is not the case.
-         * \return the length of the record, in bytes
-         * \pre record_is_open()
-         */
-        Numeric::uint32 end_record() {
-            geo_assert(record_is_open());
-            Numeric::uint32 check;
-            if(fread(&check, sizeof(Numeric::uint32), 1, f_) != 1) {
-                throw(std::logic_error(
-                          "FortranFile::end_record(): fread() error"
-                ));
-            }
-            if(check != record_size_) {
-                throw(
-                    std::logic_error(
-                        String::format(
-                            "invalid FORTRAN record size:expected %d got %d",
-                            record_size_, check
-                        )
-                    )
-                );
-            }
-            record_size_= 0;
-            return check;
-        }
-
-        /**
-         * \brief Skips the contents of the currently open record and
-         *  closes it
-         * \return the length of the record in bytes
-         * \pre record_is_open()
-         */
-        Numeric::uint32 skip_end_record() {
-            geo_assert(record_is_open());
-            if(
-                fseek(
-                    f_, (long int)(record_start_pos_+record_size_), SEEK_SET
-                ) != 0
-            ) {
-                throw(std::logic_error(
-                          "FortranFile::skip_end_record(): fseek() error"
-                ));
-            }
-            return end_record();
-        }
-
-        /**
-         * \brief Opens, skips and closes a record.
-         * \pre !record_is_open()
-         */
-        Numeric::uint32 skip_record() {
-            begin_record();
-            return skip_end_record();
-        }
-
-        /**
-         * \brief Reads data of arbitrary type
-         */
-        template <class T> void read(T& out) {
-            if(fread(&out, sizeof(T), 1, f_) != 1) {
-                throw(std::logic_error(
-                          "FortranFile::read(): fread() error"
-                ));
-            }
-        }
-        
-    private:
-        FILE* f_;
-        Numeric::uint32 record_size_;
-        size_t record_start_pos_;
-    };
-}
-
 /************************************************************************/
 
 
@@ -3442,149 +3289,45 @@ namespace OGF {
         mesh_grob()->clear();
 
         try {
-            FortranFile in(filename);
+            HydraFile in(filename);
+
+            in.load_header();
+
+            Logger::out("Hydra") << String::format("version %f", in.version())
+                                 << std::endl;
+
+            index_t NPART = in.nb_particles();
+            Logger::out("Hydra") << String::format(" - irun    =%d",in.ibuf2.d.irun)     << std::endl;
+            Logger::out("Hydra") << String::format(" - nobj    =%d",in.ibuf2.d.nobj)     << std::endl;
+            Logger::out("Hydra") << String::format(" - ngas    =%d",in.ibuf2.d.ngas)     << std::endl;
+            Logger::out("Hydra") << String::format(" - ndark   =%d",in.ibuf2.d.ndark)    << std::endl;
+            Logger::out("Hydra") << String::format(" - h100    =%f",in.ibuf2.d.h100)     << std::endl;
+            Logger::out("Hydra") << String::format(" - box100  =%f",in.ibuf2.d.box100)   << std::endl;
+            Logger::out("Hydra") << String::format(" - tstart  =%f",in.ibuf2.d.tstart)   << std::endl;
+            Logger::out("Hydra") << String::format(" - omega0  =%f",in.ibuf2.d.omega0)   << std::endl;
+            Logger::out("Hydra") << String::format(" - xlambda0=%f",in.ibuf2.d.xlambda0) << std::endl;
+            Logger::out("Hydra") << String::format(" - h0t0    =%f",in.ibuf2.d.h0t0)     << std::endl;
             
-            {
-                Logger::out("Hydra") << "read version" << std::endl;
-                in.begin_record();
-                int32_t ver[3];
-                in.read(ver);
-                in.end_record();
-                Logger::out("Hydra") << String::format(" - Hydra v %d.%d%d",ver[0], ver[1], ver[2])
-                                     << std::endl;
-            }
-
-            index_t NPART = 0; // number of particles
-            {
-                struct {
-                    union {
-                        int32_t I[100];
-                        struct {
-                            int32_t itime;    /**< timestep */
-                            int32_t itstop;   /**< timestep to stop at */
-                            int32_t itdump;   /**< dump (ie backup) every itdump timesteps */
-                            int32_t itout;    /**< next timestep to output results at */
-                            float time;       /**< simulation time */
-                            float atime;      /**< expansion factor */
-                            float htime;      /**< Hubble parameter */
-                            float dtime;      /**< current timestep */
-                            float Est;        /**< start energy */
-                            float T;          /**< kinetic energy */
-                            float Th;         /**< thermal energy */
-                            float U;          /**< potential energy */
-                            float Radiation;  /**< radiated energy */
-                            float Esum;       /**< energy integral */
-                            float Rsum;       /**< total radiated energy */
-                            float cputo;      /**< cpu time */
-                            float tstop;      /**< time to stop at */
-                            float tout;       /**< next time to output result at */
-                            int32_t icdump;   /**< index of list of requested output times, tout1 */
-                            int32_t pad1;     /**< padding */
-                            float Tlost;      /**< kinetic energy of escaping particles */
-                            float Qlost;      /**< thermal energy of escaping particles */
-                            float Ulost;      /**< potential energy of escaping particles */
-                            int32_t pad2;     /**< padding */
-                            float soft2;      /**< current Plummer softening squared */
-                            float dta;        /**< minimum timestepfrom acceleration */
-                            float dtcs;       /**< minimum timestep from sound speed */
-                            float dtv;        /**< minimum timestep from velocity */
-                        } d;
-                    };
-                } ibuf1;
-
-                struct {
-                    union {
-                        int32_t I[100];
-                        struct {
-                            int32_t irun;   /**< run number */
-                            int32_t nobj;   /**< total number of particles */
-                            int32_t ngas;   /**< number of gas particles (MUST BE FIRST IN LIST) */
-                            int32_t ndark;  /**< number of dark matter particles */
-                            int32_t intl;   /**< must be 0 (1 for interlacing) */
-                            int32_t nlmx;   /**< maximum number of refinement levels */
-                            float perr;     /**< percentage error for gravity, use 7.7 or 2.0 */
-                            float dtnorm;   /**< mult for tstep, use 1 unless prticles go haywire */
-                            float sft0;     /**< z=0 softening */
-                            float sftmin;   /**< minimum softening */
-                            float sftmax;   /**< maximum softening */
-                            int32_t pad3;   /**< padding */
-                            float h100;     /**< Hubble parameter in units of 100 km/s/Mpc */
-                            float box100;   /**< z=0 boxsize in Mpc/h100 */
-                            float zmet0;    /**< metallicity of gas relative to solar, if const */
-                            float lcool;    /**< cooling switch (1=on) */
-                            float rmbary;   /**< baryonic particle mass (grid units) */
-                            float rmnorm0;  /**< intermediate in normalisation of gravity force */
-                            int32_t pad4;   /**< padding */
-                            int32_t pad5;   /**< padding */
-                            float tstart;   /**< time of initial conditions */
-                            float omega0;   /**< z=0 value of omega */
-                            float xlambda0; /**< z=0 value of lambda */
-                            float h0t0;     /**< z=0 value of Hubble param times age of universe */
-                            float rcen[3];  /**< middle of the box in input co-ordinates */
-                            float rmax2;    /**< sq of max dist from ctr in isolated simulations */
-                        } d;
-                    };
-                } ibuf2;
-                
-
-                struct {
-                    union {
-                        int32_t I[200];
-                        struct {
-                            float tout1[50]; /**< list of desired output times */
-                        } d;
-                    };
-                } ibuf;
-
-                Logger::out("Hydra") << "read ibuf1,ibuf2,ibuf3" << std::endl;
-                in.begin_record();
-
-                in.read(ibuf);
-                in.read(ibuf1);
-                in.read(ibuf2);
-
-                Logger::out("Hydra") << String::format(" - irun    =%d",ibuf2.d.irun)     << std::endl;
-                Logger::out("Hydra") << String::format(" - nobj    =%d",ibuf2.d.nobj)     << std::endl;
-                Logger::out("Hydra") << String::format(" - ngas    =%d",ibuf2.d.ngas)     << std::endl;
-                Logger::out("Hydra") << String::format(" - ndark   =%d",ibuf2.d.ndark)    << std::endl;
-                Logger::out("Hydra") << String::format(" - h100    =%f",ibuf2.d.h100)     << std::endl;
-                Logger::out("Hydra") << String::format(" - box100  =%f",ibuf2.d.box100)   << std::endl;
-                Logger::out("Hydra") << String::format(" - tstart  =%f",ibuf2.d.tstart)   << std::endl;
-                Logger::out("Hydra") << String::format(" - omega0  =%f",ibuf2.d.omega0)   << std::endl;
-                Logger::out("Hydra") << String::format(" - xlambda0=%f",ibuf2.d.xlambda0) << std::endl;
-                Logger::out("Hydra") << String::format(" - h0t0    =%f",ibuf2.d.h0t0)     << std::endl;
-                
-                Logger::out("Hydra") << String::format(" - itime =%d",ibuf1.d.itime)  << std::endl;
-                Logger::out("Hydra") << String::format(" - itstop=%d",ibuf1.d.itstop) << std::endl;
-                Logger::out("Hydra") << String::format(" - itdump=%d",ibuf1.d.itdump) << std::endl;
-                Logger::out("Hydra") << String::format(" - itout =%d",ibuf1.d.itout)  << std::endl;
-
-                Logger::out("Hydra") << String::format(" -  time =%f",ibuf1.d.time)   << std::endl;
-                Logger::out("Hydra") << String::format(" - atime =%f",ibuf1.d.atime)  << std::endl;
-                Logger::out("Hydra") << String::format(" - htime =%f",ibuf1.d.htime)  << std::endl;
-                Logger::out("Hydra") << String::format(" - dtime =%f",ibuf1.d.dtime)  << std::endl;
-
-                Logger::out("Hydra") << String::format(" - tstop =%f",ibuf1.d.tstop)  << std::endl;
-                Logger::out("Hydra") << String::format(" - tout  =%f",ibuf1.d.tout)   << std::endl;
-                Logger::out("Hydra") << String::format(" - icdump=%d",ibuf1.d.icdump) << std::endl;
-                
-                in.end_record();
-                
-                NPART = index_t(ibuf2.d.nobj);
-            }
-
+            Logger::out("Hydra") << String::format(" - itime =%d",in.ibuf1.d.itime)  << std::endl;
+            Logger::out("Hydra") << String::format(" - itstop=%d",in.ibuf1.d.itstop) << std::endl;
+            Logger::out("Hydra") << String::format(" - itdump=%d",in.ibuf1.d.itdump) << std::endl;
+            Logger::out("Hydra") << String::format(" - itout =%d",in.ibuf1.d.itout)  << std::endl;
+            
+            Logger::out("Hydra") << String::format(" -  time =%f",in.ibuf1.d.time)   << std::endl;
+            Logger::out("Hydra") << String::format(" - atime =%f",in.ibuf1.d.atime)  << std::endl;
+            Logger::out("Hydra") << String::format(" - htime =%f",in.ibuf1.d.htime)  << std::endl;
+            Logger::out("Hydra") << String::format(" - dtime =%f",in.ibuf1.d.dtime)  << std::endl;
+            
+            Logger::out("Hydra") << String::format(" - tstop =%f",in.ibuf1.d.tstop)  << std::endl;
+            Logger::out("Hydra") << String::format(" - tout  =%f",in.ibuf1.d.tout)   << std::endl;
+            Logger::out("Hydra") << String::format(" - icdump=%d",in.ibuf1.d.icdump) << std::endl;
+            
             Logger::out("Hydra") <<  " ---> nb particles=" << NPART << std::endl;
             mesh_grob()->vertices.set_dimension(3);
             mesh_grob()->vertices.create_vertices(NPART);
-            
-            Logger::out("Hydra") << "read itype" << std::endl;
-            if(index_t(in.skip_record()/sizeof(Numeric::uint32)) != NPART) {
-                throw(std::logic_error("Invalid itype size"));
-            }
-            
-            
-            Logger::out("Hydra") << "read rm" << std::endl;
-            in.skip_record(); // rm
+
+            in.skip_itype();
+            in.skip_rm();
             
             Logger::out("Hydra") << "read r" << std::endl;   
             in.begin_record();
@@ -3596,6 +3339,9 @@ namespace OGF {
                 }
             }
             in.end_record();
+
+            in.skip_v();
+            
         } catch(std::logic_error& err) {
             Logger::err("Hydra") << err.what() << std::endl;
             return;
