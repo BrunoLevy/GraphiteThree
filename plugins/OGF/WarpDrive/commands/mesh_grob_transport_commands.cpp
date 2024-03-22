@@ -3396,6 +3396,29 @@ namespace OGF {
             mesh_grob()->set_shader("Cosmo");
         }
     }
+
+    void MeshGrobTransportCommands::save_binary(const NewFileName& filename) {
+        try {
+            FILE* f = fopen(std::string(filename).c_str(),"wb");
+            if(f == nullptr) {
+                throw(std::logic_error(
+                          "Could not create file:" + std::string(filename)
+                ));
+            }
+            for(index_t i: mesh_grob()->vertices) {
+                float xyz[3];
+                xyz[0] = float(mesh_grob()->vertices.point_ptr(i)[0]);
+                xyz[1] = float(mesh_grob()->vertices.point_ptr(i)[1]);
+                xyz[2] = float(mesh_grob()->vertices.point_ptr(i)[2]);
+                if(fwrite(xyz, sizeof(xyz), 1, f) != 1) {
+                    throw(std::logic_error("Error while writing file"));
+                }
+            }
+            fclose(f);
+        } catch (std::logic_error& err) {
+            Logger::err("Cosmo") << err.what() << std::endl;
+        }
+    }
     
     void MeshGrobTransportCommands::create_box() {
         MeshGrob* box = MeshGrob::find_or_create(scene_graph(), "box");

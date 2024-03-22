@@ -714,6 +714,12 @@ namespace OGF {
          * \brief Loads a flat floating point binary file
          */
         void load_binary(const FileName& filename);
+
+        /**
+         * \menu /Cosmo
+         * \brief Saves the points to a flat floating point binary file
+         */
+        void save_binary(const NewFileName& filename);
         
         /**
          * \menu /Cosmo

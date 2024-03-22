@@ -225,7 +225,7 @@ namespace OGF {
         void restore_viewing_parameters();
         
 	/**
-	 * \brief Draws the generated image on the screen.
+	 * \brief Draws the generated image on the screen using OpenGL.
 	 */
 	void draw_image();
         

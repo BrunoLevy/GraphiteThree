@@ -132,6 +132,15 @@ namespace OGF {
                     &X, &Y, &Z
                 );
 
+                // Discard points that fall outside of window
+                if(
+                    X < 0 || X >= double(intensity_image_->width()) ||
+                    Y < 0 || Y >= double(intensity_image_->height())
+                ) {
+                    return;
+                }
+                
+                
                 // Splat point onto floating point image
                 if(point_size_ == 0) {
                     splat(X,Y,pw);
