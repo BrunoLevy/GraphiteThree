@@ -416,7 +416,7 @@ namespace OGF {
         }
     }
 
-    void SceneGraphShaderManager::apply_to_scene_graph() {
+    void SceneGraphShaderManager::apply_to_scene_graph(bool visible_only) {
         if(current_object_ == nullptr) {
             return;
         }
@@ -431,7 +431,8 @@ namespace OGF {
             Grob* cur_grob = scene_graph_->ith_child(i);
             if(
                 (cur_grob == current_object_) ||
-                (cur_grob->meta_class() != current_object_->meta_class())
+                (cur_grob->meta_class() != current_object_->meta_class())||
+                (visible_only && !cur_grob->get_visible())
             ) {
                 continue;
             }
