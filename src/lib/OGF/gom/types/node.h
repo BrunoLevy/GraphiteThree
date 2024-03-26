@@ -115,6 +115,26 @@ namespace OGF {
             return parent_;
         }
 
+    protected:
+        /**
+         * \brief Swaps two children by indices
+         * \param[in] n1 , n2 the two children to swap
+         */
+        void swap_children(Node* n1, Node* n2) {
+            index_t i = NO_INDEX;
+            index_t j = NO_INDEX;
+            for(index_t k=0; k<children_.size(); ++k) {
+                if(children_[k] == n1) {
+                    i = k;
+                }
+                if(children_[k] == n2) {
+                    j = k;
+                }
+            }
+            geo_assert(i != NO_INDEX && j != NO_INDEX);
+            std::swap(children_[i], children_[j]);
+        }
+        
     private:
         std::vector< SmartPointer<Node> > children_ ;
         Node* parent_ ;

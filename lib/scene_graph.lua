@@ -247,6 +247,18 @@ function scene_graph_gui.grob_ops(grob, main_menu)
          return nil
       end
 
+      if imgui.MenuItem(imgui.font_icon('arrow-up')..' move up') then
+         main.save_state()
+         scene_graph.current_object = name
+         scene_graph.move_current_up()
+      end
+
+      if imgui.MenuItem(imgui.font_icon('arrow-down')..' move down') then
+         main.save_state()
+         scene_graph.current_object = name
+         scene_graph.move_current_down()
+      end
+
       imgui.Separator()
 
       if imgui.BeginMenu(imgui.font_icon('file')..'  File...') then

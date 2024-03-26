@@ -258,6 +258,40 @@ namespace OGF {
 	return dupl;
     }
 
+    void SceneGraph::move_current_up() {
+        if(current() == nullptr) {
+            return;
+        }
+        Grob* prev = nullptr;
+        for(index_t i=0; i+1<get_nb_children(); ++i) {
+            if(ith_child(i+1) == current()) {
+                prev = ith_child(i);
+                break;
+            }
+        }
+        if(prev == nullptr) {
+            return;
+        }
+        swap_children(prev, current());
+    }
+
+    void SceneGraph::move_current_down() {
+        if(current() == nullptr) {
+            return;
+        }
+        Grob* next = nullptr;
+        for(index_t i=0; i+1<get_nb_children(); ++i) {
+            if(ith_child(i) == current()) {
+                next = ith_child(i+1);
+                break;
+            }
+        }
+        if(next == nullptr) {
+            return;
+        }
+        swap_children(next, current());
+    }
+    
     void SceneGraph::delete_current_object() {
         Grob* cur = resolve(current_object_);
         set_current_object(std::string(),false);

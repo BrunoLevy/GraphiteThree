@@ -128,6 +128,20 @@ namespace OGF {
         Grob* duplicate_current();
 
         /**
+         * \brief Swaps the current object with the previous one
+         * \details Does nothing if there is no current object or
+         *  if current object is the first one
+         */
+        void move_current_up();
+
+        /**
+         * \brief Swaps the current object with the next one
+         * \details Does nothing if there is no current object or
+         *  if current object is the last one
+         */
+        void move_current_down();
+        
+        /**
          * \brief Clears this SceneGraph.
          * \details Deletes all the objects of this SceneGraph.
          */
