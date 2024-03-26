@@ -146,6 +146,8 @@ namespace OGF {
          * \brief Copies the properties of the current Shader to all
          *  other Shaders in the SceneGraph associated with objects
          *  that have the same class as the current object.
+         * \param[in] visible_only if set, copies the properties
+         *  of the current shader only to objects that are visible.
          */
         void apply_to_scene_graph(bool visible_only = false);
 
