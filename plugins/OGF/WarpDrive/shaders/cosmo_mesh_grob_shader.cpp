@@ -50,6 +50,7 @@ namespace OGF {
     CosmoMeshGrobShader::CosmoMeshGrobShader(
         OGF::MeshGrob* grob
     ) : MeshGrobShader(grob) {
+        skip_= 1;
         point_size_ = 0;
         point_weight_ = 50.0;
         log_  = 0.0;
@@ -62,6 +63,7 @@ namespace OGF {
         lock_z_ = false;
         texture_ = 0;
         colormap_style_.colormap_name = "inferno";
+        view_changed_ = false;
     }
         
     CosmoMeshGrobShader::~CosmoMeshGrobShader() {
@@ -105,13 +107,20 @@ namespace OGF {
         );
 
         // Scale point weight according to window size and zooming factor
-        pw *= float(geo_sqr(double(viewport_[3]/1000.0)/double(modelview_[15])));
+        pw *=
+            float(geo_sqr(double(viewport_[3]/1000.0)/double(modelview_[15])));
 
+        pw *= float(skip_);
         
         // Splat the points into the floating-point image
         parallel_for(
             0, mesh_grob()->vertices.nb(),
             [&](index_t v) {
+
+                if(v % skip_ != 0) {
+                    return;
+                }
+                
                 const double* p = mesh_grob()->vertices.point_ptr(v);
 
                 // Discard points outside of selection window
@@ -153,7 +162,7 @@ namespace OGF {
                         }
                     }
                 }
-            }
+           }
         );
 
         // Map the floating-point image to colors (could be done by GPU
@@ -206,9 +215,32 @@ namespace OGF {
     }
 
     void CosmoMeshGrobShader::get_viewing_parameters() {
+        GLUPdouble modelview_bkp[16];
+        GLUPdouble project_bkp[16];
+        GLUPint viewport_bkp[4];
+
+        Memory::copy(modelview_bkp, modelview_, sizeof(modelview_));
+        Memory::copy(project_bkp, project_, sizeof(project_));
+        Memory::copy(viewport_bkp, viewport_, sizeof(viewport_));
+
 	glGetIntegerv(GL_VIEWPORT, viewport_);
 	glupGetMatrixdv(GLUP_MODELVIEW_MATRIX, modelview_);
 	glupGetMatrixdv(GLUP_PROJECTION_MATRIX, project_);
+        
+        view_changed_ = false;
+        for(index_t i=0; i<16; ++i) {
+            view_changed_ = view_changed_||(modelview_[i] != modelview_bkp[i]);
+            view_changed_ = view_changed_||(project_[i] != project_bkp[i]);
+        }
+        for(index_t i=0; i<4; ++i) {
+            view_changed_ = view_changed_||(viewport_[i] != viewport_bkp[i]);
+        }
+        skip_ = 1;
+        if(view_changed_) {
+            skip_ = mesh_grob()->vertices.nb() /
+                (3000000u * std::max(point_size_, 1u));
+            skip_ = std::max(skip_, 1u);
+        }
     }
 
     void CosmoMeshGrobShader::restore_viewing_parameters() {
@@ -217,6 +249,10 @@ namespace OGF {
         glupLoadMatrixd(project_);
         glupMatrixMode(GLUP_MODELVIEW_MATRIX);
         glupLoadMatrixd(modelview_);
+        if(view_changed_) {
+            mesh_grob()->update(); // to make sure we redraw without skip
+        }
+        skip_ = 1;
     }
 
     void CosmoMeshGrobShader::draw_image() {

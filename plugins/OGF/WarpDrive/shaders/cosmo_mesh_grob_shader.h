@@ -277,6 +277,7 @@ namespace OGF {
 
         
     private:
+        index_t skip_;
         index_t point_size_;
         vector<float> point_weights_;
         double point_weight_;
@@ -292,6 +293,7 @@ namespace OGF {
         double maxx_;
         GLUPdouble modelview_[16];
         GLUPdouble project_[16];
+        bool view_changed_;
         GLUPint viewport_[4];
         Image_var intensity_image_;
         Image_var image_;        
