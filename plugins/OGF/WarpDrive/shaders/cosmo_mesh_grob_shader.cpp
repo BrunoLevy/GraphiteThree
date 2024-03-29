@@ -117,6 +117,7 @@ namespace OGF {
             0, mesh_grob()->vertices.nb(),
             [&](index_t v) {
 
+                // Skip points when moving camera around for faster display
                 if(v % skip_ != 0) {
                     return;
                 }
@@ -151,7 +152,7 @@ namespace OGF {
                 
                 
                 // Splat point onto floating point image
-                if(point_size_ == 0) {
+                if(point_size_ == 0 || view_changed_) {
                     splat(X,Y,pw);
                 } else {
                     auto it = point_weights_.begin();
