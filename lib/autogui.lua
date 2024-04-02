@@ -1428,25 +1428,30 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
    autogui.properties_editor_properties(object)
    if is_shader then
       imgui.Separator()
+      imgui.Text(imgui.font_icon('sync-alt'))
+      imgui.SameLine()
       if imgui.Button(
-        imgui.font_icon('check')..      
-        "  Apply to all".."##ops##"..name,-1,autogui.icon_size()+6
+        imgui.font_icon('cubes')..
+        '##ops##'..name,
+        -imgui.GetContentRegionAvail()/2,autogui.icon_size()+6
       ) then
          local current_bkp = scene_graph.current_object
          scene_graph.current_object = name
          scene_graph.scene_graph_shader_manager.apply_to_scene_graph()
          scene_graph.current_object = current_bkp
       end
-      if imgui.BeginPopupContextItem(" Apply to all visible") then
-        if imgui.MenuItem(imgui.font_icon('check')..' Apply to visible only') then
-           local current_bkp = scene_graph.current_object
-           scene_graph.current_object = name
-           scene_graph.scene_graph_shader_manager.apply_to_scene_graph(true)
-           scene_graph.current_object = current_bkp
-        end
-        imgui.EndPopup()
+      autogui.tooltip('Apply graphic attributes to all objects')      
+      imgui.SameLine()
+      if imgui.Button(
+         imgui.font_icon('eye')..
+         "##ops##"..name,-1,autogui.icon_size()+6
+      ) then
+         local current_bkp = scene_graph.current_object
+         scene_graph.current_object = name
+         scene_graph.scene_graph_shader_manager.apply_to_scene_graph(true)
+         scene_graph.current_object = current_bkp
       end
-      autogui.tooltip('Applies graphic attributes to all objects')      
+      autogui.tooltip('Apply graphic attributes to visible objects')      
    end
    
    autogui.property_editor_state[k].width_,
