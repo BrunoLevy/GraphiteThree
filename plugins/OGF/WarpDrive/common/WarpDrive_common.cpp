@@ -51,6 +51,7 @@
 #include <OGF/WarpDrive/IO/xyzw_serializer.h>
 
 #include <OGF/WarpDrive/shaders/cosmo_mesh_grob_shader.h>
+#include <OGF/WarpDrive/shaders/aniso_mesh_grob_shader.h>
 // [includes insertion point] (do not delete this line, ModuleMaker depends on it)
 
 namespace OGF {
@@ -75,6 +76,7 @@ namespace OGF {
         
        
         ogf_register_grob_shader<OGF::MeshGrob,CosmoMeshGrobShader>();
+        ogf_register_grob_shader<OGF::MeshGrob,AnisoMeshGrobShader>();
         // [source insertion point] (do not delete this line, ModuleMaker depends on it)
 
         // Insert package initialization stuff here ...
