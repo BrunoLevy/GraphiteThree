@@ -232,6 +232,9 @@ namespace OGF {
                 "     vec3 w = I-FragmentIn.p; \n"
                 "     vec3 N = Mt*(M*w); \n"
                 "     N = normalize(GLUP.normal_matrix*N); \n"
+                "     if(result.r < 0.01 && result.g < 0.01 && result.b < 0.01) {\n"
+                "        result = vec4(0.5*(N+vec3(1.0, 1.0, 1.0)),1.0);\n"
+                "     }\n"
                 "     result = glup_lighting(result, N);\n"
                 "  }\n"
                 "  glup_FragColor = result;\n"
@@ -257,8 +260,6 @@ namespace OGF {
         glupSetColor3d(
             GLUP_FRONT_AND_BACK_COLOR, color_.r(), color_.g(), color_.b()
         );
-
-        // TODO: fragment raytracing...
 
         glupEnable(GLUP_VERTEX_COLORS);
         glupEnable(GLUP_VERTEX_NORMALS);

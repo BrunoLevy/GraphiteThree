@@ -56,9 +56,6 @@ namespace OGF {
 
     gom_properties:
 
-        /**
-         * \brief Color used to draw the object.
-         */
         const Color& get_color() const {
             return color_;
         }
