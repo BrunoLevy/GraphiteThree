@@ -47,7 +47,7 @@ namespace OGF {
     AnisoMeshGrobShader::AnisoMeshGrobShader(
         OGF::MeshGrob* grob
     ):MeshGrobShader(grob) {
-        color_ = Color(1.0, 1.0, 1.0);
+        color_ = Color(0.0, 0.0, 0.0);
         scaling_ = 1.0;
         points_ = true;
         V0_ = true;
@@ -155,10 +155,10 @@ namespace OGF {
                 "  vec3 W_clip_space;\n"
                 "} VertexIn[];\n"
                 "out VertexData {\n"
-                "  vec3 p;\n"
-                "  vec3 Up;\n"
-                "  vec3 Vp;\n"
-                "  vec3 Wp;\n"
+                "  flat vec3 p;\n"
+                "  flat vec3 Up;\n"
+                "  flat vec3 Vp;\n"
+                "  flat vec3 Wp;\n"
                 "} VertexOut;\n"
                 "void emit_vertex_2(int i) {\n"
                 "  vec3 delta = vec3(float(i&1),float((i&2)>>1),float((i&4)>>2));\n"
@@ -208,10 +208,10 @@ namespace OGF {
                 "//import <GLUP/fragment_shader_utils.h>\n"
                 "//import <GLUP/fragment_ray_tracing.h>\n"
                 "in VertexData {\n"
-                "  vec3 p;\n"
-                "  vec3 Up;\n"
-                "  vec3 Vp;\n"
-                "  vec3 Wp;\n"
+                "  flat vec3 p;\n"
+                "  flat vec3 Up;\n"
+                "  flat vec3 Vp;\n"
+                "  flat vec3 Wp;\n"
                 "} FragmentIn;\n"
                 "void main() {\n"
                 "  mat3 Mt = mat3(FragmentIn.Up, FragmentIn.Vp, FragmentIn.Wp); \n"
@@ -219,12 +219,12 @@ namespace OGF {
                 "  Ray R = glup_primary_ray();\n"
                 "  vec3 D = M * (R.O - FragmentIn.p); \n"
                 "  vec3 v = M * R.V; \n"
-                "  float a = dot(v,v); \n"
-                "  float b = 2.0 * dot(D,v); \n"
-                "  float c = dot(D,D) - 1.0; \n"
-                "  float delta = b*b - 4.0*a*c; \n"
-                "  if(delta < 0.0) discard; \n"
-                "  float t = (-b -sqrt(delta)) / (2.0 * a);\n"
+                "  float a   = dot(v,v); \n"
+                "  float b_p = dot(D,v); \n"
+                "  float c   = dot(D,D) - 1; \n"
+                "  float delta_p = b_p*b_p - a*c; \n"
+                "  if(delta_p < 0.0) discard; \n"
+                "  float t = -(b_p+sqrt(delta_p))/a;\n"
                 "  vec3 I = R.O + t*R.V; \n"
                 "  glup_update_depth(I); \n"
                 "  vec4 result = GLUP.front_color;\n"
