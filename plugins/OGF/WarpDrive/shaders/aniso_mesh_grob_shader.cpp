@@ -308,19 +308,26 @@ namespace OGF {
         V0_ = true;
         V1_ = true;
         V2_ = true;
-        program_ = 0;
+        fp64_program_ = 0;
+        fp32_program_ = 0;
         ellipsoids_ = true;
         fp64_ = true;
+        view_changed_ = false;
     }
         
     AnisoMeshGrobShader::~AnisoMeshGrobShader() {
-        if(program_ != 0) {
-            glDeleteProgram(program_);
+        if(fp64_program_ != 0) {
+            glDeleteProgram(fp64_program_);
+        }
+        if(fp32_program_ != 0) {
+            glDeleteProgram(fp32_program_);
         }
     }        
 
     void AnisoMeshGrobShader::draw() {
 
+        get_viewing_parameters();
+        
         if(points_ && !ellipsoids_) {
             glupSetColor3d(
                 GLUP_FRONT_AND_BACK_COLOR, color_.r(), color_.g(), color_.b()
@@ -338,11 +345,15 @@ namespace OGF {
         } else if(V0_ || V1_ || V2_) {
             draw_crosses();
         }
+
+        if(view_changed_) {
+            mesh_grob()->update(); // to make sure we redraw with fp64
+        }
     }
 
     void AnisoMeshGrobShader::draw_ellipsoids() {
 
-        if(program_ == 0) {
+        if(fp64_program_ == 0 || fp32_program_ == 0) {
 
             std::string profile = glupCurrentProfileName();
             if(profile != "GLUP440") {
@@ -351,7 +362,8 @@ namespace OGF {
                     << std::endl;
                 return;
             }
-            program_ = glupCompileProgram(fp64_ ? fp64_source : fp32_source);
+            fp64_program_ = glupCompileProgram(fp64_source);
+            fp32_program_ = glupCompileProgram(fp32_source);
         }
         
         Attribute<double> V0;
@@ -376,7 +388,7 @@ namespace OGF {
         glupEnable(GLUP_VERTEX_COLORS);
         glupEnable(GLUP_VERTEX_NORMALS);
         glupEnable(GLUP_TEXTURING);
-        glupUseProgram(program_);
+        glupUseProgram((fp64_ && !view_changed_) ? fp64_program_ : fp32_program_);
         glupBegin(GLUP_POINTS);
         for(index_t v: mesh_grob()->vertices) {
             vec3 p(mesh_grob()->vertices.point_ptr(v));
@@ -393,6 +405,9 @@ namespace OGF {
         glupDisable(GLUP_VERTEX_COLORS);
         glupDisable(GLUP_VERTEX_NORMALS);
         glupDisable(GLUP_TEXTURING);
+        if(view_changed_) {
+            mesh_grob()->update(); // to make sure we redraw with fp64 when still
+        }
     }
 
     void AnisoMeshGrobShader::draw_crosses() {
@@ -463,5 +478,30 @@ namespace OGF {
         }
         glupEnd();
     }
+
+
+    void AnisoMeshGrobShader::get_viewing_parameters() {
+        GLUPdouble modelview_bkp[16];
+        GLUPdouble project_bkp[16];
+        GLUPint viewport_bkp[4];
+
+        Memory::copy(modelview_bkp, modelview_, sizeof(modelview_));
+        Memory::copy(project_bkp, project_, sizeof(project_));
+        Memory::copy(viewport_bkp, viewport_, sizeof(viewport_));
+
+	glGetIntegerv(GL_VIEWPORT, viewport_);
+	glupGetMatrixdv(GLUP_MODELVIEW_MATRIX, modelview_);
+	glupGetMatrixdv(GLUP_PROJECTION_MATRIX, project_);
+        
+        view_changed_ = false;
+        for(index_t i=0; i<16; ++i) {
+            view_changed_ = view_changed_||(modelview_[i] != modelview_bkp[i]);
+            view_changed_ = view_changed_||(project_[i] != project_bkp[i]);
+        }
+        for(index_t i=0; i<4; ++i) {
+            view_changed_ = view_changed_||(viewport_[i] != viewport_bkp[i]);
+        }
+    }
     
 }
+

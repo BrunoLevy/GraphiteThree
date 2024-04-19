@@ -126,16 +126,13 @@ namespace OGF {
 
         void set_fp64(bool x) {
             fp64_ = x;
-            if(program_ != 0) {
-                glDeleteProgram(program_);
-                program_ = 0;
-            }
             update();
         }
         
     protected:
         void draw_crosses();
         void draw_ellipsoids();
+        void get_viewing_parameters();
         
     private:
         Color color_;
@@ -145,8 +142,13 @@ namespace OGF {
         bool V0_;
         bool V1_;
         bool V2_;
-        GLuint program_;
+        GLuint fp64_program_;
+        GLuint fp32_program_;
         bool fp64_;
+        GLUPdouble modelview_[16];
+        GLUPdouble project_[16];
+        GLUPint viewport_[4];
+        bool view_changed_;
     };
 }
 
