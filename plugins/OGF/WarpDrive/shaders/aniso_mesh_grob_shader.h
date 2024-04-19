@@ -120,6 +120,19 @@ namespace OGF {
             update();
         }
 
+        bool get_fp64() const {
+            return fp64_;
+        }
+
+        void set_fp64(bool x) {
+            fp64_ = x;
+            if(program_ != 0) {
+                glDeleteProgram(program_);
+                program_ = 0;
+            }
+            update();
+        }
+        
     protected:
         void draw_crosses();
         void draw_ellipsoids();
@@ -133,6 +146,7 @@ namespace OGF {
         bool V1_;
         bool V2_;
         GLuint program_;
+        bool fp64_;
     };
 }
 
