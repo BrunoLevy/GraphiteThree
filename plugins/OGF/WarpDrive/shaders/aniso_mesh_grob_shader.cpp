@@ -54,7 +54,7 @@ namespace OGF {
         V1_ = true;
         V2_ = true;
         program_ = 0;
-        ellipsoids_ = false;
+        ellipsoids_ = true;
     }
         
     AnisoMeshGrobShader::~AnisoMeshGrobShader() {
@@ -204,7 +204,6 @@ namespace OGF {
                 "//import <GLUPGLSL/state.h>\n"
                 "//import <GLUP/stdglup.h>\n"
                 "//import <GLUP/current_profile/toggles.h>\n"
-                "//import <GLUP/current_profile/primitive.h>\n"
                 "//import <GLUP/fragment_shader_utils.h>\n"
                 "//import <GLUP/fragment_ray_tracing.h>\n"
                 "in VertexData {\n"
@@ -214,6 +213,7 @@ namespace OGF {
                 "  flat vec3 Wp;\n"
                 "} FragmentIn;\n"
                 "void main() {\n"
+                "  if(!gl_FrontFacing) discard; \n"
                 "  mat3 Mt = mat3(FragmentIn.Up, FragmentIn.Vp, FragmentIn.Wp); \n"
                 "  mat3 M  = transpose(Mt); \n" // M is the inverse basis transform
                 "  Ray R = glup_primary_ray();\n"
@@ -221,7 +221,7 @@ namespace OGF {
                 "  vec3 v = M * R.V; \n"
                 "  float a   = dot(v,v); \n"
                 "  float b_p = dot(D,v); \n"
-                "  float c   = dot(D,D) - 1; \n"
+                "  float c   = dot(D,D) - 1.0; \n"
                 "  float delta_p = b_p*b_p - a*c; \n"
                 "  if(delta_p < 0.0) discard; \n"
                 "  float t = -(b_p+sqrt(delta_p))/a;\n"
