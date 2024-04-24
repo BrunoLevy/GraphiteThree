@@ -99,7 +99,8 @@ namespace OGF {
          * \param[in] name the name of the object to be created.
          */
         void create_object(
-            const GrobClassName& type, const std::string& name="new_object"
+            const GrobClassName& type = "OGF::MeshGrob",
+            const std::string& name="new_object"
         );
 
         /**

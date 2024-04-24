@@ -727,7 +727,24 @@ namespace OGF {
          */
         void create_box();
 
-        
+        /**
+         * \menu /Cosmo/CY
+         * \brief Loads a binary file with a sampling of a Calabi Yau manifold
+         */
+        void load_Calabi_Yau(const FileName& filename);
+
+        /**
+         * \menu /Cosmo/CY
+         * \brief Show some coordinates as X,Y,Z
+         */
+        void show_Calabi_Yau_coordinates(index_t x=0, index_t y=1, index_t z=2);
+
+        /**
+         * \menu /Cosmo/CY
+         * \brief Splits a Calabi Yau into four spheres for visualization
+         */
+        void split_Calabi_Yau();
+       
     };
 }
 

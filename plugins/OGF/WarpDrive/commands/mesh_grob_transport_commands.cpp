@@ -3419,6 +3419,8 @@ namespace OGF {
             Logger::err("Cosmo") << err.what() << std::endl;
         }
     }
+
+
     
     void MeshGrobTransportCommands::create_box() {
         MeshGrob* box = MeshGrob::find_or_create(scene_graph(), "box");
@@ -3459,4 +3461,128 @@ namespace OGF {
         }
     }
 
+
+    void MeshGrobTransportCommands::load_Calabi_Yau(const FileName& filename) {
+        Attribute<double> CY;
+        CY.bind_if_is_defined(mesh_grob()->vertices.attributes(), "CY");
+        if(!CY.is_bound()) {
+            CY.create_vector_attribute(mesh_grob()->vertices.attributes(), "CY", 12);
+        }
+        try {
+            FILE* f = fopen(std::string(filename).c_str(),"rb");
+            if(f == nullptr) {
+                throw(std::logic_error(
+                          "Could not open " + std::string(filename)
+                ));
+            }
+            
+            fseek(f, 0L, SEEK_END);
+            size_t filesize = size_t(ftell(f));
+            rewind(f);
+
+            if(filesize % 48 != 0) {
+                throw(std::logic_error("Invalid file size"));
+            }
+
+            index_t N = index_t(filesize/48);
+
+            mesh_grob()->clear();
+            mesh_grob()->vertices.set_dimension(3);
+            mesh_grob()->vertices.create_vertices(N);
+            for(index_t i=0; i<N; ++i) {
+                float xyz[12];
+                if(fread(xyz, sizeof(xyz), 1, f) != 1) {
+                    throw(std::logic_error("Error while reading file"));
+                }
+                mesh_grob()->vertices.point_ptr(i)[0] = double(xyz[0]);
+                mesh_grob()->vertices.point_ptr(i)[1] = double(xyz[1]);
+                mesh_grob()->vertices.point_ptr(i)[2] = double(xyz[2]);
+                for(index_t c=0; c<12; ++c) {
+                    CY[i*12+c] = xyz[c];
+                }
+            }
+            fclose(f);
+        } catch (std::logic_error& err) {
+            Logger::err("Cosmo") << err.what() << std::endl;
+            return;
+        }
+        mesh_grob()->get_shader()->set_property("vertices_style","true; 0 1 0 1; 1");
+    }
+
+    void MeshGrobTransportCommands::show_Calabi_Yau_coordinates(index_t x, index_t y, index_t z) {
+        if(x >= 12  || y >= 12 || z >= 12) {
+            Logger::err("Cosmo") << "CY coords should be in 0..11" << std::endl;
+            return;
+        }
+        Attribute<double> CY;
+        CY.bind_if_is_defined(mesh_grob()->vertices.attributes(), "CY");
+        if(!CY.is_bound()  || CY.dimension() != 12) {
+            Logger::err("Cosmo") << "Missing or invalid CY attribute" << std::endl;
+            return;
+        }
+        for(index_t v: mesh_grob()->vertices) {
+            mesh_grob()->vertices.point_ptr(v)[0] = CY[12*v+x];
+            mesh_grob()->vertices.point_ptr(v)[1] = CY[12*v+y];
+            mesh_grob()->vertices.point_ptr(v)[2] = CY[12*v+z];
+        }
+        mesh_grob()->update();
+    }
+    
+
+    void MeshGrobTransportCommands::split_Calabi_Yau() {
+        Attribute<double> CY;
+        CY.bind_if_is_defined(mesh_grob()->vertices.attributes(), "CY");
+        if(!CY.is_bound()  || CY.dimension() != 12) {
+            Logger::err("Cosmo") << "Missing or invalid CY attribute" << std::endl;
+            return;
+        }
+        
+        MeshGrob* split = MeshGrob::find_or_create(scene_graph(),"split");
+        split->clear();
+
+        Attribute<double> theta(split->vertices.attributes(),"theta");
+        Attribute<double> phi(split->vertices.attributes(),"phi");
+
+        split->vertices.create_vertices(mesh_grob()->vertices.nb()*4);
+        for(index_t v: mesh_grob()->vertices) {
+
+            // Take one that has regular sampling
+            double x = CY[12*v+3 ];
+            double y = CY[12*v+4 ];
+            double z = CY[12*v+5 ];
+            double vtheta = atan2(y,x);
+            double vphi = atan2(sqrt(x*x+y*y),z);
+            
+            split->vertices.point_ptr(4*v+0)[0] = CY[12*v+0 ] - 2.0;
+            split->vertices.point_ptr(4*v+0)[1] = CY[12*v+1 ] - 2.0;
+            split->vertices.point_ptr(4*v+0)[2] = CY[12*v+2 ];
+            theta[4*v] = vtheta;
+            phi[4*v]   = vphi;
+
+            
+            split->vertices.point_ptr(4*v+1)[0] = CY[12*v+3 ] - 2.0;
+            split->vertices.point_ptr(4*v+1)[1] = CY[12*v+4 ] + 2.0;
+            split->vertices.point_ptr(4*v+1)[2] = CY[12*v+5 ];
+            theta[4*v+1] = vtheta;
+            phi[4*v+1]   = vphi;
+            
+
+            split->vertices.point_ptr(4*v+2)[0] = CY[12*v+6 ] + 2.0;
+            split->vertices.point_ptr(4*v+2)[1] = CY[12*v+7 ] - 2.0;
+            split->vertices.point_ptr(4*v+2)[2] = CY[12*v+8 ];
+            theta[4*v+2] = vtheta;
+            phi[4*v+2]   = vphi;
+
+            split->vertices.point_ptr(4*v+3)[0] = CY[12*v+9 ] + 2.0;
+            split->vertices.point_ptr(4*v+3)[1] = CY[12*v+10] + 2.0;
+            split->vertices.point_ptr(4*v+3)[2] = CY[12*v+11];
+            theta[4*v+3] = vtheta;
+            phi[4*v+3]   = vphi;
+            
+        }
+        
+        split->get_shader()->set_property("vertices_style","true; 0 1 0 1; 1");
+        split->update();
+    }
+    
 }

@@ -53,7 +53,7 @@ namespace {
         // Input point and basis as GLUP_POINTS + attributes
         // basis is encoded in (color,tex_color,normal)
         // Transforms points and basis into clip space
-        // Computes inverse transform of basis (Up, Vp, Wp)
+        // Computes inverse transform of basis Minv
         "//stage GL_VERTEX_SHADER\n"
         "//import <GLUP/current_profile/vertex_shader_preamble.h>\n"
         "//import <GLUPGLSL/state.h>\n"
@@ -101,9 +101,7 @@ namespace {
         "   flat mat3 Minv;\n"
         "} VertexOut;\n"
         "void cube_vrtx(int i) {\n"
-        "   vec3 delta = vec3(\n"
-        "      float(i&1),float((i&2)>>1),float((i&4)>>2)\n"
-        "   );\n"
+        "   vec3 delta = vec3(float(i&1),float((i&2)>>1),float((i&4)>>2));\n"
         "   delta = vec3(-1.0, -1.0, -1.0) + 2.0*delta;\n"
         "   gl_Position = gl_in[0].gl_Position + \n"
         "      vec4(VertexIn[0].M_clip_space*delta,0.0); \n"
@@ -138,10 +136,9 @@ namespace {
         "void main() {\n"
         "   if(!gl_FrontFacing) discard; \n"
         "   if(glupIsEnabled(GLUP_CLIPPING)) {\n"
-        "      if(dot(\n"
-        "         vec4(FragmentIn.p,1.0),\n"
-        "         GLUP.world_clip_plane\n"
-        "      ) < 0.0) discard; \n"
+        "      if(dot(vec4(FragmentIn.p,1.0),GLUP.world_clip_plane) < 0.0) {\n"
+        "          discard; \n"
+        "      }\n"        
         "   }\n"
         "   Ray R = glup_primary_ray();\n"
         "   vec3 D = FragmentIn.Minv * (R.O - FragmentIn.p); \n"
@@ -179,7 +176,7 @@ namespace {
         // Input point and basis as GLUP_POINTS + attributes
         // basis is encoded in (color,tex_color,normal)
         // Transforms points and basis into clip space
-        // Computes inverse transform of basis (Up, Vp, Wp)
+        // Computes inverse transform of basis Minv
         "//stage GL_VERTEX_SHADER\n"
         "//import <GLUP/current_profile/vertex_shader_preamble.h>\n"
         "//import <GLUPGLSL/state.h>\n"
@@ -227,9 +224,7 @@ namespace {
         "   flat dmat3 Minv;\n"
         "} VertexOut;\n"
         "void cube_vrtx(int i) {\n"
-        "   vec3 delta = vec3(\n"
-        "      float(i&1),float((i&2)>>1),float((i&4)>>2)\n"
-        "   );\n"
+        "   vec3 delta = vec3(float(i&1),float((i&2)>>1),float((i&4)>>2));\n"
         "   delta = vec3(-1.0, -1.0, -1.0) + 2.0*delta;\n"
         "   gl_Position = gl_in[0].gl_Position + \n"
         "      vec4(VertexIn[0].M_clip_space*delta,0.0); \n"
@@ -264,10 +259,9 @@ namespace {
         "void main() {\n"
         "   if(!gl_FrontFacing) discard; \n"
         "   if(glupIsEnabled(GLUP_CLIPPING)) {\n"
-        "      if(dot(\n"
-        "         vec4(FragmentIn.p,1.0),\n"
-        "         GLUP.world_clip_plane\n"
-        "      ) < 0.0) discard; \n"
+        "      if(dot(vec4(FragmentIn.p,1.0),GLUP.world_clip_plane) < 0.0) {\n"
+        "          discard; \n"
+        "      }\n"
         "   }\n"
         "   Ray R = glup_primary_ray();\n"
         "   dvec3 D = FragmentIn.Minv * (dvec3(R.O - FragmentIn.p)); \n"
@@ -388,7 +382,7 @@ namespace OGF {
         glupEnable(GLUP_VERTEX_COLORS);
         glupEnable(GLUP_VERTEX_NORMALS);
         glupEnable(GLUP_TEXTURING);
-        glupUseProgram((fp64_ && !view_changed_) ? fp64_program_ : fp32_program_);
+        glupUseProgram((fp64_&&!view_changed_) ? fp64_program_ : fp32_program_);
         glupBegin(GLUP_POINTS);
         for(index_t v: mesh_grob()->vertices) {
             vec3 p(mesh_grob()->vertices.point_ptr(v));
