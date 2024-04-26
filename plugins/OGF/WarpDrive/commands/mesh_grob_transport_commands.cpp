@@ -3433,6 +3433,32 @@ namespace OGF {
         double x2 = 1.0;
         double y2 = 1.0;
         double z2 = 1.0;
+
+        Object* shdr = mesh_grob()->get_shader();
+        if(shdr != nullptr) {
+            auto update_bound = [&](
+                double& bound, const std::string& prop_name
+            ) {
+                std::string prop_val;
+                if(!(shdr->get_property(prop_name, prop_val))) {
+                    return;
+                }
+                try {
+                    int val = String::to_int(prop_val);
+                    std::cerr << "val =" << std::endl;
+                    bound = double(val)/100.0;
+                } catch(...) {
+                    return;
+                }
+            };
+            update_bound(x1, "minx");
+            update_bound(y1, "miny");
+            update_bound(z1, "minz");
+            update_bound(x2, "maxx");
+            update_bound(y2, "maxy");
+            update_bound(z2, "maxz");
+
+        }
         
         index_t v0 = box->vertices.create_vertex(vec3(x1,y1,z1).data());
         index_t v1 = box->vertices.create_vertex(vec3(x1,y1,z2).data());

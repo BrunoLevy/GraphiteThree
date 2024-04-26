@@ -206,6 +206,25 @@ namespace OGF {
             return index_t(maxx_*100.0);
         }
 
+        bool get_transparent() const {
+            return transparent_;
+        }
+
+        void set_transparent(bool x) {
+            transparent_ = x;
+            update();
+        }
+        
+        bool get_fast_draw() const {
+            return fast_draw_;
+        }
+
+        void set_fast_draw(bool x) {
+            fast_draw_ = x;
+            update();
+        }
+
+        
     protected:
         /**
 	 * \brief Creates the image the first time, then resizes it 
@@ -291,6 +310,8 @@ namespace OGF {
         double maxy_;
         double minx_;
         double maxx_;
+        bool transparent_;
+        bool fast_draw_;
         GLUPdouble modelview_[16];
         GLUPdouble project_[16];
         bool view_changed_;

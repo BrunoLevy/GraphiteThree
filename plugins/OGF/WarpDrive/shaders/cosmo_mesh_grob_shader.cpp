@@ -60,6 +60,8 @@ namespace OGF {
         maxx_ = 1.0;
         maxy_ = 1.0;
         maxz_ = 1.0;
+        transparent_ = false;
+        fast_draw_ = true;
         lock_z_ = false;
         texture_ = 0;
         colormap_style_.colormap_name = "inferno";
@@ -174,6 +176,7 @@ namespace OGF {
                 FOR(x, image_->width()) {
                     float g = *intensity_image_->pixel_base_float32_ptr(x,y);
                     geo_clamp(g, 0.0f, 1.0f);
+                    float g_in = g;
                     if(log_ != 0.0 && g != 0.0f) {
                         g = logf(g * float(log_)+1.0f) / logf(float(log_+1.0));
                     }
@@ -186,7 +189,14 @@ namespace OGF {
                     p[0] = rgb[0];
                     p[1] = rgb[1];
                     p[2] = rgb[2];
-                    p[3] = 255;
+
+                    G = G*255/(colormap_image_->width()-1);
+
+                    if(transparent_) {
+                        p[3] = Numeric::uint8(g_in*255.0f);
+                    } else {
+                        p[3] = (g_in == 0.0f) ? 0 : 255;
+                    }
                 }
             }
         );
@@ -241,6 +251,9 @@ namespace OGF {
             skip_ = mesh_grob()->vertices.nb() /
                 (3000000u * std::max(point_size_, 1u));
             skip_ = std::max(skip_, 1u);
+        }
+        if(!fast_draw_) {
+            view_changed_ = false;
         }
     }
 
