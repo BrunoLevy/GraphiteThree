@@ -46,249 +46,252 @@ namespace {
 
     // Fast ellipsoid renderer, may have some precision issue
     // with very skinny ellipsoids
-    const char* fp32_source = 
-        "//primitive GLUP_POINTS\n"
+    const char* fp32_source =
+        R"(
+        //primitive GLUP_POINTS
 
         // Vertex shader
         // Input point and basis as GLUP_POINTS + attributes
         // basis is encoded in (color,tex_color,normal)
         // Transforms points and basis into clip space
         // Computes inverse transform of basis Minv
-        "//stage GL_VERTEX_SHADER\n"
-        "//import <GLUP/current_profile/vertex_shader_preamble.h>\n"
-        "//import <GLUPGLSL/state.h>\n"
-        "//import <GLUP/stdglup.h>\n"
-        "//import <GLUP/current_profile/toggles.h>\n"
-        "//import <GLUP/current_profile/primitive.h>\n"
-        "in vec4 vertex_in;\n"
-        "in vec4 color_in;\n"                          
-        "in vec4 tex_coord_in;\n"
-        "in vec4 normal_in;\n"
-        "out VertexData {\n"
-        "  vec3 p;\n"            // current point
-        "  mat3 Minv;\n"         // M = [U|V|W]; Minv = M^-1 
-        "  mat3 M_clip_space;\n" // M_clip_space = MVP * M
-        "} VertexOut;\n"
-        "void main(void) {\n"
-        "   VertexOut.p  = vertex_in.xyz;\n"
-        "   gl_Position = GLUP.modelviewprojection_matrix*vertex_in;\n"
-        "   mat3 MVP33 = mat3(GLUP.modelviewprojection_matrix);\n"
-        "   VertexOut.M_clip_space = MVP33*mat3(\n"
-        "      color_in.xyz, tex_coord_in.xyz, normal_in.xyz\n"
-        "   );\n"
-        "   vec3 Up = vec3(color_in.xyz);\n"
-        "   vec3 Vp = vec3(tex_coord_in.xyz);\n"
-        "   vec3 Wp = vec3(normal_in.xyz);\n"
-        "   VertexOut.Minv = transpose(mat3(\n"
-        "      Up/dot(Up,Up), Vp/dot(Vp,Vp), Wp/dot(Wp,Wp)\n"
-        "   ));\n"
-        "}\n"
+        //stage GL_VERTEX_SHADER
+        //import <GLUP/current_profile/vertex_shader_preamble.h>
+        //import <GLUPGLSL/state.h>
+        //import <GLUP/stdglup.h>
+        //import <GLUP/current_profile/toggles.h>
+        //import <GLUP/current_profile/primitive.h>
+        in vec4 vertex_in;
+        in vec4 color_in;                          
+        in vec4 tex_coord_in;
+        in vec4 normal_in;
+        out VertexData {
+          vec3 p;            // current point
+          mat3 Minv;         // M = [U|V|W]; Minv = M^-1 
+          mat3 M_clip_space; // M_clip_space = MVP * M
+        } VertexOut;
+        void main(void) {
+           VertexOut.p  = vertex_in.xyz;
+           gl_Position = GLUP.modelviewprojection_matrix*vertex_in;
+           mat3 MVP33 = mat3(GLUP.modelviewprojection_matrix);
+           VertexOut.M_clip_space = MVP33*mat3(
+              color_in.xyz, tex_coord_in.xyz, normal_in.xyz
+           );
+           vec3 Up = vec3(color_in.xyz);
+           vec3 Vp = vec3(tex_coord_in.xyz);
+           vec3 Wp = vec3(normal_in.xyz);
+           VertexOut.Minv = transpose(mat3(
+              Up/dot(Up,Up), Vp/dot(Vp,Vp), Wp/dot(Wp,Wp)
+           ));
+        }
 
         // Geometry shader
         // Generates a box around each ellipsoid
-        "//stage GL_GEOMETRY_SHADER\n"
-        "#version 440\n"
-        "#define GLUP_GEOMETRY_SHADER\n"
-        "layout(points) in;\n"
-        "layout(triangle_strip, max_vertices = 18) out;\n"
-        "in VertexData {\n"
-        "   vec3 p;\n"
-        "   mat3 Minv;\n"
-        "   mat3 M_clip_space;\n"
-        "} VertexIn[];\n"
-        "out VertexData {\n"
-        "   flat vec3 p;\n"
-        "   flat mat3 Minv;\n"
-        "} VertexOut;\n"
-        "void cube_vrtx(int i) {\n"
-        "   vec3 delta = vec3(float(i&1),float((i&2)>>1),float((i&4)>>2));\n"
-        "   delta = vec3(-1.0, -1.0, -1.0) + 2.0*delta;\n"
-        "   gl_Position = gl_in[0].gl_Position + \n"
-        "      vec4(VertexIn[0].M_clip_space*delta,0.0); \n"
-        "   EmitVertex();"
-        "}\n"
-        "void main() {\n"
-        "   VertexOut.p    = VertexIn[0].p;\n"
-        "   VertexOut.Minv = VertexIn[0].Minv;\n"
-        "   cube_vrtx(6); cube_vrtx(7); cube_vrtx(4); cube_vrtx(5);\n"
-        "   cube_vrtx(0); cube_vrtx(1); cube_vrtx(2); cube_vrtx(3);\n"
-        "   cube_vrtx(6); cube_vrtx(7); \n"
-        "   EndPrimitive();\n"
-        "   cube_vrtx(4); cube_vrtx(0); cube_vrtx(6); cube_vrtx(2);\n"
-        "   EndPrimitive();\n"
-        "   cube_vrtx(1); cube_vrtx(5); cube_vrtx(3); cube_vrtx(7);\n"
-        "   EndPrimitive();\n"  
-        "}\n"
+        //stage GL_GEOMETRY_SHADER
+        #version 440
+        #define GLUP_GEOMETRY_SHADER
+        layout(points) in;
+        layout(triangle_strip, max_vertices = 18) out;
+        in VertexData {
+           vec3 p;
+           mat3 Minv;
+           mat3 M_clip_space;
+        } VertexIn[];
+        out VertexData {
+           flat vec3 p;
+           flat mat3 Minv;
+        } VertexOut;
+        void cube_vrtx(int i) {
+           vec3 delta = vec3(float(i&1),float((i&2)>>1),float((i&4)>>2));
+           delta = vec3(-1.0, -1.0, -1.0) + 2.0*delta;
+           gl_Position = gl_in[0].gl_Position + 
+              vec4(VertexIn[0].M_clip_space*delta,0.0); 
+           EmitVertex();
+        }
+        void main() {
+           VertexOut.p    = VertexIn[0].p;
+           VertexOut.Minv = VertexIn[0].Minv;
+           cube_vrtx(6); cube_vrtx(7); cube_vrtx(4); cube_vrtx(5);
+           cube_vrtx(0); cube_vrtx(1); cube_vrtx(2); cube_vrtx(3);
+           cube_vrtx(6); cube_vrtx(7); 
+           EndPrimitive();
+           cube_vrtx(4); cube_vrtx(0); cube_vrtx(6); cube_vrtx(2);
+           EndPrimitive();
+           cube_vrtx(1); cube_vrtx(5); cube_vrtx(3); cube_vrtx(7);
+           EndPrimitive();  
+        }
 
         // Fragment shader
         // Displays ellipsoids by ray-tracing
-        "//stage GL_FRAGMENT_SHADER\n"
-        "//import <GLUP/current_profile/fragment_shader_preamble.h>\n"
-        "//import <GLUPGLSL/state.h>\n"
-        "//import <GLUP/stdglup.h>\n"
-        "//import <GLUP/current_profile/toggles.h>\n"
-        "//import <GLUP/fragment_shader_utils.h>\n"
-        "//import <GLUP/fragment_ray_tracing.h>\n"
-        "in VertexData {\n"
-        "   flat vec3  p;\n"
-        "   flat mat3 Minv;\n"
-        "} FragmentIn;\n"
-        "void main() {\n"
-        "   if(!gl_FrontFacing) discard; \n"
-        "   if(glupIsEnabled(GLUP_CLIPPING)) {\n"
-        "      if(dot(vec4(FragmentIn.p,1.0),GLUP.world_clip_plane) < 0.0) {\n"
-        "          discard; \n"
-        "      }\n"        
-        "   }\n"
-        "   Ray R = glup_primary_ray();\n"
-        "   vec3 D = FragmentIn.Minv * (R.O - FragmentIn.p); \n"
-        "   vec3 v = FragmentIn.Minv * R.V; \n"
-        "   float a   = dot(v,v); \n"
-        "   float b_p = dot(D,v); \n"
-        "   float c   = dot(D,D) - 1.0; \n"
-        "   float delta_p = b_p*b_p - a*c; \n"
-        "   if(delta_p < 0.0) discard; \n"
-        "   float t = -(b_p+sqrt(delta_p))/a;\n"
-        "   vec3 I = R.O + t*R.V; \n"
-        "   glup_update_depth(I); \n"
-        "   vec4 result = GLUP.front_color;\n"
-        "   if(glupIsEnabled(GLUP_LIGHTING)) {\n"
-        "      vec3 w = I-FragmentIn.p; \n"
-        "      vec3 N = transpose(FragmentIn.Minv)*(FragmentIn.Minv*w); \n"
-        "      N = normalize(GLUP.normal_matrix*N); \n"
-        "      if(result.r<0.01 && result.g<0.01 && result.b<0.01) {\n"
-        "         result = vec4(0.5*(N+vec3(1.0, 1.0, 1.0)),1.0);\n"
-        "      }\n"
-        "      result = glup_lighting(result, N);\n"
-        "  }\n"
-        "  glup_FragColor = result;\n"
-        "}\n";
+        //stage GL_FRAGMENT_SHADER
+        //import <GLUP/current_profile/fragment_shader_preamble.h>
+        //import <GLUPGLSL/state.h>
+        //import <GLUP/stdglup.h>
+        //import <GLUP/current_profile/toggles.h>
+        //import <GLUP/fragment_shader_utils.h>
+        //import <GLUP/fragment_ray_tracing.h>
+        in VertexData {
+           flat vec3  p;
+           flat mat3 Minv;
+        } FragmentIn;
+        void main() {
+           if(!gl_FrontFacing) discard; 
+           if(glupIsEnabled(GLUP_CLIPPING)) {
+              if(dot(vec4(FragmentIn.p,1.0),GLUP.world_clip_plane) < 0.0) {
+                  discard; 
+              }        
+           }
+           Ray R = glup_primary_ray();
+           vec3 D = FragmentIn.Minv * (R.O - FragmentIn.p); 
+           vec3 v = FragmentIn.Minv * R.V; 
+           float a   = dot(v,v); 
+           float b_p = dot(D,v); 
+           float c   = dot(D,D) - 1.0; 
+           float delta_p = b_p*b_p - a*c; 
+           if(delta_p < 0.0) discard; 
+           float t = -(b_p+sqrt(delta_p))/a;
+           vec3 I = R.O + t*R.V; 
+           glup_update_depth(I); 
+           vec4 result = GLUP.front_color;
+           if(glupIsEnabled(GLUP_LIGHTING)) {
+              vec3 w = I-FragmentIn.p; 
+              vec3 N = transpose(FragmentIn.Minv)*(FragmentIn.Minv*w); 
+              N = normalize(GLUP.normal_matrix*N); 
+              if(result.r<0.01 && result.g<0.01 && result.b<0.01) {
+                 result = vec4(0.5*(N+vec3(1.0, 1.0, 1.0)),1.0);
+              }
+              result = glup_lighting(result, N);
+          }
+          glup_FragColor = result;
+        }
+        )";
     
 
     /***************************************************************/
 
     // More accurate ellipsoid renderer, uses double precision numbers
     // (much slower on most graphic boards)
-    const char* fp64_source = 
-        "//primitive GLUP_POINTS\n"
+    const char* fp64_source =
+        R"(
+        //primitive GLUP_POINTS
 
         // Vertex shader
         // Input point and basis as GLUP_POINTS + attributes
         // basis is encoded in (color,tex_color,normal)
         // Transforms points and basis into clip space
         // Computes inverse transform of basis Minv
-        "//stage GL_VERTEX_SHADER\n"
-        "//import <GLUP/current_profile/vertex_shader_preamble.h>\n"
-        "//import <GLUPGLSL/state.h>\n"
-        "//import <GLUP/stdglup.h>\n"
-        "//import <GLUP/current_profile/toggles.h>\n"
-        "//import <GLUP/current_profile/primitive.h>\n"
-        "in vec4 vertex_in;\n"
-        "in vec4 color_in;\n"                          
-        "in vec4 tex_coord_in;\n"
-        "in vec4 normal_in;\n"
-        "out VertexData {\n"
-        "  vec3 p;\n"             // current point
-        "  dmat3 Minv;\n"         // M = [U|V|W]; Minv = M^-1 
-        "  mat3  M_clip_space;\n" // M_clip_space = MVP * M
-        "} VertexOut;\n"
-        "void main(void) {\n"
-        "   VertexOut.p  = vertex_in.xyz;\n"
-        "   gl_Position = GLUP.modelviewprojection_matrix*vertex_in;\n"
-        "   mat3 MVP33 = mat3(GLUP.modelviewprojection_matrix);\n"
-        "   VertexOut.M_clip_space = MVP33*mat3(\n"
-        "      color_in.xyz, tex_coord_in.xyz, normal_in.xyz\n"
-        "   );\n"
-        "   dvec3 Up = dvec3(color_in.xyz);\n"
-        "   dvec3 Vp = dvec3(tex_coord_in.xyz);\n"
-        "   dvec3 Wp = dvec3(normal_in.xyz);\n"
-        "   VertexOut.Minv = transpose(dmat3(\n"
-        "      Up/dot(Up,Up), Vp/dot(Vp,Vp), Wp/dot(Wp,Wp)\n"
-        "   ));\n"
-        "}\n"
+        //stage GL_VERTEX_SHADER
+        //import <GLUP/current_profile/vertex_shader_preamble.h>
+        //import <GLUPGLSL/state.h>
+        //import <GLUP/stdglup.h>
+        //import <GLUP/current_profile/toggles.h>
+        //import <GLUP/current_profile/primitive.h>
+        in vec4 vertex_in;
+        in vec4 color_in;                          
+        in vec4 tex_coord_in;
+        in vec4 normal_in;
+        out VertexData {
+          vec3 p;             // current point
+          dmat3 Minv;         // M = [U|V|W]; Minv = M^-1 
+          mat3  M_clip_space; // M_clip_space = MVP * M
+        } VertexOut;
+        void main(void) {
+           VertexOut.p  = vertex_in.xyz;
+           gl_Position = GLUP.modelviewprojection_matrix*vertex_in;
+           mat3 MVP33 = mat3(GLUP.modelviewprojection_matrix);
+           VertexOut.M_clip_space = MVP33*mat3(
+              color_in.xyz, tex_coord_in.xyz, normal_in.xyz
+           );
+           dvec3 Up = dvec3(color_in.xyz);
+           dvec3 Vp = dvec3(tex_coord_in.xyz);
+           dvec3 Wp = dvec3(normal_in.xyz);
+           VertexOut.Minv = transpose(dmat3(
+              Up/dot(Up,Up), Vp/dot(Vp,Vp), Wp/dot(Wp,Wp)
+           ));
+        }
 
         // Geometry shader
         // Generates a box around each ellipsoid
-        "//stage GL_GEOMETRY_SHADER\n"
-        "#version 440\n"
-        "#define GLUP_GEOMETRY_SHADER\n"
-        "layout(points) in;\n"
-        "layout(triangle_strip, max_vertices = 18) out;\n"
-        "in VertexData {\n"
-        "   vec3 p;\n"
-        "   dmat3 Minv;\n"
-        "   mat3 M_clip_space;\n"
-        "} VertexIn[];\n"
-        "out VertexData {\n"
-        "   flat vec3 p;\n"
-        "   flat dmat3 Minv;\n"
-        "} VertexOut;\n"
-        "void cube_vrtx(int i) {\n"
-        "   vec3 delta = vec3(float(i&1),float((i&2)>>1),float((i&4)>>2));\n"
-        "   delta = vec3(-1.0, -1.0, -1.0) + 2.0*delta;\n"
-        "   gl_Position = gl_in[0].gl_Position + \n"
-        "      vec4(VertexIn[0].M_clip_space*delta,0.0); \n"
-        "   EmitVertex();"
-        "}\n"
-        "void main() {\n"
-        "   VertexOut.p    = VertexIn[0].p;\n"
-        "   VertexOut.Minv = VertexIn[0].Minv;\n"
-        "   cube_vrtx(6); cube_vrtx(7); cube_vrtx(4); cube_vrtx(5);\n"
-        "   cube_vrtx(0); cube_vrtx(1); cube_vrtx(2); cube_vrtx(3);\n"
-        "   cube_vrtx(6); cube_vrtx(7); \n"
-        "   EndPrimitive();\n"
-        "   cube_vrtx(4); cube_vrtx(0); cube_vrtx(6); cube_vrtx(2);\n"
-        "   EndPrimitive();\n"
-        "   cube_vrtx(1); cube_vrtx(5); cube_vrtx(3); cube_vrtx(7);\n"
-        "   EndPrimitive();\n"  
-        "}\n"
+        //stage GL_GEOMETRY_SHADER
+        #version 440
+        #define GLUP_GEOMETRY_SHADER
+        layout(points) in;
+        layout(triangle_strip, max_vertices = 18) out;
+        in VertexData {
+           vec3 p;
+           dmat3 Minv;
+           mat3 M_clip_space;
+        } VertexIn[];
+        out VertexData {
+           flat vec3 p;
+           flat dmat3 Minv;
+        } VertexOut;
+        void cube_vrtx(int i) {
+           vec3 delta = vec3(float(i&1),float((i&2)>>1),float((i&4)>>2));
+           delta = vec3(-1.0, -1.0, -1.0) + 2.0*delta;
+           gl_Position = gl_in[0].gl_Position + 
+              vec4(VertexIn[0].M_clip_space*delta,0.0); 
+           EmitVertex();
+        }
+        void main() {
+           VertexOut.p    = VertexIn[0].p;
+           VertexOut.Minv = VertexIn[0].Minv;
+           cube_vrtx(6); cube_vrtx(7); cube_vrtx(4); cube_vrtx(5);
+           cube_vrtx(0); cube_vrtx(1); cube_vrtx(2); cube_vrtx(3);
+           cube_vrtx(6); cube_vrtx(7); 
+           EndPrimitive();
+           cube_vrtx(4); cube_vrtx(0); cube_vrtx(6); cube_vrtx(2);
+           EndPrimitive();
+           cube_vrtx(1); cube_vrtx(5); cube_vrtx(3); cube_vrtx(7);
+           EndPrimitive();  
+        }
 
         // Fragment shader
         // Displays ellipsoids by ray-tracing
-        "//stage GL_FRAGMENT_SHADER\n"
-        "//import <GLUP/current_profile/fragment_shader_preamble.h>\n"
-        "//import <GLUPGLSL/state.h>\n"
-        "//import <GLUP/stdglup.h>\n"
-        "//import <GLUP/current_profile/toggles.h>\n"
-        "//import <GLUP/fragment_shader_utils.h>\n"
-        "//import <GLUP/fragment_ray_tracing.h>\n"
-        "in VertexData {\n"
-        "   flat vec3  p;\n"
-        "   flat dmat3 Minv;\n"
-        "} FragmentIn;\n"
-        "void main() {\n"
-        "   if(!gl_FrontFacing) discard; \n"
-        "   if(glupIsEnabled(GLUP_CLIPPING)) {\n"
-        "      if(dot(vec4(FragmentIn.p,1.0),GLUP.world_clip_plane) < 0.0) {\n"
-        "          discard; \n"
-        "      }\n"
-        "   }\n"
-        "   Ray R = glup_primary_ray();\n"
-        "   dvec3 D = FragmentIn.Minv * (dvec3(R.O - FragmentIn.p)); \n"
-        "   dvec3 v = FragmentIn.Minv * dvec3(R.V); \n"
-        "   double a   = dot(v,v); \n"
-        "   double b_p = dot(D,v); \n"
-        "   double c   = dot(D,D) - 1.0; \n"
-        "   double delta_p = b_p*b_p - a*c; \n"
-        "   if(delta_p < 0.0) discard; \n"
-        "   double t = -(b_p+sqrt(delta_p))/a;\n"
-        "   vec3 I = R.O + float(t)*R.V; \n"
-        "   glup_update_depth(I); \n"
-        "   vec4 result = GLUP.front_color;\n"
-        "   if(glupIsEnabled(GLUP_LIGHTING)) {\n"
-        "      vec3 w = I-FragmentIn.p; \n"
-        "      mat3 fMinv = mat3(FragmentIn.Minv); \n"
-        "      mat3 fMinvt = transpose(fMinv); \n"
-        "      vec3 N = fMinvt*(fMinv*w); \n"
-        "      N = normalize(GLUP.normal_matrix*N); \n"
-        "      if(result.r<0.01 && result.g<0.01 && result.b<0.01) {\n"
-        "         result = vec4(0.5*(N+vec3(1.0, 1.0, 1.0)),1.0);\n"
-        "      }\n"
-        "      result = glup_lighting(result, N);\n"
-        "  }\n"
-        "  glup_FragColor = result;\n"
-        "}\n";
-    
+        //stage GL_FRAGMENT_SHADER
+        //import <GLUP/current_profile/fragment_shader_preamble.h>
+        //import <GLUPGLSL/state.h>
+        //import <GLUP/stdglup.h>
+        //import <GLUP/current_profile/toggles.h>
+        //import <GLUP/fragment_shader_utils.h>
+        //import <GLUP/fragment_ray_tracing.h>
+        in VertexData {
+           flat vec3  p;
+           flat dmat3 Minv;
+        } FragmentIn;
+        void main() {
+           if(!gl_FrontFacing) discard; 
+           if(glupIsEnabled(GLUP_CLIPPING)) {
+              if(dot(vec4(FragmentIn.p,1.0),GLUP.world_clip_plane) < 0.0) {
+                  discard; 
+              }
+           }
+           Ray R = glup_primary_ray();
+           dvec3 D = FragmentIn.Minv * (dvec3(R.O - FragmentIn.p)); 
+           dvec3 v = FragmentIn.Minv * dvec3(R.V); 
+           double a   = dot(v,v); 
+           double b_p = dot(D,v); 
+           double c   = dot(D,D) - 1.0; 
+           double delta_p = b_p*b_p - a*c; 
+           if(delta_p < 0.0) discard; 
+           double t = -(b_p+sqrt(delta_p))/a;
+           vec3 I = R.O + float(t)*R.V; 
+           glup_update_depth(I); 
+           vec4 result = GLUP.front_color;
+           if(glupIsEnabled(GLUP_LIGHTING)) {
+              vec3 w = I-FragmentIn.p; 
+              mat3 fMinv = mat3(FragmentIn.Minv); 
+              mat3 fMinvt = transpose(fMinv); 
+              vec3 N = fMinvt*(fMinv*w); 
+              N = normalize(GLUP.normal_matrix*N); 
+              if(result.r<0.01 && result.g<0.01 && result.b<0.01) {
+                 result = vec4(0.5*(N+vec3(1.0, 1.0, 1.0)),1.0);
+              }
+              result = glup_lighting(result, N);
+          }
+          glup_FragColor = result;
+        };
+        )";
 }
 
 namespace OGF {
