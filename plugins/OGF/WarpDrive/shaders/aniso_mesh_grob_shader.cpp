@@ -49,12 +49,14 @@ namespace {
     const char* fp32_source =
         R"(
         //primitive GLUP_POINTS
+        )"
 
         // Vertex shader
         // Input point and basis as GLUP_POINTS + attributes
         // basis is encoded in (color,tex_color,normal)
         // Transforms points and basis into clip space
         // Computes inverse transform of basis Minv
+        R"(
         //stage GL_VERTEX_SHADER
         //import <GLUP/current_profile/vertex_shader_preamble.h>
         //import <GLUPGLSL/state.h>
@@ -84,9 +86,11 @@ namespace {
               Up/dot(Up,Up), Vp/dot(Vp,Vp), Wp/dot(Wp,Wp)
            ));
         }
-
+        )"
+        
         // Geometry shader
         // Generates a box around each ellipsoid
+        R"(
         //stage GL_GEOMETRY_SHADER
         #version 440
         #define GLUP_GEOMETRY_SHADER
@@ -120,9 +124,11 @@ namespace {
            cube_vrtx(1); cube_vrtx(5); cube_vrtx(3); cube_vrtx(7);
            EndPrimitive();  
         }
+        )"
 
         // Fragment shader
         // Displays ellipsoids by ray-tracing
+        R"(
         //stage GL_FRAGMENT_SHADER
         //import <GLUP/current_profile/fragment_shader_preamble.h>
         //import <GLUPGLSL/state.h>
@@ -174,12 +180,14 @@ namespace {
     const char* fp64_source =
         R"(
         //primitive GLUP_POINTS
-
+        )"
+            
         // Vertex shader
         // Input point and basis as GLUP_POINTS + attributes
         // basis is encoded in (color,tex_color,normal)
         // Transforms points and basis into clip space
         // Computes inverse transform of basis Minv
+        R"(
         //stage GL_VERTEX_SHADER
         //import <GLUP/current_profile/vertex_shader_preamble.h>
         //import <GLUPGLSL/state.h>
@@ -209,9 +217,11 @@ namespace {
               Up/dot(Up,Up), Vp/dot(Vp,Vp), Wp/dot(Wp,Wp)
            ));
         }
+        )"
 
         // Geometry shader
         // Generates a box around each ellipsoid
+        R"(
         //stage GL_GEOMETRY_SHADER
         #version 440
         #define GLUP_GEOMETRY_SHADER
@@ -245,9 +255,11 @@ namespace {
            cube_vrtx(1); cube_vrtx(5); cube_vrtx(3); cube_vrtx(7);
            EndPrimitive();  
         }
-
+        )"
+        
         // Fragment shader
         // Displays ellipsoids by ray-tracing
+        R"(
         //stage GL_FRAGMENT_SHADER
         //import <GLUP/current_profile/fragment_shader_preamble.h>
         //import <GLUPGLSL/state.h>
