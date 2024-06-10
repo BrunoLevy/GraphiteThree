@@ -1140,12 +1140,22 @@ namespace OGF {
               break;
             }
             bary_ = vec3(0.0, 0.0, 0.0);
+            double bary_cnt = 0.0;
             for(index_t rgn=0; rgn<region_bary_.size(); ++rgn) {
                 region_bary_[rgn] =
                     1.0/double(region_count[rgn])*region_bary_[rgn];
-                bary_ = bary_ + region_bary_[rgn];
+                if(
+                    Numeric::is_nan(region_bary_[rgn].x) ||
+                    Numeric::is_nan(region_bary_[rgn].y) ||
+                    Numeric::is_nan(region_bary_[rgn].z) 
+                ) {
+                    region_bary_[rgn] = vec3(0.0, 0.0, 0.0);
+                } else {
+                    bary_ = bary_ + region_bary_[rgn];
+                    bary_cnt += 1.0;
+                }
             }
-            bary_ = 1.0/double(region_bary_.size())*bary_;
+            bary_ = (1.0/bary_cnt)*bary_;
             dirty_ = false;
         }
 
