@@ -570,6 +570,28 @@ autogui.handlers['OGF::FullScreenEffectName'] = function(
    autogui.combo_box(object, property_name, values, tooltip)
 end
 
+-- \brief Handler for OGF::GrobName
+-- \param[in] object, property_name, menum, tooltip handler parameters
+-- \see autogui.handlers
+
+autogui.handlers['OGF::GrobName'] = function(
+   object, property_name, mtype, tooltip
+)
+   local values = gom.get_environment_value('grob_instances')
+   autogui.combo_box(object, property_name, values, tooltip)
+end
+
+-- \brief Handler for OGF::NewGrobName
+-- \param[in] object, property_name, menum, tooltip handler parameters
+-- \see autogui.handlers
+
+autogui.handlers['OGF::NewGrobName'] = function(
+   object, property_name, mtype, tooltip
+)
+   local values = gom.get_environment_value('grob_instances')
+   autogui.editable_combo_box(object, property_name, values, tooltip)
+end
+
 
 -- \brief Handler for OGF::MeshGrobName
 -- \param[in] object, property_name, menum, tooltip handler parameters

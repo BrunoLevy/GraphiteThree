@@ -37,6 +37,7 @@
  
 
 #include <OGF/mesh/commands/mesh_grob_mesh_commands.h>
+#include <OGF/scene_graph/types/scene_graph.h>
 #include <geogram/mesh/mesh_topology.h>
 #include <geogram/mesh/mesh_geometry.h>
 #include <geogram/mesh/mesh_repair.h>
@@ -264,7 +265,54 @@ namespace OGF {
         
         mesh_grob()->update();
     }
-    
+
+    void MeshGrobMeshCommands::gather(const NewMeshGrobName& new_mesh_name) {
+        vector<MeshGrob*> inputs;
+        for(index_t i=0; i<scene_graph()->get_nb_children(); ++i) {
+            MeshGrob* cur = dynamic_cast<MeshGrob*>(scene_graph()->ith_child(i));
+            if(cur != nullptr) {
+                if(cur->name() == std::string(new_mesh_name)) {
+                    Logger::err("Mesh")
+                       << "gather: target mesh cannot be one of the input meshes"
+                       << std::endl;
+                    return;
+                }
+                inputs.push_back(cur);
+            }
+        }
+        MeshGrob* new_mesh =
+            MeshGrob::find_or_create(scene_graph(),new_mesh_name);
+        index_t total_nv = 0;
+        for(MeshGrob* M: inputs) {
+            total_nv += M->vertices.nb();
+        }
+        new_mesh->vertices.set_dimension(3);
+        new_mesh->vertices.create_vertices(total_nv);
+        index_t v_ofs = 0;
+        for(MeshGrob* M: inputs) {
+            for(index_t v: M->vertices) {
+                new_mesh->vertices.point_ptr(v+v_ofs)[0] =
+                    M->vertices.point_ptr(v)[0];
+                new_mesh->vertices.point_ptr(v+v_ofs)[1] =
+                    M->vertices.point_ptr(v)[1];
+                new_mesh->vertices.point_ptr(v+v_ofs)[2] =
+                    M->vertices.point_ptr(v)[2];
+            }
+            for(index_t f: M->facets) {
+                index_t N = M->facets.nb_vertices(f);
+                index_t g = new_mesh->facets.create_polygon(N);
+                for(index_t lv=0; lv<N; ++lv) {
+                    new_mesh->facets.set_vertex(
+                        g,lv,M->facets.vertex(f,lv)+v_ofs
+                    );
+                }
+            }
+            v_ofs += M->vertices.nb();
+        }
+        new_mesh->facets.connect();
+        new_mesh->update();
+    }
+
 
 }
 

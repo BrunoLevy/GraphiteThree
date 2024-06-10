@@ -154,10 +154,13 @@ namespace OGF {
          *  only works for surfaces, and does not append attributes
          *  (TODO...)
          */
-        void append(
-            const MeshGrobName& other
-        );
-	
+        void append(const MeshGrobName& other);
+
+        /**
+         * \brief Gathers all surface meshes into a single surface
+         *  mesh.
+         */
+        void gather(const NewMeshGrobName& new_mesh);
     };
 }
 
