@@ -2,7 +2,7 @@
 # Graphite/// root CMakeList
 ##############################################################################
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.5)
 
 project(Graphite)
 include(${CMAKE_SOURCE_DIR}/cmake/graphite.cmake)
