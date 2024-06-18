@@ -524,8 +524,9 @@ namespace OGF {
 
 	
         if(mclass == nullptr) {
-            Logger::err("SceneGraph") << class_name_in << ": no such object class"
-                                      << std::endl;
+            Logger::err("SceneGraph")
+                << class_name_in << ": no such object class"
+                << std::endl;
             return nullptr;
         }
         

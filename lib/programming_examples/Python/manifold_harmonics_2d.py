@@ -14,7 +14,7 @@ import sys,math,numpy,os.path
 
 if not 'gom' in globals():
    import gompy
-   scene_graph = gom.create(classname='OGF::SceneGraph',interpreter=gom)
+   scene_graph = gom.meta_types.OGF.SceneGraph.create(interpreter=gom)
 else:
     # pyplot accesses sys.argv[0] that is not initialized by Graphite
     sys.argv =  ['graphite']
@@ -24,13 +24,12 @@ scene_graph.clear()
 file = gom.get_environment_value('PROJECT_ROOT')+'/lib/data/violin.obj'   
    
 if os.path.isfile(file):
-   scene_graph.load_object(file)
+   S = scene_graph.load_object(file)
 else:
-   scene_graph.create_object('Mesh','S').I.Shapes.create_ngon(nb_edges=8)
+   S = scene_graph.create_object('Mesh','S').I.Shapes.create_ngon(nb_edges=8)
 
-S = scene_graph.current()
-S.I.Surface.remesh_smooth(nb_points=500)
-R = scene_graph.resolve('remesh')
+S.I.Surface.remesh_smooth(nb_points=500,remesh_name='remesh')
+R = scene_graph.objects.remesh
 R.I.Spectral.compute_manifold_harmonics(nb_eigens=100)
 
 # ====================================================================
