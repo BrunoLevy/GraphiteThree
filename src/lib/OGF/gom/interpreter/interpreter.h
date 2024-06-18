@@ -498,6 +498,15 @@ namespace OGF {
 	) {
 	    return instance_by_file_extension(extension);
 	}
+
+      public:
+        /**
+         * \brief Gets the default interpreter.
+         * \return a pointer to the first created interpreter.
+         */
+        static Interpreter* default_interpreter() {
+            return default_interpreter_;
+        }
 	
       gom_properties:
 	/**
@@ -773,6 +782,7 @@ namespace OGF {
 	> instance_;
 	static std::map<std::string, Interpreter*>
 	    instance_by_file_extension_;
+        static Interpreter* default_interpreter_;
 	
 	Scope_var globals_;
         Scope_var meta_types_;

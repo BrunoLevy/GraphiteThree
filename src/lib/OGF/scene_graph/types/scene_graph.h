@@ -65,10 +65,12 @@ namespace OGF {
 
         /**
          * \brief SceneGraph constructor.
-	 * \param[in] interpreter a pointer to the main interpreter.
+	 * \param[in] interpreter a pointer to the main interpreter, or
+         *   nullptr. If interpreter is set to nullptr, then the default 
+         *   interpreter is used.
          */
-        SceneGraph(Interpreter* interpreter);
-
+        SceneGraph(Interpreter* interpreter = nullptr);
+        
         /**
          * \brief SceneGraph destructor.
          */

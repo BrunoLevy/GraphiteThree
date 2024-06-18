@@ -65,7 +65,10 @@ namespace OGF {
 
     SceneGraph::SceneGraph(Interpreter* interpreter) :
 	CompositeGrob(nullptr),
-	interpreter_(interpreter),
+	interpreter_(
+            interpreter != nullptr ? interpreter :
+            Interpreter::default_interpreter()
+        ),
 	render_area_(nullptr),
 	application_(nullptr),
 	scene_graph_shader_manager_(nullptr)

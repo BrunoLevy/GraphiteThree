@@ -51,7 +51,8 @@ namespace OGF {
     std::map<std::string, SmartPointer<Interpreter> > Interpreter::instance_;
     std::map<std::string, Interpreter* >
        Interpreter::instance_by_file_extension_;
-
+    Interpreter* Interpreter::default_interpreter_ = nullptr;
+    
     Interpreter::Interpreter() {
 	globals_ = new GlobalScope(this);
         MetaTypesScope* meta_types = new MetaTypesScope();
@@ -60,6 +61,9 @@ namespace OGF {
         OGF->create_subscope("Numeric");
         meta_types->create_subscope("std");
         meta_types_ = meta_types;
+        if(default_interpreter_ == nullptr) {
+            default_interpreter_ = this;
+        }
     }
 
     void Interpreter::initialize(
