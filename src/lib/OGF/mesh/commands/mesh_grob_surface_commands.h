@@ -255,7 +255,7 @@ namespace OGF {
 	  * \param[in] post_process triangulate result, remove small edges, 
 	  *  make sure there is no intersection
           */
-        void compute_union(
+        MeshGrob* compute_union(
 	    const MeshGrobName& other,
 	    const NewMeshGrobName& result = "result",
 	    bool pre_process=false,	    
@@ -273,7 +273,7 @@ namespace OGF {
 	  * \param[in] post_process triangulate result, remove small edges, 
 	  *  make sure there is no intersection
           */
-        void compute_intersection(
+        MeshGrob* compute_intersection(
 	    const MeshGrobName& other,
 	    const NewMeshGrobName& result = "result",
 	    bool pre_process=false,
@@ -290,7 +290,7 @@ namespace OGF {
 	  * \param[in] post_process triangulate result, remove small edges, 
 	  *  make sure there is no intersection
           */
-        void compute_difference(
+        MeshGrob* compute_difference(
 	    const MeshGrobName& other,
 	    const NewMeshGrobName& result = "result",
 	    bool pre_process=false,
@@ -310,7 +310,7 @@ namespace OGF {
           */
         gom_arg_attribute(operation, handler, "combo_box")
         gom_arg_attribute(operation, values, "A+B;A*B;A-B;B-A")
-        void compute_boolean_operation(
+        MeshGrob* compute_boolean_operation(
             const MeshGrobName& other,
             const NewMeshGrobName& result = "result",
             const std::string& operation = "A+B",

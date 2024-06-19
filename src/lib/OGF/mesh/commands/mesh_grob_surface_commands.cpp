@@ -233,46 +233,46 @@ namespace OGF {
         mesh_grob()->update();
     }
 
-    void MeshGrobSurfaceCommands::compute_union(
+    MeshGrob* MeshGrobSurfaceCommands::compute_union(
 	const MeshGrobName& other_name,
 	const NewMeshGrobName& result_name,
 	bool pre_process,
 	bool post_process
     ) {
-        compute_boolean_operation(
+        return compute_boolean_operation(
             other_name, result_name,
             "A+B",
             pre_process, post_process
         );
     }
     
-    void MeshGrobSurfaceCommands::compute_intersection(
+    MeshGrob* MeshGrobSurfaceCommands::compute_intersection(
 	const MeshGrobName& other_name,
 	const NewMeshGrobName& result_name,
 	bool pre_process,
 	bool post_process
     ) {
-        compute_boolean_operation(
+        return compute_boolean_operation(
             other_name, result_name,
             "A*B",
             pre_process, post_process
         );
     }
 
-    void MeshGrobSurfaceCommands::compute_difference(
+    MeshGrob* MeshGrobSurfaceCommands::compute_difference(
 	const MeshGrobName& other_name,
 	const NewMeshGrobName& result_name,
 	bool pre_process,
 	bool post_process
     ) {
-        compute_boolean_operation(
+        return compute_boolean_operation(
             other_name, result_name,
             "A-B",
             pre_process, post_process
         );
     }
 
-    void MeshGrobSurfaceCommands::compute_boolean_operation(
+    MeshGrob* MeshGrobSurfaceCommands::compute_boolean_operation(
         const MeshGrobName& other_name,
         const NewMeshGrobName& result_name,
         const std::string& operation,
@@ -283,21 +283,21 @@ namespace OGF {
 	if(other == nullptr) {
 	    Logger::err("Booleans") << other_name << ": no such MeshGrob"
 				    << std::endl;
-	    return;
+	    return nullptr;
 	}
 	if(other == mesh_grob()) {
 	    Logger::err("Booleans") << "Mesh and operand are the same"
 				    << std::endl;
-	    return;
+	    return nullptr;
 	}
 	if(!mesh_grob()->facets.are_simplices()) {
 	    Logger::err("Booleans") << "Mesh is not triangulated" << std::endl;
-	    return;
+	    return nullptr;
 	}
 	if(!other->facets.are_simplices()) {
 	    Logger::err("Booleans") << other_name << " is not triangulated"
 				    << std::endl;
-	    return;	    
+	    return nullptr;	    
 	}
 	MeshGrob* result = MeshGrob::find_or_create(scene_graph(), result_name);
 	if(pre_process) {
@@ -311,6 +311,7 @@ namespace OGF {
 	    fix_mesh_for_boolean_ops(result);
 	}
 	result->update();
+        return result;
     }
 
     void MeshGrobSurfaceCommands::intersect(

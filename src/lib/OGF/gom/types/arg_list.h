@@ -481,6 +481,8 @@ namespace OGF {
         /**
          * \brief Converts a pointer to Object into a string using its name
          *  attribute if target type is a xxxName
+         * \details Used by the mechanism that lets one pass Object* to functions
+         *  that take ObjectNames
          * \param[in] argval the stored value 
          * \param[out] name the name to be read
          * \retval true if \p argval is a pointer to Object that has
@@ -500,6 +502,8 @@ namespace OGF {
 
         /**
          * \brief Gets the name of an object
+         * \details Used by the mechanism that lets one pass Object* to functions
+         *  that take ObjectNames
          * \param[in] object an Any with a pointer to the object
          * \param[out] name an Any with the name of the object
          * \retval true if \p object has a pointer to an Object that has

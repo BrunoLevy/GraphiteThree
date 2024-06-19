@@ -163,6 +163,16 @@ namespace OGF {
 	 */
 	bool has_attribute(const std::string& attribute_name) const;
 
+
+        /**
+         * \brief Gets the points
+	 * \return a pointer to a new NL::Vector referring to 
+	 *  the array of points
+         */
+        NL::Vector* get_points() {
+            return find_attribute("vertices.point");
+        }
+        
 	/**
 	 * \brief If the surface mesh is triangulated, 
 	 *   gets the array of triangles.
