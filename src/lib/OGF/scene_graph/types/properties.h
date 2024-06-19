@@ -39,6 +39,7 @@
 #define H_OGF_SCENE_GRAPH_TYPES_SHADER_PROPERTIES_H
 
 #include <OGF/scene_graph/common/common.h>
+#include <OGF/gom/types/arg_list.h>
 #include <geogram/image/color.h>
 
 #include <iostream>
@@ -203,8 +204,8 @@ namespace OGF {
     SCENE_GRAPH_API std::istream& operator>>(
         std::istream& in, SurfaceStyle& ss
     );
-
-    //________________________________________________________
+    
+    /***********************************************************************/
 
     /**
      * \brief A template class for strings that need to have a 
@@ -214,7 +215,7 @@ namespace OGF {
      *  and use a specific handler for it in the GUI. There
      *  are several subclasses for, e.g., image file names, object file names
      */
-    template <class T, bool create=false> class Name {
+    template <class T, bool create=false> class Name : public NameBase {
     public:
         /**
          * \brief This class type.

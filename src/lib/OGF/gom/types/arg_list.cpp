@@ -86,13 +86,16 @@ namespace OGF {
 
 	MetaType* current_type = argval_[i].meta_type();
 	
-	Logger::err("GOM") << "Arg type error:"
-			   << " i = " << i
-			   << " name = " << argname_[i]
-		           << " type = " << ((current_type != nullptr) ? current_type->name() : "unknown")
-			   << " expected type = "
-			   << ((expected_type != nullptr) ? expected_type->name() : "unknown: " + expected_typeid_name) 
-			   << std::endl;
+	Logger::err("GOM")
+            << "Arg type error:"
+            << " i = " << i
+            << " name = " << argname_[i]
+            << " type = " <<
+                   ((current_type != nullptr) ? current_type->name() : "unknown")
+            << " expected type = "
+            << ((expected_type != nullptr) ? expected_type->name() :
+                "unknown: " + expected_typeid_name) 
+            << std::endl;
 
 	std::ostringstream oss;
 	serialize(oss);
@@ -101,6 +104,21 @@ namespace OGF {
 	//geo_assert_not_reached;
     }
 
+    bool ArgList::get_object_name(const Any& object, Any& name) {
+        Object* object_ptr;
+        if(!object.get_value(object_ptr)) {
+            return false;
+        }
+        if(object_ptr == nullptr) {
+            return false;
+        }
+        std::string object_name;
+        if(!object_ptr->get_property("name", object_name)) {
+            return false;
+        }
+        name.set_value(object_name);
+        return true;
+    }
     
 }
 
