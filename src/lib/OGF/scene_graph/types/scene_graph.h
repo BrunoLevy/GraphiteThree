@@ -202,6 +202,18 @@ namespace OGF {
 	    const GrobClassName& classname, const std::string& name = ""
 	);
 
+
+        /**
+         * \brief Creates a mesh.
+         * \param[in] name the name of the mesh in the SceneGraph. If no 
+	 *  name is specified, then the created object will be 
+         *  given a default name.
+         * \return a pointer to the created mesh
+         */
+        Grob* create_mesh(const std::string& name = "") {
+            return create_object("OGF::MeshGrob",name);
+        }
+        
 	/**
 	 * \brief Creates a new object or retreives an existing one.
 	 * \param[in] classname the class name of the object to create,

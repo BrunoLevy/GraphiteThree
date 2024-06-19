@@ -306,7 +306,7 @@ namespace {
      * \retval false otherwise.
      */
     bool graphite_Object_has_getter(const std::string& name);
-    
+
     /***************** Python wrapper for Graphite object **************/
 
     PyObject* graphite_Object_new(
