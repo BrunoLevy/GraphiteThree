@@ -35,6 +35,7 @@
  */
 
 #include <OGF/gom/types/callable.h>
+#include <OGF/gom/reflection/meta.h>
 
 namespace OGF {
 
@@ -68,5 +69,58 @@ namespace OGF {
 	return object_->invoke_method(method_->name(), args, ret_val);	
     }
 
+    std::string Request::get_doc() const {
+	std::string result;
+	MetaMethod* mmethod = method();
+	MetaClass* mclass = mmethod->container_meta_class();
+
+	result  = "GOM function\n";
+	result += "============\n";
+	result += mclass->name() + "::" + mmethod->name() + "(";
+	for(index_t i=0; i<mmethod->nb_args(); ++i) {
+	    result += mmethod->ith_arg_name(i);
+	    if(i != mmethod->nb_args()-1) {
+		result += ",";
+	    }
+	}
+	result += ")\n";
+	if(mmethod->has_custom_attribute("help")) {
+	    result += mmethod->custom_attribute_value("help");
+	    result += "\n";
+	}
+	if(mmethod->nb_args() != 0) {
+	    result += "Parameters\n";
+	    result += "==========\n";
+	    for(index_t i=0; i<mmethod->nb_args(); ++i) {
+		result += mmethod->ith_arg_name(i);
+		result += " : ";
+		result += mmethod->ith_arg_type(i)->name();
+		if(mmethod->ith_arg(i)->has_default_value()) {
+		    result += " = ";
+		    bool is_string = (
+			mmethod->ith_arg(i)->default_value().meta_type() ==
+			ogf_meta<std::string>::type()
+		    );
+		    if(is_string) {
+			result += '\'';
+		    }
+		    result +=
+			mmethod->ith_arg(i)->default_value().as_string();
+		    if(is_string) {
+			result += '\'';
+		    }
+		}
+		result += "\n" ;
+		if(mmethod->ith_arg(i)->has_custom_attribute("help")) {
+		    result += mmethod->ith_arg(i)
+			->custom_attribute_value("help");
+		    result += "\n";
+		}
+	    }
+	}
+
+	return result;
+    }
+    
     /*******************************************************************/    
 }

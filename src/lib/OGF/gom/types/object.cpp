@@ -186,6 +186,10 @@ namespace OGF {
         return false;
     }
 
+    void Object::help() const {
+        Logger::out("GOM") << get_doc() << std::endl;
+    }
+    
     bool Object::set_property(
         const std::string& prop_name, const Any& prop_value
     ) {
@@ -314,6 +318,23 @@ namespace OGF {
 			   << " not implemented"
 			   << std::endl;
     }
+
+    std::string Object::get_doc() const {
+        std::string result;
+        MetaClass* mclass = meta_class();
+        // Discard uninteresting doc about the MetaClass
+        // of the MetaClass !!
+        if(mclass == ogf_meta<MetaClass>::type()) {
+            return result;
+        }
+        result = mclass->name();
+        if(mclass->has_custom_attribute("help")) {
+            result += "\n";
+            result += mclass->custom_attribute_value("help");
+        }
+        return result;
+    }
+
     
 /******************************************************************/
     

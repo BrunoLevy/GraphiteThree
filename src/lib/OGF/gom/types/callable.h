@@ -130,6 +130,12 @@ namespace OGF {
 	  */
 	  bool invoke(const ArgList& args, Any& ret_val) override;
 
+
+	 /**
+	  * \copydoc Object::get_doc()
+	  */
+          std::string get_doc() const override;
+          
       gom_slots:
 	  
 	 /**

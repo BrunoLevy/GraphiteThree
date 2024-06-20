@@ -318,7 +318,15 @@ namespace OGF {
 	std::string get_string_id() const {
 	    return string_id();
 	}
-	
+
+        /**
+         * \brief Gets the documentation.
+         * \return A string with a human-readable documentation 
+         *  about this object.
+         */
+        virtual std::string get_doc() const;
+
+        
     gom_slots:
 
 	/**
@@ -374,6 +382,12 @@ namespace OGF {
             const std::string& name, const std::string& value
         );
 
+        /**
+         * \brief Displays some help about this object
+         * \details Outputs the doc property to the logger.
+         */
+        void help() const;
+        
       public:
 	// Note: set_property() variants that are not slots
 	// need to be declared *after* the set_property() slot

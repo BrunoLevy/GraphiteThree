@@ -686,18 +686,7 @@ namespace {
 	if(object == nullptr) {
 	    result_string = "null";
 	} else {
-	    MetaClass* mclass = object->meta_class();
-	    // Discard uninteresting doc about the MetaClass
-	    // of the MetaClass !!
-	    if(mclass == ogf_meta<MetaClass>::type()) {
-		Py_INCREF(Py_None);
-		return Py_None;
-	    }
-	    result_string = mclass->name();
-	    if(mclass->has_custom_attribute("help")) {
-		result_string += "\n";
-		result_string += mclass->custom_attribute_value("help");
-	    }
+            result_string = object->get_doc();
 	}
 	PyObject* result = string_to_python(result_string);
 	Py_INCREF(result);
@@ -826,75 +815,10 @@ namespace {
     
     /**************************************************/
 
-    PyObject* graphite_callable_get_doc(PyObject* self_in, void* closure) {
-	geo_argused(closure);
-	geo_debug_assert(PyGraphite_Check(self_in));
-	graphite_Object* self = (graphite_Object*)self_in;
-	Object* object = self->object;
-	Request* rq = dynamic_cast<Request*>(object);
-	if(rq == nullptr) {
-	    return graphite_get_doc(self_in, closure);
-	}
-	std::string result_string;
-	MetaMethod* mmethod = rq->method();
-	MetaClass* mclass = mmethod->container_meta_class();
-
-	result_string  = "GOM function\n";
-	result_string += "============\n";
-	result_string += 
-	    mclass->name() + "::" + mmethod->name() + "(";
-	for(index_t i=0; i<mmethod->nb_args(); ++i) {
-	    result_string += mmethod->ith_arg_name(i);
-	    if(i != mmethod->nb_args()-1) {
-		result_string += ",";
-	    }
-	}
-	result_string += ")\n";
-	if(mmethod->has_custom_attribute("help")) {
-	    result_string += mmethod->custom_attribute_value("help");
-	    result_string += "\n";
-	}
-	if(mmethod->nb_args() != 0) {
-	    result_string += "Parameters\n";
-	    result_string += "==========\n";
-	    for(index_t i=0; i<mmethod->nb_args(); ++i) {
-		result_string += mmethod->ith_arg_name(i);
-		result_string += " : ";
-		result_string += mmethod->ith_arg_type(i)->name();
-		if(mmethod->ith_arg(i)->has_default_value()) {
-		    result_string += " = ";
-		    bool is_string = (
-			mmethod->ith_arg(i)->default_value().meta_type() ==
-			ogf_meta<std::string>::type()
-		    );
-		    if(is_string) {
-			result_string += '\'';
-		    }
-		    result_string +=
-			mmethod->ith_arg(i)->default_value().as_string();
-		    if(is_string) {
-			result_string += '\'';
-		    }
-		}
-		result_string += "\n" ;
-		if(mmethod->ith_arg(i)->has_custom_attribute("help")) {
-		    result_string += mmethod->ith_arg(i)
-			->custom_attribute_value("help");
-		    result_string += "\n";
-		}
-	    }
-	}
-
-	
-	PyObject* result = string_to_python(result_string);
-	Py_INCREF(result);
-	return result;
-    }
-
     PyGetSetDef graphite_Callable_getsets[] = {
 	{
 	    (char*)"__doc__", 
-	    graphite_callable_get_doc,
+	    graphite_get_doc,
 	    nullptr, 
 	    nullptr, 
 	    nullptr  
