@@ -134,7 +134,7 @@ namespace {
      * \details Used for NumPy interop.
      */
     void delete_array_interface(PyObject* capsule) {
-        void* ptr = PyCapsule_GetContext(capsule);
+        void* ptr = PyCapsule_GetPointer(capsule,nullptr);
         geo_assert(ptr != nullptr);
 	PyArrayInterface* array_interface = static_cast<PyArrayInterface*>(ptr);
 	delete_array_interface_internal(array_interface);
@@ -384,6 +384,17 @@ namespace {
 	    return result;
 	}
 
+        // Case 4: object is a meta class, attribute may be a meta member
+        MetaClass* object_as_meta_class = dynamic_cast<MetaClass*>(object);
+        if(object_as_meta_class != nullptr) {
+            MetaMember* mmember = object_as_meta_class->find_member(name);
+            if(mmember != nullptr) {
+                PyObject* result = (PyObject*)graphite_Object_new(mmember);
+                Py_INCREF(result);
+                return result;
+            }
+        }
+        
 	// All other cases: use Python generic attribute mechanism.
 	PyObject* result = PyObject_GenericGetAttr(self_in, name_in);
 	return(result);
@@ -616,11 +627,28 @@ namespace {
             Py_INCREF(capsule);
             if(PyCapsule_CheckExact(capsule)) {
                 Logger::out("GOM") << "  it is a capsule, good !" << std::endl;
-                // HERE
+
+                void* ptr = PyCapsule_GetPointer(capsule,nullptr);
+                geo_assert(ptr != nullptr);
+                PyArrayInterface* array_interface = static_cast<PyArrayInterface*>(ptr);
+
+                if(array_interface == nullptr) {
+                    Logger::out("GOM") << "   array interface is null" << std::endl;
+                } else {
+                    Logger::out("GOM") << "--array interface--" << std::endl
+                                       << "      two: " << array_interface->two << std::endl
+                                       << "       nd: " << array_interface->nd  << std::endl
+                                       << " typekind: " << array_interface->typekind << std::endl
+                                       << "    flags: " << array_interface->flags << std::endl
+                                       << std::endl;
+                }
+            } else {
+                Logger::out("GOM") << "No capsule found" << std::endl;
             }
             Py_DECREF(capsule);
+        } else {
+            Logger::out("GOM") << "No __array_struct__" << std::endl;
         }
-        
         Py_INCREF(Py_None);
         return Py_None;
     }

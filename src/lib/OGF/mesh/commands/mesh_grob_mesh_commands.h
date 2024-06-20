@@ -152,7 +152,7 @@ namespace OGF {
         /**
          * \brief Appends a surface mesh to this mesh. Note: for now,
          *  only works for surfaces, and does not append attributes
-         *  (TODO...)
+         *  (TODO...). It merges the duplicated vertices and facets.
          */
         void append(const MeshGrobName& other);
 
