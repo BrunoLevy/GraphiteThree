@@ -603,6 +603,29 @@ namespace {
 	return result;
     }
 
+    // TEMP TEST
+    PyObject* graphite_array_inspect(PyObject* self_in, PyObject* pyobject_in) {
+        geo_argused(self_in);	
+	geo_argused(pyobject_in);
+        Logger::out("GOM") << "Test Numpy array interop" << std::endl;
+
+        if(PyObject_HasAttrString(pyobject_in,"__array_struct__")) { 
+            Logger::out("GOM") << "  has __array_struct__ attribute"
+                               << std::endl;
+            PyObject* capsule = PyObject_GetAttrString(pyobject_in,"__array_struct__");
+            Py_INCREF(capsule);
+            if(PyCapsule_CheckExact(capsule)) {
+                Logger::out("GOM") << "  it is a capsule, good !" << std::endl;
+                // HERE
+            }
+            Py_DECREF(capsule);
+        }
+        
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+    
+    
     /**
      * \brief Methods definition for Python wrapper around Graphite object.
      */
@@ -613,6 +636,12 @@ namespace {
 	    METH_NOARGS,
 	    "Implementation of dir() for Graphite objects"
 	},
+        {
+            "array_inspect",
+            graphite_array_inspect,
+            METH_O,
+            "Inspect NumPy arrays (test)"
+        }, // TEMP TEST
         {
             nullptr, /* ml_name */
             nullptr, /* ml_meth */
@@ -1114,7 +1143,7 @@ namespace {
 	Py_INCREF(result);
 	return result;
     }
-    
+
     PyMethodDef graphite_module_methods[] = {
 	{
 	    "interpreter",

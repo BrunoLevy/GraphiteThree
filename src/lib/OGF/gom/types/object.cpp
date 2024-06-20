@@ -335,6 +335,12 @@ namespace OGF {
         return result;
     }
 
+
+    void Object::search(const std::string& needle, const std::string& path) {
+        geo_argused(needle);
+        geo_argused(path);
+    }
+    
     
 /******************************************************************/
     

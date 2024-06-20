@@ -435,6 +435,11 @@ namespace OGF {
             factory_ = f;
         }
 
+        /**
+         * \copydoc Object::search()
+         */
+        virtual void search(const std::string& needle, const std::string& path = "");
+        
     protected:
 
         /**

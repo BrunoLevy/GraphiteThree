@@ -93,7 +93,12 @@ namespace OGF {
 	 * \param[out] names the variable names.
 	 */
 	virtual void list_names(std::vector<std::string>& names) const;
-	
+
+        /**
+         * \copydoc Object::search()
+         */
+        void search(const std::string& needle, const std::string& path="") override;
+        
       protected:
 	Object* object_;
     };
@@ -499,6 +504,11 @@ namespace OGF {
 	    return instance_by_file_extension(extension);
 	}
 
+        /**
+         * \copydoc Object::search()
+         */
+        void search(const std::string& needle, const std::string& path="");
+        
       public:
         /**
          * \brief Gets the default interpreter.

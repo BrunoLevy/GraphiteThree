@@ -44,6 +44,14 @@ namespace OGF {
     MetaInformation::~MetaInformation() {
     }
 
+    void MetaInformation::search(
+        const std::string& needle, const std::string& path
+    ) {
+        if(path.find(needle) != std::string::npos) {
+            Logger::out("GOM") << path << std::endl;
+        }
+    }
+    
     size_t MetaInformation::nb_custom_attributes() const {
 	return CustomAttributes::nb_custom_attributes();
     }
@@ -77,7 +85,7 @@ namespace OGF {
     ) {
         CustomAttributes::set_custom_attribute(name, value);
     }
-    
+
     /**************************************************************************/
     
     MetaType::MetaType(const std::string& name) : name_(name) {

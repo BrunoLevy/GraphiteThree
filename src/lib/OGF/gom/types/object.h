@@ -253,7 +253,16 @@ namespace OGF {
 	 * \param[in] value the element at index i.
 	 */
 	virtual void set_element(index_t i, const Any& value);
-	
+
+        /**
+         * \brief Displays the names of all objects that
+         *   contain a substring
+         * \param[in] needle the substring
+         * \param[in] path the path to be prepended to the names
+         */
+        virtual void search(
+            const std::string& needle, const std::string& path=""
+        );
 	
     gom_properties:
 

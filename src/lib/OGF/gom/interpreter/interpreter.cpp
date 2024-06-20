@@ -583,7 +583,28 @@ namespace OGF {
     void Scope::list_names(std::vector<std::string>& names) const {
 	names.clear();
     }
-    
+
+    void Scope::search(const std::string& needle, const std::string& path) {
+        std::vector<std::string> names;
+        list_names(names);
+        for(const std::string& name : names) {
+            Any a = resolve(name);
+            if(a.meta_type() != nullptr && a.meta_type()->name() == "OGF::Scope*") {
+                Scope* s = nullptr;
+                a.get_value(s);
+                if(s != nullptr) {
+                    s->search(needle, path + "." + name);
+                }
+            }
+            if(a.meta_type() != nullptr && a.meta_type()->name() == "OGF::MetaType*") {
+                MetaType* m = nullptr;
+                a.get_value(m);
+                if(m != nullptr) {
+                    m->search(needle, path + "." + name);
+                }
+            }            
+        }
+    }
     
     /********************************************************/
 
@@ -1041,4 +1062,24 @@ namespace OGF {
     ) const {
 	return args;
     }
+
+    void Interpreter::search(const std::string& needle_in, const std::string& path_in) {
+        std::string needle = needle_in;
+        if(needle == "") {
+            Logger::err("GOM") << "Search: empty string specified" << std::endl;
+        }
+
+        // "*" to display all meta-information available in the system (takes a while !!)
+        if(needle == "*") {
+            needle = "";
+        }
+        
+        std::string path = path_in;
+        if(path != "") {
+            path = path + ".";
+        }
+        meta_types_->search(needle,path+"gom.meta_types");
+        globals_->search(needle,path+"globals");
+    }
+    
 }

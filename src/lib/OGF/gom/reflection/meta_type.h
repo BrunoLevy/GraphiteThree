@@ -157,7 +157,13 @@ namespace OGF {
         MetaInformation() {
         }
         virtual ~MetaInformation() ;
-	
+
+
+        /**
+         * \copydoc Object::search()
+         */
+        virtual void search(const std::string& needle, const std::string& path = "");
+        
     gom_slots:
 
 	/**
@@ -197,7 +203,8 @@ namespace OGF {
 	 */
         void set_custom_attribute(
             const std::string& name, const std::string& value
-        );        
+        );
+
     } ;
 
     /**

@@ -466,6 +466,19 @@ namespace OGF {
         Meta::instance()->bind_meta_type(result);
         return result;
     }
+
+    void MetaClass::search(const std::string& needle, const std::string& path) {
+        MetaInformation::search(needle, path);
+        if(path.find(needle) != std::string::npos) {
+            return;
+        }
+        std::vector<MetaMember*> members;
+        get_members(members, true);
+        for(MetaMember* member: members) {
+            member->search(needle, path + "." + member->name());
+        }
+    }
+
     
 /****************************************************************************/
 
