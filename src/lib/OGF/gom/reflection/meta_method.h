@@ -106,7 +106,13 @@ namespace OGF {
 	 * \copydoc MetaMember::pre_delete()
 	 */
 	void pre_delete() override;
-	
+
+
+        /**
+         * \copydoc Object::get_doc()
+         */
+        std::string get_doc() const override;
+        
     gom_slots:
         
         /**

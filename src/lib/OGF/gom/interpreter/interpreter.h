@@ -170,7 +170,7 @@ namespace OGF {
     /*************************************************************************/ 
 
     /**
-     * \brief The Scope that contains all interfaces of an object.
+     * \brief A Scope that contains MetaTypes.
      * \details Encapsulates query_interface() in such a way that 
      *  automatic completion works when using object.I.
      */

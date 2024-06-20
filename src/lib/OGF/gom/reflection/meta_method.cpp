@@ -70,6 +70,58 @@ namespace OGF {
 	meta_args_.clear();
     }
 
+
+    std::string MetaMethod::get_doc() const {
+	std::string result;
+	MetaClass* mclass = container_meta_class();
+
+	result  = "GOM function\n";
+	result += "============\n";
+	result += mclass->name() + "::" + name() + "(";
+	for(index_t i=0; i<nb_args(); ++i) {
+	    result += ith_arg_name(i);
+	    if(i != nb_args()-1) {
+		result += ",";
+	    }
+	}
+	result += ")\n";
+	if(has_custom_attribute("help")) {
+	    result += custom_attribute_value("help");
+	    result += "\n";
+	}
+	if(nb_args() != 0) {
+	    result += "Parameters\n";
+	    result += "==========\n";
+	    for(index_t i=0; i<nb_args(); ++i) {
+		result += ith_arg_name(i);
+		result += " : ";
+		result += ith_arg_type(i)->name();
+		if(ith_arg(i)->has_default_value()) {
+		    result += " = ";
+		    bool is_string = (
+			ith_arg(i)->default_value().meta_type() ==
+			ogf_meta<std::string>::type()
+		    );
+		    if(is_string) {
+			result += '\'';
+		    }
+		    result +=
+			ith_arg(i)->default_value().as_string();
+		    if(is_string) {
+			result += '\'';
+		    }
+		}
+		result += "\n" ;
+		if(ith_arg(i)->has_custom_attribute("help")) {
+		    result += ith_arg(i)
+			->custom_attribute_value("help");
+		    result += "\n";
+		}
+	    }
+	}
+	return result;
+    }
+    
     
     bool MetaMethod::has_arg(const std::string& meta_arg_name) {
         return (find_arg(meta_arg_name) != nullptr) ;
