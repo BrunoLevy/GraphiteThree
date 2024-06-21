@@ -438,7 +438,13 @@ namespace OGF {
         /**
          * \copydoc Object::search()
          */
-        virtual void search(const std::string& needle, const std::string& path = "");
+        void search(const std::string& needle, const std::string& path = "") override;
+
+        /**
+         * \copydoc Object::get_doc()
+         */
+        std::string get_doc() const override;
+        
         
     protected:
 

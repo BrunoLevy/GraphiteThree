@@ -479,6 +479,20 @@ namespace OGF {
         }
     }
 
+    std::string MetaClass::get_doc() const {
+        std::string result;
+        // Discard uninteresting doc about the MetaClass
+        // of the MetaClass !!
+        if(this == ogf_meta<MetaClass>::type()) {
+            return result;
+        }
+        result = name();
+        if(has_custom_attribute("help")) {
+            result += "\n";
+            result += custom_attribute_value("help");
+        }
+        return result;
+    }
     
 /****************************************************************************/
 

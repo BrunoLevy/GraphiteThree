@@ -320,19 +320,7 @@ namespace OGF {
     }
 
     std::string Object::get_doc() const {
-        std::string result;
-        MetaClass* mclass = meta_class();
-        // Discard uninteresting doc about the MetaClass
-        // of the MetaClass !!
-        if(mclass == ogf_meta<MetaClass>::type()) {
-            return result;
-        }
-        result = mclass->name();
-        if(mclass->has_custom_attribute("help")) {
-            result += "\n";
-            result += mclass->custom_attribute_value("help");
-        }
-        return result;
+        return meta_class()->get_doc();
     }
 
 
