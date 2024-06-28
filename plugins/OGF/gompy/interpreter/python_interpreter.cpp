@@ -1239,9 +1239,14 @@ namespace OGF {
     /*****************************************************************/
     
     PythonCallable::PythonCallable(PyObject* impl) : impl_(impl) {
+        Py_INCREF(impl); 
+        geo_assert(PyCallable_Check(impl_));
     }
 
     PythonCallable::~PythonCallable() {
+        geo_assert(impl_ != nullptr);
+        Py_DECREF(impl_); 
+        impl_ = nullptr;
     }
     
     bool PythonCallable::invoke(const ArgList& args_in, Any& ret_val) {
@@ -1268,6 +1273,10 @@ namespace OGF {
             // name and value, it seems that it's not the
             // case (according to the doc)
         }
+
+        geo_assert(impl_ != nullptr);
+        geo_assert(PyCallable_Check(impl_));
+        
         PyObject* result = PyObject_Call(impl_, args, nullptr);
             // Finally I'm not using kw...
 	ret_val = python_to_graphite(result);
