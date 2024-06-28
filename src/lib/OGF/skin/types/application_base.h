@@ -55,7 +55,7 @@ namespace OGF {
      * \details Contains all the toolkit-independent
      *  material.
      */
-    gom_attribute(abstract, "true")
+    // gom_attribute(abstract, "true")
     gom_class SKIN_API ApplicationBase : public Object {
         
     public:
@@ -63,7 +63,7 @@ namespace OGF {
          * \brief ApplicationBase constructor.
 	 * \param[in] interpreter a pointer to the main Interpreter.
          */
-        ApplicationBase(Interpreter* interpreter);
+        ApplicationBase(Interpreter* interpreter = nullptr);
 
         /**
          * \brief ApplicationBase destructor.
@@ -243,6 +243,12 @@ namespace OGF {
          */
         virtual void redo();
 
+
+        /**
+         * \brief Cancels current progress tastk
+         */
+        virtual void progress_cancel();
+        
     gom_properties:
 
         /**

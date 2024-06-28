@@ -97,7 +97,9 @@ namespace OGF {
         /**
          * \copydoc Object::search()
          */
-        void search(const std::string& needle, const std::string& path="") override;
+        void search(
+            const std::string& needle, const std::string& path=""
+        ) override;
         
       protected:
 	Object* object_;

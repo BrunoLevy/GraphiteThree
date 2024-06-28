@@ -635,12 +635,13 @@ namespace {
                 if(array_interface == nullptr) {
                     Logger::out("GOM") << "   array interface is null" << std::endl;
                 } else {
-                    Logger::out("GOM") << "--array interface--" << std::endl
-                                       << "      two: " << array_interface->two << std::endl
-                                       << "       nd: " << array_interface->nd  << std::endl
-                                       << " typekind: " << array_interface->typekind << std::endl
-                                       << "    flags: " << array_interface->flags << std::endl
-                                       << std::endl;
+                    Logger::out("GOM")
+                        << "--array interface--" << std::endl
+                        << "      two: " << array_interface->two << std::endl
+                        << "       nd: " << array_interface->nd  << std::endl
+                        << " typekind: " << array_interface->typekind << std::endl
+                        << "    flags: " << array_interface->flags << std::endl
+                        << std::endl;
                 }
             } else {
                 Logger::out("GOM") << "No capsule found" << std::endl;
@@ -992,7 +993,7 @@ namespace {
 		result.set_value(index_t(PyLong_AsLong(obj)));
 	    } else if(PyFloat_Check(obj)) {
 		result.set_value(PyFloat_AsDouble(obj));
-	    } else if(PyFunction_Check(obj)) {
+	    } else if(PyCallable_Check(obj)) {  // PyFunction_Check ?
 		result.set_value(new PythonCallable(obj));
 	    } else {
 		result.set_value(python_to_string(obj));
@@ -1012,6 +1013,14 @@ namespace {
             if(dynamic_cast<MetaClass*>(pmtype) != nullptr) {
 		Object* object = nullptr;
 		arg.get_value(object);
+
+
+                // if object pointer is null, return None
+                if(object == nullptr) {
+                    Py_INCREF(Py_None);
+                    return Py_None; 
+                }
+                
                 graphite_Object* result = graphite_Object_new(object);
                 Py_INCREF(result);
 
