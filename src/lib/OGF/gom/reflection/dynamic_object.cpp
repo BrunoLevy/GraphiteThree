@@ -41,9 +41,7 @@ namespace OGF {
 
     /*************************************************************************/
     
-    bool DynamicObject::set_property(
-        const std::string& name, const Any& value
-    ) {
+    bool DynamicObject::set_property(const std::string& name, const Any& value) {
         // We first need to test if property is one of
         // Object properties. Then we let Object do the
         // job and access the property in Object fields.
@@ -63,9 +61,7 @@ namespace OGF {
         return true;
     }
 
-    bool DynamicObject::get_property(
-        const std::string& name, Any& value
-    ) const {
+    bool DynamicObject::get_property(const std::string& name, Any& value) const {
 
         // We first need to test if property is one of
         // Object properties. Then we let Object do the
@@ -134,9 +130,10 @@ namespace OGF {
                                        << std::endl;
                     return false;
                 }
-                ArgList args2 = args;
+                ArgList args2;
                 args2.create_arg("self",target);
                 args2.create_arg("method",method_name);
+                args2.append(args);
                 return mmethod->action_->invoke(args2, ret_val);
             }
         );
