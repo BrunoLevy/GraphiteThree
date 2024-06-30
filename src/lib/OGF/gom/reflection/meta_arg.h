@@ -109,7 +109,6 @@ namespace OGF {
          * \brief Gets the default value of an argument.
          * \return a const reference to an Any with the
          *  default value of the argument
-         * \pre has_default_value()
          */
         const Any& default_value() const {
             return default_value_ ;
@@ -119,7 +118,6 @@ namespace OGF {
          * \brief Gets the default value of an argument.
          * \return a modifiable reference to an Any with the
          *  default value of the argument
-         * \pre has_default_value()
          */
 	Any& default_value() {
 	    return default_value_;

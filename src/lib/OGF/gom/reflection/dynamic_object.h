@@ -120,12 +120,24 @@ namespace OGF {
          * \brief Adds an argument to a DynamicMetaSlot
          * \param[in] name the name of the argument
          * \param[in] type the MetaType of the argument
+         * \param[in] default_value an optional default value as a string
          */
         void add_arg(
             const std::string& name, MetaType* type,
             const std::string& default_value = ""
         );
 
+
+        /**
+         * \brief Sets the default value for an arg.
+         * \details There should be an existing arg with the specified name
+         * \param[in] name the name of the argument
+         * \param[in] default_value the default value as a string
+         */
+        void set_arg_default_value(
+            const std::string& name, const std::string& default_value
+        );
+        
         /**
          * \brief Creates a new custom attribute
          * \param[in] arg_name name of the argument

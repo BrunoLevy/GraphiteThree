@@ -162,6 +162,16 @@ namespace OGF {
         MetaSlot::add_arg(marg);
     }
 
+    void DynamicMetaSlot::set_arg_default_value(
+        const std::string& name, const std::string& default_value
+    ) {
+        MetaArg* marg = find_arg(name);
+        if(marg != nullptr) {
+            marg->default_value().set_value(default_value);
+        }
+    }
+    
+    
     void DynamicMetaSlot::create_arg_custom_attribute(
         const std::string& arg_name,
         const std::string& name, const std::string& value

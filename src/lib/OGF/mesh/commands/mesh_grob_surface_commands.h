@@ -250,6 +250,7 @@ namespace OGF {
 	  * \brief Computes the union between two meshes.
           * \param[in] other name of the other mesh
           * \param[in] result name of the result mesh
+          * \advanced
 	  * \param[in] pre_process triangulate, inputs, remove small edges, 
 	  *  make sure there is no intersection
 	  * \param[in] post_process triangulate result, remove small edges, 
@@ -268,6 +269,7 @@ namespace OGF {
 	  * \brief Computes the intersection between two meshes.
           * \param[in] other name of the other mesh
           * \param[in] result name of the result mesh
+          * \advanced
 	  * \param[in] pre_process triangulate, inputs, remove small edges, 
 	  *  make sure there is no intersection
 	  * \param[in] post_process triangulate result, remove small edges, 
@@ -285,6 +287,7 @@ namespace OGF {
 	  * \brief Computes the difference between two meshes.
           * \param[in] other name of the other mesh
           * \param[in] result name of the result mesh
+          * \advanced
 	  * \param[in] pre_process triangulate, inputs, remove small edges, 
 	  *  make sure there is no intersection
 	  * \param[in] post_process triangulate result, remove small edges, 
@@ -303,6 +306,7 @@ namespace OGF {
           * \param[in] other name of the other mesh
           * \param[in] result name of the result mesh
           * \param[in] operation one of "A+B", "A*B", "A-B", "B-A"
+          * \advanced
 	  * \param[in] pre_process triangulate, inputs, remove small edges, 
 	  *  make sure there is no intersection
 	  * \param[in] post_process triangulate result, remove small edges, 

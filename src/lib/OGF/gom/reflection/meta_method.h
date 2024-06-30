@@ -295,16 +295,15 @@ namespace OGF {
         /**
          * \brief Finds an argument by name.
          * \param[in] meta_arg_name name of the argument
-         * \return a const pointer to the MetaArg 
-         * \pre has_arg(meta_arg_name)
+         * \return a const pointer to the MetaArg or nullptr if there is no
+         *  such arg.
          */
         const MetaArg* find_arg(const std::string& meta_arg_name) const ;
 
         /**
          * \brief Finds an argument by name.
          * \param[in] meta_arg_name name of the argument
-         * \return a pointer to the MetaArg 
-         * \pre has_arg(meta_arg_name)
+         * \return a pointer to the MetaArg or nullptr if there is no such arg.
          */
         MetaArg* find_arg(const std::string& meta_arg_name) ;
 
