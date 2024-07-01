@@ -277,63 +277,6 @@ namespace OGF {
     ) {
 	return ith_arg(i)->ith_custom_attribute_value(j);
     }
-
-    bool MetaMethod::arg_has_custom_attribute(
-        const std::string& arg_name, const std::string& attr_name
-    ) const {
-        const MetaArg* marg = find_arg(arg_name);
-        if(marg == nullptr) {
-            Logger::err("GOM") << arg_name << ":no such arg" << std::endl;
-            return false;
-        }
-        return marg->has_custom_attribute(attr_name);
-    }
-
-    void MetaMethod::arg_create_custom_attribute(
-        const std::string& arg_name,
-        const std::string& attr_name,
-        const std::string& attr_value
-    ) {
-        MetaArg* marg = find_arg(arg_name);
-        if(marg == nullptr) {
-            Logger::err("GOM") << arg_name << ":no such arg" << std::endl;
-            return;
-        }
-        if(marg->has_custom_attribute(arg_name)) {
-            Logger::err("GOM") << arg_name << " already has attribute "
-                               << attr_name << std::endl;
-        }
-        marg->create_custom_attribute(attr_name, attr_value);
-    }
-
-    void MetaMethod::arg_set_custom_attribute(
-        const std::string& arg_name,
-        const std::string& attr_name,
-        const std::string& attr_value
-    ) {
-        MetaArg* marg = find_arg(arg_name);
-        if(marg == nullptr) {
-            Logger::err("GOM") << arg_name << ":no such arg" << std::endl;
-            return;
-        }
-        if(!marg->has_custom_attribute(arg_name)) {
-            Logger::err("GOM") << arg_name << " does not have attribute "
-                               << attr_name << std::endl;
-        }
-        marg->set_custom_attribute(attr_name, attr_value);
-    }
-
-    void MetaMethod::arg_set_default_value(
-        const std::string& arg_name, const std::string& default_value
-    ) {
-        MetaArg* marg = find_arg(arg_name);
-        if(marg == nullptr) {
-            Logger::err("GOM") << arg_name << ":no such arg" << std::endl;
-            return;
-        }
-        marg->default_value().set_value(default_value);
-    }
-    
 }
 
 

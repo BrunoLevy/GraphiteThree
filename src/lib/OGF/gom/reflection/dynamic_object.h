@@ -127,7 +127,6 @@ namespace OGF {
             const std::string& default_value = ""
         );
 
-
         /**
          * \brief Sets the default value for an arg.
          * \details There should be an existing arg with the specified name
@@ -150,6 +149,17 @@ namespace OGF {
             const std::string& name, const std::string& value
         );
 
+        /**
+         * \brief Sets a custom attribute
+         * \param[in] arg_name name of the argument
+         * \param[in] name name of the custom attribute
+         * \param[in] value value of the custom attribute
+         */
+        void set_arg_custom_attribute(
+            const std::string& arg_name,
+            const std::string& name, const std::string& value
+        );
+        
     public:
         void pre_delete() override;
         

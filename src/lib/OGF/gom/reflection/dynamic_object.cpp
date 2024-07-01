@@ -184,6 +184,21 @@ namespace OGF {
         marg->create_custom_attribute(name,value);
     }
 
+    void DynamicMetaSlot::set_arg_custom_attribute(
+        const std::string& arg_name,
+        const std::string& name, const std::string& value
+    ) {
+        MetaArg* marg = find_arg(arg_name);
+        if(marg == nullptr) {
+            Logger::err("GOM")
+                << meta_class()->name() << "::" << this->name() << "() :"
+                << arg_name << ":no such argument"
+                << std::endl;
+            return;
+        }
+        marg->set_custom_attribute(name,value);
+    }
+    
     void DynamicMetaSlot::pre_delete() {
         action_.reset(); // crash on LuaCallable destructor
                          // if I do not articially increase refcount

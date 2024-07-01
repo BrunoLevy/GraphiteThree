@@ -238,54 +238,6 @@ namespace OGF {
 	 * \pre i < nb_args() && j < nb_custom_attributes(i)
 	 */
 	std::string ith_arg_jth_custom_attribute_value(index_t i, index_t j);
-
-        /**
-         * \brief Tests if an argument has a custom attribute
-         * \param[in] arg_name name of the argument
-         * \param[in] attr_name name of the custom attribute
-         * \retval true if \p arg_name has the attribute \p attr_name
-         * \retval false otherwise
-         */
-        bool arg_has_custom_attribute(
-            const std::string& arg_name,
-            const std::string& attr_name
-        ) const;
-        
-        /**
-         * \brief Creates a new custom attribute for an argument
-         * \param[in] arg_name name of the argument
-         * \param[in] attr_name name of the custom attribute
-         * \param[in] attr_value value of the custom attribute
-         * \pre !arg_has_custom_attribute(arg_name, attr_name)
-         */
-        void arg_create_custom_attribute(
-            const std::string& arg_name,
-            const std::string& attr_name,
-            const std::string& attr_value
-        );
-
-        /**
-         * \brief Sets a custom attribute for an argument
-         * \param[in] arg_name name of the argument
-         * \param[in] attr_name name of the custom attribute
-         * \param[in] attr_value value of the custom attribute
-         * \pre arg_has_custom_attribute(arg_name, attr_name)
-         */
-        void arg_set_custom_attribute(
-            const std::string& arg_name,
-            const std::string& attr_name,
-            const std::string& attr_value
-        );
-
-        /**
-         * \brief Sets a default value for an argument
-         * \param[in] arg_name name of the argument
-         * \param[in] default_value the default value for the argument
-         */
-        void arg_set_default_value(
-            const std::string& arg_name,
-            const std::string& default_value
-        );
         
     public:
 	
