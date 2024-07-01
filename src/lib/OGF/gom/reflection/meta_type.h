@@ -167,7 +167,9 @@ namespace OGF {
         /**
          * \copydoc Object::search()
          */
-        virtual void search(const std::string& needle, const std::string& path = "");
+        virtual void search(
+            const std::string& needle, const std::string& path = ""
+        );
         
     gom_slots:
 
