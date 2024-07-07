@@ -42,6 +42,7 @@
 #include <OGF/voxel/grob/voxel_grob.h>
 #include <OGF/voxel/shaders/voxel_grob_shader.h>
 #include <OGF/voxel/commands/voxel_grob_attributes_commands.h>
+#include <OGF/voxel/interfaces/voxel_grob_editor_interface.h>
 
 #include <geogram/basic/command_line.h>
 
@@ -56,6 +57,7 @@ namespace OGF {
         ogf_register_grob_type<VoxelGrob>();
         ogf_register_grob_shader<VoxelGrob,PlainVoxelGrobShader>();
         ogf_register_grob_commands<VoxelGrob,VoxelGrobAttributesCommands>();
+        ogf_register_grob_interface<VoxelGrob,VoxelGrobEditor>();	
         
         // [source insertion point] (do not delete this line)
         // Insert package initialization stuff here ...

@@ -183,6 +183,8 @@ namespace OGF {
          * \return a ';'-separated list of all scalar attributes.
          */
         std::string get_displayable_attributes() const;
+
+
         
     public:
         /**

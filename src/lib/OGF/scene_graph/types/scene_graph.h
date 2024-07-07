@@ -164,7 +164,7 @@ namespace OGF {
          */
         Grob* load_object(
             const FileName& value, const std::string& type="default",
-            bool invoked_form_gui=false
+            bool invoked_from_gui=false
         );
 
         /**
@@ -180,7 +180,7 @@ namespace OGF {
          */
         void load_objects(
             const std::string& value, const std::string& type="default",
-            bool invoked_form_gui=false
+            bool invoked_from_gui=false
         );
 
         /**
