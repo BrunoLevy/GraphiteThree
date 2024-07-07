@@ -273,6 +273,12 @@ namespace OGF {
         // the slot (and that their types match).
     }
 
+    void Object::remove_connection(Connection* connection) {
+        auto it = connections_->find(connection->signal_name());
+        geo_assert(it != connections_->end());
+        it->second.remove(connection);
+    }
+
     bool Object::emit_signal(
         const std::string& signal_name, const ArgList& args,
         bool called_from_slot

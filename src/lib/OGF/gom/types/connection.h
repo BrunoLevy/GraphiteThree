@@ -196,6 +196,12 @@ namespace OGF {
             return this;
         }
 
+        /**
+         * \brief Removes this connection from the slot it is
+         *  connected to
+         */
+        void remove();
+        
     protected:
         /**
          * \brief Tests whether an argument list satisfies the
@@ -325,6 +331,23 @@ namespace OGF {
             for(unsigned int i=0; i<size(); i++) {
                 (*this)[i]->invoke(args, ret_val);
             }
+        }
+
+        /**
+         * \brief Removes a connection from a ConnectionList
+         * \param[in] conn the connection to remove
+         * \pre \p conn is in the connection list
+         */
+        void remove(Connection* conn) {
+            std::vector<Connection_var>::iterator it = this->begin();
+            while(it != this->end()) {
+                if(it->get() == conn) {
+                    erase(it);
+                    return;
+                }
+                ++it;
+            }
+            geo_assert_not_reached;
         }
     };
 

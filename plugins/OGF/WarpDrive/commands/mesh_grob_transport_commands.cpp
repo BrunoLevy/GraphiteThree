@@ -65,6 +65,7 @@
 #include <geogram/mesh/mesh_subdivision.h>
 #include <geogram/voronoi/RVD_callback.h>
 #include <geogram/voronoi/generic_RVD_cell.h>
+#include <geogram/delaunay/CDT_2d.h>
 #include <geogram/points/kd_tree.h>
 #include <geogram/basic/stopwatch.h>
 #include <geogram/basic/progress.h>
@@ -3609,6 +3610,248 @@ namespace OGF {
         
         split->get_shader()->set_property("vertices_style","true; 0 1 0 1; 1");
         split->update();
+    }
+
+    /**************************************************************/
+
+    index_t copy_cell(
+        Mesh* target, Mesh* source, index_t i, double z, double shrink, bool flip, bool edges
+    ) {
+        Attribute<index_t> chart(source->facets.attributes(),"chart");
+        
+        std::map<index_t, index_t> nxt;
+        index_t first_v = NO_INDEX;
+        for(index_t f: source->facets) {
+            if(chart[f] != i) {
+                continue;
+            }
+            index_t N = source->facets.nb_vertices(f);
+            for(index_t le=0; le<N; ++le) {
+                index_t g = source->facets.adjacent(f,le);
+                if(g == NO_INDEX || chart[g] != i) {
+                    index_t v1 = source->facets.vertex(f,le);
+                    index_t v2 = source->facets.vertex(f,(le + 1) % N);
+                    nxt[v1] = v2;
+                    first_v = v1;
+                }
+            }
+        }
+
+        vec3 G(0.0, 0.0, 0.0);
+        index_t v = first_v;
+        do {
+            G += vec3(source->vertices.point_ptr(v));
+            v = nxt[v];
+        } while(v != first_v);
+        G = (1.0/double(nxt.size()))*G;
+
+        index_t newf = target->facets.create_polygon(index_t(nxt.size()));
+        v = first_v;
+        index_t lv = 0;
+        index_t N = index_t(nxt.size());
+        do {
+            vec3 p = shrink*G+(1.0-shrink)*vec3(source->vertices.point_ptr(v));
+            p.z = z;
+            target->facets.set_vertex(
+                newf,
+                flip ? N-1-lv : lv,
+                target->vertices.create_vertex(p.data())
+            );
+            v = nxt[v];
+            ++lv;
+        } while(v != first_v);
+
+        if(edges) {
+            for(index_t lv=0; lv<N; ++lv) {
+                index_t v1 = target->facets.vertex(newf, lv);
+                index_t v2 = target->facets.vertex(newf, (lv+1)%N);
+                target->edges.create_edge(v1,v2);
+            }
+        }
+        return newf;
+    }
+
+    vec3 mesh_facet_centroid(const Mesh& M, index_t f) {
+        vec3 mg(0.0, 0.0, 0.0);
+        double m=0.0;
+        const double* p0 = M.vertices.point_ptr(
+            M.facet_corners.vertex(M.facets.corners_begin(f))
+        );
+        for(
+            index_t i = M.facets.corners_begin(f) + 1;
+            i + 1 < M.facets.corners_end(f); i++
+        ) {
+            const double* p1 = M.vertices.point_ptr(M.facet_corners.vertex(i));
+            const double* p2 = M.vertices.point_ptr(M.facet_corners.vertex(i + 1));
+            double A = GEO::Geom::triangle_area(
+                p0, p1, p2, coord_index_t(3)
+            );
+            mg += A*vec3(p0);
+            mg += A*vec3(p1);
+            mg += A*vec3(p2);
+            m += 3.0*A;
+        }
+        return (1.0/m)*mg;
+    }
+
+    void connect(Mesh* M, index_t f1, index_t f2, const std::string& name, double delta_z) {
+        index_t N1 = M->facets.nb_vertices(f1);
+        index_t N2 = M->facets.nb_vertices(f2);
+        double R1 = 0.0;
+        double R2 = 0.0;
+        vec3 g1 = mesh_facet_centroid(*M,f1);
+        vec3 g2 = mesh_facet_centroid(*M,f2);
+        for(index_t lv=0; lv<N1; ++lv) {
+            index_t v = M->facets.vertex(f1,lv);
+            R1 = std::max(R1, length(vec3(M->vertices.point_ptr(v)) - g1));
+        }
+        for(index_t lv=0; lv<N2; ++lv) {
+            index_t v = M->facets.vertex(f2,lv);
+            R2 = std::max(R2, length(vec3(M->vertices.point_ptr(v)) - g2));
+        }
+        double R = std::max(R1,R2);
+        CDT2d CDT;
+        CDT.set_delaunay(true);
+        double D = 20.0*R;
+
+        vector<index_t> cdt2mesh;
+
+        CDT.create_enclosing_rectangle(-D,-D,D,D);
+
+        cdt2mesh.push_back(NO_INDEX);
+        cdt2mesh.push_back(NO_INDEX);
+        cdt2mesh.push_back(NO_INDEX);
+        cdt2mesh.push_back(NO_INDEX);
+        
+        index_t base1 = CDT.nv();
+        for(index_t lv = 0; lv<N1; ++lv) {
+            index_t v = M->facets.vertex(f1,lv);
+            vec3 p = vec3(M->vertices.point_ptr(v))-g1;
+            CDT.insert(vec2(p.x, p.y));
+            cdt2mesh.push_back(v);
+        }
+        index_t base2 = CDT.nv();
+        for(index_t lv = 0; lv<N2; ++lv) {
+            index_t v = M->facets.vertex(f2,lv);
+            vec3 p = 2.0 * (vec3(M->vertices.point_ptr(v))-g2);
+            CDT.insert(vec2(p.x, p.y));
+            cdt2mesh.push_back(v);
+        }
+
+        for(index_t lv = 0; lv<N1; ++lv) {
+            CDT.insert_constraint(base1+lv, base1+(lv+1)%N1);
+        }
+        
+        for(index_t lv = 0; lv<N2; ++lv) {
+            CDT.insert_constraint(base2+lv, base2+(lv+1)%N2);
+        }
+        
+        for(index_t t=0; t<CDT.nT(); ++t) {
+            index_t v[3] = { NO_INDEX, NO_INDEX, NO_INDEX } ;
+            index_t nb1 = 0;
+            index_t nb2 = 0;
+            for(index_t lv=0; lv<3; ++lv) {
+                v[lv] = CDT.Tv(t,lv);
+                if(v[lv] >= base2) {
+                    ++nb2;
+                } else if(v[lv] >= base1) {
+                    ++nb1;
+                }
+                if(v[lv] < cdt2mesh.size()) {
+                    v[lv] = cdt2mesh[v[lv]];
+                } else {
+                    v[lv] = NO_INDEX;
+                }
+            }
+            
+            if(
+                v[0] != NO_INDEX && v[1] != NO_INDEX && v[2] != NO_INDEX &&
+                nb1 > 0 && nb2 > 0
+            ) {
+                M->facets.create_triangle(v[0],v[1],v[2]);
+                for(index_t lv1=0; lv1<3; ++lv1) {
+                    index_t lv2=(lv1+1)%3;
+                    const double* p1 = M->vertices.point_ptr(v[lv1]);
+                    const double* p2 = M->vertices.point_ptr(v[lv2]);
+                    double d = Geom::distance(p1,p2,2);
+                    if((p1[2] != p2[2]) && (d < 1.4*delta_z) && (v[lv1] < v[lv2])) {
+                        M->edges.create_edge(v[lv1],v[lv2]);
+                    }
+                }
+            }
+
+        }
+        if(name != "") {
+            CDT.save(name);
+        }
+    }
+    
+    void MeshGrobTransportCommands::get_path_bundles(
+        const std::string& format,
+        double shrink,
+        double delta_z,
+        index_t max_timestep,
+        index_t skip
+    ) {
+        index_t N = 0;
+
+        std::vector<MeshGrob*> timesteps;
+        for(index_t i=1; i<max_timestep; i += (skip+1)) {
+            std::string name = String::format(format.c_str(), i);
+            MeshGrob* M = MeshGrob::find(scene_graph(), name);
+            if(M != nullptr) {
+                timesteps.push_back(M);
+            } else {
+                break;
+            }
+            if(N == 0) {
+                Attribute<index_t> chart(M->facets.attributes(),"chart");
+                for(index_t f: M->facets) {
+                    N = std::max(N, chart[f]+1);
+                }
+                Logger::out("OT") << "N = " << N << std::endl;
+            }
+        }
+
+        mesh_grob()->clear();
+
+        if(timesteps.size() == 0) {
+            Logger::err("OTM") << "Did not find any timestep"
+                               << std::endl;
+            return;
+        }
+
+        Attribute<index_t> to_delete(mesh_grob()->facets.attributes(),"to_delete");
+        
+        for(index_t i=0; i<N; ++i) {
+            bool flip = false;
+            bool edges = true;
+            index_t f1 = copy_cell(
+                mesh_grob(), timesteps[0], i, 0.0, shrink, flip, edges
+            );
+            std::string name = String::format("debugCDT_%03d.geogram",i);
+            name = "";
+            for(index_t timestep=1; timestep < timesteps.size(); ++timestep) {
+                MeshGrob* M = timesteps[timestep];
+                flip = true;
+                edges = (timestep == timesteps.size()-1);
+                index_t f2 = copy_cell(
+                    mesh_grob(), M, i, delta_z*double(timestep),shrink, flip, edges
+                );
+                connect(mesh_grob(), f1, f2, name, delta_z);
+                name = "";
+                if(timestep != timesteps.size()-1) {
+                    to_delete[f2] = 1;
+                }
+                f1 = f2;
+            }
+        }
+
+        vector<index_t> to_delete_bkp = to_delete.get_vector();
+        mesh_grob()->facets.delete_elements(to_delete_bkp);
+        mesh_grob()->facets.connect();
+        
+        mesh_grob()->update();
     }
     
 }

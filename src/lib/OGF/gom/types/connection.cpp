@@ -55,6 +55,10 @@ namespace OGF {
         }
     }
 
+    void Connection::remove() {
+        source_->remove_connection(this);
+    }
+    
     Connection::~Connection() {
     }
 

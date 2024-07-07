@@ -744,7 +744,20 @@ namespace OGF {
          * \brief Splits a Calabi Yau into four spheres for visualization
          */
         void split_Calabi_Yau();
-       
+
+
+	/**
+	 * \menu Post-processing
+	 * \brief Constructs the path bundles from mutliple 2D meshes
+	 */
+	void get_path_bundles(
+            const std::string& format = "RVD_%03d",
+            double shrink = 0.3,
+            double delta_z = 0.05,
+            index_t max_timestep = 1000,
+            index_t skip = 0
+        );
+        
     };
 }
 

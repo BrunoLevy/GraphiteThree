@@ -218,6 +218,12 @@ namespace OGF {
          */
         virtual void add_connection(Connection* connection);
 
+        /**
+         * \brief Removes a connection to this object
+         * \param[in] connection a pointer to the connection to be removed
+         */
+        virtual void remove_connection(Connection* connection);
+        
 	/**
 	 * \brief Gets an object from a unique object id.
 	 * \param[in] id the object id.
