@@ -711,7 +711,7 @@ namespace OGF {
 
             // Grob header
             {
-                ArgList grob_properties = attributes();
+                ArgList grob_properties = grob->attributes();
                 grob_properties.create_arg(
                     "class_name", grob->meta_class()->name()
                 );

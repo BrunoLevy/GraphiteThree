@@ -157,7 +157,7 @@ namespace OGF {
 
         /**
          * \brief Gets the attributes associated with this Grob.
-         * \return a cons reference to the attributes
+         * \return a const reference to the attributes
          * \details Each Grob has a set of name-value pairs that can
          *  be used to store additional information (to extend the
          *  current state of the object, if needed by some algorithms).
@@ -336,6 +336,48 @@ namespace OGF {
          * \return a pointer to the created Interface object
          */
         virtual Object* query_interface(const std::string& name);
+
+
+        /**
+         * \brief gets the number of grob attributes
+         * \return the number of grob attributes
+         */
+        index_t nb_grob_attributes() const {
+            return attributes().nb_args();
+        }
+
+        /**
+         * \brief gets the name of a grob attribute
+         * \param[in] i the index of the grob attribute, 
+         *   in 0 .. nb_grob_attributes()-1
+         * \return the name of the attribute
+         */
+        const std::string& ith_grob_attribute_name(index_t i) const {
+            return attributes().ith_arg_name(i);
+        }
+
+        /**
+         * \brief gets the value of a grob attribute
+         * \param[in] i the index of the grob attribute, 
+         *   in 0 .. nb_grob_attributes()-1
+         * \return the value of the attribute, as a string
+         */
+        std::string ith_grob_attribute_value(index_t i) const {
+            return attributes().ith_arg_value(i).as_string();
+        }
+
+        /**
+         * \brief sets the value of a grob attribute
+         * \details if the attribute already exists it is overwritten else
+         *  it is created
+         * \param[in] name the name of the attribute
+         * \param[in] value the new value of the attrinute as a string
+         */
+        void set_grob_attribute(
+            const std::string& name, const std::string& value
+        ) {
+            attributes().set_arg(name, value);
+        }
         
     gom_signals:
         
