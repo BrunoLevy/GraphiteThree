@@ -82,7 +82,7 @@ namespace OGF {
                 << Geom::mesh_area(*mesh_grob())
                 << std::endl;
             Logger::out("Mesh")
-                << "enclosed volume = "
+                << "volume enclosed by surface = "
                 << Geom::mesh_enclosed_volume(*mesh_grob())
                 << std::endl;
         }
