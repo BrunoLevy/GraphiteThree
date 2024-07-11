@@ -76,6 +76,23 @@ namespace OGF {
 			    << mesh_grob()->bbox().z_max() -
 	                       mesh_grob()->bbox().z_min()	    
 			    << std::endl;
+        if(mesh_grob()->facets.nb() != 0) {
+            Logger::out("Mesh")
+                << "surface area = "
+                << Geom::mesh_area(*mesh_grob())
+                << std::endl;
+            Logger::out("Mesh")
+                << "enclosed volume = "
+                << Geom::mesh_enclosed_volume(*mesh_grob())
+                << std::endl;
+        }
+        if(mesh_grob()->cells.nb() != 0) {
+            Logger::out("Mesh")
+                << "cells volume = "
+                << Geom::mesh_enclosed_volume(*mesh_grob())
+                << std::endl;
+        }
+        
     }
 
     void MeshGrobMeshCommands::display_topology() {
