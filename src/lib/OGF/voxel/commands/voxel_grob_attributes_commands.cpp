@@ -244,16 +244,9 @@ namespace OGF {
             }
         }
 
-        Mesh* reconstruction = nullptr;
-        Mesh tmp;
-        if(reconstruction_name != "") {
-            reconstruction =
-                MeshGrob::find_or_create(scene_graph(), reconstruction_name);
-        } else {
-            // TODO: it's a bit stupid, we reconstruct the surface even
-            // if we do not use it...
-            reconstruction = &tmp;
-        }
+        MeshGrob* reconstruction = 
+            MeshGrob::find_or_create(scene_graph(), reconstruction_name);
+        
         reconstruction->clear();
 
         PoissonReconstruction poisson;
@@ -276,7 +269,8 @@ namespace OGF {
         Memory::copy(
             &attribute[0], poisson.voxel_values(), res*res*res*sizeof(float)
         );
-        
+
+        reconstruction->update();
         voxel_grob()->update();
     }
 

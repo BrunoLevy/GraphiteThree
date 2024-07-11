@@ -75,6 +75,7 @@ namespace OGF {
          * \param[in] nu number of cells along the U axis
          * \param[in] nv number of cells along the V axis
          * \param[in] nw number of cells along the W axis
+         * \menu /Geometry
          */
         void init_box_from_object(
             const GrobName& object,
@@ -130,7 +131,7 @@ namespace OGF {
             const MeshGrobName& points,
             const std::string& attribute="distance",
             index_t depth = 8,
-            const NewMeshGrobName& reconstruction=""
+            const NewMeshGrobName& reconstruction="reconstruction"
         );
 
 
