@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/basic/common/common.h>
@@ -45,12 +45,16 @@
 namespace OGF {
 
 /****************************************************************/
-    
+
     void basic_libinit::initialize() {
 
-        // Do not install geogram signal handlers to 
+        // Do not install geogram signal handlers to
         // facilitate debugging under Windows.
-        GEO::initialize(GEOGRAM_NO_HANDLER);
+        GEO::initialize(
+            GEOGRAM_INSTALL_LOCALE |
+            GEOGRAM_INSTALL_FPE    |
+            GEOGRAM_INSTALL_BIBLIO
+        );
         CmdLine::import_arg_group("standard");
         CmdLine::import_arg_group("gfx");
 	CmdLine::set_arg("gfx:full_screen", true);
@@ -61,15 +65,15 @@ namespace OGF {
 		"Init;FileManager;timings"
 	    );
 	}
-	
+
         //   Whenever an assertion fails, abort the
         // program.
         CmdLine::set_arg("sys:assert","abort");
-        Logger::out("Init") << "<basic>" << std::endl; 
+        Logger::out("Init") << "<basic>" << std::endl;
 
         //_____________________________________________________________
 
-        FileManager::initialize();        
+        FileManager::initialize();
         ModuleManager::initialize();
 
         // Graphite major version number is 3.
@@ -81,7 +85,7 @@ namespace OGF {
         );
 
         std::string geogram_SVN_revision=Environment::instance()->get_value("SVN revision");
-        
+
         //_____________________________________________________________
 
         Module* module_info = new Module;
@@ -91,12 +95,12 @@ namespace OGF {
         module_info->set_info("Basic types, services, OS abstraction layer");
         module_info->set_is_system(true);
         Module::bind_module("basic", module_info);
-        
-        Logger::out("Init") << "</basic>" << std::endl; 
+
+        Logger::out("Init") << "</basic>" << std::endl;
     }
-    
+
     void basic_libinit::terminate() {
-        Logger::out("Init") << "<~basic>" << std::endl; 
+        Logger::out("Init") << "<~basic>" << std::endl;
 
         //_____________________________________________________________
 
@@ -111,11 +115,11 @@ namespace OGF {
         Logger::out("Init") << "</~basic>" << std::endl;
         // Note: Geogram is automatically terminated, using atexit()
     }
-    
+
 // You should not need to modify this file below that point.
-    
+
 /****************************************************************/
-    
+
     basic_libinit::basic_libinit() {
         increment_users();
     }
@@ -123,31 +127,31 @@ namespace OGF {
     basic_libinit::~basic_libinit() {
         decrement_users();
     }
-    
+
     void basic_libinit::increment_users() {
         // Note that count_ is incremented before calling
         // initialize, else it would still be equal to
-        // zero at module initialization time, which 
+        // zero at module initialization time, which
         // may cause duplicate initialization of libraries.
         count_++;
         if(count_ == 1) {
             initialize();
         }
     }
-    
+
     void basic_libinit::decrement_users() {
         count_--;
         if(count_ == 0) {
             terminate();
         }
     }
-    
+
     int basic_libinit::count_ = 0;
-    
+
 }
 
 // The initialization and termination functions
-// are also declared using C linkage in order to 
+// are also declared using C linkage in order to
 // enable dynamic linking of modules.
 
 extern "C" void BASIC_API OGF_basic_initialize(void);
@@ -159,5 +163,3 @@ extern "C" void BASIC_API OGF_basic_terminate(void);
 extern "C" void BASIC_API OGF_basic_terminate() {
     OGF::basic_libinit::decrement_users();
 }
-
-
