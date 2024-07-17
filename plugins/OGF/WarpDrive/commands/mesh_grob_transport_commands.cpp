@@ -23,15 +23,15 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the 
+ * As an exception to the GPL, Graphite can be linked with the
  *  following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
@@ -81,7 +81,7 @@
 
 namespace {
     using namespace OGF;
-    
+
     /**
      * \brief Appends a surface mesh to this mesh.
      * \param[in,out] to a pointer to a mesh
@@ -126,16 +126,16 @@ namespace {
 
 namespace OGF {
 
-    MeshGrobTransportCommands::MeshGrobTransportCommands() { 
+    MeshGrobTransportCommands::MeshGrobTransportCommands() {
     }
-        
-    MeshGrobTransportCommands::~MeshGrobTransportCommands() { 
-    }        
+
+    MeshGrobTransportCommands::~MeshGrobTransportCommands() {
+    }
 
     void MeshGrobTransportCommands::align(
         const MeshGrobName& target_name,
         bool recenter,
-        bool rescale 
+        bool rescale
     ) {
         if(mesh_grob()->cells.nb() == 0) {
             Logger::err("WarpDrive") << " this mesh has no tetrahedron"
@@ -205,7 +205,7 @@ namespace OGF {
             for(index_t i: mesh_grob()->vertices) {
                 indices[i] = i;
             }
-            std::random_shuffle(indices.begin(), indices.end());       
+            std::random_shuffle(indices.begin(), indices.end());
             Permutation::apply(mesh_grob()->vertices.point_ptr(0), indices, sizeof(double)*3);
             for(index_t i : mesh_grob()->vertices) {
                 indices[i] = (i >= subsample) ? 1 : 0;
@@ -245,7 +245,7 @@ namespace OGF {
         for(index_t i=0; i<histo.size(); ++i) {
             std::cerr << i << ":" << histo[i] << std::endl;
         }
-        
+
         Attribute<double> density(
             mesh_grob()->vertices.attributes(), "mass"
         );
@@ -258,10 +258,10 @@ namespace OGF {
             i = std::min(i, nb_bins-1);
             density[v] = 1.0/double(histo[i]);
         }
-        
+
         mesh_grob()->update();
     }
-    
+
     void MeshGrobTransportCommands::transport_3d(
         const MeshGrobName& target_name,
         index_t nb_points,
@@ -289,15 +289,15 @@ namespace OGF {
 		<< std::endl;
 	    return;
 	}
-	
+
         //  For now, hierarchical mode does not work with Newton, because
         // when we refine, there can be empty cells...
         if(Newton) {
             BRIO = false;
             multilevel = false;
         }
-        
-        
+
+
         if(mesh_grob()->cells.nb() == 0) {
             Logger::err("WarpDrive") << " this mesh has no tetrahedron"
                                      << std::endl;
@@ -333,7 +333,7 @@ namespace OGF {
                 CVT.embedding(0), CVT.dimension(), CVT.nb_points()
             );
         }
-        
+
         if(sampling_name != "") {
             // Copy the samples if the user wants to see them...
             MeshGrob* sampling = MeshGrob::find_or_create(
@@ -360,28 +360,28 @@ namespace OGF {
 		    );
 		    Permutation::apply(
 			sampling->vertices.point_ptr(0),
-			sorted_indices, 
+			sorted_indices,
 			index_t(sampling->vertices.dimension() * sizeof(double))
 		    );
 		}
-		sampling->update();		
-		
+		sampling->update();
+
                 nb_points = sampling->vertices.nb();
                 points.vertices.assign_points(
                     sampling->vertices.point_ptr(0),
                     sampling->vertices.dimension(),
                     sampling->vertices.nb()
                 );
-		
+
                 CVT.set_points(
-                    sampling->vertices.nb(),                    
+                    sampling->vertices.nb(),
                     sampling->vertices.point_ptr(0)
                 );
-		
+
                 //  It is too stupid, set_points() does not
                 // do that, I probably need to change it...
                 CVT.delaunay()->set_vertices(
-                    sampling->vertices.nb(),                    
+                    sampling->vertices.nb(),
                     sampling->vertices.point_ptr(0)
                 );
                 CVT.set_volumetric(true);
@@ -414,7 +414,7 @@ namespace OGF {
             return;
         }
 
-        
+
         // Step 2: Transport
 
         // Everything happens in dimension 4 (power diagram is seen
@@ -426,20 +426,20 @@ namespace OGF {
         if(save_RVD_iter) {
             scene_graph()->disable_signals();
         }
-        
+
         OptimalTransportMap3d OTM(mesh_grob(), "default", BRIO);
 
         if(Newton) {
             regularization = std::max(regularization, 1e-3);
             OTM.set_Newton(true);
         }
-        
+
         OTM.set_regularization(regularization);
-        
+
         OTM.set_save_RVD_iter(
             save_RVD_iter, show_RVD_centers, save_last_iter
         );
-        
+
         OTM.set_points(
             points.vertices.nb(), points.vertices.point_ptr(0)
         );
@@ -463,7 +463,7 @@ namespace OGF {
             scene_graph()->enable_signals();
             scene_graph()->update();
         }
-        
+
         // Step 3: extract result
         if(result_name != "") {
             MeshGrob* result = MeshGrob::find_or_create(
@@ -471,7 +471,7 @@ namespace OGF {
             );
             result->clear();
             result->vertices.set_dimension(6);
-            
+
             Logger::div("Morphing");
             Logger::out("OTM") <<  "Time-coherent triangulation." << std::endl;
 
@@ -481,7 +481,7 @@ namespace OGF {
             result->get_shader()->set_property("animate","true");
         }
 
-        
+
         if(singular_set_name != "") {
             MeshGrob* singular_set =
                 MeshGrob::find_or_create(scene_graph(),singular_set_name);
@@ -508,7 +508,7 @@ namespace OGF {
                 }
             }
         }
-        
+
         mesh_grob()->vertices.set_dimension(3);
         mesh_grob()->update();
     }
@@ -522,7 +522,7 @@ namespace OGF {
 	index_t max_linesearch_iter,
 	double linsolve_epsilon,
 	index_t max_linsolve_iter,
-	double regularization 
+	double regularization
     ) {
         if(mesh_grob()->cells.nb() == 0) {
             Logger::err("WarpDrive") << " this mesh has no tetrahedron"
@@ -533,19 +533,19 @@ namespace OGF {
 	MeshGrob* points = MeshGrob::find(scene_graph(), points_name);
 
 	if(points == nullptr) {
-            Logger::err("WarpDrive") << points_name 
+            Logger::err("WarpDrive") << points_name
 				     << " no such pointset"
                                      << std::endl;
 	    return;
 	}
 
 	if(points->vertices.nb() == 0) {
-            Logger::err("WarpDrive") << points_name 
+            Logger::err("WarpDrive") << points_name
 				     << " has no point"
                                      << std::endl;
 	    return;
 	}
-	
+
 	// Remove previous animation if present.
 	points->vertices.set_dimension(3);
 	points->update();
@@ -554,11 +554,11 @@ namespace OGF {
 	FOR(i,points->vertices.nb()*points->vertices.dimension()) {
 	    points->vertices.point_ptr(0)[i] *= scaling_factor;
 	}
-	
+
 	FOR(i,mesh_grob()->vertices.nb()*mesh_grob()->vertices.dimension()) {
 	    mesh_grob()->vertices.point_ptr(0)[i] *= scaling_factor;
 	}
-	
+
         // Step 2: Transport
         // Everything happens in dimension 4 (power diagram is seen
         // as Voronoi diagram in dimension 4), therefore the dimension
@@ -596,24 +596,24 @@ namespace OGF {
             }
 	    points->update();
         }
-        
+
         mesh_grob()->vertices.set_dimension(3);
 
 	// "un-apply" scaling.
-	
+
 	FOR(i,points->vertices.nb()*points->vertices.dimension()) {
 	    points->vertices.point_ptr(0)[i] /= scaling_factor;
 	}
-	
+
 	FOR(i,mesh_grob()->vertices.nb()*mesh_grob()->vertices.dimension()) {
 	    mesh_grob()->vertices.point_ptr(0)[i] /= scaling_factor;
 	}
 
-	
+
         mesh_grob()->update();
     }
-    
-    
+
+
     void MeshGrobTransportCommands::create_regular_sampling(
         const NewMeshGrobName& sampling_name,
         index_t nb
@@ -625,13 +625,13 @@ namespace OGF {
             l = std::max(l, box.xyz_max[c] - box.xyz_min[c]);
         }
         l /= double(nb);
-        
+
         MeshGrob* sampling = MeshGrob::find_or_create(
             scene_graph(), sampling_name
         );
         sampling->clear();
         sampling->vertices.set_dimension(3);
-	
+
         if(mesh_grob()->cells.nb() == 0) {
 	    for(double x=box.xyz_min[0]+l/2.0; x<=box.xyz_max[0]; x += l) {
 		for(double y=box.xyz_min[1]+l/2.0; y<=box.xyz_max[1]; y += l) {
@@ -664,7 +664,7 @@ namespace OGF {
                 vec3(
                     Numeric::random_float64() - 0.5,
                     Numeric::random_float64() - 0.5,
-                    Numeric::random_float64() - 0.5                   
+                    Numeric::random_float64() - 0.5
                 );
         }
         mesh_grob()->update();
@@ -684,9 +684,9 @@ namespace OGF {
 	}
 
 	index_t dimension = (mode == EULER_2D ? 2 : 3);
-	
+
 	double air_fraction = 0.0;
-	
+
 	MeshGrob* air_particles_mesh = nullptr;
 	index_t nb_air_particles = 0;
 	const double* air_particles = nullptr;
@@ -698,7 +698,7 @@ namespace OGF {
 		    Logger::err("OTM") << air_particles_name << ": no such MeshGrob"
 				       << std::endl;
 		    return;
-		} 
+		}
 		nb_air_particles = air_particles_mesh->vertices.nb();
 		air_particles = air_particles_mesh->vertices.point_ptr(0);
 		air_particles_stride = air_particles_mesh->vertices.dimension();
@@ -727,7 +727,7 @@ namespace OGF {
 	    Logger::out("OTM") << "Air fraction = " << air_fraction << std::endl;
 	}
 
-	
+
 	vector<double> centroids(mesh_grob()->vertices.nb()*dimension);
 	switch(mode) {
 	    case EULER_2D: {
@@ -770,7 +770,7 @@ namespace OGF {
 		    mesh_grob()->vertices.point_ptr(0), centroids.data()
 		);
 	    }
-	} 
+	}
 
 	FOR(v,mesh_grob()->vertices.nb()) {
 	    double* p = mesh_grob()->vertices.point_ptr(v);
@@ -794,13 +794,13 @@ namespace OGF {
 		mass[i] = 1.0;
 	    }
 	}
-	
+
 	mesh_grob()->update();
     }
 
 
     //HERE
-    
+
     void MeshGrobTransportCommands::get_density(const MeshGrobName& domain) {
         MeshGrob* M = MeshGrob::find(scene_graph(),domain);
         if(M == nullptr) {
@@ -810,7 +810,7 @@ namespace OGF {
         }
 
 	double V = GEO::mesh_cells_volume(*M);
-	
+
 	Attribute<double> mass;
 	mass.bind_if_is_defined(mesh_grob()->vertices.attributes(), "mass");
 
@@ -858,8 +858,8 @@ namespace OGF {
 	for(index_t v:mesh_grob()->vertices) {
 	    mass[v] = m;
 	}
-	
-	mesh_grob()->update();	
+
+	mesh_grob()->update();
     }
 
     void MeshGrobTransportCommands::append_points(const MeshGrobName& points) {
@@ -880,7 +880,7 @@ namespace OGF {
 				     << std::endl;
 	    return;
 	}
-	
+
 	index_t v_ofs = mesh_grob()->vertices.nb();
 	mesh_grob()->vertices.create_vertices(M->vertices.nb());
 
@@ -892,10 +892,10 @@ namespace OGF {
 	for(index_t v: M->vertices) {
 	    mass[v_ofs+v] = points_mass[v];
 	}
-	
-	mesh_grob()->update();	
+
+	mesh_grob()->update();
     }
-    
+
     void MeshGrobTransportCommands::Euler2d(
         const MeshGrobName& omega_name,
         double tau,
@@ -927,12 +927,12 @@ namespace OGF {
         }
 
 	double air_fraction = 0.0;
-	
+
 	MeshGrob* air_particles_mesh = nullptr;
 	index_t nb_air_particles = 0;
 	const double* air_particles = nullptr;
 	index_t air_particles_stride = 0;
-	
+
 	if(fluid_omega0_name != "") {
 
 	    if(air_particles_name != "") {
@@ -978,7 +978,7 @@ namespace OGF {
 		<< "Air fraction = " << air_fraction << std::endl;
 	}
 
-	
+
         index_t nb_pts = mesh_grob()->vertices.nb();
 
 	vector<vec2> pos(nb_pts);
@@ -992,16 +992,16 @@ namespace OGF {
         // CmdLine::set_arg("algo:predicates","exact");
         // CmdLine::set_arg("dbg:delaunay_benchmark",true);
 
-	// Get bbox and center for initializing weights when some points are 
+	// Get bbox and center for initializing weights when some points are
 	// off limits.
 	double xyzmin[3];
 	double xyzmax[3];
 	get_bbox(*omega, xyzmin, xyzmax);
 	double cx = 0.5*(xyzmin[0] + xyzmax[0]);
-	double cy = 0.5*(xyzmin[1] + xyzmax[1]);	
+	double cy = 0.5*(xyzmin[1] + xyzmax[1]);
 	double Rx = 0.5*(xyzmax[0] - xyzmin[0]);
-	double Ry = 0.5*(xyzmax[1] - xyzmin[1]);	
-	
+	double Ry = 0.5*(xyzmax[1] - xyzmin[1]);
+
 	vector<double> initial_weights(nb_pts);
 
 	bool zero_iter = false;
@@ -1009,10 +1009,10 @@ namespace OGF {
 	    nb_iter = 1;
 	    zero_iter = true;
 	}
-	
+
         for(unsigned int k=1; k<=nb_iter; ++k) {
 	    bool off_limits = false;
-		
+
 	    // Step 0: setup initial weights, to process off-limit points
 	    double s = 1.0; // scaling
 	    FOR(i, nb_pts) {
@@ -1039,7 +1039,7 @@ namespace OGF {
 		initial_weights.assign(nb_pts, 0.0);
 	    }
 
-	    
+
             // Step 1: get Laguerre cells centroids
 
 	    MeshGrob* RVD = nullptr;
@@ -1053,7 +1053,7 @@ namespace OGF {
 	    if(show_centroids) {
 		centroids_existed = (MeshGrob::find(scene_graph(),"centroids") != nullptr);
 	    }
-	    
+
             compute_Laguerre_centroids_2d(
                 omega, nb_pts,
 		pos[0].data(),
@@ -1086,8 +1086,8 @@ namespace OGF {
 		    omega->set_visible(false);
 		}
 		RVD->update();
-	    } 
-	    
+	    }
+
 	    if(show_centroids) {
 		MeshGrob* mcentroids =
 		    MeshGrob::find_or_create(scene_graph(), "centroids");
@@ -1104,7 +1104,7 @@ namespace OGF {
 		}
 		if(!centroids_existed) {
 		    mesh_grob()->set_visible(false);
-		    mcentroids->get_shader()->set_property("vertices_style","true; 0 1 0 1; 2");		    
+		    mcentroids->get_shader()->set_property("vertices_style","true; 0 1 0 1; 2");
 		    mcentroids->get_shader()->set_property("painting","ATTRIBUTE");
 		    mcentroids->get_shader()->set_property("attribute","vertices.mass");
 		    mcentroids->get_shader()->set_property(
@@ -1125,7 +1125,7 @@ namespace OGF {
 		}
 		break;
 	    }
-	    
+
             // Step 2: update speeds
 
             double inveps2 = 1.0 / geo_sqr(epsilon);
@@ -1161,7 +1161,7 @@ namespace OGF {
 		    pos[v].y = centroids[v].y;
 		}
 	    }
-	    
+
             for(index_t v=0; v<nb_pts; ++v) {
 		double* p = mesh_grob()->vertices.point_ptr(v);
 		p[0] += tau*V[v].x;
@@ -1177,7 +1177,7 @@ namespace OGF {
 			p[0] = xyzmax[0];
 			V[v].x /= 2.0;
 		    }
-		
+
 		    if(p[1] < xyzmin[1]) {
 			p[1] = xyzmin[1];
 			V[v].y /= 2.0;
@@ -1186,7 +1186,7 @@ namespace OGF {
 			V[v].y /= 2.0;
 		    }
 		}
-		
+
 		pos[v].x = p[0];
 		pos[v].y = p[1];
             }
@@ -1201,13 +1201,13 @@ namespace OGF {
 		while(iter_str.length() < 5) {
 		    iter_str = "0" + iter_str;
 		}
-		
+
 		scene_graph()->save_current_object(
 		    "Euler_timestep_" + iter_str + ".graphite"
 		);
 	    }
 
-            
+
             omega->update();
             mesh_grob()->update();
 	    // Need to trigger a graphics update (not needed in verbose
@@ -1217,7 +1217,7 @@ namespace OGF {
 	    }
         }
     }
-    
+
     void MeshGrobTransportCommands::shell_mesh(
         const MeshGrobName& shell_name,
         double inner_density,
@@ -1242,7 +1242,7 @@ namespace OGF {
 		mesh_grob()->facets.connect();
 		mesh_tetrahedralize(*mesh_grob(), false, true, 1.0, true);
 	    }
-	    
+
 	    // Remove the tets that are inside the inner shell
 	    {
 		Attribute<index_t> region(mesh_grob()->cells.attributes(),"region");
@@ -1266,7 +1266,7 @@ namespace OGF {
 	    return;
 	}
 
-	
+
         if(mesh_grob()->cells.nb() == 0) {
             Logger::out("Shell") << "Tetrahedralizing mesh" << std::endl;
             mesh_tetrahedralize(*mesh_grob(), false, true, 2.0);
@@ -1277,7 +1277,7 @@ namespace OGF {
         initial_surface.vertices.set_dimension(3);
         append_surface_mesh(&initial_surface, mesh_grob());
         MeshFacetsAABB AABB(initial_surface);
-        
+
         Mesh tets;
         tets.vertices.set_dimension(3);
         append_surface_mesh(&tets, mesh_grob());
@@ -1287,20 +1287,20 @@ namespace OGF {
         mesh_tetrahedralize(tets, false, true, 1.0, shell_only);
 
         index_t v_offset = mesh_grob()->vertices.nb();
-        
+
         append_volume_mesh(mesh_grob(), &tets);
         mesh_grob()->cells.connect();
         mesh_grob()->cells.compute_borders();
 
         double dmin = 1e30;
         double dmax = -1e30;
-        
+
         Attribute<double> weight(mesh_grob()->vertices.attributes(), "weight");
-        
+
         for(index_t v=0; v<v_offset; ++v) {
-            weight[v] = inner_density;            
+            weight[v] = inner_density;
         }
-        
+
         for(index_t v=v_offset; v<mesh_grob()->vertices.nb(); ++v) {
             double d = ::sqrt(
                 AABB.squared_distance(vec3(mesh_grob()->vertices.point_ptr(v)))
@@ -1333,7 +1333,7 @@ namespace OGF {
             Logger::err("Transport") << other_name << ": no such meshgrob"
                                      << std::endl;
         }
-        
+
         if(mesh_grob()->cells.nb() == 0) {
             Logger::err("Transport") << "current mesh does not have tets"
                                      << std::endl;
@@ -1368,11 +1368,11 @@ namespace OGF {
             );
             Attribute<double> otherpotential(
                 othersampling->vertices.attributes(), "psi"
-            );            
+            );
         }
         */
 
-        
+
         // Step 1: create other sampling
 
         vector<index_t> levels;
@@ -1399,17 +1399,17 @@ namespace OGF {
 
         mesh_grob()->vertices.set_dimension(4);
         other->vertices.set_dimension(4);
-        
+
         for(index_t k=0; k<nb_iter; ++k) {
             {
-                Stopwatch W("OTM 1->2");            
+                Stopwatch W("OTM 1->2");
                 OptimalTransportMap3d OTM(mesh_grob(), "default", BRIO);
                 OTM.set_points(
                     othersampling->vertices.nb(),
 		    othersampling->vertices.point_ptr(0)
                 );
                 OTM.set_epsilon(epsilon);
-                OTM.set_regularization(regularization);                
+                OTM.set_regularization(regularization);
                 OTM.optimize_levels(levels, nb_OTM_iter);
                 OTM.compute_Laguerre_centroids(
 		    thissampling->vertices.point_ptr(0)
@@ -1427,7 +1427,7 @@ namespace OGF {
             thissampling->update();
 
             {
-                Stopwatch W("OTM 2->1");            
+                Stopwatch W("OTM 2->1");
                 OptimalTransportMap3d OTM(other, "default", BRIO);
                 OTM.set_points(
                     thissampling->vertices.nb(),
@@ -1435,14 +1435,14 @@ namespace OGF {
                 );
                 OTM.set_epsilon(epsilon);
                 OTM.set_regularization(regularization);
-		
+
                 OTM.optimize_levels(levels, nb_OTM_iter);
                 OTM.compute_Laguerre_centroids(
 		    othersampling->vertices.point_ptr(0)
 		);
 
                 if(k == nb_iter-1) {
-                    mesh_grob()->vertices.set_dimension(3);                    
+                    mesh_grob()->vertices.set_dimension(3);
                     CentroidalVoronoiTesselation CVT(mesh_grob(), 0, "NN");
                     CVT.set_points(
 			thissampling->vertices.nb(),
@@ -1459,7 +1459,7 @@ namespace OGF {
                     );
                     morph->clear();
                     morph->vertices.set_dimension(6);
-            
+
                     Logger::div("Morphing");
                     Logger::out("OTM") <<  "Time-coherent triangulation."
 				       << std::endl;
@@ -1484,7 +1484,7 @@ namespace OGF {
         mesh_grob()->update();
         other->vertices.set_dimension(3);
         other->update();
-        
+
     }
 
     void MeshGrobTransportCommands::isoarea_Laguerre_2d(
@@ -1502,7 +1502,7 @@ namespace OGF {
 	MeshGrob* points = MeshGrob::find_or_create(
 	    scene_graph(), points_name
 	);
-	
+
 	MeshGrob* laguerre = MeshGrob::find_or_create(
 	    scene_graph(), laguerre_name
 	);
@@ -1511,7 +1511,7 @@ namespace OGF {
 	// Compute initial sampling.
 	if(nb_points != 0) {
 	    points->clear();
-	    points->vertices.set_dimension(3);	
+	    points->vertices.set_dimension(3);
 	    points->vertices.create_vertices(nb_points);
 	    Attribute<double> dummy;
 	    mesh_generate_random_samples_on_surface<3>(
@@ -1540,7 +1540,7 @@ namespace OGF {
 		return;
 	    }
 	}
-	
+
 	// Compute optimal transport map.
 	if(surface3D) {
 	    // Everything happens in dimension 4 (power diagram is seen
@@ -1548,7 +1548,7 @@ namespace OGF {
 	    // of M1 needs to be changed as well (even if it is not used).
 	    mesh_grob()->vertices.set_dimension(4);
 	    mesh_grob()->update();
-	    
+
 	    OptimalTransportMapOnSurface OTM(mesh_grob());
 	    if(air != nullptr) {
 		OTM.set_air_particles(
@@ -1583,7 +1583,7 @@ namespace OGF {
 		    air->vertices.nb(),
 		    air->vertices.point_ptr(0),
 		    air->vertices.dimension(),
-		    air_fraction		    
+		    air_fraction
 		);
 	    }
 	    OTM.set_points(
@@ -1603,12 +1603,12 @@ namespace OGF {
 	    OTM.optimize(nb_iter);
 	    OTM.get_RVD(*laguerre);
 	}
-	
+
 	points->update();
 	laguerre->update();
     }
-    
-    
+
+
     void MeshGrobTransportCommands::crop_domain(
 	const MeshGrobName& domain_name
     ) {
@@ -1642,7 +1642,7 @@ namespace OGF {
 	domain->update();
 	points->update();
     }
-    
+
     void MeshGrobTransportCommands::crop_region(
 	double xmin,
 	double ymin,
@@ -1669,7 +1669,7 @@ namespace OGF {
 	    mesh_grob()->update();
 	    return;
 	}
-	
+
 	if(mesh_grob()->cells.nb() == 0) {
 	    Logger::err("crop") << "Mesh has no cell"
 				<< std::endl;
@@ -1726,14 +1726,14 @@ namespace OGF {
 	const NewMeshGrobName& subd_name
     ) {
 	MeshGrob* grid = MeshGrob::find(scene_graph(), grid_name);
-	
+
 	if(grid == nullptr) {
 	    Logger::err("VSDM")
 		<< grid_name << ": no such MeshGrob"
 		<< std::endl;
 	    return;
 	}
-	
+
 	if(grid == mesh_grob()) {
 	    Logger::err("VSDM")
 		<< "Source and target cannot be the same surface"
@@ -1746,21 +1746,21 @@ namespace OGF {
 	    subd = MeshGrob::find_or_create(scene_graph(), subd_name);
 	    subd->clear();
 	}
-	
+
 	try {
 	    VisualVSDM vsdm(grid, mesh_grob());
-	    ProgressTask progress("VSDM",nb_iter);	
+	    ProgressTask progress("VSDM",nb_iter);
 	    vsdm.set_progress(&progress);
 	    vsdm.set_affinity(affinity);
 
 	    if(nb_subd != 0) {
 		vsdm.set_subdivision_surface(subd, nb_subd);
 	    }
-	    
+
 	    vsdm.optimize(nb_iter);
 	} catch(...) {
 	}
-	
+
 	grid->update();
     }
 
@@ -1775,7 +1775,7 @@ namespace OGF {
 	    return;
 	}
 	if(t0_mesh->vertices.nb() != mesh_grob()->vertices.nb()) {
-	    Logger::err("copy_t0") 
+	    Logger::err("copy_t0")
 		<< t0_mesh_name << ": does not have the same number of vertices as this mesh"
 		<< std::endl;
 	    return;
@@ -1783,7 +1783,7 @@ namespace OGF {
 	Attribute<double> t0;
 	t0.bind_if_is_defined(mesh_grob()->vertices.attributes(), "t0");
 	if(!t0.is_bound()) {
-	    t0.create_vector_attribute(mesh_grob()->vertices.attributes(), "t0", 3);	    
+	    t0.create_vector_attribute(mesh_grob()->vertices.attributes(), "t0", 3);
 	}
 	if(!t0.is_bound() || t0.dimension() != 3) {
 	    Logger::err("copy_t0") << "t0 attribute already exists with wrong type or dimension"
@@ -1794,7 +1794,7 @@ namespace OGF {
 	    const double* p_t0 = t0_mesh->vertices.point_ptr(v);
 	    t0[3*v  ] = p_t0[0];
 	    t0[3*v+1] = p_t0[1];
-	    t0[3*v+2] = p_t0[2];	    
+	    t0[3*v+2] = p_t0[2];
 	}
 	mesh_grob()->update();
     }
@@ -1841,7 +1841,7 @@ namespace OGF {
 	{
 	    interface->vertices.set_dimension(3);
 	}
-	
+
 	/**
 	 * \copydoc RVDPolyhedronCallback::operator()
 	 */
@@ -1885,7 +1885,7 @@ namespace OGF {
 		    continue;
 		}
 
-		
+
 		GEOGen::ConvexCell::Corner first(
 		    index_t(ct), C.find_triangle_vertex(index_t(ct), cv)
 		);
@@ -1906,12 +1906,12 @@ namespace OGF {
 		cur_v_ = interface_->vertices.nb();
 	    }
 	}
-	
+
     private:
 	const Attribute<double>& mass_;
 	Mesh* interface_;
 	mutable index_t cur_v_;
-    };    
+    };
 
 
     /**
@@ -1932,7 +1932,7 @@ namespace OGF {
 	{
 	    interface->vertices.set_dimension(3);
 	}
-	
+
 	/**
 	 * \copydoc RVDPolyhedronCallback::operator()
 	 */
@@ -1967,7 +1967,7 @@ namespace OGF {
 		{
 		    // "Marching tet" tables
 		    // ---------------------
-		    
+
 		    // tet_edge[e][v] gives for each edge
 		    // e of a tet the local indices of its two
 		    // vertices.
@@ -2018,12 +2018,12 @@ namespace OGF {
 			index_t vv1 = old_v[tet_edges[e][0]];
 			index_t vv2 = old_v[tet_edges[e][1]];
 			const double* p1 = delaunay_->vertex_ptr(vv1);
-			const double* p2 = delaunay_->vertex_ptr(vv2);		    
+			const double* p2 = delaunay_->vertex_ptr(vv2);
 			if(mass_[vv1] != mass_[vv2]) {
 			    index_t new_v = interface_->vertices.create_vertex();
 			    interface_->vertices.point_ptr(new_v)[0] = 0.5 * (p1[0] + p2[0]);
 			    interface_->vertices.point_ptr(new_v)[1] = 0.5 * (p1[1] + p2[1]);
-			    interface_->vertices.point_ptr(new_v)[2] = 0.5 * (p1[2] + p2[2]);			
+			    interface_->vertices.point_ptr(new_v)[2] = 0.5 * (p1[2] + p2[2]);
 			    new_idx[e] = new_v;
 			}
 		    }
@@ -2033,25 +2033,25 @@ namespace OGF {
 			code = code | (index_t(mass_[ov] > 2.0) << lv);
 		    }
 		    if(tet_cases[code][0] != X) {
-			if(tet_cases[code][3] == X) {			
+			if(tet_cases[code][3] == X) {
 			    interface_->facets.create_triangle(
 				new_idx[tet_cases[code][0]],
 				new_idx[tet_cases[code][1]],
-				new_idx[tet_cases[code][2]]		    
+				new_idx[tet_cases[code][2]]
 			     );
 			} else {
 			    interface_->facets.create_quad(
-				new_idx[tet_cases[code][0]],				
+				new_idx[tet_cases[code][0]],
 				new_idx[tet_cases[code][1]],
 				new_idx[tet_cases[code][3]],
-				new_idx[tet_cases[code][2]]		    
+				new_idx[tet_cases[code][2]]
 			    );
 			}
 		    }
 		}
 	    }
 	}
-	
+
     private:
 	const Attribute<double>& mass_;
 	Mesh* interface_;
@@ -2060,7 +2060,7 @@ namespace OGF {
 
     /**********************************************************************/
 
-    
+
     void MeshGrobTransportCommands::compute_interface(
 	const MeshGrobName& domain_name,
 	const NewMeshGrobName& interface_name,
@@ -2082,7 +2082,7 @@ namespace OGF {
 			       << std::endl;
 	    return;
 	}
-	
+
 	if(domain->cells.nb() == 0) {
 	    Logger::err("OTM") << "Domain has no cell" << std::endl;
 	    return;
@@ -2104,16 +2104,16 @@ namespace OGF {
 	    clip->vertices.set_dimension(4);
 	}
 
-	
+
 	MeshGrob* interface = MeshGrob::find_or_create(
 	    scene_graph(), interface_name
 	);
 	interface->clear();
 	interface->vertices.set_dimension(3);
 
-	
+
 	domain->vertices.set_dimension(4);
-	
+
 	OptimalTransportMap3d OTM(domain, "BPOW", false);
 	OTM.set_regularization(1e-3);
 	OTM.set_Newton(true);
@@ -2125,7 +2125,7 @@ namespace OGF {
 	if(clip != nullptr) {
 	    RVD = RestrictedVoronoiDiagram::create(RVD->delaunay(), clip);
 	}
-	
+
 	if(primal) {
 	    PrimalInterfacePolyhedronCallback iface_cb(
 		mass, interface, RVD->delaunay()
@@ -2136,7 +2136,7 @@ namespace OGF {
 	    DualInterfacePolyhedronCallback iface_cb(mass, interface);
 	    RVD->for_each_polyhedron(iface_cb, false, false, false);
 	}
-	    
+
 	domain->vertices.set_dimension(3);
 
 	mesh_repair(
@@ -2144,14 +2144,14 @@ namespace OGF {
 	    GEO::MeshRepairMode(
 		GEO::MESH_REPAIR_COLOCATE | GEO::MESH_REPAIR_DUP_F
 	    ),
-	    1e-6 * (0.01 * bbox_diagonal(*interface))	    
+	    1e-6 * (0.01 * bbox_diagonal(*interface))
 	);
 
 	if(clip != nullptr) {
 	    clip->vertices.set_dimension(3);
 	    clip->update();
 	}
-	
+
 	interface->update();
     }
 
@@ -2181,7 +2181,7 @@ namespace OGF {
                                  << std::endl;
             return ;
         }
-        
+
         index_t nb_pts = mesh_grob()->vertices.nb();
 
 	bool zero_iter = false;
@@ -2190,7 +2190,7 @@ namespace OGF {
 	    zero_iter = true;
 	}
 	// HERE
-	
+
         Attribute<double> m(mesh_grob()->vertices.attributes(),"mass");
         Attribute<vec3> V(mesh_grob()->vertices.attributes(),"V");
         vector<vec3> centroids(nb_pts);
@@ -2202,7 +2202,7 @@ namespace OGF {
 	if(compute_interface) {
 	    interface = MeshGrob::find_or_create(scene_graph(), "interface");
 	}
-	
+
         for(unsigned int k=1; k<=nb_iter; ++k) {
 	    Stopwatch W("Timestep");
 
@@ -2211,7 +2211,7 @@ namespace OGF {
 		    << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
 		    << "Time step = " << k << std::endl;
 	    }
-            
+
             // Step 1: get Laguerre cells centroids
 
 	    if(compute_interface) {
@@ -2225,18 +2225,18 @@ namespace OGF {
 		    &iface_cb,
 		    verbose,
 		    zero_iter ? 0 : 2000
-		); 
+		);
 		mesh_repair(
 		    tmp_interface,
 		    GEO::MeshRepairMode(
 			GEO::MESH_REPAIR_COLOCATE | GEO::MESH_REPAIR_DUP_F
 		    ),
-		    1e-6 * (0.01 * bbox_diagonal(tmp_interface))	    
+		    1e-6 * (0.01 * bbox_diagonal(tmp_interface))
 		);
 		interface->copy(tmp_interface);
 		if(split_interface) {
 		    mesh_split_catmull_clark(*interface);
-		    mesh_split_catmull_clark(*interface);		    
+		    mesh_split_catmull_clark(*interface);
 		}
 		interface->update();
 	    } else {
@@ -2258,9 +2258,9 @@ namespace OGF {
 		}
 		break;
 	    }
-	    
+
             // Step 2: update speeds
-            
+
             double inveps2 = 1.0 / geo_sqr(epsilon);
 	    if(physical) {
 		for(index_t v=0; v<nb_pts; ++v) {
@@ -2285,10 +2285,10 @@ namespace OGF {
 		    double* p = mesh_grob()->vertices.point_ptr(v);
 		    p[0] = centroids[v].x;
 		    p[1] = centroids[v].y;
-		    p[2] = centroids[v].z;		    
+		    p[2] = centroids[v].z;
 		}
 	    }
-	    
+
             for(index_t v=0; v<nb_pts; ++v) {
                 Geom::mesh_vertex_ref(*mesh_grob(),v) += tau*V[v];
             }
@@ -2310,7 +2310,7 @@ namespace OGF {
 		    "Euler_timestep_" + iter_str + ".graphite"
 		);
 	    }
-            
+
             omega->update();
             mesh_grob()->update();
         }
@@ -2340,9 +2340,9 @@ namespace OGF {
                                  << std::endl;
             return ;
         }
-        
+
         index_t nb_pts = mesh_grob()->vertices.nb();
-        
+
         Attribute<double> m(mesh_grob()->vertices.attributes(),"mass");
         Attribute<vec3> V(mesh_grob()->vertices.attributes(),"V");
         vector<vec3> centroids(nb_pts);
@@ -2364,7 +2364,7 @@ namespace OGF {
 		    << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> "
 		    << "Time step = " << k << std::endl;
 	    }
-            
+
             // Step 1: get Laguerre cells centroids
 
 	    compute_Laguerre_centroids_on_surface(
@@ -2376,7 +2376,7 @@ namespace OGF {
 	    );
 
             // Step 2: update speeds
-            
+
             double inveps2 = 1.0 / geo_sqr(epsilon);
 	    if(physical) {
 		for(index_t v=0; v<nb_pts; ++v) {
@@ -2403,11 +2403,11 @@ namespace OGF {
 		    double* p = mesh_grob()->vertices.point_ptr(v);
 		    p[0] = centroids[v].x;
 		    p[1] = centroids[v].y;
-		    p[2] = centroids[v].z;		    
+		    p[2] = centroids[v].z;
 		}
 	    }
 
-	    
+
             for(index_t v=0; v<nb_pts; ++v) {
                 Geom::mesh_vertex_ref(*mesh_grob(),v) += tau*V[v];
             }
@@ -2416,7 +2416,7 @@ namespace OGF {
             mesh_grob()->update();
 
 	    if(compute_RVD) {
-		
+
 		Attribute<index_t> f_chart(RVD->facets.attributes(), "chart");
 		Attribute<double> f_mass(RVD->facets.attributes(), "mass");
 		FOR(f,RVD->facets.nb()) {
@@ -2434,7 +2434,7 @@ namespace OGF {
 		    RVD->set_visible(true);
 		    omega->set_visible(false);
 		}
-		
+
 		RVD->update();
 	    }
 
@@ -2445,14 +2445,14 @@ namespace OGF {
 	    }
         }
     }
-    
+
     void MeshGrobTransportCommands::smooth_interface() {
 	vector<vec3>
 	    facet_center(mesh_grob()->facets.nb(), vec3(0.0, 0.0, 0.0));
-	
+
 	vector<vec3>
 	    vertex_center(mesh_grob()->vertices.nb(), vec3(0.0, 0.0, 0.0));
-	
+
 	vector<index_t> vertex_degree(mesh_grob()->vertices.nb(),0);
 	FOR(f, mesh_grob()->facets.nb()) {
 	    FOR(lv, mesh_grob()->facets.nb_vertices(f)) {
@@ -2477,7 +2477,7 @@ namespace OGF {
 	FOR(v, mesh_grob()->vertices.nb()) {
 	    mesh_grob()->vertices.point_ptr(v)[0] = vertex_center[v].x;
 	    mesh_grob()->vertices.point_ptr(v)[1] = vertex_center[v].y;
-	    mesh_grob()->vertices.point_ptr(v)[2] = vertex_center[v].z;	    
+	    mesh_grob()->vertices.point_ptr(v)[2] = vertex_center[v].z;
 	}
 	mesh_grob()->update();
     }
@@ -2492,7 +2492,7 @@ namespace OGF {
 	FOR(v,dual->vertices.nb()) {
 	    dual->vertices.point_ptr(v)[0]=0.0;
 	    dual->vertices.point_ptr(v)[1]=0.0;
-	    dual->vertices.point_ptr(v)[2]=0.0;	    
+	    dual->vertices.point_ptr(v)[2]=0.0;
 	}
 	FOR(f,mesh_grob()->facets.nb()) {
 	    double s = 1.0 / double(mesh_grob()->facets.nb_vertices(f));
@@ -2500,7 +2500,7 @@ namespace OGF {
 		index_t v = mesh_grob()->facets.vertex(f,lv);
 		dual->vertices.point_ptr(f)[0] += s*mesh_grob()->vertices.point_ptr(v)[0];
 		dual->vertices.point_ptr(f)[1] += s*mesh_grob()->vertices.point_ptr(v)[1];
-		dual->vertices.point_ptr(f)[2] += s*mesh_grob()->vertices.point_ptr(v)[2];		
+		dual->vertices.point_ptr(f)[2] += s*mesh_grob()->vertices.point_ptr(v)[2];
 	    }
 	}
 	vector<index_t> v2f(mesh_grob()->vertices.nb(),index_t(-1));
@@ -2508,7 +2508,7 @@ namespace OGF {
 	    FOR(lv, mesh_grob()->facets.nb_vertices(f)) {
 		index_t v = mesh_grob()->facets.vertex(f,lv);
 		v2f[v] = f;
-	    }	    
+	    }
 	}
 	FOR(v,mesh_grob()->vertices.nb()) {
 	    vector<index_t> star;
@@ -2536,7 +2536,7 @@ namespace OGF {
 	dual->update();
     }
 
-    
+
     inline void write_vec(FILE* F, const double* V) {
 	float xyz[3];
 	xyz[0] = float(V[0]);
@@ -2544,7 +2544,7 @@ namespace OGF {
 	xyz[2] = float(V[2]);
 	fwrite(xyz, sizeof(float), 3, F);
     }
-    
+
     void MeshGrobTransportCommands::export_to_Cyril_Crassin_raw(
 	const std::string& basename
     ) {
@@ -2607,9 +2607,9 @@ namespace OGF {
 	}
 	return result;
     }
-    
+
     void MeshGrobTransportCommands::extract_initial_and_final(
-	const NewMeshGrobName& now_name,	
+	const NewMeshGrobName& now_name,
 	const NewMeshGrobName& initial_name,
 	bool wrap_coords,
 	bool correct_origin,
@@ -2620,12 +2620,12 @@ namespace OGF {
 			       << std::endl;
 	    return;
 	}
-	
+
 	MeshGrob* now = MeshGrob::find_or_create(scene_graph(), now_name);
 	now->clear();
 	now->vertices.set_dimension(3);
 	now->vertices.create_vertices(mesh_grob()->vertices.nb());
-	
+
 	MeshGrob* initial = MeshGrob::find_or_create(scene_graph(), initial_name);
 	initial->clear();
 	initial->vertices.set_dimension(3);
@@ -2641,9 +2641,9 @@ namespace OGF {
 	    double ofs = 1.0 / (double(nb_per_axis) + 1.0);
 	    Tx = ofs - p0[0];
 	    Ty = ofs - p0[1];
-	    Tz = ofs - p0[2];	    
+	    Tz = ofs - p0[2];
 	}
-	
+
 	FOR(v, mesh_grob()->vertices.nb()) {
 	    const double* from = mesh_grob()->vertices.point_ptr(v);
 	    double* to = now->vertices.point_ptr(v);
@@ -2696,7 +2696,7 @@ namespace OGF {
 	from_tex_coord.bind_if_is_defined(
 	    from->vertices.attributes(), "tex_coord"
 	);
-	
+
 	Attribute<double> to_tex_coord;
 	if(from_tex_coord.is_bound() && mesh_grob()->facet_corners.nb() != 0) {
 	    to_tex_coord.bind_if_is_defined(
@@ -2708,7 +2708,7 @@ namespace OGF {
 		);
 	    }
 	}
-	
+
 	NearestNeighborSearch_var NN = new BalancedKdTree(3);
 	NN->set_points(
 	    from->vertices.nb(), from->vertices.point_ptr(0),
@@ -2729,7 +2729,7 @@ namespace OGF {
 
 		to_color[3*v  ] = from_color[3*nearest  ];
 		to_color[3*v+1] = from_color[3*nearest+1];
-		to_color[3*v+2] = from_color[3*nearest+2];		
+		to_color[3*v+2] = from_color[3*nearest+2];
 	    }
 	);
 
@@ -2747,12 +2747,12 @@ namespace OGF {
 			&sq_dist
 		    );
 		    to_tex_coord[2*c] = from_tex_coord[2*nearest];
-		    to_tex_coord[2*c+1] = from_tex_coord[2*nearest+1];    
+		    to_tex_coord[2*c+1] = from_tex_coord[2*nearest+1];
 		}
 	    );
 	}
 
-	mesh_grob()->update();	
+	mesh_grob()->update();
     }
 
 
@@ -2772,7 +2772,7 @@ namespace OGF {
 		<< std::endl;
 	    return;
 	}
-	
+
 	Attribute<double> from_color;
 	from_color.bind_if_is_defined(from->vertices.attributes(), "color");
 	if(!from_color.is_bound() || from_color.dimension() != 3) {
@@ -2820,7 +2820,7 @@ namespace OGF {
 	mesh_grob()->update();
     }
 
-    
+
     void MeshGrobTransportCommands::sample_regions(
 	const std::string& points_name,
 	index_t total_nb_points,
@@ -2842,23 +2842,23 @@ namespace OGF {
 			       << std::endl;
 	    return;
 	}
-	
+
 	MeshGrob* points = MeshGrob::find_or_create(scene_graph(), points_name);
 	points->clear();
 	Attribute<double> mass(points->vertices.attributes(),"mass");
 
 	vector<double> masses;
-	
+
 	masses.push_back(0.0);
 	masses.push_back(region1_mass);
 	masses.push_back(region2_mass);
 	masses.push_back(region3_mass);
 	masses.push_back(region4_mass);
-	masses.push_back(region5_mass);	
+	masses.push_back(region5_mass);
 
 	vector<double> volumes(masses.size(), 0.0);
 	double total_volume = 0.0;
-	
+
 	FOR(t, mesh_grob()->vertices.nb()) {
 	    index_t rgn = region[t];
 	    if(rgn < volumes.size()) {
@@ -2914,7 +2914,7 @@ namespace OGF {
 		}
 	    }
 	}
-	
+
 	points->update();
     }
 
@@ -2935,7 +2935,7 @@ namespace OGF {
 		time_integrator(t, dt, vec3(p), V, integrator, VF);
 		p[0] += dt * V.x;
 		p[1] += dt * V.y;
-		p[2] += dt * V.z;	    
+		p[2] += dt * V.z;
 	    }
 	    mesh_grob()->update();
 	    Logger::out("Advect") << "Timestep: " << t << std::endl;
@@ -2954,7 +2954,7 @@ namespace OGF {
     void MeshGrobTransportCommands::select_chart(
 	const std::string& chart_attribute_name,
 	const std::string& selection_name,
-	index_t chart_id 
+	index_t chart_id
     ) {
 	Attribute<index_t> chart;
 	chart.bind_if_is_defined(
@@ -2966,7 +2966,7 @@ namespace OGF {
 	    return;
 	}
 	Attribute<bool> selection(
-	    mesh_grob()->facets.attributes(), selection_name	    
+	    mesh_grob()->facets.attributes(), selection_name
 	);
 	FOR(f, mesh_grob()->facets.nb()) {
 	    selection[f] = (chart[f] == chart_id);
@@ -2979,9 +2979,9 @@ namespace OGF {
 	    double* p = mesh_grob()->vertices.point_ptr(v);
 	    p[0] += tx;
 	    p[1] += ty;
-	    p[2] += tz;	    
+	    p[2] += tz;
 	}
-	mesh_grob()->update();	
+	mesh_grob()->update();
     }
 
     void MeshGrobTransportCommands::EUR_normalize_periodic_coordinates() {
@@ -2989,9 +2989,9 @@ namespace OGF {
 	    double* p = mesh_grob()->vertices.point_ptr(v);
 	    p[0] = wrap_coord(p[0], true);
 	    p[1] = wrap_coord(p[1], true);
-	    p[2] = wrap_coord(p[2], true);	    
+	    p[2] = wrap_coord(p[2], true);
 	}
-	mesh_grob()->update();	
+	mesh_grob()->update();
     }
 
     void MeshGrobTransportCommands::EUR_scatter_plot(
@@ -3021,13 +3021,13 @@ namespace OGF {
 	double ofs = 1.0 / (double(nb_per_axis) + 1.0);
 	Tx = ofs - p0[0];
 	Ty = ofs - p0[1];
-	Tz = ofs - p0[2];	    
+	Tz = ofs - p0[2];
 
 	std::ofstream out(std::string(filename).c_str());
 
 	std::ofstream test_pts("test_pts.xyz");
-	std::ofstream test_pts2("test_pts2.xyz");	
-	
+	std::ofstream test_pts2("test_pts2.xyz");
+
 	FOR(v, mesh_grob()->vertices.nb()) {
 	    index_t U = v % N;
 	    index_t V = (v / N) % N;
@@ -3049,10 +3049,10 @@ namespace OGF {
 	    out << Qy << " " << Py << std::endl;
 //	    out << Qz << " " << Pz << std::endl;
 
-	    test_pts2 << Px << " " << Py << " " << Pz << std::endl;	    
+	    test_pts2 << Px << " " << Py << " " << Pz << std::endl;
 	    test_pts  << Qx << " " << Qy << " " << Qz << std::endl;
 	}
-	
+
     }
 
     void MeshGrobTransportCommands::copy_attribute_to_geometry(
@@ -3079,7 +3079,7 @@ namespace OGF {
 	}
 	mesh_grob()->update();
     }
-    
+
     void MeshGrobTransportCommands::save_normals() {
 	std::ofstream out("normals.c");
 	out << "const int NB=" << mesh_grob()->facets.nb() << ";" << std::endl;
@@ -3138,8 +3138,8 @@ namespace OGF {
 	  out << p[0] << ' ' << p[1] << ' ' << p[2] << ' ' << attrib[i] << std::endl;
        }
     }
-   
-   
+
+
     void MeshGrobTransportCommands::normalize_transported_volume() {
         if(mesh_grob()->vertices.dimension() != 6) {
 	    Logger::err("OT") << "Mesh does not have transport" << std::endl;
@@ -3161,8 +3161,8 @@ namespace OGF {
 	    vec3 q2(mesh_grob()->vertices.point_ptr(j)+3);
 	    vec3 q3(mesh_grob()->vertices.point_ptr(k)+3);
 	    double V1 = Geom::tetra_signed_volume(origin, p1, p2, p3);
-	    double V2 = Geom::tetra_signed_volume(origin, q1, q2, q3);	    
-	    vol1 += V1; 
+	    double V2 = Geom::tetra_signed_volume(origin, q1, q2, q3);
+	    vol1 += V1;
 	    vol2 += V2;
 	    center1 += (V1 / 4.0)*(p1+p2+p3);
 	    center2 += (V2 / 4.0)*(q1+q2+q3);
@@ -3179,7 +3179,7 @@ namespace OGF {
 	    p = p+center2;
 	    mesh_grob()->vertices.point_ptr(v)[3] = p.x;
 	    mesh_grob()->vertices.point_ptr(v)[4] = p.y;
-	    mesh_grob()->vertices.point_ptr(v)[5] = p.z;	    
+	    mesh_grob()->vertices.point_ptr(v)[5] = p.z;
 	}
 	mesh_grob()->update();
     }
@@ -3210,7 +3210,7 @@ namespace {
 	    }
 	}
     }
-    
+
 }
 
 namespace OGF {
@@ -3253,9 +3253,9 @@ namespace OGF {
 	    vec3 p = (d[i] + R1) * V[i];
 	    mesh_grob()->vertices.point_ptr(i)[0] = p.x;
 	    mesh_grob()->vertices.point_ptr(i)[1] = p.y;
-	    mesh_grob()->vertices.point_ptr(i)[2] = p.z;	    
+	    mesh_grob()->vertices.point_ptr(i)[2] = p.z;
 	}
-	
+
 	mesh_grob()->update();
     }
 
@@ -3288,7 +3288,7 @@ namespace OGF {
 
 namespace OGF {
     void MeshGrobTransportCommands::load_Hydra(const FileName& filename) {
-        
+
         mesh_grob()->clear();
 
         try {
@@ -3310,29 +3310,29 @@ namespace OGF {
             Logger::out("Hydra") << String::format(" - omega0  =%f",in.ibuf2.d.omega0)   << std::endl;
             Logger::out("Hydra") << String::format(" - xlambda0=%f",in.ibuf2.d.xlambda0) << std::endl;
             Logger::out("Hydra") << String::format(" - h0t0    =%f",in.ibuf2.d.h0t0)     << std::endl;
-            
+
             Logger::out("Hydra") << String::format(" - itime =%d",in.ibuf1.d.itime)  << std::endl;
             Logger::out("Hydra") << String::format(" - itstop=%d",in.ibuf1.d.itstop) << std::endl;
             Logger::out("Hydra") << String::format(" - itdump=%d",in.ibuf1.d.itdump) << std::endl;
             Logger::out("Hydra") << String::format(" - itout =%d",in.ibuf1.d.itout)  << std::endl;
-            
+
             Logger::out("Hydra") << String::format(" -  time =%f",in.ibuf1.d.time)   << std::endl;
             Logger::out("Hydra") << String::format(" - atime =%f",in.ibuf1.d.atime)  << std::endl;
             Logger::out("Hydra") << String::format(" - htime =%f",in.ibuf1.d.htime)  << std::endl;
             Logger::out("Hydra") << String::format(" - dtime =%f",in.ibuf1.d.dtime)  << std::endl;
-            
+
             Logger::out("Hydra") << String::format(" - tstop =%f",in.ibuf1.d.tstop)  << std::endl;
             Logger::out("Hydra") << String::format(" - tout  =%f",in.ibuf1.d.tout)   << std::endl;
             Logger::out("Hydra") << String::format(" - icdump=%d",in.ibuf1.d.icdump) << std::endl;
-            
+
             Logger::out("Hydra") <<  " ---> nb particles=" << NPART << std::endl;
             mesh_grob()->vertices.set_dimension(3);
             mesh_grob()->vertices.create_vertices(NPART);
 
             in.skip_itype();
             in.skip_rm();
-            
-            Logger::out("Hydra") << "read r" << std::endl;   
+
+            Logger::out("Hydra") << "read r" << std::endl;
             in.begin_record();
             for(index_t i=0; i<NPART; ++i) {
                 float p[3];
@@ -3344,7 +3344,7 @@ namespace OGF {
             in.end_record();
 
             in.skip_v();
-            
+
         } catch(std::logic_error& err) {
             Logger::err("Hydra") << err.what() << std::endl;
             return;
@@ -3363,7 +3363,7 @@ namespace OGF {
                           "Could not open " + std::string(filename)
                 ));
             }
-            
+
             fseek(f, 0L, SEEK_END);
             size_t filesize = size_t(ftell(f));
             rewind(f);
@@ -3386,13 +3386,13 @@ namespace OGF {
                 mesh_grob()->vertices.point_ptr(i)[1] = double(xyz[1]);
                 mesh_grob()->vertices.point_ptr(i)[2] = double(xyz[2]);
             }
-            
+
             fclose(f);
         } catch (std::logic_error& err) {
             Logger::err("Cosmo") << err.what() << std::endl;
             return;
         }
-        
+
         if(mesh_grob()->get_shader() != nullptr) {
             mesh_grob()->set_shader("Cosmo");
         }
@@ -3422,7 +3422,7 @@ namespace OGF {
     }
 
 
-    
+
     void MeshGrobTransportCommands::create_box() {
         MeshGrob* box = MeshGrob::find_or_create(scene_graph(), "box");
         box->clear();
@@ -3460,7 +3460,7 @@ namespace OGF {
             update_bound(z2, "maxz");
 
         }
-        
+
         index_t v0 = box->vertices.create_vertex(vec3(x1,y1,z1).data());
         index_t v1 = box->vertices.create_vertex(vec3(x1,y1,z2).data());
         index_t v2 = box->vertices.create_vertex(vec3(x1,y2,z1).data());
@@ -3479,7 +3479,7 @@ namespace OGF {
 
         box->facets.connect();
 
-        
+
         Shader* shd = box->get_shader();
         if(shd != nullptr) {
             shd->set_property("surface_style", "true;0 0 0 0");
@@ -3502,7 +3502,7 @@ namespace OGF {
                           "Could not open " + std::string(filename)
                 ));
             }
-            
+
             fseek(f, 0L, SEEK_END);
             size_t filesize = size_t(ftell(f));
             rewind(f);
@@ -3554,7 +3554,7 @@ namespace OGF {
         }
         mesh_grob()->update();
     }
-    
+
 
     void MeshGrobTransportCommands::split_Calabi_Yau() {
         Attribute<double> CY;
@@ -3563,7 +3563,7 @@ namespace OGF {
             Logger::err("Cosmo") << "Missing or invalid CY attribute" << std::endl;
             return;
         }
-        
+
         MeshGrob* split = MeshGrob::find_or_create(scene_graph(),"split");
         split->clear();
 
@@ -3579,20 +3579,20 @@ namespace OGF {
             double z = CY[12*v+5 ];
             double vtheta = atan2(y,x);
             double vphi = atan2(sqrt(x*x+y*y),z);
-            
+
             split->vertices.point_ptr(4*v+0)[0] = CY[12*v+0 ] - 2.0;
             split->vertices.point_ptr(4*v+0)[1] = CY[12*v+1 ] - 2.0;
             split->vertices.point_ptr(4*v+0)[2] = CY[12*v+2 ];
             theta[4*v] = vtheta;
             phi[4*v]   = vphi;
 
-            
+
             split->vertices.point_ptr(4*v+1)[0] = CY[12*v+3 ] - 2.0;
             split->vertices.point_ptr(4*v+1)[1] = CY[12*v+4 ] + 2.0;
             split->vertices.point_ptr(4*v+1)[2] = CY[12*v+5 ];
             theta[4*v+1] = vtheta;
             phi[4*v+1]   = vphi;
-            
+
 
             split->vertices.point_ptr(4*v+2)[0] = CY[12*v+6 ] + 2.0;
             split->vertices.point_ptr(4*v+2)[1] = CY[12*v+7 ] - 2.0;
@@ -3605,9 +3605,9 @@ namespace OGF {
             split->vertices.point_ptr(4*v+3)[2] = CY[12*v+11];
             theta[4*v+3] = vtheta;
             phi[4*v+3]   = vphi;
-            
+
         }
-        
+
         split->get_shader()->set_property("vertices_style","true; 0 1 0 1; 1");
         split->update();
     }
@@ -3615,10 +3615,10 @@ namespace OGF {
     /**************************************************************/
 
     index_t copy_cell(
-        Mesh* target, Mesh* source, index_t i, double z, double shrink, bool flip, bool edges
+        Mesh* target, Mesh* source, index_t i, double shrink, bool flip, bool edges
     ) {
         Attribute<index_t> chart(source->facets.attributes(),"chart");
-        
+
         std::map<index_t, index_t> nxt;
         index_t first_v = NO_INDEX;
         for(index_t f: source->facets) {
@@ -3651,7 +3651,7 @@ namespace OGF {
         index_t N = index_t(nxt.size());
         do {
             vec3 p = shrink*G+(1.0-shrink)*vec3(source->vertices.point_ptr(v));
-            p.z = z;
+            // p.z = z;
             target->facets.set_vertex(
                 newf,
                 flip ? N-1-lv : lv,
@@ -3694,7 +3694,12 @@ namespace OGF {
         return (1.0/m)*mg;
     }
 
-    void connect(Mesh* M, index_t f1, index_t f2, const std::string& name, double delta_z) {
+    void connect(Mesh* M, index_t f1, index_t f2, const std::string& name) {
+
+        double z1 = M->vertices.point_ptr(M->facets.vertex(f1,0))[2];
+        double z2 = M->vertices.point_ptr(M->facets.vertex(f2,0))[2];
+        double delta_z = z2 - z1;
+
         index_t N1 = M->facets.nb_vertices(f1);
         index_t N2 = M->facets.nb_vertices(f2);
         double R1 = 0.0;
@@ -3722,7 +3727,7 @@ namespace OGF {
         cdt2mesh.push_back(NO_INDEX);
         cdt2mesh.push_back(NO_INDEX);
         cdt2mesh.push_back(NO_INDEX);
-        
+
         index_t base1 = CDT.nv();
         for(index_t lv = 0; lv<N1; ++lv) {
             index_t v = M->facets.vertex(f1,lv);
@@ -3741,11 +3746,11 @@ namespace OGF {
         for(index_t lv = 0; lv<N1; ++lv) {
             CDT.insert_constraint(base1+lv, base1+(lv+1)%N1);
         }
-        
+
         for(index_t lv = 0; lv<N2; ++lv) {
             CDT.insert_constraint(base2+lv, base2+(lv+1)%N2);
         }
-        
+
         for(index_t t=0; t<CDT.nT(); ++t) {
             index_t v[3] = { NO_INDEX, NO_INDEX, NO_INDEX } ;
             index_t nb1 = 0;
@@ -3763,7 +3768,7 @@ namespace OGF {
                     v[lv] = NO_INDEX;
                 }
             }
-            
+
             if(
                 v[0] != NO_INDEX && v[1] != NO_INDEX && v[2] != NO_INDEX &&
                 nb1 > 0 && nb2 > 0
@@ -3774,7 +3779,7 @@ namespace OGF {
                     const double* p1 = M->vertices.point_ptr(v[lv1]);
                     const double* p2 = M->vertices.point_ptr(v[lv2]);
                     double d = Geom::distance(p1,p2,2);
-                    if((p1[2] != p2[2]) && (d < 1.4*delta_z) && (v[lv1] < v[lv2])) {
+                    if((p1[2] != p2[2]) && (d < delta_z) && (v[lv1] < v[lv2])) {
                         M->edges.create_edge(v[lv1],v[lv2]);
                     }
                 }
@@ -3785,11 +3790,10 @@ namespace OGF {
             CDT.save(name);
         }
     }
-    
+
     void MeshGrobTransportCommands::get_path_bundles(
         const std::string& format,
         double shrink,
-        double delta_z,
         index_t max_timestep,
         index_t skip
     ) {
@@ -3822,12 +3826,12 @@ namespace OGF {
         }
 
         Attribute<index_t> to_delete(mesh_grob()->facets.attributes(),"to_delete");
-        
+
         for(index_t i=0; i<N; ++i) {
             bool flip = false;
             bool edges = true;
             index_t f1 = copy_cell(
-                mesh_grob(), timesteps[0], i, 0.0, shrink, flip, edges
+                mesh_grob(), timesteps[0], i, shrink, flip, edges
             );
             std::string name = String::format("debugCDT_%03d.geogram",i);
             name = "";
@@ -3836,9 +3840,9 @@ namespace OGF {
                 flip = true;
                 edges = (timestep == timesteps.size()-1);
                 index_t f2 = copy_cell(
-                    mesh_grob(), M, i, delta_z*double(timestep),shrink, flip, edges
+                    mesh_grob(), M, i, shrink, flip, edges
                 );
-                connect(mesh_grob(), f1, f2, name, delta_z);
+                connect(mesh_grob(), f1, f2, name);
                 name = "";
                 if(timestep != timesteps.size()-1) {
                     to_delete[f2] = 1;
@@ -3850,8 +3854,8 @@ namespace OGF {
         vector<index_t> to_delete_bkp = to_delete.get_vector();
         mesh_grob()->facets.delete_elements(to_delete_bkp);
         mesh_grob()->facets.connect();
-        
+
         mesh_grob()->update();
     }
-    
+
 }

@@ -24,19 +24,19 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the following 
+ * As an exception to the GPL, Graphite can be linked with the following
  *  (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_WARPDRIVE_COMMANDS_MESH_GROB_TRANSPORT_COMMANDS_H
 #define H_OGF_WARPDRIVE_COMMANDS_MESH_GROB_TRANSPORT_COMMANDS_H
@@ -77,7 +77,7 @@ namespace OGF {
          * \param[in] density1 minimum value of the density
          * \param[out] density2 maximum value of the density
          * \param[in] function specification of the function to be used,
-         *  in the form "(+|-)?func(^pow)?", where func is one of 
+         *  in the form "(+|-)?func(^pow)?", where func is one of
          *  X,Y,Z,R,sin,dist
          * \param[in] reference if specified and func is "dist",
          *  distance is computed relative to this surface, else it
@@ -101,17 +101,17 @@ namespace OGF {
             index_t nb_bins = 1000,
             index_t subsample = 0
         );
-        
+
         /**
 	 * \menu Compute
          * \brief Computes the optimal transport between this volumetric mesh
          *  and another one.
-         * \param[in] target name of the target volumetric mesh 
-         * \param[in] nb_points number of points to be created to 
+         * \param[in] target name of the target volumetric mesh
+         * \param[in] nb_points number of points to be created to
          *  sample the target
          * \param[in] proj_border if true, points near the
          *  border are projected onto the boundary of the target
-         * \param[in] result name of the computed morphing 
+         * \param[in] result name of the computed morphing
          * \param[in] Newton if true use Newton solver
          * \advanced
          * \param[in] sampling (optional) name of the computed target sampling
@@ -119,17 +119,17 @@ namespace OGF {
          * \param[in] regularization (optional) if non-zero, add regularization
          * \param[in] BRIO if true, use Biased Random Insertion
          *  Order [Amenta et.al]
-         * \param[in] multilevel if true, use multilevel sampling 
+         * \param[in] multilevel if true, use multilevel sampling
          *  (note: BRIO implies multilevel)
          * \param[in] ratio ratio between the sizes of two sucessive levels
          * \param[in] nb_iter maximum number of iterations
          * \param[in] epsilon maximum relative measure error in a cell
-	 * \param[in] linsolve_nb_iter the maximum number of iterations 
+	 * \param[in] linsolve_nb_iter the maximum number of iterations
 	 *   for linear solves
-	 * \param[in] linsolve_epsilon the maximum value of 
+	 * \param[in] linsolve_epsilon the maximum value of
 	 *   \f$ \| Ax - b \| / \| b \| \f$ for linear solves
-         * \param[in] save_RVD_iter if true, save all iterations 
-         * \param[in] show_RVD_center if true and savev_RVD_iter, 
+         * \param[in] save_RVD_iter if true, save all iterations
+         * \param[in] show_RVD_center if true and savev_RVD_iter,
          *  shows center of cells attached to cells
          * \param[in] save_last_iter if true, save only last iteration
          */
@@ -159,15 +159,15 @@ namespace OGF {
 	 * \menu Compute
 	 * \brief Computes Early Universe Reconstruction.
 	 * \param[in] points the pointset
-	 * \param[in] scaling_factor multiply all coordinates 
+	 * \param[in] scaling_factor multiply all coordinates
 	 *   to improve stability
-         * \param[in] Newton_epsilon maximum relative measure error in a cell 
+         * \param[in] Newton_epsilon maximum relative measure error in a cell
 	 * \param[in] max_Newton_iter maximum number of Newton iterations
 	 * \param[in] linesearch_init_iter first iteration for linesearch
-	 * \param[in] max_linesearch_iter maximum number of 
+	 * \param[in] max_linesearch_iter maximum number of
 	 *   line search iterations
 	 * \param[in] linsolve_epsilon tolerance for linear solve
-	 * \param[in] max_linsolve_iter maximum number of 
+	 * \param[in] max_linsolve_iter maximum number of
 	 *   linear solve iterations
 	 * \param[in] regularization (optional) if non-zero, add regularization
 	 */
@@ -183,12 +183,12 @@ namespace OGF {
 	    double regularization = 0.0
 	);
 
-	
+
 	/**
 	 * \menu Compute
 	 * \brief Computes a Laguerre diagram where the cells have all
 	 *  the same areas
-	 * \param[in] points the generated pointset 
+	 * \param[in] points the generated pointset
 	 * \param[in] laguerre the generated Laguerre diagram
 	 * \param[in] air an optional pointset with air particles
 	 * \param[in] air_fraction if air is specified, fraction of total
@@ -213,11 +213,11 @@ namespace OGF {
 	    double regul = 1e-3,
 	    OTLinearSolver solver = OT_PRECG
 	);
-	
-	
+
+
         /**
 	 * \menu Compute
-         * \brief Computes symetrized semi-discrete transport between 
+         * \brief Computes symetrized semi-discrete transport between
          *   two objects.
          * \param[in] other the other object
          * \param[in] nb_points number of points
@@ -232,7 +232,7 @@ namespace OGF {
             const NewMeshGrobName& othersampling = "points2",
             index_t nb_iter=4
         );
-        
+
         /**
 	 * \menu Pre-processing
          * \brief Creates a regular sampling of the current object.
@@ -253,7 +253,7 @@ namespace OGF {
         void perturb(double howmuch);
 
 	enum EulerMode { EULER_2D=2, EULER_3D=3, EULER_ON_SURFACE=4};
-	
+
 	/**
 	 * \menu Pre-processing
 	 * \brief Moves points to barycenters of Laguerre cells
@@ -286,7 +286,7 @@ namespace OGF {
 	 * \brief Append points and mass attribute
 	 */
 	void append_points(const MeshGrobName& points);
-	
+
         /**
 	 * \menu Compute
          * \brief Performs one step of incompressible Euler simulation in 2d
@@ -297,7 +297,7 @@ namespace OGF {
 	 * \advanced
          * \param[in] tau time step
          * \param[in] epsilon should be smaller than tau
-         * \param[in] g gravity 
+         * \param[in] g gravity
 	 * \param[in] save_every save object every nnn
 	 * \param[in] first_iter number of the first iteration,
 	 *  used to name files correctly when doing multiple runs
@@ -310,7 +310,7 @@ namespace OGF {
 	 * \param[in] air_particles pointset with air particles if any
 	 * \param[in] fluid_omega0 initial domain occupied by the fluid if any
 	 * \param[in] physical true if using F=ma, else uses F=a
-	 * \param[in] no_transport if true, just use non-optimized 
+	 * \param[in] no_transport if true, just use non-optimized
 	 *  Voronoi diagram
          */
 	void Euler2d(
@@ -343,11 +343,11 @@ namespace OGF {
 	 * \advanced
          * \param[in] tau time step
          * \param[in] epsilon should be smaller than tau
-         * \param[in] g gravity 
+         * \param[in] g gravity
 	 * \param[in] save_every save object every nnn
 	 * \param[in] first_iter number of the first iteration,
 	 *  used to name files correctly when doing multiple runs
-	 * \param[in] verbose if set, messages are displayed during 
+	 * \param[in] verbose if set, messages are displayed during
 	 *  optimization.
 	 * \param[in] project_every if non-zero, relocate each point to
 	 *  the barycenter of its cell every nnn interations.
@@ -371,7 +371,7 @@ namespace OGF {
 
         /**
 	 * \menu Compute
-         * \brief Performs one step of incompressible Euler 
+         * \brief Performs one step of incompressible Euler
 	 *   simulation on surface
          * \param[in] omega the surfacic mesh with the domain
          * \param[in] nb_iter number of time steps
@@ -379,8 +379,8 @@ namespace OGF {
 	 * \advanced
          * \param[in] tau time step
          * \param[in] epsilon should be smaller than tau
-         * \param[in] g gravity 
-	 * \param[in] verbose if set, messages are displayed during 
+         * \param[in] g gravity
+	 * \param[in] verbose if set, messages are displayed during
 	 *  optimization.
 	 * \param[in] project_every if non-zero, relocate each point to
 	 *  the barycenter of its cell every nnn interations.
@@ -399,7 +399,7 @@ namespace OGF {
 	    bool physical=true
         );
 
-	
+
         /**
 	 * \menu Pre-processing
          * \brief Generates a volumetric mesh that fills the space
@@ -431,7 +431,7 @@ namespace OGF {
 	 * \param[in] domain the name of the domain mesh.
 	 */
 	void crop_domain(const MeshGrobName& domain = "omega");
-	
+
 	/**
 	 * \menu Pre-processing
 	 * \brief Keeps only the mesh elements that are inside
@@ -460,10 +460,10 @@ namespace OGF {
 	 *  Metric algorithm.
 	 * \param[in] affinity the higher, the smoother
 	 * \param[in] nb_iter number of iterations
-	 * \param[in] grid the object to be fitted or control mesh 
+	 * \param[in] grid the object to be fitted or control mesh
 	 *  of subd surface
 	 * \param[in] nb_subd number of subdivision
-	 * \param[in] subd computed subdivision surface 
+	 * \param[in] subd computed subdivision surface
 	 *  (if nb_subd different from 0)
 	 */
 	void optimize_VSDM(
@@ -478,7 +478,7 @@ namespace OGF {
 	 * \menu Post-processing
 	 * \brief Copies coordinates of another mesh into
 	 *  a "t0" vector attribute.
-	 * \param[in] t0_mesh the name of the mesh with 
+	 * \param[in] t0_mesh the name of the mesh with
 	 *  geometry at t0 to be copied. Needs to have the
 	 *  same number of vertices as this mesh.
 	 */
@@ -489,7 +489,7 @@ namespace OGF {
 	/**
 	 * \menu Post-processing
 	 * \brief Computes velocities from speed vectors.
-	 * \param[in] velocity name of the attribute where to 
+	 * \param[in] velocity name of the attribute where to
 	 *  store velocities.
 	 * \param[in] speed_vector name of the attribute with
 	 *  speed vectors (dim 3 vector attribute)
@@ -504,10 +504,10 @@ namespace OGF {
 	 * \brief In a Euler simulation, compute the interface
 	 *  between the two liquides.
 	 * \param[in] domain the name of the mesh with the domain.
-	 * \param[out] interface the name of the mesh where to store 
+	 * \param[out] interface the name of the mesh where to store
 	 *  the interface.
 	 * \param[in] primal if true, then interface is computed by
-	 *  marching-tetrahedra from the primal 3d triangulation, else 
+	 *  marching-tetrahedra from the primal 3d triangulation, else
 	 *  it is computed from the power diagram.
 	 */
 	void compute_interface(
@@ -536,7 +536,7 @@ namespace OGF {
 	    const NewMeshGrobName& dual="dual",
 	    bool triangulate=false
 	);
-	
+
 	/**
 	 * \menu Post-processing
 	 * \brief Exports a mesh in raw format to be
@@ -549,11 +549,11 @@ namespace OGF {
 
 	/**
 	 * \menu Post-processing
-	 * \brief Extracts initial and final pointsets 
+	 * \brief Extracts initial and final pointsets
 	 *  from an animated pointset.
 	 */
 	void extract_initial_and_final(
-	    const NewMeshGrobName& now="EUR_now",	    
+	    const NewMeshGrobName& now="EUR_now",
 	    const NewMeshGrobName& initial="EUR_initial",
 	    bool wrap_coords=false,
 	    bool correct_origin=false,
@@ -562,7 +562,7 @@ namespace OGF {
 
 	/**
 	 * \menu Post-processing
-	 * \brief Creates a scatter plot datafile for evaluating 
+	 * \brief Creates a scatter plot datafile for evaluating
 	 *  Early Universe Reconstruction quality.
 	 */
 	void EUR_scatter_plot(
@@ -570,7 +570,7 @@ namespace OGF {
 	    index_t nb_per_axis = 256
 	);
 
-	
+
 	/**
 	 * \menu Post-processing
 	 * \brief Selects a chart
@@ -586,7 +586,7 @@ namespace OGF {
 	 * \brief Translates mesh by vector.
 	 */
 	void translate(double tx=0.0, double ty=0.0, double tz=0.0);
-	
+
 	/**
 	 * \menu Post-processing
 	 * \brief Set coordinates between 0 and 1 for reconstructed pointsets
@@ -610,10 +610,10 @@ namespace OGF {
 	void copy_point_colors(
 	    const MeshGrobName& from
 	);
-	
+
 	/**
 	 * \menu Post-processing
-	 * \brief Copies colors from the nearest point of 
+	 * \brief Copies colors from the nearest point of
 	 *  another object
 	 * \param[in] from the object from which colors
 	 *  are copied
@@ -643,7 +643,7 @@ namespace OGF {
 	    double region5_mass = 0.0
 	);
 
-	/** 
+	/**
 	 * \menu Advection
 	 * \brief Applies a velocity field to a mesh.
 	 * \param[in] t0
@@ -690,7 +690,7 @@ namespace OGF {
 	 * \brief For tet6 files, extract trajectories
 	 */
 	void extract_trajectories();
-        
+
 
         /**
 	 * \menu Pre-processing
@@ -720,7 +720,7 @@ namespace OGF {
          * \brief Saves the points to a flat floating point binary file
          */
         void save_binary(const NewFileName& filename);
-        
+
         /**
          * \menu /Cosmo
          * \brief Creates a box
@@ -753,13 +753,11 @@ namespace OGF {
 	void get_path_bundles(
             const std::string& format = "RVD_%03d",
             double shrink = 0.3,
-            double delta_z = 0.05,
             index_t max_timestep = 1000,
             index_t skip = 0
         );
-        
+
     };
 }
 
 #endif
-
