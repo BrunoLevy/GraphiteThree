@@ -24,15 +24,15 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
+ * As an exception to the GPL, Graphite can be linked
  *  with the following (non-GPL) libraries: Qt, SuperLU, WildMagic and CGAL
  */
 
@@ -50,7 +50,7 @@ namespace {
             v_is_marked[M.facets.vertex(f,lv)] = true;
         }
     }
-    
+
     static void mark_cell_vertices(
         const Mesh& M, index_t c, vector<bool>& v_is_marked
     ) {
@@ -60,7 +60,7 @@ namespace {
     }
 
     static bool all_facet_vertices_are_marked(
-        const Mesh& M, index_t f, vector<bool>& v_is_marked        
+        const Mesh& M, index_t f, vector<bool>& v_is_marked
     ) {
         for(index_t lv=0; lv<M.facets.nb_vertices(f); ++lv) {
             if(!v_is_marked[M.facets.vertex(f,lv)]) {
@@ -69,7 +69,15 @@ namespace {
         }
         return true;
     }
-    
+
+    static bool all_edge_vertices_are_marked(
+        const Mesh& M, index_t e, vector<bool>& v_is_marked
+    ) {
+        return
+            v_is_marked[M.edges.vertex(e,0)] &&
+            v_is_marked[M.edges.vertex(e,1)] ;
+    }
+
     static bool all_cell_vertices_are_marked(
         const Mesh& M, index_t c, vector<bool>& v_is_marked
     ) {
@@ -80,7 +88,7 @@ namespace {
         }
         return true;
     }
-    
+
     void get_connected_component_from_facet(
         const Mesh& M, index_t f, vector<bool>& v_is_marked
     ) {
@@ -133,11 +141,11 @@ namespace {
         }
     }
 
-    
+
     void get_connected_component_from_cell(
         const Mesh& M, index_t c, vector<bool>& v_is_marked
     ) {
-        vector<bool> c_is_marked(M.cells.nb(), false);        
+        vector<bool> c_is_marked(M.cells.nb(), false);
         std::stack<index_t> S;
         c_is_marked[c] = true;
         mark_cell_vertices(M,c,v_is_marked);
@@ -159,7 +167,7 @@ namespace {
     void propagate_connected_component_to_cells(
         const Mesh& M, vector<bool>& v_is_marked
     ) {
-        vector<bool> c_is_marked(M.cells.nb(), false);        
+        vector<bool> c_is_marked(M.cells.nb(), false);
         std::stack<index_t> S;
 
         for(index_t c: M.cells) {
@@ -186,13 +194,13 @@ namespace {
             }
         }
     }
-    
+
 
     bool pick_component(
         MeshGrobTool* tool, const RayPick& rp, vector<bool>& v_is_picked
     ) {
         bool result = false;
-        
+
         MeshGrob& mesh_grob = *tool->mesh_grob();
         v_is_picked.assign(mesh_grob.vertices.nb(), false);
         index_t picked_cell = NO_CELL;
@@ -222,7 +230,7 @@ namespace {
         }
         return result;
     }
-    
+
 }
 
 namespace OGF {
@@ -246,6 +254,22 @@ namespace OGF {
                     }
                 }
                 mesh_grob()->facets.delete_elements(to_remove);
+            }
+            if(mesh_grob()->edges.nb() != 0) {
+                vector<index_t> to_remove(mesh_grob()->edges.nb(),0);
+                for(index_t e: mesh_grob()->edges) {
+                    bool remove_e =
+                        all_edge_vertices_are_marked(
+                            *mesh_grob(), e, v_is_picked
+                        );
+                    if(invert_selection_) {
+                        remove_e = !remove_e;
+                    }
+                    if(remove_e) {
+                        to_remove[e] = 1;
+                    }
+                }
+                mesh_grob()->edges.delete_elements(to_remove);
             }
             if(mesh_grob()->cells.nb() != 0) {
                 vector<index_t> to_remove(mesh_grob()->cells.nb(),0);
@@ -277,7 +301,7 @@ namespace OGF {
         vector<bool> v_is_picked;
         pick_component(tool, rp, v_is_picked);
 
-        vector<index_t> v_to_new(mesh_grob()->vertices.nb(), NO_VERTEX);        
+        vector<index_t> v_to_new(mesh_grob()->vertices.nb(), NO_VERTEX);
         index_t nb_new_vertices = 0;
         for(index_t v=0; v<v_is_picked.size(); ++v) {
             if(v_is_picked[v]) {
@@ -360,7 +384,7 @@ namespace OGF {
             }
             for(index_t c=0; c<first_new_c; ++c) {
                 if(c_to_new[c] != NO_CELL) {
-                    index_t new_c = c_to_new[c];                    
+                    index_t new_c = c_to_new[c];
                     index_t nb_vertices = mesh_grob()->cells.nb_vertices(c);
                     for(index_t lv=0; lv<nb_vertices; ++lv) {
                         index_t v = mesh_grob()->cells.vertex(c, lv);
@@ -378,7 +402,7 @@ namespace OGF {
                 }
             }
         }
-        
+
         mesh_grob()->update();
     }
 
@@ -389,10 +413,10 @@ namespace OGF {
         }
     }
 
-    
-    
+
+
 /**********************************************************/
-    
+
     void MeshGrobTransformComponent::pick_subset(
         MeshGrobTransformSubset* tool, const RayPick& rp
     ) {
@@ -405,7 +429,7 @@ namespace OGF {
         index_t count = 0;
         center_ = vec3(0.0, 0.0, 0.0);
         for(index_t v: mesh_grob()->vertices) {
-            if(v_is_picked_[v]) {            
+            if(v_is_picked_[v]) {
                 const vec3& p = Geom::mesh_vertex(*mesh_grob(), v);
                 center_ += p;
                 ++count;
@@ -462,6 +486,5 @@ namespace OGF {
 	    mesh_grob()->update();
 	}
     }
-    
-}
 
+}

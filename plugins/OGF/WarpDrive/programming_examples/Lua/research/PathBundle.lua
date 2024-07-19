@@ -69,6 +69,9 @@ function Euler_step()
    if Euler_dialog.show_PathBundle then
      copy_path_bundle()
    end
+   if Euler_dialog.show_Path then
+     copy_path()
+   end
 end
 
 function copy_path_bundle()
@@ -80,6 +83,26 @@ function copy_path_bundle()
    for v=0,RVD2.I.Editor.nb_vertices-1 do
       pts[3*v+2] = time_step * Euler_dialog.delta_z
    end
+end
+
+function copy_path()
+  paths = scene_graph.objects.paths
+  if paths == nil then
+     paths = scene_graph.create_object(gom.meta_types.OGF.MeshGrob,'paths')
+  end
+  E1 = points.I.Editor
+  XYZ = E1.get_points()
+  E2 = paths.I.Editor
+  offset = E2.nb_vertices
+  for v=0,E1.nb_vertices-1 do
+    x = XYZ[3*v]
+    y = XYZ[3*v+1]
+    z = time_step * Euler_dialog.delta_z
+    new_v = E2.create_vertex(x,y,z)
+    if offset ~= 0 then
+       E2.create_edge(new_v, new_v - E1.nb_vertices)
+    end
+  end
 end
 
 
@@ -180,6 +203,7 @@ Euler_dialog.width = 400
 Euler_dialog.nb_steps = 100
 Euler_dialog.show_Laguerre = false
 Euler_dialog.show_PathBundle = false
+Euler_dialog.show_Path = false
 Euler_dialog.delta_z = 0.01
 Euler_dialog.stopped = false
 
@@ -214,19 +238,30 @@ function Euler_dialog.draw_window()
          RVD.shader.attribute,RVD.shader.scalar_attributes
       )
    end
-   imgui.Text('Path Bundle')
+
+   imgui.Text('Path Bundles')
    imgui.SameLine()
    sel,Euler_dialog.show_PathBundle =
-          imgui.Checkbox('##show_PathBundle',Euler_dialog.show_PathBundle)
+      imgui.Checkbox('##show_PathBundle',Euler_dialog.show_PathBundle)
    if sel then
       time_step = 0
    end
-   if Euler_dialog.show_PathBundle then
+
+   imgui.Text('Paths')
+   imgui.SameLine()
+   sel,Euler_dialog.show_Path =
+      imgui.Checkbox('##show_Path',Euler_dialog.show_Path)
+   if sel then
+      time_step = 0
+   end
+
+   if Euler_dialog.show_PathBundle or Euler_dialog.show_Path then
       imgui.Text('delta z')
       imgui.SameLine()
       sel,Euler_dialog.delta_z =
          imgui.InputFloat('##DeltaZ', Euler_dialog.delta_z, 0.0, 0.0, '%.3f')
    end
+
    imgui.Separator()
    if imgui.Button('run Euler',-1,0) then
        -- we need to 'exec_command' rather than directly calling

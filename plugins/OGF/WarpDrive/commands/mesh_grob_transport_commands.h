@@ -756,7 +756,6 @@ namespace OGF {
             index_t max_timestep = 1000,
             index_t skip = 0
         );
-
     };
 }
 
