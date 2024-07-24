@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_META_TYPES_META_CLASS_H
@@ -70,7 +70,7 @@ namespace OGF {
          * \param[in] super_class a pointer to the super class, or nullptr
          *  if there is no super class
          * \param[in] is_abstract indicates whether the class is abstract
-         *  (e.g. with pure virtual methods) or not. Abstract classes 
+         *  (e.g. with pure virtual methods) or not. Abstract classes
          *  cannot be constructed.
          */
         explicit MetaClass(
@@ -83,11 +83,11 @@ namespace OGF {
          * \param[in] class_name the C++ class name
          * \param[in] super_class_name the C++ name of the super class
          * \param[in] is_abstract indicates whether the class is abstract
-         *  (e.g. with pure virtual methods) or not. Abstract classes 
+         *  (e.g. with pure virtual methods) or not. Abstract classes
          *  cannot be constructed.
          */
         explicit MetaClass(
-            const std::string& class_name, 
+            const std::string& class_name,
             const std::string& super_class_name,
             bool is_abstract = false
         );
@@ -103,7 +103,7 @@ namespace OGF {
 	void pre_delete() override;
 
     gom_slots:
-        
+
         /**
          * \brief Gets the super class.
          * \return a pointer to the super class, or nullptr if there
@@ -115,8 +115,8 @@ namespace OGF {
          * \brief Gets the name of the super class.
          * \return the C++ name of the super class
          */
-        const std::string& super_class_name() const { 
-            return super_class_name_; 
+        const std::string& super_class_name() const {
+            return super_class_name_;
         }
 
         /**
@@ -136,7 +136,7 @@ namespace OGF {
          *  found or if the class is abstract.
          */
         Object* create(const ArgList& args);
-        
+
         /**
          * \brief Gets the number of class members.
          * \details Class members are constructors,
@@ -154,7 +154,7 @@ namespace OGF {
          * \param[in] super if true, lookup also in superclasses
          * \pre i < nb_members(super)
          */
-        MetaMember* ith_member(index_t i, bool super = true) const; 
+        MetaMember* ith_member(index_t i, bool super = true) const;
 
         /**
          * \brief Finds a MetaMember by name
@@ -164,10 +164,10 @@ namespace OGF {
          * \return a pointer to the found MetaMember or nullptr
          */
         MetaMember* find_member(
-            const std::string& member_name, bool super = true 
+            const std::string& member_name, bool super = true
         ) const;
 
-        
+
         /**
          * \brief Gets the number of signals.
          * \param[in] super if true, counts also the
@@ -184,7 +184,7 @@ namespace OGF {
          * \pre i < nb_signals(super)
          */
         MetaSignal* ith_signal(index_t i, bool super = true) const;
-        
+
         /**
          * \brief Gets the number of slots.
          * \param[in] super if true, counts also the
@@ -201,7 +201,7 @@ namespace OGF {
          * \pre i < nb_slots(super)
          */
         MetaSlot* ith_slot(index_t i, bool super = true) const;
-        
+
         /**
          * \brief Gets the number of properties.
          * \param[in] super if true, counts also the
@@ -219,7 +219,7 @@ namespace OGF {
          * \pre i < nb_properties(super)
          */
         MetaProperty* ith_property(index_t i, bool super = true) const;
-        
+
         /**
          * \brief Gets the number of constructors.
          * \return the number of constructors
@@ -243,7 +243,7 @@ namespace OGF {
          * \return a pointer to the found MetaMethod or nullptr
          */
         MetaMethod* find_method(
-            const std::string& method_name, bool super = true 
+            const std::string& method_name, bool super = true
         ) const;
 
         /**
@@ -253,8 +253,8 @@ namespace OGF {
          *  members inherited from super class
          * \return a pointer to the found MetaMethod or nullptr
          */
-        MetaSlot* find_slot( 
-            const std::string& slot_name, bool super = true 
+        MetaSlot* find_slot(
+            const std::string& slot_name, bool super = true
         ) const;
 
         /**
@@ -264,8 +264,8 @@ namespace OGF {
          *  members inherited from super class
          * \return a pointer to the found MetaSignal or nullptr
          */
-        MetaSignal* find_signal( 
-            const std::string& signal_name, bool super = true 
+        MetaSignal* find_signal(
+            const std::string& signal_name, bool super = true
         ) const;
 
         /**
@@ -275,8 +275,8 @@ namespace OGF {
          *  members inherited from super class
          * \return a pointer to the found MetaProperty or nullptr
          */
-        MetaProperty* find_property( 
-            const std::string& property_name, bool super = true 
+        MetaProperty* find_property(
+            const std::string& property_name, bool super = true
         ) const;
 
         /**
@@ -290,12 +290,20 @@ namespace OGF {
         virtual MetaClass* create_subclass(
             const std::string& name, bool is_abstract=false
         );
-        
+
+        /**
+         * \brief Tests whether this MetaClass is a subclass of another MetaClass
+         * \param[in] other a pointer to a MetaClass
+         * \retval true if this MetaClass is the same or is a subtype of \p other
+         * \retval false otherwise
+         */
+        virtual bool is_subclass_of(const MetaClass* other) const;
+
     public:
-        
+
         /**
          * \brief Indicate that the class is abstract.
-         * \param[in] b true if the class is abstract, 
+         * \param[in] b true if the class is abstract,
          *  false otherwise
          */
         void set_abstract(bool b) {
@@ -314,7 +322,7 @@ namespace OGF {
         }
 
         /**
-         * \brief Gets all the members 
+         * \brief Gets all the members
          * \param[out] result a vector of MetaMember pointers
          * \param[in] super if true, gets also the MetaMembers
          *  inherited from super classes
@@ -342,7 +350,7 @@ namespace OGF {
         }
 
         /**
-         * \brief Gets all the signals. 
+         * \brief Gets all the signals.
          * \param[out] result a vector of MetaSignal pointers
          * \param[in] super if true, gets also the MetaSignals
          *  inherited from super classes
@@ -355,7 +363,7 @@ namespace OGF {
         }
 
         /**
-         * \brief Gets all the slots. 
+         * \brief Gets all the slots.
          * \param[out] result a vector of MetaSlot pointers
          * \param[in] super if true, gets also the MetaSlots
          *  inherited from super classes
@@ -368,7 +376,7 @@ namespace OGF {
         }
 
         /**
-         * \brief Gets all the properties. 
+         * \brief Gets all the properties.
          * \param[out] result a vector of MetaProperty pointers
          * \param[in] super if true, gets also the MetaProperties
          *  inherited from super classes
@@ -381,15 +389,15 @@ namespace OGF {
         }
 
         /**
-         * \brief Gets all the constructors. 
+         * \brief Gets all the constructors.
          * \param[out] result a vector of MetaConstructor pointers
          */
         void get_constructors(std::vector<MetaConstructor*>& result) const;
 
         /**
-         * \copydoc MetaType::is_a()
+         * \copydoc MetaType::is_subtype_of()
          */
-        bool is_a(const MetaType* other) const override;
+        bool is_subtype_of(const MetaType* other) const override;
 
         /**
          * \brief Gets all the types used by this class.
@@ -406,7 +414,7 @@ namespace OGF {
 
         /**
          * \brief Gets the best constructors for the specified
-         *  arguments. 
+         *  arguments.
          * \details The best constructor is the one that uses the largest
          *  number of arguments.
          * \param[in] args the arguments, as name-value pairs
@@ -417,9 +425,9 @@ namespace OGF {
 
         /**
          * \brief Gets the factory.
-         * \return a pointer to the factory associated with this class, 
-         *  or nullptr if there is no factory. 
-         *  The returned factory is typically a FactoryMetaClass, 
+         * \return a pointer to the factory associated with this class,
+         *  or nullptr if there is no factory.
+         *  The returned factory is typically a FactoryMetaClass,
          *  that selects the best constructor according to the arguments.
          */
         Factory* factory() const {
@@ -444,8 +452,8 @@ namespace OGF {
          * \copydoc Object::get_doc()
          */
         std::string get_doc() const override;
-        
-        
+
+
     protected:
 
         /**
@@ -500,7 +508,7 @@ namespace OGF {
         ) const;
 
         /**
-         * \brief Gets all the properties. 
+         * \brief Gets all the properties.
          * \param[in,out] result a vector of MetaProperty pointers
          * \param[in] super if true, gets also the MetaProperties
          *  inherited from super classes
@@ -510,7 +518,7 @@ namespace OGF {
         ) const;
 
     private:
-        std::string super_class_name_;                  
+        std::string super_class_name_;
         std::vector<MetaMember_var> members_;
         bool abstract_;
         Factory_var factory_;
@@ -520,12 +528,12 @@ namespace OGF {
     /**
      * \brief An automatic reference-counted pointer to a MetaClass.
      */
-    typedef SmartPointer<MetaClass> MetaClass_var;   
+    typedef SmartPointer<MetaClass> MetaClass_var;
 
     /*******************************************************************/
 
     /**
-     * \brief A Factory that uses a MetaClass. 
+     * \brief A Factory that uses a MetaClass.
      */
     class GOM_API FactoryMetaClass : public Factory {
     public:
@@ -560,5 +568,4 @@ namespace OGF {
 
     /*******************************************************************/
 }
-#endif 
-
+#endif

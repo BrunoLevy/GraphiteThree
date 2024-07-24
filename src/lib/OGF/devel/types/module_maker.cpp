@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/devel/types/module_maker.h>
@@ -111,7 +111,7 @@ namespace OGF {
         }
 
         if(!FileSystem::create_directory(package_path_)) {
-            Logger::err("ModuleMaker") 
+            Logger::err("ModuleMaker")
                 << "Could not create directory \'" << package_path_
                 << "\'" << std::endl;
             return false;
@@ -142,7 +142,7 @@ namespace OGF {
         if(!create_file_from_skel(
                "common/" + package_ + "_common.cpp",
                "devel/common.cpp.skel", env, true
-            ) 
+            )
         ) {
             return false;
         }
@@ -157,7 +157,7 @@ namespace OGF {
             module_info->set_version("3-1.x");
             module_info->set_info("Module under construction...");
             module_info->set_is_system(false);
-            module_info->set_is_dynamic(true);            
+            module_info->set_is_dynamic(true);
             Module::bind_module(module_name, module_info);
         }
 
@@ -183,7 +183,7 @@ namespace OGF {
 	}
 
 	touch_root_cmake();
-	
+
         return true;
     }
 
@@ -213,7 +213,7 @@ namespace OGF {
         }
 
         std::string file = subdirectory + "/" + file_name;
-        std::string FILE = file_name_to_include_guard(file_name); 
+        std::string FILE = file_name_to_include_guard(file_name);
 
         TextUtils::Environment env;
         set_module_name(env);
@@ -239,12 +239,12 @@ namespace OGF {
             return;
         }
 
-	touch_root_cmake();	
+	touch_root_cmake();
     }
 
     void ModuleMaker::create_class(
-        const std::string& module_name, const std::string& subdirectory, 
-        const std::string& class_name, 
+        const std::string& module_name, const std::string& subdirectory,
+        const std::string& class_name,
         const std::string& header_skel, const std::string& source_skel
     ) {
         if(!set_module(module_name)) {
@@ -263,7 +263,7 @@ namespace OGF {
 
         std::string file_name =
             subdirectory + "/" + class_name_to_file_name(class_name);
-        std::string FILE_NAME = file_name_to_include_guard(file_name); 
+        std::string FILE_NAME = file_name_to_include_guard(file_name);
 
         TextUtils::Environment env;
         set_module_name(env);
@@ -285,11 +285,11 @@ namespace OGF {
             return;
         }
 
-	touch_root_cmake();	
+	touch_root_cmake();
     }
 
     bool ModuleMaker::create_gom_class(
-        const std::string& module_name, const std::string& subdirectory, 
+        const std::string& module_name, const std::string& subdirectory,
         const std::string& base_class_name, const std::string& class_name,
         const std::string& header_skel, const std::string& source_skel
     ) {
@@ -301,7 +301,7 @@ namespace OGF {
     }
 
     bool ModuleMaker::create_gom_class(
-        const std::string& module_name, const std::string& subdirectory, 
+        const std::string& module_name, const std::string& subdirectory,
         const std::string& base_class_name, const std::string& class_name,
         const std::string& header_skel, const std::string& source_skel,
         TextUtils::Environment& env
@@ -337,7 +337,7 @@ namespace OGF {
             return false;
         }
 
-        std::string base_class_header_file = 
+        std::string base_class_header_file =
             "OGF/xxx/yyy/" + class_name_to_file_name(base_class_name) + ".h";
 
         if(base_mclass->has_custom_attribute("file")) {
@@ -345,13 +345,13 @@ namespace OGF {
                 base_mclass->custom_attribute_value("file");
         } {
             Logger::warn("ModuleMaker")
-                << "gom_class " << base_class_name 
+                << "gom_class " << base_class_name
                 << " does not have the \'file\' attribute" << std::endl;
         }
 
         std::string file_name =
             subdirectory + "/" + class_name_to_file_name(class_name);
-        std::string FILE_NAME = file_name_to_include_guard(file_name); 
+        std::string FILE_NAME = file_name_to_include_guard(file_name);
 
         set_module_name(env);
         env.set_value("class_name", strip_namespaces(class_name));
@@ -373,16 +373,16 @@ namespace OGF {
         ) {
             return false;
         }
-	touch_root_cmake();	
+	touch_root_cmake();
         return true;
     }
 
     void ModuleMaker::create_commands(
-        const std::string& module_name, 
-        const std::string& grob_class_name, 
+        const std::string& module_name,
+        const std::string& grob_class_name,
         const std::string& commands_name
     ) {
-        
+
         if(!set_module(module_name)) {
             return;
         }
@@ -397,7 +397,7 @@ namespace OGF {
             return;
         }
 
-        if(!grob_mclass->is_a(
+        if(!grob_mclass->is_subtype_of(
                Meta::instance()->resolve_meta_type("OGF::Grob"))
         ) {
             Logger::err("ModuleMaker")
@@ -412,7 +412,7 @@ namespace OGF {
                 << "\'Mesh\' for \'SurfaceMeshCommands\'" << std::endl;
             return;
         }
-        
+
         if(String::string_starts_with(commands_name, grob_class_name)) {
             Logger::err("ModuleMaker")
                 << "commands name should be like "
@@ -435,7 +435,7 @@ namespace OGF {
         );
 
         insert(
-            "common/" + package_ + "_common.cpp", 
+            "common/" + package_ + "_common.cpp",
             "[includes insertion point]",
             "#include <OGF/" + package_ + "/commands/" +
             class_name_to_file_name(class_name) + ".h>"
@@ -443,33 +443,33 @@ namespace OGF {
 
 
         insert(
-            "common/" + package_ + "_common.cpp", 
+            "common/" + package_ + "_common.cpp",
             "[source insertion point]",
             "        ogf_register_grob_commands<" +
             grob_class_name + "," + class_name + ">();"
         );
-	touch_root_cmake();	
+	touch_root_cmake();
     }
 
     void ModuleMaker::create_shader(
         const std::string& module_name,
         const std::string& grob_class_name,
-        const std::string& shader_name,        
+        const std::string& shader_name,
         const std::string& base_class_name_in
     ) {
         if(!set_module(module_name)) {
             return;
         }
-        
+
         MetaClass* grob_mclass = dynamic_cast<MetaClass*>(
-            Meta::instance()->resolve_meta_type(grob_class_name) 
+            Meta::instance()->resolve_meta_type(grob_class_name)
         );
         if(grob_mclass == nullptr) {
             Logger::err("ModuleMaker")
                 << grob_class_name << ": no such gom_class" << std::endl;
             return;
         }
-        if(!grob_mclass->is_a(
+        if(!grob_mclass->is_subtype_of(
                Meta::instance()->resolve_meta_type("OGF::Grob"))
         ) {
             Logger::err("ModuleMaker")
@@ -483,7 +483,7 @@ namespace OGF {
                 5, grob_class_name.length()-5
             );
         }
-        
+
         if(
             String::string_starts_with(shader_name, "OGF::")   ||
             String::string_starts_with(shader_name, grob_name) ||
@@ -494,24 +494,24 @@ namespace OGF {
                 << "for \'ParamSurfaceShader\'" << std::endl;
             return;
         }
-        
+
         std::string base_class_name = base_class_name_in;
-        
+
         if(base_class_name == "") {
             base_class_name = grob_class_name + "Shader";
         }
-        
+
         MetaClass* base_mclass = dynamic_cast<MetaClass*>(
-            Meta::instance()->resolve_meta_type(base_class_name) 
+            Meta::instance()->resolve_meta_type(base_class_name)
         );
-        
+
         if(base_mclass == nullptr) {
             Logger::err("ModuleMaker")
                 << base_class_name << ": no such gom_class" << std::endl;
             return;
         }
-        
-        if(!base_mclass->is_a(
+
+        if(!base_mclass->is_subtype_of(
                Meta::instance()->resolve_meta_type("OGF::Shader"))
         ) {
             Logger::err("ModuleMaker")
@@ -531,19 +531,19 @@ namespace OGF {
         );
 
         insert(
-            "common/" + package_ + "_common.cpp", 
+            "common/" + package_ + "_common.cpp",
             "[includes insertion point]",
             "#include <OGF/" + package_ + "/shaders/" +
             class_name_to_file_name(class_name) + ".h>"
         );
 
         insert(
-            "common/" + package_ + "_common.cpp", 
+            "common/" + package_ + "_common.cpp",
             "[source insertion point]",
             "        ogf_register_grob_shader<" +
             grob_class_name + "," + class_name + ">();"
         );
-	touch_root_cmake();	
+	touch_root_cmake();
     }
 
     void ModuleMaker::create_tool(
@@ -557,14 +557,14 @@ namespace OGF {
         }
 
         MetaClass* grob_mclass = dynamic_cast<MetaClass*>(
-            Meta::instance()->resolve_meta_type(grob_class_name) 
+            Meta::instance()->resolve_meta_type(grob_class_name)
         );
         if(grob_mclass == nullptr) {
             Logger::err("ModuleMaker")
                 << grob_class_name << ": no such gom_class" << std::endl;
             return;
         }
-        if(!grob_mclass->is_a(
+        if(!grob_mclass->is_subtype_of(
                Meta::instance()->resolve_meta_type("OGF::Grob"))
         ) {
             Logger::err("ModuleMaker")
@@ -592,37 +592,37 @@ namespace OGF {
 
 
         std::string base_class_name = base_class_name_in;
-        
+
         if(base_class_name == "") {
             base_class_name = grob_class_name + "Tool";
         }
-        
+
         MetaClass* base_mclass = dynamic_cast<MetaClass*>(
-            Meta::instance()->resolve_meta_type(base_class_name) 
+            Meta::instance()->resolve_meta_type(base_class_name)
         );
-        
+
         if(base_mclass == nullptr) {
             Logger::err("ModuleMaker")
                 << base_class_name << ": no such gom_class" << std::endl;
             return;
         }
-        
-        if(!base_mclass->is_a(
+
+        if(!base_mclass->is_subtype_of(
                Meta::instance()->resolve_meta_type("OGF::Tool"))
         ) {
             Logger::err("ModuleMaker")
                 << base_class_name << ": not a Tool" << std::endl;
             return;
         }
-        
+
         std::string class_name =
-            grob_name + tool_name + "Tool"; 
+            grob_name + tool_name + "Tool";
 
         TextUtils::Environment env;
         env.set_value("grob_class_name", grob_class_name);
         env.set_value("base_class_name", base_class_name);
         env.set_value("tool_name", tool_name);
-        
+
         if (
             create_gom_class(
                 module_name, "tools", base_class_name, class_name,
@@ -638,14 +638,14 @@ namespace OGF {
             );
 
             insert(
-                "common/" + package_ + "_common.cpp", 
+                "common/" + package_ + "_common.cpp",
                 "[source insertion point]",
                 "        ogf_register_grob_tool<" + grob_class_name +
                 "," + class_name + ">();"
             );
 
         }
-	touch_root_cmake();	
+	touch_root_cmake();
     }
 
 
@@ -663,7 +663,7 @@ namespace OGF {
             base_class_name = "OGF::Grob";
         }
         MetaClass* base_mclass = dynamic_cast<MetaClass*>(
-            Meta::instance()->resolve_meta_type(base_class_name) 
+            Meta::instance()->resolve_meta_type(base_class_name)
         );
         if(base_mclass == nullptr) {
             Logger::err("ModuleMaker")
@@ -671,7 +671,9 @@ namespace OGF {
             return;
         }
         if(
-            !base_mclass->is_a(Meta::instance()->resolve_meta_type("OGF::Grob"))
+            !base_mclass->is_subtype_of(
+                Meta::instance()->resolve_meta_type("OGF::Grob")
+            )
         ) {
             Logger::err("ModuleMaker")
                 << base_class_name << ": not a Grob" << std::endl;
@@ -709,27 +711,27 @@ namespace OGF {
         );
 
         insert(
-            "common/" + package_ + "_common.cpp", 
+            "common/" + package_ + "_common.cpp",
             "[includes insertion point]",
             "#include <OGF/" + package_ + "/grob/" +
             class_name_to_file_name(grob_name) + ".h>"
         );
 
         insert(
-            "common/" + package_ + "_common.cpp", 
+            "common/" + package_ + "_common.cpp",
             "[includes insertion point]",
             "#include <OGF/" + package_ + "/shaders/" +
             class_name_to_file_name(grob_name) + "_shader" + ".h>"
         );
 
         insert(
-            "common/" + package_ + "_common.cpp", 
+            "common/" + package_ + "_common.cpp",
             "[source insertion point]",
             "        ogf_register_grob_type<" + grob_name + ">();"
         );
 
         insert(
-            "common/" + package_ + "_common.cpp", 
+            "common/" + package_ + "_common.cpp",
             "[source insertion point]",
             "        ogf_register_grob_shader<" + grob_name + "," +
             "Plain" + grob_name + "Shader>();"
@@ -737,7 +739,7 @@ namespace OGF {
 
         if(file_extension.length() != 0) {
             insert(
-                "common/" + package_ + "_common.cpp", 
+                "common/" + package_ + "_common.cpp",
                 "[source insertion point]",
                 std::string("        SceneGraphLibrary::instance()->") +
                 "register_grob_read_file_extension(\"" +
@@ -745,7 +747,7 @@ namespace OGF {
                 + file_extension + "\");"
             );
         }
-	touch_root_cmake();	
+	touch_root_cmake();
     }
 
     bool ModuleMaker::set_module(const std::string& module_name, bool check) {
@@ -765,27 +767,27 @@ namespace OGF {
             FileSystem::touch(package_path_ + "/CMakeLists.txt");
         }
         if(check && !module_exists) {
-            Logger::err("ModuleMaker") 
+            Logger::err("ModuleMaker")
                 << "Directory \'" << package_path_
                 << "\' does not exist" << std::endl;
         }
         Module* module = ModuleManager::instance()->resolve_module(package_);
         if(check && module == nullptr) {
-            Logger::err("ModuleMaker") 
+            Logger::err("ModuleMaker")
                 << "Module \'" << package_
                 << "\' is not loaded" << std::endl;
         }
         if(module != nullptr) {
-            author_ = module->vendor();            
+            author_ = module->vendor();
         }
         return module_exists;
     }
 
     void ModuleMaker::set_module_name(TextUtils::Environment& env) {
         std::string package    = package_;
-        std::string Package    = package_; 
+        std::string Package    = package_;
         Package[0] = char_toupper(Package[0]);
-        std::string PACKAGE = package_; 
+        std::string PACKAGE = package_;
         String::to_uppercase(PACKAGE);
         env.set_value("package", package);
         env.set_value("Package", Package);
@@ -803,43 +805,43 @@ namespace OGF {
         std::ofstream out((package_path_ + "/" + file_name).c_str());
         if(!out) {
             Logger::err("ModuleMaker")
-                << "Could not create file: \'" 
-                << package_path_ + "/" + file_name << "\'" << std::endl; 
+                << "Could not create file: \'"
+                << package_path_ + "/" + file_name << "\'" << std::endl;
             return false;
         }
 
         if(insert_header) {
             std::string header_file_name = "devel/header.skel";
             if(!FileManager::instance()->find_file(header_file_name)) {
-                Logger::err("ModuleMaker") 
+                Logger::err("ModuleMaker")
                     << "Could not find skeleton: \'"
-                    << header_file_name << "\'" << std::endl; 
+                    << header_file_name << "\'" << std::endl;
             }
             std::ifstream in(header_file_name.c_str());
-            TextUtils::find_and_replace(in, out, env);            
+            TextUtils::find_and_replace(in, out, env);
         }
 
         std::string skel_name = skel_name_in;
         if(!FileManager::instance()->find_file(skel_name)) {
             Logger::err("ModuleMaker")
                 << "Could not find skeleton: \'" << skel_name << "\'"
-                << std::endl; 
+                << std::endl;
         }
         std::ifstream in(skel_name.c_str());
         if(!in) {
-            Logger::err("ModuleMaker") 
+            Logger::err("ModuleMaker")
                 << "Could not open skeleton file: \'" << skel_name << "\'"
-                << std::endl; 
+                << std::endl;
             return false;
         }
 
-        
+
         TextUtils::find_and_replace(in, out, env);
 
-        Logger::out("ModuleMaker") << "Successfully created file: \'" 
+        Logger::out("ModuleMaker") << "Successfully created file: \'"
                                    << package_path_ + "/" + file_name
                                    << "\'" << std::endl;
-        
+
         return true;
     }
 
@@ -877,7 +879,7 @@ namespace OGF {
         const std::string& file_name
     ) {
         std::string result = "H__OGF_" + package_ + "_" + file_name + "__H";
-        for(unsigned int i=0; i<result.length(); i++) {        
+        for(unsigned int i=0; i<result.length(); i++) {
             if(result[i] == '/') {
                 result[i] = '_';
             } else {
@@ -896,14 +898,14 @@ namespace OGF {
             std::ifstream in((package_path_ + "/" + file_name).c_str());
             if(!in) {
                 Logger::err("ModuleMaker")
-                    << "Could not open file \'" 
+                    << "Could not open file \'"
                     << package_path_ + "/" + file_name << std::endl;
                 return false;
             }
 
             std::ofstream out((package_path_ + "/tmp.txt").c_str());
             std::string line;
-            
+
             while(getline(in,line)) {
                 if(line.find(insertion_point) != std::string::npos) {
                     out << line_to_insert << std::endl;
@@ -928,7 +930,7 @@ namespace OGF {
         std::ifstream in((package_path_ + "/CMakeLists.txt").c_str());
         if(!in) {
             Logger::err("ModuleMaker")
-                << "Could not open file \'" 
+                << "Could not open file \'"
                 << package_path_ + "/CMakeLists.txt" << std::endl;
             return;
         }
@@ -947,7 +949,7 @@ namespace OGF {
         }
         out.close();
         in.close();
-        
+
         FileSystem::copy_file(
             package_path_ + "/tmp.txt", package_path_ + "/CMakeLists.txt"
         );

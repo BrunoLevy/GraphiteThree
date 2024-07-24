@@ -3,7 +3,7 @@
 
 -- \brief creates editors for object commands properties based on their types.
 -- \details it is implemented as a table that maps typenames to
---   'editing functions'. 
+--   'editing functions'.
 
 autogui = {}
 
@@ -62,7 +62,7 @@ end
 function autogui.help(minfo)
    if minfo.has_custom_attribute('help') then
       return minfo.custom_attribute_value('help')
-   end   
+   end
 end
 
 -- \brief Gets the default size of an icon.
@@ -91,7 +91,7 @@ function autogui.combo_box(object, property_name, values, tooltip)
 
    local found = false
    local first_value = nil
-   
+
    for val in string.split(values,';') do
       if first_value == nil then
          first_value = val
@@ -112,13 +112,13 @@ function autogui.combo_box(object, property_name, values, tooltip)
    -- If initial value was not one of the
    -- combobox values, then update to first
    -- combobox value.
-   
+
    if not sel and not found then
       sel,new_value = true,first_value
    end
 
    if sel then
-        object[property_name] = new_value   
+        object[property_name] = new_value
    end
 end
 
@@ -131,7 +131,7 @@ function autogui.combo_box_value(name,old_value,values)
 
    local found = false
    local first_value = nil
-   
+
    for val in string.split(values,';') do
       if first_value == nil then
          first_value = val
@@ -150,7 +150,7 @@ function autogui.combo_box_value(name,old_value,values)
    -- If initial value was not one of the
    -- combobox values, then update to first
    -- combobox value.
-   
+
    if not sel and not found then
       sel,new_value = true,first_value
    end
@@ -170,21 +170,21 @@ function autogui.editable_combo_box(object, property_name, values, tooltip)
    autogui.tooltip(tooltip)
 
    imgui.PushItemWidth(-1-autogui.icon_size()-25)
-   
+
    local sel,new_value = imgui.TextInput(
 	'##properties##1_'..property_name,
 	tostring(object[property_name]),
-	autogui.input_text_flags	
+	autogui.input_text_flags
    )
 
    if sel then
-      object[property_name] = new_value   
+      object[property_name] = new_value
    end
 
    imgui.PopItemWidth()
    imgui.SameLine()
    if imgui.Button( imgui.font_icon('caret-down').. '##properties##btn_'..property_name) then
-      imgui.OpenPopup('##properties##popup_'..property_name)   
+      imgui.OpenPopup('##properties##popup_'..property_name)
    end
 
    if(imgui.BeginPopup('##properties##popup_'..property_name)) then
@@ -194,7 +194,7 @@ function autogui.editable_combo_box(object, property_name, values, tooltip)
 	end
      end
      imgui.EndPopup()
-   end	 
+   end
 end
 
 
@@ -224,11 +224,11 @@ function autogui.string(object, property_name, mtype, tooltip)
    local sel,new_value = imgui.TextInput(
 	'##properties##'..property_name,
 	tostring(object[property_name]),
-	autogui.input_text_flags	
+	autogui.input_text_flags
    )
    imgui.PopItemWidth()
    if sel then
-        object[property_name] = new_value   
+        object[property_name] = new_value
    end
 end
 
@@ -246,7 +246,7 @@ function autogui.integer(object, property_name, mtype, tooltip)
    )
    imgui.PopItemWidth()
    if sel then
-        object[property_name] = new_value   
+        object[property_name] = new_value
    end
 end
 
@@ -267,7 +267,7 @@ function autogui.unsigned_integer(object, property_name, mtype, tooltip)
         new_value = 0
    end
    if sel then
-        object[property_name] = new_value   
+        object[property_name] = new_value
    end
 end
 
@@ -285,7 +285,7 @@ autogui.handlers['bool'] = function(object, property_name, mtype, tooltip)
    local sel,new_value = imgui.Checkbox(
        autogui.remove_underscores(property_name)..'##properties', old_val
    )
-   autogui.tooltip(tooltip)   
+   autogui.tooltip(tooltip)
    if sel then
         object[property_name] = tostring(new_value)
    end
@@ -312,7 +312,7 @@ function autogui.color(label,oldval,with_alpha)
       sel,r,g,b,a = imgui.ColorEdit4WithPalette(
          autogui.remove_underscores(label),r,g,b,a
       )
-   else 
+   else
       sel,r,g,b = imgui.ColorEdit3WithPalette(
          autogui.remove_underscores(label),r,g,b
       )
@@ -336,7 +336,7 @@ autogui.handlers['GEO::Color'] = function(object, property_name, mtype, tooltip)
    )
    imgui.PopItemWidth()
    if sel then
-        object[property_name] = new_value   
+        object[property_name] = new_value
    end
 end
 
@@ -354,7 +354,7 @@ function autogui.bool_color(object, property_name, mtype, tooltip)
    for word in string.split(value,';') do
       words[#words+1] = word
    end
-   local visible=(words[1]=='true') 
+   local visible=(words[1]=='true')
    local color=words[2]
    autogui.Text(property_name)
    autogui.tooltip(tooltip)
@@ -367,7 +367,7 @@ function autogui.bool_color(object, property_name, mtype, tooltip)
 	color,
 	true
    )
-   imgui.PopItemWidth()      
+   imgui.PopItemWidth()
    if s1 or s2 then
       value = tostring(visible) .. ';' .. color
       object[property_name] = value
@@ -386,7 +386,7 @@ function autogui.bool_color_int(object,property_name, mtype, tooltip)
    for word in string.split(value,';') do
       words[#words+1] = word
    end
-   local visible=(words[1]=='true') 
+   local visible=(words[1]=='true')
    local color=words[2]
    local size=tonumber(words[3])
    autogui.Text(property_name)
@@ -401,7 +401,7 @@ function autogui.bool_color_int(object,property_name, mtype, tooltip)
 	color
    )
    imgui.SameLine()
-   imgui.PushItemWidth(-autogui.margin)   
+   imgui.PushItemWidth(-autogui.margin)
    s3,size = imgui.InputInt(
       '##size##'..property_name,
       size
@@ -429,7 +429,7 @@ autogui.colormaps = {
   {'black_white', false},
   {'viridis', true},
   {'rainbow', false},
-  {'turbo', false},  
+  {'turbo', false},
   {'cei_60757', false},
   {'inferno', true},
   {'magma', true},
@@ -461,7 +461,7 @@ function autogui.colormap(label,oldval)
        100.0*main.scaling(),
        10.0*main.scaling()
    ) then
-       imgui.OpenPopup(label);   
+       imgui.OpenPopup(label);
    end
    if imgui.BeginPopup(label) then
       for i=1,#autogui.colormaps do
@@ -476,7 +476,7 @@ function autogui.colormap(label,oldval)
 	    imgui.CloseCurrentPopup()
 	 end
 	 if autogui.colormaps[i][2] then
-	    autogui.tooltip('Perceptually correct')	 
+	    autogui.tooltip('Perceptually correct')
   	    imgui.SameLine()
 	    imgui.Text('*')
          end
@@ -523,14 +523,14 @@ autogui.handlers['OGF::ColormapStyle'] = function(
           autogui.icon_size(),autogui.icon_size()
       )
    end
-   imgui.SameLine()   
+   imgui.SameLine()
    sel2,smooth = imgui.Checkbox('##smooth##'..property_name,smooth)
    imgui.SameLine()
    imgui.Image(
       main.resolve_icon('smooth_colormap',true),
       autogui.icon_size(),autogui.icon_size()
    )
-   imgui.PushItemWidth(-autogui.margin)   
+   imgui.PushItemWidth(-autogui.margin)
    sel3,cmrepeat = imgui.InputInt('##repeat##'..property_name,cmrepeat)
    if cmrepeat<0 then
       cmrepeat=0
@@ -543,9 +543,9 @@ autogui.handlers['OGF::ColormapStyle'] = function(
 	    tostring(smooth)   .. ';' ..
 	    tostring(cmrepeat) .. ';' ..
 	    tostring(show)     .. ';' ..
-	    tostring(invert) 
+	    tostring(invert)
    end
-   imgui.Separator()   
+   imgui.Separator()
 end
 
 -- \brief Handler for OGF::GrobClassName
@@ -697,7 +697,7 @@ autogui.handlers.combo_box = function(
 	object                   -- environment
      )()
    end
-   
+
    autogui.combo_box(object, property_name, values, tooltip)
 end
 
@@ -720,7 +720,7 @@ autogui.handlers.slider_int = function(
    local sel,val
    sel,val = imgui.SliderInt(
        autogui.remove_underscores(property_name),
-       object[property_name], min, max, '%d' 
+       object[property_name], min, max, '%d'
    )
    if sel then
       object[property_name] = val
@@ -752,11 +752,11 @@ function autogui.file_name(
    local sel,new_value = imgui.TextInput(
 	'##properties##'..property_name,
 	tostring(object[property_name]),
-	autogui.input_text_flags	
+	autogui.input_text_flags
    )
    imgui.PopItemWidth()
    if sel then
-        object[property_name] = new_value   
+        object[property_name] = new_value
    end
 
    if not autogui.in_popup then
@@ -765,7 +765,7 @@ function autogui.file_name(
      if create_file then
        flags = ImGuiExtFileDialogFlags_Save
      else
-       flags = ImGuiExtFileDialogFlags_Load   
+       flags = ImGuiExtFileDialogFlags_Load
      end
 
      if imgui.Button(
@@ -778,14 +778,14 @@ function autogui.file_name(
  	    flags
          )
      end
-   
+
      sel,new_value = imgui.FileDialog(
         '##attr##file_dlg##'..property_name,object[property_name]
      )
    end
 
    if sel then
-        object[property_name] = new_value   
+        object[property_name] = new_value
    end
 end
 
@@ -815,7 +815,7 @@ autogui.handlers['OGF::NewImageFileName'] = function(
       object, property_name, mtype, tooltip
    )
 --   extensions = gom.get_environment_value('image_write_extensions')
---   extensions = string.gsub(extensions,'*.','')   
+--   extensions = string.gsub(extensions,'*.','')
    autogui.new_file_name(object, property_name, mtype, tooltip, extensions)
 end
 
@@ -856,9 +856,9 @@ function autogui.property(object, mproperty)
 	       else
 	          handler = autogui.file_name
 	       end
-	    else 
+	    else
                handler = autogui.string
-            end	       
+            end
         end
         handler(object,mproperty.name,mproperty.type(),tooltip)
    end
@@ -872,7 +872,7 @@ end
 -- \param[in] i the index of the argument
 
 function autogui.slot_arg(args,mslot,i)
-   local type_name = mslot.ith_arg_type_name(i) 
+   local type_name = mslot.ith_arg_type_name(i)
    local mtype = gom.resolve_meta_type(type_name)
    if mtype.meta_class.name == 'OGF::MetaEnum' then
         autogui.enum(args, mslot.ith_arg_name(i), mtype, tooltip)
@@ -939,7 +939,7 @@ function autogui.init_args(mmethod)
 	       val = mtype.ith_name(0)
 	    else
 	       val = ''
-	    end   
+	    end
 	 end
       end
       args[mmethod.ith_arg_name(i)] = val
@@ -947,7 +947,7 @@ function autogui.init_args(mmethod)
    return args
 end
 
--- \brief Converts a table with name-argument pairs into a string that can 
+-- \brief Converts a table with name-argument pairs into a string that can
 --  be sent to the LUA interpreter
 -- \param[in] mmethod the meta-method
 -- \param[in] args the table with the name-argument pairs
@@ -964,7 +964,7 @@ function autogui.args_to_string(mmethod,args)
       if autogui.ith_arg_needs_quotes(mmethod,i) then
          result = result .. name .. '=' .. '\'' .. value .. '\''
       else
-         result = result .. name .. '=' .. value 
+         result = result .. name .. '=' .. value
       end
    end
    if #result > 1 then
@@ -1052,7 +1052,7 @@ function autogui.command_dialog(object,mmethod,object_as_string)
 	autogui.remove_underscores(autogui.command_state[k].object_name_)
      )
   elseif imgui.MenuItem(
-     imgui.font_icon('code-branch')..'  '..	 
+     imgui.font_icon('code-branch')..'  '..
      autogui.remove_underscores(mmethod.name)..'##command_apply'
   ) then
      autogui.command_state[k].show_as_window_ = true
@@ -1062,21 +1062,21 @@ function autogui.command_dialog(object,mmethod,object_as_string)
   imgui.Separator()
 
   local has_advanced_args = false
-  
+
   for i=0,mmethod.nb_args()-1 do
      if mmethod.ith_arg_has_custom_attribute(i,'advanced') and
         mmethod.ith_arg_custom_attribute_value(i,'advanced') == 'true' then
 	has_advanced_args = true
-     end	 
+     end
   end
 
   for i=0,mmethod.nb_args()-1 do
-     if (not has_advanced_args or 
+     if (not has_advanced_args or
          not mmethod.ith_arg_has_custom_attribute(i,'advanced') or
-	 mmethod.ith_arg_custom_attribute_value(i,'advanced') == 'false'	
-     ) then 
+	 mmethod.ith_arg_custom_attribute_value(i,'advanced') == 'false'
+     ) then
         autogui.slot_arg(autogui.command_state[k],mmethod,i)
-     end	
+     end
   end
 
   if has_advanced_args then
@@ -1084,13 +1084,13 @@ function autogui.command_dialog(object,mmethod,object_as_string)
         'Advanced'..'##'..object_as_string..'.'..mmethod.name
      ) then
         imgui.TreePop()
-	for i=0,mmethod.nb_args()-1 do	
+	for i=0,mmethod.nb_args()-1 do
 	   if (mmethod.ith_arg_has_custom_attribute(i,'advanced') and
-      	       mmethod.ith_arg_custom_attribute_value(i,'advanced') == 'true'	
+      	       mmethod.ith_arg_custom_attribute_value(i,'advanced') == 'true'
 	   ) then
-	       autogui.slot_arg(autogui.command_state[k],mmethod,i)	
+	       autogui.slot_arg(autogui.command_state[k],mmethod,i)
 	   end
-	 end  
+	 end
      end
   end
 
@@ -1103,7 +1103,7 @@ function autogui.command_dialog(object,mmethod,object_as_string)
       autogui.command_state[k] = autogui.init_args(mmethod)
 
       autogui.command_state[k].show_as_window_ = bkp1
-      autogui.command_state[k].object_name_ = bkp2      
+      autogui.command_state[k].object_name_ = bkp2
 
       autogui.command_state[k].object_ = object
       autogui.command_state[k].object_as_string_ = object_as_string
@@ -1128,12 +1128,12 @@ function autogui.command_dialog(object,mmethod,object_as_string)
   autogui.command_state[k].height_ = imgui.GetWindowSize()
 
   --   Increase height a little bit so that resizing corner
-  -- does not 'eat' too much and scrollbar does not appear. 
+  -- does not 'eat' too much and scrollbar does not appear.
   autogui.command_state[k].height_ = autogui.command_state[k].height_ + 5
 
   autogui.command_state[k].x_,
   autogui.command_state[k].y_ = imgui.GetWindowPos()
-  
+
   if doit_apply_button or doit_recycle_button then
       local args_string = autogui.args_to_string(
          mmethod,autogui.command_state[k]
@@ -1155,8 +1155,8 @@ function autogui.command_dialog(object,mmethod,object_as_string)
 	 -- Close the menu (if we were in menu mode).
 	 if not autogui.command_state[k].show_as_window_ then
   	    imgui.CloseCurrentPopup()
-	 end   
-      end	 
+	 end
+      end
   end
 end
 
@@ -1170,7 +1170,7 @@ function autogui.command_dialogs()
       -- Hide window / delete command state if target object was
       -- deleted in the meanwhile.
 
-      if autogui.command_state[k].object_ ~= scene_graph 
+      if autogui.command_state[k].object_ ~= scene_graph
          and not scene_graph.is_bound(autogui.command_state[k].object_name_)
       then
          autogui.command_state[k] = nil
@@ -1216,7 +1216,7 @@ end
 --   that will be passed to the LUA interpreter
 
 function autogui.command_menu_item(object,mmethod,object_as_string)
-   if mmethod.nb_args() == 0 then 
+   if mmethod.nb_args() == 0 then
          -- Need to add '##' suffix with slot name with underscores
          -- else ImGui generates a shortcut I think (to be understood)
       if imgui.MenuItem(
@@ -1285,7 +1285,7 @@ function autogui.member_is_visible(object, mmember)
         end
      end
   end
-  
+
   return true
 end
 
@@ -1302,9 +1302,9 @@ function autogui.properties_editor_properties(object)
       if mproperty.has_custom_attribute('aggregate_properties') and
          object[mproperty.name] ~= nil then
          autogui.properties_editor_properties(object[mproperty.name])
-      elseif autogui.member_is_visible(object, mproperty) then 
+      elseif autogui.member_is_visible(object, mproperty) then
          autogui.property(object,mproperty)
-      end	 
+      end
    end
 end
 
@@ -1325,7 +1325,7 @@ function autogui.properties_editor_functions(object)
             object[mslot.name]()
 	 end
 	 autogui.tooltip(autogui.help(mslot))
-      end	 
+      end
    end
 end
 
@@ -1402,13 +1402,11 @@ autogui.property_editor_state  = {}
 function autogui.properties_editor(object,called_from_inspect,no_windowify)
    local name = string.strip_prefix(object.meta_class.name,'OGF::')
    local is_shader = not called_from_inspect and
-                     object.meta_class.is_a(
-		        gom.resolve_meta_type('OGF::Shader')
-		     )
+                     object.is_a(gom.meta_types.OGF.Shader)
    local k = object.string_id
    if is_shader then
       k = 'SHADER' .. k
-      name = object.grob.name      
+      name = object.grob.name
    end
 
    if autogui.property_editor_state[k] == nil then
@@ -1416,15 +1414,15 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
       autogui.property_editor_state[k].object_ = object
       autogui.property_editor_state[k].name_ = name
       autogui.property_editor_state[k].show_as_window_ = called_from_inspect
-      autogui.property_editor_state[k].object_id_ = object.string_id      
+      autogui.property_editor_state[k].object_id_ = object.string_id
    end
 
    if called_from_inspect then
       autogui.property_editor_state[k].inspect_ = true
-      autogui.property_editor_state[k].show_as_window_ = true            
+      autogui.property_editor_state[k].show_as_window_ = true
       return
    end
-   
+
    imgui.PushID(k)
 
    if not no_windowify and
@@ -1432,7 +1430,7 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
       if imgui.MenuItem(
          imgui.font_icon('edit')..'  ' .. name .. ' properties'
       ) then
-         autogui.property_editor_state[k].show_as_window_ = true      
+         autogui.property_editor_state[k].show_as_window_ = true
       end
       imgui.Separator()
    end
@@ -1441,11 +1439,11 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
        local grob = object.grob
        if gom.get_environment_value('gui:shaders_selector') == 'true' then
           shader_selector(grob)
-       end	  
+       end
        object = grob.shader
        autogui.property_editor_state[k].object = object
        autogui.properties_editor_functions(object)
-       imgui.Separator()		 
+       imgui.Separator()
    end
    autogui.properties_editor_properties(object)
    if is_shader then
@@ -1462,7 +1460,7 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
          scene_graph.scene_graph_shader_manager.apply_to_scene_graph()
          scene_graph.current_object = current_bkp
       end
-      autogui.tooltip('Apply graphic attributes to all objects')      
+      autogui.tooltip('Apply graphic attributes to all objects')
       imgui.SameLine()
       if imgui.Button(
          imgui.font_icon('eye')..
@@ -1473,15 +1471,15 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
          scene_graph.scene_graph_shader_manager.apply_to_scene_graph(true)
          scene_graph.current_object = current_bkp
       end
-      autogui.tooltip('Apply graphic attributes to visible objects')      
+      autogui.tooltip('Apply graphic attributes to visible objects')
    end
-   
+
    autogui.property_editor_state[k].width_,
    autogui.property_editor_state[k].height_ = imgui.GetWindowSize()
 
    autogui.property_editor_state[k].x_,
    autogui.property_editor_state[k].y_ = imgui.GetWindowPos()
-   
+
    imgui.PopID(k)
 end
 
@@ -1498,7 +1496,7 @@ function autogui.property_editors()
       -- deleted meanwhile. Special version for shaders
 
       if not v.inspect_ and
-         v.object_.meta_class.is_a(gom.resolve_meta_type('OGF::Shader')) and
+         v.object_.is_a(gom.meta_types.OGF.Shader) and
          not scene_graph.is_bound(v.name_)
       then
          autogui.property_editor_state[k] = nil
@@ -1532,7 +1530,7 @@ function autogui.property_editors()
 	        v.y_,
 	        ImGuiCond_Appearing
 	    )
-	 end   
+	 end
 
          sel,v.show_as_window_ = imgui.Begin(
 	     imgui.font_icon('edit')..'  '..

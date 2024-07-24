@@ -45,11 +45,11 @@ function text_editor_gui.save(filename)
 	    '', -- default filename
 	    ImGuiExtFileDialogFlags_Save
         )
-   else 
+   else
       text_editor_gui.set_language(FileSystem.extension(filename))
       text_editor.save(filename)
       print('Saved '..filename)
-   end      
+   end
 end
 
 -- Generates menus and menu entries to load files
@@ -130,7 +130,7 @@ function text_editor_gui.parse_errors()
 	 end
       end
    elseif text_editor.language == 'lua' then
-      -- If the error message has multiple lines, segment it.   
+      -- If the error message has multiple lines, segment it.
       for line in string.gmatch(error_lines,'[^\r\n]+') do
 	 local lineno, message = string.match(line, 'Error: (%d+): (.*)')
 	 if lineno ~= nil and message ~= nil then
@@ -169,14 +169,14 @@ function text_editor_gui.run()
          grob.shader_source = text_editor.text
       else
          main.exec_command(text_editor.text)
-      end	 
+      end
    elseif text_editor.language == 'glsl' then
        local grob = scene_graph.resolve('GLSL_program')
        if grob == nil then
           grob = scene_graph.create_object('OGF::MeshGrob')
           grob.rename('GLSL_program')
 	  grob.query_interface('OGF::MeshGrobShapesCommands').create_square()
-          scene_graph.current_object = 'GLSL_program'	  
+          scene_graph.current_object = 'GLSL_program'
        end
        if not string.starts_with(text_editor.text, '//stage') then
           gom.err('Missing //stage declaration')
@@ -253,21 +253,21 @@ function text_editor_gui.draw_menu()
          end
          if imgui.MenuItem('LuaGrob shader') then
 	    text_editor_gui.load(templates_path .. '/luagrob_template.lua')
-	    text_editor_gui.filename = nil	    
+	    text_editor_gui.filename = nil
          end
          if imgui.MenuItem('GLSL ShaderToy') then
 	    text_editor_gui.load(templates_path .. '/ShaderToy_template.glsl')
-	    text_editor_gui.filename = nil	    
+	    text_editor_gui.filename = nil
          end
 	if gom.interpreter('Python') ~= nil then
 	   if imgui.MenuItem('Python') then
   	      text_editor_gui.load(templates_path .. '/Python_template.py')
-	      text_editor_gui.filename = nil	    
+	      text_editor_gui.filename = nil
 	   end
 	end
          imgui.EndMenu()
       end
-      imgui.Separator()      
+      imgui.Separator()
       if imgui.MenuItem('Load...') then
          local extensions = 'lua;glsl'
 	 if gom.interpreter('Python') ~= nil then
@@ -358,7 +358,7 @@ function text_editor_gui.draw_menu()
          sel,name = imgui.TextInput(
             '##NewLuaGrob',
    	    name,
-	    ImGuiInputTextFlags_EnterReturnsTrue			
+	    ImGuiInputTextFlags_EnterReturnsTrue
          )
 	 imgui.PopItemWidth()
 	 if sel then
@@ -405,7 +405,7 @@ function text_editor_gui.draw_menu()
       end
       imgui.EndMenu()
     end
-    
+
     if imgui.BeginMenu('MeshGrob') then
       if imgui.BeginMenu('New Mesh object') then
          local sel
@@ -415,7 +415,7 @@ function text_editor_gui.draw_menu()
          sel,name = imgui.TextInput(
             '##NewMeshGrob',
    	    name,
-	    ImGuiInputTextFlags_EnterReturnsTrue			
+	    ImGuiInputTextFlags_EnterReturnsTrue
          )
 	 imgui.PopItemWidth()
 	 if sel then
@@ -471,7 +471,7 @@ function text_editor_gui.draw_menu()
      	       text_editor_gui.browse_by_language(path2)
 	       imgui.EndMenu()
 	    end
-         end	    
+         end
       end
       imgui.EndMenu()
    end
@@ -491,14 +491,14 @@ function text_editor_gui.draw_menu()
              object_properties_gui.visible=true
              toolbox_gui.visible=true
          end
-	 autogui.tooltip('show right pane')	 
+	 autogui.tooltip('show right pane')
       end
-   end      
+   end
 end
 
 function text_editor_gui.find_next()
    text_editor.cursor_forward()
-   text_editor.find(text_editor_gui.find_word)     
+   text_editor.find(text_editor_gui.find_word)
 end
 
 function text_editor_gui.show_find()
@@ -508,7 +508,7 @@ function text_editor_gui.show_find()
       text_editor_gui.find_word = ''
       text_editor_gui.find_visible = true
       text_editor_gui.find_focus = true
-   end      
+   end
 end
 
 function text_editor_gui.hide_find()
@@ -518,7 +518,7 @@ end
 
 function text_editor_gui.draw_window()
    text_editor_gui.parse_errors()
-   
+
    if imgui.SimpleButton(
       imgui.font_icon('play-circle')
    ) then
@@ -529,10 +529,10 @@ function text_editor_gui.draw_window()
    if imgui.SimpleButton(
       imgui.font_icon('stop-circle')
    ) then
-      text_editor_gui.stop()   
+      text_editor_gui.stop()
    end
    autogui.tooltip('Stop program <Ctrl><C>')
-   imgui.SameLine()   
+   imgui.SameLine()
    if imgui.SimpleButton(
      imgui.font_icon('sync-alt')
    ) then
@@ -597,8 +597,8 @@ function text_editor_gui.draw_extra()
   if sel then
      text_editor_gui.filename = filename
      text_editor_gui.save(filename)
-  end    
-end    
+  end
+end
 
 function text_editor_gui.Text_title(str)
    imgui.PushFont(2)
@@ -626,10 +626,10 @@ end
 
 function text_editor_gui.Text_section(str)
    imgui.PushFont(2)
-   if(main.get_style() == 'Light') then   
+   if(main.get_style() == 'Light') then
        imgui.PushStyleColor_2(0, 0.5, 0.5, 0.5, 1.0)
    else
-       imgui.PushStyleColor_2(0, 0.7, 0.7, 0.7, 1.0)   
+       imgui.PushStyleColor_2(0, 0.7, 0.7, 0.7, 1.0)
    end
    imgui.Text(str)
    imgui.PopStyleColor()
@@ -638,26 +638,26 @@ end
 
 function text_editor_gui.Text_comment(str)
    imgui.PushFont(0)
-   if(main.get_style() == 'Light') then      
+   if(main.get_style() == 'Light') then
        imgui.PushStyleColor_2(0, 0.4, 0.4, 0.4, 1.0)
    else
-       imgui.PushStyleColor_2(0, 0.6, 0.6, 0.6, 1.0)   
+       imgui.PushStyleColor_2(0, 0.6, 0.6, 0.6, 1.0)
    end
    imgui.Text(str)
    imgui.PopStyleColor()
-   imgui.PopFont()   
+   imgui.PopFont()
 end
 
 function text_editor_gui.Text(str)
    imgui.PushFont(0)
-   if(main.get_style() == 'Light') then         
+   if(main.get_style() == 'Light') then
       imgui.PushStyleColor_2(0, 0.0, 0.0, 0.5, 1.0)
    else
-      imgui.PushStyleColor_2(0, 0.85, 0.85, 1.0, 1.0)   
+      imgui.PushStyleColor_2(0, 0.85, 0.85, 1.0, 1.0)
    end
    imgui.Text(str)
    imgui.PopStyleColor()
-   imgui.PopFont()   
+   imgui.PopFont()
 end
 
 function text_editor_gui.show_help(minfo)
@@ -686,7 +686,7 @@ function text_editor_gui.tooltip(args)
              strval ~= '\''..args.context..'\'' then
 	        text_editor_gui.Text(args.context .. '=' .. strval)
           else
-	        text_editor_gui.Text(strval)       
+	        text_editor_gui.Text(strval)
           end
           imgui.EndTooltip()
        end
@@ -704,7 +704,7 @@ function text_editor_gui.tooltip(args)
         text_editor_gui.show_help(mmethod)
         if mmethod.nb_args() ~= 0 then
            imgui.Separator()
-        end	
+        end
         for i=0,mmethod.nb_args()-1 do
            text_editor_gui.Text('  '..mmethod.ith_arg_name(i))
 	   imgui.SameLine()
@@ -715,7 +715,7 @@ function text_editor_gui.tooltip(args)
 	      )
 	   end
         end
-     elseif mclass.is_a(gom.resolve_meta_type('OGF::Callable')) then
+     elseif obj.is_a(gom.meta_types.OGF.Callable) then
         imgui.Text('builtin or function')
      else
         text_editor_gui.Text_title(mclass.name)
@@ -729,9 +729,9 @@ function text_editor_gui.tooltip(args)
         imgui.EndGroup()
         imgui.SameLine()
         imgui.Text('  ')
-        imgui.SameLine()     
+        imgui.SameLine()
         imgui.BeginGroup()
-        text_editor_gui.Text_section('gom_properties')     
+        text_editor_gui.Text_section('gom_properties')
         for i=0,mclass.nb_properties()-1 do
            local propname = mclass.ith_property(i).name
 	   local proptype = mclass.ith_property(i).type_name()
@@ -743,10 +743,10 @@ function text_editor_gui.tooltip(args)
 	      if propval == '' then
                  propval = '<emptystring>'
 	      else
-                 propval = '\''..propval..'\''	   
+                 propval = '\''..propval..'\''
 	      end
 	   else
-	      propval = tostring(obj[propname])	
+	      propval = tostring(obj[propname])
 	   end
            text_editor_gui.Text('  '..propname)
 	   imgui.SameLine()
@@ -754,7 +754,7 @@ function text_editor_gui.tooltip(args)
 	   imgui.SameLine()
 	   text_editor_gui.Text_comment(' = '..propval)
         end
-        imgui.EndGroup()     
+        imgui.EndGroup()
      end
      imgui.EndTooltip()
   end

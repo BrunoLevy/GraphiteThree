@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/gom/reflection/meta_class.h>
@@ -118,7 +118,7 @@ namespace OGF {
             set_factory(new FactoryMetaClass(this));
         }
     }
-    
+
     MetaClass::~MetaClass() {
     }
 
@@ -126,20 +126,20 @@ namespace OGF {
         Object* result = nullptr;
 
         if(is_abstract()) {
-            Logger::err("GOM") 
-                << this->name() 
+            Logger::err("GOM")
+                << this->name()
                 << " is abstract (cannot create() instances)"
                 << std::endl;
             return nullptr;
         }
-        
+
         MetaConstructor* constructor = best_constructor(args);
-        
+
         if(constructor == nullptr) {
-            Logger::err("GOM") 
-                << this->name() 
+            Logger::err("GOM")
+                << this->name()
                 << " does not have a matching constructor"
-                << " (missing arg?)" 
+                << " (missing arg?)"
                 << std::endl;
             for(unsigned int i=0; i<args.nb_args(); i++) {
                 Logger::err("Interpreter") << "arg " << i << " name= "
@@ -176,21 +176,21 @@ namespace OGF {
 
         return result;
     }
-    
+
     void MetaClass::pre_delete() {
 	MetaType::pre_delete();
         for(index_t i=0; i<nb_members(false); ++i) {
             ith_member(i,false)->pre_delete();
         }
     }
-    
+
     MetaClass* MetaClass::super_class() const {
         MetaType* super_type = Meta::instance()->resolve_meta_type(
             super_class_name_
         );
         return dynamic_cast<MetaClass*>(super_type);
     }
-    
+
     size_t MetaClass::nb_members(bool super) const {
         size_t result = members_.size();
         if(super && super_class() != nullptr) {
@@ -209,7 +209,7 @@ namespace OGF {
         }
         return result;
     }
-    
+
     size_t MetaClass::nb_signals(bool super) const {
         return get_nb_members_recursive<MetaSignal>(this, super);
     }
@@ -217,7 +217,7 @@ namespace OGF {
     MetaSignal* MetaClass::ith_signal(index_t i, bool super) const {
         return get_ith_member_recursive<MetaSignal>(this, i, super);
     }
-    
+
     size_t MetaClass::nb_slots(bool super) const {
         return get_nb_members_recursive<MetaSlot>(this, super);
     }
@@ -225,7 +225,7 @@ namespace OGF {
     MetaSlot* MetaClass::ith_slot(index_t i, bool super) const {
         return get_ith_member_recursive<MetaSlot>(this, i, super);
     }
-    
+
     size_t MetaClass::nb_properties(bool super) const {
         return get_nb_members_recursive<MetaProperty>(this, super);
     }
@@ -233,7 +233,7 @@ namespace OGF {
     MetaProperty* MetaClass::ith_property(index_t i, bool super) const {
         return get_ith_member_recursive<MetaProperty>(this, i, super);
     }
-    
+
     size_t MetaClass::nb_constructors() const {
         return get_nb_members_recursive<MetaConstructor>(this, false);
     }
@@ -241,14 +241,14 @@ namespace OGF {
     MetaConstructor* MetaClass::ith_constructor(index_t i) const {
         return get_ith_member_recursive<MetaConstructor>(this, i, false);
     }
-    
+
     void MetaClass::get_constructors(
         std::vector<MetaConstructor*>& result
     ) const {
         result.clear();
         for(unsigned int i=0; i<members_.size(); i++) {
             MetaMember* cur = members_[i];
-            MetaConstructor* cur_constructor = 
+            MetaConstructor* cur_constructor =
                 dynamic_cast<MetaConstructor*>(cur);
             if(cur_constructor != nullptr) {
                 result.push_back(cur_constructor);
@@ -256,8 +256,8 @@ namespace OGF {
         }
     }
 
-    MetaMember* MetaClass::find_member( 
-        const std::string& member_name, bool super 
+    MetaMember* MetaClass::find_member(
+        const std::string& member_name, bool super
     ) const {
         for(unsigned int i=0; i<members_.size(); i++) {
             MetaMember* cur = members_[i];
@@ -270,9 +270,9 @@ namespace OGF {
         }
         return nullptr;
     }
-    
+
     MetaMethod* MetaClass::find_method(
-        const std::string& member_name, bool super 
+        const std::string& member_name, bool super
     ) const {
         if(String::string_starts_with(member_name, "get_")) {
             std::string property_name =
@@ -293,20 +293,20 @@ namespace OGF {
         return dynamic_cast<MetaMethod*>(find_member(member_name, super));
     }
 
-    MetaSignal* MetaClass::find_signal( 
-        const std::string& signal_name, bool super 
+    MetaSignal* MetaClass::find_signal(
+        const std::string& signal_name, bool super
     ) const {
         return dynamic_cast<MetaSignal*>(find_member(signal_name, super));
     }
 
-    MetaSlot* MetaClass::find_slot( 
-        const std::string& slot_name, bool super  
+    MetaSlot* MetaClass::find_slot(
+        const std::string& slot_name, bool super
     ) const {
         return dynamic_cast<MetaSlot*>(find_member(slot_name, super));
     }
 
-    MetaProperty* MetaClass::find_property( 
-        const std::string& property_name, bool super 
+    MetaProperty* MetaClass::find_property(
+        const std::string& property_name, bool super
     ) const {
         return dynamic_cast<MetaProperty*>(find_member(property_name, super));
     }
@@ -320,7 +320,7 @@ namespace OGF {
     }
 
     void MetaClass::append_members(
-        std::vector<MetaMember*>& result, bool super 
+        std::vector<MetaMember*>& result, bool super
     ) const {
         for(unsigned int i=0; i<members_.size(); i++) {
             MetaMember* cur = members_[i];
@@ -332,7 +332,7 @@ namespace OGF {
     }
 
     void MetaClass::append_methods(
-        std::vector<MetaMethod*>& result, bool super 
+        std::vector<MetaMethod*>& result, bool super
     ) const {
         for(unsigned int i=0; i<members_.size(); i++) {
             MetaMember* cur = members_[i];
@@ -347,7 +347,7 @@ namespace OGF {
     }
 
     void MetaClass::append_signals(
-        std::vector<MetaSignal*>& result, bool super 
+        std::vector<MetaSignal*>& result, bool super
     ) const {
         for(unsigned int i=0; i<members_.size(); i++) {
             MetaMember* cur = members_[i];
@@ -360,9 +360,9 @@ namespace OGF {
             super_class()->append_signals(result, true);
         }
     }
-    
+
     void MetaClass::append_slots(
-        std::vector<MetaSlot*>& result, bool super 
+        std::vector<MetaSlot*>& result, bool super
     ) const {
         for(unsigned int i=0; i<members_.size(); i++) {
             MetaMember* cur = members_[i];
@@ -375,9 +375,9 @@ namespace OGF {
             super_class()->append_slots(result, true);
         }
     }
-    
+
     void MetaClass::append_properties(
-        std::vector<MetaProperty*>& result, bool super 
+        std::vector<MetaProperty*>& result, bool super
     ) const {
         for(unsigned int i=0; i<members_.size(); i++) {
             MetaMember* cur = members_[i];
@@ -391,20 +391,26 @@ namespace OGF {
         }
     }
 
-    bool MetaClass::is_a(
-        const MetaType* other
-    ) const {
-        if (this == other) {
+    bool MetaClass::is_subclass_of(const MetaClass* other) const {
+        if(this == other) {
             return true;
         }
         if(super_class() != nullptr) {
-            return super_class()->is_a(other);
+            return super_class()->is_subclass_of(other);
         }
         return false;
     }
 
+    bool MetaClass::is_subtype_of(const MetaType* other) const {
+        const MetaClass* other_as_mclass = dynamic_cast<const MetaClass*>(other);
+        if(other_as_mclass == nullptr) {
+            return false;
+        }
+        return is_subclass_of(other_as_mclass);
+    }
+
     void MetaClass::get_used_types(
-        std::set<std::string>& used_types, bool super 
+        std::set<std::string>& used_types, bool super
     ) const {
         for(unsigned int i=0; i<members_.size(); i++) {
             MetaMember* cur_member = members_[i];
@@ -493,20 +499,20 @@ namespace OGF {
         }
         return result;
     }
-    
+
 /****************************************************************************/
 
     Object* FactoryMetaClass::create(const ArgList& args) {
-        MetaConstructor* best_constructor = 
+        MetaConstructor* best_constructor =
             meta_class()->best_constructor(args);
 
         if(best_constructor == nullptr) {
             return nullptr;
         }
-        
+
         ogf_assert(best_constructor->factory() != nullptr);
         Object* result = nullptr;
-        
+
         if(args.has_unnamed_args()) {
             geo_assert(args.nb_args() == best_constructor->nb_args());
             ArgList named_args;
@@ -522,15 +528,14 @@ namespace OGF {
                 ArgList all_args = args;
                 best_constructor->add_default_args(all_args);
                 result = best_constructor->factory()->create(all_args);
-            } else 
+            } else
                 result = best_constructor->factory()->create(args);
         }
         result->meta_class(); // initializes metaclass information.
-        
+
         return result;
     }
 
 
-    
-}
 
+}

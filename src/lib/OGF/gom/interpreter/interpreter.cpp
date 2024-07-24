@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/gom/interpreter/interpreter.h>
@@ -47,12 +47,12 @@
 #include <fstream>
 
 namespace OGF {
-    
+
     std::map<std::string, SmartPointer<Interpreter> > Interpreter::instance_;
     std::map<std::string, Interpreter* >
        Interpreter::instance_by_file_extension_;
     Interpreter* Interpreter::default_interpreter_ = nullptr;
-    
+
     Interpreter::Interpreter() {
 	globals_ = new GlobalScope(this);
         MetaTypesScope* meta_types = new MetaTypesScope();
@@ -99,7 +99,7 @@ namespace OGF {
 	    }
 	}
     }
-    
+
     void Interpreter::terminate() {
     }
 
@@ -118,11 +118,11 @@ namespace OGF {
         }
 	return result;
     }
-    
+
     void Interpreter::clear_history() {
         history_.clear() ;
     }
-    
+
     bool Interpreter::execute_file(const std::string& file_name) {
         std::ifstream in(file_name.c_str()) ;
         if(!in) {
@@ -141,7 +141,7 @@ namespace OGF {
 
     Interpreter::~Interpreter() {
     }
-    
+
     void Interpreter::add_to_history(const std::string& command) {
         if(command != "") {
             if(*command.rbegin() == '\n') {
@@ -174,11 +174,11 @@ namespace OGF {
             oss << " = " << value;
             second_member = oss.str();
         }
-        
-        Logger::out("GOM") << "   " 
+
+        Logger::out("GOM") << "   "
                            << readonly
                            << mprop->type_name() << " "
-                           << mprop->name() 
+                           << mprop->name()
                            << second_member << ";" << std::endl;
     }
 
@@ -195,10 +195,10 @@ namespace OGF {
         }
         Logger::out("GOM") << is_obj << "class = "
                            << mclass->name()
-                           << " : " 
+                           << " : "
                            << mclass->super_class_name()
                            << " { " << std::endl;
-        
+
         {
             Logger::out("GOM") << "properties:" << std::endl;
             std::vector<MetaProperty*> properties;
@@ -207,7 +207,7 @@ namespace OGF {
                 inspect_property(object, properties[i]);
             }
         }
-        
+
         {
             Logger::out("GOM") << "constructors:" << std::endl;
             std::vector<MetaConstructor*> constructors;
@@ -216,7 +216,7 @@ namespace OGF {
                 inspect_method(object, constructors[i]);
             }
         }
-        
+
         {
             Logger::out("GOM") << "slots:" << std::endl;
             std::vector<MetaSlot*> slots;
@@ -225,7 +225,7 @@ namespace OGF {
                 inspect_method(object, slots[i]);
             }
         }
-        
+
         {
             Logger::out("GOM") << "signals:" << std::endl;
             std::vector<MetaSignal*> signals;
@@ -234,13 +234,13 @@ namespace OGF {
                 inspect_method(object, signals[i]);
             }
         }
-        
+
         Logger::out("GOM") << "};" << std::endl;
     }
 
     void Interpreter::inspect(Object* object) {
 	if(object == nullptr) {
-	    Logger::out("GOM") << "nil GOM object" << std::endl; 
+	    Logger::out("GOM") << "nil GOM object" << std::endl;
 	} else {
 	    inspect_meta_class(object, object->meta_class());
 	}
@@ -252,16 +252,16 @@ namespace OGF {
 	if(mclass != nullptr) {
 	    inspect_meta_class(nullptr, mclass);
 	} else if(mmethod != nullptr) {
-	    inspect_meta_method(mmethod);	    
+	    inspect_meta_method(mmethod);
 	} else if(meta_type != nullptr) {
 	    Logger::out("GOM") << meta_type->name() << std::endl;
 	} else {
-	    Logger::out("GOM") << "nil" << std::endl;	    
+	    Logger::out("GOM") << "nil" << std::endl;
 	}
     }
-    
+
     void Interpreter::inspect_meta_method(MetaMethod* mmethod) {
-	
+
         std::ostringstream out;
 
         if(dynamic_cast<MetaConstructor*>(mmethod) != nullptr) {
@@ -286,16 +286,16 @@ namespace OGF {
                 out << ", ";
             }
         }
-        
+
         out << ");";
 
         Logger::out("GOM") << out.str() << std::endl;
     }
 
-    
+
     void Interpreter::list_classes() {
         Logger::out("GOM") << "List of all known MetaClasses:" << std::endl;
-        
+
         std::vector<MetaType*> all_types;
         Meta::instance()->list_types(all_types);
         for(MetaType* cur : all_types) {
@@ -304,16 +304,16 @@ namespace OGF {
                 std::string abstraction = "";
                 if(cur_class->is_abstract())
                     abstraction = " (abstract)";
-                
+
                 std::string superclass = cur_class->super_class_name();
                 if(superclass != "") {
                     superclass = std::string(": ") + superclass;
                 }
-                
-                Logger::out("GOM") 
+
+                Logger::out("GOM")
                     << cur_class->name() << " "
                     << superclass << " "
-                    << abstraction  
+                    << abstraction
                     << std::endl;
             }
         }
@@ -333,7 +333,7 @@ namespace OGF {
         std::string result;
         if(Environment::instance()->has_value(name)) {
             result = Environment::instance()->get_value(name);
-        } 
+        }
         return result;
     }
 
@@ -354,7 +354,7 @@ namespace OGF {
     ) {
 	Logger::warn(tag) << message << std::endl;
     }
-    
+
     void Interpreter::status(const std::string& message) {
 	Logger::status() << message << std::endl;
     }
@@ -366,7 +366,7 @@ namespace OGF {
     void Interpreter::append_dynamic_libraries_path(const std::string& path) {
 	ModuleManager::append_dynamic_libraries_path(path);
     }
-    
+
     Connection* Interpreter::connect(Request* from, Callable* to) {
 	// Special case: target is a Request.
 	// We create a SlotConnection, that does not do reference counting
@@ -389,7 +389,7 @@ namespace OGF {
 	value.set_value(object);
 	bind(id,value);
     }
-    
+
     Object* Interpreter::resolve_object_by_global_id(
 	const std::string& id, bool quiet
     ) const {
@@ -414,12 +414,12 @@ namespace OGF {
 		    result = Object::id_to_object(index);
                     if(result == nullptr) {
                         Logger::err("GOM")
-                            << id << ": No such object in " 
+                            << id << ": No such object in "
                             << classname << " instances" << std::endl;
                     }
 		    if(result->meta_class() != mclass) {
                         Logger::err("GOM")
-                            << id << ": is not of class " 
+                            << id << ": is not of class "
                             << classname
 			    << " but of class "
 			    << result->meta_class()->name()
@@ -427,7 +427,7 @@ namespace OGF {
 		    }
                 }
             }
-        } 
+        }
 
         if(result == nullptr && !quiet) {
             Logger::err("GOM") << "No such object:" << id << std::endl;
@@ -438,7 +438,7 @@ namespace OGF {
     void Interpreter::list_names(std::vector<std::string>& names) const {
 	names.clear();
     }
-    
+
     Object* Interpreter::resolve_object(
 	const std::string& id, bool quiet
     ) const {
@@ -469,14 +469,14 @@ namespace OGF {
 	return result;
     }
 
-    
+
     Object* Interpreter::eval_object(
 	const std::string& expression, bool quiet
     ) const {
 	Any any_result = eval(expression, quiet);
 	Object* result = nullptr;
 	bool OK = true;
-	OK = any_result.meta_type() != nullptr && 
+	OK = any_result.meta_type() != nullptr &&
 	     Any::is_pointer_type(any_result.meta_type()) &&
 	     any_result.get_value(result);
 	if(!OK && !quiet) {
@@ -497,7 +497,7 @@ namespace OGF {
 	return result;
     }
 
-    
+
     MetaType* Interpreter::resolve_meta_type(
 	const std::string& type_name
     ) const {
@@ -542,7 +542,7 @@ namespace OGF {
 	}
 	return result;
     }
-    
+
     Object* Interpreter::create(const std::string& classname, const ArgList& args) {
         Object* result = nullptr;
         MetaClass* mclass = Meta::instance()->resolve_meta_class(classname);
@@ -602,10 +602,10 @@ namespace OGF {
                 if(m != nullptr) {
                     m->search(needle, path + "." + name);
                 }
-            }            
+            }
         }
     }
-    
+
     /********************************************************/
 
     GlobalScope::GlobalScope(Interpreter* interpreter)
@@ -621,7 +621,7 @@ namespace OGF {
 	);
 	dynamic_cast<Interpreter*>(object_)->list_names(names);
     }
-    
+
     Any GlobalScope::resolve(const std::string& name) {
 	geo_assert(
 	    dynamic_cast<Interpreter*>(object_) != nullptr
@@ -630,8 +630,8 @@ namespace OGF {
 	    object_
 	)->resolve(name);
     }
-    
-    /********************************************************/    
+
+    /********************************************************/
 
     InterfaceScope::InterfaceScope(Object* object)
 	: Scope(object) {
@@ -639,7 +639,7 @@ namespace OGF {
 
     Any InterfaceScope::resolve(const std::string& name_in) {
 	Any result;
-	
+
 	if(object_ == nullptr) {
 	    return result;
 	}
@@ -649,11 +649,11 @@ namespace OGF {
 	if(!String::string_starts_with(name, object_class_name)) {
 	    name = object_class_name + name;
 	}
-	
+
 	MetaClass* mclass = dynamic_cast<MetaClass*>(
 	    Meta::instance()->resolve_meta_type(name)
 	);
-	
+
 	if(mclass == nullptr && !String::string_ends_with(name, "Interface")) {
 	    mclass = dynamic_cast<MetaClass*>(
 		Meta::instance()->resolve_meta_type(name + "Interface")
@@ -699,7 +699,7 @@ namespace OGF {
 	    s = s.substr(0, s.length()-suffix.length());
 	}
     }
-    
+
     void InterfaceScope::list_names(std::vector<std::string>& names) const {
 	names.clear();
 	if(object_ == nullptr) {
@@ -733,7 +733,7 @@ namespace OGF {
 		Meta::instance()->resolve_meta_type(
 		    mclassname+trimmed_name
 		) != nullptr);
-	    
+
 	    if(nb_classes > 1) {
 		names.push_back(name);
 	    } else {
@@ -754,13 +754,13 @@ namespace OGF {
 
     Any MetaTypesScope::resolve(const std::string& name) {
         Any result;
-        
+
         auto it = subscopes_.find(name);
         if(it != subscopes_.end()) {
             result.set_value((Scope*)(it->second));
             return result;
         }
-        
+
         MetaType* mtype = Meta::instance()->resolve_meta_type(prefix_ + name);
         result.set_value(mtype);
         return result;
@@ -786,7 +786,7 @@ namespace OGF {
             } else {
                 if(
                     String::string_starts_with(cur, prefix_) &&
-                    cur.find("::",prefix_.length()) == std::string::npos 
+                    cur.find("::",prefix_.length()) == std::string::npos
                 ) {
                     names.push_back(cur.substr(prefix_.length()));
                 }
@@ -804,7 +804,7 @@ namespace OGF {
         return result;
     }
 
-    
+
     /********************************************************/
 
     void Interpreter::automatic_completion(
@@ -850,23 +850,23 @@ namespace OGF {
 		if(cur_class != nullptr) {
 		    matches.push_back("\'" + cur_class->name() + "\'");
 		}
-		filter_completion_candidates(prefix, matches);		
+		filter_completion_candidates(prefix, matches);
 	    }
 	    return;
 	}
-	
+
 	int pos = int(context.length())-1;
 	int depth=0;
 	while(
 	    pos >= 0 &&
-	    strchr(",+-*/={} ",context[size_t(pos)]) == nullptr 
+	    strchr(",+-*/={} ",context[size_t(pos)]) == nullptr
 	) {
 	    if(depth==0 && context[size_t(pos)] == '(') {
 		break;
 	    }
 	    if(context[size_t(pos)] == '(') {
 		--depth;
-		
+
 	    } else if(context[size_t(pos)] == ')') {
 		++depth;
 	    }
@@ -877,7 +877,7 @@ namespace OGF {
 	    size_t(pos),
 	    size_t(int(context.length())-pos)
 	);
-	
+
 	get_keys(context,matches);
 	filter_completion_candidates(prefix,matches);
     }
@@ -898,7 +898,7 @@ namespace OGF {
 		}
 	    }
 	}
-	
+
 	if(context == "") {
 	    list_names(keys);
 	} else {
@@ -906,7 +906,7 @@ namespace OGF {
 	    get_keys(context_any, keys);
 	}
     }
-    
+
     void Interpreter::get_keys(
 	Any& context, std::vector<std::string>& keys
     ) {
@@ -915,13 +915,13 @@ namespace OGF {
 	if(mtype == nullptr) {
 	    return;
 	}
-	
+
 	if(!Any::is_pointer_type(mtype)) {
 	    return;
 	}
-	
+
 	mtype = Any::pointed_type(mtype);
-	if(!mtype->is_a(ogf_meta<Object>::type())) {
+	if(!mtype->is_subtype_of(ogf_meta<Object>::type())) {
 	    return;
 	}
 
@@ -955,7 +955,7 @@ namespace OGF {
 			if(
 			    arg_type_name == "bool" ||
 			    arg_type_name == "int" ||
-			    arg_type_name == "unsigned int" ||			
+			    arg_type_name == "unsigned int" ||
 			    arg_type_name == "float" ||
 			    arg_type_name == "double" ||
 			    arg_type_name == "OGF::index_t" ||
@@ -976,12 +976,12 @@ namespace OGF {
 			    arg_type_name == "int" ||
 			    arg_type_name == "unsigned int" ||
 			    arg_type_name == "OGF::index_t" ||
-			    arg_type_name == "GEO::index_t"			
+			    arg_type_name == "GEO::index_t"
 			) {
 			    args += "=0";
 			} else if(
 			    arg_type_name == "float" ||
-			    arg_type_name == "double" 
+			    arg_type_name == "double"
 			) {
 			    args += "=0.0";
 			} else {
@@ -1005,15 +1005,15 @@ namespace OGF {
 	    MetaMember* member = mclass->ith_member(i);
 	    if(dynamic_cast<MetaConstructor*>(member) == nullptr) {
 		if(dynamic_cast<MetaMethod*>(member) != nullptr) {
-		    keys.push_back(member->name()+"(");			
+		    keys.push_back(member->name()+"(");
 		} else {
 		    keys.push_back(member->name());
 		}
 	    }
-	} 
+	}
     }
-    
-    
+
+
     void Interpreter::filter_completion_candidates(
 	const std::string& prefix, std::vector<std::string>& completions
     ) {
@@ -1025,7 +1025,7 @@ namespace OGF {
 	}
 	std::swap(completions, result);
     }
-    
+
     void Interpreter::filename_completion(
 	const std::string& prefix_in,
 	std::vector<std::string>& completions
@@ -1073,7 +1073,7 @@ namespace OGF {
         if(needle == "*") {
             needle = "";
         }
-        
+
         std::string path = path_in;
         if(path != "") {
             path = path + ".";
@@ -1081,5 +1081,5 @@ namespace OGF {
         meta_types_->search(needle,path+"gom.meta_types");
         globals_->search(needle,path+"globals");
     }
-    
+
 }

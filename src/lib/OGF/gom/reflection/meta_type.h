@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_META_TYPES_META_TYPE_H
@@ -54,7 +54,7 @@ namespace OGF {
     /**
      * \brief Stores a set of custom attributes, i.e. name-value pairs
      *  attached to the objects.
-     * \details All the constructs of the language (classes, methods, 
+     * \details All the constructs of the language (classes, methods,
      *  arguments...) can be "decorated" with custom attributes. For
      *  instance, these custom attribute can indicate which widget type
      *  should be used for a function argument in the GUI. They can also
@@ -94,7 +94,7 @@ namespace OGF {
                 ? custom_attributes_.ith_arg_value(i).as_string()
                 : std::string();
         }
-        
+
         /**
          * \brief Tests whether a given custom attribute exists
          * \param[in] name name of the custom attribute
@@ -147,7 +147,7 @@ namespace OGF {
 	void clear_custom_attributes() {
 	    custom_attributes_.clear();
 	}
-	
+
     private:
         ArgList custom_attributes_ ;
     } ;
@@ -170,7 +170,7 @@ namespace OGF {
         virtual void search(
             const std::string& needle, const std::string& path = ""
         );
-        
+
     gom_slots:
 
 	/**
@@ -181,7 +181,7 @@ namespace OGF {
 	/**
 	 * \copydoc CustomAttributes::has_custom_attribute()
 	 */
-	bool has_custom_attribute(const std::string& name) const; 
+	bool has_custom_attribute(const std::string& name) const;
 
 	/**
 	 * \copydoc CustomAttributes::ith_custom_attribute_name()
@@ -217,10 +217,10 @@ namespace OGF {
     /**
      * \brief The representation of a type in the Meta repository.
      */
-    gom_attribute(abstract,"true")    
+    gom_attribute(abstract,"true")
     gom_class GOM_API MetaType : public MetaInformation {
     public:
-        
+
         /**
          * \brief MetaType constructor.
          * \param[in] name C++ name of the type
@@ -244,7 +244,7 @@ namespace OGF {
 
         /**
          * \brief Sets the typeid name.
-         * \param[in] typeid_name the typeid name, 
+         * \param[in] typeid_name the typeid name,
          *  as obtained by typeid(T).name()
          */
         void set_typeid_name(const std::string& typeid_name ) {
@@ -275,9 +275,9 @@ namespace OGF {
          */
 	void set_life_cycle(LifeCycle* life_cycle) {
 	    life_cycle_ = life_cycle;
-	    // life_cycle_->ref(); 
+	    // life_cycle_->ref();
 	}
-	
+
         /**
          * \brief Gets the serializer associated with the type.
          * \return a pointer to the Serializer or nil if none
@@ -304,17 +304,16 @@ namespace OGF {
 	 *  first meta classes that we needed to delete other ones.
 	 */
 	virtual void pre_delete();
-	
+
     gom_slots:
-        
+
         /**
-         * \brief Tests whether this MetaType is a subclass of 
-         *  another MetaType.
+         * \brief Tests whether this MetaType is a subtype of another MetaType.
          * \param[in] other a pointer to a MetaType
-         * \retval true if this MetaType is a subclass of \p other
+         * \retval true if this MetaType is the same or is a subtype of \p other
          * \retval false otherwise
          */
-	bool is_a(const MetaType* other) const override;
+	virtual bool is_subtype_of(const MetaType* other) const;
 
     gom_properties:
         /**
@@ -326,7 +325,7 @@ namespace OGF {
             return name();
         }
 
-        
+
     private:
         std::string name_;
         std::string typeid_name_;
@@ -337,8 +336,7 @@ namespace OGF {
     /**
      * \brief Automatic reference-counted pointer to a MetaType.
      */
-    typedef SmartPointer<MetaType> MetaType_var ;   
+    typedef SmartPointer<MetaType> MetaType_var ;
 }
 
-#endif 
-
+#endif

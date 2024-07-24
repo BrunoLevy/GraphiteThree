@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/gom/reflection/meta_type.h>
@@ -51,19 +51,19 @@ namespace OGF {
             Logger::out("GOM") << path << std::endl;
         }
     }
-    
+
     size_t MetaInformation::nb_custom_attributes() const {
 	return CustomAttributes::nb_custom_attributes();
     }
-    
+
     bool MetaInformation::has_custom_attribute(const std::string& name) const {
 	return CustomAttributes::has_custom_attribute(name);
     }
-    
+
     std::string MetaInformation::ith_custom_attribute_name(index_t i) const {
 	return CustomAttributes::ith_custom_attribute_name(i);
     }
-    
+
     std::string MetaInformation::ith_custom_attribute_value(index_t i) const {
 	return CustomAttributes::ith_custom_attribute_value(i);
     }
@@ -87,14 +87,14 @@ namespace OGF {
     }
 
     /**************************************************************************/
-    
+
     MetaType::MetaType(const std::string& name) : name_(name) {
     }
-    
+
     MetaType::~MetaType(){
     }
-    
-    bool MetaType::is_a(const MetaType* other) const {
+
+    bool MetaType::is_subtype_of(const MetaType* other) const {
         return this == other ;
     }
 
@@ -103,4 +103,3 @@ namespace OGF {
     }
 
 }
-

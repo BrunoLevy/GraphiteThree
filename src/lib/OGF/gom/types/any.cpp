@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/gom/types/any.h>
@@ -49,7 +49,7 @@ namespace OGF {
 	geo_debug_assert(meta_type_ != nullptr);
 	return meta_type_->life_cycle();
     }
-    
+
     void Any::convert_from_string(
         MetaType* mtype,
         const std::string& string, Memory::pointer value
@@ -61,7 +61,7 @@ namespace OGF {
         if(mtype == nullptr) {
             return;
         }
-#endif        
+#endif
         geo_assert(mtype != nullptr);
         Serializer* serializer = mtype->serializer();
         geo_assert(serializer != nullptr);
@@ -69,7 +69,7 @@ namespace OGF {
         bool conversion_ok = serializer->serialize_read(stream, value);
         geo_assert(conversion_ok);
     }
-    
+
     void Any::convert_to_string(
 	MetaType* mtype,
         std::string& string, Memory::pointer value
@@ -81,7 +81,7 @@ namespace OGF {
         if(mtype == nullptr) {
             return;
         }
-#endif        
+#endif
         geo_assert(mtype != nullptr);
         Serializer* serializer = mtype->serializer();
         geo_assert(serializer != nullptr);
@@ -101,7 +101,7 @@ namespace OGF {
 	if(mtype == ogf_meta<std::nullptr_t>::type()) {
 	    return ogf_meta<void>::type();
 	}
-	
+
 	std::string deferenced_type_name =
 	    mtype->name().substr(0, mtype->name().length()-1);
 	return Meta::instance()->resolve_meta_type(deferenced_type_name);
@@ -113,7 +113,7 @@ namespace OGF {
 	return Meta::instance()->resolve_meta_type_by_typeid_name(typeid_name);
     }
 
-    
+
     bool Any::pointer_can_be_casted_to(
 	const MetaType* derived_pointer_type,
 	const MetaType* base_pointer_type
@@ -124,7 +124,8 @@ namespace OGF {
 	MetaClass* derived = dynamic_cast<MetaClass*>(
 	    pointed_type(derived_pointer_type)
 	);
-	return base != nullptr && derived != nullptr && derived->is_a(base);
+	return base != nullptr && derived != nullptr &&
+            derived->is_subtype_of(base);
     }
 
     /**
@@ -139,13 +140,15 @@ namespace OGF {
      * \retval true if conversion was successful.
      * \retval false otherwise.
      */
-    template <class T> bool try_copy_convert_to(const Any* any, T* addr, MetaType* meta_type) {
+    template <class T> bool try_copy_convert_to(
+        const Any* any, T* addr, MetaType* meta_type
+    ) {
 	if(meta_type != ogf_meta<T>::type()) {
 	    return false;
 	}
 	return any->get_value(*addr);
     }
-    
+
     bool Any::copy_convert_to(Memory::pointer addr, MetaType* meta_type) const {
 	if(try_copy_convert_to(this, (index_t*)addr, meta_type)) {
 	    return true;
@@ -171,12 +174,11 @@ namespace OGF {
     std::string Any::meta_type_name(const MetaType* mt) {
 	return mt->name();
     }
-    
+
     /********************************************************************/
-    
+
 }
 
 #ifdef GEO_COMPILER_CLANG
 #pragma GCC diagnostic pop
 #endif
-

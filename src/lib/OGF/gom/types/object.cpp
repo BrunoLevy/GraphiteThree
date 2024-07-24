@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/gom/types/object.h>
@@ -71,13 +71,13 @@ namespace OGF {
 	    }
 	    (*id_to_object_)[id_] = this;
 	}
-	
+
         //   Note: meta_class_ cannot be initialized in constructor
         // since in constructor we got typeid(*this) == Object ...
     }
-    
+
     Object::~Object() {
-        delete connections_; 
+        delete connections_;
         connections_ = nullptr;
 	if(id_ != 0) {
 	    auto it = id_to_object_->find(id_);
@@ -89,12 +89,12 @@ namespace OGF {
 	    }
 	}
     }
-    
+
     void Object::disconnect() {
 	delete connections_;
 	connections_ = nullptr;
     }
-    
+
     std::string Object::string_id() const {
         std::ostringstream out;
         out << "@" << meta_class()->name() << "::#" << id_;
@@ -112,7 +112,7 @@ namespace OGF {
             MetaType* m_type = ogf_dynamic_type(*this);
             if(m_type == nullptr) {
                 std::cerr << "Missing meta information for type:"
-                          << typeid(*this).name() 
+                          << typeid(*this).name()
                           << std::endl;
             }
             ogf_assert(m_type != nullptr);
@@ -126,14 +126,18 @@ namespace OGF {
         meta_class_ = mclass;
     }
 
+    bool Object::equals(const Object* other) const {
+        return other == this;
+    }
+
     bool Object::is_a(const MetaType* type) const {
         return ogf_is_a(*this, type);
     }
 
     bool Object::has_method(const std::string& method_name) const {
-	return meta_class()->find_method(method_name) != nullptr;	
+	return meta_class()->find_method(method_name) != nullptr;
     }
-    
+
     bool Object::invoke_method(
         const std::string& method_name,
         const ArgList& args, Any& ret_val
@@ -152,8 +156,8 @@ namespace OGF {
 	}
 	std::cerr << ")" << std::endl;
 	*/
-	
-        if( !slots_enabled_ && 
+
+        if( !slots_enabled_ &&
             method_name != "enable_slots" &&
             method_name != "slots_enabled"
         ) {
@@ -170,9 +174,9 @@ namespace OGF {
         MetaProperty* property = meta_class()->find_property(method_name);
         if(property != nullptr) {
             if(property->read_only()) {
-            Logger::err("Object") 
+            Logger::err("Object")
                 << "Property "
-                << meta_class()->name() << "::" << method_name 
+                << meta_class()->name() << "::" << method_name
                 << " is read-only" << std::endl;
             } else {
                 return property->meta_method_set()->invoke(
@@ -180,7 +184,7 @@ namespace OGF {
                 );
             }
         }
-        Logger::err("Object") 
+        Logger::err("Object")
             << "No such method: "
             << meta_class()->name() << "::" << method_name << std::endl;
         return false;
@@ -189,7 +193,7 @@ namespace OGF {
     void Object::help() const {
         Logger::out("GOM") << get_doc() << std::endl;
     }
-    
+
     bool Object::set_property(
         const std::string& prop_name, const Any& prop_value
     ) {
@@ -200,7 +204,7 @@ namespace OGF {
         if(prop != nullptr) {
             return prop->set_value(this, prop_value);
         }
-        Logger::err("Object") 
+        Logger::err("Object")
             << "No such property: "
             << meta_class()->name() << "::" << prop_name << std::endl;
         return false;
@@ -209,7 +213,7 @@ namespace OGF {
     bool Object::has_property(const std::string& prop_name) const {
 	return (meta_class()->find_property(prop_name) != nullptr);
     }
-    
+
     bool Object::get_property(
         const std::string& prop_name, Any& prop_value
     ) const {
@@ -218,13 +222,13 @@ namespace OGF {
             bool result = prop->get_value(this, prop_value);
 	    return result;
         }
-        Logger::err("Object") 
+        Logger::err("Object")
             << "No such property: "
             << meta_class()->name() << "::" << prop_name << std::endl;
         return false;
     }
 
-    
+
     bool Object::set_property(
         const std::string& prop_name, const std::string& prop_value
     ) {
@@ -250,10 +254,10 @@ namespace OGF {
                 );
             }
         }
-    } 
+    }
 
     Connection* Object::connect_signal_to_slot(
-        const std::string& signal_name, 
+        const std::string& signal_name,
         Object* to, const std::string& slot_name
     ) {
         return new SlotConnection(this, signal_name, to, slot_name);
@@ -285,7 +289,7 @@ namespace OGF {
     ) {
 
         ogf_argused(called_from_slot);
-        
+
         if(!signals_enabled_) {
             return true;
         }
@@ -295,7 +299,7 @@ namespace OGF {
         if(connections_ == nullptr) {
             return false;
         }
-        
+
         auto it = connections_->find(signal_name);
         if(it == connections_->end()) {
             return true;
@@ -308,7 +312,7 @@ namespace OGF {
     index_t Object::get_nb_elements() const {
 	return 0;
     }
-    
+
     void Object::get_element(index_t i, Any& value) const {
 	geo_argused(i);
 	geo_argused(value);
@@ -334,8 +338,8 @@ namespace OGF {
         geo_argused(needle);
         geo_argused(path);
     }
-    
-    
+
+
 /******************************************************************/
-    
+
 }

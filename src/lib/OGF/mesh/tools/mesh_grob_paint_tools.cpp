@@ -23,15 +23,15 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
+ * As an exception to the GPL, Graphite can be linked
  *  with the following (non-GPL) libraries: Qt, SuperLU, WildMagic and CGAL
  */
 
@@ -57,7 +57,7 @@ namespace {
      * \param[in] mesh_grob the MeshGrob
      * \param[out] where one of MESH_VERTICES, MESH_FACETS, MESH_CELLS
      * \param[out] attribute_name the base name of the attribute
-     * \param[out] component the component index for a vector attribute 
+     * \param[out] component the component index for a vector attribute
      *             (0 if it is a scalar attribute)
      */
     bool get_visible_attribute(
@@ -69,7 +69,7 @@ namespace {
         MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
             mesh_grob->get_shader()
         );
-        
+
         if(shd == nullptr) {
             return false;
         }
@@ -87,23 +87,23 @@ namespace {
           ) {
             return false;
         }
-        
+
         return true;
     }
-    
+
     /**
      * \brief Paints an attribute value for a given type
      * \tparam T the type of the attribute
      * \param[in] mesh_grob a pointer to the MeshGrob
-     * \param[in] where one of MESH_VERTICES, MESH_EDGES, MESH_FACETS or 
+     * \param[in] where one of MESH_VERTICES, MESH_EDGES, MESH_FACETS or
      *  MESH_CELLS
      * \param[in] name the name of the attribute
      * \param[in] element_id the element to be painted
-     * \param[in] component the component of a vector attribute 
+     * \param[in] component the component of a vector attribute
      *            (0 for a scalar attribute)
      * \param[in] op one of PAINT_SET, PAINT_RESET, PAINT_INC or PAINT_DEC
      * \param[in] value the value to be painted
-     * \retval true if an attribute of the specified type was found 
+     * \retval true if an attribute of the specified type was found
      * \retval false otherwise
      */
     template <class T> bool paint_attribute_generic(
@@ -123,15 +123,15 @@ namespace {
             break;
         case PAINT_RESET:
             attr[element_id*attr.dimension()+component] = T(0);
-            break;            
+            break;
         case PAINT_INC:
             attr[element_id*attr.dimension()+component] =
                 attr[element_id*attr.dimension()+component] + T(value);
-            break;            
+            break;
         case PAINT_DEC:
             attr[element_id*attr.dimension()+component] =
                 attr[element_id*attr.dimension()+component] - T(value);
-            break;            
+            break;
         }
         return true;
     }
@@ -142,11 +142,11 @@ namespace {
      * \details The specified value is converted into the type. Floating-point
      *   values are truncated if the attribute has integer type.
      * \param[in] mesh_grob a pointer to the MeshGrob
-     * \param[in] where one of MESH_VERTICES, MESH_EDGES, MESH_FACETS or 
+     * \param[in] where one of MESH_VERTICES, MESH_EDGES, MESH_FACETS or
      *  MESH_CELLS
      * \param[in] name the name of the attribute
      * \param[in] element_id the element to be painted
-     * \param[in] component the component of a vector attribute 
+     * \param[in] component the component of a vector attribute
      *            (0 for a scalar attribute)
      * \param[in] op one of PAINT_SET, PAINT_RESET, PAINT_INC or PAINT_DEC
      * \param[in] value the value to be painted
@@ -172,7 +172,7 @@ namespace {
                ) ||
                paint_attribute_generic<bool>(
                    mesh_grob, where, name, component, element_id, op, value
-               );            
+               );
     }
 
     /**
@@ -185,7 +185,7 @@ namespace {
      */
     void for_each_connected_facet(
         MeshGrob* mesh_grob, index_t seed_facet,
-        std::function<bool(index_t)> doit        
+        std::function<bool(index_t)> doit
     ) {
         std::vector<bool> visited(mesh_grob->facets.nb(),false);
         std::stack<index_t> S;
@@ -215,10 +215,10 @@ namespace {
      * \param[in] doit the function to be called for each cell of the
      *  connected component incident to \p seed_cell
      */
-    
+
     void for_each_connected_cell(
         MeshGrob* mesh_grob, index_t seed_cell,
-        std::function<bool(index_t)> doit        
+        std::function<bool(index_t)> doit
     ) {
         std::vector<bool> visited(mesh_grob->cells.nb(),false);
         std::stack<index_t> S;
@@ -241,7 +241,7 @@ namespace {
     }
 
     /**
-     * \brief Gets all the vertices of a connected component incident to 
+     * \brief Gets all the vertices of a connected component incident to
      *  a given facet
      * \param[in] mesh_grob the mesh
      * \param[in] seed_facet a facet of the connected component
@@ -264,7 +264,7 @@ namespace {
     }
 
     /**
-     * \brief Gets all the vertices of a connected component incident to 
+     * \brief Gets all the vertices of a connected component incident to
      *  a given cell
      * \param[in] mesh_grob the mesh
      * \param[in] seed_cell a cell of the connected component
@@ -285,19 +285,19 @@ namespace {
             }
         );
     }
-    
+
     /**
      * \brief Probes an attribute value for a given type
      * \tparam T the type of the attribute
      * \param[in] mesh_grob a pointer to the MeshGrob
-     * \param[in] where one of MESH_VERTICES, MESH_EDGES, MESH_FACETS or 
+     * \param[in] where one of MESH_VERTICES, MESH_EDGES, MESH_FACETS or
      *  MESH_CELLS
      * \param[in] name the name of the attribute
      * \param[in] element_id the element probe
-     * \param[in] component the component of a vector attribute 
+     * \param[in] component the component of a vector attribute
      *            (0 for a scalar attribute)
      * \param[out] value the probed value
-     * \retval true if an attribute of the specified type was found 
+     * \retval true if an attribute of the specified type was found
      * \retval false otherwise
      */
     template <class T> bool probe_attribute_generic(
@@ -320,11 +320,11 @@ namespace {
      * \details The specified value is converted into double. Booleans are
      *   converted into 1.0 (true) or 0.0 (false)
      * \param[in] mesh_grob a pointer to the MeshGrob
-     * \param[in] where one of MESH_VERTICES, MESH_EDGES, MESH_FACETS or 
+     * \param[in] where one of MESH_VERTICES, MESH_EDGES, MESH_FACETS or
      *  MESH_CELLS
      * \param[in] name the name of the attribute
-     * \param[in] element_id the element 
-     * \param[in] component the component of a vector attribute 
+     * \param[in] element_id the element
+     * \param[in] component the component of a vector attribute
      *            (0 for a scalar attribute)
      * \param[out] value the value of the probed attribute
      * \retval true if an attribute could be probed
@@ -349,7 +349,7 @@ namespace {
                ) ||
                probe_attribute_generic<bool>(
                    mesh_grob, where, name, component, element_id, value
-               );            
+               );
     }
 
     /**
@@ -435,13 +435,13 @@ namespace {
     ) {
 
         // Virtually tetrahedralize the cell
-        
+
         index_t v1 = mesh_grob->cells.facet_vertex(c,0,0);
         vec3 p1(mesh_grob->vertices.point_ptr(v1));
-        
+
         for(index_t lf=0; lf<mesh_grob->cells.nb_facets(c); ++lf) {
             index_t v2 = mesh_grob->cells.facet_vertex(c,lf,0);
-            vec3 p2(mesh_grob->vertices.point_ptr(v2));            
+            vec3 p2(mesh_grob->vertices.point_ptr(v2));
             if(v2 == v1) {
                 continue;
             }
@@ -457,15 +457,15 @@ namespace {
                 }
 
                 vec3 p3(mesh_grob->vertices.point_ptr(v3));
-                vec3 p4(mesh_grob->vertices.point_ptr(v4));                
+                vec3 p4(mesh_grob->vertices.point_ptr(v4));
 
                 // Baryentric coordinates of q in p1,p2,p3,p4
                 double V  = GEO::Geom::tetra_volume(p1,p2,p3,p4);
                 double l1 = GEO::Geom::tetra_volume(q,p2,p3,p4);
                 double l2 = GEO::Geom::tetra_volume(p1,q,p3,p4);
                 double l3 = GEO::Geom::tetra_volume(p1,p2,q,p4);
-                double l4 = GEO::Geom::tetra_volume(p1,p2,p3,q);            
-            
+                double l4 = GEO::Geom::tetra_volume(p1,p2,p3,q);
+
                 // Normally l1+l2+l3+l4 should be exactly equal to V for
                 // the tet that contains q. We let a tolerance.
                 if(V > 1e-6 && l1+l2+l3+l4 <= V*1.1) {
@@ -501,7 +501,7 @@ namespace {
     }
 
     /**
-     * \brief called a function for each unique picked element in a 
+     * \brief called a function for each unique picked element in a
      *  picking image
      * \param[in,out] picking_image the image. It needs to be in RGBA format.
      *  It is modified by the function.
@@ -531,7 +531,7 @@ namespace {
                 }
             }
         }
-        
+
         // Get all the picked ids, by sorting the pixels of the image by
         // value then using std::unique
         Numeric::uint32* begin = (Numeric::uint32*)(picking_image->base_mem());
@@ -551,13 +551,13 @@ namespace {
      * \details The selection is a rectangle in device coordinates plus an
      *  optional mask image
      * \param[in] p the device coordinates of the point to be tested
-     * \param[in] x0 , y0 , x1 , y1 the device coordinates rectangle 
+     * \param[in] x0 , y0 , x1 , y1 the device coordinates rectangle
      * \param[in] mask the optional mask image. Needs to be in GRAYSCALE,
      *  8 bits per pixel, with same dimensions as rectangle.
      */
     bool point_is_selected(
-        const vec2& p,                  
-        index_t x0, index_t y0, index_t x1, index_t y1,  
+        const vec2& p,
+        index_t x0, index_t y0, index_t x1, index_t y1,
         Image* mask = nullptr
     ) {
         if(p.x < double(x0) || p.y < double(y0) ||
@@ -606,12 +606,12 @@ namespace OGF {
                 if(pick_vertices_only_) {
                     shd->show_vertices();
                 } else {
-                    shd->hide_vertices();                    
+                    shd->hide_vertices();
                 }
             }
         }
     }
-    
+
     bool MeshGrobPaintTool::get_painting_parameters(
         const RayPick& raypick,
         PaintOp& op,
@@ -630,22 +630,22 @@ namespace OGF {
         }
         return true;
     }
-    
+
     void MeshGrobPaintTool::paint(const RayPick& raypick) {
 
         PaintOp op = PAINT_SET;
         MeshElementsFlags where;
         std::string attribute_name;
         index_t component;
-        
+
         if(!get_painting_parameters(raypick,op,where,attribute_name,component)){
             return;
         }
-        
+
         index_t picked_element = pick(raypick,where);
 
         // Paint the picked element
-        
+
         if(picked_element != index_t(-1)) {
             paint_attribute(
                 mesh_grob(), where,
@@ -656,7 +656,7 @@ namespace OGF {
 
             // If painting vertices and no vertex was picked, try to
             // pick a facet or a cell, and paint its vertices.
-            
+
             index_t f = pick_facet(raypick);
             if(f != index_t(-1)) {
                 picked_element_ = f;
@@ -669,7 +669,7 @@ namespace OGF {
                         attribute_name, component,
                         v, op, value_
                     );
-                } 
+                }
             } else {
                 index_t c = pick_cell(raypick);
                 picked_element_ = c;
@@ -725,7 +725,7 @@ namespace OGF {
             tool->set_autorange_for_this_tool(value);
         }
     }
-    
+
     void MeshGrobPaintTool::set_pick_vertices_only(bool value) {
         // set property for all MeshGrobPaintTools.
         vector<MeshGrobPaintTool*> tools;
@@ -743,7 +743,7 @@ namespace OGF {
             if(pick_vertices_only_) {
                 shd->show_vertices();
             } else {
-                shd->hide_vertices();                    
+                shd->hide_vertices();
             }
         }
     }
@@ -756,12 +756,12 @@ namespace OGF {
             tool->set_xray_mode_for_this_tool(value);
         }
     }
-    
+
     void MeshGrobPaintTool::get_paint_tools(
         ToolsManager* manager, vector<MeshGrobPaintTool*>& paint_tools
     ) {
         paint_tools.clear();
-        
+
         // Get OGF::MeshGrobPaintTool meta type
         MetaType* mesh_grob_paint_tool_type =
             Meta::instance()->resolve_meta_type("OGF::MeshGrobPaintTool");
@@ -769,12 +769,10 @@ namespace OGF {
 
         // Iterate on all meta types known in the system, and
         // pick the ones that derive from OGF::MeshGrobPaintTool
-        
         std::vector<MetaType*> all_types;
         Meta::instance()->list_types(all_types);
         for(MetaType* mtype : all_types) {
-            if(mtype->is_a(mesh_grob_paint_tool_type)) {
-
+            if(mtype->is_subtype_of(mesh_grob_paint_tool_type)) {
                 // Find (or create) the corresponding tool
                 // in the tools manager
                 MeshGrobPaintTool* paint_tool =
@@ -786,16 +784,16 @@ namespace OGF {
             }
         }
     }
-    
+
     /**********************************************************************/
-    
+
     MeshGrobPaint::MeshGrobPaint(
         ToolsManager* parent
     ) : MeshGrobPaintRect(parent) {
         stroke_mode_ = true;
         width_ = 5;
     }
-   
+
     void MeshGrobPaint::grab(const RayPick& raypick) {
         MeshGrobPaintTool::grab(raypick);
         latest_ndc_ = raypick.p_ndc;
@@ -811,7 +809,7 @@ namespace OGF {
             return ;
         }
         latest_ndc_ = raypick.p_ndc;
-        
+
         // In stroke mode, draw the stroke in the overlay
         if(stroke_mode_) {
             stroke_.push_back(ndc_to_dc(raypick.p_ndc));
@@ -819,13 +817,13 @@ namespace OGF {
             rendering_context()->overlay().clear();
             for(index_t i=0; i<stroke_.size(); ++i) {
                 rendering_context()->overlay().fillcircle(
-                    stroke_[i],double(width_),Color(1.0, 1.0, 1.0, 1.0)  
+                    stroke_[i],double(width_),Color(1.0, 1.0, 1.0, 1.0)
                 );
             }
             for_each_stroke_quad(
                 [&](vec2 q1, vec2 q2, vec2 q3, vec2 q4) {
                     rendering_context()->overlay().fillquad(
-                        q1,q2,q3,q4,Color(1.0, 1.0, 1.0, 1.0) 
+                        q1,q2,q3,q4,Color(1.0, 1.0, 1.0, 1.0)
                     );
                 }
             );
@@ -838,7 +836,7 @@ namespace OGF {
     void MeshGrobPaint::release(const RayPick& raypick) {
 
         if(stroke_mode_ && stroke_.size() != 0) {
-            
+
             // Get the bounding box of the stroke
             int x0 =  65535;
             int y0 =  65535;
@@ -851,7 +849,7 @@ namespace OGF {
                         x0 = std::min(x0, int(t[i].x));
                         y0 = std::min(y0, int(t[i].y));
                         x1 = std::max(x1, int(t[i].x));
-                        y1 = std::max(y1, int(t[i].y));                        
+                        y1 = std::max(y1, int(t[i].y));
                     }
                 }
             );
@@ -871,7 +869,7 @@ namespace OGF {
             if(x1 > x0 && y1 > y0) {
 
                 // Generate mask
-                
+
                 Image_var mask = new Image(
                     Image::GRAY, Image::BYTE,
                     index_t(x1-x0+1),
@@ -913,11 +911,11 @@ namespace OGF {
                     raypick, index_t(x0), index_t(y0), index_t(x1), index_t(y1),
                     mask
                 );
-                
+
             } else {
                 paint(raypick);
             }
-            
+
             stroke_.clear();
             rendering_context()->overlay().clear();
         } else {
@@ -945,22 +943,22 @@ namespace OGF {
             if(i+2<stroke_.size()) {
                 n2 += stroke_[i+2] - p2;
             }
-            
+
             n1 = normalize(vec2(n1.y, -n1.x));
-            n2 = normalize(vec2(n2.y, -n2.x));                    
-            
+            n2 = normalize(vec2(n2.y, -n2.x));
+
             double width = double(width_);
             vec2 q1 = p1-width*n1;
             vec2 q2 = p1+width*n1;
             vec2 q3 = p2-width*n2;
             vec2 q4 = p2+width*n2;
-            
+
             doit(q1,q2,q4,q3);
-        }                
+        }
     }
-    
+
     /**********************************************************************/
-    
+
     MeshGrobPaintRect::MeshGrobPaintRect(
         ToolsManager* parent
     ) : MeshGrobPaintTool(parent) {
@@ -969,7 +967,7 @@ namespace OGF {
         // and creates a selection.
         active_ = false;
     }
-   
+
     void MeshGrobPaintRect::grab(const RayPick& p_ndc) {
         MeshGrobPaintTool::grab(p_ndc);
         p_ = ndc_to_dc(p_ndc.p_ndc);
@@ -980,7 +978,7 @@ namespace OGF {
         if(!active_) {
             return;
         }
-        
+
         // Draw selection rectangle in overlay
         vec2 q = ndc_to_dc(p_ndc.p_ndc);
         rendering_context()->overlay().clear();
@@ -992,21 +990,21 @@ namespace OGF {
         );
 
         rendering_context()->overlay().fillcircle(
-            p_, 4.0, Color(1.0, 1.0, 1.0, 1.0)                
+            p_, 4.0, Color(1.0, 1.0, 1.0, 1.0)
         );
 
         rendering_context()->overlay().fillcircle(
-            q, 4.0, Color(1.0, 1.0, 1.0, 1.0)                
+            q, 4.0, Color(1.0, 1.0, 1.0, 1.0)
         );
 
         rendering_context()->overlay().fillcircle(
-            vec2(p_.x, q.y), 4.0, Color(1.0, 1.0, 1.0, 1.0)                
+            vec2(p_.x, q.y), 4.0, Color(1.0, 1.0, 1.0, 1.0)
         );
 
         rendering_context()->overlay().fillcircle(
-            vec2(q.x,p_.y), 4.0, Color(1.0, 1.0, 1.0, 1.0)                
+            vec2(q.x,p_.y), 4.0, Color(1.0, 1.0, 1.0, 1.0)
         );
-        
+
     }
 
     void MeshGrobPaintRect::release(const RayPick& raypick) {
@@ -1026,7 +1024,7 @@ namespace OGF {
         index_t y1 = std::max(py,qy);
 
         paint_rect(raypick,x0,y0,x1,y1);
-        
+
         rendering_context()->overlay().clear();
     }
 
@@ -1045,7 +1043,7 @@ namespace OGF {
             geo_assert(mask->width() == x1-x0+1);
             geo_assert(mask->height() == y1-y0+1);
         }
-        
+
         PaintOp op = PAINT_SET;
         MeshElementsFlags where;
         std::string attribute_name;
@@ -1057,7 +1055,7 @@ namespace OGF {
         ) {
             return;
         }
-        
+
         // Pick the elements, and copy the selected rect in an image
         index_t width  = x1-x0+1;
         index_t height = y1-y0+1;
@@ -1067,7 +1065,7 @@ namespace OGF {
 
 
         // In xray mode, test for each element whether its center falls in the
-        // selection. 
+        // selection.
         if(xray_mode_) {
             switch(where) {
             case MESH_VERTICES: {
@@ -1119,14 +1117,14 @@ namespace OGF {
 
             // In standard mode, get picking image, apply the (optional) mask
             // and find all the picked elements
-            
+
             // Damnit, glReadPixels and ImageRasterizer use the
             // opposite convention for Y coordinate.
             // It has an importance here because we got a mask,
             // so we flip y0 so that mask and picking image
             // have the same orientation.
             y0 = rendering_context()->get_height()-height-1-y0;
-        
+
             pick(raypick, where, picking_image, x0, y0, width, height);
 
             for_each_picked_element(
@@ -1142,7 +1140,7 @@ namespace OGF {
 
             // If painting vertices and no vertex was picked, try to
             // pick a facet or a cell, and paint its vertices.
-            
+
             if(!pick_vertices_only_ && where == MESH_VERTICES) {
                 pick(raypick,MESH_FACETS, picking_image, x0, y0, width, height);
                 for_each_picked_element(
@@ -1233,25 +1231,25 @@ namespace OGF {
                 minx = std::min(minx, selection_[i].x);
                 miny = std::min(miny, selection_[i].y);
                 maxx = std::max(maxx, selection_[i].x);
-                maxy = std::max(maxy, selection_[i].y);            
+                maxy = std::max(maxy, selection_[i].y);
             }
             x0 = index_t(minx);
             y0 = index_t(miny);
             width = index_t(maxx-minx)+1;
-            height = index_t(maxy-miny)+1;            
+            height = index_t(maxy-miny)+1;
         }
 
         Image_var mask = new Image(Image::GRAY,Image::BYTE, width, height);
         ImageRasterizer rasterizer(mask);
-        Color black(0.0,0.0,0.0,1.0);        
+        Color black(0.0,0.0,0.0,1.0);
         Color white(1.0,1.0,1.0,1.0);
-        
+
         for(index_t i=0; i<selection_.size(); ++i) {
             index_t j = (i+1)%selection_.size();
             vec2 p1 = selection_[i];
             vec2 p2 = selection_[j];
             p1 -= vec2(double(x0),double(y0));
-            p2 -= vec2(double(x0),double(y0));            
+            p2 -= vec2(double(x0),double(y0));
             p1.x /= double(width);
             p1.y /= double(height);
             p2.x /= double(width);
@@ -1284,11 +1282,11 @@ namespace OGF {
         }
 
         paint_rect(raypick, x0, y0, x0+width-1, y0+height-1, mask);
-        
+
         selection_.clear();
         rendering_context()->overlay().clear();
     }
-    
+
     /***************************************************************/
 
     MeshGrobPaintConnected::MeshGrobPaintConnected(
@@ -1297,18 +1295,18 @@ namespace OGF {
         fill_same_value_ = true;
         tolerance_ = 0.0;
     }
-    
+
     void MeshGrobPaintConnected::grab(const RayPick& raypick) {
         MeshGrobPaintTool::grab(raypick);
         PaintOp op = PAINT_SET;
         MeshElementsFlags where;
         std::string attribute_name;
         index_t component;
-        
+
         if(!get_painting_parameters(raypick,op,where,attribute_name,component)){
             return;
         }
-        
+
         index_t picked_element = pick(raypick, where);
         if(picked_element == index_t(-1)) {
             return;
@@ -1324,7 +1322,7 @@ namespace OGF {
         if(fill_same_value_ && !with_value) {
             return;
         }
-        
+
         if(where != MESH_VERTICES && picked_element != index_t(-1)) {
             switch(where) {
             case MESH_FACETS: {
@@ -1335,7 +1333,7 @@ namespace OGF {
                         probe_attribute(
                             mesh_grob(), where, attribute_name, component,
                             f, value
-                        );                        
+                        );
                         if(!test(picked_value, value)) {
                             return false;
                         }
@@ -1413,7 +1411,7 @@ namespace OGF {
             }
         }
     }
-    
+
     /***************************************************************/
 
     MeshGrobProbe::MeshGrobProbe(
@@ -1422,7 +1420,7 @@ namespace OGF {
         picked_ = false;
         grabbed_ = false;
     }
-   
+
     void MeshGrobProbe::grab(const RayPick& p_ndc) {
         latest_ndc_ = p_ndc.p_ndc;
         probe(p_ndc);
@@ -1463,7 +1461,7 @@ namespace OGF {
         Logger::out("") << std::endl;
         grabbed_ = false;
     }
-    
+
     void MeshGrobProbe::probe(const RayPick& p_ndc) {
         picked_ = false;
 
@@ -1473,7 +1471,7 @@ namespace OGF {
         bool with_attributes = get_visible_attribute(
             mesh_grob(), attribute_element_type, attribute_name, component
         );
-        
+
         double value;
         bool with_value = false;
         index_t element_id = index_t(-1);
@@ -1485,11 +1483,11 @@ namespace OGF {
         };
 
         for(index_t i=0; i<3; ++i) {
-            if(element_id == index_t(-1)) { 
+            if(element_id == index_t(-1)) {
                 element_id = pick(p_ndc, element_types[i]);
                 if(element_id != index_t(-1)) {
                     p = picked_point();
-                    element_type = element_types[i];                    
+                    element_type = element_types[i];
                     if(with_attributes &&
                        attribute_element_type == element_types[i]
                     ) {
@@ -1531,7 +1529,7 @@ namespace OGF {
                 .attributes().find_attribute_store(attribute_name);
 
             dim = store->dimension();
-            
+
             is_bool = store->elements_type_matches(
                 typeid(Numeric::uint8).name()
             );
@@ -1542,14 +1540,14 @@ namespace OGF {
                 typeid(Numeric::int32).name()
             );
         }
-        
+
         message_ = "<nothing>";
 
         if(element_id != index_t(-1) && element_type != MESH_NONE) {
             message_ =
                    "x=" + String::to_string(p.x) +
                 "\\ny=" + String::to_string(p.y) +
-                "\\nz=" + String::to_string(p.z) ;                 
+                "\\nz=" + String::to_string(p.z) ;
             message_ += "\\n" +
                 mesh_grob()->subelements_type_to_name(element_type) +
                 ": #" + String::to_string(element_id);
@@ -1593,9 +1591,9 @@ namespace OGF {
         if(length(p_ndc.p_ndc - latest_ndc_) <= 10.0/1024.0) {
             return ;
         }
-        
+
         latest_ndc_ = p_ndc.p_ndc;
-        
+
         vec3 q;
         bool q_picked = pick(p_ndc,q);
         std::string message;
@@ -1611,11 +1609,11 @@ namespace OGF {
         if(p_picked_ && q_picked) {
             rendering_context()->overlay().fillcircle(
                 project_point(p_), 7.0,
-                Color(1.0, 1.0, 1.0, 1.0)                
+                Color(1.0, 1.0, 1.0, 1.0)
             );
             rendering_context()->overlay().fillcircle(
                 project_point(q), 7.0,
-                Color(1.0, 1.0, 1.0, 1.0)                
+                Color(1.0, 1.0, 1.0, 1.0)
             );
             rendering_context()->overlay().segment(
                 project_point(p_), project_point(q),
@@ -1645,7 +1643,7 @@ namespace OGF {
         }
         return false;
     }
-    
+
 /***************************************************************/
 
 }

@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_GOM_TYPES_OBJECT_H
@@ -61,7 +61,7 @@ namespace OGF {
     /**
      * \brief Base class for all objects in the GOM system.
      */
-    gom_attribute(abstract,"true")     
+    gom_attribute(abstract,"true")
     gom_class GOM_API Object : public Counted {
     public:
         /**
@@ -84,14 +84,6 @@ namespace OGF {
          * \return a pointer to the MetaClass of this object.
          */
         virtual MetaClass* meta_class() const;
-
-        /**
-         * \brief Tests whether this object inherits a given type.
-         * \param[in] type a const pointer to the MetaType to be tested.
-         * \retval true if this object inherits \p type
-         * \retval false otherwise
-         */
-        virtual bool is_a(const MetaType* type) const;
 
         /**
          * \brief Sets the meta class.
@@ -123,7 +115,7 @@ namespace OGF {
          * \return the unique string identifier
          * \see id()
          */
-        std::string string_id() const; 
+        std::string string_id() const;
 
         // Properties and Dynamic invokation interface
 
@@ -134,7 +126,7 @@ namespace OGF {
          * \retval false otherwise
          */
 	bool has_method(const std::string& method_name) const;
-	
+
         /**
          * \brief Invokes a method by method name and argument list,
          *  and gets the return value.
@@ -186,7 +178,7 @@ namespace OGF {
          * \retval false otherwise
          */
 	bool has_property(const std::string& prop_name) const;
-	
+
         /**
          * \brief Gets a property
          * \param[in] prop_name name of the property
@@ -198,7 +190,7 @@ namespace OGF {
             const std::string& prop_name, std::string& prop_value
         ) const;
 
-        // Signals and slots
+        // ************** Signals and slots *************************
 
         /**
          * \brief Connects a signal with a slot of another object.
@@ -208,7 +200,7 @@ namespace OGF {
          * \return a pointer to the newly created Connection
          */
         virtual Connection* connect_signal_to_slot(
-            const std::string& signal_name, 
+            const std::string& signal_name,
             Object* to, const std::string& slot_name
         );
 
@@ -223,7 +215,7 @@ namespace OGF {
          * \param[in] connection a pointer to the connection to be removed
          */
         virtual void remove_connection(Connection* connection);
-        
+
 	/**
 	 * \brief Gets an object from a unique object id.
 	 * \param[in] id the object id.
@@ -245,7 +237,7 @@ namespace OGF {
 	/**
 	 * \brief Gets an element by index.
 	 * \details Part of the array interface, used by operator[]
-	 *  in scripting language. 
+	 *  in scripting language.
 	 * \param[in] i the index of the element, in [0..get_nb_elements()-1].
 	 * \param[out] value the element at index i.
 	 */
@@ -254,7 +246,7 @@ namespace OGF {
 	/**
 	 * \brief Sets an element by index.
 	 * \details Part of the array interface, used by operator[]
-	 *  in scripting language. 
+	 *  in scripting language.
 	 * \param[in] i the index of the element, in [0..get_nb_elements()-1].
 	 * \param[in] value the element at index i.
 	 */
@@ -269,13 +261,13 @@ namespace OGF {
         virtual void search(
             const std::string& needle, const std::string& path=""
         );
-	
+
     gom_properties:
 
 	/**
 	 * \brief Gets the number of elements.
 	 * \details Part of the array interface, used by operator[]
-	 *  in scripting language. 
+	 *  in scripting language.
 	 */
 	virtual index_t get_nb_elements() const;
 
@@ -288,7 +280,7 @@ namespace OGF {
             return signals_enabled_;
         }
 
-        /** 
+        /**
          * \brief Enables or disables signals.
          * \param[in] value true if signals should be enabled,
          *  false if they should be disabled.
@@ -306,14 +298,14 @@ namespace OGF {
             return slots_enabled_;
         }
 
-        /** 
+        /**
          * \brief Enables or disables slots.
          * \param[in] value true if slots should be enabled,
          *  false if they should be disabled.
          */
         void set_slots_enabled(bool value) {
             slots_enabled_ = value;
-        } 
+        }
 
         /**
          * \brief Gets the meta class.
@@ -336,22 +328,41 @@ namespace OGF {
 
         /**
          * \brief Gets the documentation.
-         * \return A string with a human-readable documentation 
+         * \return A string with a human-readable documentation
          *  about this object.
          */
         virtual std::string get_doc() const;
 
-        
+
     gom_slots:
 
+        /**
+         * \brief Tests whether two objects are equal
+         * \details Default implementation just tests for pointers equality,
+         *   derived classes may overload this function.
+         * \param[in] other the other object to test equality with
+         * \retval true if the two objects are equal
+         * \retval false otherwise
+         */
+        virtual bool equals(const Object* other) const;
+
+
+        /**
+         * \brief Tests whether this object inherits a given type.
+         * \param[in] type a const pointer to the MetaType to be tested.
+         * \retval true if this object inherits \p type
+         * \retval false otherwise
+         */
+        virtual bool is_a(const MetaType* type) const;
+
 	/**
-	 * \brief Removes all connections from signals of 
+	 * \brief Removes all connections from signals of
 	 *  this objects.
 	 * \details Connections to slots of this object are
 	 *  kept.
 	 */
 	void disconnect();
-	
+
         /**
          * \brief Enables signals.
          */
@@ -402,19 +413,19 @@ namespace OGF {
          * \details Outputs the doc property to the logger.
          */
         void help() const;
-        
+
       public:
 	// Note: set_property() variants that are not slots
 	// need to be declared *after* the set_property() slot
 	// else gomgen does not see the set_property slot.
-	
+
         /**
          * \brief Sets an individual property
          * \param[in] name name of the property
          * \param[in] value value of the property as an Any
          * \retval true if the property could be sucessfully set
          * \retval false otherwise
-         */ 
+         */
         virtual bool set_property(
             const std::string& name, const Any& value
         );
@@ -429,7 +440,7 @@ namespace OGF {
         virtual bool get_property(
             const std::string& prop_name, Any& prop_value
         ) const;
-	
+
     protected:
 
         /**
@@ -441,11 +452,11 @@ namespace OGF {
          * \param[in] args a const reference to the arguments list
          * \param [in] called_from_slot distingishes whether
          * the signal was called after an event, or was called
-         * from client code. This can be used to implement a 
+         * from client code. This can be used to implement a
          * recording mechanism.
          */
         virtual bool emit_signal(
-            const std::string& signal_name, const ArgList& args, 
+            const std::string& signal_name, const ArgList& args,
             bool called_from_slot = false
         );
 
@@ -463,13 +474,13 @@ namespace OGF {
     };
 
     /**************************************************************/
-    
+
     /**
      * \brief An automatic reference-counted pointer to an Object.
      */
     typedef SmartPointer<Object> Object_var;
 
-    /**************************************************************/    
+    /**************************************************************/
 
 }
 

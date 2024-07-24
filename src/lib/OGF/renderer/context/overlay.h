@@ -45,7 +45,7 @@ namespace OGF {
     /**
      * \brief A display list that memorizes simple graphic primitives to
      *  be displayed over the 3D rendering window.
-     * \details Used by some tools. We annot directly use ImDrawList API,
+     * \details Used by some tools. We cannot directly use ImDrawList API,
      *  because mouse event handler of the 3D window are called completely 
      *  independelty of ImGui, so we need a "protocol" to communicate
      *  between the two worlds.

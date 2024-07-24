@@ -39,7 +39,6 @@
 #include <OGF/scene_graph/tools/grob_select.h>
 #include <OGF/scene_graph/types/scene_graph_tools_manager.h>
 #include <OGF/scene_graph/grob/grob.h>
-#include <OGF/renderer/context/rendering_context.h>
 #include <OGF/gom/reflection/meta.h>
 #include <OGF/gom/reflection/meta_class.h>
 #include <OGF/gom/types/connection.h>
