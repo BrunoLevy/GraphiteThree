@@ -344,7 +344,18 @@ namespace OGF {
          * \retval true if the two objects are equal
          * \retval false otherwise
          */
-        virtual bool equals(const Object* other) const;
+        bool equals(const Object* other) const;
+
+        /**
+         * \brief Compares this object with another one
+         * \details Default implementation compares addresses
+         * \param[in] other the other object to be compared
+         * \retval POSITIVE if this object is greater than \p other
+         * \retval ZERO if this object and \p other are equal
+         * \retval NEGATIVE if this object is lower than \p other
+         */
+        virtual Sign compare(const Object* other) const;
+
 
 
         /**

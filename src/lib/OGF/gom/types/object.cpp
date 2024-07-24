@@ -127,7 +127,11 @@ namespace OGF {
     }
 
     bool Object::equals(const Object* other) const {
-        return other == this;
+        return compare(other) == ZERO;
+    }
+
+    Sign Object::compare(const Object* other) const {
+        return geo_sgn(this - other);
     }
 
     bool Object::is_a(const MetaType* type) const {
