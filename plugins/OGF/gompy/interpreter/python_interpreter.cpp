@@ -340,6 +340,7 @@ namespace {
 	graphite_Object* self = (graphite_Object*)self_in;
 	Object* object = self->object;
         Object* other = nullptr;
+
         if(PyGraphite_Check(self_in)) {
             graphite_Object* rhs = (graphite_Object*)rhs_in;
             other = rhs->object;
@@ -348,16 +349,27 @@ namespace {
                 Py_RETURN_NOTIMPLEMENTED;
             }
         }
-        Sign s = geo_sgn(object - other);
+
         bool result = true;
-        switch(op) {
-        case Py_LT: result = (int(s) <  0); break ;
-        case Py_LE: result = (int(s) <= 0); break ;
-        case Py_EQ: result = (int(s) == 0); break ;
-        case Py_NE: result = (int(s) != 0); break ;
-        case Py_GE: result = (int(s) >= 0); break ;
-        case Py_GT: result = (int(s) >  0); break ;
-        default: geo_assert_not_reached;
+        if(object == nullptr || other == nullptr) {
+            if(op == Py_EQ) {
+                result = (object == other);
+            } else if (op == Py_NE) {
+                result = (object != other);
+            } else {
+                Py_RETURN_NOTIMPLEMENTED;
+            }
+        } else {
+            Sign s = object->compare(other);
+            switch(op) {
+            case Py_LT: result = (int(s) <  0); break ;
+            case Py_LE: result = (int(s) <= 0); break ;
+            case Py_EQ: result = (int(s) == 0); break ;
+            case Py_NE: result = (int(s) != 0); break ;
+            case Py_GE: result = (int(s) >= 0); break ;
+            case Py_GT: result = (int(s) >  0); break ;
+            default: geo_assert_not_reached;
+            }
         }
         PyObject* pyresult = result ? Py_True : Py_False;
         Py_INCREF(pyresult);
