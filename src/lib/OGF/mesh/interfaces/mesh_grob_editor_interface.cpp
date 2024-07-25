@@ -23,13 +23,13 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
  * As an exception to the GPL, Graphite can be linked with the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
@@ -43,7 +43,7 @@
 namespace OGF {
 
     /*************************************************************/
-    
+
     MeshGrobEditor::MeshGrobEditor() {
     }
 
@@ -56,7 +56,7 @@ namespace OGF {
 	}
 	mesh_grob()->clear();
     }
-    
+
     index_t MeshGrobEditor::get_dimension() const {
 	if(mesh_grob() == nullptr) {
 	    return 0;
@@ -73,7 +73,7 @@ namespace OGF {
 	}
 	mesh_grob()->vertices.set_dimension(dim);
     }
-    
+
     index_t MeshGrobEditor::get_nb_vertices() const {
 	if(!check_mesh_grob()) {
 	    return 0;
@@ -101,7 +101,7 @@ namespace OGF {
 	}
 	return mesh_grob()->cells.nb();
     }
-    
+
 
     index_t MeshGrobEditor::create_vertex(double x, double y, double z) {
 	if(!check_mesh_grob()) {
@@ -129,15 +129,15 @@ namespace OGF {
 	if(mesh_grob()->vertices.dimension() >= 3) {
 	    p[2] = z;
 	}
-	update();	
+	update();
     }
-    
+
     index_t MeshGrobEditor::create_vertices(index_t nb) {
 	if(!check_mesh_grob()) {
 	    return 0;
 	}
 	index_t result = mesh_grob()->vertices.create_vertices(nb);
-	update();	
+	update();
 	return result;
     }
 
@@ -149,12 +149,12 @@ namespace OGF {
 	update();
 	return result;
     }
-  
+
     index_t MeshGrobEditor::create_triangle(
        index_t v1, index_t v2, index_t v3
     ) {
 	if(
-	    !check_mesh_grob() ||	    
+	    !check_mesh_grob() ||
 	    !check_vertex_index(v1) ||
 	    !check_vertex_index(v2) ||
 	    !check_vertex_index(v3)
@@ -165,16 +165,16 @@ namespace OGF {
 	update();
 	return result;
     }
-    
+
     index_t MeshGrobEditor::create_quad(
 	index_t v1, index_t v2, index_t v3, index_t v4
     ) {
 	if(
-	    !check_mesh_grob() ||	    
+	    !check_mesh_grob() ||
 	    !check_vertex_index(v1) ||
 	    !check_vertex_index(v2) ||
 	    !check_vertex_index(v3) ||
-	    !check_vertex_index(v4)	    
+	    !check_vertex_index(v4)
 	) {
 	    return 0;
 	}
@@ -185,9 +185,9 @@ namespace OGF {
 
     index_t MeshGrobEditor::create_edge(index_t v1, index_t v2) {
 	if(
-	    !check_mesh_grob() ||	    
+	    !check_mesh_grob() ||
 	    !check_vertex_index(v1) ||
-	    !check_vertex_index(v2) 
+	    !check_vertex_index(v2)
 	) {
 	    return 0;
 	}
@@ -216,7 +216,7 @@ namespace OGF {
 	    return;
 	}
 	mesh_grob()->facets.set_vertex(f,lv,v);
-    } 
+    }
 
     index_t MeshGrobEditor::facet_vertex(index_t f, index_t lv) const {
 	if(!check_mesh_grob() || !check_facet_index(f)) {
@@ -228,8 +228,8 @@ namespace OGF {
 	    return index_t(-1);
 	}
 	return mesh_grob()->facets.vertex(f,lv);
-    } 
-  
+    }
+
     void MeshGrobEditor::connect_facets() {
 	if(!check_mesh_grob()) {
 	    return;
@@ -237,7 +237,7 @@ namespace OGF {
 	mesh_grob()->facets.connect();
 	update();
     }
-    
+
     /*******************************************************************/
 
     void MeshGrobEditor::update() {
@@ -245,7 +245,7 @@ namespace OGF {
 	    mesh_grob()->update();
 	}
     }
-    
+
     bool MeshGrobEditor::check_mesh_grob() const {
 	if(mesh_grob() == nullptr) {
 	    Logger::err("MeshGrobEditor") << "No MeshGrob" << std::endl;
@@ -271,9 +271,9 @@ namespace OGF {
 	}
 	return true;
     }
-    
+
     /*******************************************************************/
-    
+
     NL::Vector* MeshGrobEditor::find_attribute(
 	const std::string& full_attribute_name, bool quiet
     ) {
@@ -294,13 +294,13 @@ namespace OGF {
 	    }
 	    return nullptr;
 	}
-	
+
 	AttributesManager& attrmgr =
 	    mesh_grob()->get_subelements_by_type(elt).attributes();
-	
+
 	AttributeStore* attrstore =
 	    attrmgr.find_attribute_store(attribute_name);
-	
+
 	if(attrstore == nullptr) {
 	    if(!quiet) {
 		Logger::err("MeshGrobEditor")
@@ -360,11 +360,11 @@ namespace OGF {
 	const std::string& attribute_name, index_t dimension, MetaType* type
     ) {
 	NL::Vector* result = find_attribute(attribute_name, true);
-	
+
 	if(result == nullptr) {
 	    return create_attribute(attribute_name, dimension, type);
 	}
-	
+
 	if(type != nullptr && result->get_element_meta_type() != type) {
 	    Logger::err("MeshEditor")
 		<< "Attribute " << attribute_name
@@ -375,21 +375,21 @@ namespace OGF {
 	    result->unref();
 	    return nullptr;
 	}
-	
+
 	if(result->get_dimension() != dimension) {
 	    Logger::err("MeshEditor")
 		<< "Attribute " << attribute_name
 		<< " already exist with different dimension"
 		<< std::endl;
 	    // This decrements the refcount that reaches 0
-	    // thus deallocates the object.	    
+	    // thus deallocates the object.
 	    result->unref();
 	    return nullptr;
 	}
 
 	return result;
     }
-    
+
     bool MeshGrobEditor::has_attribute(
 	const std::string& full_attribute_name
     ) const {
@@ -414,12 +414,41 @@ namespace OGF {
     }
 
     NL::Vector* MeshGrobEditor::get_triangles() const {
-      if(!mesh_grob()->facets.are_simplices()) {
-	    Logger::err("MeshGrobEditor")
-          << "get_triangles(): facets are not triangulated"
-          << std::endl;
-	    return nullptr;
+
+        // triangulate on-the-fly
+        if(!mesh_grob()->facets.are_simplices()) {
+            index_t nb_t = 0;
+            for(index_t f: mesh_grob()->facets) {
+                nb_t += (mesh_grob()->facets.nb_vertices(f) - 2);
+            }
+
+            NL::Vector* result = new NL::Vector(
+                nb_t, 3, ogf_meta<index_t>::type()
+            );
+
+            index_t t = 0;
+            for(index_t f: mesh_grob()->facets) {
+                index_t v1 = mesh_grob()->facets.vertex(f,0);
+                for(
+                    index_t lv=1; lv+1<mesh_grob()->facets.nb_vertices(f);
+                    ++lv
+                ) {
+                  index_t v2 = mesh_grob()->facets.vertex(f,lv);
+                  index_t v3 = mesh_grob()->facets.vertex(f,lv+1);
+
+                  geo_assert(result->data_index_t() != nullptr);
+                  geo_assert(3*t+2 < result->nb_elements());
+
+                  result->data_index_t()[3*t  ] = v1;
+                  result->data_index_t()[3*t+1] = v2;
+                  result->data_index_t()[3*t+2] = v3;
+                  ++t;
+                }
+            }
+            return result;
 	}
+
+        // return pointers to internal storage
 	return new NL::Vector(
 	    mesh_grob(),
 	    mesh_grob()->facet_corners.vertex_index_ptr(0),
@@ -480,7 +509,7 @@ namespace OGF {
 	    true
 	);
     }
-    
+
     void MeshGrobEditor::delete_vertices(NL::Vector* to_delete) {
 	MetaType* type = to_delete->get_element_meta_type();
 	if(
@@ -508,7 +537,7 @@ namespace OGF {
 	mesh_grob()->vertices.delete_elements(to_delete_as_vector);
 	update();
     }
-    
+
     void MeshGrobEditor::delete_edges(
 	NL::Vector* to_delete, bool delete_isolated_vertices
     ) {
@@ -539,8 +568,8 @@ namespace OGF {
 	    to_delete_as_vector,delete_isolated_vertices
 	);
 	update();
-    }	
-    
+    }
+
     void MeshGrobEditor::delete_facets(
 	NL::Vector* to_delete, bool delete_isolated_vertices
     ) {
@@ -571,8 +600,8 @@ namespace OGF {
 	    to_delete_as_vector,delete_isolated_vertices
 	);
 	update();
-    }	
-    
+    }
+
     void MeshGrobEditor::delete_cells(
 	NL::Vector* to_delete, bool delete_isolated_vertices
     ) {
@@ -603,7 +632,6 @@ namespace OGF {
 	    to_delete_as_vector,delete_isolated_vertices
 	);
 	update();
-    }	
-    
-}
+    }
 
+}
