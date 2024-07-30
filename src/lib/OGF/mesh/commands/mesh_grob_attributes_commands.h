@@ -23,18 +23,18 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the following 
+ * As an exception to the GPL, Graphite can be linked with the following
  *  (non-GPL) libraries:  Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_MESH_COMMANDS_MESH_GROB_ATTRIBUTES_COMMANDS_H
 #define H_OGF_MESH_COMMANDS_MESH_GROB_ATTRIBUTES_COMMANDS_H
@@ -49,7 +49,7 @@
 
 namespace OGF {
 
-    
+
    /**
     * \brief Commands that manipulate mesh attributes.
     */
@@ -65,13 +65,13 @@ namespace OGF {
          * \brief MeshGrobAttributesCommands destructor.
          */
         ~MeshGrobAttributesCommands() override;
-	
+
     gom_slots:
 
         /**
          * \brief Creates an attribute.
          * \param[in] name name of the attribute, without the localisation.
-         * \param[in] where which mesh elements the attribute should 
+         * \param[in] where which mesh elements the attribute should
          *  be attached to.
          * \param[in] type attribute type
          * \param[in] dimension number of components (1 for scalar)
@@ -86,10 +86,10 @@ namespace OGF {
             const std::string& type  = "float64",
             index_t dimension = 1
         );
-        
+
         /**
          * \brief Deletes an attribute.
-         * \param[in] name the name of the attribute, 
+         * \param[in] name the name of the attribute,
          *   for instance "vertices.distance
          */
 	gom_arg_attribute(name, handler, "combo_box")
@@ -104,7 +104,6 @@ namespace OGF {
          */
         void compute_vertices_id(const std::string& attribute="id");
 
-        
         /**
          * \brief Stores the edges ids in an attribute.
          * \param[in] attribute the name of the edge attribute
@@ -125,7 +124,7 @@ namespace OGF {
          * \menu Facets
          */
         void compute_chart_id(const std::string& attribute="chart");
-        
+
         /**
          * \brief Computes facets visibility from random views.
          * \param[in] nb_views number of views
@@ -137,14 +136,14 @@ namespace OGF {
 	    index_t nb_views = 1000,
 	    bool dual_sided = true
 	);
-        
+
         /**
          * \brief Stores the cells ids in an attribute.
          * \param[in] attribute the name of the cell attribute
          * \menu Cells
          */
         void compute_cells_id(const std::string& attribute="id");
-        
+
         /**
          * \brief Computes the distance between each vertex and a surface.
          * \param[in] surface the surface
@@ -157,17 +156,17 @@ namespace OGF {
         );
 
         /**
-         * \brief Computes the distance to 
+         * \brief Computes the distance to
          *  an approximation of the medial axis of a surface.
          * \param[in] surface a pointset that samples the surface
          * \param[in] attribute the name of the vertex attribute
          * \menu Vertices
          */
         void compute_local_feature_size(
-            const MeshGrobName& surface,            
+            const MeshGrobName& surface,
             const std::string& attribute="lfs"
         );
-	
+
 	/**
 	 * \brief Copies colors from a textured surface.
 	 * \param[in] surface the surface mesh
@@ -176,16 +175,16 @@ namespace OGF {
 	 *  in an additional attribute
 	 */
 	void copy_texture_colors(
-            const MeshGrobName& surface,            	    
+            const MeshGrobName& surface,
 	    const ImageFileName& texture,
 	    bool copy_tex_coords=false
 	);
 
-	
+
         /**
          * \brief Computes per-vertex ambient occlusion.
          * \param[in] attribute the name of the vertex attribute
-	 * \param[in] nb_rays_per_vertex number of rays used to 
+	 * \param[in] nb_rays_per_vertex number of rays used to
 	 *  sample directions. The higher, the more precise.
 	 * \param[in] nb_smoothing_iterations blur the result
 	 *  a little bit to hide sampling noise
@@ -197,16 +196,24 @@ namespace OGF {
 	    index_t nb_smoothing_iterations = 2
         );
 
-	
+        /**
+         * \brief Computes per-vertex surface normals..
+         * \param[in] attribute the name of the vertex attribute
+         * \menu Vertices
+         */
+        void compute_vertices_normals(
+            const std::string& attribute = "normal"
+        );
+
+
        /*********************************************************************/
-        
+
     protected:
         void compute_sub_elements_id(
             MeshElementsFlags what, const std::string& attribute
         );
 
     };
-    
+
 }
 #endif
-

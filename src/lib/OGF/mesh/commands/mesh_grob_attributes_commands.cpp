@@ -23,19 +23,19 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
+ * As an exception to the GPL, Graphite can be linked
  *  with the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #include <OGF/mesh/commands/mesh_grob_attributes_commands.h>
 #include <OGF/scene_graph/types/scene_graph_tools_manager.h>
@@ -54,61 +54,61 @@
 #include <stack>
 
 namespace {
-    using namespace OGF;    
-    
+    using namespace OGF;
+
     /**
      * \brief Creates a random rotation matrix from three parameters.
-     * \details Maps three values (x[0], x[1], x[2]) in the range [0,1]   
-     *  into a 3x3 rotation matrix, M.  Uniformly distributed random variables 
-     *  x0, x1, and x2 create uniformly distributed random rotation matrices.  
-     *  To create small uniformly distributed "perturbations", supply          
+     * \details Maps three values (x[0], x[1], x[2]) in the range [0,1]
+     *  into a 3x3 rotation matrix, M.  Uniformly distributed random variables
+     *  x0, x1, and x2 create uniformly distributed random rotation matrices.
+     *  To create small uniformly distributed "perturbations", supply
      *  samples in the following ranges.
-     *      x[0] in [ 0, d ]                                                   
-     *      x[1] in [ 0, 1 ]                                                   
-     *      x[2] in [ 0, d ]       
+     *      x[0] in [ 0, d ]
+     *      x[1] in [ 0, 1 ]
+     *      x[2] in [ 0, d ]
      *  Author: Jim Arvo, 1991
      * \param[in] x array of three parameters.
      * \param[out] M the resulting 9 coefficients of the rotation matrix.
      */
     void rand_rotation( double x[], double M[]) {
-	double theta = x[0] * 2.0 * M_PI; // Rotation about the pole (Z).      
-	double phi   = x[1] * 2.0 * M_PI; // For direction of pole deflection. 
+	double theta = x[0] * 2.0 * M_PI; // Rotation about the pole (Z).
+	double phi   = x[1] * 2.0 * M_PI; // For direction of pole deflection.
 	double z     = x[2] * 2.0;        // For magnitude of pole deflection.
 
-	// Compute a vector V used for distributing points over the sphere  
-	// via the reflection I - V Transpose(V).  This formulation of V    
-	// will guarantee that if x[1] and x[2] are uniformly distributed,  
-	// the reflected points will be uniform on the sphere.  Note that V 
-	// has length sqrt(2) to eliminate the 2 in the Householder matrix. 
+	// Compute a vector V used for distributing points over the sphere
+	// via the reflection I - V Transpose(V).  This formulation of V
+	// will guarantee that if x[1] and x[2] are uniformly distributed,
+	// the reflected points will be uniform on the sphere.  Note that V
+	// has length sqrt(2) to eliminate the 2 in the Householder matrix.
 
 	double r  = sqrt( z );
 	double Vx = sin( phi ) * r;
 	double Vy = cos( phi ) * r;
-	double Vz = sqrt( 2.0 - z );    
+	double Vz = sqrt( 2.0 - z );
 
-	// Compute the row vector S = Transpose(V) * R, where R is a simple 
-	// rotation by theta about the z-axis.  No need to compute Sz since 
-	// it's just Vz.                                                    
-	
+	// Compute the row vector S = Transpose(V) * R, where R is a simple
+	// rotation by theta about the z-axis.  No need to compute Sz since
+	// it's just Vz.
+
 	double st = sin( theta );
 	double ct = cos( theta );
 	double Sx = Vx * ct - Vy * st;
 	double Sy = Vx * st + Vy * ct;
 
-	// Construct the rotation matrix  ( V Transpose(V) - I ) R, which   
-	// is equivalent to V S - R.                                        
+	// Construct the rotation matrix  ( V Transpose(V) - I ) R, which
+	// is equivalent to V S - R.
 
 	M[0] = Vx * Sx - ct;
 	M[1] = Vx * Sy - st;
 	M[2] = Vx * Vz;
-	
+
 	M[3] = Vy * Sx + st;
 	M[4] = Vy * Sy - ct;
 	M[5] = Vy * Vz;
-	
+
 	M[6] = Vz * Sx;
 	M[7] = Vz * Sy;
-	M[8] = 1.0 - z;   // This equals Vz * Vz - 1.0 
+	M[8] = 1.0 - z;   // This equals Vz * Vz - 1.0
     }
 
     void rand_rotation(mat4& M) {
@@ -121,18 +121,18 @@ namespace {
 	M.load_identity();
 	M(0,0) = MM[0]; M(0,1) = MM[1]; M(0,2) = MM[2];
 	M(1,0) = MM[3]; M(1,1) = MM[4]; M(1,2) = MM[5];
-	M(2,0) = MM[6]; M(2,1) = MM[7]; M(2,2) = MM[8];	
+	M(2,0) = MM[6]; M(2,1) = MM[7]; M(2,2) = MM[8];
     }
 
 }
 
 namespace OGF {
 
-    
-    MeshGrobAttributesCommands::MeshGrobAttributesCommands() { 
+
+    MeshGrobAttributesCommands::MeshGrobAttributesCommands() {
     }
 
-    MeshGrobAttributesCommands::~MeshGrobAttributesCommands() { 
+    MeshGrobAttributesCommands::~MeshGrobAttributesCommands() {
     }
 
     void MeshGrobAttributesCommands::create_attribute(
@@ -148,7 +148,7 @@ namespace OGF {
                 << std::endl;
             return;
         }
-        
+
         MeshSubElementsStore& elts =
             mesh_grob()->get_subelements_by_type(where_id);
 
@@ -180,7 +180,7 @@ namespace OGF {
 
         show_attribute(where + "." + name);
     }
-    
+
     void MeshGrobAttributesCommands::delete_attribute(
         const std::string& name
     ) {
@@ -221,13 +221,13 @@ namespace OGF {
                                 << std::endl;
             return;
         }
-        
+
         mgr.delete_attribute_store(attribute_name);
         mesh_grob()->update();
     }
 
     /*************************************************************************/
-    
+
     void MeshGrobAttributesCommands::compute_sub_elements_id(
         MeshElementsFlags what,
         const std::string& attribute_name
@@ -241,23 +241,23 @@ namespace OGF {
 	show_attribute(Mesh::subelements_type_to_name(what)+"."+attribute_name);
         mesh_grob()->update();
     }
-    
+
     void MeshGrobAttributesCommands::compute_vertices_id(
         const std::string& attribute
     ) {
         compute_sub_elements_id(MESH_VERTICES, attribute);
     }
-    
+
     void MeshGrobAttributesCommands::compute_edges_id(
         const std::string& attribute
     ) {
         compute_sub_elements_id(MESH_EDGES, attribute);
     }
-    
+
     void MeshGrobAttributesCommands::compute_facets_id(
         const std::string& attribute
     ) {
-        compute_sub_elements_id(MESH_FACETS, attribute);        
+        compute_sub_elements_id(MESH_FACETS, attribute);
     }
 
     void MeshGrobAttributesCommands::compute_chart_id(
@@ -295,13 +295,13 @@ namespace OGF {
 	show_charts(attribute);
     }
 
-    
+
     void MeshGrobAttributesCommands::compute_cells_id(
         const std::string& attribute) {
-        compute_sub_elements_id(MESH_CELLS, attribute);                
+        compute_sub_elements_id(MESH_CELLS, attribute);
     }
 
-    
+
     void MeshGrobAttributesCommands::compute_distance_to_surface(
         const MeshGrobName& surface_name,
         const std::string& attribute_name
@@ -319,7 +319,7 @@ namespace OGF {
         Attribute<double> attribute(
             mesh_grob()->vertices.attributes(), attribute_name
         );
-	
+
 	parallel_for(
 	    0, mesh_grob()->vertices.nb(),
 	    [&attribute, &AABB, this](index_t v) {
@@ -337,7 +337,7 @@ namespace OGF {
 
 
     void MeshGrobAttributesCommands::compute_local_feature_size(
-        const MeshGrobName& surface_name,        
+        const MeshGrobName& surface_name,
         const std::string& attribute_name
     ) {
         MeshGrob* surface = MeshGrob::find(scene_graph(), surface_name);
@@ -383,7 +383,7 @@ namespace OGF {
         MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
             mesh_grob()->get_shader()
         );
-        
+
         if(shd == nullptr) {
             Logger::err("Attributes") << "Cannot find shader."
                                       << std::endl;
@@ -394,7 +394,7 @@ namespace OGF {
         // facets visibility.
         shd->hide_borders();
         shd->hide_vertices();
-        
+
         Image image(
             Image::RGBA,
             Image::BYTE,
@@ -406,7 +406,7 @@ namespace OGF {
         std::vector<Numeric::int64> histo(mesh_grob()->facets.nb());
 
 	index_t nb_sides = (dual_sided ? 2 : 1);
-	
+
         for(index_t i=0; i<nb_views; ++i) {
 	    for(index_t side=0; side<nb_sides; ++side) {
                 mgr->rendering_context()->begin_picking(vec2(0.0, 0.0));
@@ -416,19 +416,19 @@ namespace OGF {
 		    glEnable(GL_CULL_FACE);
 		}
 
-                
+
                 glupMultMatrix(mgr->get_focus());
                 glupMultMatrix(mesh_grob()->get_obj_to_world_transform()) ;
-            
+
                 mat4 M;
                 M.load_identity();
 		rand_rotation(M);
 		M(3,3) = 2.0; // shrink it a little bit (*0.5) to make it fit in
                               // the screen even when it is rotated.
-		
+
                 glupTranslated(c.x, c.y, c.z);
                 glupMultMatrixd(M.data());
-                glupTranslated(-c.x, -c.y, -c.z);        
+                glupTranslated(-c.x, -c.y, -c.z);
 
 		if(dual_sided) {
 		    glCullFace((side == 0) ? GL_BACK : GL_FRONT);
@@ -440,7 +440,7 @@ namespace OGF {
 		    shd->pick_object(index_t(-2));
 		    glDisable(GL_CULL_FACE);
 		}
-                
+
                 mgr->rendering_context()->snapshot(&image);
                 mgr->rendering_context()->end_frame();
                 mgr->rendering_context()->end_picking();
@@ -448,7 +448,7 @@ namespace OGF {
                 for(index_t y=0; y<image.height(); ++y) {
                     for(index_t x=0; x<image.width(); ++x) {
                         Memory::byte* pixel = image.pixel_base(x,y);
-                        Numeric::uint64 facet = 
+                        Numeric::uint64 facet =
                             Numeric::uint64(pixel[0])         |
                             (Numeric::uint64(pixel[1]) << 8)  |
                             (Numeric::uint64(pixel[2]) << 16) |
@@ -462,9 +462,9 @@ namespace OGF {
                         }
                     }
                 }
-            } 
+            }
         }
-        
+
         Attribute<double> visibility(
             mesh_grob()->facets.attributes(), "visibility"
         );
@@ -514,14 +514,14 @@ namespace OGF {
 		l2 * tex_coord[2*c2  ] ,
 		l0 * tex_coord[2*c0+1] +
 		l1 * tex_coord[2*c1+1] +
-		l2 * tex_coord[2*c2+1] 
+		l2 * tex_coord[2*c2+1]
 	    );
 	}
     }
-    
+
 
     void MeshGrobAttributesCommands::copy_texture_colors(
-	const MeshGrobName& surface_name,            	    
+	const MeshGrobName& surface_name,
 	const ImageFileName& texture_filename,
 	bool copy_tex_coords
     ) {
@@ -533,7 +533,7 @@ namespace OGF {
 				<< std::endl;
 	    return;
 	}
-	
+
 	MeshGrob* surface = MeshGrob::find(scene_graph(), surface_name);
 	if(surface == nullptr) {
 	    Logger::err("Mesh") << surface_name << " no such surface"
@@ -569,7 +569,7 @@ namespace OGF {
 		);
 	    }
 	}
-	
+
 	MeshFacetsAABB AABB(*surface);
 
 	parallel_for(
@@ -592,19 +592,19 @@ namespace OGF {
 		    );
 		if(to_tex_coord.is_bound()) {
 		    to_tex_coord[2*v]   = uv.x;
-		    to_tex_coord[2*v+1] = uv.y;		    
+		    to_tex_coord[2*v+1] = uv.y;
 		}
 		color[3*v  ] = double(rgb[0]/255.0);
 		color[3*v+1] = double(rgb[1]/255.0);
-		color[3*v+2] = double(rgb[2]/255.0);		
+		color[3*v+2] = double(rgb[2]/255.0);
 	    }
 	);
-	
+
 	surface->update();
 	show_colors();
 	mesh_grob()->update();
     }
-    
+
 /************************************************************************/
 
     void MeshGrobAttributesCommands::compute_ambient_occlusion(
@@ -621,7 +621,7 @@ namespace OGF {
 		vec3 p(mesh_grob()->vertices.point_ptr(v));
 		for(index_t i=0; i<nb_rays_per_vertex; ++i) {
 		    // https://math.stackexchange.com/questions/1585975/
-		    //   how-to-generate-random-points-on-a-sphere	
+		    //   how-to-generate-random-points-on-a-sphere
 		    double u1 = Numeric::random_float64();
 		    double u2 = Numeric::random_float64();
 		    double theta = 2.0 * M_PI * u2;
@@ -667,6 +667,47 @@ namespace OGF {
 	mesh_grob()->update();
     }
 
-    
-}
 
+    void MeshGrobAttributesCommands::compute_vertices_normals(
+        const std::string& attribute
+    ) {
+        Attribute<double> N;
+        N.bind_if_is_defined(mesh_grob()->vertices.attributes(), attribute);
+        if(N.is_bound()) {
+            if(N.dimension() != 3) {
+                Logger::err("Attributes")
+                    << attribute << " already exists with wrong dim "
+                    << N.dimension()
+                    << std::endl;
+                return;
+            }
+        } else {
+            N.create_vector_attribute(
+                mesh_grob()->vertices.attributes(), attribute, 3
+            );
+        }
+
+        N.zero();
+
+        for(index_t f: mesh_grob()->facets) {
+            vec3 fN = Geom::mesh_facet_normal(*mesh_grob(), f);
+            for(index_t lv=0; lv<mesh_grob()->facets.nb_vertices(f); ++lv) {
+                index_t v = mesh_grob()->facets.vertex(f,lv);
+                N[3*v]   += fN.x;
+                N[3*v+1] += fN.y;
+                N[3*v+2] += fN.z;
+            }
+        }
+
+        for(index_t v: mesh_grob()->vertices) {
+            vec3 vN(N[3*v],N[3*v+1],N[3*v+2]);
+            vN = normalize(vN);
+            N[3*v]   = vN.x;
+            N[3*v+1] = vN.y;
+            N[3*v+2] = vN.z;
+        }
+
+        mesh_grob()->update();
+    }
+
+}
