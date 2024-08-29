@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/skin/types/application_base.h>
@@ -55,7 +55,7 @@ namespace OGF {
 
     ApplicationBase* ApplicationBase::instance_ = nullptr;
     bool ApplicationBase::stopping_ = true;
-    
+
     ApplicationBase::ApplicationBase(Interpreter* interpreter) :
 	interpreter_(
             interpreter == nullptr ? Interpreter::default_interpreter()
@@ -75,10 +75,11 @@ namespace OGF {
         state_buffer_end_     = 0;
         state_buffer_current_ = 0;
         undo_redo_called_ = false;
+        started_callback_called_ = false;
     }
 
     ApplicationBase::~ApplicationBase() {
-        
+
         // Cleanup saved states for undo and redo
         if(Environment::instance()->get_value("gui:undo") == "true") {
             for(index_t i=0; i<state_buffer_size_; ++i) {
@@ -88,7 +89,7 @@ namespace OGF {
                 }
             }
         }
-        
+
         geo_assert(instance_ == this);
 	if(logger_client_ != nullptr) {
 	    Logger::instance()->unregister_client(logger_client_);
@@ -101,7 +102,7 @@ namespace OGF {
 	stopping_ = false;
         // User GEL files
         if(Environment::instance()->has_value("gel:startup_files")) {
-            std::string gel_str = 
+            std::string gel_str =
                 Environment::instance()->get_value("gel:startup_files");
             std::vector<std::string> gel_files;
             String::split_string(gel_str, ';', gel_files);
@@ -111,15 +112,14 @@ namespace OGF {
                 interpreter()->execute_file(gel_files[i]);
             }
         }
-        started();
     }
-    
+
     void ApplicationBase::stop() {
         Logger::instance()->unregister_client(logger_client_);
 	logger_client_ = nullptr;
         Progress::set_client(nullptr);
     }
-    
+
     void ApplicationBase::set_style(const std::string& value) {
         Environment::instance()->set_value("gfx:style", value);
     }
@@ -143,7 +143,7 @@ namespace OGF {
 	    );
 	}
     }
-    
+
     void ApplicationBase::save_preferences() {
         Preferences::save_preferences();
     }
@@ -155,13 +155,13 @@ namespace OGF {
     bool ApplicationBase::preferences_loaded() {
 	return CmdLine::config_file_loaded();
     }
-    
+
     void ApplicationBase::progress(index_t step, index_t percent) {
         geo_argused(step);
         notify_progress(percent);
 	draw();
     }
-    
+
     void ApplicationBase::cancel_current_job() {
         Logger::out("Task") << "Canceled current job" << std::endl;
         Progress::cancel();
@@ -180,7 +180,7 @@ namespace OGF {
         if(canceled) {
             Logger::out(task_name) << "interrupted." << std::endl;
             notify_progress(0);
-        } 
+        }
         notify_progress_end();
     }
 
@@ -191,14 +191,14 @@ namespace OGF {
 	}
 	return result;
     }
-    
+
     void ApplicationBase::draw() {
     }
 
     void ApplicationBase::update() {
     }
 
-    
+
     void ApplicationBase::save_state_to_file(const std::string& filename) {
         if(Environment::instance()->get_value("gui:undo") != "true") {
             return;
@@ -216,7 +216,7 @@ namespace OGF {
             scene_graph->invoke_method("save", args);
         }
     }
-    
+
     void ApplicationBase::load_state_from_file(const std::string& filename) {
         if(Environment::instance()->get_value("gui:undo") != "true") {
             return;
@@ -253,7 +253,7 @@ namespace OGF {
         if(Environment::instance()->get_value("gui:undo") != "true") {
             return;
         }
-        
+
         save_state_to_file(state_buffer_filename(state_buffer_current_));
         state_buffer_current_ = (state_buffer_current_ + 1) % state_buffer_size_;
         state_buffer_end_ = state_buffer_current_;
@@ -261,7 +261,7 @@ namespace OGF {
             state_buffer_begin_ = (state_buffer_begin_+1) % state_buffer_size_;
         }
     }
-    
+
     void ApplicationBase::undo() {
         if(Environment::instance()->get_value("gui:undo") != "true") {
             return;
@@ -275,9 +275,11 @@ namespace OGF {
         if(state_buffer_current_ == state_buffer_end_) {
             save_state_to_file(state_buffer_filename(state_buffer_current_));
         }
-        
+
         state_buffer_current_ =
-            (state_buffer_current_ + state_buffer_size_ - 1) % state_buffer_size_;
+            (state_buffer_current_ + state_buffer_size_ - 1) %
+            state_buffer_size_;
+
         load_state_from_file(state_buffer_filename(state_buffer_current_));
         undo_redo_called_ = true;
     }
@@ -297,9 +299,16 @@ namespace OGF {
     void ApplicationBase::progress_cancel() {
         Progress::cancel();
     }
-    
+
+    void ApplicationBase::post_draw() {
+        if(!started_callback_called_) {
+            started_callback_called_ = true;
+            started();
+        }
+    }
+
 /**************************************************************/
-    
+
     ApplicationBase::
     ApplicationBaseProgressClient::ApplicationBaseProgressClient(
         ApplicationBase* app
@@ -320,41 +329,41 @@ namespace OGF {
     ApplicationBaseProgressClient::end(bool canceled) {
         application_base_->end(canceled);
     }
-    
-    
-/**************************************************************/    
-    
+
+
+/**************************************************************/
+
     ApplicationBase::
     ApplicationBaseLoggerClient::ApplicationBaseLoggerClient(
         ApplicationBase* app
     ) : application_base_(app) {
     }
 
-    void ApplicationBase::    
+    void ApplicationBase::
     ApplicationBaseLoggerClient::div(const std::string& value) {
         application_base_->div(value);
     }
 
-    void ApplicationBase::        
+    void ApplicationBase::
     ApplicationBaseLoggerClient::out(const std::string& value) {
-        application_base_->out(value);        
+        application_base_->out(value);
     }
 
-    void ApplicationBase::        
+    void ApplicationBase::
     ApplicationBaseLoggerClient::warn(const std::string& value) {
-        application_base_->warn(value);        
+        application_base_->warn(value);
     }
 
-    void ApplicationBase::        
+    void ApplicationBase::
     ApplicationBaseLoggerClient::err(const std::string& value) {
-        application_base_->err(value);        
+        application_base_->err(value);
     }
 
-    void ApplicationBase::        
+    void ApplicationBase::
     ApplicationBaseLoggerClient::status(const std::string& value) {
-        application_base_->status(value);        
+        application_base_->status(value);
     }
-    
-/**************************************************************/        
-    
+
+/**************************************************************/
+
 }

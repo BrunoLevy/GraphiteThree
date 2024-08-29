@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 #ifndef H_SKIN_IMGUI_APPLICATION_H
 #define H_SKIN_IMGUI_APPLICATION_H
 
@@ -47,7 +47,7 @@ namespace OGF {
     class Builder;
     class IconRepository;
     class ApplicationImpl;
-    
+
     /**
      * \brief Implementation of Skin application using ImGui.
      * \note Client code should not use this class directly. It
@@ -75,7 +75,7 @@ namespace OGF {
 	 * \brief Forbid copy.
 	 */
 	Application& operator=(const Application& rhs) = delete;
-	
+
         /**
          * \brief Gets the instance.
          * \return a pointer to the unique instance
@@ -83,7 +83,7 @@ namespace OGF {
         static Application* instance() {
             return dynamic_cast<Application*>(ApplicationBase::instance());
         }
-	
+
         /**
          * \brief Gets the icon repository.
          * \return a pointer to the IconRepository
@@ -99,7 +99,7 @@ namespace OGF {
         const IconRepository* icon_repository() const {
 	    return icon_repository_;
 	}
-	
+
         /**
          * \copydoc ApplicationBase::start()
          */
@@ -122,7 +122,7 @@ namespace OGF {
 
 	/**
 	 * \brief Lock updates.
-	 * \details If this function is called, updates are ignored. 
+	 * \details If this function is called, updates are ignored.
 	 *  It is useful when a RenderingContext operation is occuring, to
 	 *  prevent the Console for triggering a drawing operation.
 	 */
@@ -168,20 +168,20 @@ namespace OGF {
 	 *  modifiers state.
 	 */
 	void* impl_window() const;
-	
+
     gom_slots:
 	/**
 	 * \brief Draws a dockspace that fills the current
 	 *  window.
 	 */
 	void draw_dock_space();
-	
+
 	/**
 	 * \brief Gets the style.
 	 * \return a string with the current style;
 	 */
 	const std::string& get_style() const;
-	
+
 	/**
 	 * \brief Gets the Camera.
 	 * \return a pointer to the Camera.
@@ -203,7 +203,7 @@ namespace OGF {
 	/**
 	 * \brief Executes a command.
 	 * \details The command is queued so that it is executed right
-	 *  after the current frame (and not nested in the current frame). 
+	 *  after the current frame (and not nested in the current frame).
 	 *  This allows updating the progress bar.
 	 * \param[in] command a string with the LUA command to be executed.
 	 * \param[in] add_to_history true if the command should be recorded in
@@ -239,12 +239,12 @@ namespace OGF {
 	    return 35.0 * scaling();
 	}
 
-	
+
 	/**
 	 * \brief Draws the console.
 	 * \param[in] visible true if the console is visible, false otherwise.
 	 * \retval true if the console is still visible.
-	 * \retval false otherwise, e.g., when the user clicks on the 
+	 * \retval false otherwise, e.g., when the user clicks on the
 	 *  close button of the console.
 	 */
 	bool draw_console(bool visible);
@@ -314,7 +314,7 @@ namespace OGF {
 	    error_occured(message);
 	    latest_error_ = message;
 	}
-	
+
     gom_properties:
 
 	/**
@@ -340,7 +340,7 @@ namespace OGF {
          *  windows.
          */
 	std::string get_gui_state() const;
-	
+
 	/**
 	 * \brief Sets full-screen mode.
 	 * \param[in] x true if full-screen mode should be used,
@@ -354,7 +354,7 @@ namespace OGF {
 	 * \retval false if windowed mode is used.
 	 */
 	bool get_full_screen() const;
-	
+
 	/**
 	 * \brief Gets the width of the window.
 	 * \return the width of the window in pixels.
@@ -378,7 +378,7 @@ namespace OGF {
 	 * \return the height of the frame buffer in pixels.
 	 */
 	index_t get_frame_buffer_height() const;
-	
+
         /**
          * \brief Sets whether drag and drop events should be
          *  taken into account.
@@ -420,14 +420,14 @@ namespace OGF {
 	}
 
     gom_signals:
-	
+
 	/**
 	 * \brief This signal is triggered when the GUI should be redisplayed.
 	 */
 	void redraw_request();
 
 	/**
-	 * \brief This signal is triggered when the console displays an 
+	 * \brief This signal is triggered when the console displays an
 	 *  error message.
 	 * \param[in] error the error message to be displayed.
 	 */
@@ -453,4 +453,3 @@ namespace OGF {
 }
 
 #endif
-

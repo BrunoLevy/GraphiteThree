@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 
@@ -57,7 +57,7 @@ namespace OGF {
      */
     // gom_attribute(abstract, "true")
     gom_class SKIN_API ApplicationBase : public Object {
-        
+
     public:
         /**
          * \brief ApplicationBase constructor.
@@ -108,7 +108,7 @@ namespace OGF {
         const std::string& get_tooltip() const {
             return tooltip_;
         }
-        
+
     gom_slots:
         /**
          * \brief Starts the application.
@@ -146,7 +146,7 @@ namespace OGF {
 	/**
 	 * \brief Declares a preference variable.
 	 * \param[in] name the name of the variable.
-	 * \param[in] value the default value to be used, 
+	 * \param[in] value the default value to be used,
 	 *  if the variable does not already exist in the
 	 *  environment.
 	 * \param[in] help the optional help string.
@@ -156,7 +156,7 @@ namespace OGF {
 	    const std::string& value,
 	    const std::string& help=""
 	);
-	
+
 	/**
 	 * \brief Saves the preferences to home directory / graphite.ini.
 	 */
@@ -177,7 +177,7 @@ namespace OGF {
 	 * \retval false otherwise.
 	 */
 	virtual bool preferences_loaded();
-	
+
         /**
          * \brief Cancels the current job.
          * \details This function is called when the 'stop' button near
@@ -188,7 +188,7 @@ namespace OGF {
 
 	/**
 	 * \brief Redraws the main window.
-	 * \details This function is called by commands that animate 
+	 * \details This function is called by commands that animate
 	 *  objects during computation, by the progress bar and by
 	 *  console output.
 	 */
@@ -204,7 +204,7 @@ namespace OGF {
          * \details Called when a ProgressTask starts.
          */
         virtual void begin();
-        
+
         /**
          * \brief ProgressClient overload, callback called by ProgressTask.
          * \details Called when a ProgressTask is updated.
@@ -232,7 +232,7 @@ namespace OGF {
          * \brief Saves state before applying command or tool, for undo()/redo().
          */
         virtual void save_state();
-        
+
         /**
          * \brief Restores last saved state if available.
          */
@@ -248,7 +248,13 @@ namespace OGF {
          * \brief Cancels current progress tastk
          */
         virtual void progress_cancel();
-        
+
+
+        /**
+         * \brief Called after each frame
+         */
+        virtual void post_draw();
+
     gom_properties:
 
         /**
@@ -265,7 +271,7 @@ namespace OGF {
          * \false otherwise
          */
         bool get_can_redo() const;
-        
+
     gom_signals:
         /**
          * \brief A signal that is triggered after the Graphite
@@ -342,7 +348,7 @@ namespace OGF {
 	    return stopping_;
 	}
 
-	
+
     protected:
 
         /**
@@ -358,14 +364,16 @@ namespace OGF {
 
         /**
          * \brief Gets the file name to be used to store a state buffer.
-         * \details Used by undo() / redo(). State buffers are stored as .graphite
-         *  files, that store the scene graph and the complete state of Graphite.
+         * \details Used by undo() / redo(). State buffers are stored
+         *  as .graphite files, that store the scene graph and the
+         *  complete state of Graphite.
          * \param[in] i the index of the state buffer
-         * \return the file name to be used to store or retreive the state buffer.
+         * \return the file name to be used to store or retreive the
+         *  state buffer.
          */
         std::string state_buffer_filename(index_t i) const;
 
-        
+
 	/**
 	 * \brief Indicates that the application is stopping, i.e. processes
 	 *  the last events from the event queue.
@@ -376,7 +384,7 @@ namespace OGF {
 	static void set_stopping_flag() {
 	    stopping_ = true;
 	}
-	
+
         /**
          * \brief A LoggerClient that redirects all messages to
          *  an ApplicationBase.
@@ -421,22 +429,22 @@ namespace OGF {
         class ApplicationBaseProgressClient : public ProgressClient {
         public:
             ApplicationBaseProgressClient(ApplicationBase* app);
-            
+
             /**
              * \copydoc ProgressClient::begin()
              */
             void begin() override;
-        
+
             /**
              * \copydoc ProgressClient::progress()
              */
             void progress(index_t step, index_t percent) override;
-            
+
             /**
              * \copydoc ProgressClient::end()
              */
             void end(bool canceled) override;
-            
+
         private:
             ApplicationBase* application_base_;
         };
@@ -451,9 +459,10 @@ namespace OGF {
         index_t state_buffer_size_;
         index_t state_buffer_current_;
         bool undo_redo_called_;
-        
+
         static ApplicationBase* instance_;
 	static bool stopping_;
+        bool started_callback_called_;
     };
 
 }

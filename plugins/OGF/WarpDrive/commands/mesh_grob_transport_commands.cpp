@@ -70,6 +70,7 @@
 #include <geogram/basic/stopwatch.h>
 #include <geogram/basic/progress.h>
 #include <geogram/basic/permutation.h>
+#include <geogram/basic/line_stream.h>
 
 // We got some classes declared locally that
 // have no out-of-line virtual functions. It is not a
@@ -3396,6 +3397,90 @@ namespace OGF {
         if(mesh_grob()->get_shader() != nullptr) {
             mesh_grob()->set_shader("Cosmo");
         }
+    }
+
+    void MeshGrobTransportCommands::load_Gaia(
+        const FileName& filename, double Vscale, double ortho_scale
+    ) {
+        mesh_grob()->clear();
+        mesh_grob()->vertices.set_dimension(3);
+
+        Attribute<double> V0;
+        Attribute<double> V1;
+        Attribute<double> V2;
+
+        V0.bind_if_is_defined(mesh_grob()->vertices.attributes(), "eigenV0");
+        V1.bind_if_is_defined(mesh_grob()->vertices.attributes(), "eigenV1");
+        V2.bind_if_is_defined(mesh_grob()->vertices.attributes(), "eigenV2");
+        if(
+            (V0.is_bound() && V0.dimension() != 3) ||
+            (V1.is_bound() && V1.dimension() != 3) ||
+            (V2.is_bound() && V2.dimension() != 3)
+        ) {
+            Logger::err("Cosmo") << "V0 or V1 or V2 already exist with wrong dim"
+                                 << std::endl;
+            return;
+        }
+
+        if(!V0.is_bound()) {
+            V0.create_vector_attribute(
+                mesh_grob()->vertices.attributes(), "eigenV0",3
+            );
+        }
+
+        if(!V1.is_bound()) {
+            V1.create_vector_attribute(
+                mesh_grob()->vertices.attributes(), "eigenV1",3
+            );
+        }
+
+        if(!V2.is_bound()) {
+            V2.create_vector_attribute(
+                mesh_grob()->vertices.attributes(), "eigenV2",3
+            );
+        }
+
+        LineInput in(filename);
+        if(!in.OK()) {
+            Logger::err("Cosmo") << "Could not open " << filename << std::endl;
+            return;
+        }
+        try {
+            while( !in.eof() && in.get_line() ) {
+                in.get_fields();
+                vec3 p(
+                    in.field_as_double(0),
+                    in.field_as_double(1),
+                    in.field_as_double(2)
+                );
+                vec3 V(
+                    in.field_as_double(3),
+                    in.field_as_double(4),
+                    in.field_as_double(5)
+                );
+                V = Vscale * V;
+                double l = length(V);
+                vec3 X = ortho_scale * l * normalize(Geom::perpendicular(V));
+                vec3 Y = ortho_scale * l * normalize(cross(V,X));
+
+                index_t v = mesh_grob()->vertices.create_vertex(p.data());
+                V0[3*v  ] = V.x;
+                V0[3*v+1] = V.y;
+                V0[3*v+2] = V.z;
+
+                V1[3*v  ] = X.x;
+                V1[3*v+1] = X.y;
+                V1[3*v+2] = X.z;
+
+                V2[3*v  ] = Y.x;
+                V2[3*v+1] = Y.y;
+                V2[3*v+2] = Y.z;
+            }
+        } catch(const std::logic_error& ex) {
+            Logger::err("Cosmo") << ex.what() << std::endl;
+        }
+
+        mesh_grob()->update();
     }
 
     void MeshGrobTransportCommands::save_binary(const NewFileName& filename) {

@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/skin_imgui/types/application.h>
@@ -84,7 +84,7 @@ namespace OGF {
 	~ApplicationImpl() override {
 	    GEO::Application::GL_terminate();
 	}
-	
+
 	/**
 	 * \brief Gets the console.
 	 * \return a pointer to the console.
@@ -122,9 +122,9 @@ namespace OGF {
 		);
 	    }
 	}
-	
+
     protected:
-	
+
 	/**
 	 * \copydoc GEO::Application::needs_to_redraw()
 	 */
@@ -149,6 +149,7 @@ namespace OGF {
 	void post_draw() override {
 	    application_->flush_command_queue();
 	    GEO::Application::post_draw();
+            application_->post_draw();
 	}
 
 	/**
@@ -256,7 +257,7 @@ namespace OGF {
 	void ImGui_terminate() override {
 	    Logger::instance()->unregister_client(console_);
 	    Progress::set_client(nullptr);
-	    GEO::Application::ImGui_terminate();	    
+	    GEO::Application::ImGui_terminate();
 	}
 
 	/**
@@ -286,7 +287,7 @@ namespace OGF {
 	    // loop. We prefer to deallocate GL stuff later, after all
 	    // graphic objects have been deallocated, in the destructor.
 	}
-	
+
     private:
 	OGF::Application* application_;
 	SmartPointer<OGF::Console> console_;
@@ -297,18 +298,18 @@ namespace OGF {
 	ApplicationBase(interpreter)
     {
 	picked_grob_ = nullptr;
-	impl_ = new ApplicationImpl(this);	
-        icon_repository_ = new IconRepository; 
+	impl_ = new ApplicationImpl(this);
+        icon_repository_ = new IconRepository;
 	if(CmdLine::arg_is_declared("gui:font_size")) {
 	    set_font_size(CmdLine::get_arg_uint("gui:font_size"));
 	}
-	
+
 	// TODO: get size from preferences so that we do not
 	// need to resize render area after (would be cleaner)
 	render_area_ = new RenderArea(
 	    get_width(), get_height(),
 	    get_frame_buffer_width(), get_frame_buffer_height()
-	);	
+	);
 	camera_ = new Camera(this);
 	LuaInterpreter* lua_interp = dynamic_cast<LuaInterpreter*>(
 	    interpreter
@@ -323,7 +324,7 @@ namespace OGF {
     Application::~Application() {
 #ifdef GEO_DEBUG
 	Logger::out("Skin") << "Application::~Application()" << std::endl;
-#endif	
+#endif
 	delete icon_repository_;
 	icon_repository_ = nullptr;
 	// Make sure RenderArea is deleted before
@@ -336,7 +337,7 @@ namespace OGF {
     void Application::lock_updates() {
 	impl_->lock_updates();
     }
-    
+
     void Application::unlock_updates() {
 	impl_->unlock_updates();
     }
@@ -360,7 +361,7 @@ namespace OGF {
     index_t Application::get_frame_buffer_height() const {
 	return impl_->get_frame_buffer_height();
     }
-    
+
     void Application::set_accept_drops(bool value) {
 	impl_->set_accept_drops(value);
     }
@@ -368,7 +369,7 @@ namespace OGF {
     bool Application::get_accept_drops() const {
 	return impl_->get_accept_drops();
     }
-    
+
     void Application::start() {
         ApplicationBase::start();
         if(!is_stopping()) {
@@ -383,7 +384,7 @@ namespace OGF {
 	disconnect();
 	render_area_->disconnect();
     }
-    
+
     void Application::stop() {
 	if(Commands::command_is_running()) {
 	    Progress::cancel();
@@ -401,7 +402,7 @@ namespace OGF {
 	impl_->set_style(style_name);
         ApplicationBase::set_style(style_name);
     }
-    
+
     void Application::set_font_size(index_t value) {
         ApplicationBase::set_font_size(value);
 	impl_->set_font_size(value);
@@ -423,7 +424,7 @@ namespace OGF {
     void Application::draw_dock_space() {
 	impl_->draw_dock_space();
     }
-	
+
     bool Application::draw_console(bool visible) {
 	if(impl_->console() == nullptr) {
 	    return false;
@@ -439,7 +440,7 @@ namespace OGF {
 	    (impl_->status_bar() != nullptr) &&
 	     impl_->status_bar()->active();
     }
-    
+
     void Application::draw_status_bar() {
 	if(status_bar_is_active()) {
 	    impl_->status_bar()->draw();
@@ -503,7 +504,7 @@ namespace OGF {
     void* Application::impl_window() const {
 	return impl_->impl_window();
     }
-    
+
     void Application::set_gui_state(std::string x) {
 	impl_->set_gui_state(x);
     }
@@ -511,7 +512,7 @@ namespace OGF {
     std::string Application::get_gui_state() const {
 	return impl_->get_gui_state();
     }
-    
+
     void Application::set_full_screen_mode(
 	index_t w, index_t h, index_t Hz, index_t monitor
     ) {
@@ -529,7 +530,7 @@ namespace OGF {
     void Application::iconify() {
 	impl_->iconify();
     }
-    
+
     void Application::restore() {
 	impl_->restore();
     }
@@ -537,9 +538,8 @@ namespace OGF {
     bool Application::get_full_screen() const {
 	return impl_->get_full_screen();
     }
-    
+
     void Application::set_full_screen(bool x) {
 	impl_->set_full_screen(x);
     }
-    
 }

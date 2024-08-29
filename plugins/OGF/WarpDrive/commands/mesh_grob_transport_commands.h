@@ -715,6 +715,18 @@ namespace OGF {
          */
         void load_binary(const FileName& filename);
 
+
+        /**
+         * \menu /Cosmo
+         * \brief Loads a x y z Vx Vy Vz Gaia file
+         * \param[in] Vscale scaling for first aniso axis
+         * \param[in] ortho_scale relative scaling for the two other axes
+         */
+        void load_Gaia(
+            const FileName& filename,
+            double Vscale = 0.01, double ortho_scale = 0.1
+        );
+
         /**
          * \menu /Cosmo
          * \brief Saves the points to a flat floating point binary file
