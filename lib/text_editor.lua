@@ -18,6 +18,10 @@ text_editor_gui.find_visible = false
 text_editor_gui.find_word = ''
 text_editor_gui.find_focus = false
 
+function text_editor_gui.error(msg)
+   gom.err(msg)
+end
+
 function text_editor_gui.set_language(lang)
    text_editor.language = lang
 -- text_editor_gui.icon = lang
@@ -157,7 +161,7 @@ function text_editor_gui.run()
       if not string.starts_with(text_editor.text, '-- Lua') then
          gom.err('Missing -- Lua or -- LuaGrob comment at beginning of source')
 	 gom.err('Without it, editor does not know how file should be run')
-	 error('Cannot run file')
+	 text_editor_gui.error('Cannot run file')
       end
       if string.starts_with(text_editor.text, '-- LuaGrob') then
          local grob = scene_graph.resolve('Lua_program')
@@ -182,7 +186,7 @@ function text_editor_gui.run()
           gom.err('Missing //stage declaration')
 	  gom.err('If copy-pasted from www.shadertoy.com, then')
 	  gom.err('Use Edit...Adapt ShaderToy code')
-	  error('Cannot run file')
+	  text_editor_gui.error('Cannot run file')
        end
        grob.shader.glsl_source = text_editor.text
    else
@@ -209,7 +213,7 @@ function text_editor_gui.run_selection()
    main.reset_latest_error()
    local lang = text_editor.language
    if lang == 'GLSL' then
-      error('Run selection does not work in GLSL mode')
+      text_editor_gui.error('Run selection does not work in GLSL mode')
       return
    end
    if lang == 'py' then
@@ -317,7 +321,9 @@ function text_editor_gui.draw_menu()
       if imgui.MenuItem('Adapt ShaderToy code') then
          text_editor_gui.set_language('glsl')
 	 if text_editor.text:starts_with('//stage') then
-	    error('Has //stage specifier, seems to be already a GLUP shader')
+	    text_editor_gui.error(
+                'Has //stage specifier, seems to be already a GLUP shader'
+            )
 	 end
          local filename=
             gom.get_environment_value('PROJECT_ROOT') ..
