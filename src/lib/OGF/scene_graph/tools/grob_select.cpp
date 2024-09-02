@@ -35,6 +35,7 @@
  */
 
 #include <OGF/scene_graph/tools/grob_select.h>
+#include <OGF/scene_graph/types/scene_graph.h>
 #include <OGF/scene_graph/types/scene_graph_shader_manager.h>
 #include <OGF/gom/interpreter/interpreter.h>
 #include <OGF/gom/reflection/meta_class.h>

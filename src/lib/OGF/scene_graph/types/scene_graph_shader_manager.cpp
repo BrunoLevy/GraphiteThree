@@ -37,6 +37,8 @@
 #include <OGF/scene_graph/types/scene_graph_shader_manager.h>
 #include <OGF/scene_graph/types/scene_graph.h>
 #include <OGF/scene_graph/types/scene_graph_library.h>
+#include <OGF/scene_graph/shaders/shader_manager.h>
+#include <OGF/scene_graph/types/scene_graph.h>
 #include <OGF/skin/types/application_base.h>
 #include <OGF/gom/reflection/meta_class.h>
 #include <OGF/gom/interpreter/interpreter.h>
@@ -141,6 +143,16 @@ namespace OGF {
 	effect->update();	    
     }
 
+    void SceneGraphShaderManager::set_highlight_selected(bool value) { 
+       highlight_selected_ = value;
+       scene_graph_->update(); 
+    }
+
+    void SceneGraphShaderManager::set_draw_selected_only(bool value) { 
+       draw_selected_only_ = value;
+       scene_graph_->update(); 
+    }
+   
     void SceneGraphShaderManager::set_effect(
 	const FullScreenEffectName& effect
     ) {
@@ -416,6 +428,10 @@ namespace OGF {
         }
     }
 
+    Interpreter* SceneGraphShaderManager::interpreter() {
+       return scene_graph_->interpreter();
+    }
+   
     void SceneGraphShaderManager::apply_to_scene_graph(bool visible_only) {
         if(current_object_ == nullptr) {
             return;

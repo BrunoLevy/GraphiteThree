@@ -37,6 +37,7 @@
 #include <OGF/skin_imgui/types/camera.h>
 #include <OGF/skin_imgui/types/application.h>
 #include <OGF/skin_imgui/widgets/render_area.h>
+#include <OGF/scene_graph/types/scene_graph.h>
 #include <OGF/scene_graph/types/scene_graph_library.h>
 #include <OGF/scene_graph/types/scene_graph_shader_manager.h>
 #include <OGF/gom/interpreter/interpreter.h>

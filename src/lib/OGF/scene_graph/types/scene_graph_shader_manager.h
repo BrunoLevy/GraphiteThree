@@ -39,11 +39,8 @@
 #define H_OGF_SCENE_GRAPH_TYPES_SCENE_GRAPH_SHDR_MGR_H
 
 #include <OGF/scene_graph/common/common.h>
-#include <OGF/scene_graph/shaders/shader_manager.h>
-#include <OGF/scene_graph/shaders/shader.h>
-#include <OGF/scene_graph/types/scene_graph.h>
 #include <OGF/scene_graph/full_screen_effects/full_screen_effect.h>
-
+#include <OGF/scene_graph/types/properties.h>
 #include <map>
 
 /**
@@ -53,7 +50,10 @@
 
 namespace OGF {
 
+    class Grob;
     class Shader;
+    class ShaderManager;
+    class SceneGraph;
 
     /**
      * \brief Manages the shaders and full screen effects for the entire
@@ -100,9 +100,7 @@ namespace OGF {
 	 * \brief Gets the main Interpreter.
 	 * \return a pointer to the main Interpreter.
 	 */
-	Interpreter* interpreter() {
-	    return scene_graph_->interpreter();
-	}
+	Interpreter* interpreter();
 	
     gom_slots:
         /**
@@ -211,11 +209,7 @@ namespace OGF {
          * \param[in] value true if highlighting mode should be activated,
          *  false otherwise
          */
-        void set_highlight_selected(bool value) { 
-            highlight_selected_ = value;
-            scene_graph_->update(); 
-        }
-
+        void set_highlight_selected(bool value);
 	
         /**
          * \brief Tests whether highlighting mode is active.
@@ -233,10 +227,7 @@ namespace OGF {
          * \param[in] value true if only the selected object is drawn,
          *  false if the whole scene graph is drawn
          */
-        void set_draw_selected_only(bool value) { 
-            draw_selected_only_ = value;
-            scene_graph_->update(); 
-        }
+        void set_draw_selected_only(bool value);
  
         /**
          * \brief Tests whether only the selected object should be drawn.
