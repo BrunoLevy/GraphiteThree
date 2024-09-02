@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/scene_graph/types/scene_graph_shader_manager.h>
@@ -49,15 +49,15 @@
 #include <geogram/basic/stopwatch.h>
 
 namespace OGF {
-    
+
     SceneGraphShaderManager::SceneGraphShaderManager()
 	: current_object_(nullptr) {
-	
+
         scene_graph_ = SceneGraphLibrary::instance()->scene_graph();
         ogf_assert(scene_graph_ != nullptr);
 
         current_object_ = nullptr;
-        
+
         scene_graph_->connect_signal_to_slot(
             "current_object_changed", this, "current_object"
         );
@@ -70,16 +70,16 @@ namespace OGF {
 	FullScreenEffect* default_FSE = new PlainFullScreenEffect(scene_graph_);
 	effects_["OGF::PlainFullScreenEffect"] = default_FSE;
         effect_ = default_FSE;
-        
+
         SceneGraphLibrary::instance()->set_scene_graph_shader_manager(this);
     }
 
     SceneGraphShaderManager::~SceneGraphShaderManager() {
     }
-    
+
     void SceneGraphShaderManager::shader(const std::string& shader_name_in) {
 
-        if(current_object_ == nullptr || shader_name_in.length() == 0) { 
+        if(current_object_ == nullptr || shader_name_in.length() == 0) {
             return;
         }
 
@@ -102,7 +102,7 @@ namespace OGF {
         const std::string& full_screen_effect_name_in
     ) {
 	user_effect_name_ = full_screen_effect_name_in;
-	
+
         const std::string& full_screen_effect_name =
             SceneGraphLibrary::instance()->
             full_screen_effect_user_to_classname(full_screen_effect_name_in);
@@ -110,7 +110,7 @@ namespace OGF {
         FullScreenEffect_var& effect = effects_[
             full_screen_effect_name
         ];
-        
+
         if(effect.is_null()) {
             ArgList args;
 	    args.create_arg("scene_graph", scene_graph_);
@@ -140,30 +140,30 @@ namespace OGF {
             );
         }
 
-	effect->update();	    
+	effect->update();
     }
 
-    void SceneGraphShaderManager::set_highlight_selected(bool value) { 
+    void SceneGraphShaderManager::set_highlight_selected(bool value) {
        highlight_selected_ = value;
-       scene_graph_->update(); 
+       scene_graph_->update();
     }
 
-    void SceneGraphShaderManager::set_draw_selected_only(bool value) { 
+    void SceneGraphShaderManager::set_draw_selected_only(bool value) {
        draw_selected_only_ = value;
-       scene_graph_->update(); 
+       scene_graph_->update();
     }
-   
+
     void SceneGraphShaderManager::set_effect(
 	const FullScreenEffectName& effect
     ) {
 	full_screen_effect(effect);
     }
-    
+
     const FullScreenEffectName& SceneGraphShaderManager::get_effect() const {
 	return user_effect_name_;
     }
 
-    
+
     void SceneGraphShaderManager::current_object(
         const std::string& name
     ) {
@@ -172,7 +172,7 @@ namespace OGF {
             last_shader_ = "";
             return;
         }
-	
+
         current_object_ = scene_graph_->resolve(name);
         ogf_assert(current_object_ != nullptr);
 
@@ -202,7 +202,9 @@ namespace OGF {
 
     ShaderManager* SceneGraphShaderManager::resolve_shader_manager(Grob* grob) {
         ogf_assert(grob != nullptr);
-        ShaderManager* result = grob->get_shader_manager();
+        ShaderManager* result = dynamic_cast<ShaderManager*>(
+            grob->get_shader_manager()
+        );
         if(result == nullptr) {
             result = new ShaderManager(grob, this);
             grob->set_shader_manager(result);
@@ -234,7 +236,7 @@ namespace OGF {
     FullScreenEffect* SceneGraphShaderManager::current_effect() {
 	return effect_;
     }
-    
+
 
     void SceneGraphShaderManager::update_focus() {
 
@@ -252,15 +254,15 @@ namespace OGF {
 
         vec3 center = box.center();
         double radius  = box.radius();
-        
+
         double s = 1.0;
         if(radius != 0.0) {
             s = 1.0 / radius;
         }
-        
+
         focus_.load_identity();
         focus_(0,0) = s;
-        focus_(1,1) = s; 
+        focus_(1,1) = s;
         focus_(2,2) = s;
         focus_(3,0) = -s * center.x;
         focus_(3,1) = -s * center.y;
@@ -281,7 +283,7 @@ namespace OGF {
         // so that rendering will be performed at the next
         // update with everything setup correctly.
         if(
-            effect_ != nullptr && 
+            effect_ != nullptr &&
             RenderingContext::current()->get_full_screen_effect() !=
             effect_->implementation()
         ) {
@@ -298,21 +300,21 @@ namespace OGF {
 	if(!scene_graph_->get_visible()) {
 	    return;
 	}
-	
+
         glupMatrixMode(GLUP_MODELVIEW_MATRIX);
         glupPushMatrix();
         glupMultMatrix(focus_);
-        
+
         if(draw_selected_only_) {
             if(current_object_ != nullptr) {
                 glupPushMatrix();
                 glupMultMatrix(
                     current_object_->get_obj_to_world_transform()
                 );
-                
+
                 ShaderManager* shader_mgr =
                     resolve_shader_manager(current_object_);
-		
+
                 if(shader_mgr != nullptr) {
                     shader_mgr->draw();
                 }
@@ -326,11 +328,11 @@ namespace OGF {
 
                     glupPushMatrix();
                     glupMultMatrix(cur->get_obj_to_world_transform());
-                    
+
                     ShaderManager* shader_mgr = resolve_shader_manager(cur);
                     if(shader_mgr != nullptr) {
                         shader_mgr->draw();
-                    } 
+                    }
                     glupPopMatrix();
                 }
             }
@@ -345,7 +347,7 @@ namespace OGF {
 	) {
             return;
         }
-        
+
         // If we draw the selected object only, then we cannot pick
         //   another object !
         if(draw_selected_only_) {
@@ -355,28 +357,28 @@ namespace OGF {
         glupMatrixMode(GLUP_MODELVIEW_MATRIX);
         glupPushMatrix();
         glupMultMatrix(focus_);
-        
+
         for(index_t i=0; i<scene_graph_->get_nb_children(); i++) {
             Grob* cur = scene_graph_->ith_child(i);
             if(cur != nullptr && cur->get_visible()) {
 
                 glupPushMatrix();
                 glupMultMatrix(cur->get_obj_to_world_transform());
-                
-                Shader* shader =  cur->get_shader();
+
+                Shader* shader =  dynamic_cast<Shader*>(cur->get_shader());
                 if(shader != nullptr) {
                     shader->pick_object(i);
                 }
 
-                glupPopMatrix();                    
+                glupPopMatrix();
             }
         }
 
-        glupPopMatrix();                    
+        glupPopMatrix();
     }
-    
+
     void SceneGraphShaderManager::get_grob_shader(
-        Grob* grob, std::string& classname, ArgList& args, bool pointers 
+        Grob* grob, std::string& classname, ArgList& args, bool pointers
     ) {
         classname = "";
         args.clear();
@@ -411,7 +413,7 @@ namespace OGF {
             args.create_arg(name, value);
         }
     }
-    
+
     void SceneGraphShaderManager::set_grob_shader(
         Grob* grob, const std::string& classname, const ArgList& args
     ) {
@@ -431,7 +433,7 @@ namespace OGF {
     Interpreter* SceneGraphShaderManager::interpreter() {
        return scene_graph_->interpreter();
     }
-   
+
     void SceneGraphShaderManager::apply_to_scene_graph(bool visible_only) {
         if(current_object_ == nullptr) {
             return;
@@ -459,4 +461,4 @@ namespace OGF {
         scene_graph_->update();
     }
 
-} 
+}

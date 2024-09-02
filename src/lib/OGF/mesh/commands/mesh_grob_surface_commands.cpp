@@ -23,15 +23,15 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, 
+ * As an exception to the GPL,
  *   Graphite can be linked with the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
@@ -85,18 +85,18 @@ namespace {
 	    1e-3*GEO::surface_average_edge_length(*M)
 	);
 	GEO::tessellate_facets(*M,3);
-	GEO::mesh_remove_intersections(*M);	
+	GEO::mesh_remove_intersections(*M);
     }
 }
 
 namespace OGF {
-    
-    MeshGrobSurfaceCommands::MeshGrobSurfaceCommands() { 
+
+    MeshGrobSurfaceCommands::MeshGrobSurfaceCommands() {
     }
 
-    MeshGrobSurfaceCommands::~MeshGrobSurfaceCommands() { 
+    MeshGrobSurfaceCommands::~MeshGrobSurfaceCommands() {
     }
-    
+
     void MeshGrobSurfaceCommands::merge_vertices(
         double epsilon
     ) {
@@ -148,13 +148,13 @@ namespace OGF {
             max_degree3_dist *= (0.01 * bbox_diagonal);
             GEO::remove_degree3_vertices(*mesh_grob(), max_degree3_dist);
         }
-        
+
         if(remove_intersections) {
             Logger::out("Mesh") << "Removing intersections" << std::endl;
             GEO::mesh_remove_intersections(*mesh_grob());
             Logger::out("Mesh") << "Removed intersections" << std::endl;
         }
-        
+
         mesh_grob()->update();
     }
 
@@ -179,7 +179,7 @@ namespace OGF {
 	);
 	mesh_grob()->update();
     }
-    
+
     void MeshGrobSurfaceCommands::expand_border(double margin) {
         margin *= (GEO::bbox_diagonal(*mesh_grob()) * 0.001);
         GEO::expand_border(*mesh_grob(),margin);
@@ -208,7 +208,7 @@ namespace OGF {
         mesh_grob()->update();
     }
 
-    
+
     void MeshGrobSurfaceCommands::remove_invisible_facets(
         double min_visibility
     ) {
@@ -245,7 +245,7 @@ namespace OGF {
             pre_process, post_process
         );
     }
-    
+
     MeshGrob* MeshGrobSurfaceCommands::compute_intersection(
 	const MeshGrobName& other_name,
 	const NewMeshGrobName& result_name,
@@ -297,7 +297,7 @@ namespace OGF {
 	if(!other->facets.are_simplices()) {
 	    Logger::err("Booleans") << other_name << " is not triangulated"
 				    << std::endl;
-	    return nullptr;	    
+	    return nullptr;
 	}
 	MeshGrob* result = MeshGrob::find_or_create(scene_graph(), result_name);
 	if(pre_process) {
@@ -318,19 +318,19 @@ namespace OGF {
         bool remove_internal_shells,
         bool simplify_coplanar_facets,
         double coplanar_angle_tolerance,
-        bool interpolate_attributes 
+        bool interpolate_attributes
     ) {
         MeshSurfaceIntersection intersection(*mesh_grob());
         intersection.set_delaunay(true);
         intersection.set_detect_intersecting_neighbors(true);
         intersection.set_radial_sort(remove_internal_shells);
         intersection.set_interpolate_attributes(interpolate_attributes);
-        
+
         intersection.intersect();
         if(remove_internal_shells) {
             intersection.remove_internal_shells();
         }
-        
+
         if(simplify_coplanar_facets) {
             intersection.simplify_coplanar_facets(coplanar_angle_tolerance);
         }
@@ -338,8 +338,8 @@ namespace OGF {
         show_mesh();
         mesh_grob()->update();
     }
-    
-    
+
+
     void MeshGrobSurfaceCommands::remesh_smooth(
         const NewMeshGrobName& surface_name_in,
         unsigned int nb_points,
@@ -354,7 +354,7 @@ namespace OGF {
         unsigned int LFS_samples
     ) {
         std::string surface_name = surface_name_in;
-        
+
         if(surface_name == mesh_grob()->name()) {
             Logger::err("Remesh")
                 << "remesh should not be the same as mesh"
@@ -367,22 +367,22 @@ namespace OGF {
                 << "mesh has no facet" << std::endl;
             return;
         }
-        
+
         if(!mesh_grob()->facets.are_simplices()) {
             Logger::err("Remesh")
                 << "mesh need to be simplicial, use repair"
                 << std::endl;
             return;
         }
-       
+
         index_t dimension = mesh_grob()->vertices.dimension();
-       
+
         MeshGrob* remesh = MeshGrob::find_or_create(
             scene_graph(), surface_name
         );
 
         remesh->clear();
-        remesh->lock_graphics();        
+        remesh->lock_graphics();
 
         if(tri_shape_adaptation != 0.0) {
             tri_shape_adaptation *= 0.02;
@@ -400,22 +400,22 @@ namespace OGF {
             mesh_grob()->update();
         } else {
             mesh_grob()->vertices.set_dimension(3);
-            mesh_grob()->update();            
+            mesh_grob()->update();
         }
 
         if(tri_size_adaptation != 0.0) {
             GEO::compute_sizing_field(
                 *mesh_grob(), tri_size_adaptation, LFS_samples
             );
-            mesh_grob()->update();            
+            mesh_grob()->update();
         } else {
             AttributesManager& attributes = mesh_grob()->vertices.attributes();
             if(attributes.is_defined("weight")) {
                 attributes.delete_attribute_store("weight");
-                mesh_grob()->update();                
+                mesh_grob()->update();
             }
         }
-        
+
         GEO::remesh_smooth(
             *mesh_grob(), *remesh,
             nb_points, 0,
@@ -427,18 +427,18 @@ namespace OGF {
 
         remesh->unlock_graphics();
         remesh->update();
-       
+
         // If anisotropic remeshing was used, then this lifts
         // the mesh into 6D space. Here we restore the initial
         // 3D setting.
         if(mesh_grob()->vertices.dimension() != dimension) {
            mesh_grob()->vertices.set_dimension(dimension);
         }
-       
+
         // Need to update this one as well, since vertices
         //  order may have changed
-        mesh_grob()->update(); 
-    }       
+        mesh_grob()->update();
+    }
 
     void MeshGrobSurfaceCommands::remesh_feature_sensitive(
         const NewMeshGrobName& surface_name,
@@ -458,20 +458,20 @@ namespace OGF {
                 << std::endl;
             return;
         }
-        
+
         if(mesh_grob()->facets.nb() == 0) {
             Logger::err("Remesh")
                 << "mesh has no facet" << std::endl;
             return;
         }
-        
+
         if(!mesh_grob()->facets.are_simplices()) {
             Logger::err("Remesh")
                 << "mesh need to be simplicial, use repair"
                 << std::endl;
             return;
         }
-#ifdef GEOGRAM_WITH_VORPALINE        
+#ifdef GEOGRAM_WITH_VORPALINE
         MeshGrob* remesh = MeshGrob::find_or_create(
             scene_graph(), surface_name
         );
@@ -490,8 +490,8 @@ namespace OGF {
 	show_mesh(remesh);
         remesh->update();
         // Need to update this one as well,
-        // since vertices order may have changed        
-        mesh_grob()->update(); 
+        // since vertices order may have changed
+        mesh_grob()->update();
 #else
         geo_argused(surface_name);
         geo_argused(nb_points);
@@ -529,13 +529,13 @@ namespace OGF {
                 << std::endl;
             return;
         }
-        
+
         if(mesh_grob()->facets.nb() == 0) {
             Logger::err("Remesh")
                 << "mesh has no facet" << std::endl;
             return;
         }
-        
+
         if(!mesh_grob()->facets.are_simplices()) {
             Logger::err("Remesh")
                 << "mesh need to be simplicial, use repair"
@@ -559,8 +559,8 @@ namespace OGF {
 	show_mesh(remesh);
         remesh->update();
         // Need to update this one as well,
-        // since vertices order may have changed        
-        mesh_grob()->update(); 
+        // since vertices order may have changed
+        mesh_grob()->update();
 #else
 	geo_argused(surface_name);
 	geo_argused(rel_edge_len);
@@ -575,11 +575,11 @@ namespace OGF {
 			      << std::endl;
 	Logger::err("Remesh") << "or contact@tessael.com"
 			      << std::endl;
-#endif	
+#endif
     }
 
    /***********************************************************/
-    
+
     void MeshGrobSurfaceCommands::decimate(
         index_t nb_bins,
         bool remove_deg3_vrtx,
@@ -602,7 +602,7 @@ namespace OGF {
     }
 
    /***********************************************************/
-    
+
     void MeshGrobSurfaceCommands::split_triangles(index_t nb_times) {
 	if(!mesh_grob()->facets.are_simplices()) {
 	    Logger::err("Split") << "Mesh is not simplicial, cannot split."
@@ -620,7 +620,7 @@ namespace OGF {
 	for(index_t i=0; i<nb_times; ++i) {
 	    mesh_split_quads(*mesh_grob());
 	}
-	show_mesh();	
+	show_mesh();
 	mesh_grob()->update();
     }
 
@@ -628,10 +628,10 @@ namespace OGF {
 	for(index_t i=0; i<nb_times; ++i) {
 	    mesh_split_catmull_clark(*mesh_grob());
 	}
-	show_mesh();	
+	show_mesh();
 	mesh_grob()->update();
     }
-    
+
     void MeshGrobSurfaceCommands::tessellate_facets(
 	index_t max_vertices_per_facet
     ) {
@@ -641,11 +641,11 @@ namespace OGF {
 		"mesh_style", "true;0 0 0 1;1"
 	    );
         }
-	show_mesh();	
+	show_mesh();
 	mesh_grob()->update();
     }
-    
-   
+
+
     void MeshGrobSurfaceCommands::triangulate_center_vertex() {
 	GEO::mesh_triangulate_center_vertex(*mesh_grob());
         if(mesh_grob()->get_shader() != nullptr) {
@@ -653,11 +653,11 @@ namespace OGF {
 		"mesh_style", "true;0 0 0 1;1"
 	    );
         }
-	show_mesh();	
+	show_mesh();
 	mesh_grob()->update();
     }
 
-   
+
     void MeshGrobSurfaceCommands::smooth() {
 	Attribute<bool> v_is_locked(
 	    mesh_grob()->vertices.attributes(),"selection"
@@ -675,7 +675,7 @@ namespace OGF {
 	    return;
 	}
 	mesh_smooth(*mesh_grob());
-	mesh_grob()->update();	
+	mesh_grob()->update();
     }
 
     void MeshGrobSurfaceCommands::make_texture_atlas(
@@ -691,7 +691,7 @@ namespace OGF {
                 << std::endl;
             return;
         }
-        
+
 	if(!detect_sharp_edges) {
 	    sharp_edges_threshold = 360.0;
 	}
@@ -721,15 +721,15 @@ namespace OGF {
             pack_atlas_using_xatlas(*mesh_grob());
             break;
         }
-	show_UV();	
+	show_UV();
 	mesh_grob()->update();
     }
-    
+
     void MeshGrobSurfaceCommands::parameterize_chart(
 	const std::string& attribute, ChartParameterizer algo, bool verbose
     ) {
 	switch(algo) {
-	    case PARAM_PROJECTION: 
+	    case PARAM_PROJECTION:
 		Logger::out("Param") << "Not implemented for single chart"
 				     << std::endl;
 		return;
@@ -745,12 +745,12 @@ namespace OGF {
 		    Logger::err("ABF")
 		      << "Mesh facets need to be triangles" << std::endl;
 		    return ;
-		} 
+		}
 		mesh_compute_ABF_plus_plus(*mesh_grob(), attribute, verbose);
 		break;
 	}
-	show_UV("vertices." + attribute);	
-	mesh_grob()->update();		
+	show_UV("vertices." + attribute);
+	mesh_grob()->update();
     }
 
     void MeshGrobSurfaceCommands::bake_normals(
@@ -776,15 +776,15 @@ namespace OGF {
 	}
 
 	Image_var normal_map = new Image(Image::RGB, Image::BYTE, size, size);
-	
+
 	MeshGrob* highres = MeshGrob::find(scene_graph(),surface);
-	
+
 	if(highres == mesh_grob()) {
-	    
+
 	    // Case 1: bake normals from the parameterized surface.
-	    
+
 	    bake_mesh_facet_normals(mesh_grob(), normal_map);
-	    
+
 	} else {
 
 	    // Case 2: bake normals from a different highres surface.
@@ -794,26 +794,26 @@ namespace OGF {
 
 	    Logger::out("baking") << "Creating geometry image"
 				  << std::endl;
-	    
+
 	    Image_var geometry_image = new Image(
 		Image::RGB, Image::FLOAT64, size, size
 	    );
 
 	    bake_mesh_geometry(mesh_grob(),geometry_image);
-	    
+
 	    //   Step 2: create the normal map by looking up the high res
 	    // facet nearest to each point from the geometry image.
 
 	    if(highres->facets.nb() != 0) {
-	    
+
 		Logger::out("baking")
 		    << "Transferring highres surface normals to geometry image"
 		    << std::endl;
-		
+
 		bake_mesh_facet_normals_indirect(
 		    geometry_image, normal_map, highres
 		);
-		
+
 	    } else {
 
 		Logger::out("baking")
@@ -847,13 +847,13 @@ namespace OGF {
 	    shader->set_property("painting","TEXTURE");
 	    shader->set_property("tex_image",image);
 	    shader->set_property("tex_coords","facet_corners." + attribute);
-	    shader->set_property("tex_repeat","1");	    
+	    shader->set_property("tex_repeat","1");
 	    shader->set_property("normal_map","true");
-	    shader->set_property("lighting","true");            
+	    shader->set_property("lighting","true");
 	}
 
 	mesh_grob()->update();
-	
+
     }
 
     void MeshGrobSurfaceCommands::bake_colors(
@@ -885,13 +885,13 @@ namespace OGF {
 				  << std::endl;
 	    return;
 	}
-	
+
 	Attribute<double> color;
 	color.bind_if_is_defined(
 	   highres->vertices.attributes(), color_attr_name
 	);
 	if(!color.is_bound()) {
-	    Logger::err("baking") << color_attr_name 
+	    Logger::err("baking") << color_attr_name
 	  	  		  << ": no such vertex attribute"
 				  << std::endl;
 	    return;
@@ -901,15 +901,15 @@ namespace OGF {
 				  << ": wront dimension" << std::endl;
 	    return;
 	}
-	
+
 	Image_var color_map = new Image(Image::RGB, Image::BYTE, size, size);
-	
+
 	if(highres == mesh_grob()) {
-	    
+
 	    // Case 1: bake colors from the parameterized surface.
-	    
+
 	    bake_mesh_attribute(mesh_grob(), color_map, color);
-	    
+
 	} else {
 
 	    // Case 2: bake normals from a different highres surface.
@@ -919,13 +919,13 @@ namespace OGF {
 
 	    Logger::out("baking") << "Creating geometry image"
 				  << std::endl;
-	    
+
 	    Image_var geometry_image = new Image(
 		Image::RGB, Image::FLOAT64, size, size
 	    );
 
 	    bake_mesh_geometry(mesh_grob(),geometry_image);
-	    
+
 	    //   Step 2: create the color map by looking up the high res
 	    // point nearest to each point from the geometry image.
 
@@ -943,7 +943,7 @@ namespace OGF {
 	    shader->set_property("painting","TEXTURE");
 	    shader->set_property("tex_image",image);
 	    shader->set_property("tex_coords","facet_corners." + attribute);
-	    shader->set_property("tex_repeat","1");	    	    
+	    shader->set_property("tex_repeat","1");
 	    shader->set_property("normal_map","false");
 	}
 
@@ -1001,13 +1001,13 @@ namespace OGF {
 
 	Image_var src_texture =
 	    ImageLibrary::instance()->load_image(src_texture_name);
-	
+
 	/*****************************************/
 
 	// Create pointset with the "geometry" of src_surface's facet
 	// corners (we do not have (yet) functions to directly bake
 	// facet corner attributes)...
-	
+
 	Mesh points;
 	points.vertices.set_dimension(3);
 	points.vertices.create_vertices(src_surface->facet_corners.nb());
@@ -1028,15 +1028,15 @@ namespace OGF {
 		points.vertices.point_ptr(c)[1] = q.y;
 		points.vertices.point_ptr(c)[2] = q.z;
 		points_tex_coords[2*c]   = src_tex_coord[2*c];
-		points_tex_coords[2*c+1] = src_tex_coord[2*c+1];		
+		points_tex_coords[2*c+1] = src_tex_coord[2*c+1];
 	    }
 	}
 
-	/*****************************************/	
+	/*****************************************/
 
 	Logger::out("baking") << "Creating geometry image"
 			      << std::endl;
-	    
+
 	Image_var geometry_image = new Image(
 	    Image::RGB, Image::FLOAT64, size, size
 	);
@@ -1047,7 +1047,7 @@ namespace OGF {
 			      << std::endl;
 
 	Image_var UV_map = new Image(
-	    Image::RGB, Image::FLOAT64, size, size	    
+	    Image::RGB, Image::FLOAT64, size, size
 	);
 
 	bake_mesh_points_attribute_indirect(
@@ -1057,7 +1057,7 @@ namespace OGF {
 
 	Logger::out("baking") << "Lookup image"
 			      << std::endl;
-	
+
 	Image_var image = new Image(
 	    Image::RGB, Image::BYTE, size, size
 	);
@@ -1085,15 +1085,15 @@ namespace OGF {
 	if(nb_dilate != 0) {
 	    Logger::out("baking") << "Dilate"
 				  << std::endl;
-	
+
 	    MorphoMath mm(image);
 	    mm.dilate(nb_dilate);
 	}
-	
+
 	ImageLibrary::instance()->save_image(image_name, image);
-	
-	/*****************************************/	
-	
+
+	/*****************************************/
+
 	Object* shader = mesh_grob()->get_shader();
 	if(shader != nullptr) {
 	    shader->set_property("painting","TEXTURE");
@@ -1101,7 +1101,7 @@ namespace OGF {
 	    shader->set_property(
 		"tex_coords","facet_corners." + tex_coord_name
 	    );
-	    shader->set_property("tex_repeat","1");	    
+	    shader->set_property("tex_repeat","1");
 	    shader->set_property("normal_map","false");
 	}
 
@@ -1119,9 +1119,9 @@ namespace OGF {
         }
         mesh_segment(*mesh_grob(), segmenter, nb_segments);
         show_charts();
-	mesh_grob()->update();        
+	mesh_grob()->update();
     }
-    
+
     void MeshGrobSurfaceCommands::get_charts() {
 	mesh_get_charts(*mesh_grob());
 	show_charts();
@@ -1132,7 +1132,7 @@ namespace OGF {
 	Attribute<index_t> chart;
         chart.bind_if_is_defined(mesh_grob()->facets.attributes(), "chart");
         chart.destroy();
-        Shader* shader = mesh_grob()->get_shader();
+        Object* shader = mesh_grob()->get_shader();
         if(shader != nullptr) {
             if(shader->has_property("painting")) {
                 shader->set_property("painting","SOLID_COLOR");
@@ -1168,7 +1168,7 @@ namespace OGF {
 	for(index_t i=0; i<f_to_unglue.size(); ++i) {
 	    unglue_edges(*mesh_grob(), f_to_unglue[i], c_to_unglue[i]);
 	}
-	
+
 	mesh_grob()->update();
     }
 
@@ -1198,9 +1198,8 @@ namespace OGF {
 	for(index_t i=0; i<f_to_unglue.size(); ++i) {
 	    unglue_edges(*mesh_grob(), f_to_unglue[i], c_to_unglue[i]);
 	}
-	
+
 	mesh_grob()->update();
     }
-    
-}
 
+}

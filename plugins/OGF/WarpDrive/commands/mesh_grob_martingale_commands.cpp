@@ -44,6 +44,7 @@
 #include <exploragram/optimal_transport/optimal_transport_on_surface.h>
 
 #include <OGF/scene_graph/types/scene_graph.h>
+#include <OGF/scene_graph/shaders/shader.h>
 
 #include <geogram/basic/command_line.h>
 #include <geogram/voronoi/CVT.h>

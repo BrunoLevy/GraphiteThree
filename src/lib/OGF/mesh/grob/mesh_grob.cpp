@@ -23,24 +23,25 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- * *  the Software into proprietary programs. 
+ * *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the 
+ * As an exception to the GPL, Graphite can be linked with the
  *  following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #include <OGF/mesh/grob/mesh_grob.h>
 #include <OGF/scene_graph/types/scene_graph.h>
 #include <OGF/scene_graph/types/scene_graph_library.h>
 #include <OGF/scene_graph/types/geofile.h>
+#include <OGF/scene_graph/shaders/shader.h>
 #include <OGF/gom/reflection/meta_class.h>
 
 #include <geogram/mesh/mesh_io.h>
@@ -48,7 +49,7 @@
 #include <geogram/basic/file_system.h>
 
 namespace OGF {
-    
+
     MeshGrob::MeshGrob(CompositeGrob* parent) :
         Grob(parent)
     {
@@ -57,11 +58,11 @@ namespace OGF {
 
     MeshGrob::~MeshGrob() {
     }
-    
+
     void MeshGrob::update() {
         Grob::update();
     }
-    
+
     bool MeshGrob::load(const FileName& value) {
         MeshIOFlags flags;
 	flags.set_attributes(MESH_ALL_ATTRIBUTES);
@@ -78,8 +79,8 @@ namespace OGF {
 
         // If the mesh only has points,
         // then activate points display.
-        Shader* shader = get_shader();
-        if(shader != nullptr && 
+        Object* shader = get_shader();
+        if(shader != nullptr &&
            vertices.nb() != 0 &&
            edges.nb() == 0 &&
            facets.nb() == 0 &&
@@ -89,7 +90,7 @@ namespace OGF {
         }
         return result;
     }
-    
+
     bool MeshGrob::append(const FileName& value) {
         Logger::warn("MeshGrob") << "append() not implemented"
                                  << std::endl;
@@ -97,14 +98,14 @@ namespace OGF {
         update();
         return result;
     }
-    
+
     bool MeshGrob::save(const NewFileName& value) {
 	if(FileSystem::extension(value) == "graphite") {
 	    return Grob::save(value);
 	}
         return GEO::mesh_save(*this, value);
     }
-    
+
     void MeshGrob::clear() {
         GEO::Mesh::clear();
         update();
@@ -120,19 +121,21 @@ namespace OGF {
         result->update();
         return result;
     }
-    
+
     Box3d MeshGrob::bbox() const {
         Box3d result;
 
         // If there is a vertex filter, apply it.
-        Shader* shader = get_shader();
+        Object* shader = get_shader();
         if(shader != nullptr) {
             if(shader->has_property("vertices_filter")) {
                 std::string prop;
                 shader->get_property("vertices_filter", prop);
                 if(prop == "true") {
                     Attribute<Numeric::uint8> filter;
-                    filter.bind_if_is_defined(this->vertices.attributes(),"filter");
+                    filter.bind_if_is_defined(
+                        this->vertices.attributes(),"filter"
+                    );
                     if(filter.is_bound()) {
                         for(index_t v: vertices) {
                             if(filter[v] != 0) {
@@ -144,7 +147,7 @@ namespace OGF {
                 }
             }
         }
-        
+
         if(vertices.nb() != 0) {
             double xyzmin[3];
             double xyzmax[3];
@@ -152,10 +155,10 @@ namespace OGF {
             result.add_point(vec3(xyzmin));
             result.add_point(vec3(xyzmax));
         }
-        
+
         return result;
     }
-    
+
     MeshGrob* MeshGrob::find_or_create(
         SceneGraph* sg, const std::string& name
     ) {
@@ -168,13 +171,13 @@ namespace OGF {
             ogf_assert(result != nullptr);
             result->rename(name);
             sg->set_current_object(result->name());
-	    if(sg->is_bound(cur_grob_bkp)) { 
+	    if(sg->is_bound(cur_grob_bkp)) {
 		sg->set_current_object(cur_grob_bkp);
 	    }
         }
         return result;
     }
-    
+
     MeshGrob* MeshGrob::find(SceneGraph* sg, const std::string& name) {
         MeshGrob* result = nullptr;
         if(sg->is_bound(name)) {
@@ -208,7 +211,7 @@ namespace OGF {
     std::string MeshGrob::get_attributes() const {
 	return Mesh::get_attributes();
     }
-    
+
     std::string MeshGrob::get_scalar_attributes() const {
         return Mesh::get_scalar_attributes();
     }
@@ -252,19 +255,19 @@ namespace OGF {
         }
         return result;
     }
-    
+
     bool MeshGrob::is_serializable() const {
         return true;
     }
-    
+
     bool MeshGrob::serialize_read(InputGraphiteFile& geofile) {
         bool result = mesh_load(geofile, *this);
         update();
         return result;
     }
-    
+
     bool MeshGrob::serialize_write(OutputGraphiteFile& geofile) {
-        return mesh_save(*this, geofile); 
+        return mesh_save(*this, geofile);
     }
 
 
@@ -287,7 +290,7 @@ namespace OGF {
         std::vector<std::string> dims;
         String::split_string(dims_in,';',dims);
 
-        
+
         std::vector<std::string> attributes;
         String::split_string(all_attributes,';',attributes);
         std::string result;
@@ -308,7 +311,7 @@ namespace OGF {
                 std::cerr << "nil attr: " << full_attribute_name << std::endl;
                 continue;
             }
-            
+
             bool localisation_ok = (localisations_in == "");
             for(const std::string& localisation: localisations) {
                 if(Mesh::subelements_type_to_name(where) == localisation) {
@@ -316,7 +319,7 @@ namespace OGF {
                     break;
                 }
             }
-            
+
             bool type_ok = (types_in == "");
             for(const std::string& type: types) {
                 MetaType* mtype = Meta::instance()->resolve_meta_type(type);
@@ -331,7 +334,7 @@ namespace OGF {
                     break;
                 }
             }
-            
+
             bool dim_ok = (dims_in == "");
             for(const std::string& dim: dims) {
                 if(String::to_string(attribute_store->dimension()) == dim) {
@@ -346,11 +349,10 @@ namespace OGF {
                 }
                 result += full_attribute_name;
             }
-            
+
         }
 
         return result;
     }
-    
-}
 
+}

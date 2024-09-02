@@ -23,30 +23,30 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
  * As an exception to the GPL, Graphite can be linked with the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #include <OGF/mesh/commands/mesh_grob_commands.h>
 
 namespace OGF {
-    MeshGrobCommands::MeshGrobCommands() { 
+    MeshGrobCommands::MeshGrobCommands() {
     }
-        
-    MeshGrobCommands::~MeshGrobCommands() { 
-    }        
+
+    MeshGrobCommands::~MeshGrobCommands() {
+    }
 
     void MeshGrobCommands::hide_attribute() {
-	Shader* shader = mesh_grob()->get_shader();
+	Object* shader = mesh_grob()->get_shader();
 	if(shader == nullptr) {
 	    return;
 	}
@@ -57,15 +57,15 @@ namespace OGF {
             shader->set_property("lighting", "true");
         }
     }
-    
+
     void MeshGrobCommands::show_attribute(
 	const std::string& attribute_name, MeshGrob* M
     ) {
 	if(M == nullptr) {
 	    M = mesh_grob();
 	}
-	
-	Shader* shader = M->get_shader();
+
+	Object* shader = M->get_shader();
 
 	if(shader == nullptr) {
 	    return;
@@ -100,21 +100,21 @@ namespace OGF {
         if(store == nullptr) {
             return;
         }
-        
+
 	std::string shd_painting;
 	std::string shd_attribute;
 	shader->get_property("painting",shd_painting);
 	shader->get_property("attribute",shd_attribute);
-	
+
 	bool first_time = (
 	    shd_painting != "ATTRIBUTE" ||
 	    shd_attribute != attribute_name
 	);
-	
+
 	shader->set_property("painting","ATTRIBUTE");
 	shader->set_property("attribute", attribute_name);
 
-        
+
         bool is_bool = store->elements_type_matches(
             typeid(Numeric::uint8).name()
         );
@@ -124,12 +124,12 @@ namespace OGF {
             ) || store->elements_type_matches(
                typeid(Numeric::int32).name()
             ) ;
-            
-        
+
+
 	if(first_time) {
 	    shader->invoke_method("autorange");
 	    if(
-                !is_bool && !is_integer && 
+                !is_bool && !is_integer &&
                 !String::string_starts_with(attribute_name,"cells.")
             ) {
 		shader->set_property("lighting","false");
@@ -137,7 +137,7 @@ namespace OGF {
 
             std::string colormap = is_bool ? "blue_red" : "plasma";
             std::string smooth   = (is_bool || is_integer) ? "false" : "true";
-            
+
             shader->set_property(
                 "colormap",
                 colormap + ";true;0;false;" + smooth
@@ -162,11 +162,11 @@ namespace OGF {
     }
 
     void MeshGrobCommands::show_charts(const std::string& attribute) {
-	Shader* shader = mesh_grob()->get_shader();
+	Object* shader = mesh_grob()->get_shader();
 	if(shader == nullptr) {
 	    return;
 	}
-        
+
         Attribute<index_t> chart(mesh_grob()->facets.attributes(),"chart");
         index_t max_chart = 0;
         for(index_t f: mesh_grob()->facets) {
@@ -179,14 +179,14 @@ namespace OGF {
 	shader->set_property("colormap","random;true;65537;false;false;");
         shader->set_property("lighting","false");
     }
-    
+
     void MeshGrobCommands::show_mesh(MeshGrob* M) {
-	
+
 	if(M == nullptr) {
 	    M = mesh_grob();
 	}
-	
-	Shader* shader = M->get_shader();
+
+	Object* shader = M->get_shader();
 
 	if(shader == nullptr) {
 	    return;
@@ -209,13 +209,13 @@ namespace OGF {
 	if(shd_mesh_fields[0] == "true") {
 	    return;
 	}
-	
+
 	shd_mesh = "true;"+shd_mesh_fields[1]+";"+shd_mesh_fields[2];
 	shader->set_property("mesh_style", shd_mesh);
     }
 
     void MeshGrobCommands::set_vertices_visibility(bool visible) {
-	Shader* shader = mesh_grob()->get_shader();
+	Object* shader = mesh_grob()->get_shader();
 	if(shader == nullptr) {
 	    return;
 	}
@@ -225,7 +225,7 @@ namespace OGF {
 
 	std::string shd_vertices;
 	std::vector<std::string> shd_vertices_fields;
-        
+
 	shader->get_property("vertices_style",shd_vertices);
 	String::split_string(shd_vertices, ';', shd_vertices_fields, false);
 
@@ -235,19 +235,19 @@ namespace OGF {
 
         shd_vertices = visible ? "true;" : "false;";
 	shd_vertices += shd_vertices_fields[1]+";"+shd_vertices_fields[2];
-        
+
 	shader->set_property("vertices_style", shd_vertices);
     }
 
-    
+
     void MeshGrobCommands::show_UV(
-	const std::string& UV_prop_name, MeshGrob* M 
+	const std::string& UV_prop_name, MeshGrob* M
     ) {
 	if(M == nullptr) {
 	    M = mesh_grob();
 	}
-	
-	Shader* shader = M->get_shader();
+
+	Object* shader = M->get_shader();
 
 	if(shader == nullptr) {
 	    return;
@@ -256,7 +256,7 @@ namespace OGF {
 	if(
 	    !shader->has_property("painting") ||
 	    !shader->has_property("tex_coords")	||
-	    !shader->has_property("lighting")	
+	    !shader->has_property("lighting")
 	) {
 	    return;
 	}
@@ -266,7 +266,7 @@ namespace OGF {
 	shader->set_property("tex_coords",UV_prop_name);
 	shader->set_property("normal_map","false");
 	shader->set_property("tex_repeat","10");
-	shader->set_property("lighting","true");        
+	shader->set_property("lighting","true");
     }
 
     void MeshGrobCommands::show_colors(
@@ -275,8 +275,8 @@ namespace OGF {
 	if(M == nullptr) {
 	    M = mesh_grob();
 	}
-	
-	Shader* shader = M->get_shader();
+
+	Object* shader = M->get_shader();
 
 	if(shader == nullptr) {
 	    return;
@@ -291,4 +291,3 @@ namespace OGF {
     }
 
 }
-

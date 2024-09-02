@@ -25,18 +25,19 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/scene_graph/tools/tool.h>
 #include <OGF/scene_graph/tools/tools_manager.h>
 #include <OGF/scene_graph/types/scene_graph_tools_manager.h>
+#include <OGF/scene_graph/shaders/shader.h>
 #include <OGF/skin/types/application_base.h>
 
 namespace OGF {
@@ -46,14 +47,14 @@ namespace OGF {
     SceneGraph* Tool::scene_graph() {
 	return tools_manager_->manager()->scene_graph();
     }
-    
+
     void Tool::grab(const RayPick&) {
         ApplicationBase::instance()->save_state();
     }
-    
+
     void Tool::drag(const RayPick&) {
     }
-    
+
     void Tool::release(const RayPick&) {
     }
 
@@ -66,13 +67,13 @@ namespace OGF {
     RenderingContext* Tool::rendering_context() const {
         return tools_manager_->rendering_context() ;
     }
-    
+
     Grob* Tool::object() const {
         return tools_manager_->object() ;
     }
 
     vec2 Tool::project_point(vec3 p) const {
-        Shader* shd         = object()->get_shader();
+        Shader* shd         = dynamic_cast<Shader*>(object()->get_shader());
         GLdouble* modelview = shd->latest_modelview();
         GLdouble* project   = shd->latest_project();
         GLint*    viewport  = shd->latest_viewport();
@@ -85,18 +86,18 @@ namespace OGF {
             &X, &Y, &Z
         );
 
-        // Once again, Y axis is flipped... 
+        // Once again, Y axis is flipped...
         double y0 = double(viewport[1]);
         double h  = double(viewport[3]);
         Y -= y0;
         Y  = h-1-Y;
         Y += y0;
-        
+
         return vec2(X,Y);
     }
 
     vec2 Tool::ndc_to_dc(vec2 p) const {
-        Shader* shd = object()->get_shader();
+        Shader* shd = dynamic_cast<Shader*>(object()->get_shader());
         GLint* viewport = shd->latest_viewport();
         double x = 0.5*(p.x+1.0);
         double y = 0.5*(p.y+1.0);
@@ -111,13 +112,13 @@ namespace OGF {
             y * h + y0
         );
     }
-    
+
     const mat4& Tool::focus() const {
         return tools_manager_->manager()->get_focus() ;
     }
 
-    void Tool::status(const std::string& value) { 
-        tools_manager_->status(value) ; 
+    void Tool::status(const std::string& value) {
+        tools_manager_->status(value) ;
     }
 
     void Tool::set_tooltip(const std::string& text) {
@@ -137,12 +138,12 @@ namespace OGF {
             main->set_property("tooltip", "");
         }
     }
-    
+
     /*******************************************************/
 
     MultiTool::MultiTool(ToolsManager* mgr) : Tool(mgr) {
     }
-    
+
     void MultiTool::grab(const RayPick& ev) {
 	if(ev.button >= MOUSE_BUTTONS_NB) {
 	    return;
@@ -151,7 +152,7 @@ namespace OGF {
             tools_[ev.button]->grab(ev) ;
         }
     }
-    
+
     void MultiTool::drag(const RayPick& ev) {
 	if(ev.button >= MOUSE_BUTTONS_NB) {
 	    return;
@@ -160,7 +161,7 @@ namespace OGF {
             tools_[ev.button]->drag(ev) ;
         }
     }
-    
+
     void MultiTool::release(const RayPick& ev) {
 	if(ev.button >= MOUSE_BUTTONS_NB) {
 	    return;
@@ -169,7 +170,7 @@ namespace OGF {
             tools_[ev.button]->release(ev) ;
         }
     }
-    
+
     void MultiTool::reset() {
         for(int i=0; i<MOUSE_BUTTONS_NB; ++i) {
             if(!tools_[i].is_null()) {
@@ -184,7 +185,7 @@ namespace OGF {
     }
 
     Tool* MultiTool::get_tool(int button) const {
-        geo_assert(button < MOUSE_BUTTONS_NB);        
+        geo_assert(button < MOUSE_BUTTONS_NB);
         return tools_[button] ;
     }
 

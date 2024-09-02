@@ -3565,7 +3565,7 @@ namespace OGF {
         box->facets.connect();
 
 
-        Shader* shd = box->get_shader();
+        Object* shd = box->get_shader();
         if(shd != nullptr) {
             shd->set_property("surface_style", "true;0 0 0 0");
             shd->set_property("mesh_style", "true;1 1 1;3");
@@ -3578,7 +3578,9 @@ namespace OGF {
         Attribute<double> CY;
         CY.bind_if_is_defined(mesh_grob()->vertices.attributes(), "CY");
         if(!CY.is_bound()) {
-            CY.create_vector_attribute(mesh_grob()->vertices.attributes(), "CY", 12);
+            CY.create_vector_attribute(
+                mesh_grob()->vertices.attributes(), "CY", 12
+            );
         }
         try {
             FILE* f = fopen(std::string(filename).c_str(),"rb");

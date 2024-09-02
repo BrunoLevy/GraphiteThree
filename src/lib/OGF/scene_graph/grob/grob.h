@@ -25,21 +25,21 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
- 
+
+
 #ifndef H_OGF_SCENE_GRAPH_TYPES_GROB_H
 #define H_OGF_SCENE_GRAPH_TYPES_GROB_H
 
 #include <OGF/scene_graph/common/common.h>
-#include <OGF/scene_graph/shaders/shader_manager.h>
+#include <OGF/scene_graph/types/properties.h>
 #include <OGF/gom/types/node.h>
 #include <OGF/basic/math/geometry.h>
 
@@ -57,15 +57,16 @@ namespace OGF {
     class CompositeGrob;
     class SceneGraph;
     class Commands;
-    class Shader;
     class InputGraphiteFile;
     class OutputGraphiteFile;
     class Interpreter;
-    
+    // class ShaderManager;
+    // class Shader;
+
     /**
-     * \brief Base class for all 3D Graphite objects. 
+     * \brief Base class for all 3D Graphite objects.
      */
-    gom_attribute(abstract, "true") 
+    gom_attribute(abstract, "true")
     gom_class SCENE_GRAPH_API Grob : public Node {
     public:
 
@@ -114,7 +115,7 @@ namespace OGF {
          * \see serialize_read(), serialize_write()
          */
         virtual bool is_serializable() const;
-        
+
         /**
          * \brief Reads this Grob from a GeoFile.
          * \param[in,out] geofile the input GeoFile
@@ -137,7 +138,7 @@ namespace OGF {
 
         /**
          * \brief Changes the current shader of this Grob
-         * \param[in] value the shader user 
+         * \param[in] value the shader user
          *  class name to be used, as a string (without the "OGF::" prefix).
          * \note This Grob needs to be the current object in
          *  its SceneGraph.
@@ -190,7 +191,7 @@ namespace OGF {
         /**
          * \brief Tests whether this VoxelGrob is locked
          *  for graphics display.
-         * \details When graphics updates are locked, 
+         * \details When graphics updates are locked,
          *  redraw requests are ignored for this VoxelGrob.
          * \retval true if this VoxelGrob is locked
          * \retval false otherwise
@@ -201,12 +202,12 @@ namespace OGF {
 
         /**
          * \brief Locks graphics for this VoxelGrob.
-         * \details When graphics updates are locked, 
+         * \details When graphics updates are locked,
          *  redraw requests are ignored for this VoxelGrob.
          *  Graphics needs to be locked whenever there is a
          *  possibility that a graphics object will be requested
          *  on an object that is in a transient state. For instance,
-         *  this function can be used to avoid OpenGL warnings that 
+         *  this function can be used to avoid OpenGL warnings that
          *  the buffer object has not the expected size.
          *  Multiple lock/unlock requests can be nested, the
          *  VoxelGrob keeps track of the number of active locks.
@@ -220,12 +221,12 @@ namespace OGF {
 
         /**
          * \brief Unlocks graphics for this VoxelGrob.
-         * \details When graphics updates are locked, 
+         * \details When graphics updates are locked,
          *  redraw requests are ignored for this VoxelGrob.
          *  Graphics needs to be locked whenever there is a
          *  possibility that a graphics object will be requested
          *  on an object that is in a transient state. For instance,
-         *  this function can be used to avoid OpenGL warnings that 
+         *  this function can be used to avoid OpenGL warnings that
          *  the buffer object has not the expected size.
          *  Multiple lock/unlock requests can be nested, the
          *  VoxelGrob keeps track of the number of active locks.
@@ -251,7 +252,7 @@ namespace OGF {
 	 * \return a pointer to the main Interpreter.
 	 */
 	virtual Interpreter* interpreter();
-	
+
     gom_slots:
         /**
          * \brief Triggers update events.
@@ -262,13 +263,13 @@ namespace OGF {
         virtual void update();
 
 	/**
-	 * \brief Triggers update events and redraws the 
+	 * \brief Triggers update events and redraws the
 	 *  scene.
 	 * \details Used by commands to display the intermediary
 	 *  state of the object during computations.
 	 */
         virtual void redraw();
-	
+
         /**
          * \brief Gets the SceneGraph.
          * \return a pointer to the SceneGraph
@@ -276,7 +277,7 @@ namespace OGF {
         SceneGraph* scene_graph() const {
             return scene_graph_;
         }
-	
+
         /**
          * \brief Replaces this Grob with the contents of a file.
          * \param[in] value the name of the file
@@ -294,7 +295,7 @@ namespace OGF {
         virtual bool save(const NewFileName& value);
 
 	/**
-	 * \brief Appends the content of the specified file to 
+	 * \brief Appends the content of the specified file to
 	 *  this Grob.
          * \param[in] value the name of the file
 	 * \retval true on success
@@ -309,22 +310,22 @@ namespace OGF {
 
         /**
          * \brief Renames this Grob
-         * \param[in] value the new name. If another Grob exists with the 
-         *  specified name, then the name is changed (by appending a 
+         * \param[in] value the new name. If another Grob exists with the
+         *  specified name, then the name is changed (by appending a
          *  number to it).
          */
         virtual void rename(const std::string& value);
 
         /**
          * \brief Duplicates this Grob
-         * \details The newly created Grob has the same name as the 
-         *  current one, with "_copy" appended. 
+         * \details The newly created Grob has the same name as the
+         *  current one, with "_copy" appended.
          */
         virtual Grob* duplicate(SceneGraph* sg);
 
         /**
          * \brief Creates an Interface object connected to this Grob
-         * \details This is used in GEL scripts, to easily invoke 
+         * \details This is used in GEL scripts, to easily invoke
          *  commands on objects by using for instance:
          *  \code
          *     mesh.query_interface(
@@ -348,7 +349,7 @@ namespace OGF {
 
         /**
          * \brief gets the name of a grob attribute
-         * \param[in] i the index of the grob attribute, 
+         * \param[in] i the index of the grob attribute,
          *   in 0 .. nb_grob_attributes()-1
          * \return the name of the attribute
          */
@@ -358,7 +359,7 @@ namespace OGF {
 
         /**
          * \brief gets the value of a grob attribute
-         * \param[in] i the index of the grob attribute, 
+         * \param[in] i the index of the grob attribute,
          *   in 0 .. nb_grob_attributes()-1
          * \return the value of the attribute, as a string
          */
@@ -378,11 +379,11 @@ namespace OGF {
         ) {
             attributes().set_arg(name, value);
         }
-        
+
     gom_signals:
-        
+
         /**
-         * \brief A signal that is triggered each time the object 
+         * \brief A signal that is triggered each time the object
          *  changed.
          * \param[in] value a pointer to this Grob
          */
@@ -439,19 +440,21 @@ namespace OGF {
          * \brief Gets the shader associated with this Grob.
          * \return a pointer to the Shader
          */
-        Shader* get_shader() const;
+        Object* get_shader() const;
 
 	/**
 	 * \brief Gets the ShaderManager associated with this Grob.
 	 * \return a pointer to the ShaderManager.
 	 */
-	ShaderManager* get_shader_manager() const {
-	    return shader_manager_;
+	Object* get_shader_manager() const {
+	    // Stored as Object_var to avoid dependency to Shader
+	    // return (ShaderManager*)(shader_manager_.get());
+            return shader_manager_;
 	}
-	
+
         /**
          * \brief Sets the object to world transform.
-         * \param[in] value the object to world transform, as 
+         * \param[in] value the object to world transform, as
          *  a 4x4 homogeneous matrix
          * \note In most cases, this is the identity matrix.
          * \TODO more explanations needed here
@@ -462,7 +465,7 @@ namespace OGF {
 
         /**
          * \brief Gets the object to world transform.
-         * \return a const reference to the object to 
+         * \return a const reference to the object to
          *  world transform, as a 4x4 homogeneous matrix
          * \note In most cases, this is the identity matrix.
          * \TODO more explanations needed here
@@ -486,33 +489,33 @@ namespace OGF {
          *  Grob.
          * \param[in] s a pointer to the ShaderManager
          */
-        void set_shader_manager(ShaderManager* s) {
+        void set_shader_manager(Object* s/* ShaderManager* s */) {
+            // shader_manager_ = (Object *)s;
             shader_manager_ = s;
         }
-        
+
     protected:
         std::string name_;
         std::string filename_;
         bool visible_;
         SceneGraph* scene_graph_;
         mat4 obj_to_world_;
-        ShaderManager_var shader_manager_;
+        Object_var shader_manager_;
         ArgList grob_attributes_;
         bool dirty_;
         index_t nb_graphics_locks_;
 
         friend class SceneGraph;
         friend class SceneGraphShaderManager;
-        friend class ShaderManager;	
+        friend class ShaderManager;
     };
 
     /**
      * \brief An automatic reference-counted pointer to a Grob.
      */
     typedef SmartPointer<Grob> Grob_var;
-    
+
 //_________________________________________________________
 
 }
 #endif
-

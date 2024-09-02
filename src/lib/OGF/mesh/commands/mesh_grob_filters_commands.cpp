@@ -23,19 +23,19 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
+ * As an exception to the GPL, Graphite can be linked
  *  with the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #include <OGF/mesh/commands/mesh_grob_filters_commands.h>
 #include <OGF/mesh/commands/filter.h>
@@ -44,11 +44,11 @@ namespace OGF {
 
     /*********************************************************/
 
-    
-    MeshGrobFiltersCommands::MeshGrobFiltersCommands() { 
+
+    MeshGrobFiltersCommands::MeshGrobFiltersCommands() {
     }
 
-    MeshGrobFiltersCommands::~MeshGrobFiltersCommands() { 
+    MeshGrobFiltersCommands::~MeshGrobFiltersCommands() {
     }
 
 
@@ -100,8 +100,8 @@ namespace OGF {
             FILTER_REMOVE, full_attribute_name, filter_string, propagate
         );
     }
-    
-    
+
+
     void MeshGrobFiltersCommands::propagate_filter(
         const std::string& where
     ) {
@@ -116,7 +116,7 @@ namespace OGF {
         propagate_filter(mesh_grob(), where_id);
         mesh_grob()->update();
     }
-    
+
     void MeshGrobFiltersCommands::delete_filters(const std::string& where) {
         if(where == "all") {
             delete_filters("vertices");
@@ -136,21 +136,21 @@ namespace OGF {
         if(attributes.is_defined("filter")) {
             attributes.delete_attribute_store("filter");
         }
-        
-        Shader* shd = mesh_grob()->get_shader();
+
+        Object* shd = mesh_grob()->get_shader();
         if(shd != nullptr) {
             if(shd->has_property(where + "_filter")) {
                 shd->set_property(where + "_filter", "false");
             }
         }
-        
+
         mesh_grob()->update();
     }
 
     void MeshGrobFiltersCommands::copy_filter_to_selection(
         const std::string& filter
     ) {
-        MeshElementsFlags where; 
+        MeshElementsFlags where;
         std::string filter_name;
         index_t component;
 
@@ -191,7 +191,7 @@ namespace OGF {
     void MeshGrobFiltersCommands::copy_selection_to_filter(
         const std::string& selection, bool propagate
     ) {
-        MeshElementsFlags where; 
+        MeshElementsFlags where;
         std::string selection_name;
         index_t component;
 
@@ -226,7 +226,7 @@ namespace OGF {
             filter_attr[i] = selection_attr[i];
         }
 
-        Shader* shd = mesh_grob()->get_shader();
+        Object* shd = mesh_grob()->get_shader();
         if(shd != nullptr) {
             std::string prop_name =
                 Mesh::subelements_type_to_name(where) + "_filter";
@@ -234,11 +234,11 @@ namespace OGF {
                 shd->set_property(prop_name, "true");
             }
         }
-        
+
         if(propagate) {
             propagate_filter(mesh_grob(), where);
         }
-        
+
         mesh_grob()->update();
     }
 
@@ -289,7 +289,7 @@ namespace OGF {
                                       << std::endl;
         }
 
-        Shader* shd = mesh_grob()->get_shader();
+        Object* shd = mesh_grob()->get_shader();
         if(shd != nullptr) {
             if(shd->has_property(where + "_filter")) {
                 shd->set_property(where + "_filter", "true");
@@ -299,7 +299,7 @@ namespace OGF {
         if(propagate) {
             propagate_filter(mesh_grob(), where_id);
         }
-        
+
         mesh_grob()->update();
     }
 
@@ -309,7 +309,7 @@ namespace OGF {
         const std::string& filter_string,
         bool propagate
     ) {
-        MeshElementsFlags where; 
+        MeshElementsFlags where;
         std::string attribute_name;
         index_t component;
 
@@ -369,10 +369,10 @@ namespace OGF {
         if(propagate) {
             propagate_filter(mesh_grob(), where);
         }
-        
+
         mesh_grob()->update();
     }
-    
+
     void MeshGrobFiltersCommands::propagate_filter(
         MeshGrob* mesh, MeshElementsFlags from
     ) {
@@ -417,7 +417,7 @@ namespace OGF {
         case MESH_FACETS: {
             for(index_t v: mesh->vertices) {
                 vertices_filter[v] = 0;
-            }            
+            }
             for(index_t f: mesh->facets) {
                 if(facets_filter[f] != 0) {
                     for(
@@ -446,7 +446,7 @@ namespace OGF {
         case MESH_CELLS: {
             for(index_t v: mesh->vertices) {
                 vertices_filter[v] = 0;
-            }            
+            }
             for(index_t c: mesh->cells) {
                 if(cells_filter[c] != 0) {
                     for(
@@ -475,7 +475,7 @@ namespace OGF {
         default: {
         } break;
         }
-        Shader* shd = mesh->get_shader();
+        Object* shd = mesh->get_shader();
         if(shd != nullptr) {
             std::string oldval;
             if(shd->has_property("vertices_filter")) {
@@ -499,6 +499,5 @@ namespace OGF {
         }
     }
 
-    
-}
 
+}

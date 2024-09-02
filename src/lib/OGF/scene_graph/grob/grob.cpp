@@ -25,24 +25,23 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
- 
+
+
 #include <OGF/scene_graph/grob/grob.h>
 #include <OGF/scene_graph/grob/composite_grob.h>
 #include <OGF/scene_graph/types/scene_graph.h>
 #include <OGF/scene_graph/types/geofile.h>
 #include <OGF/scene_graph/commands/commands.h>
-#include <OGF/scene_graph/shaders/shader.h>
-#include <OGF/scene_graph/shaders/shader_manager.h>
-#include <OGF/scene_graph/types/scene_graph_shader_manager.h>
+//#include <OGF/scene_graph/types/scene_graph_shader_manager.h>
+//#include <OGF/scene_graph/shaders/shader_manager.h>
 #include <OGF/basic/math/geometry.h>
 #include <OGF/gom/reflection/meta_class.h>
 #include <OGF/gom/interpreter/interpreter.h>
@@ -67,7 +66,7 @@ namespace OGF {
         nb_graphics_locks_ = 0;
     }
 
-    Grob::~Grob() {   
+    Grob::~Grob() {
         // Note: this grob is removed from the attribute manager in
         // the remove_child() function of CompositeGrob
     }
@@ -96,7 +95,7 @@ namespace OGF {
             scene_graph()->grob_renamed();
         }
     }
-    
+
     Grob* Grob::duplicate(SceneGraph* sg) {
         Grob* result = sg->create_object(this->meta_class()->name());
         result->attributes() = attributes();
@@ -113,7 +112,7 @@ namespace OGF {
         if( M.is_identity() ) {
             return lb;
         }
-        vec3 p = vec3(lb.xyz_min); 
+        vec3 p = vec3(lb.xyz_min);
         vec3 d = vec3(lb.xyz_max);
         result.add_point(transform_point(p, M));
         p.x += d.x;
@@ -160,7 +159,7 @@ namespace OGF {
         Object* o = interpreter()->create(name, args);
         if(o == nullptr) {
             name = meta_class()->name() + name_in;
-            o = interpreter()->create(name, args);           
+            o = interpreter()->create(name, args);
         }
         if(o == nullptr) {
             name = name_in;
@@ -178,16 +177,16 @@ namespace OGF {
     bool Grob::is_serializable() const {
         return false;
     }
-    
+
     bool Grob::serialize_read(InputGraphiteFile& in) {
         geo_argused(in);
-        Logger::out("Grob") << "Cannot read from stream" 
+        Logger::out("Grob") << "Cannot read from stream"
                             << std::endl;
         return false;
     }
-    
+
     bool Grob::serialize_write(OutputGraphiteFile& out) {
-        geo_argused(out);        
+        geo_argused(out);
         Logger::out("Grob") << "Cannot write to stream"
                             << std::endl;
         return false;
@@ -208,7 +207,7 @@ namespace OGF {
         }
         return false;
     }
-    
+
     bool Grob::save(const NewFileName& value) {
 	if(
 	    FileSystem::extension(value) == "graphite" &&
@@ -220,7 +219,7 @@ namespace OGF {
 	    scene_graph()->set_current_object(bkp);
 	    return result;
 	}
-	
+
         if(is_serializable()) {
             bool result = false;
             try {
@@ -245,11 +244,11 @@ namespace OGF {
 			   << std::endl;
 	return false;
     }
-    
+
     bool Grob::get_visible() const {
         return visible_;
     }
-    
+
     void Grob::set_visible(bool x) {
 	if(x != visible_) {
 	    visible_ = x;
@@ -257,33 +256,44 @@ namespace OGF {
 	}
     }
 
-    Shader* Grob::get_shader() const {
+    Object* Grob::get_shader() const {
+        // Since we do not want to create a Grob->Shader dependancy,
+        // everything is done using the dynamic invokation interface.
         if(shader_manager_ == nullptr) {
             return nullptr;
         }
-        return shader_manager_->current_shader();
+        Any result_as_any;
+        ArgList args;
+        shader_manager_->invoke_method("current_shader", args, result_as_any);
+        Object* result = nullptr;
+        result_as_any.get_value(result);
+        return result;
     }
 
     void Grob::set_shader(const std::string& shader_classname) {
+        // Since we do not want to create a Grob->Shader dependancy,
+        // everything is done using the dynamic invokation interface.
         if(shader_manager_ == nullptr) {
             return;
         }
-        SceneGraphShaderManager* sg_shader_mgr =
-            shader_manager_->scene_graph_shader_manager();
+        ArgList args;
+        Any retval;
+        shader_manager_->invoke_method(
+            "scene_graph_shader_manager", args, retval
+        );
+        Object* sg_shader_mgr = nullptr;
+        retval.get_value(sg_shader_mgr);
         if(sg_shader_mgr == nullptr) {
             return;
         }
-        Any ret_val;
-        ArgList args;
         args.create_arg("value", shader_classname);
-        sg_shader_mgr->invoke_method("shader", args, ret_val);
+        sg_shader_mgr->invoke_method("shader", args);
     }
 
     Interpreter* Grob::interpreter() {
 	return scene_graph()->interpreter();
     }
-    
+
 //_________________________________________________________
 
 }
-

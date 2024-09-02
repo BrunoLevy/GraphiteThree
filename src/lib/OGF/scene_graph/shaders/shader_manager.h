@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_SCENE_GRAPH_TYPES_SHADER_MANAGER_H
@@ -69,6 +69,7 @@ namespace OGF {
          */
          ~ShaderManager() override;
 
+    gom_slots:
         /**
          * \brief Gets the current Shader.
          * \return a pointer to the current Shader
@@ -105,7 +106,7 @@ namespace OGF {
         SceneGraphShaderManager* scene_graph_shader_manager() const {
             return sg_shader_manager_;
         }
-        
+
     gom_properties:
         /**
          * \brief Sets the Shader by class name.
@@ -116,7 +117,7 @@ namespace OGF {
 
         /**
          * \brief Gets the class name of the current shader.
-         * \return the class name of the current shader as a string, with 
+         * \return the class name of the current shader as a string, with
          *  the "OGF::" prefix.
          */
         std::string get_shader() const;
@@ -129,7 +130,7 @@ namespace OGF {
 	Shader* get_shader_object() const {
 	    return current_shader_;
 	}
-	
+
     private:
         Grob* grob_;
         SceneGraphShaderManager* sg_shader_manager_;
