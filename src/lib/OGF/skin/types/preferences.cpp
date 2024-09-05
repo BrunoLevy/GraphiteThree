@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/skin/types/preferences.h>
@@ -43,18 +43,18 @@
 
 #include <vector>
 #include <fstream>
- 
+
 namespace OGF {
     namespace Preferences {
 
         void save_preferences() {
             if(!Environment::instance()->has_value("preferences_variables")) {
-                Logger::warn("Preferences") 
-                    << "No specified preference_variables" 
+                Logger::warn("Preferences")
+                    << "No specified preference_variables"
                     << std::endl;
                 return;
             }
-	    
+
             std::string pref_vars_str =
                 Environment::instance()->get_value("preferences_variables");
             Logger::out("Preference")
@@ -74,7 +74,7 @@ namespace OGF {
 		    std::string name = pref_vars[i];
 		    std::string value;
 		    if(!Environment::instance()->has_value(name)) {
-			Logger::warn("Preferences") 
+			Logger::warn("Preferences")
 			    << "Undefined variable \'" << name << "\'"
 			    << std::endl;
 		    } else {
@@ -116,7 +116,7 @@ namespace OGF {
 	    values += name;
 	    Environment::instance()->set_value(var_name, values);
 	}
-	
+
         void declare_preference_variable(
 	    const std::string& name, const char* value,
 	    const std::string& help
@@ -138,6 +138,6 @@ namespace OGF {
 	    CmdLine::declare_arg(name, value, help);
 	    declare_preference_variable(name);
         }
-	
+
     }
 }

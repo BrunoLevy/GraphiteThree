@@ -119,7 +119,6 @@ function post_init()
 	    if text_editor_gui ~= nil then
 	       text_editor_gui.load(arg)
 	       text_editor_gui.filename = arg
-	       text_editor_gui.visible = true
 	    end
 	    if main ~= nil then
 	       main.exec_command('gom.execute_file(\''..arg..'\')')

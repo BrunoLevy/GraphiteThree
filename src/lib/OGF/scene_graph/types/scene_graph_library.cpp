@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/scene_graph/types/scene_graph_library.h>
@@ -44,7 +44,7 @@ namespace {
     /**
      * \brief Trims the beginning of a string if it matches a specified string
      * \param[in,out] s the string to be trimmed
-     * \param[in] head the candidate head to be removed from 
+     * \param[in] head the candidate head to be removed from
      *  the beginning of \p s
      * \retval true if the input string \p starts with \p head (and \p head
      *   is removed from \p s)
@@ -73,7 +73,7 @@ namespace {
         }
         return false;
     }
-    
+
 }
 
 namespace OGF {
@@ -85,7 +85,7 @@ namespace OGF {
         scene_graph_shader_manager_ = nullptr;
         scene_graph_tools_manager_ = nullptr;
     }
-    
+
     SceneGraphLibrary::~SceneGraphLibrary() {
     }
 
@@ -94,7 +94,7 @@ namespace OGF {
         instance_ = new SceneGraphLibrary();
         Environment::instance()->add_environment(instance_);
     }
-    
+
     void SceneGraphLibrary::terminate() {
         ogf_assert(instance_ != nullptr);
         instance_ = nullptr;
@@ -102,9 +102,9 @@ namespace OGF {
         // transfered to Environment::instance().
     }
 
-    SceneGraphLibrary* SceneGraphLibrary::instance() { 
-        ogf_assert(instance_ != nullptr); 
-        return instance_; 
+    SceneGraphLibrary* SceneGraphLibrary::instance() {
+        ogf_assert(instance_ != nullptr);
+        return instance_;
     }
 
     void SceneGraphLibrary::register_grob_type(
@@ -152,14 +152,15 @@ namespace OGF {
             trim_string_head(tail, "OGF::");
             trim_string_tail(shader_user_name,tail);
         }
-        
+
         it->second.shaders_user_names.push_back(
             shader_user_name == "" ? shader_class_name : shader_user_name
         );
 
-	MetaType* shader_type = Meta::instance()->resolve_meta_type(shader_class_name);
+	MetaType* shader_type =
+            Meta::instance()->resolve_meta_type(shader_class_name);
 	shader_type->create_custom_attribute("grob_class_name", grob_class_name);
-	
+
         Environment::notify_observers(grob_class_name + "_shaders");
     }
 
@@ -170,7 +171,8 @@ namespace OGF {
         ogf_assert(it != grob_infos_.end());
         it->second.tools.push_back(tool_class_name);
         Environment::notify_observers(grob_class_name + "_tools");
-	MetaType* tool_type = Meta::instance()->resolve_meta_type(tool_class_name);
+	MetaType* tool_type =
+            Meta::instance()->resolve_meta_type(tool_class_name);
 	tool_type->create_custom_attribute("grob_class_name", grob_class_name);
     }
 
@@ -182,10 +184,11 @@ namespace OGF {
 	ogf_assert(it != grob_infos_.end());
 	it->second.interfaces.push_back(interface_class_name);
         Environment::notify_observers(grob_class_name + "_interfaces");
-	MetaType* iface_type = Meta::instance()->resolve_meta_type(interface_class_name);
+	MetaType* iface_type =
+            Meta::instance()->resolve_meta_type(interface_class_name);
 	iface_type->create_custom_attribute("grob_class_name", grob_class_name);
     }
-    
+
     void SceneGraphLibrary::register_grob_commands(
         const std::string& grob_class_name,
         const std::string& commands_class_name
@@ -210,9 +213,9 @@ namespace OGF {
             trim_string_head(user_name, "OGF::");
         }
         full_screen_effects_user_names_.push_back(user_name);
-        Environment::notify_observers("full_screen_effects");        
+        Environment::notify_observers("full_screen_effects");
     }
-    
+
     std::string SceneGraphLibrary::file_extension_to_grob(
         const std::string& extension
     ) const {
@@ -237,11 +240,11 @@ namespace OGF {
         ogf_argused(value);
         return false;
     }
-    
+
     bool SceneGraphLibrary::get_local_value(
         const std::string& name, std::string& value
     ) const {
-        
+
         value = "";
 
         if(name == "grob_types") {
@@ -316,9 +319,9 @@ namespace OGF {
 			}
 		    }
 		}
-		
+
                 auto it = grob_infos_.find(grob_class_name);
-                
+
                 if(it == grob_infos_.end()) {
                     return false;
                 }
@@ -342,7 +345,7 @@ namespace OGF {
 			String::split_string(value, ';', shaders);
 			sort_unique(shaders);
 			value = String::join_strings(shaders, ';');
-		    } 
+		    }
                     return true;
                 } else if(grob_var == "tools") {
                     value += it->second.tools_string();
@@ -374,8 +377,8 @@ namespace OGF {
         return false;
     }
 
-    
-    //__________________________________________________________________________
+
+    /*************************************************************************/
 
     std::string
     SceneGraphLibrary::GrobInfo::read_file_extensions_string() const {
@@ -388,7 +391,7 @@ namespace OGF {
         }
         return result;
     }
-    
+
     std::string
     SceneGraphLibrary::GrobInfo::write_file_extensions_string() const {
         std::string result;
@@ -400,7 +403,7 @@ namespace OGF {
         }
         return result;
     }
-    
+
     std::string SceneGraphLibrary::GrobInfo::shaders_user_names_string() const {
         std::string result;
         for(unsigned int i=0; i<shaders.size(); i++) {
@@ -466,7 +469,7 @@ namespace OGF {
         }
         return "";
     }
-        
+
     std::string SceneGraphLibrary::default_grob_write_extension(
         const std::string& grob_class_name
     ) const {
@@ -478,7 +481,7 @@ namespace OGF {
         return "";
     }
 
-    //__________________________________________________________________________
+    /*************************************************************************/
 
     const std::string& SceneGraphLibrary::shader_user_to_classname(
         const std::string& grob_class_name,
@@ -505,7 +508,7 @@ namespace OGF {
 	}
         ogf_assert_not_reached;
     }
-    
+
     const std::string& SceneGraphLibrary::shader_classname_to_user(
         const std::string& grob_class_name,
         const std::string& shader_class_name
@@ -531,7 +534,7 @@ namespace OGF {
         }
         ogf_assert_not_reached;
     }
-    
+
     std::string SceneGraphLibrary::full_screen_effect_user_to_classname(
         const std::string& full_screen_effect_user_name
     ) const {
@@ -553,5 +556,5 @@ namespace OGF {
             Environment::notify_observers(it.first+"_instances");
         }
     }
-    
+
 }

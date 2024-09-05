@@ -589,14 +589,20 @@ namespace OGF {
         list_names(names);
         for(const std::string& name : names) {
             Any a = resolve(name);
-            if(a.meta_type() != nullptr && a.meta_type()->name() == "OGF::Scope*") {
+            if(
+                a.meta_type() != nullptr &&
+                a.meta_type()->name() == "OGF::Scope*"
+            ) {
                 Scope* s = nullptr;
                 a.get_value(s);
                 if(s != nullptr) {
                     s->search(needle, path + "." + name);
                 }
             }
-            if(a.meta_type() != nullptr && a.meta_type()->name() == "OGF::MetaType*") {
+            if(
+                a.meta_type() != nullptr &&
+                a.meta_type()->name() == "OGF::MetaType*"
+            ) {
                 MetaType* m = nullptr;
                 a.get_value(m);
                 if(m != nullptr) {
