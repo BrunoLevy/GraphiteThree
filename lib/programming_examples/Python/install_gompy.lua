@@ -78,7 +78,7 @@ else
 --   F:write("   '"..path_to_gompy..gompy_lib.."'\n")
 --   F:write(")\n")
 
--- New version using 'importib'
+-- New version using 'importlib'
    F:write("import importlib.util\n")
    F:write("spec=importlib.util.spec_from_file_location(\n")
    F:write("   'gompy',\n")

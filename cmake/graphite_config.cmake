@@ -7,8 +7,9 @@ macro(graphite_find_Python)
    # ./configure --with-pydebug --without-pymalloc --prefix /opt/debugpython/
    #  --enable-shared
    #set(WHERE_ARE_PYTHON_INCLUDES /opt/debugpython/include/python3.7d/)
-   #set(WHERE_IS_PYTHON_LIB /opt/debugpython/lib/libpython3.7d.so) 
-   find_package(PythonLibs 3 QUIET)
+   #set(WHERE_IS_PYTHON_LIB /opt/debugpython/lib/libpython3.7d.so)
+   #find_package(PythonLibs 3 QUIET) #deprecated, replaced with Python3
+   find_package(Python3 QUIET)
    if(NOT PYTHONLIBS_FOUND)
       message(
          STATUS

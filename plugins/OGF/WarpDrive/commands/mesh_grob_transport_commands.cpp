@@ -72,6 +72,8 @@
 #include <geogram/basic/permutation.h>
 #include <geogram/basic/line_stream.h>
 
+#include <random>
+
 // We got some classes declared locally that
 // have no out-of-line virtual functions. It is not a
 // problem since they are only visible from this translation
@@ -206,7 +208,15 @@ namespace OGF {
             for(index_t i: mesh_grob()->vertices) {
                 indices[i] = i;
             }
-            std::random_shuffle(indices.begin(), indices.end());
+
+            //The next three lines replace the following commented-out line
+            //(random_shuffle is deprecated in C++17, and they call this
+            // progress...)
+            // std::random_shuffle(indices.begin(), indices.end());
+            std::random_device rng;
+            std::mt19937 urng(rng());
+            std::shuffle(indices.begin(),indices.end(), urng);
+	   
             Permutation::apply(mesh_grob()->vertices.point_ptr(0), indices, sizeof(double)*3);
             for(index_t i : mesh_grob()->vertices) {
                 indices[i] = (i >= subsample) ? 1 : 0;
