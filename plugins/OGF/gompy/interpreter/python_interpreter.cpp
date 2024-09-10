@@ -1393,7 +1393,7 @@ namespace OGF {
             wchar_t* w_python_path =
 		_Py_char2wchar(python_path.c_str(), nullptr);
 #endif
-	    Py_SetPath(w_python_path);
+	    Py_SetPath(w_python_path); // Deprecated, TODO, find how to say that
 	    PyMem_RawFree(w_python_path);
         }
 
