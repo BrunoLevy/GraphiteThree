@@ -40,13 +40,13 @@
 #ifndef H_OGF_VOXEL_SHADERS_VOXEL_GROB_SHADER_H
 #define H_OGF_VOXEL_SHADERS_VOXEL_GROB_SHADER_H
 
-#include <OGF/voxel/common/common.h>
+#include <OGF/voxel_gfx/common/common.h>
 #include <OGF/voxel/grob/voxel_grob.h>
 #include <OGF/scene_graph_gfx/shaders/shader.h>
 #include <OGF/scene_graph/types/properties.h>
 
 /**
- * \file OGF/voxel/shaders/voxel_grob_shader.h
+ * \file OGF/voxel_gfx/shaders/voxel_grob_shader.h
  * \brief Classes for drawing and picking VoxelGrob.
  */
 
@@ -66,7 +66,7 @@ namespace OGF {
      * \brief Base class for drawing and picking VoxelGrob.
      */
     gom_attribute(abstract, "true")
-    gom_class VOXEL_API VoxelGrobShader : public Shader {
+    gom_class VOXEL_GFX_API VoxelGrobShader : public Shader {
     public:
         /**
          * \brief VoxelGrobShader constructor.
@@ -119,7 +119,7 @@ namespace OGF {
     /**
      * \brief The default implementation of VoxelGrobShader
      */
-    gom_class VOXEL_API PlainVoxelGrobShader : public VoxelGrobShader {
+    gom_class VOXEL_GFX_API PlainVoxelGrobShader : public VoxelGrobShader {
     public:
         /**
          * \brief PlainVoxelGrobShader constructor.

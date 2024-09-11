@@ -23,98 +23,95 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the following 
+ * As an exception to the GPL, Graphite can be linked with the following
  *  (non-GPL) libraries: Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 #include <OGF/voxel/common/common.h>
 #include <OGF/basic/modules/module.h>
 #include <OGF/gom/types/gom_defs.h>
 #include <OGF/scene_graph/types/scene_graph_library.h>
 #include <OGF/voxel/grob/voxel_grob.h>
-#include <OGF/voxel/shaders/voxel_grob_shader.h>
 #include <OGF/voxel/commands/voxel_grob_attributes_commands.h>
 #include <OGF/voxel/interfaces/voxel_grob_editor_interface.h>
 
 #include <geogram/basic/command_line.h>
 
-// [includes insertion point] (do not delete this line)
-
 namespace OGF {
     void voxel_libinit::initialize() {
-        Logger::out("Init") << "<voxel>" << std::endl; 
-        //_____________________________________________________________
+        Logger::out("Init") << "<voxel>" << std::endl;
+
+        //**************************************************************
+
         gom_package_initialize(voxel) ;
-        
+
         ogf_register_grob_type<VoxelGrob>();
-        ogf_register_grob_shader<VoxelGrob,PlainVoxelGrobShader>();
         ogf_register_grob_commands<VoxelGrob,VoxelGrobAttributesCommands>();
-        ogf_register_grob_interface<VoxelGrob,VoxelGrobEditor>();	
-        
-        // [source insertion point] (do not delete this line)
-        // Insert package initialization stuff here ...
-        //_____________________________________________________________
+        ogf_register_grob_interface<VoxelGrob,VoxelGrobEditor>();
+
+        //**************************************************************
+
         Module* module_info = new Module;
         module_info->set_name("voxel");
         module_info->set_vendor("OGF");
-        module_info->set_is_system(true);        
+        module_info->set_is_system(true);
         module_info->set_version("3-1.x");
         module_info->set_info(
             "Voxel grids object and manipulation"
         );
         Module::bind_module("voxel", module_info);
 
-        Logger::out("Init") << "</voxel>" << std::endl;         
+        Logger::out("Init") << "</voxel>" << std::endl;
     }
-    
+
     void voxel_libinit::terminate() {
-        Logger::out("Init") << "<~voxel>" << std::endl;                 
-        //_____________________________________________________________
-        // Insert package termination stuff here ...
-        
-        //_____________________________________________________________
+        Logger::out("Init") << "<~voxel>" << std::endl;
+
+        //**************************************************************
+
+        //**************************************************************
 
         Module::unbind_module("voxel");
-        Logger::out("Init") << "</~voxel>" << std::endl;        
+        Logger::out("Init") << "</~voxel>" << std::endl;
     }
-    
+
     voxel_libinit::voxel_libinit() {
         increment_users();
     }
     voxel_libinit::~voxel_libinit() {
         decrement_users();
     }
-    
+
     void voxel_libinit::increment_users() {
         // Note that count_ is incremented before calling
         // initialize, else it would still be equal to
-        // zero at module initialization time, which 
+        // zero at module initialization time, which
         // may cause duplicate initialization of libraries.
         count_++;
         if(count_ == 1) {
             initialize();
         }
     }
-    
+
     void voxel_libinit::decrement_users() {
         count_--;
         if(count_ == 0) {
             terminate();
         }
     }
-    
+
     int voxel_libinit::count_ = 0;
 }
 // The initialization and termination functions
-// are also declared using C linkage in order to 
+// are also declared using C linkage in order to
 // enable dynamic linking of modules.
 
 extern "C" void VOXEL_API OGF_voxel_initialize(void);
@@ -126,4 +123,3 @@ extern "C" void VOXEL_API OGF_voxel_terminate(void);
 extern "C" void VOXEL_API OGF_voxel_terminate() {
     OGF::voxel_libinit::decrement_users();
 }
-

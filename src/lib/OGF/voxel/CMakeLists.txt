@@ -9,7 +9,7 @@ aux_source_directories(SOURCES "Source Files\\tools"       tools)
 
 gomgen(voxel)
 add_library(voxel ${SOURCES})
-target_link_libraries(voxel mesh scene_graph_gfx)
+target_link_libraries(voxel mesh scene_graph)
 
 set_target_properties(
     voxel PROPERTIES

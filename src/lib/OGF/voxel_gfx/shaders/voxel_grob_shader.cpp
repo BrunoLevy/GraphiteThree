@@ -23,20 +23,20 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the following 
+ * As an exception to the GPL, Graphite can be linked with the following
  *   (non-GPL) libraries:  Qt, SuperLU, WildMagic and CGAL
  */
- 
 
-#include <OGF/voxel/shaders/voxel_grob_shader.h>
+
+#include <OGF/voxel_gfx/shaders/voxel_grob_shader.h>
 #include <OGF/renderer/context/rendering_context.h>
 
 namespace OGF {
@@ -46,10 +46,10 @@ namespace OGF {
     ) : Shader(grob) {
        no_grob_update_ = true;
     }
-        
-    VoxelGrobShader::~VoxelGrobShader() { 
+
+    VoxelGrobShader::~VoxelGrobShader() {
     }
-    
+
     void VoxelGrobShader::blink() {
     }
 
@@ -62,7 +62,7 @@ namespace OGF {
     }
 
     /*********************************************************************/
-    
+
     PlainVoxelGrobShader::PlainVoxelGrobShader(
         VoxelGrob* grob
     ) :
@@ -71,7 +71,7 @@ namespace OGF {
         attribute_name_ = "";
         attribute_min_ = 0.0;
         attribute_max_ = 0.0;
-        
+
         picking_ = false;
         clipping_ = true;
         lighting_ = true;
@@ -80,7 +80,7 @@ namespace OGF {
         box_style_.color   = Color(0.0,0.0,0.0,1.0);
         box_style_.width   = 2;
     }
-    
+
     PlainVoxelGrobShader::~PlainVoxelGrobShader() {
     }
 
@@ -93,7 +93,7 @@ namespace OGF {
             update();
         }
     }
-    
+
     void PlainVoxelGrobShader::autorange() {
         ReadOnlyScalarAttributeAdapter attribute(
             voxel_grob()->attributes(), attribute_name_
@@ -101,10 +101,10 @@ namespace OGF {
         if(attribute.is_bound()) {
             attribute_min_ = Numeric::max_float64();
             attribute_max_ = Numeric::min_float64();
-            
+
             index_t nuvw =
                 voxel_grob()->nu() * voxel_grob()->nv() * voxel_grob()->nw();
-            
+
             for(index_t i=0; i<nuvw; ++i) {
                 attribute_min_ = std::min(attribute_min_, attribute[i]);
                 attribute_max_ = std::max(attribute_max_, attribute[i]);
@@ -112,18 +112,18 @@ namespace OGF {
         }
         update();
     }
-    
+
     void PlainVoxelGrobShader::draw() {
 
         VoxelGrobShader::draw();
-        
+
         GLUPboolean clipping_backup = glupIsEnabled(GLUP_CLIPPING);
-        
+
         if(!clipping_) {
             glupDisable(GLUP_CLIPPING);
             glDisable(GL_CLIP_PLANE0);
         }
-        
+
         if(voxel_grob()->graphics_are_locked()) {
             return;
         }
@@ -132,8 +132,8 @@ namespace OGF {
             attribute_texture_.reset();
             voxel_grob()->up_to_date();
         }
-        
-        
+
+
         if(box_style_.visible) {
             draw_wireframe_box();
         }
@@ -156,7 +156,7 @@ namespace OGF {
 
 	    double attribute_min = attribute_min_;
 	    double attribute_max = attribute_max_;
-	    
+
 	    if(colormap_style_.flip) {
 		std::swap(attribute_min, attribute_max);
 	    }
@@ -165,11 +165,11 @@ namespace OGF {
                 draw_volume(
                     colormap_texture_,
                     attribute_min, attribute_max, repeat
-                );                
+                );
             } else {
                 GLUPclipMode clip_mode = glupGetClipMode();
                 if(
-                    clip_mode == GLUP_CLIP_STANDARD 
+                    clip_mode == GLUP_CLIP_STANDARD
                 ) {
                     draw_volume(
                         colormap_texture_,
@@ -194,7 +194,7 @@ namespace OGF {
                     );
                     glupClipMode(clip_mode);
                 }
-                glupEnable(GLUP_LIGHTING);                
+                glupEnable(GLUP_LIGHTING);
             }
         }
 
@@ -225,7 +225,7 @@ namespace OGF {
                 colormap_style_.colormap_name,
                 filtering, clamping
             );
-        } 
+        }
         if(attribute_texture_.is_null()) {
             ReadOnlyScalarAttributeAdapter attribute(
                 voxel_grob()->attributes(), attribute_name_
@@ -234,7 +234,7 @@ namespace OGF {
             if(attribute.is_bound()) {
 
                 Image::ComponentEncoding comp_encoding = Image::BYTE;
-                    
+
                 switch(attribute.element_type()) {
                 case ReadOnlyScalarAttributeAdapter::ET_UINT8:
                 case ReadOnlyScalarAttributeAdapter::ET_INT8:
@@ -252,10 +252,10 @@ namespace OGF {
                     break;
                 case ReadOnlyScalarAttributeAdapter::ET_NONE:
                 case ReadOnlyScalarAttributeAdapter::ET_VEC2:
-                case ReadOnlyScalarAttributeAdapter::ET_VEC3:		    
+                case ReadOnlyScalarAttributeAdapter::ET_VEC3:
                     break;
                 }
-                
+
                 attribute_texture_ = new Texture;
                 attribute_texture_->create_from_data(
                     Memory::pointer(
@@ -283,8 +283,8 @@ namespace OGF {
         const vec3& origin = voxel_grob()->origin();
         const vec3& U = voxel_grob()->U();
         const vec3& V = voxel_grob()->V();
-        const vec3& W = voxel_grob()->W();            
-        
+        const vec3& W = voxel_grob()->W();
+
         vec3 p000 = origin;
         vec3 p100 = origin + U;
         vec3 p010 = origin + V;
@@ -293,12 +293,12 @@ namespace OGF {
         vec3 p101 = origin + U + W;
         vec3 p110 = origin + U + V;
         vec3 p111 = origin + U + V + W;
-        
+
         glupDisable(GLUP_VERTEX_COLORS);
         glupDisable(GLUP_TEXTURING);
         glupSetColor4dv(GLUP_MESH_COLOR, box_style_.color.data());
         glupSetMeshWidth(GLUPint(box_style_.width));
-            
+
         glupBegin(GLUP_LINES);
         glupVertex(p000);
         glupVertex(p100);
@@ -306,7 +306,7 @@ namespace OGF {
         glupVertex(p110);
         glupVertex(p110);
         glupVertex(p010);
-        glupVertex(p010);            
+        glupVertex(p010);
         glupVertex(p000);
         glupVertex(p001);
         glupVertex(p101);
@@ -314,7 +314,7 @@ namespace OGF {
         glupVertex(p111);
         glupVertex(p111);
         glupVertex(p011);
-        glupVertex(p011);            
+        glupVertex(p011);
         glupVertex(p001);
         glupVertex(p000);
         glupVertex(p001);
@@ -322,11 +322,11 @@ namespace OGF {
         glupVertex(p101);
         glupVertex(p110);
         glupVertex(p111);
-        glupVertex(p010);            
+        glupVertex(p010);
         glupVertex(p011);
         glupEnd();
     }
-    
+
     void PlainVoxelGrobShader::draw_volume(
         Texture* colormap_texture,
         double attribute_min,
@@ -336,8 +336,8 @@ namespace OGF {
         const vec3& origin = voxel_grob()->origin();
         const vec3& U = voxel_grob()->U();
         const vec3& V = voxel_grob()->V();
-        const vec3& W = voxel_grob()->W();            
-        
+        const vec3& W = voxel_grob()->W();
+
         vec3 p000 = origin;
         vec3 p100 = origin + U;
         vec3 p010 = origin + V;
@@ -354,14 +354,14 @@ namespace OGF {
         vec3 u011(0.0, 1.0, 1.0);
         vec3 u101(1.0, 0.0, 1.0);
         vec3 u110(1.0, 1.0, 0.0);
-        vec3 u111(1.0, 1.0, 1.0);        
+        vec3 u111(1.0, 1.0, 1.0);
 
         colormap_texture->bind();
         attribute_texture_->bind();
-                
+
         glupEnable(GLUP_INDIRECT_TEXTURING);
         glupMapTexCoords1d(attribute_min, attribute_max, repeat);
-        
+
         glupBegin(GLUP_HEXAHEDRA);
         glupTexCoord(u000);
         glupVertex(p000);
@@ -382,16 +382,16 @@ namespace OGF {
         glupEnd();
 
         glupDisable(GLUP_INDIRECT_TEXTURING);
-        
+
         attribute_texture_->unbind();
         colormap_texture->unbind();
 
         glupMatrixMode(GLUP_TEXTURE_MATRIX);
         glupLoadIdentity();
-        glupMatrixMode(GLUP_MODELVIEW_MATRIX);        
-        
+        glupMatrixMode(GLUP_MODELVIEW_MATRIX);
+
     }
-    
+
     void PlainVoxelGrobShader::pick_object(index_t object_id) {
         geo_argused(object_id);
         // TODO
@@ -405,4 +405,3 @@ namespace OGF {
         update();
     }
 }
-

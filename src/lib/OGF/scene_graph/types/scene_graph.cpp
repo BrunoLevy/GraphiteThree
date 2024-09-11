@@ -662,34 +662,12 @@ namespace OGF {
         Grob* grob, std::string& classname, ArgList& properties
     ) {
 	grob->get_shader_and_shader_properties(classname, properties, false);
-        // last arg to false: do not copy properties of pointer type,
-        // since they are not serializable
-
-	/*
-        classname = "";
-        properties.clear();
-        Object* sgsm = get_scene_graph_shader_manager();
-	if(sgsm == nullptr) {
-            properties.clear();
-        } else {
-	    sgsm->get_grob_shader(grob, classname, properties, false);
-        }
-        // last arg to false: do not copy properties of pointer type,
-        // since they are not serializable
-	*/
     }
 
     void SceneGraph::set_grob_shader(
         Grob* grob, const std::string& classname, const ArgList& properties
     ) {
 	grob->set_shader_and_shader_properties(classname, properties);
-	/*
-        Object* sgsm = get_scene_graph_shader_manager();
-        if(sgsm != nullptr) {
-	    // TODO: cannot access this function from GOM
-	    // sgsm->set_grob_shader(grob, classname, properties);
-	}
-	*/
     }
 
     void SceneGraph::serialize_grob_write(

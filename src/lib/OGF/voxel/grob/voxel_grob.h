@@ -23,19 +23,19 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
+ * As an exception to the GPL, Graphite can be linked
  *  with the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_GRAPHITE_VOXEL_VOXEL_GROB_H
 #define H_OGF_GRAPHITE_VOXEL_VOXEL_GROB_H
@@ -57,7 +57,7 @@ namespace OGF {
     public:
         /**
          * \brief VoxelGrob constructor.
-         * \param[in] parent a pointer to the container (the scenegraph 
+         * \param[in] parent a pointer to the container (the scenegraph
          *  in most cases).
          */
         VoxelGrob(CompositeGrob* parent);
@@ -149,7 +149,7 @@ namespace OGF {
             geo_debug_assert(w < nw());
             return u + nu_ * (v + nv_ * w);
         }
-        
+
         /**
          * \copydoc Grob::clear()
          */
@@ -177,7 +177,7 @@ namespace OGF {
 
 
     gom_properties:
-        
+
         /**
          * \brief Gets the list of all attributes.
          * \return a ';'-separated list of all scalar attributes.
@@ -185,14 +185,14 @@ namespace OGF {
         std::string get_displayable_attributes() const;
 
 
-        
+
     public:
         /**
          * \copydoc Grob::update()
          */
         void update() override;
 
-        
+
         /**
          * \copydoc Grob::bbox()
          */
@@ -256,10 +256,9 @@ namespace OGF {
      *  difference is that when it is used as a command argument or
      *  a Shader property, AutoGUI will generate for it a ComboBox
      *  with all the VoxelGrob objects found in the SceneGraph.
-     *  In additon, the field can be edited, and the user can enter in 
-     *  it a new name, not already present in the SceneGraph.     
+     *  In additon, the field can be edited, and the user can enter in
+     *  it a new name, not already present in the SceneGraph.
      */
     typedef Name<VoxelGrob*,true> NewVoxelGrobName;
 }
 #endif
-

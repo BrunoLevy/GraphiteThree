@@ -201,7 +201,7 @@ namespace {
         );
 
         CmdLine::declare_arg(
-            "base_modules", "luagrob;mesh;mesh_gfx;voxel",
+            "base_modules", "luagrob;mesh;mesh_gfx;voxel;voxel_gfx",
             "list of plugins to be loaded at startup "
 	    "(separator = ';' or 'none' for empty list)"
         );
