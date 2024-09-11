@@ -23,21 +23,21 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the following 
+ * As an exception to the GPL, Graphite can be linked with the following
  *  (non-GPL) libraries:  Qt, SuperLU, WildMagic and CGAL
  */
 
 #include <OGF/mesh/commands/mesh_grob_selections_commands.h>
 #include <OGF/mesh/commands/filter.h>
-#include <OGF/mesh/shaders/mesh_grob_shader.h>
+// #include <OGF/mesh/shaders/mesh_grob_shader.h>
 #include <geogram/mesh/mesh_surface_intersection.h>
 #include <geogram/mesh/mesh_geometry.h>
 #include <geogram/mesh/mesh_AABB.h>
@@ -46,7 +46,7 @@
 #include <geogram/points/colocate.h>
 
 namespace OGF {
-    
+
     MeshGrobSelectionsCommands::MeshGrobSelectionsCommands() {
     }
 
@@ -121,11 +121,11 @@ namespace OGF {
                 mesh_grob()->get_subelements_by_type(where).attributes(),
                 "selection"
             );
-        
+
             vector<bool> new_selection(
                 mesh_grob()->get_subelements_by_type(where).nb(), false
             );
-            
+
             switch(where) {
             case MESH_VERTICES: {
                 for(index_t f: mesh_grob()->facets) {
@@ -195,15 +195,15 @@ namespace OGF {
                                          << std::endl;
             } break;
             }
-            
+
             for(index_t i: mesh_grob()->get_subelements_by_type(where)) {
                 selection[i] = new_selection[i];
             }
         }
-        
+
         mesh_grob()->update();
     }
-    
+
     void MeshGrobSelectionsCommands::shrink_selection(index_t nb_times) {
         MeshElementsFlags where = visible_selection();
         if(where == MESH_NONE) {
@@ -218,7 +218,7 @@ namespace OGF {
         invert_selection();
         mesh_grob()->update();
     }
-    
+
 
     void MeshGrobSelectionsCommands::close_small_holes_in_selection(
         index_t hole_size
@@ -236,7 +236,7 @@ namespace OGF {
             shrink_selection();
         }
     }
-    
+
     void MeshGrobSelectionsCommands::delete_selected_elements(
         bool remove_isolated
     ) {
@@ -246,13 +246,13 @@ namespace OGF {
                                      << std::endl;
             return;
         }
-        
+
         Attribute<bool> selection(
             mesh_grob()->get_subelements_by_type(where).attributes(),
             "selection"
         );
 
-        // Particular case: vertices. Delete all edges, facets, cells 
+        // Particular case: vertices. Delete all edges, facets, cells
         // incident to a vertex to delete.
         if(where == MESH_VERTICES) {
             {
@@ -311,7 +311,7 @@ namespace OGF {
         mesh_grob()->update();
     }
 
-    
+
     void MeshGrobSelectionsCommands::show_vertices_selection() {
         Attribute<bool> sel(mesh_grob()->vertices.attributes(),"selection");
         show_attribute("vertices.selection");
@@ -329,7 +329,7 @@ namespace OGF {
             }
         }
         show_vertices_selection();
-        mesh_grob()->update();        
+        mesh_grob()->update();
     }
 
     void MeshGrobSelectionsCommands::unselect_vertices_on_surface_border() {
@@ -343,8 +343,8 @@ namespace OGF {
                 }
             }
         }
-        show_vertices_selection();        
-        mesh_grob()->update();        
+        show_vertices_selection();
+        mesh_grob()->update();
     }
 
     void MeshGrobSelectionsCommands::select_duplicated_vertices(
@@ -373,7 +373,7 @@ namespace OGF {
 	Logger::out("Colocate") << mesh_grob()->vertices.nb() - nb_distinct
 				<< " colocated vertices"
 				<< std::endl;
-	
+
 	vector<index_t> new_count(mesh_grob()->vertices.nb(),0);
 	for(index_t v: mesh_grob()->vertices) {
 	    ++new_count[old2new[v]];
@@ -386,7 +386,7 @@ namespace OGF {
 		v_selection[v] = true;
 	    }
 	}
-        show_vertices_selection();        
+        show_vertices_selection();
 	mesh_grob()->update();
     }
 
@@ -405,14 +405,14 @@ namespace OGF {
                 if(PCK::aligned_3d(p1,p2,p3)) {
                     v_selection[v1] = true;
                     v_selection[v2] = true;
-                    v_selection[v3] = true;                    
+                    v_selection[v3] = true;
                 }
             }
         }
-        show_vertices_selection();        
+        show_vertices_selection();
 	mesh_grob()->update();
     }
-    
+
     void MeshGrobSelectionsCommands::show_facets_selection() {
         Attribute<bool> sel(mesh_grob()->facets.attributes(),"selection");
         show_attribute("facets.selection");
@@ -430,7 +430,7 @@ namespace OGF {
         }
 
         bool has_degenerate_facets = false;
-        
+
         for(index_t f: mesh_grob()->facets) {
             bool degenerate = true;
             index_t N = mesh_grob()->facets.nb_vertices(f);
@@ -457,7 +457,7 @@ namespace OGF {
         mesh_grob()->update();
     }
 
-    
+
     void MeshGrobSelectionsCommands::select_intersecting_facets(
         bool add_to_selection, bool test_adjacent_facets
     ) {
@@ -469,7 +469,7 @@ namespace OGF {
         }
 
         bool has_intersections = false;
-        
+
         MeshFacetsAABB AABB(*mesh_grob());
         vector<std::pair<index_t, index_t> > candidates;
         AABB.compute_facet_bbox_intersections(
@@ -495,7 +495,7 @@ namespace OGF {
             0, candidates.size(),
             [&](index_t i) {
                 index_t f1 = candidates[i].first;
-                index_t f2 = candidates[i].second;                
+                index_t f2 = candidates[i].second;
                 if(mesh_facets_have_intersection(*mesh_grob(), f1, f2)) {
                     sel[f1] = true;
                     sel[f2] = true;
@@ -545,10 +545,10 @@ namespace OGF {
         for(index_t f: M.facets) {
             selection[orig_facet[f]] = false;
         }
-        show_facets_selection();        
+        show_facets_selection();
 	mesh_grob()->update();
     }
-    
+
     void MeshGrobSelectionsCommands::select_facets_on_border() {
         Attribute<bool> selection(mesh_grob()->facets.attributes(), "selection");
         for(index_t f: mesh_grob()->facets) {
@@ -561,21 +561,19 @@ namespace OGF {
                 }
             }
         }
-        show_facets_selection();        
+        show_facets_selection();
 	mesh_grob()->update();
     }
 
     void MeshGrobSelectionsCommands::show_cells_selection() {
         Attribute<bool> sel(mesh_grob()->cells.attributes(),"selection");
         show_attribute("cells.selection");
-        hide_vertices();        
+        hide_vertices();
     }
 
     MeshElementsFlags MeshGrobSelectionsCommands::visible_selection() const {
-        MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
-            mesh_grob()->get_shader()
-        );
-        
+	Object* shd = mesh_grob()->get_shader();
+
         if(shd == nullptr) {
             return MESH_NONE;
         }
@@ -585,7 +583,7 @@ namespace OGF {
         if(painting != "ATTRIBUTE") {
             return MESH_NONE;
         }
-        
+
         std::string full_attribute_name;
         MeshElementsFlags where;
         std::string attribute_name;
@@ -596,7 +594,7 @@ namespace OGF {
           ) {
             return MESH_NONE;
         }
-        
+
         return where;
     }
 
@@ -626,4 +624,3 @@ namespace OGF {
     }
 
 }
-

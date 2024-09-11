@@ -37,7 +37,6 @@
 
 
 #include <OGF/mesh/commands/mesh_grob_points_commands.h>
-#include <OGF/scene_graph_gfx/shaders/shader.h>
 #include <geogram/points/co3ne.h>
 #include <geogram/points/kd_tree.h>
 #include <geogram/mesh/mesh_geometry.h>

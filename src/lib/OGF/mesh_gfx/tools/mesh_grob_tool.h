@@ -36,17 +36,17 @@
  */
 
 
-#ifndef H_OGF_MESH_TOOLS_MESH_GROB_TOOL_H
-#define H_OGF_MESH_TOOLS_MESH_GROB_TOOL_H
+#ifndef H_OGF_MESH_GFX_TOOLS_MESH_GROB_TOOL_H
+#define H_OGF_MESH_GFX_TOOLS_MESH_GROB_TOOL_H
 
-#include <OGF/mesh/common/common.h>
+#include <OGF/mesh_gfx/common/common.h>
 #include <OGF/mesh/grob/mesh_grob.h>
 #include <OGF/scene_graph_gfx/tools/tool.h>
 #include <OGF/scene_graph_gfx/tools/tools_manager.h>
 #include <OGF/scene_graph_gfx/transforms/arc_ball.h>
 
 /**
- * \file OGF/mesh/tools/mesh_grob_tool.h
+ * \file OGF/mesh_gfx/tools/mesh_grob_tool.h
  * \brief Base classes for tools that operate on MeshGrob
  */
 
@@ -58,7 +58,7 @@ namespace OGF {
      * \brief Base class for tools that operate on MeshGrob
      */
     gom_attribute(abstract,"true")
-    gom_class MESH_API MeshGrobTool : public Tool {
+    gom_class MESH_GFX_API MeshGrobTool : public Tool {
     public:
 
         /**
@@ -220,7 +220,7 @@ namespace OGF {
      *  of a MeshGrob and that are attached to a MultiTool
      *  (or a MeshGrobTransformTool).
      */
-    class MeshGrobTransformSubset : public MeshGrobTool {
+    class MESH_GFX_API MeshGrobTransformSubset : public MeshGrobTool {
     public:
 
         /**
@@ -256,7 +256,7 @@ namespace OGF {
     /**
      * \brief Applies a mouse-controlled translation to a subset.
      */
-    class MeshGrobMoveSubset : public MeshGrobTransformSubset {
+    class MESH_GFX_API MeshGrobMoveSubset : public MeshGrobTransformSubset {
     public:
         /**
          * \brief MeshGrobMoveSubset constructor.
@@ -282,7 +282,7 @@ namespace OGF {
     /**
      * \brief Applies a mouse-controlled scaling to a subset.
      */
-    class MeshGrobResizeSubset : public MeshGrobTransformSubset {
+    class MESH_GFX_API MeshGrobResizeSubset : public MeshGrobTransformSubset {
     public:
 
         /**
@@ -309,7 +309,8 @@ namespace OGF {
     /**
      * \brief Applies a mouse-controlled scaling to a subset.
      */
-    class MeshGrobScrollResizeSubset : public MeshGrobTransformSubset {
+    class MESH_GFX_API MeshGrobScrollResizeSubset :
+	public MeshGrobTransformSubset {
     public:
 
         /**
@@ -335,7 +336,7 @@ namespace OGF {
     /**
      * \brief Applies a mouse-controlled rotation to a subset.
      */
-    class MeshGrobRotateSubset : public MeshGrobTransformSubset {
+    class MESH_GFX_API MeshGrobRotateSubset : public MeshGrobTransformSubset {
     public:
 
         /**
@@ -374,7 +375,7 @@ namespace OGF {
      *  controls a scaling, and right mouse button controls a rotation.
      */
     gom_attribute(abstract, "true")
-    gom_class MeshGrobTransformTool : public MultiTool {
+    gom_class MESH_GFX_API MeshGrobTransformTool : public MultiTool {
     public:
         MeshGrobTransformTool(ToolsManager* parent) : MultiTool(parent) {
             set_tool(MOUSE_BUTTON_LEFT, new MeshGrobMoveSubset(this));

@@ -23,26 +23,26 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with 
+ * As an exception to the GPL, Graphite can be linked with
  *  the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
 
-#include <OGF/mesh/shaders/pdb_mesh_grob_shader.h>
+#include <OGF/mesh_gfx/shaders/pdb_mesh_grob_shader.h>
 
 namespace {
 
-// #define c1 0.35 
+// #define c1 0.35
 #define c2 0.5
-#define c3 1.0 
+#define c3 1.0
 
     const unsigned int nb_colormap_entries = 6;
     double colormap[nb_colormap_entries][3] = {
@@ -53,7 +53,7 @@ namespace {
 	{c2, c3, c3},
 	{c3, c3, c2}
     };
-    
+
 }
 
 namespace OGF {
@@ -71,16 +71,16 @@ namespace OGF {
 
     void PDBMeshGrobShader::draw() {
         MeshGrobShader::draw();
-        
+
 	bool slicing_mode = false;
-	
+
 	if(glupGetClipMode() == GLUP_CLIP_SLICE_CELLS) {
 	    glupClipMode(GLUP_CLIP_STANDARD);
 	    draw();
 	    glupClipMode(GLUP_CLIP_SLICE_CELLS);
 	    slicing_mode = true;
 	}
-	
+
 	Attribute<char> atom_type;
 	Attribute<char> chain_id;
 	atom_type.bind_if_is_defined(
@@ -89,7 +89,7 @@ namespace OGF {
 	chain_id.bind_if_is_defined(
 	    mesh_grob()->vertices.attributes(), "chain_id"
 	);
-	
+
 	if(atom_colors_ != constant) {
 	    glupEnable(GLUP_VERTEX_COLORS);
 	} else {
@@ -102,7 +102,7 @@ namespace OGF {
 	if(lighting_ && !slicing_mode) {
 	    glupEnable(GLUP_LIGHTING);
 	} else {
-	    glupDisable(GLUP_LIGHTING);	    
+	    glupDisable(GLUP_LIGHTING);
 	}
 	glupBegin(GLUP_SPHERES);
 	for(index_t v: mesh_grob()->vertices) {
@@ -121,7 +121,7 @@ namespace OGF {
 		} else if(t == 'N') {
 		    r = 0.0; g = 0.0; b = 1.0;
 		} else if(t == 'S') {
-		    r = 1.0; g = 1.0; b = 0.0;		    
+		    r = 1.0; g = 1.0; b = 0.0;
 		} else {
 		    r = 1.0; g = 0.0; b = 1.0;
 		}
@@ -147,9 +147,8 @@ namespace OGF {
 	    );
 	}
 	glupEnd();
-	glupDisable(GLUP_VERTEX_COLORS);	
+	glupDisable(GLUP_VERTEX_COLORS);
     }
-    
-    
-}
 
+
+}

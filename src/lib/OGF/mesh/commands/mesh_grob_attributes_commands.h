@@ -126,18 +126,6 @@ namespace OGF {
         void compute_chart_id(const std::string& attribute="chart");
 
         /**
-         * \brief Computes facets visibility from random views.
-         * \param[in] nb_views number of views
-	 * \param[in] dual_sided if true, facets seen as backfacing
-	 *  count as negative.
-         * \menu Facets
-         */
-        void compute_facets_visibility(
-	    index_t nb_views = 1000,
-	    bool dual_sided = true
-	);
-
-        /**
          * \brief Stores the cells ids in an attribute.
          * \param[in] attribute the name of the cell attribute
          * \menu Cells

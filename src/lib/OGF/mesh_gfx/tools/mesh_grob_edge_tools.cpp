@@ -24,69 +24,71 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
- *  with the following (non-GPL) libraries: Qt, SuperLU, WildMagic and CGAL
+ * As an exception to the GPL,
+ *  Graphite can be linked with the following (non-GPL) libraries:
+ *     Qt, SuperLU, WildMagic and CGAL
  */
 
-#include <OGF/mesh/tools/mesh_grob_selection_tools.h>
-#include <OGF/mesh/shaders/mesh_grob_shader.h>
+#include <OGF/mesh_gfx/tools/mesh_grob_edge_tools.h>
+#include <OGF/mesh_gfx/shaders/mesh_grob_shader.h>
+#include <OGF/renderer/context/rendering_context.h>
 #include <geogram/mesh/mesh_geometry.h>
 
 namespace OGF {
 
-    void MeshGrobSelectVertex::grab(const RayPick& p_ndc) {
+    void MeshGrobCreateEdge::grab(const RayPick& p_ndc) {
         MeshGrobTool::grab(p_ndc);
-        vertex_ = pick_vertex(p_ndc);
-        if(vertex_ != NO_VERTEX) {
-            Attribute<bool> v_selection(
-                mesh_grob()->vertices.attributes(), "selection"
-            );
-            v_selection[vertex_] = true;
-            mesh_grob()->update();
+        if(v1_ == NO_VERTEX) {
+            v1_ = pick_vertex(p_ndc);
+            if(v1_ == NO_VERTEX) {
+                Logger::err("Tool") << "Did not pick first vertex" << std::endl;
+            } else {
+                Logger::out("Tool") << "Now you can pick the second vertex"
+                                    << std::endl;
+            }
+            return;
         }
+
+        v2_ = pick_vertex(p_ndc);
+        if(v2_ == NO_VERTEX) {
+            Logger::err("Tool")
+                << "Did not pick second vertex (retry)" << std::endl;
+            return;
+        }
+
+        if(v1_ == v2_) {
+            Logger::err("Tool") << "Picked the same vertex twice" << std::endl;
+            reset();
+            return;
+        }
+
+	mesh_grob()->edges.create_edge(v1_,v2_);
+        mesh_grob()->update();
+
+        v1_ = NO_VERTEX;
+        v2_ = NO_VERTEX;
     }
 
-    void MeshGrobSelectVertex::drag(const RayPick& p_ndc) {
-	if(
-	    vertex_ != NO_VERTEX &&
-	    vertex_ < mesh_grob()->vertices.nb() &&
-	    mesh_grob()->vertices.dimension() >= 3
-	) {
-            Geom::mesh_vertex_ref(*mesh_grob(), vertex_)
-                = drag_point(p_ndc);
-            mesh_grob()->update();	    
-	}
-    }
-    
-    void MeshGrobUnselectVertex::grab(const RayPick& p_ndc) {
-        MeshGrobTool::grab(p_ndc);
-        index_t v = pick_vertex(p_ndc);
-        if(v != NO_VERTEX) {
-            Attribute<bool> v_selection(
-                mesh_grob()->vertices.attributes(), "selection"
-            );
-            v_selection[v] = false;
-            mesh_grob()->update();
-        }
-    }
-
-    void MeshGrobSelectUnselectVertex::reset() {
+    void MeshGrobCreateEdge::reset() {
+        v1_ = NO_VERTEX;
+        v2_ = NO_VERTEX;
         MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
             object()->get_shader()
         );
         if(shd != nullptr) {
-            shd->show_mesh();
             shd->show_vertices();
-            shd->show_vertices_selection();
         }
-        MultiTool::reset();
+        MeshGrobTool::reset();
+        Logger::out("Tool") << "Pick the first vertex" << std::endl;
     }
+
+
 }

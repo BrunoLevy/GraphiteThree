@@ -24,20 +24,20 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
+ * As an exception to the GPL, Graphite can be linked
  *  with the following (non-GPL) libraries: Qt, SuperLU, WildMagic and CGAL
  */
 
-#include <OGF/mesh/tools/mesh_grob_border_tools.h>
-#include <OGF/mesh/shaders/mesh_grob_shader.h>
+#include <OGF/mesh_gfx/tools/mesh_grob_border_tools.h>
+#include <OGF/mesh_gfx/shaders/mesh_grob_shader.h>
 #include <geogram/mesh/mesh_local_operations.h>
 #include <geogram/mesh/mesh_halfedges.h>
 
@@ -68,7 +68,7 @@ namespace {
         index_t v2 = M.facet_corners.vertex(c1n);
         const double* p1 = M.vertices.point_ptr(v1);
         const double* p2 = M.vertices.point_ptr(v2);
-        
+
         index_t c2n = M.facets.next_corner_around_facet(f2,c2);
         index_t w1 = M.facet_corners.vertex(c2);
         index_t w2 = M.facet_corners.vertex(c2n);
@@ -103,7 +103,7 @@ namespace OGF {
 
         f[1] = NO_FACET;
         c[1] = NO_CORNER;
-        
+
         for(index_t ff: mesh_grob()->facets) {
             if(ff == f[0]) {
                 continue;
@@ -131,9 +131,9 @@ namespace OGF {
                 << std::endl;
             return;
         }
-        
+
         glue_edges(*mesh_grob(),f[0], c[0], f[1], c[1]);
-        
+
         mesh_grob()->update();
     }
 
@@ -141,7 +141,7 @@ namespace OGF {
         MeshGrobTool::grab(p_ndc);
 
         // Step 1: pick edge (f1,c1) and determine opposite edge (f2,c2)
-        
+
         index_t f1;
         index_t c1;
         if(!pick_facet_edge(p_ndc, f1, c1)) {
@@ -155,7 +155,7 @@ namespace OGF {
         }
 
         unglue_edges(*mesh_grob(), f1, c1);
-        
+
         mesh_grob()->update();
     }
 
@@ -200,7 +200,7 @@ namespace OGF {
                 << std::endl;
             return;
         }
-        
+
         glue_edges(*mesh_grob(), f1, c1, Hprev.facet, Hprev.corner);
         mesh_grob()->update();
     }
@@ -212,36 +212,36 @@ namespace OGF {
         if(shd != nullptr) {
             shd->show_mesh();
             shd->show_borders();
-        }        
+        }
         MultiTool::reset();
     }
 
-    
+
     void MeshGrobZipUnzipEdges::reset() {
         MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
             object()->get_shader()
         );
         if(shd != nullptr) {
-            shd->show_vertices();            
+            shd->show_vertices();
             shd->show_mesh();
             shd->show_borders();
-        }        
+        }
         MultiTool::reset();
     }
 
-    
+
     void MeshGrobConnectEdges::grab(const RayPick& p_ndc) {
         MeshGrobTool::grab(p_ndc);
         if(f_ == NO_FACET || c_ == NO_CORNER) {
             pick_facet_edge(p_ndc, f_, c_);
-            
+
             if(mesh_grob()->facet_corners.adjacent_facet(c_) != NO_FACET) {
                 Logger::err("Tool")
                     << "Picked edge is not on the border"
                     << std::endl;
                 reset();
             }
-            
+
             return;
         }
 
@@ -274,7 +274,7 @@ namespace OGF {
         f_ = NO_FACET;
         c_ = NO_CORNER;
     }
-    
+
     void MeshGrobConnectDisconnectEdges::reset() {
         MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
             object()->get_shader()
@@ -282,8 +282,7 @@ namespace OGF {
         if(shd != nullptr) {
             shd->show_mesh();
             shd->show_borders();
-        }        
+        }
         MultiTool::reset();
     }
 }
-

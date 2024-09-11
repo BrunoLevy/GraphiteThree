@@ -24,26 +24,26 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
+ * As an exception to the GPL, Graphite can be linked
  *  with the following (non-GPL) libraries: Qt, SuperLU, WildMagic and CGAL
  */
 
-#ifndef H_OGF_MESH_TOOLS_MESH_GROB_COMPONENT_TOOLS_H
-#define H_OGF_MESH_TOOLS_MESH_GROB_COMPONENT_TOOLS_H
+#ifndef H_OGF_MESH_GFX_TOOLS_MESH_GROB_COMPONENT_TOOLS_H
+#define H_OGF_MESH_GFX_TOOLS_MESH_GROB_COMPONENT_TOOLS_H
 
-#include <OGF/mesh/common/common.h>
-#include <OGF/mesh/tools/mesh_grob_tool.h>
+#include <OGF/mesh_gfx/common/common.h>
+#include <OGF/mesh_gfx/tools/mesh_grob_tool.h>
 
 /**
- * \file OGF/mesh/tools/mesh_grob_component_tools.h
+ * \file OGF/mesh_gfx/tools/mesh_grob_component_tools.h
  * \brief Tools to edit mesh components
  */
 
@@ -62,7 +62,8 @@ namespace OGF {
         message,
         "btn1: move; btn2: resize; btn3: rotate"
     )
-    gom_class MeshGrobTransformComponent : public MeshGrobTransformTool {
+    gom_class MESH_GFX_API MeshGrobTransformComponent :
+	public MeshGrobTransformTool {
     public:
         /**
          * \brief MeshGrobTransformComponent constructor.
@@ -80,7 +81,7 @@ namespace OGF {
         void pick_subset(
             MeshGrobTransformSubset* tool, const RayPick& rp
         ) override;
-        
+
         /**
          * \copydoc MeshGrobTransformTool::transform_subset()
          */
@@ -90,7 +91,7 @@ namespace OGF {
          * \copydoc MeshGrobTransformTool::clear_subset()
          */
         void clear_subset() override;
-        
+
         vector<bool> v_is_picked_;
     };
 
@@ -99,7 +100,8 @@ namespace OGF {
     /**
      * \brief A tool that removes a connected component of a mesh.
      */
-    class MeshGrobRemoveComponent : public MeshGrobTool {
+    class MESH_GFX_API MeshGrobRemoveComponent :
+	public MeshGrobTool {
     public:
         /**
          * \brief MeshGrobRemoveComponent constructor.
@@ -112,7 +114,7 @@ namespace OGF {
         ) : MeshGrobTool(parent),
             invert_selection_(invert_selection) {
         }
-        
+
         /**
          * \copydoc Tool::grab()
          */
@@ -124,7 +126,7 @@ namespace OGF {
     /****************************************************************/
 
     /**
-     * \brief A tool that removes a connected component of a mesh or 
+     * \brief A tool that removes a connected component of a mesh or
      *  its complement depending on the pushed mouse button.
      * \see MeshGrobRemoveComponent
      */
@@ -135,7 +137,7 @@ namespace OGF {
         message,
         "btn1: remove component; btn3: keep component"
     )
-    gom_class MeshGrobKeepOrRemoveComponent : public MultiTool {
+    gom_class MESH_GFX_API MeshGrobKeepOrRemoveComponent : public MultiTool {
     public:
         /**
          * \brief MeshGrobRemoveOrKeepComponent constructor.
@@ -170,7 +172,7 @@ namespace OGF {
         message,
         "btn1: copy component; btn3: remove component"
     )
-    gom_class MeshGrobCopyComponent : public MeshGrobTransformTool {
+    gom_class MESH_GFX_API MeshGrobCopyComponent : public MeshGrobTransformTool {
     public:
         /**
          * \brief MeshGrobCopyComponent constructor.
@@ -184,7 +186,7 @@ namespace OGF {
             );
             set_tool(
                 MOUSE_BUTTON_RIGHT, new MeshGrobRemoveComponent(parent,false)
-            );            
+            );
         }
 
     protected:
@@ -205,7 +207,7 @@ namespace OGF {
     };
 
 
-    /****************************************************************/        
+    /****************************************************************/
 
     /**
      * \brief A tool that flips the normals of a connected component.
@@ -214,7 +216,7 @@ namespace OGF {
     gom_attribute(icon, "flip_component")
     gom_attribute(help, "flip component")
     gom_attribute(message, "btn1: flip")
-    gom_class MeshGrobFlipComponent : public MeshGrobTool {
+    gom_class MESH_GFX_API MeshGrobFlipComponent : public MeshGrobTool {
     public:
         /**
          * \brief MeshGrobFlipComponent constructor.
@@ -223,7 +225,7 @@ namespace OGF {
         MeshGrobFlipComponent(ToolsManager* parent) :
 	   MeshGrobTool(parent) {
         }
-        
+
         /**
          * \copydoc Tool::grab()
          */

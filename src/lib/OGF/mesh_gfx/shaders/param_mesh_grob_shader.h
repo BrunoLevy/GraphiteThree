@@ -23,28 +23,28 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with 
+ * As an exception to the GPL, Graphite can be linked with
  *  the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
 
-#ifndef H_OGF_MESH_SHADERS_PARAM_MESH_GROB_SHADER_H
-#define H_OGF_MESH_SHADERS_PARAM_MESH_GROB_SHADER_H
 
-#include <OGF/mesh/common/common.h>
-#include <OGF/mesh/shaders/mesh_grob_shader.h>
+#ifndef H_OGF_MESH_GFX_SHADERS_PARAM_MESH_GROB_SHADER_H
+#define H_OGF_MESH_GFX_SHADERS_PARAM_MESH_GROB_SHADER_H
+
+#include <OGF/mesh_gfx/common/common.h>
+#include <OGF/mesh_gfx/shaders/mesh_grob_shader.h>
 
 /**
- * \file OGF/mesh/shaders/param_mesh_grob_shader.h
+ * \file OGF/mesh_gfx/shaders/param_mesh_grob_shader.h
  * \brief Classes for drawing the parameter space of a MeshGrob.
  */
 
@@ -52,7 +52,7 @@ namespace OGF {
     /**
      * \brief A MeshGrobShader to display parameter space.
      */
-    gom_class MESH_API ParamMeshGrobShader : public MeshGrobShader {
+    gom_class MESH_GFX_API ParamMeshGrobShader : public MeshGrobShader {
     public:
         /**
          * \brief PlainMeshGrobShader constructor.
@@ -69,17 +69,17 @@ namespace OGF {
 	 * \copydoc MeshGrobShader::draw()
 	 */
 	void draw() override;
-	
+
       gom_properties:
-	        
+
         /**
          * \brief Sets surface drawing style.
          * \param[in] value a const reference to the SurfaceStyle
          */
         gom_attribute(visible_if, "has_facets")
-        void set_surface_style(const SurfaceStyle& value) { 
+        void set_surface_style(const SurfaceStyle& value) {
             surface_style_ = value;
-            update(); 
+            update();
         }
 
         /**
@@ -98,9 +98,9 @@ namespace OGF {
          *  in the cells.
          */
         gom_attribute(visible_if, "has_facets or has_cells")
-        void set_mesh_style(const EdgeStyle& value) { 
+        void set_mesh_style(const EdgeStyle& value) {
             mesh_style_ = value;
-            update(); 
+            update();
         }
 
         /**
@@ -118,7 +118,7 @@ namespace OGF {
         SurfaceStyle surface_style_;
         EdgeStyle    mesh_style_;
     };
-    
+
 }
 
 #endif

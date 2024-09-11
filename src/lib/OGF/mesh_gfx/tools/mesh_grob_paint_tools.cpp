@@ -35,8 +35,8 @@
  *  with the following (non-GPL) libraries: Qt, SuperLU, WildMagic and CGAL
  */
 
-#include <OGF/mesh/tools/mesh_grob_paint_tools.h>
-#include <OGF/mesh/shaders/mesh_grob_shader.h>
+#include <OGF/mesh_gfx/tools/mesh_grob_paint_tools.h>
+#include <OGF/mesh_gfx/shaders/mesh_grob_shader.h>
 #include <OGF/renderer/context/rendering_context.h>
 #include <OGF/gom/reflection/meta.h>
 

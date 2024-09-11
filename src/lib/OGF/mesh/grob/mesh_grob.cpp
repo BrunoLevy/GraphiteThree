@@ -41,7 +41,6 @@
 #include <OGF/scene_graph/types/scene_graph.h>
 #include <OGF/scene_graph/types/scene_graph_library.h>
 #include <OGF/scene_graph/types/geofile.h>
-#include <OGF/scene_graph_gfx/shaders/shader.h>
 #include <OGF/gom/reflection/meta_class.h>
 
 #include <geogram/mesh/mesh_io.h>

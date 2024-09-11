@@ -24,26 +24,26 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
+ * As an exception to the GPL, Graphite can be linked
  *  with the following (non-GPL) libraries: Qt, SuperLU, WildMagic and CGAL
  */
 
-#ifndef H_OGF_MESH_TOOLS_MESH_GROB_FACET_TOOLS_H
-#define H_OGF_MESH_TOOLS_MESH_GROB_FACET_TOOLS_H
+#ifndef H_OGF_MESH_GFX_TOOLS_MESH_GROB_FACET_TOOLS_H
+#define H_OGF_MESH_GFX_TOOLS_MESH_GROB_FACET_TOOLS_H
 
-#include <OGF/mesh/common/common.h>
-#include <OGF/mesh/tools/mesh_grob_tool.h>
+#include <OGF/mesh_gfx/common/common.h>
+#include <OGF/mesh_gfx/tools/mesh_grob_tool.h>
 
 /**
- * \file OGF/mesh/tools/mesh_grob_facet_tools.h
+ * \file OGF/mesh_gfx/tools/mesh_grob_facet_tools.h
  * \brief Tools to edit surface mesh facets.
  */
 
@@ -54,7 +54,7 @@ namespace OGF {
     /**
      * \brief A tool that creates a vertex in the center of a facet.
      */
-    class MESH_API MeshGrobCreateCenterVertex : public MeshGrobTool {
+    class MESH_GFX_API MeshGrobCreateCenterVertex : public MeshGrobTool {
     public:
         /**
          * \brief MeshGrobCreateCenterVertex constructor.
@@ -65,12 +65,12 @@ namespace OGF {
         ) : MeshGrobTool(parent),
             new_vertex_(NO_VERTEX) {
         }
-        
+
         /**
          * \copydoc Tool::grab()
          */
         void grab(const RayPick& p_ndc) override;
-        
+
         /**
          * \copydoc Tool::drag()
          */
@@ -82,7 +82,7 @@ namespace OGF {
     /**
      * \brief A tool that removes a vertex and merges all incident facets.
      */
-    class MESH_API MeshGrobRemoveCenterVertex : public MeshGrobTool {
+    class MESH_GFX_API MeshGrobRemoveCenterVertex : public MeshGrobTool {
     public:
         /**
          * \brief MeshGrobRemoveCenterVertex constructor.
@@ -110,7 +110,7 @@ namespace OGF {
     gom_attribute(message,
                   "btn1: create center vertex; btn3: remove center vertex"
     )
-    gom_class MESH_API MeshGrobEditCenterVertex : public MultiTool {
+    gom_class MESH_GFX_API MeshGrobEditCenterVertex : public MultiTool {
     public:
         /**
          * \brief MeshGrobEditCenterVertex constructor.
@@ -128,8 +128,8 @@ namespace OGF {
          * \copydoc Tool::reset()
          */
         void reset() override;
-    };    
-    
+    };
+
 
     /****************************************************************/
 
@@ -140,7 +140,7 @@ namespace OGF {
     gom_attribute(icon, "remove_incident_facets")
     gom_attribute(help, "remove facets incident to a vertex")
     gom_attribute(message, "btn1: remove facets incident to vertex")
-    gom_class MESH_API MeshGrobRemoveIncidentFacets : public MeshGrobTool {
+    gom_class MESH_GFX_API MeshGrobRemoveIncidentFacets : public MeshGrobTool {
     public:
         /**
          * \brief MeshGrobRemoveIncidentFacets constructor.
@@ -150,7 +150,7 @@ namespace OGF {
             ToolsManager* parent
         ) : MeshGrobTool(parent) {
         }
-        
+
         /**
          * \copydoc Tool::reset()
          */
@@ -161,13 +161,13 @@ namespace OGF {
          */
         void grab(const RayPick& p_ndc) override;
     };
-    
+
     /****************************************************************/
 
     /**
      * \brief A tool that removes a facet.
      */
-    class MESH_API MeshGrobRemoveFacet : public MeshGrobTool {
+    class MESH_GFX_API MeshGrobRemoveFacet : public MeshGrobTool {
     public:
         /**
          * \brief MeshGrobRemoveFacet constructor.
@@ -185,7 +185,7 @@ namespace OGF {
     /**
      * \brief A tool that fills a hole by creating a new facet.
      */
-    class MESH_API MeshGrobFillHole : public MeshGrobTool {
+    class MESH_GFX_API MeshGrobFillHole : public MeshGrobTool {
     public:
         /**
          * \brief MeshGrobFillHole constructor.
@@ -209,7 +209,7 @@ namespace OGF {
     gom_attribute(icon, "fill_hole")
     gom_attribute(help, "fill hole / remove facet")
     gom_attribute(message, "btn1: fill hole; btn3: remove facet")
-    gom_class MESH_API MeshGrobEditHole : public MultiTool {
+    gom_class MESH_GFX_API MeshGrobEditHole : public MultiTool {
     public:
 
         /**
@@ -225,7 +225,7 @@ namespace OGF {
 	 * \brief MeshGrobEditHole destructor.
 	 */
 	~MeshGrobEditHole() override;
-    };    
+    };
 
     /****************************************************************/
 
@@ -334,7 +334,7 @@ namespace OGF {
     gom_attribute(message,
        "btn1: split facet (select vertices); btn3: merge facets (select edge)"
     )
-    gom_class MESH_API MeshGrobEditFacetEdge : public MultiTool {
+    gom_class MESH_GFX_API MeshGrobEditFacetEdge : public MultiTool {
     public:
         /**
          * \brief MeshGrobEditFacetEdge constructor.
@@ -344,13 +344,12 @@ namespace OGF {
             set_tool(MOUSE_BUTTON_LEFT, new MeshGrobSplitFacet(parent));
             set_tool(MOUSE_BUTTON_RIGHT, new MeshGrobJoinFacets(parent));
         }
-        
+
         /**
          * \copydoc Tool::reset()
          */
         void reset() override;
-    };    
+    };
 }
 
 #endif
-

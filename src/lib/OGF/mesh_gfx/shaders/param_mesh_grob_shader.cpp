@@ -23,27 +23,27 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with 
+ * As an exception to the GPL, Graphite can be linked with
  *  the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
 
-#include <OGF/mesh/shaders/param_mesh_grob_shader.h>
+#include <OGF/mesh_gfx/shaders/param_mesh_grob_shader.h>
 
 namespace OGF {
 
     ParamMeshGrobShader::ParamMeshGrobShader(
 	MeshGrob* grob
     ) : MeshGrobShader(grob) {
-	
+
         surface_style_.visible = true;
         surface_style_.color = Color(1.0,1.0,1.0,1.0);
 
@@ -57,7 +57,7 @@ namespace OGF {
 
     void ParamMeshGrobShader::draw() {
         MeshGrobShader::draw();
-        
+
 	Attribute<double> tex_coord;
 	tex_coord.bind_if_is_defined(
 	    mesh_grob()->facet_corners.attributes(), "tex_coord"
@@ -73,27 +73,27 @@ namespace OGF {
 	// is displayed in the bounding box of the object, so that
 	// the parameter space is displayed where the object was,
 	// and the "home" button works as expected.
-	
+
 	Box3d B = mesh_grob()->bbox();
 	double s = B.radius();
 	glupMatrixMode(GLUP_MODELVIEW_MATRIX);
 	glupPushMatrix();
 
 	glupTranslated(B.x_min(), B.y_min(), B.z_min() + s);
-	glupScaled(s,s,s);	
-	
+	glupScaled(s,s,s);
+
 	glupDisable(GLUP_LIGHTING);
 	if(surface_style_.visible) {
 	    glupSetColor4dv(
 		GLUP_FRONT_AND_BACK_COLOR,surface_style_.color.data()
 	    );
-	    
+
 	    if(mesh_style_.visible) {
 		glupEnable(GLUP_DRAW_MESH);
 		glupSetColor4dv(GLUP_MESH_COLOR,mesh_style_.color.data());
 		glupSetMeshWidth(GLUPint(mesh_style_.width));
 	    } else {
-		glupDisable(GLUP_DRAW_MESH);		
+		glupDisable(GLUP_DRAW_MESH);
 	    }
 	    glupBegin(GLUP_TRIANGLES);
 	    for(index_t f: mesh_grob()->facets) {
@@ -112,16 +112,14 @@ namespace OGF {
 		    glupVertex2dv(&tex_coord[2*c]);
 		    glupVertex2dv(&tex_coord[2*(c+1)]);
 		    glupVertex2dv(&tex_coord[2*(c+2)]);
-		    glupVertex2dv(&tex_coord[2*(c+3)]);		    
+		    glupVertex2dv(&tex_coord[2*(c+3)]);
 		}
 	    }
 	    glupEnd();
 	}
 	glupEnable(GLUP_LIGHTING);
-	
+
 	glupPopMatrix();
 	tex_coord.unbind();
     }
 }
-
-

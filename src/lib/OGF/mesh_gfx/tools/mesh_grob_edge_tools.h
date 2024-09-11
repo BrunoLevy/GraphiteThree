@@ -24,26 +24,26 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
+ * As an exception to the GPL, Graphite can be linked
  *  with the following (non-GPL) libraries: Qt, SuperLU, WildMagic and CGAL
  */
 
-#ifndef H_OGF_MESH_TOOLS_MESH_GROB_EDGE_TOOLS_H
-#define H_OGF_MESH_TOOLS_MESH_GROB_EDGE_TOOLS_H
+#ifndef H_OGF_MESH_GFX_TOOLS_MESH_GROB_EDGE_TOOLS_H
+#define H_OGF_MESH_GFX_TOOLS_MESH_GROB_EDGE_TOOLS_H
 
-#include <OGF/mesh/common/common.h>
-#include <OGF/mesh/tools/mesh_grob_tool.h>
+#include <OGF/mesh_gfx/common/common.h>
+#include <OGF/mesh_gfx/tools/mesh_grob_tool.h>
 
 /**
- * \file OGF/mesh/tools/mesh_grob_edge_tools.h
+ * \file OGF/mesh_gfx/tools/mesh_grob_edge_tools.h
  * \brief Tools to edit surface mesh edges.
  */
 
@@ -56,7 +56,7 @@ namespace OGF {
      */
     gom_attribute(icon, "create_edge")
     gom_attribute(help, "create edge")
-    gom_class MeshGrobCreateEdge : public MeshGrobTool {
+    gom_class MESH_GFX_API MeshGrobCreateEdge : public MeshGrobTool {
     public:
 
         /**

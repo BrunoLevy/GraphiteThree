@@ -23,20 +23,20 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the following 
+ * As an exception to the GPL, Graphite can be linked with the following
  *   (non-GPL) libraries:  Qt, SuperLU, WildMagic and CGAL
  */
- 
 
-#include <OGF/mesh/shaders/mesh_grob_shader.h>
+
+#include <OGF/mesh_gfx/shaders/mesh_grob_shader.h>
 #include <OGF/mesh/commands/mesh_grob_filters_commands.h>
 #include <OGF/renderer/context/rendering_context.h>
 #include <OGF/basic/os/file_manager.h>
@@ -55,10 +55,10 @@ namespace OGF {
     ) : Shader(grob) {
        no_grob_update_ = true;
     }
-        
+
     MeshGrobShader::~MeshGrobShader() {
     }
-    
+
     void MeshGrobShader::blink() {
     }
 
@@ -73,7 +73,7 @@ namespace OGF {
 
     void MeshGrobShader::hide_vertices_selection() {
     }
-    
+
     void MeshGrobShader::show_mesh() {
     }
 
@@ -97,7 +97,7 @@ namespace OGF {
     void MeshGrobShader::pick_object(index_t object_id) {
         geo_argused(object_id);
     }
-    
+
     PlainMeshGrobShader::PlainMeshGrobShader(
         MeshGrob* grob
     ) :
@@ -106,7 +106,7 @@ namespace OGF {
         gfx_.set_mesh(grob);
 
 	painting_mode_ = SOLID_COLOR;
-	
+
         attribute_ = "vertices.point[0]";
         attribute_subelements_ = MESH_VERTICES;
         attribute_name_ = "point[0]";
@@ -117,7 +117,7 @@ namespace OGF {
 	tex_coord_attribute_ = "point";
 	tex_coord_repeat_ = 1;
 	tex_normal_mapping_ = false;
-	
+
         surface_style_.visible = true;
         surface_style_.color = Color(0.5,0.5,0.5);
         facets_filter_ = false;
@@ -125,15 +125,15 @@ namespace OGF {
 	specular_ = 2;
 
         two_sided_ = false;
-        
+
         volume_style_.visible = true;
         volume_style_.color = Color(1.0,1.0,0.0);
         cells_filter_ = false;
-        
+
         edges_style_.visible = true;
         edges_style_.color  = dark_mode() ? Color(0.0,1.0,1.0) : Color(0.0,0.0,0.5);
         edges_style_.width  = 1;
-        
+
         mesh_style_.visible = false;
         mesh_style_.color   = Color(0.0,0.0,0.0);
         mesh_style_.width   = 1;
@@ -147,22 +147,22 @@ namespace OGF {
         vertices_style_.size    = 2;
 
         vertices_filter_ = false;
-        
+
 	vertices_transparency_ = 0.0;
-	
+
         vertices_selection_style_.visible = true;
         vertices_selection_style_.color   = Color(1.0,0.0,0.0);
         vertices_selection_style_.size    = 3;
-        
+
         shrink_ = 0;
 
         colored_cells_ = false;
-        tets_ = true;        
+        tets_ = true;
         hexes_ = true;
         prisms_ = true;
         pyramids_ =true;
         connectors_=true;
-        
+
         //  If we got only points, make sure that we will see
         // something by default !
         if(
@@ -188,7 +188,7 @@ namespace OGF {
 	glsl_start_time_ = 0.0;
 	glsl_frame_ = 0;
     }
-    
+
     PlainMeshGrobShader::~PlainMeshGrobShader() {
 	if(glsl_program_ != 0) {
 	    glDeleteProgram(glsl_program_);
@@ -203,7 +203,7 @@ namespace OGF {
 	    // GUI elements visibility depend on it.
 	    if(attribute_min_ == 0.0 && attribute_max_ == 0.0) {
 		autorange();
-	    } 
+	    }
 	}
 	if(painting_mode_ == COLOR) {
 	    if(texture_filename_ != "rgbcube") {
@@ -244,7 +244,7 @@ namespace OGF {
 	update();
     }
 
-    
+
     void PlainMeshGrobShader::autorange() {
         if(attribute_subelements_ != MESH_NONE) {
             attribute_min_ = 0.0;
@@ -265,7 +265,7 @@ namespace OGF {
                 } else {
 
                     Attribute<Numeric::uint8> filter;
-                    
+
                     if(
                         attribute_subelements_ == MESH_VERTICES &&
                         vertices_filter_
@@ -288,7 +288,7 @@ namespace OGF {
                             mesh_grob()->cells.attributes(), "filter"
                         );
                     }
-                    
+
                     attribute_min_ = Numeric::max_float64();
                     attribute_max_ = Numeric::min_float64();
                     for(index_t i: subelements) {
@@ -299,29 +299,29 @@ namespace OGF {
                         attribute_max_ = std::max(attribute_max_, attribute[i]);
                     }
                 }
-            } 
+            }
         }
         update();
     }
-    
+
     void PlainMeshGrobShader::draw() {
         MeshGrobShader::draw();
-        
+
 	if(glsl_program_changed_) {
 	    update_glsl_program();
 	}
-	
+
         GLUPboolean clipping_backup = glupIsEnabled(GLUP_CLIPPING);
-        
+
         if(!clipping_) {
             glupDisable(GLUP_CLIPPING);
             glDisable(GL_CLIP_PLANE0);
         }
-        
+
         if(mesh_grob()->graphics_are_locked()) {
             return;
         }
-        
+
         if(mesh_grob()->dirty()) {
             gfx_.set_mesh(mesh_grob());
             mesh_grob()->up_to_date();
@@ -330,7 +330,7 @@ namespace OGF {
 	if(get_texturing() || get_coloring()) {
 	    glupEnable(GLUP_ALPHA_DISCARD);
 	    glupSetAlphaThreshold(0.05f);
-	    
+
 	    if(texture_.is_null()) {
 		if(FileSystem::is_file(texture_filename_)) {
 		    texture_ = create_texture_from_file(
@@ -442,7 +442,7 @@ namespace OGF {
 	    // TODO: detect non-zero alpha in colormap.
 	    if(
 	       colormap_style_.colormap_name == "transparent" ||
-	       colormap_style_.colormap_name == "transparent2" 
+	       colormap_style_.colormap_name == "transparent2"
 	    ) {
 		glupEnable(GLUP_ALPHA_DISCARD);
 		glupSetAlphaThreshold(0.05f);
@@ -450,11 +450,11 @@ namespace OGF {
 
 	    double attribute_min = attribute_min_;
 	    double attribute_max = attribute_max_;
-	    
+
 	    if(colormap_style_.flip) {
 		std::swap(attribute_min, attribute_max);
 	    }
-	    
+
             colormap_texture_->bind();
 
             gfx_.set_scalar_attribute(
@@ -472,7 +472,7 @@ namespace OGF {
         gfx_.set_mesh_color(
             float(mesh_style_.color.r()),
             float(mesh_style_.color.g()),
-            float(mesh_style_.color.b())                
+            float(mesh_style_.color.b())
         );
 
         gfx_.set_show_mesh(mesh_style_.visible);
@@ -485,14 +485,14 @@ namespace OGF {
             gfx_.set_points_color(
                 float(vertices_selection_style_.color.r()),
                 float(vertices_selection_style_.color.g()),
-                float(vertices_selection_style_.color.b())                
+                float(vertices_selection_style_.color.b())
             );
             gfx_.set_points_size(float(vertices_selection_style_.size));
             gfx_.set_vertices_selection("selection");
             gfx_.draw_vertices();
-            gfx_.set_vertices_selection("");            
+            gfx_.set_vertices_selection("");
         }
-        
+
         if(vertices_style_.visible) {
 
 	    if(vertices_transparency_ != 0.0) {
@@ -508,11 +508,11 @@ namespace OGF {
                 float(vertices_style_.color.b()),
 		float(1.0 - vertices_transparency_)
             );
-	    
+
             gfx_.set_points_size(float(vertices_style_.size));
             gfx_.draw_vertices();
 
-	    if(vertices_transparency_ != 0.0) {	    
+	    if(vertices_transparency_ != 0.0) {
 		glDisable(GL_BLEND);
 		glDepthMask(GL_TRUE);
 	    }
@@ -524,22 +524,22 @@ namespace OGF {
             gfx_.set_mesh_color(
                 float(edges_style_.color.r()),
                 float(edges_style_.color.g()),
-                float(edges_style_.color.b())                
+                float(edges_style_.color.b())
             );
-            gfx_.set_mesh_width(edges_style_.width);            
+            gfx_.set_mesh_width(edges_style_.width);
             gfx_.draw_edges();
         }
-        
+
         if(border_style_.visible) {
             gfx_.set_mesh_color(
                 float(border_style_.color.r()),
                 float(border_style_.color.g()),
-                float(border_style_.color.b())                
+                float(border_style_.color.b())
             );
             gfx_.set_mesh_border_width(border_style_.width);
             gfx_.draw_surface_borders();
         }
-        
+
         if(surface_style_.visible) {
             gfx_.set_surface_color(
                 float(surface_style_.color.r()),
@@ -550,9 +550,9 @@ namespace OGF {
             gfx_.set_mesh_color(
                 float(mesh_style_.color.r()),
                 float(mesh_style_.color.g()),
-                float(mesh_style_.color.b())                
+                float(mesh_style_.color.b())
             );
-            gfx_.set_mesh_width(mesh_style_.width);	    
+            gfx_.set_mesh_width(mesh_style_.width);
 	    if(surface_style_.color.a() < 1.0) {
 		Color bkg = 0.5 * (
 		    context->background_color() +
@@ -588,7 +588,7 @@ namespace OGF {
                     gfx_.set_backface_surface_color(
                         1.0f - float(surface_style_.color.r()),
                         1.0f - float(surface_style_.color.g()),
-                        1.0f - float(surface_style_.color.b())                
+                        1.0f - float(surface_style_.color.b())
                     );
                 }
             }
@@ -619,22 +619,22 @@ namespace OGF {
 	    if(tex_normal_mapping_) {
 		glupDisable(GLUP_NORMAL_MAPPING);
 	    }
-	    glupDisable(GLUP_ALPHA_DISCARD);	    
+	    glupDisable(GLUP_ALPHA_DISCARD);
         }
-	
+
         if(volume_style_.visible) {
             gfx_.set_mesh_width(mesh_style_.width);
             gfx_.set_mesh_color(
                 float(mesh_style_.color.r()),
                 float(mesh_style_.color.g()),
-                float(mesh_style_.color.b())                
+                float(mesh_style_.color.b())
             );
             gfx_.set_show_mesh(mesh_style_.visible);
             gfx_.set_mesh_width(mesh_style_.width);
 
 	    float specular_backup = glupGetSpecular();
 	    glupSetSpecular(float(specular_) / 10.0f);
-	    
+
             if(colored_cells_) {
                 gfx_.set_cells_colors_by_type();
             } else {
@@ -659,19 +659,19 @@ namespace OGF {
 		    glupSetAlphaThreshold(0.05f);
 		}
             }
-	    
-	    
+
+
             gfx_.set_draw_cells(GEO::MESH_TET, tets_);
             gfx_.set_draw_cells(GEO::MESH_HEX, hexes_);
             gfx_.set_draw_cells(GEO::MESH_PRISM, prisms_);
             gfx_.set_draw_cells(GEO::MESH_PYRAMID, pyramids_);
-            gfx_.set_draw_cells(GEO::MESH_CONNECTOR, connectors_);            
+            gfx_.set_draw_cells(GEO::MESH_CONNECTOR, connectors_);
 
             // If clipping mode is slicing, we deactivate shading:
             // in particular when properties are mapped, shading
             // is very distracting, and properties variations can
             // be completely hidden by specular highlights.
-            
+
             bool light_bkp = gfx_.get_lighting();
 
             // In addition, if we have a volume and we do not
@@ -679,7 +679,7 @@ namespace OGF {
             // with standard OpenGL mode, so that we can see
             // the border of the object.
             if(
-                glupIsEnabled(GLUP_CLIPPING) && 
+                glupIsEnabled(GLUP_CLIPPING) &&
                 (glupGetClipMode() == GLUP_CLIP_SLICE_CELLS)
             ) {
                 if(mesh_grob()->facets.nb() == 0) {
@@ -689,15 +689,15 @@ namespace OGF {
                     gfx_.draw_volume();
                     glDisable(GL_CULL_FACE);
                 }
-                gfx_.set_lighting(false);                
+                gfx_.set_lighting(false);
                 glupClipMode(GLUP_CLIP_SLICE_CELLS);
             }
-            
+
             gfx_.draw_volume();
             gfx_.set_lighting(light_bkp);
 	    glupDisable(GLUP_ALPHA_DISCARD);
 
-	    glupSetSpecular(specular_backup);	    
+	    glupSetSpecular(specular_backup);
         }
 
         if(slivers_ < 180.0) {
@@ -762,12 +762,12 @@ namespace OGF {
         if(!weird.is_bound()) {
             return;
         }
-        
+
         glupSetColor3f(GLUP_FRONT_AND_BACK_COLOR, 1.0f, 0.0f, 0.0f);
         glupEnable(GLUP_DRAW_MESH);
         glupSetMeshWidth(1);
         glupSetCellsShrink(float(get_shrink())/10.0f);
-        
+
         glupBegin(GLUP_TETRAHEDRA);
         for(index_t cell: mesh_grob()->cells) {
             if(mesh_grob()->cells.type(cell) == MESH_TET && weird[cell]) {
@@ -791,17 +791,17 @@ namespace OGF {
         glupEnd();
     }
 
-    
+
     void PlainMeshGrobShader::pick_object(index_t object_id) {
         gfx_.set_picking_mode(MESH_NONE);
         gfx_.set_object_picking_id(object_id);
         picking_ = true;
         draw();
-        gfx_.set_object_picking_id(index_t(-1));        
+        gfx_.set_object_picking_id(index_t(-1));
         picking_ = false;
     }
 
-    
+
     void PlainMeshGrobShader::pick(MeshElementsFlags what) {
         gfx_.set_picking_mode(what);
         picking_ = true;
@@ -835,7 +835,7 @@ namespace OGF {
         update();
     }
 
-    
+
     void PlainMeshGrobShader::show_mesh() {
         mesh_style_.visible=true;
         update();
@@ -870,7 +870,7 @@ namespace OGF {
 	}
 	GEO_CHECK_GL();
 	if(glsl_source_ != "") {
-	    
+
 	    std::string includes;
 	    const char* begin = glsl_source_.c_str();
 	    for(const char* p = begin; p != nullptr; p = strstr(p,"//import")) {
@@ -906,7 +906,7 @@ namespace OGF {
 	update();
     }
 
-    
+
     namespace {
 	inline void draw_vertex(
 	    MeshGrob* mesh, index_t v, const Attribute<double>& tex_coord
@@ -950,9 +950,9 @@ namespace OGF {
 	    }
 	}
     }
-    
+
     void PlainMeshGrobShader::draw_surface_with_glsl_shader() {
-	GEO_CHECK_GL();	
+	GEO_CHECK_GL();
 	glUseProgram(glsl_program_);
 
 	// If shader has an iTime uniform (e.g. a ShaderToy shader),
@@ -989,10 +989,10 @@ namespace OGF {
 	}
 
 	++glsl_frame_;
-	
+
 	glUseProgram(0);
 	GEO_CHECK_GL();
-	
+
 	glupDisable(GLUP_VERTEX_COLORS);
 	glupEnable(GLUP_TEXTURING);
 	glupSetColor4dv(GLUP_FRONT_AND_BACK_COLOR, surface_style_.color.data());
@@ -1018,7 +1018,7 @@ namespace OGF {
 	glupEnd();
 	glupUseProgram(0);
 	glupDisable(GLUP_TEXTURING);
-	GEO_CHECK_GL();	
+	GEO_CHECK_GL();
     }
 
     /*************************************************************************/
@@ -1045,7 +1045,7 @@ namespace OGF {
         // Determine whether region is on vertices, facets or cells,
         // and create a ReadOnlyScalarAttributeAdapter to access it
         // whatever its internal type
-        
+
         std::string rgn_subelements_name;
         std::string rgn_attribute_name;
         String::split_string(
@@ -1059,7 +1059,7 @@ namespace OGF {
             PlainMeshGrobShader::draw();
             return;
         }
-        
+
         MeshElementsFlags rgn_attribute_subelements =
             mesh_grob()->name_to_subelements_type(rgn_subelements_name);
         const MeshSubElementsStore& rgn_subelements =
@@ -1082,12 +1082,12 @@ namespace OGF {
             rgn_attribute.element_type() !=
             ReadOnlyScalarAttributeAdapter::ET_UINT8 &&
             rgn_attribute.element_type() !=
-            ReadOnlyScalarAttributeAdapter::ET_INT8 
+            ReadOnlyScalarAttributeAdapter::ET_INT8
         ) {
             PlainMeshGrobShader::draw();
             return;
         }
-        
+
         // Compute object barycenter and regions barycenter
         if(dirty_ || mesh_grob()->dirty()) {
             rgn_min_ = 100000;
@@ -1100,7 +1100,7 @@ namespace OGF {
                 index_t(rgn_max_ - rgn_min_ + 1),vec3(0.0, 0.0, 0.0)
             );
             vector<index_t> region_count(index_t(rgn_max_ - rgn_min_ + 1), 0);
-            
+
             switch(rgn_attribute_subelements) {
             case MESH_VERTICES: {
                 for(index_t v: mesh_grob()->vertices) {
@@ -1147,7 +1147,7 @@ namespace OGF {
                 if(
                     Numeric::is_nan(region_bary_[rgn].x) ||
                     Numeric::is_nan(region_bary_[rgn].y) ||
-                    Numeric::is_nan(region_bary_[rgn].z) 
+                    Numeric::is_nan(region_bary_[rgn].z)
                 ) {
                     region_bary_[rgn] = vec3(0.0, 0.0, 0.0);
                 } else {
@@ -1178,8 +1178,8 @@ namespace OGF {
             // filtering.
             gfx_.set_filter(MESH_VERTICES,"filter");
             gfx_.set_filter(MESH_FACETS,"filter");
-            gfx_.set_filter(MESH_CELLS,"filter");                        
-            
+            gfx_.set_filter(MESH_CELLS,"filter");
+
             vec3 T = double(amount_)/10.0 * (region_bary_[rgn] - bary_);
             glupMatrixMode(GLUP_MODELVIEW_MATRIX);
             glupPushMatrix();
@@ -1192,4 +1192,3 @@ namespace OGF {
     /*************************************************************************/
 
 }
-

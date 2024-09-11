@@ -36,7 +36,7 @@
  *  with the following (non-GPL) libraries: Qt, SuperLU, WildMagic and CGAL
  */
 
-#include <OGF/mesh/tools/mesh_grob_component_tools.h>
+#include <OGF/mesh_gfx/tools/mesh_grob_component_tools.h>
 #include <geogram/mesh/mesh_geometry.h>
 #include <stack>
 

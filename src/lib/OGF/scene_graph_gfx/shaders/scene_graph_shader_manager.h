@@ -155,7 +155,6 @@ namespace OGF {
          */
         Shader* current();
 
-
 	/**
 	 * \brief Gets the current FullScreenEffect.
 	 * \return a pointer to the current FullScreenEffect.
@@ -167,6 +166,14 @@ namespace OGF {
          * \param[in] value the user name for the FullScreenEffect
          */
         void full_screen_effect(const std::string& value);
+
+
+        /**
+         * \brief Finds the ShaderManager associated with a given Grob.
+         * \param[in] grob a pointer to the Grob
+         * \return a pointer to the ShaderManager
+         */
+        ShaderManager* resolve_shader_manager(Grob* grob);
 
     gom_signals:
         /**
@@ -250,14 +257,6 @@ namespace OGF {
 	 */
 	const FullScreenEffectName& get_effect() const;
 
-    public:
-        /**
-         * \brief Finds the ShaderManager associated with a given Grob.
-         * \param[in] grob a pointer to the Grob
-         * \return a pointer to the ShaderManager
-         */
-        ShaderManager* resolve_shader_manager(Grob* grob);
-
 	/**
 	 * \brief Gets the focus matrix.
 	 * \details The focus matrix corresponds to the transform
@@ -268,6 +267,7 @@ namespace OGF {
 	const mat4& get_focus_matrix() const {
 	    return focus_;
 	}
+
 
     private:
         SceneGraph* scene_graph_;

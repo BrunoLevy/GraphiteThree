@@ -23,18 +23,18 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the following 
+ * As an exception to the GPL, Graphite can be linked with the following
  *  (non-GPL) libraries:  Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_MESH_COMMANDS_MESH_GROB_SELECTIONS_COMMANDS_H
 #define H_OGF_MESH_COMMANDS_MESH_GROB_SELECTIONS_COMMANDS_H
@@ -49,7 +49,7 @@
 
 namespace OGF {
 
-    
+
    /**
     * \brief Commands that manipulate mesh selections.
     */
@@ -65,35 +65,35 @@ namespace OGF {
          * \brief MeshGrobSelectionsCommands destructor.
          */
         ~MeshGrobSelectionsCommands() override;
-	
+
     gom_slots:
-        
+
         void select_all();
 
         void select_none();
 
         void enlarge_selection(index_t nb_times=1);
-        
+
         void shrink_selection(index_t nb_times=1);
 
         void close_small_holes_in_selection(index_t hole_size=1);
-        
+
         void invert_selection();
 
         void delete_selected_elements(
             bool delete_isolated_vertices = true
         );
-        
+
         void hide_selection();
 
 
         /**
          * \brief sets the visible selection
-         * \param[in] selection semi-column-separated list of 
+         * \param[in] selection semi-column-separated list of
          *  star,id,id1-id2,!id,!id1-id2
          */
         void set_selection(const std::string& selection="*");
-        
+
         /**
          * \menu Vertices
          */
@@ -126,7 +126,7 @@ namespace OGF {
          * \menu Vertices
          */
         void select_vertices_on_degenerate_facets();
-        
+
         /**
          * \menu Facets
          */
@@ -139,12 +139,12 @@ namespace OGF {
          * \menu Facets
          */
         void select_degenerate_facets(bool add_to_selection=false);
-        
+
         /**
          * \brief Selects facets that have an intersection with another
          *  facet of the same mesh.
          * \param[in] add_to_selection if set, do not clear selection
-         * \param test_adjacent_facets test also pairs of facets 
+         * \param test_adjacent_facets test also pairs of facets
          *  that share an edge or a vertex
          * \menu Facets
          */
@@ -163,13 +163,13 @@ namespace OGF {
          * \brief Selects the facets incident to the border
          */
         void select_facets_on_border();
-        
+
         /**
          * \brief Selects facets that have all their vertices selected
          * \menu Facets
          */
         void select_facets_from_vertices_selection();
-        
+
         /**
          * \menu Cells
          */

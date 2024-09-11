@@ -60,8 +60,6 @@ namespace OGF {
     class InputGraphiteFile;
     class OutputGraphiteFile;
     class Interpreter;
-    // class ShaderManager;
-    // class Shader;
 
     /**
      * \brief Base class for all 3D Graphite objects.
@@ -138,12 +136,37 @@ namespace OGF {
 
         /**
          * \brief Changes the current shader of this Grob
+	 * \details Ignored in non-graphic mode
          * \param[in] value the shader user
          *  class name to be used, as a string (without the "OGF::" prefix).
          * \note This Grob needs to be the current object in
          *  its SceneGraph.
          */
         void set_shader(const std::string& value);
+
+
+	/**
+	 * \brief Gets the classname of the shader and its properties
+	 * \details Ignored in non-graphic mode
+	 * \param[out] classname the classname of the current shader
+	 * \param[out] properties the properties of the current shader
+	 * \param[in] pointers if set, get attributes with pointer types, else
+	 *  ignore them
+	 */
+	void get_shader_and_shader_properties(
+	    std::string& classname, ArgList& properties, bool pointers=true
+	);
+
+	/**
+	 * \brief Sets the shader and its properties
+	 * \details Ignored in non-graphic mode
+	 * \param[in] classname the classname of the shader
+	 * \param[in] properties the properties of the shader to be set
+	 */
+	void set_shader_and_shader_properties(
+	    const std::string& classname, const ArgList& properties
+	);
+
 
         /**
          * \brief Gets the attributes associated with this Grob.

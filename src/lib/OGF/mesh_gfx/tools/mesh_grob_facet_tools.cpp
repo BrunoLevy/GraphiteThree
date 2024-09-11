@@ -24,21 +24,21 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, 
+ * As an exception to the GPL,
  *  Graphite can be linked with the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
 
-#include <OGF/mesh/tools/mesh_grob_facet_tools.h>
-#include <OGF/mesh/shaders/mesh_grob_shader.h>
+#include <OGF/mesh_gfx/tools/mesh_grob_facet_tools.h>
+#include <OGF/mesh_gfx/shaders/mesh_grob_shader.h>
 #include <OGF/renderer/context/rendering_context.h>
 #include <geogram/mesh/mesh_halfedges.h>
 #include <geogram/mesh/mesh_geometry.h>
@@ -61,9 +61,9 @@ namespace {
         index_t f1, index_t c1, index_t f2, index_t c2
     ) {
         geo_debug_assert(f1 < mesh_grob->facets.nb());
-        geo_debug_assert(f2 < mesh_grob->facets.nb());        
+        geo_debug_assert(f2 < mesh_grob->facets.nb());
         geo_debug_assert(c1 >= mesh_grob->facets.corners_begin(f1));
-        geo_debug_assert(c1 < mesh_grob->facets.corners_end(f1));        
+        geo_debug_assert(c1 < mesh_grob->facets.corners_end(f1));
         geo_debug_assert(c2 >= mesh_grob->facets.corners_begin(f2));
         geo_debug_assert(c2 < mesh_grob->facets.corners_end(f2));
         mesh_grob->facet_corners.set_adjacent_facet(c1,f2);
@@ -90,7 +90,7 @@ namespace {
             mesh_grob->facet_corners.set_adjacent_facet(c1,NO_FACET);
             return;
         }
-        
+
         for(
             index_t c2 = mesh_grob->facets.corners_begin(f2);
             c2 < mesh_grob->facets.corners_end(f2);
@@ -101,7 +101,7 @@ namespace {
                 return;
             }
         }
-        
+
         geo_assert_not_reached;
     }
 
@@ -112,7 +112,7 @@ namespace {
     typedef vector<MeshHalfedges::Halfedge> Loop;
 
     /**
-     * \brief Creates a facet that will replace a Loop in a 
+     * \brief Creates a facet that will replace a Loop in a
      *  MeshGrob.
      * \details The created facet will have the same orientation as
      *  the loop. The loop is composed of facet corners, that will be
@@ -141,13 +141,13 @@ namespace {
                 mesh_grob, f, mesh_grob->facets.corners_begin(f) + lv, adj
             );
         }
-        
+
         return f;
     }
 
 
     /**
-     * \brief Tests whether a facet of a mesh is incident to the 
+     * \brief Tests whether a facet of a mesh is incident to the
      *  same vertex more than once.
      * \param[in] mesh_grob a const pointer to the MeshGrob
      * \param[in] f the index of the facet
@@ -194,7 +194,7 @@ namespace OGF {
                 index_t c2 = mesh_grob()->facets.next_corner_around_facet(
                     picked_facet, c1
                 );
-                
+
                 index_t v1 = mesh_grob()->facet_corners.vertex(c1);
                 index_t v2 = mesh_grob()->facet_corners.vertex(c2);
                 index_t nf = mesh_grob()->facets.create_triangle(
@@ -226,8 +226,8 @@ namespace OGF {
                 mesh_grob()->facets.corners_begin(prev_facet) + 1,
                 first_facet
             );
-            
-            
+
+
             vector<index_t> to_delete(mesh_grob()->facets.nb());
             to_delete[picked_facet] = 1;
             mesh_grob()->facets.delete_elements(to_delete);
@@ -279,7 +279,7 @@ namespace OGF {
                 << std::endl;
             return;
         }
-        
+
         Loop loop;
         // +1 because we will create a new facet.
         vector<index_t> remove_f(mesh_grob()->facets.nb()+1,0);
@@ -290,7 +290,7 @@ namespace OGF {
         MeshHalfedges::Halfedge H = firstH;
         do {
             remove_f[H.facet] = 1;
-            MH.move_to_prev_around_facet(H);            
+            MH.move_to_prev_around_facet(H);
             MH.move_to_opposite(H);
         } while(H != firstH);
 
@@ -307,18 +307,18 @@ namespace OGF {
                 MH.move_to_next_around_facet(HH);
             } while(HH != H);
 
-            MH.move_to_prev_around_facet(H);            
+            MH.move_to_prev_around_facet(H);
             MH.move_to_opposite(H);
         } while(H != firstH);
 
-        
+
         create_facet_replace_loop(mesh_grob(),loop);
-        
+
         mesh_grob()->facets.delete_elements(remove_f);
         mesh_grob()->update();
     }
 
-    
+
     void MeshGrobEditCenterVertex::reset() {
         MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
             object()->get_shader()
@@ -330,9 +330,9 @@ namespace OGF {
         MultiTool::reset();
     }
 
-    
+
     /*************************************************************/
-    
+
     void MeshGrobRemoveIncidentFacets::grab(const RayPick& p_ndc) {
         MeshGrobTool::grab(p_ndc);
         index_t picked_vertex = pick_vertex(p_ndc);
@@ -362,13 +362,13 @@ namespace OGF {
         }
         MeshGrobTool::reset();
     }
-    
+
     /****************************************************************/
-    
+
     void MeshGrobRemoveFacet::grab(const RayPick& p_ndc) {
         MeshGrobTool::grab(p_ndc);
         index_t result = pick_facet(p_ndc);
-        if(result != index_t(-1)) {        
+        if(result != index_t(-1)) {
             if(result > mesh_grob()->facets.nb()) {
                 Logger::err("Tool") << "Wrong facet ID!!!" << std::endl;
                 return;
@@ -394,7 +394,7 @@ namespace OGF {
 
             //   To detect pinchouts, count the number of
             // times each vertex appears in the hole.
-            
+
             std::map<index_t, index_t> v_to_nb;
             MeshHalfedges MH(*mesh_grob());
             vector<MeshHalfedges::Halfedge> hole;
@@ -415,7 +415,7 @@ namespace OGF {
                     ++nb_pinchouts;
                 }
             }
-            
+
             if(nb_pinchouts > 0) {
                 vector<MeshHalfedges::Halfedge> clean_hole;
                 bool in_hole_part = true;
@@ -440,7 +440,7 @@ namespace OGF {
                 std::swap(hole,clean_hole);
             }
 
-            
+
             index_t new_facet = mesh_grob()->facets.create_polygon(hole.size());
             for(index_t i=0; i<hole.size(); ++i) {
                 index_t f = hole[i].facet;
@@ -455,11 +455,11 @@ namespace OGF {
                 );
                 mesh_grob()->facet_corners.set_adjacent_facet(c1,new_facet);
             }
-            
+
             mesh_grob()->update();
         }
     }
-    
+
     /****************************************************************/
 
     void MeshGrobTransformFacet::pick_subset(
@@ -487,7 +487,7 @@ namespace OGF {
             }
         }
     }
-    
+
     /****************************************************************/
 
     void MeshGrobJoinFacets::grab(const RayPick& p_ndc) {
@@ -500,7 +500,7 @@ namespace OGF {
                 << std::endl;
             return;
         }
-        
+
         index_t adj_f = mesh_grob()->facet_corners.adjacent_facet(picked_c);
         if(adj_f == NO_FACET) {
             Logger::err("Tool")
@@ -508,7 +508,7 @@ namespace OGF {
                 << std::endl;
             return;
         }
-        
+
         if(adj_f == picked_f) {
             Logger::err("Tool")
                 << "Facet is adjacent to itself along picked edge"
@@ -526,7 +526,7 @@ namespace OGF {
                 << std::endl;
             return;
         }
-        
+
         Loop loop;
         MeshHalfedges MH(*mesh_grob());
         MeshHalfedges::Halfedge firstH(picked_f, picked_c);
@@ -555,7 +555,7 @@ namespace OGF {
             }
             MH.move_to_next_around_facet(H);
         }
-        
+
         create_facet_replace_loop(mesh_grob(),loop);
         vector<index_t> remove_f(mesh_grob()->facets.nb(), 0);
         remove_f[picked_f] = true;
@@ -590,7 +590,7 @@ namespace OGF {
             reset();
             return;
         }
-        
+
         index_t picked_f = NO_FACET;
         index_t c1 = NO_CORNER;
         index_t c2 = NO_CORNER;
@@ -613,7 +613,7 @@ namespace OGF {
                 break;
             }
         }
-        
+
         if(picked_f == NO_FACET) {
             Logger::err("Tool")
                 << "Did not find facet incident to both picked vertices"
@@ -632,7 +632,7 @@ namespace OGF {
             reset();
             return;
         }
-        
+
         index_t new_f[2];
         new_f[0] = NO_FACET;
         new_f[1] = NO_FACET;
@@ -641,19 +641,19 @@ namespace OGF {
         // first from c1 to c2, then from c2 to c1. This is done
         // with this two-iterations loop, that swaps c1 and c2 at
         // the end of the first iteration.
-        
+
         for(index_t i=0; i<2; ++i) {
             index_t c2n =
                 mesh_grob()->facets.next_corner_around_facet(picked_f, c2);
 
             index_t nb = 0;
-            
+
             index_t c = c1;
             do {
                 ++nb;
                 c = mesh_grob()->facets.next_corner_around_facet(picked_f, c);
             } while(c != c2n);
-            
+
             new_f[i] = mesh_grob()->facets.create_polygon(nb);
 
             // Create vertices
@@ -689,13 +689,13 @@ namespace OGF {
             new_f[0], mesh_grob()->facets.corners_end(new_f[0])-1,
             new_f[1], mesh_grob()->facets.corners_end(new_f[1])-1
         );
-        
+
         vector<index_t> delete_f(mesh_grob()->facets.nb(), 0);
         delete_f[picked_f] = 1;
         mesh_grob()->facets.delete_elements(delete_f);
-        
+
         mesh_grob()->update();
-        
+
         reset();
     }
 
@@ -705,7 +705,7 @@ namespace OGF {
         MeshGrobTool::reset();
         Logger::out("Tool") << "Pick the first vertex" << std::endl;
     }
-    
+
     void MeshGrobEditFacetEdge::reset() {
         MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
             object()->get_shader()
@@ -718,8 +718,8 @@ namespace OGF {
     }
 
     /************************************************************/
-    
+
     MeshGrobEditHole::~MeshGrobEditHole() {
     }
-    
+
 }

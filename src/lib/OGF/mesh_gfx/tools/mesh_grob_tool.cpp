@@ -23,23 +23,23 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, 
+ * As an exception to the GPL,
  *  Graphite can be linked with the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
 
-#include <OGF/mesh/tools/mesh_grob_tool.h>
+
+#include <OGF/mesh_gfx/tools/mesh_grob_tool.h>
+#include <OGF/mesh_gfx/shaders/mesh_grob_shader.h>
 #include <OGF/renderer/context/rendering_context.h>
-#include <OGF/mesh/shaders/mesh_grob_shader.h>
 
 #include <geogram/image/image_library.h>
 #include <geogram/basic/geometry_nd.h>
@@ -48,11 +48,11 @@
 namespace OGF {
 
     /*******************************************************************/
-    
+
     MeshGrobTool::MeshGrobTool(ToolsManager* parent) :
         Tool(parent) {
     }
-      
+
     MeshGrobTool::~MeshGrobTool() {
     }
 
@@ -61,11 +61,11 @@ namespace OGF {
     }
 
     index_t MeshGrobTool::pick_edge(const RayPick& rp) {
-        return pick(rp, MESH_EDGES);                
+        return pick(rp, MESH_EDGES);
     }
 
     index_t MeshGrobTool::pick_facet(const RayPick& rp) {
-        return pick(rp, MESH_FACETS);        
+        return pick(rp, MESH_FACETS);
     }
 
     index_t MeshGrobTool::pick_cell(const RayPick& rp) {
@@ -82,7 +82,7 @@ namespace OGF {
         }
 
         //   Step 1: pick a facet.
-        
+
         facet = pick_facet(rp);
         if(facet == index_t(-1) || facet > mesh_grob()->facets.nb()) {
             return false;
@@ -90,7 +90,7 @@ namespace OGF {
 
         //   Step 2: find among all edges of the facet the one that
         // is nearest to the picked point.
-        
+
         vec3 picked_point = rendering_context()->picked_point();
         double best_distance = Numeric::max_float64();
         for(index_t c1: mesh_grob()->facets.corners(facet)) {
@@ -109,7 +109,7 @@ namespace OGF {
         }
         return true;
     }
-    
+
     index_t MeshGrobTool::pick(
         const RayPick& rp, MeshElementsFlags what, Image* image,
         index_t x0, index_t y0, index_t width, index_t height
@@ -117,7 +117,7 @@ namespace OGF {
         if(mesh_grob() == nullptr || mesh_grob()->vertices.dimension() < 3) {
             return index_t(-1);
         }
-        
+
         MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
             mesh_grob()->get_shader()
         );
@@ -136,7 +136,7 @@ namespace OGF {
         if(CmdLine::get_arg_bool("dbg:picking")) {
 	    Logger::out("Tool") << "Saving pick_debug.png" << std::endl;
             Image_var dbg_image = new Image;
-            
+
             rendering_context()->snapshot(
                 dbg_image
             );
@@ -148,7 +148,7 @@ namespace OGF {
         if(image != nullptr) {
             rendering_context()->snapshot(image, true, x0, y0, width, height);
         }
-        
+
         rendering_context()->end_frame();
         rendering_context()->end_picking();
 
@@ -157,23 +157,23 @@ namespace OGF {
         picked_ndc_ = rp.p_ndc;
         picked_point_ = rendering_context()->picked_point();
         picked_depth_ = rendering_context()->picked_depth();
-        
+
         return result;
     }
 
     vec3 MeshGrobTool::drag_point(const RayPick& rp) const {
-        
+
         //   TODO: it's a bit stupid, we could do that without
         // going through begin_frame() / end_frame() by caching
         // the current viewport and modelview transforms...
-        
+
         vec2 dragged_ndc = rp.p_ndc;
         rendering_context()->begin_picking(dragged_ndc);
         rendering_context()->begin_frame();
 
         glupMultMatrix(focus());
         glupMultMatrix(mesh_grob()->get_obj_to_world_transform()) ;
-        
+
         vec3 result = rendering_context()->unproject(
             dragged_ndc, picked_depth_
         );
@@ -204,9 +204,9 @@ namespace OGF {
     const vec3& MeshGrobTransformSubset::center() const {
         return transform_tool_->center();
     }
-    
+
     /*******************/
-    
+
     void MeshGrobMoveSubset::grab(const RayPick& p_ndc) {
         MeshGrobTransformSubset::grab(p_ndc);
     }
@@ -219,7 +219,7 @@ namespace OGF {
     }
 
     /*******************/
-    
+
     void MeshGrobResizeSubset::grab(const RayPick& p_ndc) {
         MeshGrobTransformSubset::grab(p_ndc);
     }
@@ -268,22 +268,22 @@ namespace OGF {
             arc_ball_->get_value().inverse() *
             view.inverse() *
             create_translation_matrix(center());
-        
+
         update_transform_subset(M);
     }
 
     void MeshGrobRotateSubset::release(const RayPick& rp) {
-        arc_ball_->release(rp.p_ndc);                
+        arc_ball_->release(rp.p_ndc);
     }
-    
-    /**********************************************/    
+
+    /**********************************************/
 
     void MeshGrobTransformTool::grab(const RayPick& p_ndc) {
         clear_subset();
         prev_inverse_transform_.load_identity();
         MultiTool::grab(p_ndc);
     }
-    
+
     void MeshGrobTransformTool::release(const RayPick& p_ndc) {
         MultiTool::release(p_ndc);
         clear_subset();
@@ -292,7 +292,6 @@ namespace OGF {
 
     void MeshGrobTransformTool::clear_subset() {
     }
-    
-    /*******************************************************************/    
-}
 
+    /*******************************************************************/
+}

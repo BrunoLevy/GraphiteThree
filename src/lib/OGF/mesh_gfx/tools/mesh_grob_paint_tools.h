@@ -23,32 +23,32 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
+ * As an exception to the GPL, Graphite can be linked
  *  with the following (non-GPL) libraries: Qt, SuperLU, WildMagic and CGAL
  */
 
-#ifndef H_OGF_MESH_TOOLS_MESH_GROB_PAINT_TOOLS_H
-#define H_OGF_MESH_TOOLS_MESH_GROB_PAINT_TOOLS_H
+#ifndef H_OGF_MESH_GFX_TOOLS_MESH_GROB_PAINT_TOOLS_H
+#define H_OGF_MESH_GFX_TOOLS_MESH_GROB_PAINT_TOOLS_H
 
-#include <OGF/mesh/common/common.h>
-#include <OGF/mesh/tools/mesh_grob_tool.h>
+#include <OGF/mesh_gfx/common/common.h>
+#include <OGF/mesh_gfx/tools/mesh_grob_tool.h>
 
 /**
- * \file OGF/mesh/tools/mesh_grob_paint_tools.h
+ * \file OGF/mesh_gfx/tools/mesh_grob_paint_tools.h
  * \brief Tools to paint attributes on meshes
  *
  * \details The tools can paint attributes of arbitrary types
  *  on mesh vertices, mesh facets or mesh cells. They also work
  *  for painting selections, implemented as Attribute<bool>.
- *  The tool systematically applies to the visible attribute 
+ *  The tool systematically applies to the visible attribute
  *  selected in the current shader. If no visible attribute is
  *  selected, then the tool selects the vertices selection and
  *  displays it in the shader.
@@ -56,22 +56,22 @@
  *  Two picking modes are available:
  *  - Standard mode is "what you see is what you pick":
  *    An image is generated behind the scene with picking
- *    ids instead of colors, and the picked element is 
+ *    ids instead of colors, and the picked element is
  *    found by reading the pixel value under the cursor.
  *    Rectangular zones can be also selected, then the list
  *    of picked element is found by reading all pixel values
  *    in the rectangle. Optionally, a mask can be applied to
  *    the picked rectangle before getting the picked element.
  *    It is used for paiting strokes and for free-form selection.
- *  - There is also an "xray mode", that picks all elements 
+ *  - There is also an "xray mode", that picks all elements
  *    projected on the selection. It uses the same mask
  *    for stroke paiting and free-form selection, and tests for
  *    each element of the mesh whether it is projected on a set
  *    pixel in the mask.
  *
- *  For attributes attached to the vertices of the mesh, it is 
+ *  For attributes attached to the vertices of the mesh, it is
  *  possible to indirectly select them by picking a facet or a
- *  cell. Then if a facet or a cell is picked, then all the 
+ *  cell. Then if a facet or a cell is picked, then all the
  *  facet or cell vertices are painted. This behavior can be
  *  switched of by selecting the 'paint_vertices_only' property.
  *
@@ -98,7 +98,7 @@ namespace OGF {
         PAINT_DEC    /**< subtracts from attribute value */
     };
 
-    gom_class MESH_API MeshGrobPaintTool : public MeshGrobTool {
+    gom_class MESH_GFX_API MeshGrobPaintTool : public MeshGrobTool {
     public:
         MeshGrobPaintTool(ToolsManager* parent);
 
@@ -106,13 +106,13 @@ namespace OGF {
          * \copydoc MeshGrobTool::reset()
          */
         void reset() override;
-        
+
     gom_properties:
          /**
           * \brief The value to be painted.
           */
          void set_value(double value);
-         
+
          double get_value() const {
 	    return value_;
 	 }
@@ -122,7 +122,7 @@ namespace OGF {
           *  previous value when painting.
           */
          void set_accumulate(bool value);
-         
+
          bool get_accumulate() const {
 	    return accumulate_;
 	 }
@@ -132,18 +132,18 @@ namespace OGF {
           *  continuously updated when painting.
           */
          void set_autorange(bool value);
-         
+
          bool get_autorange() const {
              return autorange_;
          }
-         
+
          /**
-          * \brief If set, vertex attributes can be 
+          * \brief If set, vertex attributes can be
           *  only painted by directly picking vertices,
           *  else one can pick facets or cells.
           */
          void set_pick_vertices_only(bool value);
-         
+
          bool get_pick_vertices_only() const {
              return pick_vertices_only_;
          }
@@ -158,20 +158,20 @@ namespace OGF {
         bool get_xray_mode() const {
             return xray_mode_;
         }
-        
+
     public:
          void set_value_for_this_tool(double value) {
              value_ = value;
          }
-         
+
          void set_accumulate_for_this_tool(bool value) {
 	    accumulate_ = value;
 	 }
-         
+
          void set_autorange_for_this_tool(bool value) {
              autorange_ = value;
          }
-         
+
          void set_pick_vertices_for_this_tool(bool value) {
              pick_vertices_only_ = value;
          }
@@ -189,9 +189,9 @@ namespace OGF {
          static void get_paint_tools(
              ToolsManager* manager, vector<MeshGrobPaintTool*>& paint_tools
          );
-         
+
     protected:
-         
+
          bool get_painting_parameters(
              const RayPick& raypick,
              PaintOp& op,
@@ -199,21 +199,21 @@ namespace OGF {
              std::string& attribute_name,
              index_t& component
          );
-         
+
          void paint(const RayPick& p_ndc);
-         
+
     protected:
          double value_;
          bool accumulate_;
          bool autorange_;
          bool pick_vertices_only_;
          bool xray_mode_;
-         
+
          index_t picked_element_;
     };
 
     /**********************************************************/
-    
+
 
     /**
      * \brief A rect selection tool that paints attribute values in a mesh
@@ -222,8 +222,8 @@ namespace OGF {
     gom_attribute(icon, "paint_rect")
     gom_attribute(help, "paint attributes in rectangle")
     gom_attribute(message, "btn1: paint; btn3: erase")
-	   
-    gom_class MESH_API MeshGrobPaintRect : public MeshGrobPaintTool {
+
+    gom_class MESH_GFX_API MeshGrobPaintRect : public MeshGrobPaintTool {
     public:
         /**
          * \brief MeshGrobPaint constructor.
@@ -252,7 +252,7 @@ namespace OGF {
 
         /**
          * \brief Paints a rectangle
-         * \param[in] raypick 
+         * \param[in] raypick
          * \param[in] x0 , y0 , x1 , y1 image bounds (device coordinates)
          * \param[in] mask an optional mask. Black pixels do not belong to
          *  the selection, non-zero pixels belong to selection. Image is
@@ -264,13 +264,13 @@ namespace OGF {
             index_t x0, index_t y0, index_t x1, index_t y1,
             Image* mask = nullptr
         );
-        
+
         bool active_;
         vec2 p_;
-    };    
+    };
 
     /************************************************************************/
-    
+
     /**
      * \brief A tool that paints attribute values in a mesh
      */
@@ -278,8 +278,8 @@ namespace OGF {
     gom_attribute(icon, "paint")
     gom_attribute(help, "paint attributes")
     gom_attribute(message, "btn1: paint; btn3: erase")
-	   
-    gom_class MESH_API MeshGrobPaint : public MeshGrobPaintRect {
+
+    gom_class MESH_GFX_API MeshGrobPaint : public MeshGrobPaintRect {
     public:
         /**
          * \brief MeshGrobPaint constructor.
@@ -311,11 +311,11 @@ namespace OGF {
         index_t get_width() const {
             return width_;
         }
-        
+
         void set_stroke_mode(bool value) {
             stroke_mode_ = value;
         }
-        
+
         bool get_stroke_mode() const {
             return stroke_mode_;
         }
@@ -329,13 +329,13 @@ namespace OGF {
         void for_each_stroke_quad(
             std::function<void(vec2, vec2, vec2, vec2)> doit
         );
-        
+
     protected:
         index_t width_;
         vec2 latest_ndc_;
         bool stroke_mode_;
         vector<vec2> stroke_;
-    };    
+    };
 
     /*************************************************************/
 
@@ -346,15 +346,15 @@ namespace OGF {
     gom_attribute(icon, "paint_freeform")
     gom_attribute(help, "paint attributes with free-form selection")
     gom_attribute(message, "btn1: paint; btn3: erase")
-	   
-    gom_class MESH_API MeshGrobPaintFreeform : public MeshGrobPaintRect {
+
+    gom_class MESH_GFX_API MeshGrobPaintFreeform : public MeshGrobPaintRect {
     public:
         /**
          * \brief MeshGrobPaintFreeform constructor.
          * \param[in] parent a pointer to the ToolsManager
          */
         MeshGrobPaintFreeform(ToolsManager* parent);
-        
+
         /**
          * \copydoc Tool::grab()
          */
@@ -384,8 +384,8 @@ namespace OGF {
     gom_attribute(icon, "paint_connected")
     gom_attribute(help, "paint attributes on connected components")
     gom_attribute(message, "btn1: paint; btn3: erase")
-	   
-    gom_class MESH_API MeshGrobPaintConnected : public MeshGrobPaintTool {
+
+    gom_class MESH_GFX_API MeshGrobPaintConnected : public MeshGrobPaintTool {
     public:
         /**
          * \brief MeshGrobPaintConnected constructor.
@@ -419,12 +419,12 @@ namespace OGF {
         void set_tolerance(double value) {
             tolerance_ = value;
         }
-        
+
         double get_tolerance() const {
             return tolerance_;
         }
 
-        
+
     protected:
         bool test(double reference, double value) const {
             return !fill_same_value_ ||
@@ -437,7 +437,7 @@ namespace OGF {
     };
 
     /**********************************************************************/
-    
+
     /**
      * \brief A tool that probes attribute values in a mesh
      */
@@ -445,8 +445,8 @@ namespace OGF {
     gom_attribute(icon, "pipette")
     gom_attribute(help, "probe attributes")
     gom_attribute(message, "btn1: probe attributes")
-    
-    gom_class MESH_API MeshGrobProbe : public MeshGrobTool {
+
+    gom_class MESH_GFX_API MeshGrobProbe : public MeshGrobTool {
     public:
         /**
          * \brief MeshGrobPaint constructor.
@@ -471,25 +471,25 @@ namespace OGF {
 
      protected:
         void probe(const RayPick& p_ndc);
-        
+
     private:
         bool picked_;
         bool grabbed_;
         double value_;
         vec2 latest_ndc_;
         std::string message_;
-    };    
+    };
 
     /********************************************************/
-    
+
     /**
      * \brief A tool that measures distances.
      */
     gom_attribute(category, "paint")
     gom_attribute(icon, "ruler")
     gom_attribute(help, "measures distances on a mesh")
-    
-    gom_class MESH_API MeshGrobRuler : public MeshGrobTool {
+
+    gom_class MESH_GFX_API MeshGrobRuler : public MeshGrobTool {
     public:
         /**
          * \brief MeshGrobPaint constructor.
@@ -520,11 +520,10 @@ namespace OGF {
         bool p_picked_;
         vec3 p_;
         vec2 latest_ndc_;
-    };    
+    };
 
     /*******************************************************/
-    
+
 }
 
 #endif
-

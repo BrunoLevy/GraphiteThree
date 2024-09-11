@@ -37,10 +37,10 @@
  */
 
 
-#ifndef H_OGF_MESH_SHADERS_MESH_GROB_SHADER_H
-#define H_OGF_MESH_SHADERS_MESH_GROB_SHADER_H
+#ifndef H_OGF_MESH_GFX_SHADERS_MESH_GROB_SHADER_H
+#define H_OGF_MESH_GFX_SHADERS_MESH_GROB_SHADER_H
 
-#include <OGF/mesh/common/common.h>
+#include <OGF/mesh_gfx/common/common.h>
 #include <OGF/mesh/grob/mesh_grob.h>
 #include <OGF/scene_graph_gfx/shaders/shader.h>
 #include <OGF/scene_graph/types/properties.h>
@@ -49,7 +49,7 @@
 
 
 /**
- * \file OGF/mesh/shaders/mesh_grob_shader.h
+ * \file OGF/mesh_gfx/shaders/mesh_grob_shader.h
  * \brief Classes for drawing and picking MeshGrob.
  */
 
@@ -73,7 +73,7 @@ namespace OGF {
      * \brief Base class for drawing and picking MeshGrob.
      */
     gom_attribute(abstract, "true")
-    gom_class MESH_API MeshGrobShader : public Shader {
+    gom_class MESH_GFX_API MeshGrobShader : public Shader {
     public:
         /**
          * \brief MeshGrobShader constructor.
@@ -265,7 +265,7 @@ namespace OGF {
     /**
      * \brief The default implementation of MeshGrobShader
      */
-    gom_class MESH_API PlainMeshGrobShader : public MeshGrobShader {
+    gom_class MESH_GFX_API PlainMeshGrobShader : public MeshGrobShader {
     public:
         /**
          * \brief PlainMeshGrobShader constructor.
@@ -1219,7 +1219,8 @@ namespace OGF {
     /**
      * \brief Exploded view, moves regions apart.
      */
-    gom_class MESH_API ExplodedViewMeshGrobShader : public PlainMeshGrobShader {
+    gom_class MESH_GFX_API ExplodedViewMeshGrobShader :
+	public PlainMeshGrobShader {
     public:
         /**
          * \brief PlainMeshGrobShader constructor.

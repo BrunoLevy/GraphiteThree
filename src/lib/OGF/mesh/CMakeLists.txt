@@ -10,7 +10,7 @@ aux_source_directories(SOURCES "Source Files\\tools"       tools)
 
 gomgen(mesh)
 add_library(mesh ${SOURCES})
-target_link_libraries(mesh scene_graph_gfx)
+target_link_libraries(mesh scene_graph)
 
 if(GEOGRAM_WITH_VORPALINE)
   target_link_libraries(mesh vorpalib)

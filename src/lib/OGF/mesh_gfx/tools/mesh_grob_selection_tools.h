@@ -24,23 +24,23 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
+ * As an exception to the GPL, Graphite can be linked
  *  with the following (non-GPL) libraries: Qt, SuperLU, WildMagic and CGAL
  */
 
-#ifndef H_OGF_MESH_TOOLS_MESH_GROB_SELECTION_TOOLS_H
-#define H_OGF_MESH_TOOLS_MESH_GROB_SELECTION_TOOLS_H
+#ifndef H_OGF_MESH_GFX_TOOLS_MESH_GROB_SELECTION_TOOLS_H
+#define H_OGF_MESH_GFX_TOOLS_MESH_GROB_SELECTION_TOOLS_H
 
-#include <OGF/mesh/common/common.h>
-#include <OGF/mesh/tools/mesh_grob_tool.h>
+#include <OGF/mesh_gfx/common/common.h>
+#include <OGF/mesh_gfx/tools/mesh_grob_tool.h>
 
 /**
  * \file OGF/mesh/tools/mesh_grob_selection_tools.h
@@ -52,7 +52,7 @@ namespace OGF {
     /**
      * \brief A tool that selects a vertex.
      */
-    class MESH_API MeshGrobSelectVertex : public MeshGrobTool {
+    class MESH_GFX_API MeshGrobSelectVertex : public MeshGrobTool {
     public:
         /**
          * \brief MeshGrobSelectTool
@@ -64,7 +64,7 @@ namespace OGF {
 	    MeshGrobTool(parent),
 	    vertex_(index_t(-1)) {
         }
-        
+
         /**
          * \copydoc Tool::grab()
          */
@@ -74,7 +74,7 @@ namespace OGF {
          * \copydoc Tool::drag()
          */
         void drag(const RayPick& p_ndc) override;
-	
+
       private:
 	index_t vertex_;
     };
@@ -82,7 +82,7 @@ namespace OGF {
     /**
      * \brief A tool that unselects a vertex.
      */
-    class MESH_API MeshGrobUnselectVertex : public MeshGrobTool {
+    class MESH_GFX_API MeshGrobUnselectVertex : public MeshGrobTool {
     public:
         /**
          * \brief MeshGrobSelectTool
@@ -91,18 +91,18 @@ namespace OGF {
         MeshGrobUnselectVertex(
             ToolsManager* parent
         ) : MeshGrobTool(parent) {
-            
+
         }
-        
+
         /**
          * \copydoc Tool::grab()
          */
         void grab(const RayPick& p_ndc) override;
     };
-    
+
 
     /**
-     * \brief A tool that selects/unselects a vertex depending 
+     * \brief A tool that selects/unselects a vertex depending
      *  on the pushed mouse button.
      * \see MeshGrobSelectVertex, MeshGrobUnselectVertex.
      */
@@ -112,7 +112,7 @@ namespace OGF {
     gom_attribute(message,
                   "btn1: select/move vertex; btn3: unselect vertex"
     )
-    gom_class MESH_API MeshGrobSelectUnselectVertex : public MultiTool {
+    gom_class MESH_GFX_API MeshGrobSelectUnselectVertex : public MultiTool {
     public:
         /**
          * \brief MeshGrobSelectUnselectVertex constructor.
@@ -127,9 +127,8 @@ namespace OGF {
          * \copydoc Tool::reset()
          */
 	void reset() override;
-    };    
-    
+    };
+
 }
 
 #endif
-

@@ -290,6 +290,57 @@ namespace OGF {
         sg_shader_mgr->invoke_method("shader", args);
     }
 
+    void Grob::get_shader_and_shader_properties(
+	std::string& classname, ArgList& properties, bool pointers
+    ) {
+	classname = "";
+	properties.clear();
+	Object* shd = get_shader();
+	if(shd == nullptr) {
+	    return;
+	}
+	classname = shd->meta_class()->name();
+        std::vector<MetaProperty*> meta_props;
+        shd->meta_class()->get_properties(meta_props);
+        for(unsigned int i=0; i<meta_props.size(); i++) {
+            MetaProperty* mprop = meta_props[i];
+            const std::string& mprop_type =
+                mprop->container_meta_class()->name();
+            if(
+                mprop->read_only() ||
+                mprop_type == "Object" ||
+                mprop_type == "Node"
+            ) {
+                continue;
+            }
+            if(!pointers && mprop_type[mprop_type.length()-1] == '*') {
+                continue;
+            }
+            std::string name = mprop->name();
+            std::string value;
+            shd->get_property(name, value);
+            properties.create_arg(name, value);
+        }
+    }
+
+    void Grob::set_shader_and_shader_properties(
+	const std::string& classname, const ArgList& properties
+    ) {
+	if(shader_manager_ == nullptr) {
+	    return;
+	}
+	ArgList args;
+	args.create_arg("value", classname);
+	shader_manager_->invoke_method("set_shader", args);
+	Object* shader = get_shader();
+        if(shader != nullptr) {
+            shader->disable_signals();
+            shader->set_properties(properties);
+            shader->enable_signals();
+        }
+    }
+
+
     Interpreter* Grob::interpreter() {
 	return scene_graph()->interpreter();
     }

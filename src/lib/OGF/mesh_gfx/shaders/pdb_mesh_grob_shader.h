@@ -23,31 +23,32 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with 
+ * As an exception to the GPL, Graphite can be linked with
  *  the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
-#ifndef H_OGF_MESH_SHADERS_MESH_GROB_PDB_SHADER_H
-#define H_OGF_MESH_SHADERS_MESH_GROB_PDB_SHADER_H
 
-#include <OGF/mesh/shaders/mesh_grob_shader.h>
+#ifndef H_OGF_MESH_GFX_SHADERS_MESH_GROB_PDB_SHADER_H
+#define H_OGF_MESH_GFX_SHADERS_MESH_GROB_PDB_SHADER_H
+
+#include <OGF/mesh_gfx/common/common.h>
+#include <OGF/mesh_gfx/shaders/mesh_grob_shader.h>
 
 /**
- * \file OGF/mesh/shaders/mesh_grob_pdb_shader.h
+ * \file OGF/mesh_gfx/shaders/mesh_grob_pdb_shader.h
  * \brief Classes for drawing PDB (Protein DataBase) files
  */
 namespace OGF {
 
-    gom_class MESH_API PDBMeshGrobShader : public MeshGrobShader {
+    gom_class MESH_GFX_API PDBMeshGrobShader : public MeshGrobShader {
     public:
 
         /**
@@ -63,7 +64,7 @@ namespace OGF {
 
 
 	enum AtomColoring { constant, atom, chain };
-	
+
     gom_properties:
         /**
          * \brief Sets whether lighting should be used.
@@ -92,7 +93,7 @@ namespace OGF {
 	AtomColoring get_atom_colors() const {
 	    return atom_colors_;
 	}
-	
+
 	void set_atom_size(index_t value) {
 	    atom_size_ = value;
 	    update();
@@ -101,20 +102,20 @@ namespace OGF {
 	index_t get_atom_size() const {
 	    return atom_size_;
 	}
-	
+
       public:
-	
+
         /**
          * \copydoc Shader::draw()
          */
          void draw() override;
-	
+
       private:
 	bool lighting_;
 	AtomColoring atom_colors_;
 	index_t atom_size_;
     };
-    
+
 }
 
 #endif
