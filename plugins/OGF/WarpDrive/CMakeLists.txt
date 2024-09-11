@@ -1,12 +1,8 @@
 ##############################################################################
 # CMake file for WarpDrive
 ##############################################################################
-# CMake 2.8.11 is required for 2 reasons:
-# - it is the first version that fully supports the specification of Visual
-# Studio toolsets (v110_xp).
-# - it is the version that supports the command string(TIMESTAMP ...)
-# ... set to 2.8.12 (< 2.8.12 has been deprecated)
-cmake_minimum_required(VERSION 2.8.12)
+
+cmake_minimum_required(VERSION 3.5)
 
 project(WarpDrive)
 
@@ -27,7 +23,7 @@ if(NOT "$ENV{GRAPHITE_SOURCE_DIR}" STREQUAL "")
      GRAPHITE_SOURCE_DIR "$ENV{GRAPHITE_SOURCE_DIR}"
      CACHE PATH "full path to the Graphite installation"
   )
-  include_directories(${CMAKE_SOURCE_DIR}/../../)   
+  include_directories(${CMAKE_SOURCE_DIR}/../../)
 else()
    set(
      GRAPHITE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../../"
@@ -79,4 +75,3 @@ set_target_properties(
    WarpDrive PROPERTIES
    FOLDER "GRAPHITE/Plugins"
 )
-

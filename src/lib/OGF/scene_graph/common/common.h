@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 
 #ifndef H_OGF_SCENE_GRAPH_COMMON_COMMON_H
 #define H_OGF_SCENE_GRAPH_COMMON_COMMON_H
@@ -58,28 +58,26 @@
 // be uninitialized.
 
 #include <OGF/basic/common/common.h>
-#include <OGF/renderer/common/common.h>
 #include <OGF/gom/common/common.h>
-#include <OGF/skin/common/common.h>
 #include <OGF/basic/math/geometry.h>
 
 namespace OGF {
-    
+
     static class SCENE_GRAPH_API scene_graph_libinit {
     public:
         scene_graph_libinit() ;
         ~scene_graph_libinit() ;
-        
+
         static void increment_users() ;
         static void decrement_users() ;
-        
-        
+
+
     private:
         static void initialize() ;
         static void terminate() ;
         static int count_ ;
     } scene_graph_libinit_instance ;
-    
+
 }
 
 #endif

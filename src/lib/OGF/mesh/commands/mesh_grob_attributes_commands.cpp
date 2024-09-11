@@ -38,7 +38,7 @@
 
 
 #include <OGF/mesh/commands/mesh_grob_attributes_commands.h>
-#include <OGF/scene_graph/types/scene_graph_tools_manager.h>
+#include <OGF/scene_graph_gfx/tools/scene_graph_tools_manager.h>
 #include <OGF/renderer/context/rendering_context.h>
 #include <OGF/mesh/shaders/mesh_grob_shader.h>
 

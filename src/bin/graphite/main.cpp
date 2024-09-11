@@ -25,16 +25,16 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
-#include <OGF/skin/types/preferences.h>
+#include <OGF/scene_graph/skin/preferences.h>
 #include <OGF/gom/interpreter/interpreter.h>
 #include <OGF/gom/lua/lua_interpreter.h>
 #include <OGF/gom/reflection/meta.h>
@@ -64,7 +64,7 @@ int main(int argc, char** argv) ;
 
 /**
  * \brief Converts Windows command line into argc/argv format.
- * \details 
+ * \details
  *  This function was grabbed from: http://alter.org.ua/docs/win/args/ \n
  *  Windows API already has CommandLineToArgW that works
  *  with Unicode strings, but no equivalent that works with
@@ -168,7 +168,7 @@ int APIENTRY WinMain(
     ogf_argused(hInstance);
     ogf_argused(hPrevInstance);
     ogf_argused(lpCmdLine);
-    ogf_argused(nCmdShow);    
+    ogf_argused(nCmdShow);
     int argc;
     LPSTR* argv = CommandLineToArgvA(GetCommandLine(), &argc);
     int result = main(argc, argv);
@@ -186,7 +186,7 @@ namespace {
 
 	// second arg true -> auto create args from graphite.ini
 	CmdLine::set_config_file_name("graphite.ini", true);
-	
+
         CmdLine::declare_arg(
             "gel", "Lua",
 	    "Name of the graphite embedded language runtime (default: uses builtin lua interpreter)"
@@ -209,7 +209,7 @@ namespace {
         CmdLine::declare_arg(
             "batch", false, "batch mode (i.e., no GUI)"
         );
-        
+
         CmdLine::declare_arg(
             "interactive", false,
 	    "interactive mode (i.e., open a GEL shell after startup)"
@@ -220,7 +220,7 @@ namespace {
 	    "shorthand for batch=true and interactive=true"
         );
 
-	
+
         std::vector<std::string> filenames;
         if(!CmdLine::parse(argc,argv,filenames,"<inputfile>*")) {
             exit(-1);
@@ -244,7 +244,7 @@ namespace {
         Preferences::declare_preference_variable(
 	    "modules","","plugins to be loaded"
 	);
-	
+
 	CmdLine::declare_arg_group("gel","graphite embedded language (lua)");
 	Preferences::declare_preference_variable(
 	    "gel:startup_files", "", "Lua files to be loaded at startup"
@@ -255,7 +255,7 @@ namespace {
 	       varname, "", "Lua script bound to a key (filename)"
 	   );
         }
-	
+
 	CmdLine::declare_arg_group("gui","graphite user interface");
         Preferences::declare_preference_variable(
 	    "gui:style", "Dark","style"
@@ -265,16 +265,16 @@ namespace {
 	);
         Preferences::declare_preference_variable(
 	    "gui:tooltips", true, "Display tooltips on commands and arguments"
-	);	    
+	);
 
         Preferences::declare_preference_variable(
 	    "gui:undo", false, "Support undo for all commands"
-	);	    
+	);
 
         Preferences::declare_preference_variable(
 	    "gui:undo_depth", 4, "number of memorized states for undo"
-	);	    
-        
+	);
+
         Preferences::declare_preference_variable(
 	    "gfx:default_full_screen_effect", "Plain",
 	    "full-screen effect enabled by default"
@@ -292,15 +292,15 @@ namespace {
 	Preferences::declare_preference_variable("sys:show_win32_console");
 #endif
 	Preferences::declare_preference_variable("gfx:full_screen");
-       
+
         Preferences::declare_preference_variable(
 	      "gui:keyboard_nav",true,"keyboard navigation"
 	);
         Preferences::declare_preference_variable(
 	      "gui:viewports",false,"individual dockable windows for dialogs"
-	);       
+	);
     }
-    
+
     void load_skin() {
         std::string skin = CmdLine::get_arg("skin");
         if(skin == "none") {
@@ -309,7 +309,7 @@ namespace {
 	if(skin == "") {
 	    skin = "imgui";
 	}
-	
+
         if(skin != "") {
 	    if(!String::string_starts_with(skin, "skin_")) {
 		skin = "skin_" + skin;
@@ -322,7 +322,7 @@ namespace {
 	    ) {
 		CmdLine::set_arg("main","lib/graphite_imgui.lua");
 	    }
-	    
+
             if(Meta::instance()->meta_type_is_bound("OGF::Application")) {
                 return;
             } else {
@@ -331,7 +331,7 @@ namespace {
                 exit(-1);
             }
         }
-        
+
         if(!Meta::instance()->meta_type_is_bound("OGF::Application")) {
             Logger::err("Fatal") << "Could not create any skin" << std::endl;
             exit(-1);
@@ -355,10 +355,10 @@ namespace {
             load_modules(base_modules);
         }
     }
-    
+
     void load_plugin_modules() {
         if(Environment::instance()->has_value("modules")) {
-            std::string modules_str = 
+            std::string modules_str =
                 Environment::instance()->get_value("modules");
             load_modules(modules_str);
         }
@@ -372,13 +372,13 @@ namespace {
 	    if(result == nullptr) {
 		Logger::err("GEL") << "Fatal: " << gel << ": no such language"
 				   << std::endl;
-		exit(-1);				       
+		exit(-1);
 	    }
 	}
 	return result;
     }
 
-    
+
     void load_interpreter() {
 	Interpreter::initialize(new LuaInterpreter, "Lua", "lua");
 	Interpreter* interp = get_interpreter();
@@ -389,14 +389,14 @@ namespace {
     }
 
     /**
-     * \brief To avoid some DLL nightmare with Windows, 
+     * \brief To avoid some DLL nightmare with Windows,
      *  in particular when using gompy,
      *  try to predeclare path where Python lib is likely to be.
      */
     void add_libpath() {
-#ifdef GEO_OS_WINDOWS	
+#ifdef GEO_OS_WINDOWS
 	std::vector<std::string> path;
-	
+
 	// The first one is deduced from where the python lib was found when compiling
 	// (see CMakeLists.txt). This ensures at least that the user who compiled it will
 	// be able to use it.
@@ -406,28 +406,28 @@ namespace {
 	// FileSystem::home_directory() returns the path to the "My documents" folder.
 	path.push_back(FileSystem::normalized_path(FileSystem::home_directory() + "/Anaconda3"));
 	path.push_back(FileSystem::normalized_path(FileSystem::home_directory() + "/../Anaconda3"));
-	
+
 	// Not sure it goes there when installed "for all users" (to be checked)
 	path.push_back("C:/Anaconda3");
-	path.push_back("C:/ProgramData/Anaconda3");	
+	path.push_back("C:/ProgramData/Anaconda3");
 
 	// Try all of them, take the first that works.
 	for(index_t i=0; i<path.size(); ++i) {
 	    if(FileSystem::is_directory(path[i])) {
 		Logger::out("ModuleMgr") << "Declaring libpath: " << path[i] << std::endl;
 		ModuleManager::append_dynamic_libraries_path(path[i]);
-		Logger::out("ModuleMgr") << "Setting PYTHONHOME as " << path[i] << std::endl;		
+		Logger::out("ModuleMgr") << "Setting PYTHONHOME as " << path[i] << std::endl;
 		SetEnvironmentVariable("PYTHONHOME",path[i].c_str());
-  	        break;									     
+  	        break;
 	    } else {
 		Logger::out("ModuleMgr") << "Ignored libpath (does not exist): "
-					 << path[i] << std::endl;		    
+					 << path[i] << std::endl;
 	    }
 	}
-	    
-#endif	
+
+#endif
     }
-	
+
 }
 
 void simple_command_line_interpreter_loop(void);
@@ -490,7 +490,7 @@ char* completion_generator(const char* text, int state) {
     static std::vector<std::string> matches;
     static size_t match_index = 0;
     char* result = nullptr;
-    
+
     if (state == 0) {
 	// During initialization, compute the actual matches for 'text' and keep
 	// them in a static vector.
@@ -498,7 +498,7 @@ char* completion_generator(const char* text, int state) {
 	match_index = 0;
 
 	get_interpreter()->automatic_completion(
-	    std::string(*p_rl_line_buffer), 
+	    std::string(*p_rl_line_buffer),
 	    compl_start, compl_end,
 	    std::string(text),
 	    matches
@@ -558,10 +558,10 @@ bool init_readline() {
 	HNDL_libreadline, "rl_attempted_completion_over"
     );
     p_rl_line_buffer = (char**)dlsym(
-	HNDL_libreadline, "rl_line_buffer"	
+	HNDL_libreadline, "rl_line_buffer"
     );
     p_rl_completer_word_break_characters = (const char**)dlsym(
-	HNDL_libreadline, "rl_completer_word_break_characters"		
+	HNDL_libreadline, "rl_completer_word_break_characters"
     );
     p_rl_completion_append_character = (char*)dlsym(
 	HNDL_libreadline, "rl_completion_append_character"
@@ -606,10 +606,10 @@ void command_line_interpreter_loop() {
 	    }
 	    get_interpreter()->execute(
 		std::string(line_read),false,false
-	    );	    
+	    );
 	}
     } else {
-	Logger::out("GEL") << "Using default input" << std::endl;	
+	Logger::out("GEL") << "Using default input" << std::endl;
 	simple_command_line_interpreter_loop();
     }
 }
@@ -643,13 +643,13 @@ int main(int argc, char** argv) {
 	    ShowWindow(h, SW_HIDE);
 	}
     }
-#endif    
-    
+#endif
+
     if(CmdLine::get_arg_bool("shell")) {
 	CmdLine::set_arg("batch", true);
 	CmdLine::set_arg("interactive", true);
     }
-    
+
     if(CmdLine::get_arg_bool("batch")) {
         CmdLine::set_arg("skin", "none");
         CmdLine::set_arg("main", "lib/graphite_batch.lua");
@@ -657,9 +657,9 @@ int main(int argc, char** argv) {
 
     load_base_modules();
     load_skin();
-    load_plugin_modules();     
+    load_plugin_modules();
     load_interpreter();
-    
+
     Logger::out("Graphite///") << "Hello, world !!" << std::endl;
     Logger::out("Graphite///") << "Starting main GEL script" << std::endl;
 
@@ -691,7 +691,7 @@ int main(int argc, char** argv) {
 	if(!app.is_null()) {
 	    app->invoke_method("start");
 	}
-        
+
         if(
             gel_filename == "none" ||
             CmdLine::get_arg_bool("interactive")
@@ -703,12 +703,12 @@ int main(int argc, char** argv) {
 	    command_line_interpreter_loop();
 	    std::cout << std::endl;
         }
-	
+
 	// Clear all variables from the interpreter.
 	// This destroys all Graphite shaders and
 	// graphics objects.
 	get_interpreter()->reset();
-	
+
 	// Now we can destroy the app by resetting the
 	// smart pointer to nil. (this destroys the
 	// window and GL context in turn).

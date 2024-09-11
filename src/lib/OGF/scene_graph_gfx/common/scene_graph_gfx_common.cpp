@@ -44,7 +44,19 @@
 #include <OGF/gom/types/gom_defs.h>
 #include <OGF/scene_graph/types/scene_graph_library.h>
 
-// [includes insertion point] (do not delete this line)
+#include <OGF/scene_graph_gfx/shaders/shader.h>
+#include <OGF/scene_graph_gfx/shaders/shader_manager.h>
+#include <OGF/scene_graph_gfx/shaders/scene_graph_shader_manager.h>
+
+#include <OGF/scene_graph_gfx/tools/scene_graph_tools_manager.h>
+#include <OGF/scene_graph_gfx/tools/tool.h>
+#include <OGF/scene_graph_gfx/tools/tools_manager.h>
+#include <OGF/scene_graph_gfx/tools/grob_pan.h>
+#include <OGF/scene_graph_gfx/tools/grob_select.h>
+#include <OGF/scene_graph_gfx/tools/grob_light.h>
+
+#include <OGF/scene_graph_gfx/full_screen_effects/ambient_occlusion.h>
+#include <OGF/scene_graph_gfx/full_screen_effects/unsharp_masking.h>
 
 namespace OGF {
 
@@ -56,9 +68,13 @@ namespace OGF {
 
         gom_package_initialize(scene_graph_gfx) ;
 
-        // [source insertion point] (do not delete this line)
+	ogf_register_grob_tool<Grob, GrobPan>();
+	ogf_register_grob_tool<Grob, GrobSelect>();
+	ogf_register_grob_tool<Grob, GrobLight>();
 
-        // Insert package initialization stuff here ...
+        ogf_register_full_screen_effect<PlainFullScreenEffect>("Plain");
+        ogf_register_full_screen_effect<AmbientOcclusion>("SSAO");
+        ogf_register_full_screen_effect<UnsharpMasking>();
 
         //**************************************************************
 

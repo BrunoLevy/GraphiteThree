@@ -23,21 +23,21 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
  * As an exception to the GPL, Graphite can be linked with the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #include <OGF/mesh/commands/mesh_grob_points_commands.h>
-#include <OGF/scene_graph/shaders/shader.h>
+#include <OGF/scene_graph_gfx/shaders/shader.h>
 #include <geogram/points/co3ne.h>
 #include <geogram/points/kd_tree.h>
 #include <geogram/mesh/mesh_geometry.h>
@@ -50,14 +50,14 @@
 
 namespace OGF {
 
-    MeshGrobPointsCommands::MeshGrobPointsCommands() { 
+    MeshGrobPointsCommands::MeshGrobPointsCommands() {
     }
 
-    MeshGrobPointsCommands::~MeshGrobPointsCommands() { 
+    MeshGrobPointsCommands::~MeshGrobPointsCommands() {
     }
-    
+
     void MeshGrobPointsCommands::smooth_point_set(
-        unsigned int nb_iterations,        
+        unsigned int nb_iterations,
         unsigned int nb_neighbors
     ) {
         GEO::Co3Ne_smooth(*mesh_grob(), nb_neighbors, nb_iterations);
@@ -75,13 +75,13 @@ namespace OGF {
         double R = bbox_diagonal(*mesh_grob());
 
         mesh_repair(*mesh_grob(), GEO::MESH_REPAIR_COLOCATE, 1e-6*R);
-        
+
         radius *= 0.01 * R;
 
         if(nb_iterations != 0) {
             smooth_point_set(nb_iterations, nb_neighbors);
         }
-        
+
         Co3Ne_reconstruct(*mesh_grob(), radius);
 
         // Note: we could also use the following function,
@@ -90,9 +90,9 @@ namespace OGF {
         //    *mesh_grob(), radius, nb_neighbors, nb_iterations
         // );
 
-	mesh_grob()->unlock_graphics();	
+	mesh_grob()->unlock_graphics();
         mesh_grob()->update();
-        
+
         // Hide the vertices, so that one can see the facets.
         // (note: needs to be done AFTER mesh_grob()->update() else
         //  graphic display is triggered with an incoherent object).
@@ -113,7 +113,7 @@ namespace OGF {
             normal.bind_if_is_defined(
                 mesh_grob()->vertices.attributes(), "normal"
             );
-            
+
             if(!normal.is_bound()) {
                 Logger::warn("Poisson") << "Missing \'normal\' vertex attribute"
                                        << std::endl;
@@ -128,7 +128,7 @@ namespace OGF {
 		);
 		geo_assert(normal.is_bound());
             }
-	    
+
             if(normal.dimension() != 3) {
                 Logger::err("Poisson")
                     << "Wrong dimension for \'normal\' vertex attribute"
@@ -140,7 +140,7 @@ namespace OGF {
             }
         }
 
-        
+
         MeshGrob* reconstruction =
             MeshGrob::find_or_create(scene_graph(), reconstruction_name);
         reconstruction->clear();
@@ -149,7 +149,7 @@ namespace OGF {
         PoissonReconstruction poisson;
         poisson.set_depth(depth);
         poisson.reconstruct(mesh_grob(), reconstruction);
-        
+
         reconstruction->update();
     }
 
@@ -160,7 +160,7 @@ namespace OGF {
 	vector<double> pts(mesh_grob()->vertices.nb()*2);
 	for(index_t v: mesh_grob()->vertices) {
 	    pts[2*v]   = mesh_grob()->vertices.point_ptr(v)[0];
-	    pts[2*v+1] = mesh_grob()->vertices.point_ptr(v)[1];	    
+	    pts[2*v+1] = mesh_grob()->vertices.point_ptr(v)[1];
 	}
 	delaunay->set_vertices(mesh_grob()->vertices.nb(), pts.data());
 	Logger::out("Delaunay") << "Created "
@@ -176,13 +176,13 @@ namespace OGF {
 	    );
 	    mesh_grob()->facets.set_vertex(
 		t, 2, index_t(delaunay->cell_vertex(t,2))
-	    );	    
+	    );
 	}
 	mesh_grob()->facets.connect();
 	mesh_grob()->unlock_graphics();
 	mesh_grob()->update();
     }
-    
+
     bool MeshGrobPointsCommands::estimate_normals(
 	index_t nb_neighbors, bool reorient
     ) {
@@ -192,7 +192,7 @@ namespace OGF {
 	mesh_grob()->update();
 	return result;
     }
-    
+
     void MeshGrobPointsCommands::sample_surface(
         const NewMeshGrobName& points_name,
         bool copy_normals,
@@ -211,11 +211,11 @@ namespace OGF {
 				  << std::endl;
 	    return;
 	}
-	
+
         mesh_grob()->vertices.set_dimension(3);
         MeshGrob* points = MeshGrob::find_or_create(scene_graph(), points_name);
         points->clear();
-	
+
         CentroidalVoronoiTesselation CVT(mesh_grob());
         CVT.compute_initial_sampling(nb_points);
 
@@ -233,14 +233,14 @@ namespace OGF {
             try {
                 ProgressTask progress("Newton", 100);
                 CVT.set_progress_logger(&progress);
-                CVT.Newton_iterations(Newton_iter, Newton_m);                
+                CVT.Newton_iterations(Newton_iter, Newton_m);
             }
             catch(const TaskCanceled&) {
             }
         }
 
         mesh_grob()->update();
-        
+
         points->vertices.assign_points(CVT.embedding(0), 3, CVT.nb_points());
 
         if(copy_normals) {
@@ -272,7 +272,7 @@ namespace OGF {
 		}
 	    }
         }
-        
+
         points->update();
 
         // show the vertices.
@@ -293,7 +293,7 @@ namespace OGF {
         unsigned int Newton_m
     ) {
         mesh_grob()->vertices.set_dimension(3);
-        
+
         MeshGrob* points = MeshGrob::find_or_create(scene_graph(), points_name);
 	if(nb_points != 0) {
 	  points->clear();
@@ -319,7 +319,7 @@ namespace OGF {
 
 	CentroidalVoronoiTesselation CVT(mesh_grob());
 	CVT.set_volumetric(true);
-	if(nb_points != 0) {	
+	if(nb_points != 0) {
 	  CVT.compute_initial_sampling(nb_points);
 	} else {
 	  CVT.set_points(points->vertices.nb(), points->vertices.point_ptr(0));
@@ -339,7 +339,7 @@ namespace OGF {
 	  try {
 	    ProgressTask progress("Newton", 100);
 	    CVT.set_progress_logger(&progress);
-	    CVT.Newton_iterations(Newton_iter, Newton_m);                
+	    CVT.Newton_iterations(Newton_iter, Newton_m);
 	  }
 	  catch(const TaskCanceled&) {
 	  }
@@ -359,7 +359,7 @@ namespace OGF {
         }
     }
 
-    
+
     void MeshGrobPointsCommands::create_vertex(
 	double x, double y, double z, bool selected
     ) {
@@ -395,10 +395,10 @@ namespace OGF {
 	if(relative_R) {
 	    R *= bbox_diagonal(*mesh_grob());
 	}
-	
+
 	double R2 = R*R; // squared threshold
 	// (KD-tree returns squared distances)
-       
+
 	parallel_for_slice(
 	    0,mesh_grob()->vertices.nb(),
 	    [this,N,&NN,R2,&is_outlier](index_t from, index_t to) {
@@ -423,9 +423,9 @@ namespace OGF {
 	if(relative_R) {
 	    R *= bbox_diagonal(*mesh_grob());
 	}
-	
+
 	double R2 = R*R;
-	
+
 	Attribute<double> density(
 	    mesh_grob()->vertices.attributes(), attribute
 	);
@@ -435,7 +435,7 @@ namespace OGF {
 	);
 
 	double Bvol = (4.0 / 3.0) * M_PI * R*R*R;
-	
+
 	parallel_for_slice(
 	    0,mesh_grob()->vertices.nb(),
 	    [this,R2,&NN,&density,Bvol](index_t from, index_t to) {
@@ -461,7 +461,7 @@ namespace OGF {
 		}
 	    }
 	);
-	
+
 	show_attribute("vertices." + attribute);
 	mesh_grob()->update();
     }
@@ -471,7 +471,7 @@ namespace OGF {
         selection.bind_if_is_defined(
             mesh_grob()->vertices.attributes(), "selection"
         );
-        
+
         if(!selection.is_bound()) {
             return;
         }
@@ -525,7 +525,7 @@ namespace OGF {
         }
 
         mesh_grob()->vertices.delete_elements(remove_element, false);
-        
+
         mesh_grob()->update();
     }
 
@@ -543,13 +543,13 @@ namespace OGF {
 	    Logger::out("Surface") << "Cannot project surface onto itself"
 				   << std::endl;
 	}
-	
+
 	if(surface->facets.nb() == 0) {
 	    Logger::out("Surface") << surface_name << " has no facets"
 				   << std::endl;
 	    return;
 	}
-	
+
         //   We need to lock the graphics because the AABB will change
         // the order of the surface facets.
         surface->lock_graphics();
@@ -564,11 +564,10 @@ namespace OGF {
 		mesh_grob()->vertices.point_ptr(i)[c] = q[c];
 	    }
 	}
-        
+
         surface->unlock_graphics();
         mesh_grob()->update();
     }
 
-    
-}
 
+}

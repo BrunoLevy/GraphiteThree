@@ -2,16 +2,11 @@
 # CMake file for gompy
 ##############################################################################
 
-# CMake 2.8.11 is required for 2 reasons:
-# - it is the first version that fully supports the specification of Visual
-# Studio toolsets (v110_xp).
-# - it is the version that supports the command string(TIMESTAMP ...)
-# ... set to 2.8.12 (< 2.8.12 has been deprecated)
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.5)
 
 graphite_find_python()
 
-if(${GRAPHITE_FOUND_PYTHON}) 
+if(${GRAPHITE_FOUND_PYTHON})
 
    message(STATUS "Found Python headers and libs, building gompy")
    message(STATUS "   PYTHON_INCLUDE_DIRS=${PYTHON_INCLUDE_DIRS}")
@@ -32,7 +27,7 @@ if(${GRAPHITE_FOUND_PYTHON})
          )
        endif()
    endif()
-   
+
    if("${GRAPHITE_SOURCE_DIR}" STREQUAL "")
      set(
        GRAPHITE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/../../../GraphiteThree/"

@@ -25,21 +25,20 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 #ifndef H_SKIN_IMGUI_RENDER_AREA_H
 #define H_SKIN_IMGUI_RENDER_AREA_H
 
 #include <OGF/skin_imgui/common/common.h>
-#include <OGF/skin/types/events.h>
-#include <OGF/skin/transforms/ray_picker.h>
+#include <OGF/scene_graph_gfx/transforms/ray_picker.h>
 #include <OGF/renderer/context/rendering_context.h>
 #include <OGF/gom/types/node.h>
 
@@ -87,8 +86,8 @@ namespace OGF {
 	bool needs_to_redraw() const {
 	    return dirty_;
 	}
-	
-	
+
+
     gom_slots:
 
 	/**
@@ -96,7 +95,7 @@ namespace OGF {
 	 *  then draws it.
 	 */
 	void draw();
-	
+
 	/**
 	 * \brief Invalidates the memorized frame so that it
 	 *  will be updated on the next call to draw().
@@ -107,7 +106,7 @@ namespace OGF {
          * \brief Re-generates the memorized frame.
 	 */
 	void update_memorized_frame();
-	
+
         /**
          * \brief Draws the latest memorized frame.
 	 */
@@ -116,10 +115,10 @@ namespace OGF {
 	/**
 	 * \brief Saves a snapshot of this rendering area
 	 *  to an image file.
-	 * \param[in] filename a string with the name of 
+	 * \param[in] filename a string with the name of
 	 *  the image file.
 	 * \param[in] make_current if true, makes the associated
-	 *  rendering context current, else use the current 
+	 *  rendering context current, else use the current
 	 *  rendering context.
          * \param[in] with_gui if set, the gui of graphite is
          *  rendereed in the image with the 3D objects, else
@@ -131,23 +130,23 @@ namespace OGF {
 	);
 
 	/**
-	 * \brief Call this function if perspective 
+	 * \brief Call this function if perspective
 	 *  mode is changed.
 	 */
 	void update_view_parameters();
 
         /**
          * \brief Updates the background image from raw image data.
-	 * \details Image data is in Cairo format (ARGB). Note that 
-	 *  it is different from the convention in Graphite (RGBA). 
+	 * \details Image data is in Cairo format (ARGB). Note that
+	 *  it is different from the convention in Graphite (RGBA).
 	 *  Note also that the Y axis is flipped as compared to the
 	 *  rest of Graphite.
          * \param[in] ptr a pointer to image data
          * \param[in] color_encoding the color encoding of the data
-         * \param[in] component_encoding the data type used for 
+         * \param[in] component_encoding the data type used for
          *  the color components
          * \param[in] width image width
-         * \param[in] height image height 
+         * \param[in] height image height
          */
         void update_background_image_from_data(
             Memory::pointer ptr,
@@ -155,7 +154,7 @@ namespace OGF {
             Image::ComponentEncoding component_encoding,
             index_t width, index_t height
         );
-	
+
     gom_properties:
 	/**
 	 * \brief Gets the width of the window.
@@ -188,7 +187,7 @@ namespace OGF {
 	index_t get_frame_buffer_height() const {
 	    return frame_buffer_height_;
 	}
-	
+
         /**
          * \brief Sets the projection matrix.
          * \param[in] value the projection matrix, as a 4x4
@@ -265,7 +264,7 @@ namespace OGF {
          * \brief Sets the lighting matrix.
          * \details The light source is transformed by the lighting
          *  matrix. This transform occurs in normalized device coordinates.
-         * \param[in] value a const reference to the 4x4 homongeneous 
+         * \param[in] value a const reference to the 4x4 homongeneous
          *  coordinates lighting matrix to be used
          */
         void set_lighting_matrix(const mat4& value);
@@ -310,7 +309,7 @@ namespace OGF {
 
         /**
          * \brief Sets the current clipping configuration
-         * \param[in] clipping_config a ';'-separated string with 
+         * \param[in] clipping_config a ';'-separated string with
          *  the following fields:
          *  - active (one of "true","false")
          *  - axis (one of "x","y","z","d")
@@ -325,7 +324,7 @@ namespace OGF {
 
     gom_signals:
 	/**
-	 * \brief This signal is triggered when the contents 
+	 * \brief This signal is triggered when the contents
 	 *  shoud be redisplayed.
 	 */
 	void redraw_request(RenderingContext* rendering_context=nullptr);
@@ -354,7 +353,7 @@ namespace OGF {
          */
         void mouse_down(
             RenderingContext* rendering_context,
-            const vec2& point_ndc, const vec2& point_wc, 
+            const vec2& point_ndc, const vec2& point_wc,
             int button, bool control, bool shift
         );
 
@@ -378,7 +377,7 @@ namespace OGF {
          */
         void mouse_move(
             RenderingContext* rendering_context,
-            const vec2& point_ndc, const vec2& point_wc, 
+            const vec2& point_ndc, const vec2& point_wc,
             const vec2& delta_ndc, double delta_x_ndc, double delta_y_ndc,
             const vec2& delta_wc,
             int button, bool control, bool shift
@@ -397,13 +396,13 @@ namespace OGF {
          */
         void mouse_up(
             RenderingContext* rendering_context,
-            const vec2& point_ndc, const vec2& point_wc, 
+            const vec2& point_ndc, const vec2& point_wc,
             int button, bool control, bool shift
         );
 
         /**
          * \brief A signal that is triggered each time a key is pushed.
-         * \param[in] value a string with the pressed key, or "shift", 
+         * \param[in] value a string with the pressed key, or "shift",
          *  "control", "alt", "left", "right", "up", "down" for special
          *  keys.
          */
@@ -411,7 +410,7 @@ namespace OGF {
 
         /**
          * \brief A signal that is triggered each time a key is released.
-         * \param[in] value a string with the pressed key, or "shift", 
+         * \param[in] value a string with the pressed key, or "shift",
          *  "control", "alt", "left", "right", "up", "down" for special
          *  keys.
          */
@@ -488,4 +487,3 @@ namespace OGF {
 }
 
 #endif
-

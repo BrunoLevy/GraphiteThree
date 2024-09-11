@@ -40,7 +40,7 @@
 #include <OGF/skin_imgui/common/common.h>
 #include <OGF/skin_imgui/types/camera.h>
 #include <OGF/skin_imgui/widgets/render_area.h>
-#include <OGF/skin/types/application_base.h>
+#include <OGF/scene_graph/skin/application_base.h>
 
 namespace OGF {
 

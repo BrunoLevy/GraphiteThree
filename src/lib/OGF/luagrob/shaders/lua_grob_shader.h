@@ -23,26 +23,26 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with 
+ * As an exception to the GPL, Graphite can be linked with
  *  the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_LUAGROB_SHADERS_LUAGROB_GROB_SHADER_H
 #define H_OGF_LUAGROB_SHADERS_LUAGROB_GROB_SHADER_H
 
 #include <OGF/luagrob/common/common.h>
 #include <OGF/luagrob/grob/lua_grob.h>
-#include <OGF/scene_graph/shaders/shader.h>
+#include <OGF/scene_graph_gfx/shaders/shader.h>
 #include <OGF/scene_graph/types/properties.h>
 
 /**
@@ -57,7 +57,7 @@ namespace GEO {
 namespace OGF {
 
     //________________________________________________________
-    
+
     class RenderingContext;
     class Builder;
     class Texture;
@@ -65,7 +65,7 @@ namespace OGF {
     /**
      * \brief Base class for drawing and picking LuaGrob.
      */
-    gom_attribute(abstract, "true") 
+    gom_attribute(abstract, "true")
     gom_class LUAGROB_API LuaGrobShader : public Shader {
     public:
         /**
@@ -94,7 +94,7 @@ namespace OGF {
          */
         void blink() override;
 
-        
+
     protected:
         /**
          * \brief Gets the LuaGrob.
@@ -139,7 +139,7 @@ namespace OGF {
         void blink() override;
 
       gom_properties:
-	
+
         /**
          * \brief Sets whether lighting should be used.
          * \param[in] value true if lighting is enabled, false
@@ -189,9 +189,9 @@ namespace OGF {
          *  should be used to draw the mesh in the facets and
          *  in the cells.
          */
-        void set_box_style(const EdgeStyle& value) { 
+        void set_box_style(const EdgeStyle& value) {
             box_style_ = value;
-            update(); 
+            update();
         }
 
         /**
@@ -219,7 +219,6 @@ namespace OGF {
         EdgeStyle         box_style_;
     };
 
-    //________________________________________________________    
+    //________________________________________________________
 }
 #endif
-

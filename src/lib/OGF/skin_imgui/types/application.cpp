@@ -38,7 +38,7 @@
 #include <OGF/skin_imgui/types/icon_repository.h>
 #include <OGF/skin_imgui/types/rendering_context.h>
 #include <OGF/skin_imgui/widgets/console.h>
-#include <OGF/skin/types/preferences.h>
+#include <OGF/scene_graph/skin/preferences.h>
 #include <OGF/scene_graph/commands/commands.h>
 #include <OGF/gom/lua/lua_interpreter.h>
 #include <OGF/gom/reflection/meta.h>

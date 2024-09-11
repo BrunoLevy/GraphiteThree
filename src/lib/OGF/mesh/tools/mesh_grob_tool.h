@@ -23,27 +23,27 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the following 
+ * As an exception to the GPL, Graphite can be linked with the following
  *  (non-GPL) libraries: Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_MESH_TOOLS_MESH_GROB_TOOL_H
 #define H_OGF_MESH_TOOLS_MESH_GROB_TOOL_H
 
 #include <OGF/mesh/common/common.h>
 #include <OGF/mesh/grob/mesh_grob.h>
-#include <OGF/scene_graph/tools/tool.h>
-#include <OGF/scene_graph/tools/tools_manager.h>
-#include <OGF/skin/transforms/arc_ball.h>
+#include <OGF/scene_graph_gfx/tools/tool.h>
+#include <OGF/scene_graph_gfx/tools/tools_manager.h>
+#include <OGF/scene_graph_gfx/transforms/arc_ball.h>
 
 /**
  * \file OGF/mesh/tools/mesh_grob_tool.h
@@ -57,7 +57,7 @@ namespace OGF {
     /**
      * \brief Base class for tools that operate on MeshGrob
      */
-    gom_attribute(abstract,"true") 
+    gom_attribute(abstract,"true")
     gom_class MESH_API MeshGrobTool : public Tool {
     public:
 
@@ -71,19 +71,19 @@ namespace OGF {
          * \brief MeshGrobTool destructor.
          */
         ~MeshGrobTool() override;
-	
+
         /**
          * \brief Gets the MeshGrob this MeshGrobTool operates on
          * \return a pointer to the MeshGrob
          */
-        MeshGrob* mesh_grob() const { 
-            return dynamic_cast<MeshGrob*>(object()) ;              
+        MeshGrob* mesh_grob() const {
+            return dynamic_cast<MeshGrob*>(object()) ;
         }
 
         /**
          * \brief Picks a vertex
          * \details The picked point, depth and normalized device coordinates
-         *  can then be queried by using picked_point(), picked_depth(), 
+         *  can then be queried by using picked_point(), picked_depth(),
          *  picked_ndc() respectively.
          * \param[in] rp a RayPick as returned by RenderArea events
          * \return the index of the picked vertex or NO_VERTEX if no
@@ -93,10 +93,10 @@ namespace OGF {
 
         /**
          * \brief Picks a edge
-         * \details Edges are the ones that are explicitly stored in the mesh. 
+         * \details Edges are the ones that are explicitly stored in the mesh.
          *  To pick an edge of a facet, use pick_facet_edge() instead.
          *  The picked point, depth and normalized device coordinates
-         *  can then be queried by using picked_point(), picked_depth(), 
+         *  can then be queried by using picked_point(), picked_depth(),
          *  picked_ndc() respectively.
          * \param[in] rp a RayPick as returned by RenderArea events
          * \return the index of the picked edge or NO_EDGE if no
@@ -107,7 +107,7 @@ namespace OGF {
         /**
          * \brief Picks a facet
          * \details The picked point, depth and normalized device coordinates
-         *  can then be queried by using picked_point(), picked_depth(), 
+         *  can then be queried by using picked_point(), picked_depth(),
          *  picked_ndc() respectively.
          * \param[in] rp a RayPick as returned by RenderArea events
          * \return the index of the picked facet or NO_FACET if no
@@ -118,7 +118,7 @@ namespace OGF {
         /**
          * \brief Picks a cell
          * \details The picked point, depth and normalized device coordinates
-         *  can then be queried by using picked_point(), picked_depth(), 
+         *  can then be queried by using picked_point(), picked_depth(),
          *  picked_ndc() respectively.
          * \param[in] rp a RayPick as returned by RenderArea events
          * \return the index of the picked cell or NO_CELL if no
@@ -129,7 +129,7 @@ namespace OGF {
         /**
          * \brief Picks an edge of a facet
          * \details The picked point, depth and normalized device coordinates
-         *  can then be queried by using picked_point(), picked_depth(), 
+         *  can then be queried by using picked_point(), picked_depth(),
          *  picked_ndc() respectively.
          * \param[in] rp a RayPick as returned by RenderArea events
          * \param[out] facet the picked facet
@@ -144,14 +144,14 @@ namespace OGF {
         /**
          * \brief Picks an element of the mesh
          * \details The picked point, depth and normalized device coordinates
-         *  can then be queried by using picked_point(), picked_depth(), 
+         *  can then be queried by using picked_point(), picked_depth(),
          *  picked_ndc() respectively.
          * \param[in] rp a RayPick as returned by RenderArea events
-         * \param[in] what one of (MESH_VERTICES, MESH_EDGES, MESH_FACETS, 
+         * \param[in] what one of (MESH_VERTICES, MESH_EDGES, MESH_FACETS,
          *  MESH_CELLS). It is also possible to use a bitwise-or combination
          *  of them (but then it is no longer possible to know what element
          *  type was picked).
-         * \param[in] image a pointer to an optional image to get the picking 
+         * \param[in] image a pointer to an optional image to get the picking
          *  framebuffer (can be used by selection tools). The image is supposed
          *  to be uninitialized. The function allocates it to the correct size
          *  and reads the pixels from the picking buffer.
@@ -178,7 +178,7 @@ namespace OGF {
 
         /**
          * \brief Gets the picked point in world coordinates.
-         * \return a const reference to the 3D world coordinates 
+         * \return a const reference to the 3D world coordinates
          *  of the latest point picked by one of the pick_xxx() functions.
          */
         const vec3& picked_point() const {
@@ -188,7 +188,7 @@ namespace OGF {
         /**
          * \brief Gets the picked point in normalized device coordinates.
          * \return a const reference to the normalized device coordinates
-         *  (x and y in [-1.0,1.0]) of the latest point picked by one 
+         *  (x and y in [-1.0,1.0]) of the latest point picked by one
          *  of the pick_xxx() functions.
          */
         const vec2& picked_ndc() const {
@@ -197,14 +197,14 @@ namespace OGF {
 
         /**
          * \brief Gets the depth of the picked point.
-         * \return the depth of the latest point picked by one 
+         * \return the depth of the latest point picked by one
          *  of the pick_xxx() functions.
          */
         double picked_depth() const {
             return picked_depth_;
         }
 
-        
+
     protected:
         vec3 picked_point_;
         vec2 picked_ndc_;
@@ -217,7 +217,7 @@ namespace OGF {
 
     /**
      * \brief Base class of tools that apply 3d transform to a subset
-     *  of a MeshGrob and that are attached to a MultiTool 
+     *  of a MeshGrob and that are attached to a MultiTool
      *  (or a MeshGrobTransformTool).
      */
     class MeshGrobTransformSubset : public MeshGrobTool {
@@ -234,7 +234,7 @@ namespace OGF {
          * \copydoc Tool::grab()
          */
         void grab(const RayPick& p_ndc) override;
-        
+
     protected:
         /**
          * \brief Applies the transform M to the subset.
@@ -249,7 +249,7 @@ namespace OGF {
          * \brief Gets the center of the subset.
          */
         const vec3& center() const;
-        
+
         MeshGrobTransformTool* transform_tool_;
     };
 
@@ -267,12 +267,12 @@ namespace OGF {
             MeshGrobTransformTool* parent
         ) : MeshGrobTransformSubset(parent) {
         }
-        
+
         /**
          * \copydoc Tool::grab()
          */
         void grab(const RayPick& p_ndc) override;
-        
+
         /**
          * \copydoc Tool::drag()
          */
@@ -294,7 +294,7 @@ namespace OGF {
             MeshGrobTransformTool* parent
         ) : MeshGrobTransformSubset(parent) {
         }
-        
+
         /**
          * \copydoc Tool::grab()
          */
@@ -363,7 +363,7 @@ namespace OGF {
          * \copydoc Tool::release()
          */
         void release(const RayPick& p_ndc) override;
-        
+
     protected:
         ArcBall_var arc_ball_;
     };
@@ -405,10 +405,10 @@ namespace OGF {
          * \brief Gets the MeshGrob this MeshGrobTransformTool operates on
          * \return a pointer to the MeshGrob
          */
-        MeshGrob* mesh_grob() const { 
-            return dynamic_cast<MeshGrob*>(object()) ;              
+        MeshGrob* mesh_grob() const {
+            return dynamic_cast<MeshGrob*>(object()) ;
         }
-        
+
     protected:
 
         /**
@@ -465,8 +465,7 @@ namespace OGF {
         friend class MeshGrobTransformSubset;
         vec3 center_;
     };
-} 
+}
 
 
 #endif
-

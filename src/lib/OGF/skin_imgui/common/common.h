@@ -52,7 +52,7 @@
 // be uninitialized.
 
 //#include <geogram_gfx/third_party/glew/glew.h>
-#include <OGF/skin/common/common.h>
+//#include <OGF/skin/common/common.h>
 #include <geogram_gfx/basic/common.h>
 
 // Lots of "conditional expression is constant" warnings 

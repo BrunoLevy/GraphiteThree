@@ -23,26 +23,26 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with 
+ * As an exception to the GPL, Graphite can be linked with
  *  the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_VOXEL_SHADERS_VOXEL_GROB_SHADER_H
 #define H_OGF_VOXEL_SHADERS_VOXEL_GROB_SHADER_H
 
 #include <OGF/voxel/common/common.h>
 #include <OGF/voxel/grob/voxel_grob.h>
-#include <OGF/scene_graph/shaders/shader.h>
+#include <OGF/scene_graph_gfx/shaders/shader.h>
 #include <OGF/scene_graph/types/properties.h>
 
 /**
@@ -57,7 +57,7 @@ namespace GEO {
 namespace OGF {
 
     //________________________________________________________
-    
+
     class RenderingContext;
     class Builder;
     class Texture;
@@ -65,7 +65,7 @@ namespace OGF {
     /**
      * \brief Base class for drawing and picking VoxelGrob.
      */
-    gom_attribute(abstract, "true") 
+    gom_attribute(abstract, "true")
     gom_class VOXEL_API VoxelGrobShader : public Shader {
     public:
         /**
@@ -94,7 +94,7 @@ namespace OGF {
          */
         void blink() override;
 
-        
+
     gom_properties:
         std::string get_displayable_attributes() const {
             std::string result;
@@ -103,7 +103,7 @@ namespace OGF {
             }
             return result;
         }
-        
+
     protected:
         /**
          * \brief Gets the VoxelGrob.
@@ -276,9 +276,9 @@ namespace OGF {
          *  should be used to draw the mesh in the facets and
          *  in the cells.
          */
-        void set_box_style(const EdgeStyle& value) { 
+        void set_box_style(const EdgeStyle& value) {
             box_style_ = value;
-            update(); 
+            update();
         }
 
         /**
@@ -317,7 +317,7 @@ namespace OGF {
          *  texture if they do not exist.
          */
         void create_textures_if_needed();
-        
+
     protected:
         std::string       attribute_name_;
         double            attribute_min_;
@@ -331,7 +331,6 @@ namespace OGF {
         EdgeStyle         box_style_;
     };
 
-    //________________________________________________________    
+    //________________________________________________________
 }
 #endif
-

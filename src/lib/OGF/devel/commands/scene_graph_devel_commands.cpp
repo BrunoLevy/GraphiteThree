@@ -26,30 +26,31 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 #include <OGF/devel/commands/scene_graph_devel_commands.h>
 #include <OGF/devel/types/module_maker.h>
+#include <OGF/scene_graph/skin/preferences.h>
 #include <OGF/basic/modules/modmgr.h>
-#include <OGF/skin/types/preferences.h>
+
 
 namespace OGF {
 
-    SceneGraphDevelCommands::SceneGraphDevelCommands() { 
+    SceneGraphDevelCommands::SceneGraphDevelCommands() {
     }
-    
-    SceneGraphDevelCommands::~SceneGraphDevelCommands() { 
-    }        
+
+    SceneGraphDevelCommands::~SceneGraphDevelCommands() {
+    }
 
     void SceneGraphDevelCommands::load_plugin(const std::string& plugin_name) {
-        ModuleManager::instance()->load_module(plugin_name);        
+        ModuleManager::instance()->load_module(plugin_name);
     }
 
     void SceneGraphDevelCommands::create_plugin(
@@ -90,7 +91,7 @@ namespace OGF {
             Preferences::save_preferences();
         }
     }
-    
+
     void SceneGraphDevelCommands::create_commands(
         const DynamicModuleName& plugin_name,
         const GrobClassName& type,
@@ -107,7 +108,7 @@ namespace OGF {
         ModuleMaker mm;
         mm.create_commands(plugin_name, "OGF::SceneGraph", name);
     }
-    
+
     void SceneGraphDevelCommands::create_shader(
         const DynamicModuleName& plugin_name,
         const GrobClassName& type,
@@ -120,7 +121,7 @@ namespace OGF {
 
     void SceneGraphDevelCommands::create_tool(
         const DynamicModuleName& plugin_name, const GrobClassName& type,
-        const std::string& name, const std::string& base_class_name 
+        const std::string& name, const std::string& base_class_name
     ) {
         ModuleMaker mm;
         mm.create_tool(plugin_name, type, name, base_class_name);
@@ -140,7 +141,7 @@ namespace OGF {
             base_class_name
         );
     }
-    
+
     void SceneGraphDevelCommands::create_class(
         const DynamicModuleName& plugin_name, const std::string& subdirectory,
         const std::string& class_name
@@ -158,4 +159,3 @@ namespace OGF {
     }
 
 }
-

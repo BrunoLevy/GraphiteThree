@@ -25,19 +25,18 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
- 
+
+
 #include <OGF/scene_graph/types/scene_graph.h>
 #include <OGF/scene_graph/types/scene_graph_library.h>
-#include <OGF/scene_graph/types/scene_graph_shader_manager.h>
 #include <OGF/scene_graph/types/geofile.h>
 #include <OGF/scene_graph/grob/grob.h>
 #include <OGF/gom/interpreter/interpreter.h>
@@ -45,16 +44,13 @@
 #include <OGF/gom/reflection/meta_class.h>
 #include <OGF/gom/services/factory.h>
 #include <OGF/gom/interpreter/interpreter.h>
-#include <OGF/renderer/context/rendering_context.h>
 #include <OGF/basic/os/file_manager.h>
 #include <OGF/basic/os/text_utils.h>
-#include <OGF/basic/modules/modmgr.h> 
+#include <OGF/basic/modules/modmgr.h>
 
 #include <geogram/basic/file_system.h>
 #include <geogram/basic/stopwatch.h>
 #include <geogram/basic/command_line.h>
-
-// #include <geogram/third_party/gzstream/gzstream.h>
 
 #include <sstream>
 
@@ -70,38 +66,24 @@ namespace OGF {
             Interpreter::default_interpreter()
         ),
 	render_area_(nullptr),
-	application_(nullptr),
-	scene_graph_shader_manager_(nullptr)
-    {
+	application_(nullptr) {
         Grob::scene_graph_ = this;
         SceneGraphLibrary::instance()->set_scene_graph(this);
     }
 
     SceneGraph::~SceneGraph() {
-	if(scene_graph_shader_manager_ != nullptr) {
-	    scene_graph_shader_manager_->unref();
-	}
     }
 
     void SceneGraph::set_scene_graph_shader_manager(
-	SceneGraphShaderManager* sgshdmgr
+	Object* sgshdmgr
     ) {
-	if(sgshdmgr == scene_graph_shader_manager_) {
-	    return;
-	}
-	if(scene_graph_shader_manager_ != nullptr) {
-	    scene_graph_shader_manager_->unref();
-	}
 	scene_graph_shader_manager_ = sgshdmgr;
-	if(scene_graph_shader_manager_ != nullptr) {	
-	    scene_graph_shader_manager_->ref();
-	}
     }
 
-    SceneGraphShaderManager* SceneGraph::get_scene_graph_shader_manager() const {
+    Object* SceneGraph::get_scene_graph_shader_manager() const {
 	return scene_graph_shader_manager_;
     }
-    
+
     void SceneGraph::set_visibility(index_t index, bool value) {
         Grob* g = ith_child(index);
         if(g != nullptr) {
@@ -116,7 +98,7 @@ namespace OGF {
             grob_class->name(), commands_class->name()
         );
     }
-    
+
     void SceneGraph::set_visibilities(const std::string& x) {
         std::vector< std::string > values;
         String::split_string( x, ';', values );
@@ -129,7 +111,7 @@ namespace OGF {
         }
         update_values();
     }
-    
+
     std::string SceneGraph::get_visibilities() const {
         std::string result;
         for(index_t i=0; i<get_nb_children(); i++) {
@@ -173,12 +155,12 @@ namespace OGF {
         value_changed(this);
     }
 
-    
+
     void SceneGraph::begin_graphite_file(
         OutputGraphiteFile& out, bool all_scene
     ) {
         if(all_scene) {
-            std::string version; 
+            std::string version;
             Environment::instance()->get_value("version", version);
 
             // Scene graph header
@@ -188,18 +170,18 @@ namespace OGF {
                 args.create_arg("current_object", get_current_object());
 
 		// skin_imgui version
-		
+
 		copy_property_to_arglist("camera.auto_focus",args);
 		copy_property_to_arglist("camera.draw_selected_only",args);
 		copy_property_to_arglist("camera.clipping",args);
 		copy_property_to_arglist("camera.lighting_matrix",args);
-		
+
 		copy_property_to_arglist("xform.u", args);
 		copy_property_to_arglist("xform.v", args);
 		copy_property_to_arglist("xform.w", args);
 		copy_property_to_arglist("xform.zoom", args);
 		copy_property_to_arglist("xform.look_at", args);
-		
+
                 out.write_scene_graph_header(args);
             }
 
@@ -211,7 +193,7 @@ namespace OGF {
             CmdLine::get_args(args);
             out.write_command_line(args);
         }
-            
+
         // History
         {
             std::vector<std::string> history(
@@ -294,7 +276,7 @@ namespace OGF {
         }
         swap_children(next, current());
     }
-    
+
     void SceneGraph::delete_current_object() {
         Grob* cur = resolve(current_object_);
         set_current_object(std::string(),false);
@@ -317,7 +299,7 @@ namespace OGF {
             );
         }
     }
-    
+
     void SceneGraph::clear() {
         while(get_nb_children() != 0) {
             delete_current_object();
@@ -346,12 +328,12 @@ namespace OGF {
         enable_slots();
         if(record_history && interpreter() != nullptr) {
             std::ostringstream out;
-            out << "scene_graph.current_object = \"" 
+            out << "scene_graph.current_object = \""
                 << value << "\"" << std::endl;
             interpreter()->add_to_history(out.str());
         }
     }
-    
+
     const std::string& SceneGraph::get_current_object() const {
         return current_object_;
     }
@@ -360,7 +342,7 @@ namespace OGF {
         const FileName& file_name_in, const std::string& type,
         bool invoked_from_gui
     ) {
-                
+
         std::string file_name = file_name_in;
 #ifdef GEO_OS_WINDOWS
         FileSystem::flip_slashes(file_name);
@@ -377,7 +359,7 @@ namespace OGF {
             load_aln(file_name, this);
             return this;
         }
-        
+
         if(extension == "graphite" || extension == "graphite_ascii") {
             try {
                 InputGraphiteFile in(file_name);
@@ -387,10 +369,11 @@ namespace OGF {
                                    << e.what() << std::endl;
             }
 	    {
-		SceneGraphShaderManager* sgsm =
-		    get_scene_graph_shader_manager();
+		Object* sgsm = get_scene_graph_shader_manager();
 		if(sgsm != nullptr && current() != nullptr) {
-		    sgsm->current_object(current()->name());
+		    ArgList args;
+		    args.create_arg("value", current()->name());
+		    sgsm->invoke_method("current_object",args);
 		}
 	    }
             return this;
@@ -405,7 +388,7 @@ namespace OGF {
         std::vector<std::string> class_names;
 
         if(type == "default") {
-            std::string class_name_str = 
+            std::string class_name_str =
                 SceneGraphLibrary::instance()->file_extension_to_grob(
                     extension
                 );
@@ -422,7 +405,7 @@ namespace OGF {
         Grob* result = nullptr;
         for(unsigned int i=0; i<class_names.size(); i++) {
             disable_signals();
-            
+
             result = create_object(class_names[i]);
             enable_signals();
 	    //   Commented-out, causes problems under Ubuntu:
@@ -432,7 +415,7 @@ namespace OGF {
             result->rename(base_name);
             result->set_filename(file_name);
             bool ok = result->load(file_name);
-            
+
             update_values();
             grob_created( result->name() );
             set_current_object(result->name(),false);
@@ -444,10 +427,10 @@ namespace OGF {
                 delete_current_object();
             }
         }
-        
+
         if(interpreter() != nullptr) {
             std::ostringstream out;
-            out << "scene_graph.load_object(\"" 
+            out << "scene_graph.load_object(\""
                 << file_name << "\")" << std::endl;
             interpreter()->add_to_history(out.str());
         }
@@ -458,7 +441,7 @@ namespace OGF {
                 FileSystem::set_current_working_directory(dir);
             }
         }
-        
+
         return result;
     }
 
@@ -525,23 +508,23 @@ namespace OGF {
 	    mclass = dynamic_cast<MetaClass*>(mtype);
 	}
 
-	
+
         if(mclass == nullptr) {
             Logger::err("SceneGraph")
                 << class_name_in << ": no such object class"
                 << std::endl;
             return nullptr;
         }
-        
+
         ArgList args;
         args.create_arg("parent",this);
         Grob* result = dynamic_cast<Grob*>(mclass->factory()->create(args));
         ogf_assert(result != nullptr);
-	
+
 	// Need to do that because if there are several levels of nested types,
 	// then the stored meta class is not always the right one !
 	result->set_meta_class(mclass);
-	
+
         grob_created(result->name());
         update_values();
 	if(name != "") {
@@ -613,7 +596,7 @@ namespace OGF {
         return true;
     }
 
-    
+
     bool SceneGraph::serialize_read(
         InputGraphiteFile& in
     ) {
@@ -633,21 +616,21 @@ namespace OGF {
                 grob = serialize_grob_read(in);
             }
         }
-        
+
         if(current_object != "") {
             set_current_object(current_object);
             grob = current();
         }
-        
+
         if(grob != nullptr) {
             grob->update();
         }
 
-	
-        Logger::out("GeoFile") << ">> EOF" << std::endl;        
+
+        Logger::out("GeoFile") << ">> EOF" << std::endl;
         return true;
     }
-    
+
 
     bool SceneGraph::serialize_write(
         OutputGraphiteFile& out
@@ -674,17 +657,18 @@ namespace OGF {
 	}
 	return result;
     }
-    
+
     void SceneGraph::get_grob_shader(
         Grob* grob, std::string& classname, ArgList& properties
     ) {
         classname = "";
         properties.clear();
-        SceneGraphShaderManager* sgsm = get_scene_graph_shader_manager();
+        Object* sgsm = get_scene_graph_shader_manager();
 	if(sgsm == nullptr) {
             properties.clear();
         } else {
-            sgsm->get_grob_shader(grob, classname, properties, false);
+	    // TODO: cannot access this function from GOM
+            // sgsm->get_grob_shader(grob, classname, properties, false);
         }
         // last arg to false: do not copy properties of pointer type,
         // since they are not serializable
@@ -693,20 +677,21 @@ namespace OGF {
     void SceneGraph::set_grob_shader(
         Grob* grob, const std::string& classname, const ArgList& properties
     ) {
-        SceneGraphShaderManager* sgsm = get_scene_graph_shader_manager();
+        Object* sgsm = get_scene_graph_shader_manager();
         if(sgsm != nullptr) {
-	    sgsm->set_grob_shader(grob, classname, properties);
-	} 
+	    // TODO: cannot access this function from GOM
+	    // sgsm->set_grob_shader(grob, classname, properties);
+	}
     }
 
     void SceneGraph::serialize_grob_write(
         Grob* grob, OutputGraphiteFile& out
     ) {
-        std::string classname = grob->meta_class()->name(); 
+        std::string classname = grob->meta_class()->name();
 
         if(grob->is_serializable()) {
-            Logger::out("GeoFile") 
-                << "<< " << grob->name() 
+            Logger::out("GeoFile")
+                << "<< " << grob->name()
                 << " (" << grob->meta_class()->name() << ")" << std::endl;
 
             // Grob header
@@ -737,8 +722,8 @@ namespace OGF {
             grob->serialize_write(out);
             out.write_separator();
         } else {
-            Logger::out("SceneGraph") 
-                << "Could not serialize " << grob->name() 
+            Logger::out("SceneGraph")
+                << "Could not serialize " << grob->name()
                 << "(" << grob->meta_class()->name() << ")" << std::endl;
         }
     }
@@ -747,7 +732,7 @@ namespace OGF {
         InputGraphiteFile& in
     ) {
         Grob* result = nullptr;
-        
+
         geo_assert(in.current_chunk_class() == "GROB");
         ArgList grob_properties;
         in.read_grob_header(grob_properties);
@@ -757,12 +742,12 @@ namespace OGF {
         if(grob_properties.has_arg("class_name")) {
             grob_class_name = grob_properties.get_arg("class_name");
         }
-        
+
         if(grob_properties.has_arg("name")) {
             grob_name = grob_properties.get_arg("name");
         }
-    
-        Logger::out("GeoFile") 
+
+        Logger::out("GeoFile")
             << ">> " << grob_name
             << " (" << grob_class_name << ")" << std::endl;
         disable_signals();
@@ -778,10 +763,10 @@ namespace OGF {
         if(i != index_t(-1)) {
             grob_properties.delete_ith_arg(i);
         }
-        
+
         result->attributes() = grob_properties;
         enable_signals();
-        
+
         in.next_chunk();
         if(in.current_chunk_class() != "SHDR") {
             Logger::err("GeoFile") << "Got " << in.current_chunk_class()
@@ -792,7 +777,7 @@ namespace OGF {
             }
             return nullptr;
         }
-        
+
         ArgList shader_properties;
         in.read_shader(shader_properties);
 
@@ -864,6 +849,5 @@ namespace OGF {
     Interpreter* SceneGraph::interpreter() {
 	return interpreter_;
     }
-    
-}
 
+}

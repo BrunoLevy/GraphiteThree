@@ -25,18 +25,19 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/skin_imgui/widgets/render_area.h>
 #include <OGF/skin_imgui/types/rendering_context.h>
 #include <OGF/skin_imgui/types/application.h>
+#include <OGF/scene_graph/skin/events.h>
 #include <OGF/basic/math/geometry.h>
 
 #include <geogram/image/image_library.h>
@@ -68,8 +69,8 @@ namespace OGF {
 	last_point_dc_ = vec2(0.0, 0.0);
 	last_point_ndc_ = vec2(0.0, 0.0);
 	last_point_wc_ = vec2(0.0, 0.0);
-	
-        // active;axis;volume_mode;shift;rotation;flip        
+
+        // active;axis;volume_mode;shift;rotation;flip
         clipping_config_ =
             "false;z;strad.;0;1 0 0 0  0 1 0 0  0 0 1 0  0 0 0 1;false";
 
@@ -79,12 +80,12 @@ namespace OGF {
 
 	dirty_ = true;
     }
-    
+
     RenderArea::~RenderArea() {
     }
-    
+
     void RenderArea::set_projection_matrix(const mat4& value) {
-	if(rendering_context_ != nullptr) {	
+	if(rendering_context_ != nullptr) {
 	    rendering_context_->load_projection_matrix(value);
 	}
 	update();
@@ -136,7 +137,7 @@ namespace OGF {
 	background_image_ = value;
 	if(rendering_context_ != nullptr) {
 	    if(value.length() > 0) {
-		Image_var image = 
+		Image_var image =
 		    ImageLibrary::instance()->load_image(value);
 		rendering_context_->set_background_image(image);
 	    } else {
@@ -200,7 +201,7 @@ namespace OGF {
                 << std::endl;
             return;
         }
-        
+
         rendering_context_->set_clipping(String::to_bool(words[0]));
 
         bool viewer = false;
@@ -224,11 +225,11 @@ namespace OGF {
 
         double shift = double(String::to_int(words[3]) + 500)/1000.0;
         eqn[3] = 1.0 - (shift * 2.0); // in [-1,1] rather than [0,1] !!
-        
+
         if(!String::to_bool(words[5])) {
             eqn = -1.0 * eqn;
         }
-        
+
         rendering_context_->set_clipping_equation(eqn);
         rendering_context_->set_clipping_viewer(viewer);
 
@@ -240,7 +241,7 @@ namespace OGF {
         } else if(words[2] == "strad.") {
             mode = GLUP_CLIP_STRADDLING_CELLS;
         } else if(words[2] == "slice") {
-            mode = GLUP_CLIP_SLICE_CELLS;            
+            mode = GLUP_CLIP_SLICE_CELLS;
         } else {
             Logger::warn("Skin_imgui")
                 << "update_clipping_config(): invalid clipping mode:"
@@ -265,14 +266,14 @@ namespace OGF {
 	// The contents of the off-screen buffer should be generated if:
 	//   - it is marked as dirty_ (update() was called before) or
 	//   - the off-screen buffer contains a picking image (i.e., with
-	//     object IDs rather than colors). 
+	//     object IDs rather than colors).
 	if(dirty_ || rendering_context_->contains_picking_image()) {
-	    dirty_ = false;	    
+	    dirty_ = false;
 	    update_memorized_frame();
 	}
 	draw_memorized_frame();
     }
-    
+
     void RenderArea::update() {
 	dirty_ = true;
     }
@@ -295,7 +296,7 @@ namespace OGF {
 	    ctxt->draw_last_frame();
 	}
     }
-    
+
     void RenderArea::resize(
 	index_t w, index_t h, index_t fb_w, index_t fb_h
     ) {
@@ -311,7 +312,7 @@ namespace OGF {
     }
 
     void RenderArea::GL_initialize() {
-#ifndef __EMSCRIPTEN__    
+#ifndef __EMSCRIPTEN__
 	if(!gladLoadGL()) {
 	    printf("GLAD: could not load OpenGL\n");
 	    exit(-1);
@@ -331,7 +332,7 @@ namespace OGF {
 	rendering_context_ = new SkinImGUIRenderingContext(
 	    glupCurrentContext()
 	);
-	
+
 	rendering_context_->resize(
 	    get_frame_buffer_width(), get_frame_buffer_height()
 	);
@@ -340,8 +341,8 @@ namespace OGF {
 	rendering_context_->load_viewing_matrix(viewing_matrix_);
 	rendering_context_->set_lighting_matrix(lighting_matrix_);
 	update_clipping_config();
-	
-	update();	
+
+	update();
     }
 
     void RenderArea::GL_terminate() {
@@ -349,7 +350,7 @@ namespace OGF {
 	glupDeleteContext(glupCurrentContext());
 	glupMakeCurrent(nullptr);
     }
-    
+
     void RenderArea::mouse_button_callback(
 	int button, int action, int mods
     ) {
@@ -364,7 +365,7 @@ namespace OGF {
             MOUSE_BUTTON_AUX1,
             MOUSE_BUTTON_AUX2
         };
-        
+
         if(size_t(button) > (sizeof(button_mapping)/sizeof(int))) {
             return;
         }
@@ -373,12 +374,12 @@ namespace OGF {
 	last_point_ndc_ = rendering_context_->screen_to_ndc(
 	    index_t(last_point_dc_.x), index_t(last_point_dc_.y)
         );
-	    
+
 	last_point_wc_ = transform_point(
 	    last_point_ndc_,
 	    rendering_context_->inverse_viewing_matrix()
         );
-	
+
 	bool control = ((mods & GLFW_MOD_CONTROL) != 0);
 	bool shift = ((mods & GLFW_MOD_SHIFT) != 0);
 	switch(action) {
@@ -393,7 +394,7 @@ namespace OGF {
 			int(button_down_), control_is_down_, shift_is_down_
 		    );
 		}
-		
+
 	    } break;
 	    case GLFW_RELEASE: {
 		mouse_up(
@@ -408,7 +409,7 @@ namespace OGF {
     }
 
     void RenderArea::cursor_pos_callback(
-	double xf, double yf	
+	double xf, double yf
     ) {
 	// For retina displays: x and y are in 'window pixels',
 	// and GLUP project / unproject expect 'framebuffer pixels'.
@@ -420,7 +421,7 @@ namespace OGF {
 
 	last_point_dc_.x = xf;
 	last_point_dc_.y = yf;
-	
+
 	if(button_down_ != 0) {
 	    vec2 prev_point_ndc = last_point_ndc_;
 	    vec2 prev_point_wc = last_point_wc_;
@@ -428,7 +429,7 @@ namespace OGF {
 	    last_point_ndc_ = rendering_context_->screen_to_ndc(
 		index_t(last_point_dc_.x), index_t(last_point_dc_.y)
 	    );
-	    
+
 	    last_point_wc_ = transform_point(
 		last_point_ndc_, rendering_context_->inverse_viewing_matrix()
 	    );
@@ -445,7 +446,7 @@ namespace OGF {
 	    );
 	}
     }
-    
+
     void RenderArea::scroll_callback(
 	 double xoffset, double yoffset
     ) {
@@ -459,7 +460,7 @@ namespace OGF {
 
 	// Synthetize move/press/release mouse events
 	// with center button pressed.
-        
+
 	vec2 last_point_dc_bak = last_point_dc_;
 	GLFWwindow* w = (GLFWwindow*)Application::instance()->impl_window();
 	bool ctrl = (glfwGetKey(w, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS);
@@ -471,7 +472,7 @@ namespace OGF {
 
 	int mods = (ctrl  ? GLFW_MOD_CONTROL : 0) |
 	           (shift ? GLFW_MOD_SHIFT   : 0) ;
-	
+
         // Wheel emulates move/press/move/release event
 	cursor_pos_callback(last_point_dc_.x, last_point_dc_.y);
 	mouse_button_callback(button, GLFW_PRESS, mods);
@@ -479,13 +480,13 @@ namespace OGF {
 	mouse_button_callback(button, GLFW_RELEASE, mods);
 	cursor_pos_callback(last_point_dc_bak.x, last_point_dc_bak.y);
     }
-    
+
     void RenderArea::drop_callback(int nb, const char** p) {
 	for(int i=0; i<nb; ++i) {
 	    dropped_file(p[i]);
 	}
     }
-    
+
     void RenderArea::char_callback(unsigned int c) {
 	char str[2];
 	str[0] = char(c);
@@ -493,7 +494,7 @@ namespace OGF {
 	key_down(std::string(str));
 	key_up(std::string(str));
     }
-    
+
     void RenderArea::key_callback(
 	int key, int scancode, int action, int mods
     ) {
@@ -502,11 +503,11 @@ namespace OGF {
 	const char* keystr = nullptr;
 	switch(key) {
 	    case GLFW_KEY_LEFT_CONTROL:
-	    case GLFW_KEY_RIGHT_CONTROL:		
+	    case GLFW_KEY_RIGHT_CONTROL:
 	      keystr = "control";
 	      break;
 	    case GLFW_KEY_LEFT_SHIFT:
-	    case GLFW_KEY_RIGHT_SHIFT:		
+	    case GLFW_KEY_RIGHT_SHIFT:
 	      keystr = "shift";
 	      break;
 	    case GLFW_KEY_LEFT_ALT:
@@ -619,7 +620,7 @@ namespace OGF {
      */
     static void flip_flip(
         Memory::pointer ptr,
-        unsigned int width, 
+        unsigned int width,
         unsigned int height
     ) {
         ogf_assert(width <= 4096);
@@ -651,7 +652,7 @@ namespace OGF {
             }
         }
     }
-    
+
     void RenderArea::update_background_image_from_data(
 	Memory::pointer ptr,
 	Image::ColorEncoding color_encoding,
@@ -661,7 +662,7 @@ namespace OGF {
 	if(ptr == nullptr || rendering_context_ == nullptr) {
 	    return;
 	}
-        // Grrr, CAIRO stores in format ARGB and I use RGBA 
+        // Grrr, CAIRO stores in format ARGB and I use RGBA
         //  (and Y is flipped !!!)
         flip_flip(ptr, width, height);
 
@@ -669,11 +670,10 @@ namespace OGF {
             ptr, color_encoding, component_encoding,
             width, height
         );
-       
+
         // Restore image.
-        flip_flip(ptr, index_t(width), index_t(height));        
+        flip_flip(ptr, index_t(width), index_t(height));
     }
 
-    
-}
 
+}

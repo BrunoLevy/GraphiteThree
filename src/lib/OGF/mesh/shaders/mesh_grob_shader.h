@@ -23,26 +23,26 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with 
+ * As an exception to the GPL, Graphite can be linked with
  *  the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_MESH_SHADERS_MESH_GROB_SHADER_H
 #define H_OGF_MESH_SHADERS_MESH_GROB_SHADER_H
 
 #include <OGF/mesh/common/common.h>
 #include <OGF/mesh/grob/mesh_grob.h>
-#include <OGF/scene_graph/shaders/shader.h>
+#include <OGF/scene_graph_gfx/shaders/shader.h>
 #include <OGF/scene_graph/types/properties.h>
 
 #include <geogram_gfx/mesh/mesh_gfx.h>
@@ -61,18 +61,18 @@ namespace GEO {
 namespace OGF {
 
     /**********************************************************/
-    
+
     class Builder;
     class Texture;
 
     enum CullingMode {NO_CULL, CULL_FRONT, CULL_BACK};
 
     enum PaintingMode {SOLID_COLOR, ATTRIBUTE, COLOR, TEXTURE};
-    
+
     /**
      * \brief Base class for drawing and picking MeshGrob.
      */
-    gom_attribute(abstract, "true") 
+    gom_attribute(abstract, "true")
     gom_class MESH_API MeshGrobShader : public Shader {
     public:
         /**
@@ -126,11 +126,11 @@ namespace OGF {
         virtual void show_vertices_selection();
 
         /**
-         * \brief Makes vertices selection invisible and 
+         * \brief Makes vertices selection invisible and
          *  triggers a drawing event.
          */
         virtual void hide_vertices_selection();
-        
+
         /**
          * \brief Makes the mesh visible and triggers a drawing event.
          */
@@ -174,7 +174,7 @@ namespace OGF {
          * \retval false otherwise
          */
         bool get_has_facets() const {
-            return            
+            return
                 mesh_grob() != nullptr &&
                 mesh_grob()->facets.nb() != 0;
         }
@@ -187,13 +187,13 @@ namespace OGF {
          * \retval false otherwise
          */
         bool get_has_cells() const {
-            return            
+            return
                 mesh_grob() != nullptr &&
                 mesh_grob()->cells.nb() != 0;
         }
 
         /**
-         * \brief Tests whether the MeshGrob attached to this shader is 
+         * \brief Tests whether the MeshGrob attached to this shader is
          *  a volumetric hybrid mesh.
          * \details This is used by the GUI that makes some widgets visible only
          *  if the mesh has the corresponding elements.
@@ -210,15 +210,15 @@ namespace OGF {
         /**
          * \brief Tests whether the MeshGrob attached to this shader stores
          *  a time evolution.
-         * \details Time evolution can be stored as 6d coordinates 
-         *  (coordinates 4,5,6 correspond to location at final time). 
+         * \details Time evolution can be stored as 6d coordinates
+         *  (coordinates 4,5,6 correspond to location at final time).
          *  This is used by the GUI that makes some widgets visible only
          *  if the mesh has the corresponding elements.
          * \retval true if the mesh stores a time evolution
          * \retval false otherwise
          */
         bool get_has_time() const {
-            return            
+            return
                 mesh_grob() != nullptr &&
                 mesh_grob()->vertices.dimension() >= 6;
         }
@@ -249,7 +249,7 @@ namespace OGF {
             }
             return result;
 	}
-	
+
     protected:
         /**
          * \brief Gets the MeshGrob.
@@ -317,7 +317,7 @@ namespace OGF {
          * \copydoc MeshGrobShader::hide_vertices_selection()
          */
         void hide_vertices_selection() override;
-        
+
         /**
          * \copydoc MeshGrobShader::show_mesh()
          */
@@ -354,7 +354,7 @@ namespace OGF {
         /**
          * \brief Sets the displayed attribute range automatically.
          */
-        gom_attribute(visible_if, "attributes")        
+        gom_attribute(visible_if, "attributes")
         void autorange();
 
 
@@ -378,7 +378,7 @@ namespace OGF {
 	double get_time_smooth() const {
 	    return time_;
 	}
-	
+
     gom_properties:
 
 	/**
@@ -394,13 +394,13 @@ namespace OGF {
 	PaintingMode get_painting() const {
 	    return painting_mode_;
 	}
-	
+
         /**
          * \brief Sets the minimum of the displayed range for
          *  attribute values.
          * \param[in] value the minimum attribute value
          */
-        gom_attribute(visible_if, "attributes")                            
+        gom_attribute(visible_if, "attributes")
         void set_attribute_min(double value) {
             attribute_min_ = value;
             update();
@@ -420,7 +420,7 @@ namespace OGF {
          *  attribute values.
          * \param[in] value the maximum attribute value
          */
-        gom_attribute(visible_if, "attributes")         
+        gom_attribute(visible_if, "attributes")
         void set_attribute_max(double value) {
             attribute_max_ = value;
             update();
@@ -435,7 +435,7 @@ namespace OGF {
             return attribute_max_;
         }
 
-        
+
         /**
          * \brief Sets the name fo the attribute to be displayed.
          * \param[in] value the name of the attribute to be displayed
@@ -486,13 +486,13 @@ namespace OGF {
             return (painting_mode_ == COLOR);
         }
 
-	
+
 	/**
 	 * \brief Sets the image used for texturing.
 	 * \param[in] value the name of the file with the
 	 *  image used for texturing.
 	 */
-        gom_attribute(visible_if, "texturing")                    	
+        gom_attribute(visible_if, "texturing")
 	void set_tex_image(const ImageFileName& value) {
 	    texture_filename_ = value;
 	    texture_.reset();
@@ -507,7 +507,7 @@ namespace OGF {
 	const ImageFileName& get_tex_image() const {
 	    return texture_filename_;
 	}
-	
+
         /**
          * \brief Sets the name fo the attribute to be displayed.
          * \param[in] value the name of the attribute to be displayed
@@ -550,13 +550,13 @@ namespace OGF {
 	    // (it is stupid, but makes code simpler for now.
 	    return get_tex_coords();
         }
-	
+
 	/**
 	 * \brief Sets the texture repeat factor.
 	 * \param[in] value the number of times the texture
 	 *  should be repeated in the unit texture space.
 	 */
-        gom_attribute(visible_if, "texturing")                    
+        gom_attribute(visible_if, "texturing")
 	void set_tex_repeat(index_t value) {
 	    tex_coord_repeat_ = value;
 	    update();
@@ -578,7 +578,7 @@ namespace OGF {
 	 * \param[in] value true if normal mapping mode should
 	 *  be used, false otherwise.
 	 */
-	gom_attribute(visible_if, "texturing")	
+	gom_attribute(visible_if, "texturing")
 	void set_normal_map(bool value) {
 	    tex_normal_mapping_ = value;
 	    update();
@@ -592,7 +592,7 @@ namespace OGF {
 	bool get_normal_map() const {
 	    return tex_normal_mapping_;
 	}
-	
+
         /**
          * \brief Sets whether lighting should be used.
          * \param[in] value true if lighting is enabled, false
@@ -634,15 +634,15 @@ namespace OGF {
             return clipping_;
         }
 
-        
+
         /**
          * \brief Sets surface drawing style.
          * \param[in] value a const reference to the SurfaceStyle
          */
         gom_attribute(visible_if, "has_facets")
-        void set_surface_style(const SurfaceStyle& value) { 
+        void set_surface_style(const SurfaceStyle& value) {
             surface_style_ = value;
-            update(); 
+            update();
         }
 
         /**
@@ -658,26 +658,26 @@ namespace OGF {
          * \param[in] value true if facet filtering is activated
          */
         gom_attribute(visible_if, "has_facets")
-        void set_facets_filter(bool value) { 
+        void set_facets_filter(bool value) {
             facets_filter_ = value;
             gfx_.set_filter(
                 MESH_FACETS, value ? "filter" : ""
             );
-            update(); 
+            update();
         }
 
         bool get_facets_filter() const {
             return facets_filter_;
         }
-        
+
         /**
          * \brief Sets culling mode;
          * \param[in] value one of NO_CULL, CULL_FRONT, CULL_BACK
          */
         gom_attribute(visible_if, "has_facets")
-        void set_culling_mode(const CullingMode value) { 
+        void set_culling_mode(const CullingMode value) {
 	    culling_mode_ = value;
-            update(); 
+            update();
         }
 
         /**
@@ -693,7 +693,7 @@ namespace OGF {
 	 * \param[in] x specular factor, use 0 for Lambert shading, 10 for
 	 *  highly specular shading.
 	 */
-        gom_attribute(visible_if, "has_facets or has_cells")	
+        gom_attribute(visible_if, "has_facets or has_cells")
 	void set_specular(index_t x) {
 	    specular_ = x;
 	    update();
@@ -708,14 +708,14 @@ namespace OGF {
 	}
 
         /**
-         * \brief Sets whether different colors should be used for 
+         * \brief Sets whether different colors should be used for
          *  inside/outside.
          * \details For drawing the inside, the complementary color of the one
-         *  declared in the surface style is used (each color component is 
-         *  replaced with 1.0 minus the value of the component). If color is 
-         *  average gray, it is replaced with light gray outside / dark gray 
+         *  declared in the surface style is used (each color component is
+         *  replaced with 1.0 minus the value of the component). If color is
+         *  average gray, it is replaced with light gray outside / dark gray
          *  inside so that one can see a difference.
-         * \param[in] value true if different colors should be used, 
+         * \param[in] value true if different colors should be used,
          *  false otherwise
          */
         gom_attribute(visible_if, "has_facets")
@@ -738,16 +738,16 @@ namespace OGF {
          * \param[in] value a const reference to the style used to
          *  draw the volumetric cells
          */
-        gom_attribute(visible_if, "has_cells")        
-        void set_volume_style(const SurfaceStyle& value) { 
+        gom_attribute(visible_if, "has_cells")
+        void set_volume_style(const SurfaceStyle& value) {
             volume_style_ = value;
-            update(); 
+            update();
         }
 
         /**
          * \brief Gets the style used to draw the volumetric
          *  cells.
-         * \return a const reference to the style used to 
+         * \return a const reference to the style used to
          *  draw the volumetric cells
          */
         const SurfaceStyle& get_volume_style() const {
@@ -765,14 +765,14 @@ namespace OGF {
                 MESH_CELLS, value ? "filter" : ""
             );
             cells_filter_ = value;
-            update(); 
+            update();
         }
 
         bool get_cells_filter() const {
             return cells_filter_;
         }
 
-        
+
         /**
          * \brief Sets whether volumetric cells should be colored
          *  by type.
@@ -897,16 +897,16 @@ namespace OGF {
         bool get_connectors() const {
             return connectors_;
         }
-        
+
         /**
          * \brief Sets the style used to draw the edges.
          * \param[in] value a const reference to the style used
          *  to draw the edges
          */
         gom_attribute(visible_if, "has_edges")
-        void set_edges_style(const EdgeStyle& value) { 
+        void set_edges_style(const EdgeStyle& value) {
             edges_style_ = value;
-            update(); 
+            update();
         }
 
         /**
@@ -927,9 +927,9 @@ namespace OGF {
          *  in the cells.
          */
         gom_attribute(visible_if, "has_facets or has_cells")
-        void set_mesh_style(const EdgeStyle& value) { 
+        void set_mesh_style(const EdgeStyle& value) {
             mesh_style_ = value;
-            update(); 
+            update();
         }
 
         /**
@@ -951,9 +951,9 @@ namespace OGF {
          *  should be used to draw the border of the surface
          */
         gom_attribute(visible_if, "has_facets")
-        void set_border_style(const EdgeStyle& value) { 
+        void set_border_style(const EdgeStyle& value) {
             border_style_ = value;
-            update(); 
+            update();
         }
 
         /**
@@ -995,15 +995,15 @@ namespace OGF {
                 MESH_VERTICES, value ? "filter" : ""
             );
             vertices_filter_ = value;
-            update(); 
+            update();
         }
 
         bool get_vertices_filter() const {
             return vertices_filter_;
         }
-        
+
 	/**
-	 * \brief Sets the transparency of the vertices 
+	 * \brief Sets the transparency of the vertices
 	 *  (use with dark background).
 	 * \param[in] value the transparency, 0.0 for opaque,
 	 *  1.0 for invisible.
@@ -1042,9 +1042,9 @@ namespace OGF {
         }
 
         /**
-         * \brief Sets the shrinking coefficient of the 
+         * \brief Sets the shrinking coefficient of the
          *  volumetric cells.
-         * \param[in] value the shrinking coefficient, between 
+         * \param[in] value the shrinking coefficient, between
          *  0 (no shrinking) and 10 (completely shrunk).
          */
         gom_attribute(visible_if, "has_cells")
@@ -1054,9 +1054,9 @@ namespace OGF {
         }
 
         /**
-         * \brief Gets the shrinking coefficient of the 
+         * \brief Gets the shrinking coefficient of the
          *  volumetric cells.
-         * \return the shrinking coefficient, between 
+         * \return the shrinking coefficient, between
          *  0 (no shrinking) and 10 (completely shrunk).
          */
         index_t get_shrink() const {
@@ -1096,7 +1096,7 @@ namespace OGF {
 
         /**
          * \brief Sets the time parameter used for time interpolation.
-         * \param[in] value the time parameter, in 0 (initial time) .. 20 
+         * \param[in] value the time parameter, in 0 (initial time) .. 20
          *  (final time).
          */
         gom_attribute(visible_if, "has_time and animate")
@@ -1141,7 +1141,7 @@ namespace OGF {
 	    return false;
 	}
 
-        gom_attribute(visible_if, "glsl_source_visible")        	
+        gom_attribute(visible_if, "glsl_source_visible")
 	void set_glsl_source(const std::string& value) {
 	    glsl_source_ = value;
 	    update_glsl_program();
@@ -1150,18 +1150,18 @@ namespace OGF {
 	const std::string& get_glsl_source() const {
 	    return glsl_source_;
 	}
-	
+
     protected:
         void draw_slivers();
         void draw_weird_cells();
 	void draw_surface_with_glsl_shader();
 	void update_glsl_program();
-	
+
     protected:
         GEO::MeshGfx gfx_;
 
 	PaintingMode      painting_mode_;
-	
+
         std::string       attribute_;
         MeshElementsFlags attribute_subelements_;
         std::string       attribute_name_;
@@ -1177,11 +1177,11 @@ namespace OGF {
 	bool              tex_normal_mapping_;
 	Texture_var       texture_;
 	ImageFileName     texture_filename_;
-	
+
         SurfaceStyle surface_style_;
         bool         facets_filter_;
 	CullingMode  culling_mode_;
-	
+
 	index_t      specular_;
         bool         two_sided_;
         SurfaceStyle volume_style_;
@@ -1245,7 +1245,7 @@ namespace OGF {
          const std::string& get_region() const {
              return region_;
          }
-         
+
          void set_amount(index_t value) {
              amount_ = value;
              update();
@@ -1254,13 +1254,13 @@ namespace OGF {
          index_t get_amount() const {
              return amount_;
          }
-         
+
     public:
          void draw() override;
 
     protected:
          bool dirty_;
-         std::string region_;         
+         std::string region_;
          index_t amount_;
          int rgn_min_;
          int rgn_max_;
@@ -1269,8 +1269,7 @@ namespace OGF {
     };
 
     /**********************************************************/
-         
+
 }
 
 #endif
-

@@ -25,16 +25,16 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
- 
+
+
 #ifndef H_OGF_SCENE_GRAPH_TYPES_SCENE_GRAPH_H
 #define H_OGF_SCENE_GRAPH_TYPES_SCENE_GRAPH_H
 
@@ -50,10 +50,9 @@ namespace OGF {
 
     class Grob;
     class RenderingContext;
-    class SceneGraphShaderManager;
 
-/*************************************************************************/    
-    
+/*************************************************************************/
+
     /**
      * \brief Represents the list of objects loaded in Graphite.
      * \details A SceneGraph stores a list of Grob and
@@ -66,11 +65,11 @@ namespace OGF {
         /**
          * \brief SceneGraph constructor.
 	 * \param[in] interpreter a pointer to the main interpreter, or
-         *   nullptr. If interpreter is set to nullptr, then the default 
+         *   nullptr. If interpreter is set to nullptr, then the default
          *   interpreter is used.
          */
         SceneGraph(Interpreter* interpreter = nullptr);
-        
+
         /**
          * \brief SceneGraph destructor.
          */
@@ -103,18 +102,18 @@ namespace OGF {
 	 bool serialize_write(OutputGraphiteFile& out) override;
 
     gom_slots:
-	
+
 	/**
 	 * \brief Saves viewer properties to a file.
 	 * \details This saves current viewpoint, clipping and background
 	 *  color to a .graphite file.
 	 * \param[in] value a .graphite file name.
-	 * \retval true if viewer properties could be successfully saved to 
+	 * \retval true if viewer properties could be successfully saved to
 	 *  the file.
 	 * \retval false otherwise.
 	 */
          bool save_viewer_properties(const std::string& value);
-	
+
         /**
          * \brief Deletes the current object.
          */
@@ -122,7 +121,7 @@ namespace OGF {
 
         /**
          * \brief Duplicates the current object.
-         * \details The name of the created object will be the same as 
+         * \details The name of the created object will be the same as
          *  current object name with "_copy" appended.
 	 * \return the created object or nullptr if there was no current
 	 *  object.
@@ -142,7 +141,7 @@ namespace OGF {
          *  if current object is the last one
          */
         void move_current_down();
-        
+
         /**
          * \brief Clears this SceneGraph.
          * \details Deletes all the objects of this SceneGraph.
@@ -153,7 +152,7 @@ namespace OGF {
          * \brief Loads an object from a file, and stores it in this
          *  SceneGraph.
          * \param[in] value the name of the file
-         * \param[in] type the class name that should be used to 
+         * \param[in] type the class name that should be used to
          *  create the object, or "default" (then it is deduced from
          *  the file extension)
          * \param[in] invoked_from_gui set to true by file menu, and
@@ -171,7 +170,7 @@ namespace OGF {
          * \brief Loads objects from a list of files, and stores them in this
          *  SceneGraph.
          * \param[in] value the list of file names, separated with ';'
-         * \param[in] type the class name that should be used to 
+         * \param[in] type the class name that should be used to
          *  create the objects, or "default" (then it is deduced from
          *  the file extensions)
          * \param[in] invoked_from_gui set to true by file menu, and
@@ -188,13 +187,13 @@ namespace OGF {
          * \param[in] value the name of the file
          */
         bool save_current_object(const NewFileName& value);
-       
+
         /**
          * \brief Creates an object.
          * \param[in] classname the class name of the object to create,
          *  as a string, with the "OGF::" prefix
-         * \param[in] name the name of the object in the SceneGraph. If no 
-	 *  name is specified, then the created object will be 
+         * \param[in] name the name of the object in the SceneGraph. If no
+	 *  name is specified, then the created object will be
          *  given a default name.
          * \return a pointer to the created object
          */
@@ -205,28 +204,28 @@ namespace OGF {
 
         /**
          * \brief Creates a mesh.
-         * \param[in] name the name of the mesh in the SceneGraph. If no 
-	 *  name is specified, then the created object will be 
+         * \param[in] name the name of the mesh in the SceneGraph. If no
+	 *  name is specified, then the created object will be
          *  given a default name.
          * \return a pointer to the created mesh
          */
         Grob* create_mesh(const std::string& name = "") {
             return create_object("OGF::MeshGrob",name);
         }
-        
+
 	/**
 	 * \brief Creates a new object or retreives an existing one.
 	 * \param[in] classname the class name of the object to create,
          *  as a string, with the "OGF::" prefix.
 	 * \param[in] name the name of the object
          * \return a pointer to the newly created or already existing object,
-	 *  or nullptr if there was already an object with the same name 
+	 *  or nullptr if there was already an object with the same name
 	 *  but with a different classname.
 	 */
 	Grob* find_or_create_object(
 	    const GrobClassName& classname, const std::string& name
 	);
-	
+
         /**
          * \brief Gets the current object.
          * \return a pointer to the current object
@@ -251,7 +250,7 @@ namespace OGF {
         void register_grob_commands(
             MetaClass* grob_class, MetaClass* commands_class
         );
-        
+
     gom_properties:
         /**
          * \brief Gets the current object by name.
@@ -273,14 +272,14 @@ namespace OGF {
 
         /**
          * \brief Sets the visibility flags for all the objects.
-         * \param[in] value the ';'-separated list of object visibilities, as 
+         * \param[in] value the ';'-separated list of object visibilities, as
          *  a string
          */
         void set_visibilities(const std::string& value);
 
         /**
          * \brief Gets the visibility flags for all the objects.
-         * \return the ';'-separated list of object visibilities, as 
+         * \return the ';'-separated list of object visibilities, as
          *  a string
          */
         std::string get_visibilities() const;
@@ -328,18 +327,18 @@ namespace OGF {
 
 	/**
 	 * \brief sets the scene graph shader manager.
-	 * \param[in] sgshdmgr a pointer to the 
+	 * \param[in] sgshdmgr a pointer to the
 	 *   scene graph shader manager.
 	 */
-	void set_scene_graph_shader_manager(SceneGraphShaderManager* sgshdmgr);
+	void set_scene_graph_shader_manager(Object* sgshdmgr);
 
 	/**
 	 * \brief gets the scene graph shader manager.
 	 * \return a pointer to the scene graph shader manager
 	 *  or nullptr if none was specified.
 	 */
-	SceneGraphShaderManager* get_scene_graph_shader_manager() const;
-	
+	Object* get_scene_graph_shader_manager() const;
+
     gom_signals:
         /**
          * \brief a signal that is triggered whenever the list of objects
@@ -351,13 +350,13 @@ namespace OGF {
         /**
          * \brief a signal that is triggered whenever object visibility
          *  flags change.
-         * \param[in] value the ';'-separated list of object visibility 
+         * \param[in] value the ';'-separated list of object visibility
          *  flags
          */
         virtual void visibilities_changed(const std::string& value);
 
         /**
-         * \brief a signal that is triggered whenever the list of 
+         * \brief a signal that is triggered whenever the list of
          *  objects changes.
          * \param[in] value the ';'-separated list of object types
          */
@@ -411,17 +410,17 @@ namespace OGF {
 	 * \copydoc Grob::interpreter()
 	 */
 	Interpreter* interpreter() override;
-	
+
     protected:
         /**
          * \brief Loads alignment data for pointsets.
-         * \details The loaded transform are stored in the 
+         * \details The loaded transform are stored in the
          *  object to world transforms of all objects.
          * \param[in] filename name of the alignment data file
          * \param[in] sg a pointer to the SceneGraph
          * \retval true if alignment data could be read
          * \retval false otherwise
-         * \see Grob::set_obj_to_world_transform(), 
+         * \see Grob::set_obj_to_world_transform(),
          *  Grob::get_obj_to_world_transform()
          */
         static bool load_aln(const std::string& filename, SceneGraph* sg);
@@ -433,7 +432,7 @@ namespace OGF {
          *  the whole scene, else it is for a single object
          */
         void begin_graphite_file(
-            OutputGraphiteFile& out, bool all_scene 
+            OutputGraphiteFile& out, bool all_scene
         );
 
         /**
@@ -463,7 +462,7 @@ namespace OGF {
 	void get_grob_shader(
 	    Grob* grob, std::string& classname, ArgList& properties
 	);
-	
+
 	void set_grob_shader(
 	    Grob* grob, const std::string& classname, const ArgList& properties
 	);
@@ -473,7 +472,7 @@ namespace OGF {
 	 * \param[in] obj_prop_name a string in the form "objectid.propname",
 	 *   where objectid is the name of a gom object and propname a name
 	 *   of a property of the object.
-	 * \param[in,out] args the ArgList where the value of the property 
+	 * \param[in,out] args the ArgList where the value of the property
 	 *   should be copied. Its name will be "objectid.propname".
 	 */
 	void copy_property_to_arglist(
@@ -484,22 +483,21 @@ namespace OGF {
 	 * \brief Copies all the object properties previously recorded by
 	 *   copy_property_to_arglist() from an ArgList to the gom objects.
 	 * \param[in] args an ArgList, with recorded object properties, with
-	 *   names "objectid.propname", where objectid is the name of a gom 
+	 *   names "objectid.propname", where objectid is the name of a gom
 	 *   object and propname a name of a property of the object. Args
 	 *   with names that do not match this pattern are ignored.
 	 */
 	void copy_arglist_to_properties(const ArgList& args);
-	
+
     private:
         std::string current_object_;
 	Interpreter* interpreter_;
 	Object* render_area_;
 	Object* application_;
-	SceneGraphShaderManager* scene_graph_shader_manager_;
+	Object_var scene_graph_shader_manager_;
     };
 
-/*************************************************************************/    
+/*************************************************************************/
 
 }
 #endif
-
