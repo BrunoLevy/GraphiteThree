@@ -54,7 +54,7 @@ namespace OGF {
     * \details This class is in mesh_gfx rather than mesh because it needs to
     *  access the renderer and the graphics
     */
-    gom_class MESH_API MeshGrobVisibilityCommands : public MeshGrobCommands {
+    gom_class MESH_GFX_API MeshGrobVisibilityCommands : public MeshGrobCommands {
     public:
 
         /**
