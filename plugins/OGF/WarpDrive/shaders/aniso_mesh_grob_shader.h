@@ -25,25 +25,25 @@
  *  Contact for this Plugin: OGF
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
  * As an exception to the GPL, Graphite can be linked with the following
  * (non-GPL) libraries:
  *     Qt, tetgen, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef OGF_WARPDRIVE_SHADERS_ANISO_MESH_GROB_SHADER
 #define OGF_WARPDRIVE_SHADERS_ANISO_MESH_GROB_SHADER
 
 #include <OGF/WarpDrive/common/common.h>
-#include <OGF/mesh/shaders/mesh_grob_shader.h>
+#include <OGF/mesh_gfx/shaders/mesh_grob_shader.h>
 
 namespace OGF {
 
@@ -59,7 +59,7 @@ namespace OGF {
         const Color& get_color() const {
             return color_;
         }
-        
+
         void set_color(const Color& x) {
             color_ = x;
             update();
@@ -82,7 +82,7 @@ namespace OGF {
             ellipsoids_ = x;
             update();
         }
-        
+
         bool get_points() const {
             return points_;
         }
@@ -91,7 +91,7 @@ namespace OGF {
             points_ = x;
             update();
         }
-        
+
         bool get_V0() const {
             return V0_;
         }
@@ -128,12 +128,12 @@ namespace OGF {
             fp64_ = x;
             update();
         }
-        
+
     protected:
         void draw_crosses();
         void draw_ellipsoids();
         void get_viewing_parameters();
-        
+
     private:
         Color color_;
         double scaling_;
@@ -153,4 +153,3 @@ namespace OGF {
 }
 
 #endif
-

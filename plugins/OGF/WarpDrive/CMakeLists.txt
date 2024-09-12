@@ -62,8 +62,7 @@ gomgen(WarpDrive)
 
 add_library(WarpDrive ${SOURCES})
 
-target_link_libraries(WarpDrive mesh scene_graph skin gom gom_gom)
-target_link_libraries(WarpDrive renderer basic)
+target_link_libraries(WarpDrive mesh_gfx)
 
 if(GEOGRAM_WITH_VORPALINE)
   target_link_libraries(WarpDrive vorpalib)

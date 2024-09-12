@@ -23,19 +23,19 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the 
+ * As an exception to the GPL, Graphite can be linked with the
  *  following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 #include <OGF/WarpDrive/commands/mesh_grob_martingale_commands.h>
 
 #include <exploragram/optimal_transport/sampling.h>
@@ -44,7 +44,6 @@
 #include <exploragram/optimal_transport/optimal_transport_on_surface.h>
 
 #include <OGF/scene_graph/types/scene_graph.h>
-#include <OGF/scene_graph/shaders/shader.h>
 
 #include <geogram/basic/command_line.h>
 #include <geogram/voronoi/CVT.h>
@@ -76,9 +75,9 @@ namespace {
 	return true;
     }
 
-    
+
     // Note: we could re-implement all Euler code using this function.
-    
+
     /**
      * \brief Computes semi-discrete optimal transport
      *   between a pointset and a surface.
@@ -99,20 +98,20 @@ namespace {
 	MeshGrob* laguerre,
 	bool exact_predicates
     ) {
-	
+
 	std::string predicates_mode_backup =
 	    CmdLine::get_arg("algo:predicates");
-	    
+
 	if(exact_predicates) {
 	    CmdLine::set_arg("algo:predicates","exact");
 	}
 
-	
+
 	bool mesh_is_2D = mesh_is_flat(omega);
-	
+
 	Attribute<double> nu;
 	nu.bind_if_is_defined(points->vertices.attributes(),"nu");
-	
+
 	OptimalTransportMap* OTM = nullptr;
 	if(mesh_is_2D) {
 	    OTM = new OptimalTransportMap2d(omega);
@@ -125,13 +124,13 @@ namespace {
 		OTM = new OptimalTransportMapOnSurface(omega);
 	    }
 	}
-	    
+
 	OTM->set_points(
 	    points->vertices.nb(),
 	    points->vertices.point_ptr(0),
 	    points->vertices.dimension()
 	);
-	
+
 	if(nu.is_bound()) {
 	    FOR(i,points->vertices.nb()) {
 		OTM->set_nu(i,nu[i]);
@@ -139,7 +138,7 @@ namespace {
 	}
 
 	OTM->set_verbose(!mesh_is_2D);
-	OTM->set_regularization(0.0);	
+	OTM->set_regularization(0.0);
 	OTM->set_epsilon(1e-3);
 	OTM->set_Newton(true);
 	OTM->optimize(1000);
@@ -152,7 +151,7 @@ namespace {
 
 	if(centroids != nullptr) {
 	    if(mesh_is_2D) {
-		vector<double> p_centroids(points->vertices.nb()*2);	  
+		vector<double> p_centroids(points->vertices.nb()*2);
 		OTM->compute_Laguerre_centroids(p_centroids.data());
 		centroids->vertices.assign_points(p_centroids, 2, true);
 		centroids->vertices.set_dimension(3);
@@ -164,7 +163,7 @@ namespace {
 		centroids->update();
 	    }
 	}
-	
+
 	if(!mesh_is_2D) {
 	    omega->vertices.set_dimension(3);
 	    omega->update();
@@ -181,11 +180,11 @@ namespace {
 
 namespace OGF {
 
-    MeshGrobMartingaleCommands::MeshGrobMartingaleCommands() { 
+    MeshGrobMartingaleCommands::MeshGrobMartingaleCommands() {
     }
-        
-    MeshGrobMartingaleCommands::~MeshGrobMartingaleCommands() { 
-    }        
+
+    MeshGrobMartingaleCommands::~MeshGrobMartingaleCommands() {
+    }
 
     void MeshGrobMartingaleCommands::init_martingale(
 	const NewMeshGrobName& points_name,
@@ -198,11 +197,11 @@ namespace OGF {
 	    Logger::err("OTM") << "Current mesh has no facet" << std::endl;
 	    return;
 	}
-	
+
 	MeshGrob* points = MeshGrob::find_or_create(
 	    scene_graph(), points_name
 	);
-	
+
 	MeshGrob* laguerre = MeshGrob::find_or_create(
 	    scene_graph(), laguerre_name
 	);
@@ -210,7 +209,7 @@ namespace OGF {
 	MeshGrob* centroids = MeshGrob::find_or_create(
 	    scene_graph(), centroids_name
 	);
-	
+
 	if(nb_points != 0) {
 	    points->clear();
 	    points->vertices.set_dimension(3);
@@ -231,13 +230,13 @@ namespace OGF {
 		    dummy
 		);
 	    }
-	} 
+	}
 	points->update();
-	
+
 	semi_discrete_OT(
 	    mesh_grob(), points, centroids, laguerre, use_exact_predicates
 	);
-	
+
         if(points->get_shader() != nullptr) {
             points->get_shader()->set_property(
                 "vertices_style", "true;0 1 0 1;2"
@@ -252,7 +251,7 @@ namespace OGF {
 
 	if(laguerre->get_shader() != nullptr) {
 	    laguerre->get_shader()->set_property(
-		"attributes", "true"					       
+		"attributes", "true"
 	    );
 	    if(mesh_grob()->cells.nb() != 0) {
 		laguerre->get_shader()->set_property(
@@ -279,7 +278,7 @@ namespace OGF {
 	}
     }
 
-  
+
     void MeshGrobMartingaleCommands::recenter_martingale(
         const MeshGrobName& points_name,
 	const MeshGrobName& laguerre_name,
@@ -292,7 +291,7 @@ namespace OGF {
 	    Logger::err("OTM") << "Current mesh has no facet" << std::endl;
 	    return;
 	}
-	
+
 	MeshGrob* points = MeshGrob::find(
 	    scene_graph(), points_name
 	);
@@ -300,9 +299,9 @@ namespace OGF {
 	if(points == nullptr) {
 	    Logger::err("OTM") << points_name
 			       << ": no such object" << std::endl;
-	    return;	    
+	    return;
 	}
-	
+
 	MeshGrob* laguerre = MeshGrob::find(
 	    scene_graph(), laguerre_name
 	);
@@ -310,9 +309,9 @@ namespace OGF {
 	if(laguerre == nullptr) {
 	    Logger::err("OTM") << laguerre_name
 			       << ": no such object" << std::endl;
-	    return;	    
+	    return;
 	}
-	
+
 	MeshGrob* centroids = MeshGrob::find(
 	    scene_graph(), centroids_name
 	);
@@ -322,7 +321,7 @@ namespace OGF {
 			       << ": no such object" << std::endl;
 	    return;
 	}
-	
+
 	for(index_t i=0; i<nb_iter; ++i) {
 	    points->vertices.assign_points(
 		centroids->vertices.point_ptr(0),

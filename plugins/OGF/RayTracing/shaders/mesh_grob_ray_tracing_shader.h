@@ -25,25 +25,25 @@
  *  Contact for this Plugin: Bruno Levy - Bruno.Levy@inria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
  * As an exception to the GPL, Graphite can be linked with the following
  * (non-GPL) libraries:
  *     Qt, tetgen, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H__OGF_RAYTRACING_SHADERS_MESH_GROB_RAY_TRACING_SHADER__H
 #define H__OGF_RAYTRACING_SHADERS_MESH_GROB_RAY_TRACING_SHADER__H
 
 #include <OGF/RayTracing/common/common.h>
-#include <OGF/mesh/shaders/mesh_grob_shader.h>
+#include <OGF/mesh_gfx/shaders/mesh_grob_shader.h>
 #include <geogram/mesh/mesh_AABB.h>
 
 namespace OGF {
@@ -67,14 +67,14 @@ namespace OGF {
 	    supersampling_ = x;
 	    update();
 	}
-	
+
         /**
          * \brief surface color.
          */
         const Color& get_color() const {
             return color_;
         }
-        
+
         void set_color(const Color& x) {
             color_ = x;
             update();
@@ -93,7 +93,7 @@ namespace OGF {
 	    update();
 	}
 
-	
+
 	/**
 	 * \brief Specular intensity.
 	 */
@@ -106,7 +106,7 @@ namespace OGF {
 	    spec_ = x;
 	    update();
 	}
-	
+
 	/**
 	 * \brief Specular factor.
 	 */
@@ -135,7 +135,7 @@ namespace OGF {
 	/**
 	 * \brief Compute shadows.
 	 */
-	
+
 	bool get_shadows() const {
 	    return shadows_;
 	}
@@ -148,7 +148,7 @@ namespace OGF {
 	/**
 	 * \brief Make object transparent.
 	 */
-	
+
 	bool get_transparent() const {
 	    return transp_;
 	}
@@ -182,7 +182,7 @@ namespace OGF {
 	    refract_index_ = x;
 	    update();
 	}
-	
+
 	/**
 	 * \brief Lighting extinction due to fluid thickness.
 	 */
@@ -206,8 +206,8 @@ namespace OGF {
 	    nb_layers_ = x;
 	    update();
 	}
-	
-	
+
+
 	/**
 	 * \brief Raytrace background.
 	 */
@@ -231,7 +231,7 @@ namespace OGF {
 	    show_stats_ = x;
 	}
 
-	
+
     gom_slots:
 	/**
 	 * \brief Copies background into image.
@@ -249,12 +249,12 @@ namespace OGF {
 	    save_background_queued_ = true;
 	    update();
 	}
-	
+
     protected:
 
 	void do_copy_background();
-	void do_save_background();	
-	
+	void do_save_background();
+
 	/**
 	 * \brief Launches a primary ray.
 	 * \param[in] x , y the coordinates of the pixel,
@@ -263,12 +263,12 @@ namespace OGF {
 	Ray primary_ray(double x, double y);
 
 	/**
-	 * \brief Creates the image the first time, then resizes it 
+	 * \brief Creates the image the first time, then resizes it
 	 *  if the size of the window changed.
 	 */
 	void create_or_resize_image_if_needed();
 
-	
+
 	/**
 	 * \brief Gets the viewing parameters from the current GLUP state.
 	 * \details Gets the viewport, modelview and projection matrices.
@@ -281,7 +281,7 @@ namespace OGF {
 	void raytrace();
 
 	vec4 raytrace_pixel(double x, double y);
-	
+
 	/**
 	 * \brief Sets a pixel in the final image.
 	 * \param[in] X , Y the pixel integer coordinates.
@@ -295,14 +295,14 @@ namespace OGF {
 		p[i] = Memory::byte(comp*255.0);
 	    }
 	}
-	
+
 	/**
 	 * \brief Draws the raytraced image on the screen.
 	 */
 	void draw_image();
 
 	/**
-	 * \brief Normalizes and optionally smooths 
+	 * \brief Normalizes and optionally smooths
 	 *  the normal in an intersection.
 	 * \param[in,out] I an intersection.
 	 */
@@ -377,10 +377,10 @@ namespace OGF {
 	double multi_refract(Ray& r, MeshFacetsAABB::Intersection& I);
 
 	vec3 raytrace_background(const Ray& r);
-	
+
     private:
 	index_t supersampling_;
-	
+
         Color color_;
 	double spec_;
 	index_t spec_factor_;
@@ -390,9 +390,9 @@ namespace OGF {
 	double ext_;
 	double refract_index_;
 	index_t nb_layers_;
-	
+
 	Image_var image_;
-	
+
 	bool raytrace_background_;
 	Image_var background_image_;
 	Image_var background_depth_;
@@ -402,7 +402,7 @@ namespace OGF {
 
 	bool xray_;
 	Color core_color_;
-	
+
 	GLuint texture_;
 	MeshFacetsAABB AABB_;
 
@@ -424,4 +424,3 @@ namespace OGF {
 }
 
 #endif
-

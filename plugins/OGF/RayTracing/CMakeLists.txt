@@ -55,9 +55,7 @@ gomgen(RayTracing)
 
 add_library(RayTracing ${SOURCES})
 
-target_link_libraries(RayTracing mesh scene_graph skin gom_gom gom)
-target_link_libraries(RayTracing renderer basic)
-target_link_libraries(RayTracing geogram_gfx geogram)
+target_link_libraries(RayTracing mesh_gfx)
 
 set_target_properties(
    RayTracing PROPERTIES

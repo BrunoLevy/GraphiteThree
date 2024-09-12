@@ -23,27 +23,27 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
  */
- 
+
 
 #ifndef H_OGF_WARPDRIVE_SHADERS_VORONOI_MESH_GROB_SHADER_H
 #define H_OGF_WARPDRIVE_SHADERS_VORONOI_MESH_GROB_SHADER_H
 
 #include <OGF/WarpDrive/common/common.h>
-#include <OGF/mesh/shaders/mesh_grob_shader.h>
+#include <OGF/mesh_gfx/shaders/mesh_grob_shader.h>
 
 namespace OGF {
-    
+
     gom_class WarpDrive_API VoronoiMeshGrobShader : public MeshGrobShader {
-	
+
     public:
         VoronoiMeshGrobShader(MeshGrob* grob);
         ~VoronoiMeshGrobShader() override;
@@ -54,13 +54,13 @@ namespace OGF {
         const PointStyle& get_vertices_style() const {
             return vertices_style_;
         }
-	
+
         void set_vertices_style(const PointStyle& value) {
             vertices_style_ = value;
             update();
         }
 
-	
+
 	bool get_lighting() const {
 	    return lighting_;
 	}
@@ -69,7 +69,7 @@ namespace OGF {
 	    lighting_ = x;
 	    update();
 	}
-	
+
 	double get_radius() const {
 	    return radius_;
 	}
@@ -127,4 +127,3 @@ namespace OGF {
 
 }
 #endif
-

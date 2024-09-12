@@ -25,32 +25,32 @@
  *  Contact for this Plugin: OGF
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
  * As an exception to the GPL, Graphite can be linked with the following
  * (non-GPL) libraries:
  *     Qt, tetgen, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H__OGF_WARPDRIVE_SHADERS_COSMO_MESH_GROB_SHADER__H
 #define H__OGF_WARPDRIVE_SHADERS_COSMO_MESH_GROB_SHADER__H
 
 #include <OGF/WarpDrive/common/common.h>
-#include <OGF/mesh/shaders/mesh_grob_shader.h>
+#include <OGF/mesh_gfx/shaders/mesh_grob_shader.h>
 
 namespace OGF {
 
     /**
      * \brief A shader to display cosmological simulations
      * \details Displays a pointset as a density field by
-     *  accumulating point splats in software. Multithreaded 
+     *  accumulating point splats in software. Multithreaded
      *  to keep interactivity reasonable. Lags a bit starting
      *  from a few tenth million points.
      */
@@ -68,7 +68,7 @@ namespace OGF {
         index_t get_splat_size() const {
             return point_size_;
         }
-        
+
 	gom_attribute(handler, "slider_int")
 	gom_attribute(min, "0")
 	gom_attribute(max, "100")
@@ -110,13 +110,13 @@ namespace OGF {
         bool get_lock_slab() const {
             return lock_z_;
         }
-        
+
 	gom_attribute(handler, "slider_int")
 	gom_attribute(min, "0")
 	gom_attribute(max, "100")
         void set_minz(double minz) {
             double d = maxz_ - minz_;
-            minz_ = double(minz)/100.0;    
+            minz_ = double(minz)/100.0;
             maxz_ = std::max(maxz_, minz_);
             if(lock_z_) {
                 maxz_ = minz_ + d;
@@ -179,7 +179,7 @@ namespace OGF {
         index_t get_maxy() const {
             return index_t(maxy_*100.0);
         }
-        
+
 	gom_attribute(handler, "slider_int")
 	gom_attribute(min, "0")
 	gom_attribute(max, "100")
@@ -214,7 +214,7 @@ namespace OGF {
             transparent_ = x;
             update();
         }
-        
+
         bool get_fast_draw() const {
             return fast_draw_;
         }
@@ -224,30 +224,30 @@ namespace OGF {
             update();
         }
 
-        
+
     protected:
         /**
-	 * \brief Creates the image the first time, then resizes it 
+	 * \brief Creates the image the first time, then resizes it
 	 *  if the size of the window changed.
 	 */
 	void create_or_resize_image_if_needed();
-	
+
 	/**
 	 * \brief Gets the viewing parameters from the current GLUP state.
 	 * \details Gets the viewport, modelview and projection matrices.
 	 */
 	void get_viewing_parameters();
-        
+
         /**
          * \brief Restores viewing parameters after 2d image was drawn.
          */
         void restore_viewing_parameters();
-        
+
 	/**
 	 * \brief Draws the generated image on the screen using OpenGL.
 	 */
 	void draw_image();
-        
+
         /**
          * \brief Draws the points to the image
          */
@@ -294,7 +294,7 @@ namespace OGF {
             }
         }
 
-        
+
     private:
         index_t skip_;
         index_t point_size_;
@@ -317,10 +317,9 @@ namespace OGF {
         bool view_changed_;
         GLUPint viewport_[4];
         Image_var intensity_image_;
-        Image_var image_;        
+        Image_var image_;
         GLuint texture_;
     };
 }
 
 #endif
-

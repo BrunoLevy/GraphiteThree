@@ -23,28 +23,28 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
  */
- 
+
 
 #ifndef H_OGF_WARPDRIVE_SHADERS_TRANSPORT_MESH_GROB_SHADER_H
 #define H_OGF_WARPDRIVE_SHADERS_TRANSPORT_MESH_GROB_SHADER_H
 
 #include <OGF/WarpDrive/common/common.h>
-#include <OGF/mesh/shaders/mesh_grob_shader.h>
+#include <OGF/mesh_gfx/shaders/mesh_grob_shader.h>
 
 #define wheel_int int
 
 namespace OGF {
 
-    gom_class WarpDrive_API TransportMeshGrobShader : 
+    gom_class WarpDrive_API TransportMeshGrobShader :
         public MeshGrobShader {
     public:
         TransportMeshGrobShader(MeshGrob* grob);
@@ -54,16 +54,16 @@ namespace OGF {
     gom_properties:
 
 	gom_attribute(widget_class,"OGF::Wheel")
-        wheel_int get_time() const { 
-            return time_; 
+        wheel_int get_time() const {
+            return time_;
         }
 
-	gom_attribute(widget_class,"OGF::Wheel")	
-        void set_time(const wheel_int& x) { 
-            time_=x; 
+	gom_attribute(widget_class,"OGF::Wheel")
+        void set_time(const wheel_int& x) {
+            time_=x;
             interp_ = double(int(time_)+25.0)/50.0;
             ogf_clamp(interp_, 0.0, 1.0);
-            update(); 
+            update();
         }
 
 	bool get_lighting() const {
@@ -79,15 +79,15 @@ namespace OGF {
             return surface_style_;
         }
 
-        void set_surface_style(const SurfaceStyle& value) { 
+        void set_surface_style(const SurfaceStyle& value) {
             surface_style_ = value;
-            update(); 
+            update();
         }
 
-        bool get_origin() const { 
+        bool get_origin() const {
             return origin_;
         }
-        
+
         void set_origin(bool x) {
             origin_ = x;
 	    update();
@@ -144,24 +144,24 @@ namespace OGF {
             result.z = interp_*phi_[v];
             if(conjugate_) {
                 // TO BE FIXED
-                result.z = 
+                result.z =
                     0.5*(result.x*result.x+result.y*result.y) - result.z;
             }
             return result;
         }
 
         vec3 get_point_interp(index_t v) {
-	    vec3 p(mesh_grob()->vertices.point_ptr(v));	    
+	    vec3 p(mesh_grob()->vertices.point_ptr(v));
             vec3 result = interp_*morph_[v] + (1.0 - interp_)*p;
-            if(two_d_) { 
-                result.z = 0.0; 
+            if(two_d_) {
+                result.z = 0.0;
             }
             return result;
         }
 
         vec3 get_point(index_t v) {
-            return phi_.is_bound() ? 
-                get_point_potential(v) : 
+            return phi_.is_bound() ?
+                get_point_potential(v) :
                 get_point_interp(v);
         }
 
@@ -186,4 +186,3 @@ namespace OGF {
 
 }
 #endif
-
