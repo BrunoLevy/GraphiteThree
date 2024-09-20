@@ -494,8 +494,27 @@ namespace {
             return Py_None;
         }
 
-	Callable* c = dynamic_cast<Callable*>(self->object);
-	if(c == nullptr) {
+
+	Callable_var c;
+	MetaClass*  mclass = dynamic_cast<MetaClass*>(self->object);
+	MetaMethod* method = nullptr;
+
+	// If target is a meta_class, try to invoke constructor
+	if(mclass != nullptr) {
+	    method = mclass->meta_class()->find_method("create");
+	    if(method != nullptr) {
+		c = new Request(mclass, method);
+	    }
+	} else {
+	    // Else, test if target is a callable
+	    c = dynamic_cast<Callable*>(self->object);
+	    Request* r = dynamic_cast<Request*>(c.get());
+	    if(r != nullptr) {
+		method = r->method();
+	    }
+	}
+
+	if(c.is_null()) {
             Logger::err("GOMPy")
                 << "Error in graphite_call(): target is not a Callable"
 		<< std::endl;
@@ -503,13 +522,6 @@ namespace {
             return Py_None;
 	}
 
-	MetaMethod* method = nullptr;
-	{
-	    Request* r = dynamic_cast<Request*>(c);
-	    if(r != nullptr) {
-		method = r->method();
-	    }
-	}
 
         ArgList gom_args;
 
@@ -947,8 +959,6 @@ namespace {
 	}
     };
 
-
-
     /**
      * \brief Class definition for Python wrapper
      *  around Graphite object.
@@ -985,18 +995,58 @@ namespace {
 	graphite_CallableType.tp_new        = graphite_Object_new;
     }
 
+    /**************************************************/
+
+    /**
+     * \brief Class definition for Python wrapper
+     *  around Graphite object.
+     */
+    PyTypeObject graphite_MetaClassType = {
+        PyVarObject_HEAD_INIT(NULL, 0)
+        "graphite.MetaClass",     // tp_name
+        sizeof(graphite_Object)   // tp_basicsize
+	// The rest is left uninitialized, and is set to zero using
+	// clear_PyTypeObject().
+    };
+
+    /**
+     * \brief Function to initialize graphite_MetaClassType
+     * \details I prefer to do that by clearing the structure
+     *  then initializing each field explicitly, because Python
+     *  keeps changing the definition of PyTypeObject. Initializing
+     *  all the fields of PyTypeObject would require lots of #ifdef
+     *  statements for testing Python version.
+     */
+    void init_graphite_MetaClassType() {
+	/*
+	 * Declaring graphite_call() in graphite_ObjectType
+	 * would have done the job, but it is cleaner like that. In
+	 * addition, having non-nullptr tp_call in graphite objects
+	 * made the autocompleter systematically add '(' to object
+	 * names.
+	 */
+	graphite_MetaClassType.tp_dealloc    = graphite_Object_dealloc;
+	graphite_MetaClassType.tp_call       = graphite_call;
+	graphite_MetaClassType.tp_flags      = Py_TPFLAGS_DEFAULT;
+	graphite_MetaClassType.tp_getset     = graphite_Object_getsets;
+	graphite_MetaClassType.tp_base       = &graphite_ObjectType;
+	graphite_MetaClassType.tp_new        = graphite_Object_new;
+    }
+
 
     /**************************** Utilities ****************************/
 
     graphite_Object* graphite_Object_new(Object* object, bool managed) {
 	graphite_Object *self = nullptr;
-	if(dynamic_cast<Callable*>(object) != nullptr) {
-	    PyTypeObject *type = &graphite_CallableType;
-	    self = (graphite_Object *)type->tp_alloc(type, 0);
+	PyTypeObject* type = nullptr;
+	if(dynamic_cast<MetaClass*>(object) != nullptr) {
+	    type = &graphite_MetaClassType;
+	} else if(dynamic_cast<Callable*>(object) != nullptr) {
+	    type = &graphite_CallableType;
 	} else {
-	    PyTypeObject *type = &graphite_ObjectType;
-	    self = (graphite_Object *)type->tp_alloc(type, 0);
+	    type = &graphite_ObjectType;
 	}
+	self = (graphite_Object *)type->tp_alloc(type, 0);
         self->object = object;
 	self->managed = managed;
 	if(self->managed) {
@@ -1269,6 +1319,7 @@ namespace {
     PyMODINIT_FUNC PyInit_gom() {
 	init_graphite_ObjectType();
 	init_graphite_CallableType();
+	init_graphite_MetaClassType();
         PyObject* m = PyModule_Create(&graphite_moduledef);
         if(m == nullptr) {
 	    Py_INCREF(Py_None);
@@ -1279,6 +1330,10 @@ namespace {
             return Py_None;
         }
         if (PyType_Ready(&graphite_CallableType) < 0) {
+	    Py_INCREF(Py_None);
+            return Py_None;
+        }
+        if (PyType_Ready(&graphite_MetaClassType) < 0) {
 	    Py_INCREF(Py_None);
             return Py_None;
         }
