@@ -38,10 +38,9 @@
 #include <OGF/scene_graph/grob/grob.h>
 #include <OGF/scene_graph/grob/composite_grob.h>
 #include <OGF/scene_graph/types/scene_graph.h>
+#include <OGF/scene_graph/types/scene_graph_library.h>
 #include <OGF/scene_graph/types/geofile.h>
 #include <OGF/scene_graph/commands/commands.h>
-//#include <OGF/scene_graph/types/scene_graph_shader_manager.h>
-//#include <OGF/scene_graph/shaders/shader_manager.h>
 #include <OGF/basic/math/geometry.h>
 #include <OGF/gom/reflection/meta_class.h>
 #include <OGF/gom/interpreter/interpreter.h>
@@ -59,6 +58,21 @@ namespace OGF {
         if(parent != nullptr) {
             scene_graph_ = parent->scene_graph();
         }
+        filename_ = "";
+        visible_ = true;
+        obj_to_world_.load_identity();
+        dirty_ = false;
+        nb_graphics_locks_ = 0;
+    }
+
+    Grob::Grob() {
+	if(SceneGraphLibrary::instance()->scene_graph() == nullptr) {
+	    new SceneGraph(nullptr, true);
+            // registered in SceneGraphLibrary
+	    // true: transfer ownership
+	}
+	scene_graph_ = SceneGraphLibrary::instance()->scene_graph();
+	scene_graph_->add_child(this);
         filename_ = "";
         visible_ = true;
         obj_to_world_.load_identity();

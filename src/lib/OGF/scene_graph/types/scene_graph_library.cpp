@@ -84,9 +84,14 @@ namespace OGF {
         scene_graph_ = nullptr;
         scene_graph_shader_manager_ = nullptr;
         scene_graph_tools_manager_ = nullptr;
+	owns_scene_graph_ = false;
     }
 
     SceneGraphLibrary::~SceneGraphLibrary() {
+	if(owns_scene_graph_ && scene_graph_ != nullptr) {
+	    scene_graph_->unref();
+	    scene_graph_ = nullptr;
+	}
     }
 
     void SceneGraphLibrary::initialize() {
@@ -556,5 +561,17 @@ namespace OGF {
             Environment::notify_observers(it.first+"_instances");
         }
     }
+
+    void SceneGraphLibrary::set_scene_graph(
+	SceneGraph* scene_graph, bool transfer_ownership
+    ) {
+	ogf_assert(scene_graph_ == nullptr);
+	scene_graph_ = scene_graph;
+	owns_scene_graph_ = transfer_ownership;
+	if(owns_scene_graph_) {
+	    scene_graph_->ref();
+	}
+    }
+
 
 }

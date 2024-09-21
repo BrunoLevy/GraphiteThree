@@ -1709,6 +1709,4 @@ extern "C" gompy_API PyObject* PyInit_gompy() {
     return PyInit_libgompy();
 }
 
-// Under windows:
-// import imp
 // imp.load_dynamic('libgompy','C:\\users\\vorpatest\\.ipython\\gompy.dll')

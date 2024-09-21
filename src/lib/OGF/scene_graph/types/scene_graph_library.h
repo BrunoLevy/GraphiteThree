@@ -25,16 +25,16 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
- 
+
+
 #ifndef H_OGF_SCENE_GRAPH_TYPES_SCENE_GRAPH_LIBRARY_H
 #define H_OGF_SCENE_GRAPH_TYPES_SCENE_GRAPH_LIBRARY_H
 
@@ -55,13 +55,13 @@ namespace OGF {
     class SceneGraph;
     class SceneGraphShaderManager;
     class SceneGraphToolsManager;
-    
+
     /**
-     * \brief Provides functions to 
+     * \brief Provides functions to
      *  dynamically declare new Grob classes,
-     *  commands, shaders and tools. 
-     * \note SceneGraphLibrary member functions 
-     *  register_xxx use typenames passed as strings. It is 
+     *  commands, shaders and tools.
+     * \note SceneGraphLibrary member functions
+     *  register_xxx use typenames passed as strings. It is
      *  preferred to use typesafe template wrappers
      *  ogf_register_xxx<>().
      */
@@ -114,7 +114,7 @@ namespace OGF {
         const SceneGraph* scene_graph() const {
             return scene_graph_;
         }
-        
+
         /**
          * \brief Gets the SceneGraphToolsManager.
          * \return a pointer to the SceneGraphToolsManager
@@ -122,13 +122,13 @@ namespace OGF {
         SceneGraphToolsManager* scene_graph_tools_manager() {
             return scene_graph_tools_manager_;
         }
-        
+
         /**
          * \brief Registers a new Grob type.
          * \param[in] grob_class_name the object class name as a string,
          *  with the "OGF::" prefix
 	 * \param[in] abstract true if the object class name is abstract
-         * \note it is prefered to use the type-safe 
+         * \note it is prefered to use the type-safe
          *  ogf_register_grob_type instead.
          */
         void register_grob_type(
@@ -141,7 +141,7 @@ namespace OGF {
          * \param[in] grob_class_name the object class name as a string,
          *  with the "OGF::" prefix
          * \param[in] extension the extension, without the "."
-         * \note it is preferred to use the type-safe 
+         * \note it is preferred to use the type-safe
          *  ogf_register_grob_read_file_extension instead.
          */
         void register_grob_read_file_extension(
@@ -154,7 +154,7 @@ namespace OGF {
          * \param[in] grob_class_name the object class name as a string,
          *  with the "OGF::" prefix
          * \param[in] extension the extension, without the "."
-         * \note it is preferred to use the type-safe 
+         * \note it is preferred to use the type-safe
          *  ogf_register_grob_write_file_extension instead.
          */
         void register_grob_write_file_extension(
@@ -169,7 +169,7 @@ namespace OGF {
          *  with the "OGF::" prefix
          * \param[in] shader_user_name an optional user name for the shader,
          *  that will be used in the GUI
-         * \note it is preferred to use the type-safe 
+         * \note it is preferred to use the type-safe
          *  ogf_register_grob_shader instead.
          */
         void register_grob_shader(
@@ -206,7 +206,7 @@ namespace OGF {
             const std::string& grob_class_name,
             const std::string& interface_class_name
         );
-	
+
         /**
          * \brief Registers a new Commands class associated with a Grob class.
          * \param[in] grob_class_name the object class name as a string,
@@ -236,10 +236,10 @@ namespace OGF {
         );
 
         /**
-         * \brief Finds the object class names associated with a file 
+         * \brief Finds the object class names associated with a file
          *  extension for reading.
          * \param[in] extension the extension, without the "."
-         * \return the ';'-separated list of object class names that 
+         * \return the ';'-separated list of object class names that
          *  can read the extension
          */
         std::string file_extension_to_grob(const std::string& extension) const;
@@ -356,20 +356,22 @@ namespace OGF {
          *  environment variables.
          */
         void scene_graph_values_changed_notify_environment();
-        
+
         /**
          * \brief Sets the SceneGraph.
          * \param[in] scene_graph a pointer to the SceneGraph
+	 * \param[in] transfer_ownership if set, then the SceneGraphLibrary
+	 *  takes the ownership of the SceneGraph (used when SceneGraph is
+	 *  created by Grob constructor).
          * \pre scene_graph() == nullptr
          */
-        void set_scene_graph(SceneGraph* scene_graph) {
-            ogf_assert(scene_graph_ == nullptr);
-            scene_graph_ = scene_graph;
-        }
+        void set_scene_graph(
+	    SceneGraph* scene_graph, bool transfer_ownership = false
+	);
 
         /**
          * \brief Sets the SceneGraphShaderManager.
-         * \param[in] scene_graph_shader_manager a pointer to the 
+         * \param[in] scene_graph_shader_manager a pointer to the
          *  SceneGraphShaderManager
          * \pre scene_graph_shader_manager() == nullptr
          */
@@ -382,7 +384,7 @@ namespace OGF {
 
         /**
          * \brief Sets the SceneGraphToolsManager.
-         * \param[in] scene_graph_tools_manager a pointer 
+         * \param[in] scene_graph_tools_manager a pointer
          *  to the SceneGraphToolsManager
          * \pre scene_graph_tools_manager() == nullptr
          */
@@ -392,7 +394,7 @@ namespace OGF {
             ogf_assert(scene_graph_tools_manager_ == nullptr);
             scene_graph_tools_manager_ = scene_graph_tools_manager;
         }
-        
+
     private:
         struct GrobInfo {
 	    GrobInfo(bool abstract_in=false) : abstract(abstract_in) {
@@ -410,7 +412,7 @@ namespace OGF {
             std::string shaders_user_names_string() const;
             std::string tools_string() const;
             std::string commands_string() const;
-            std::string interfaces_string() const;	    
+            std::string interfaces_string() const;
             bool has_read_extension(const std::string& ext) const;
         };
         std::map<std::string, GrobInfo> grob_infos_;
@@ -419,6 +421,7 @@ namespace OGF {
         SceneGraph* scene_graph_;
         SceneGraphShaderManager* scene_graph_shader_manager_;
         SceneGraphToolsManager* scene_graph_tools_manager_;
+	bool owns_scene_graph_;
         static SceneGraphLibrary* instance_;
     };
 
@@ -432,7 +435,7 @@ namespace OGF {
     template <class T> class ogf_register_grob_type {
     public:
         /**
-         * \brief Registers a new Grob class. 
+         * \brief Registers a new Grob class.
          * \details Example:
          * \code
          *    ogf_register_grob_type<Mesh>();
@@ -441,7 +444,7 @@ namespace OGF {
         ogf_register_grob_type() {
             SceneGraphLibrary::instance()->register_grob_type(
                 ogf_meta<T>::type()->name()
-            );            
+            );
         }
     };
 
@@ -454,7 +457,7 @@ namespace OGF {
     template <class T> class ogf_register_abstract_grob_type {
     public:
         /**
-         * \brief Registers a new Grob class. 
+         * \brief Registers a new Grob class.
          * \details Example:
          * \code
          *    ogf_register_grob_type<Mesh>();
@@ -463,10 +466,10 @@ namespace OGF {
         ogf_register_abstract_grob_type() {
             SceneGraphLibrary::instance()->register_grob_type(
                 ogf_meta<T>::type()->name(), true
-            );            
+            );
         }
     };
-    
+
     /**
      * \brief Helper class to register a new file extension for reading
      * \tparam T the Grob class
@@ -483,7 +486,7 @@ namespace OGF {
         ogf_register_grob_read_file_extension(const std::string& extension) {
             SceneGraphLibrary::instance()->register_grob_read_file_extension(
                 ogf_meta<T>::type()->name(), extension
-            );            
+            );
         }
     };
 
@@ -503,7 +506,7 @@ namespace OGF {
         ogf_register_grob_write_file_extension(const std::string& extension) {
             SceneGraphLibrary::instance()->register_grob_write_file_extension(
                 ogf_meta<T>::type()->name(), extension
-            );            
+            );
         }
     };
 
@@ -529,7 +532,7 @@ namespace OGF {
                 ogf_meta<T1>::type()->name(),
                 ogf_meta<T2>::type()->name(),
                 shader_user_name
-            );            
+            );
         }
     };
 
@@ -540,7 +543,7 @@ namespace OGF {
      */
     template <class T1, class T2> class ogf_register_grob_interface {
     public:
-        
+
         /**
          * \brief Registers a new Interface associated with a Grob.
          * \details Example:
@@ -551,10 +554,10 @@ namespace OGF {
         ogf_register_grob_interface() {
             SceneGraphLibrary::instance()->register_grob_interface(
                 ogf_meta<T1>::type()->name(), ogf_meta<T2>::type()->name()
-            );            
+            );
         }
     };
-    
+
     /**
      * \brief Helper class to register a new Commands associated with a Grob.
      * \tparam T1 the Grob class
@@ -562,7 +565,7 @@ namespace OGF {
      */
     template <class T1, class T2> class ogf_register_grob_commands {
     public:
-        
+
         /**
          * \brief Registers a new Commands associated with a Grob.
          * \details Example:
@@ -573,7 +576,7 @@ namespace OGF {
         ogf_register_grob_commands() {
             SceneGraphLibrary::instance()->register_grob_commands(
                 ogf_meta<T1>::type()->name(), ogf_meta<T2>::type()->name()
-            );            
+            );
         }
     };
 
@@ -595,14 +598,14 @@ namespace OGF {
         ogf_register_grob_tool() {
             SceneGraphLibrary::instance()->register_grob_tool(
                 ogf_meta<T1>::type()->name(), ogf_meta<T2>::type()->name()
-            );            
+            );
         }
     };
 
     /**
      * \brief Helper class to register a new FullScreenEffect.
      * \tparam T the FullScreenEffect class.
-     */    
+     */
     template <class T> class ogf_register_full_screen_effect {
     public:
 
@@ -618,7 +621,7 @@ namespace OGF {
         ogf_register_full_screen_effect(const std::string& user_name="") {
             SceneGraphLibrary::instance()->register_full_screen_effect(
                 ogf_meta<T>::type()->name(), user_name
-            );            
+            );
         }
     };
 

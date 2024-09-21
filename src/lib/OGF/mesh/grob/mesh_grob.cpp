@@ -49,9 +49,11 @@
 
 namespace OGF {
 
-    MeshGrob::MeshGrob(CompositeGrob* parent) :
-        Grob(parent)
-    {
+    MeshGrob::MeshGrob(CompositeGrob* parent) : Grob(parent) {
+        initialize_name("mesh");
+    }
+
+    MeshGrob::MeshGrob() : Grob() {
         initialize_name("mesh");
     }
 
@@ -67,12 +69,12 @@ namespace OGF {
 	flags.set_attributes(MESH_ALL_ATTRIBUTES);
         bool result = GEO::mesh_load(value, *this, flags);
 	if(result) {
-	  if(vertices.single_precision()) {
-	     vertices.set_double_precision();
-	  }
-	  if(vertices.dimension() == 2) {
-	    vertices.set_dimension(3);
-	  }
+	    if(vertices.single_precision()) {
+		vertices.set_double_precision();
+	    }
+	    if(vertices.dimension() == 2) {
+		vertices.set_dimension(3);
+	    }
 	}
         update();
 

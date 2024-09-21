@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 
 #include <OGF/gom/types/node.h>
 #include <OGF/gom/reflection/meta_class.h>
@@ -47,15 +47,16 @@ namespace OGF {
         if(parent_ != nullptr) {
             parent_->add_child(this) ;
         }
-    } 
+    }
 
     Node::~Node() {
     }
 
     void Node::add_child(Node* child) {
         children_.push_back(child) ;
+	child->parent_ = this;
     }
-    
+
     void Node::remove_child(Node* child) {
         for(auto it=children_.begin(); it!=children_.end(); ++it) {
             if(*it == child) {
@@ -70,4 +71,3 @@ namespace OGF {
 //___________________________________________________________________________
 
 }
-

@@ -75,6 +75,15 @@ namespace OGF {
          */
         Grob(CompositeGrob* parent);
 
+
+        /**
+         * \brief Grob constructor.
+         * \details This version of the constructor uses the SceneGraph
+	 *  declared in the SceneGraphLibrary or creates a new one if it
+	 *  does not exist already.
+         */
+	Grob();
+
         /**
          * \brief Grob destructor.
          */

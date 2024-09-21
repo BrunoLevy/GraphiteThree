@@ -23,19 +23,19 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
+ * As an exception to the GPL, Graphite can be linked
  *  with the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_GEOGRAMPLUG_GROB_MESH_GROB_H
 #define H_OGF_GEOGRAMPLUG_GROB_MESH_GROB_H
@@ -57,17 +57,23 @@ namespace OGF {
     public:
         /**
          * \brief MeshGrob constructor.
-         * \param[in] parent a pointer to the container (the scenegraph 
+         * \param[in] parent a pointer to the container (the scenegraph
          *  in most cases).
          */
         MeshGrob(CompositeGrob* parent);
 
 
 	/**
+	 * \brief MeshGrob constructor.
+	 * \detail used in scripts, when there is no existing SceneGraph
+	 */
+        MeshGrob();
+
+	/**
 	 * \brief MeshGrob destructor;
 	 */
 	~MeshGrob() override;
-	
+
         /**
          * \copydoc Grob::load()
          */
@@ -117,7 +123,7 @@ namespace OGF {
          *  name is prefixed by the subelement is is bound to.
          */
         std::string get_attributes() const;
-	
+
         /**
          * \brief Gets the list of all scalar attributes.
          * \return a ';'-separated list of all scalar attributes. Each
@@ -154,13 +160,13 @@ namespace OGF {
             const std::string& dims=""
         );
 
-        
+
     public:
         /**
          * \copydoc Grob::update()
          */
         void update() override;
-        
+
         /**
          * \copydoc Grob::bbox()
          */
@@ -193,7 +199,7 @@ namespace OGF {
          *  in the initialization function of the mesh library.
          */
         static void register_geogram_file_extensions();
-        
+
     private:
     };
 
@@ -212,10 +218,9 @@ namespace OGF {
      *  difference is that when it is used as a command argument or
      *  a Shader property, AutoGUI will generate for it a ComboBox
      *  with all the MeshGrob objects found in the SceneGraph.
-     *  In additon, the field can be edited, and the user can enter in 
-     *  it a new name, not already present in the SceneGraph.     
+     *  In additon, the field can be edited, and the user can enter in
+     *  it a new name, not already present in the SceneGraph.
      */
     typedef Name<MeshGrob*,true> NewMeshGrobName;
 }
 #endif
-

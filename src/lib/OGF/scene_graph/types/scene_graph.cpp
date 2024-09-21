@@ -59,7 +59,7 @@ namespace OGF {
 
 /*************************************************************************/
 
-    SceneGraph::SceneGraph(Interpreter* interpreter) :
+    SceneGraph::SceneGraph(Interpreter* interpreter, bool transfer_ownership) :
 	CompositeGrob(nullptr),
 	interpreter_(
             interpreter != nullptr ? interpreter :
@@ -68,7 +68,7 @@ namespace OGF {
 	render_area_(nullptr),
 	application_(nullptr) {
         Grob::scene_graph_ = this;
-        SceneGraphLibrary::instance()->set_scene_graph(this);
+        SceneGraphLibrary::instance()->set_scene_graph(this, transfer_ownership);
     }
 
     SceneGraph::~SceneGraph() {

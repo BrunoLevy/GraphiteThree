@@ -68,7 +68,10 @@ namespace OGF {
          *   nullptr. If interpreter is set to nullptr, then the default
          *   interpreter is used.
          */
-        SceneGraph(Interpreter* interpreter = nullptr);
+        SceneGraph(
+	    Interpreter* interpreter = nullptr,
+	    bool transfer_ownership_to_scenegraph_library=false
+	);
 
         /**
          * \brief SceneGraph destructor.
