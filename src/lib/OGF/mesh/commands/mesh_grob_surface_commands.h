@@ -23,19 +23,19 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the following 
+ * As an exception to the GPL, Graphite can be linked with the following
  *  (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_MESH_COMMANDS_MESH_GROB_SURFACE_COMMANDS_H
 #define H_OGF_MESH_COMMANDS_MESH_GROB_SURFACE_COMMANDS_H
@@ -57,9 +57,9 @@ namespace OGF {
      */
     gom_class MESH_API MeshGrobSurfaceCommands :
         public MeshGrobCommands {
-            
+
     public:
-            
+
        /**
         * \brief MeshGrobSurfaceCommands constructor.
         */
@@ -69,23 +69,23 @@ namespace OGF {
         * \brief MeshGrobSurfaceCommands destructor.
         */
         ~MeshGrobSurfaceCommands() override;
-	
+
     gom_slots:
 
         /**
          * \menu Repair
          * \brief Tentatively fixes some defects in a surface
-         * \param[in] epsilon Tolerance for merging vertices, 
+         * \param[in] epsilon Tolerance for merging vertices,
          *  in % of bbox diagonal.
-         * \param[in] min_comp_area Minimum area of a connected component, 
+         * \param[in] min_comp_area Minimum area of a connected component,
          *  in % of surface area
-         * \param[in] max_hole_area Maximum area of holes to be filled, 
+         * \param[in] max_hole_area Maximum area of holes to be filled,
          *  in % of surface area.
-         * \param[in] max_hole_edges Maximum number of edges 
+         * \param[in] max_hole_edges Maximum number of edges
          *  in each hole to be filled.
-         * \param[in] max_degree3_dist Maximum distance 
+         * \param[in] max_degree3_dist Maximum distance
          *  for removing degree 3 vertices, in % of bbox diagonal.
-         * \param[in] remove_intersections Tentatively remove 
+         * \param[in] remove_intersections Tentatively remove
          *  self-intersections.
          */
         void repair_surface(
@@ -101,19 +101,19 @@ namespace OGF {
 
         /**
          * \menu Repair
-         * \brief Merges vertices that are at the same location 
+         * \brief Merges vertices that are at the same location
          *  or within tolerance
-         * \param [in] epsilon Tolerance for merging vertices, 
+         * \param [in] epsilon Tolerance for merging vertices,
          *  in % of bbox diagonal.
          */
         void merge_vertices(double epsilon = 0.0);
-        
+
        /**********************************************************/
 
         /**
          * \menu Repair
          * \brief Preprocessing for remesh_feature_sensitive
-         * \param[in] margin margin to be added to borders, 
+         * \param[in] margin margin to be added to borders,
          *  in % of bbox diagonal.
          */
         void expand_border(double margin=0.05);
@@ -129,7 +129,7 @@ namespace OGF {
 	void fill_holes(index_t max_nb_vertices=0);
 
 
-       /**********************************************************/	
+       /**********************************************************/
 
         /**
          * \menu Repair
@@ -138,7 +138,7 @@ namespace OGF {
         void fix_facets_orientation();
 
        /**********************************************************/
-        
+
         /**
          * \menu Repair
          * \brief Removes all facets that have visibility smaller than
@@ -146,37 +146,37 @@ namespace OGF {
          * \param[in] min_visibility minimum visibility to keep a facet
          */
         void remove_invisible_facets(double min_visibility = 0.005);
-        
-        
+
+
        /**********************************************************/
-	
+
         /**
          * \menu Remesh
          * \brief Remeshes a (smooth) surface.
-         * \param[in] remesh_name name of the generated surface mesh.
-         * \param[in] nb_points desired number of points 
+         * \param[in] remesh name of the generated surface mesh.
+         * \param[in] nb_points desired number of points
          *  in the generated mesh.
-         * \param[in] tri_shape_adapt adapt triangle shapes 
-         *  (0.0 means no shape adapation, 1.0 for moderate 
+         * \param[in] tri_shape_adapt adapt triangle shapes
+         *  (0.0 means no shape adapation, 1.0 for moderate
          *  shape adaptation, ...)
-         * \param[in] tri_size_adapt adapt triangle sizes 
-         *  (0.0 means no size adaptation, 1.0 for moderate 
-         *  size adaptation, ...)            
+         * \param[in] tri_size_adapt adapt triangle sizes
+         *  (0.0 means no size adaptation, 1.0 for moderate
+         *  size adaptation, ...)
 	 * \param[in] adjust if true, adjust the triangles of
 	 *  the remesh to better approximate the input mesh
 	 * \param[in] adjust_max_edge_distance maximum adjustment,
-	 *  relative to local average edge length 
+	 *  relative to local average edge length
          * \advanced
-         * \param[in] normal_iter number of normal 
+         * \param[in] normal_iter number of normal
          *  smoothing iterations (if anisotropy is non-zero).
          * \param[in] Lloyd_iter number of Lloyd iterations for CVT.
          * \param[in] Newton_iter number of Newton iterations for CVT.
          * \param[in] Newton_m number of inner Newton iterations for CVT.
-         * \param[in] LFS_samples number of samples. 
+         * \param[in] LFS_samples number of samples.
          *  used to compute gradation.
          */
         void remesh_smooth(
-            const NewMeshGrobName& remesh_name = "remesh",
+            const NewMeshGrobName& remesh = "remesh",
             unsigned int nb_points = 30000,
             double tri_shape_adapt = 1.0,
             double tri_size_adapt = 0.0,
@@ -194,15 +194,15 @@ namespace OGF {
         /**
          * \menu Remesh
          * \brief Remeshes a surface that has sharp features.
-         * \param[in] surface_name name of the generated mesh.
-         * \param[in] nb_points desired number of points 
+         * \param[in] remesh name of the generated mesh.
+         * \param[in] nb_points desired number of points
          *  in the generated mesh.
-         * \param[in] refine refine border in order to lower 
+         * \param[in] refine refine border in order to lower
          *  Haussdorff distance.
-         * \param[in] max_dist maximum distance to reference, 
+         * \param[in] max_dist maximum distance to reference,
          *  as a fraction of generated mesh average edge length.
          * \advanced
-         * \param[in] normal_anisotropy determines how sharp features 
+         * \param[in] normal_anisotropy determines how sharp features
          *  are taken into account.
          * \param[in] nb_Lloyd_iter number of Lloyd iterations for CVT.
          * \param[in] nb_Newton_iter number of Newton iterations for CVT.
@@ -211,7 +211,7 @@ namespace OGF {
          * \param[in] RVC_centroids use centroids of restricted Voronoi cells.
          */
         void remesh_feature_sensitive(
-            const NewMeshGrobName& surface_name = "remesh",
+            const NewMeshGrobName& remesh = "remesh",
             unsigned int nb_points = 30000,
             bool refine = false,
             double max_dist = 0.5,
@@ -222,21 +222,21 @@ namespace OGF {
             unsigned int Newton_m = 7,
             bool RVC_centroids = false
         );
-        
+
        /**********************************************************/
 
 	/**
 	 * \menu Remesh
 	 * \brief Generates a quad-dominant mesh
-         * \param[in] surface_name name of the generated mesh.
+         * \param[in] remesh name of the generated mesh.
 	 * \param[in] rel_edge_len relative edge length.
 	 * \param[in] sharp_features true for CAD mesh, false otherwise
 	 * \param[in] optimize_parity tentatively optimize parity.
-	 * \param[in] max_scaling_corr maximum scaling correction 
+	 * \param[in] max_scaling_corr maximum scaling correction
 	 *  (use 1.0 to disable).
 	 */
 	void remesh_quad_dominant(
-            const NewMeshGrobName& surface_name = "remesh",
+            const NewMeshGrobName& remesh = "remesh",
 	    double rel_edge_len = 1.0,
 	    bool sharp_features = true,
 	    bool optimize_parity = false,
@@ -251,15 +251,15 @@ namespace OGF {
           * \param[in] other name of the other mesh
           * \param[in] result name of the result mesh
           * \advanced
-	  * \param[in] pre_process triangulate, inputs, remove small edges, 
+	  * \param[in] pre_process triangulate, inputs, remove small edges,
 	  *  make sure there is no intersection
-	  * \param[in] post_process triangulate result, remove small edges, 
+	  * \param[in] post_process triangulate result, remove small edges,
 	  *  make sure there is no intersection
           */
         MeshGrob* compute_union(
 	    const MeshGrobName& other,
 	    const NewMeshGrobName& result = "result",
-	    bool pre_process=false,	    
+	    bool pre_process=false,
 	    bool post_process=false
         );
 
@@ -270,16 +270,16 @@ namespace OGF {
           * \param[in] other name of the other mesh
           * \param[in] result name of the result mesh
           * \advanced
-	  * \param[in] pre_process triangulate, inputs, remove small edges, 
+	  * \param[in] pre_process triangulate, inputs, remove small edges,
 	  *  make sure there is no intersection
-	  * \param[in] post_process triangulate result, remove small edges, 
+	  * \param[in] post_process triangulate result, remove small edges,
 	  *  make sure there is no intersection
           */
         MeshGrob* compute_intersection(
 	    const MeshGrobName& other,
 	    const NewMeshGrobName& result = "result",
 	    bool pre_process=false,
-	    bool post_process=false	    
+	    bool post_process=false
         );
 
         /**
@@ -288,16 +288,16 @@ namespace OGF {
           * \param[in] other name of the other mesh
           * \param[in] result name of the result mesh
           * \advanced
-	  * \param[in] pre_process triangulate, inputs, remove small edges, 
+	  * \param[in] pre_process triangulate, inputs, remove small edges,
 	  *  make sure there is no intersection
-	  * \param[in] post_process triangulate result, remove small edges, 
+	  * \param[in] post_process triangulate result, remove small edges,
 	  *  make sure there is no intersection
           */
         MeshGrob* compute_difference(
 	    const MeshGrobName& other,
 	    const NewMeshGrobName& result = "result",
 	    bool pre_process=false,
-	    bool post_process=false	    
+	    bool post_process=false
         );
 
         /**
@@ -307,9 +307,9 @@ namespace OGF {
           * \param[in] result name of the result mesh
           * \param[in] operation one of "A+B", "A*B", "A-B", "B-A"
           * \advanced
-	  * \param[in] pre_process triangulate, inputs, remove small edges, 
+	  * \param[in] pre_process triangulate, inputs, remove small edges,
 	  *  make sure there is no intersection
-	  * \param[in] post_process triangulate result, remove small edges, 
+	  * \param[in] post_process triangulate result, remove small edges,
 	  *  make sure there is no intersection
           */
         gom_arg_attribute(operation, handler, "combo_box")
@@ -319,7 +319,7 @@ namespace OGF {
             const NewMeshGrobName& result = "result",
             const std::string& operation = "A+B",
 	    bool pre_process=false,
-	    bool post_process=false	    
+	    bool post_process=false
         );
 
         /**
@@ -328,7 +328,7 @@ namespace OGF {
           * \param[in] remove_internal_shells keep only facets on external hull
           * \param[in] simplify_coplanar_facets retriangulates planar zones
           * \param[in] coplanar_angle_tolerance in degrees
-          * \param[in] interpolate_attributes interpolate facet corner 
+          * \param[in] interpolate_attributes interpolate facet corner
           *   attributes on generated intersections. Deactivates coplanar
           *   facets simplification if set.
           */
@@ -338,15 +338,15 @@ namespace OGF {
             double coplanar_angle_tolerance = 0.001,
             bool interpolate_attributes = false
         );
-        
+
        /**********************************************************/
-	
+
        /**
         * \menu Remesh
         * \brief Simplifies a surface using vertex clustering.
         * \param[in] nb_bins the higher, the more detailed mesh.
         * \param[in] remove_deg3_vrtx if true, remove degree 3 vertices
-        * \param[in] keep_borders if true, do not decimate vertices 
+        * \param[in] keep_borders if true, do not decimate vertices
         *  on the border
         * \param[in] repair if true, repairs the mesh to remove non-manifold
         *  edges and borders
@@ -362,7 +362,7 @@ namespace OGF {
 
 	/**
          * \menu Subdivision
-	 * \brief Splits all the triangles of a simplicial mesh into 
+	 * \brief Splits all the triangles of a simplicial mesh into
 	 *  four triangles.
 	 * \param[in] nb_times number of times the triangles are split.
 	 */
@@ -378,12 +378,12 @@ namespace OGF {
 
 	/**
          * \menu Subdivision
-	 * \brief Splits all the facets of a mesh into quads 
+	 * \brief Splits all the facets of a mesh into quads
 	 *  using Catmull-Clark subdivision.
 	 * \param[in] nb_times number of times the facets are split.
 	 */
 	void split_catmull_clark(index_t nb_times=1);
-	
+
 	/**
 	 * \menu Subdivision
 	 * \brief Subdivides the facets until they have less than
@@ -399,7 +399,7 @@ namespace OGF {
 	void triangulate() {
 	    tessellate_facets(3);
 	}
-	
+
 
 	/**
 	 * \menu Subdivision
@@ -408,7 +408,7 @@ namespace OGF {
 	 */
 	void triangulate_center_vertex();
 
-	   
+
 	/**
 	 * \brief Smooths the mesh by optimizing the vertices that
 	 *   are not selected. Selected vertices are locked.
@@ -429,7 +429,7 @@ namespace OGF {
             MeshSegmenter segmenter=SEGMENT_GEOMETRIC_VSA_L2,
             index_t nb_segments=10
         );
-        
+
 	/**
 	 * \menu Atlas/Segmentation
 	 * \brief Gets the charts attribute from a parameterized mesh.
@@ -441,11 +441,11 @@ namespace OGF {
 	 * \brief Removes the charts attribute.
 	 */
         void remove_charts();
-        
+
 	/**
 	 * \menu Atlas/Segmentation
 	 * \brief Unglues facet edges based on specified angle
-	 * \param[in] angle_threshold unglue facets along edge 
+	 * \param[in] angle_threshold unglue facets along edge
 	 *  if angle between adjacent facet is larger than threshold
 	 */
 	void unglue_sharp_edges(double angle_threshold=90);
@@ -455,7 +455,7 @@ namespace OGF {
 	 * \brief Unglues facet edges adjacent to two different charts
 	 */
 	void unglue_charts();
-        
+
 	/**
 	 * \menu Atlas/Parameterization
 	 * \brief Computes texture coordinates of a surface.
@@ -487,7 +487,7 @@ namespace OGF {
 	void pack_texture_space(
 	    ChartPacker pack=PACK_XATLAS
 	);
-	
+
 	/**
 	 * \menu Atlas/Parameterization
 	 * \brief Computes texture coordinates of a single unfoldable surface.
@@ -511,8 +511,8 @@ namespace OGF {
 	 *  normals.
 	 * \param[in] size pixel-size of the generated normal map.
 	 * \param[in] image filename of the generated normal map.
-	 * \param[in] nb_dilate number of dilations 
-	 * \param[in] tex_coord the name of the facet corner attribute that 
+	 * \param[in] nb_dilate number of dilations
+	 * \param[in] tex_coord the name of the facet corner attribute that
 	 *  stores texture coordinates.
 	 */
 	void bake_normals(
@@ -533,8 +533,8 @@ namespace OGF {
 	 *  baked.
 	 * \param[in] size pixel-size of the generated normal map.
 	 * \param[in] image filename of the generated normal map.
-	 * \param[in] nb_dilate number of dilations 
-	 * \param[in] attribute the name of the facet corner attribute that 
+	 * \param[in] nb_dilate number of dilations
+	 * \param[in] attribute the name of the facet corner attribute that
 	 *  stores texture coordinates.
 	 */
 	void bake_colors(
@@ -550,17 +550,17 @@ namespace OGF {
 	/**
 	 * \menu Atlas/Baking
 	 * \brief Bakes texture from a textured surface to an atlas.
-	 * \param[in] src_surface the name of the mesh with the 
+	 * \param[in] src_surface the name of the mesh with the
 	 *   texture to be baked.
 	 *  can be the current mesh or another one with higher-resolution
 	 *  normals
 	 * \param[in] src_texture the texture associated with src_surface
-	 * \param[in] src_tex_coord the source facet corner attribute 
+	 * \param[in] src_tex_coord the source facet corner attribute
 	 *            with the texture coordinates
 	 * \param[in] size pixel-size of the generated texture
 	 * \param[in] image filename of the generated texture
-	 * \param[in] nb_dilate number of dilations 
-	 * \param[in] tex_coord the name of the facet corner attribute that 
+	 * \param[in] nb_dilate number of dilations
+	 * \param[in] tex_coord the name of the facet corner attribute that
 	 *  stores texture coordinates for the generated texture
 	 */
 	void bake_texture(
@@ -573,8 +573,7 @@ namespace OGF {
 	    const std::string& tex_coord="tex_coord"
 	);
 
-	
+
     };
 }
 #endif
-
