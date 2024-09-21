@@ -60,14 +60,14 @@ namespace OGF {
          * \param[in] parent a pointer to the container (the scenegraph
          *  in most cases).
          */
-        MeshGrob(CompositeGrob* parent);
+        MeshGrob(CompositeGrob* parent, const std::string& name="");
 
 
 	/**
 	 * \brief MeshGrob constructor.
 	 * \detail used in scripts, when there is no existing SceneGraph
 	 */
-        MeshGrob();
+        MeshGrob(const std::string& name="");
 
 	/**
 	 * \brief MeshGrob destructor;

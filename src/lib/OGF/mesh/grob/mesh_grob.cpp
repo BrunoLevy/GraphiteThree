@@ -49,12 +49,22 @@
 
 namespace OGF {
 
-    MeshGrob::MeshGrob(CompositeGrob* parent) : Grob(parent) {
-        initialize_name("mesh");
+    MeshGrob::MeshGrob(
+	CompositeGrob* parent, const std::string& name_in
+    ) : Grob(parent) {
+	std::string name = name_in;
+	if(name == "") {
+	    name = "mesh";
+	}
+        initialize_name(name);
     }
 
-    MeshGrob::MeshGrob() : Grob() {
-        initialize_name("mesh");
+    MeshGrob::MeshGrob(const std::string& name_in) : Grob() {
+	std::string name = name_in;
+	if(name == "") {
+	    name = "mesh";
+	}
+        initialize_name(name);
     }
 
     MeshGrob::~MeshGrob() {
