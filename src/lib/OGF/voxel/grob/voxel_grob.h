@@ -62,6 +62,12 @@ namespace OGF {
          */
         VoxelGrob(CompositeGrob* parent);
 
+	/**
+	 * \brief MeshGrob constructor.
+	 * \detail used in scripts, when there is no existing SceneGraph
+	 */
+        VoxelGrob();
+
         /**
          * \brief Gets the origin.
          * \return a const pointer to the origin

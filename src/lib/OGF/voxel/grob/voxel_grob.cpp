@@ -23,19 +23,19 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the 
+ * As an exception to the GPL, Graphite can be linked with the
  *  following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #include <OGF/voxel/grob/voxel_grob.h>
 #include <OGF/scene_graph/types/scene_graph.h>
@@ -45,10 +45,8 @@
 
 
 namespace OGF {
-    
-    VoxelGrob::VoxelGrob(CompositeGrob* parent) :
-        Grob(parent)
-    {
+
+    VoxelGrob::VoxelGrob(CompositeGrob* parent) : Grob(parent) {
         initialize_name("voxel");
         nu_ = 0;
         nv_ = 0;
@@ -58,11 +56,22 @@ namespace OGF {
         V_ = vec3(0.0, 1.0, 0.0);
         W_ = vec3(0.0, 0.0, 1.0);
     }
-    
+
+    VoxelGrob::VoxelGrob() : Grob() {
+        initialize_name("voxel");
+        nu_ = 0;
+        nv_ = 0;
+        nw_ = 0;
+        origin_ = vec3(0.0, 0.0, 0.0);
+        U_ = vec3(1.0, 0.0, 0.0);
+        V_ = vec3(0.0, 1.0, 0.0);
+        W_ = vec3(0.0, 0.0, 1.0);
+    }
+
     void VoxelGrob::update() {
         Grob::update();
     }
-    
+
     void VoxelGrob::clear() {
         nu_ = 0;
         nv_ = 0;
@@ -76,23 +85,23 @@ namespace OGF {
     }
 
 
-    
+
     Grob* VoxelGrob::duplicate(SceneGraph* sg) {
         VoxelGrob* result = dynamic_cast<VoxelGrob*>(Grob::duplicate(sg));
         ogf_assert(result != nullptr);
 
         result->nu_ = nu_;
         result->nv_ = nv_;
-        result->nw_ = nw_;        
+        result->nw_ = nw_;
         result->origin_ = origin_;
         result->U_ = U_;
         result->V_ = V_;
-        result->W_ = W_;        
+        result->W_ = W_;
         result->attributes_.copy(attributes_);
         result->update();
         return result;
     }
-    
+
     Box3d VoxelGrob::bbox() const {
         Box3d result;
         result.add_point(origin_);
@@ -102,7 +111,7 @@ namespace OGF {
         result.add_point(origin_ + U_ + V_);
         result.add_point(origin_ + V_ + W_);
         result.add_point(origin_ + W_ + U_);
-        result.add_point(origin_ + U_ + V_ + W_);                
+        result.add_point(origin_ + U_ + V_ + W_);
         return result;
     }
 
@@ -113,7 +122,7 @@ namespace OGF {
         nw_ = nw;
         attributes_.resize(nu_*nv_*nw_);
     }
-    
+
     void VoxelGrob::set_box(
         const vec3& origin, const vec3& U, const vec3& V, const vec3& W
     ) {
@@ -122,7 +131,7 @@ namespace OGF {
         V_ = V;
         W_ = W;
     }
-    
+
     VoxelGrob* VoxelGrob::find_or_create(
         SceneGraph* sg, const std::string& name
     ) {
@@ -139,7 +148,7 @@ namespace OGF {
         }
         return result;
     }
-    
+
     VoxelGrob* VoxelGrob::find(SceneGraph* sg, const std::string& name) {
         VoxelGrob* result = nullptr;
         if(sg->is_bound(name)) {
@@ -159,7 +168,7 @@ namespace OGF {
                 if(
                     store->dimension() == 1 ||
                     store->dimension() == 3 ||
-                    store->dimension() == 4 
+                    store->dimension() == 4
                 ) {
                     if(result != "") {
                         result += ";";
@@ -184,7 +193,7 @@ namespace OGF {
     bool VoxelGrob::is_serializable() const {
         return true;
     }
-    
+
     bool VoxelGrob::serialize_read(InputGraphiteFile& in) {
         for(
             std::string chunk_class = in.next_chunk();
@@ -200,7 +209,7 @@ namespace OGF {
                 origin_ = args.get_arg<vec3>("origin");
                 U_ = args.get_arg<vec3>("U");
                 V_ = args.get_arg<vec3>("V");
-                W_ = args.get_arg<vec3>("W");                
+                W_ = args.get_arg<vec3>("W");
             } else if(chunk_class == "ATTS") {
                 const std::string& name =
                     in.current_attribute_set().name;
@@ -248,7 +257,7 @@ namespace OGF {
         update();
         return true;
     }
-    
+
     bool VoxelGrob::serialize_write(OutputGraphiteFile& out) {
         ArgList args;
 
@@ -258,7 +267,7 @@ namespace OGF {
         args.create_arg("origin", origin_);
         args.create_arg("U", U_);
         args.create_arg("V", V_);
-        args.create_arg("W", W_);                
+        args.create_arg("W", W_);
 
         out.write_chunk_header("VOXH", out.arg_list_size(args));
         out.write_arg_list(args);
@@ -279,7 +288,7 @@ namespace OGF {
                     store->element_typeid_name()
                 )
             ) {
-                std::string element_type = 
+                std::string element_type =
                     AttributeStore::element_type_name_by_element_typeid_name(
                         store->element_typeid_name()
                     );
@@ -308,6 +317,5 @@ namespace OGF {
         }
         return true;
     }
-    
-}
 
+}
