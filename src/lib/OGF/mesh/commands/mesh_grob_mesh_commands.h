@@ -23,18 +23,18 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the following 
+ * As an exception to the GPL, Graphite can be linked with the following
  *  (non-GPL) libraries: Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_MESH_COMMANDS_MESH_GROB_MESH_COMMANDS_H
 #define H_OGF_MESH_COMMANDS_MESH_GROB_MESH_COMMANDS_H
@@ -63,9 +63,9 @@ namespace OGF {
          * \brief MeshGrobMeshCommands destructor.
          */
         ~MeshGrobMeshCommands() override;
-        
+
     gom_slots:
-        
+
         /**
          * \brief displays some statistics about the current mesh.
          */
@@ -83,7 +83,7 @@ namespace OGF {
          * \param[in] facets copy facets.
          * \param[in] cells copy cells.
          * \param[in] attributes copy attributes.
-         * \param[in] kill_isolated_vx if true, vertices 
+         * \param[in] kill_isolated_vx if true, vertices
          *  that are no longer connected to anything are discarded.
          */
         void copy(
@@ -94,7 +94,7 @@ namespace OGF {
             bool attributes = true,
             bool kill_isolated_vx = false
         );
-        
+
         /**
          * \brief Remove mesh elements.
          * \param[in] vertices if set, removes everything !
@@ -165,4 +165,3 @@ namespace OGF {
 }
 
 #endif
-

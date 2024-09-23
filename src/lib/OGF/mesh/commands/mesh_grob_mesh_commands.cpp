@@ -23,18 +23,18 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
  * As an exception to the GPL, Graphite can be linked with the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #include <OGF/mesh/commands/mesh_grob_mesh_commands.h>
 #include <OGF/scene_graph/types/scene_graph.h>
@@ -43,12 +43,12 @@
 #include <geogram/mesh/mesh_repair.h>
 
 namespace OGF {
-    
-    MeshGrobMeshCommands::MeshGrobMeshCommands() { 
+
+    MeshGrobMeshCommands::MeshGrobMeshCommands() {
     }
-        
-    MeshGrobMeshCommands::~MeshGrobMeshCommands() { 
-    }        
+
+    MeshGrobMeshCommands::~MeshGrobMeshCommands() {
+    }
 
     void MeshGrobMeshCommands::display_statistics() {
         mesh_grob()->show_stats("Mesh");
@@ -56,14 +56,14 @@ namespace OGF {
 			    << mesh_grob()->bbox().x_min()
 			    << ' '
 			    << mesh_grob()->bbox().y_min()
-			    << ' '	    
+			    << ' '
 			    << mesh_grob()->bbox().z_min()
 			    << std::endl;
 	Logger::out("Mesh") << "bbox max = "
 			    << mesh_grob()->bbox().x_max()
 			    << ' '
 			    << mesh_grob()->bbox().y_max()
-			    << ' '	    
+			    << ' '
 			    << mesh_grob()->bbox().z_max()
 			    << std::endl;
 	Logger::out("Mesh") << "bbox dim = "
@@ -72,9 +72,9 @@ namespace OGF {
 			    << ' '
 			    << mesh_grob()->bbox().y_max() -
 	                       mesh_grob()->bbox().y_min()
-			    << ' '	    
+			    << ' '
 			    << mesh_grob()->bbox().z_max() -
-	                       mesh_grob()->bbox().z_min()	    
+	                       mesh_grob()->bbox().z_min()
 			    << std::endl;
         if(mesh_grob()->facets.nb() != 0) {
             Logger::out("Mesh")
@@ -92,7 +92,7 @@ namespace OGF {
                 << Geom::mesh_enclosed_volume(*mesh_grob())
                 << std::endl;
         }
-        
+
     }
 
     void MeshGrobMeshCommands::display_topology() {
@@ -152,7 +152,7 @@ namespace OGF {
         }
         copy->update();
     }
-    
+
     void MeshGrobMeshCommands::remove_mesh_elements(
         bool vertices, bool edges, bool facets, bool cells,
         bool remove_isolated_vertices
@@ -192,7 +192,7 @@ namespace OGF {
         double C[3];
         C[0] = 0.5*(xyz_min[0]+xyz_max[0]);
         C[1] = 0.5*(xyz_min[1]+xyz_max[1]);
-        C[2] = 0.5*(xyz_min[2]+xyz_max[2]);        
+        C[2] = 0.5*(xyz_min[2]+xyz_max[2]);
         double R = 0.0;
         for(index_t v: M.vertices) {
             M.vertices.point_ptr(v)[0] -= C[0];
@@ -211,7 +211,7 @@ namespace OGF {
             }
             M.vertices.point_ptr(v)[0] += Cx;
             M.vertices.point_ptr(v)[1] += Cy;
-            M.vertices.point_ptr(v)[2] += Cz;            
+            M.vertices.point_ptr(v)[2] += Cz;
         }
         mesh_grob()->update();
     }
@@ -242,7 +242,7 @@ namespace OGF {
 	    double* p = mesh_grob()->vertices.point_ptr(v);
 	    p[0] = xmin + scale[0] * (p[0] - mesh_xyz_min[0]);
 	    p[1] = ymin + scale[1] * (p[1] - mesh_xyz_min[1]);
-	    p[2] = zmin + scale[2] * (p[2] - mesh_xyz_min[2]);		
+	    p[2] = zmin + scale[2] * (p[2] - mesh_xyz_min[2]);
 	}
 	mesh_grob()->update();
     }
@@ -279,7 +279,7 @@ namespace OGF {
         mesh_repair(*mesh_grob());
 
         // TODO: cells
-        
+
         mesh_grob()->update();
     }
 
@@ -329,7 +329,4 @@ namespace OGF {
         new_mesh->facets.connect();
         new_mesh->update();
     }
-
-
 }
-
