@@ -57,6 +57,7 @@ namespace OGF {
 	    name = "mesh";
 	}
         initialize_name(name);
+	// Called from SceneGraph::create_object() that calls update_values()
     }
 
     MeshGrob::MeshGrob(const std::string& name_in) : Grob() {
@@ -65,6 +66,7 @@ namespace OGF {
 	    name = "mesh";
 	}
         initialize_name(name);
+	scene_graph()->update_values();
     }
 
     MeshGrob::~MeshGrob() {

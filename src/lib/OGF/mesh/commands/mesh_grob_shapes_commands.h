@@ -23,19 +23,19 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
+ * As an exception to the GPL, Graphite can be linked
  *  with the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_MESH_COMMANDS_MESH_GROB_SHAPES_COMMANDS_H
 #define H_OGF_MESH_COMMANDS_MESH_GROB_SHAPES_COMMANDS_H
@@ -55,7 +55,7 @@ namespace OGF {
      */
     gom_class MeshGrobShapesCommands : public MeshGrobCommands {
     public:
-        
+
         /**
          * \brief MeshGrobShapesCommands constructor.
          */
@@ -65,46 +65,62 @@ namespace OGF {
          * \brief MeshGrobShapesCommands destructor.
          */
         ~MeshGrobShapesCommands() override;
-	
+
     gom_slots:
 
         /**
          * \brief Creates a new square in the current mesh.
          * \menu /Surface/Shapes
          */
-        void create_square(
-            double x1=0, double y1=0, double z1=0,
-            double x2=1, double y2=0, double z2=0,
-            double x3=1, double y3=1, double z3=0,
-            double x4=0, double y4=1, double z4=0
+        void create_quad(
+	    const vec3& p1 = vec3(0,0,0),
+	    const vec3& p2 = vec3(1,0,0),
+	    const vec3& p3 = vec3(1,1,0),
+	    const vec3& p4 = vec3(0,1,0)
         );
 
         /**
          * \brief Creates a new cube in the current mesh.
          * \menu /Surface/Shapes
          */
-        void create_cube(
-            double x1=0, double y1=0, double z1=0,
-            double x2=1, double y2=1, double z2=1
+        void create_box(
+	    const vec3& pmin = vec3(0,0,0),
+	    const vec3& pmax = vec3(1,1,1)
         );
 
         /**
          * \brief Creates a new cylinder in the current mesh.
          * \menu /Surface/Shapes
          */
-        void create_cylinder(
+        void create_cylinder_from_axes(
             const vec3& center  = vec3(0,0,0),
             const vec3& X_axis  = vec3(0.25,0,0),
             const vec3& Y_axis  = vec3(0,0.25,0),
             const vec3& Z_axis  = vec3(0,0,1),
-            index_t precision = 10
+            index_t precision = 10,
+	    bool capping = true
         );
+
+        /**
+         * \brief Creates a new cylinder in the current mesh.
+         * \menu /Surface/Shapes
+         */
+	void create_cylinder_from_extremities(
+	    const vec3& p1 = vec3(0,0,-0.5),
+	    const vec3& p2 = vec3(0,0, 0.5),
+	    double radius = 1,
+	    index_t precision = 10,
+	    bool capping = true
+	);
 
         /**
          * \brief Creates a new icosahedron in the current mesh.
          * \menu /Surface/Shapes
          */
-        void create_icosahedron();
+        void create_icosahedron(
+	    const vec3& center = vec3(0,0,0),
+	    double radius = 1.0
+	);
 
 	/**
 	 * \brief Creates a mesh that approximates a sphere.
@@ -113,9 +129,9 @@ namespace OGF {
 	 * \menu /Surface/Shapes
 	 */
 	void create_sphere(
-	    index_t precision = 4,
+	    const vec3& center = vec3(0,0,0),
 	    double radius = 1.0,
-	    const vec3& center = vec3(0,0,0)
+	    index_t precision = 4
 	);
 
         /**
@@ -128,7 +144,7 @@ namespace OGF {
             index_t nb_edges = 6,
 	    bool triangulate = true
         );
-	
+
 	/**
 	 * \brief Creates a surfacic mesh from the bounding box of an object.
 	 * \param[in] grob the object
@@ -141,7 +157,7 @@ namespace OGF {
 	    index_t nb_split = 0
 	);
     };
-    
+
 }
 
 #endif

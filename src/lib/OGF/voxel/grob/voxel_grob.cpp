@@ -55,6 +55,7 @@ namespace OGF {
         U_ = vec3(1.0, 0.0, 0.0);
         V_ = vec3(0.0, 1.0, 0.0);
         W_ = vec3(0.0, 0.0, 1.0);
+	// Called from SceneGraph::create_object() that calls update_values()
     }
 
     VoxelGrob::VoxelGrob() : Grob() {
@@ -66,6 +67,7 @@ namespace OGF {
         U_ = vec3(1.0, 0.0, 0.0);
         V_ = vec3(0.0, 1.0, 0.0);
         W_ = vec3(0.0, 0.0, 1.0);
+	scene_graph()->update_values();
     }
 
     void VoxelGrob::update() {
