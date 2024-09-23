@@ -336,7 +336,8 @@ namespace OGF {
             bool remove_internal_shells = true,
             bool simplify_coplanar_facets = true,
             double coplanar_angle_tolerance = 0.001,
-            bool interpolate_attributes = false
+            bool interpolate_attributes = false,
+	    bool verbose = false
         );
 
        /**********************************************************/

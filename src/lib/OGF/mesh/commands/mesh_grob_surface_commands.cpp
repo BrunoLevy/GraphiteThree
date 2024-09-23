@@ -318,13 +318,15 @@ namespace OGF {
         bool remove_internal_shells,
         bool simplify_coplanar_facets,
         double coplanar_angle_tolerance,
-        bool interpolate_attributes
+        bool interpolate_attributes,
+	bool verbose
     ) {
         MeshSurfaceIntersection intersection(*mesh_grob());
         intersection.set_delaunay(true);
         intersection.set_detect_intersecting_neighbors(true);
         intersection.set_radial_sort(remove_internal_shells);
         intersection.set_interpolate_attributes(interpolate_attributes);
+	intersection.set_verbose(verbose);
 
         intersection.intersect();
         if(remove_internal_shells) {
