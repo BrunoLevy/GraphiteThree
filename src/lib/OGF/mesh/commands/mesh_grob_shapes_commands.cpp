@@ -113,7 +113,6 @@ namespace OGF {
         M.facets.create_quad(v2,v6,v4,v0);
 
         M.facets.connect(first_f, M.facets.nb());
-
         M.update();
     }
 
