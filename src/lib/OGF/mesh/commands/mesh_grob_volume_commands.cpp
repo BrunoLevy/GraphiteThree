@@ -23,19 +23,19 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
+ * As an exception to the GPL, Graphite can be linked
  *  with the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #include <OGF/mesh/commands/mesh_grob_volume_commands.h>
 #include <geogram/mesh/mesh_tetrahedralize.h>
@@ -106,13 +106,13 @@ namespace {
             return min_val_;
         }
 	*/
-	
+
         std::string display_range() const {
             std::ostringstream os;
             os << "[" << min_val_ << "..." << max_val_ << "]" << std::ends;
             return os.str();
         }
-        
+
     private:
         double min_bound_;
         double max_bound_;
@@ -169,38 +169,41 @@ namespace {
             }
         }
     }
-    
-    
+
+
 }
 
 namespace OGF {
 
-    MeshGrobVolumeCommands::MeshGrobVolumeCommands() { 
+    MeshGrobVolumeCommands::MeshGrobVolumeCommands() {
     }
 
     MeshGrobVolumeCommands::~MeshGrobVolumeCommands() {
     }
-    
+
     void MeshGrobVolumeCommands::tet_meshing(
-        bool preprocess, 
+        bool preprocess,
+	bool merge_coplanar_facets,
         double epsilon, double max_hole_area,
         bool refine, double quality,
-        bool keep_regions, 
+        bool keep_regions,
 	bool verbose
     ) {
-        CmdLine::set_arg("dbg:tetgen",verbose);        
+        CmdLine::set_arg("dbg:tetgen",verbose);
         mesh_grob()->cells.clear();
         mesh_grob()->vertices.remove_isolated();
-        
+
         MeshTetrahedralizeParameters params;
         params.preprocess = preprocess;
+	params.preprocess_merge_coplanar_facets = merge_coplanar_facets;
         params.preprocess_merge_vertices_epsilon = epsilon;
         params.preprocess_fill_hole_max_area = max_hole_area;
         params.refine = refine;
         params.refine_quality = quality;
         params.keep_regions = keep_regions;
         params.verbose = verbose;
-        
+
+
         if(!mesh_tetrahedralize(*mesh_grob(), params)) {
             show_attribute("facets.selection");
             hide_vertices();
@@ -213,7 +216,7 @@ namespace OGF {
         show_mesh();
         mesh_grob()->update();
     }
-    
+
     void MeshGrobVolumeCommands::hex_dominant_meshing(
         const NewMeshGrobName& hexdom_name,
         unsigned int nb_points,
@@ -240,7 +243,7 @@ namespace OGF {
                                   << std::endl;
             return;
         }
-        
+
         MeshGrob* remesh = MeshGrob::find_or_create(
             scene_graph(), hexdom_name
         );
@@ -251,7 +254,7 @@ namespace OGF {
             "hex:border_max_distance",
             surface_average_edge_length(*mesh_grob()) * border_max_dist
         );
-        
+
         mesh_hex_dominant(
             *mesh_grob(), *remesh,
             nb_points, prisms, pyramids,
@@ -260,7 +263,7 @@ namespace OGF {
 
         mesh_grob()->update();
         remesh->cells.connect();
-        remesh->cells.compute_borders();        
+        remesh->cells.compute_borders();
         remesh->update();
 
 #else
@@ -273,10 +276,10 @@ namespace OGF {
         ogf_argused(max_corner_cos);
         ogf_argused(border_refine);
         ogf_argused(border_max_dist);
-        
+
         Logger::err("HexDom") << "Needs Vorpaline/Vorpalib, contact authors"
                               << std::endl;
-#endif        
+#endif
     }
 
 
@@ -284,7 +287,7 @@ namespace OGF {
 }
 
 namespace OGF {
-    
+
     void MeshGrobVolumeCommands::Voronoi_meshing(
 	const NewMeshGrobName& voronoi_name,
 	index_t nb_points,
@@ -299,17 +302,17 @@ namespace OGF {
     ) {
 
 	generate_ids = generate_ids | medial_axis;
-	
+
 	if(!mesh_grob()->cells.are_simplices()) {
 	    Logger::err("RVD") << "Mesh is not tetrahedral"
 			       << std::endl;
 	    return;
 	}
-	
+
 	if(mesh_grob()->cells.nb() == 0) {
 	    mesh_tetrahedralize(*mesh_grob());
 	}
-	
+
 
 	MeshGrob* points = nullptr;
 
@@ -324,7 +327,7 @@ namespace OGF {
 		return;
 	    }
 	}
-	
+
         MeshGrob* voronoi = MeshGrob::find_or_create(
             scene_graph(), voronoi_name
         );
@@ -338,7 +341,7 @@ namespace OGF {
 
 	if(points == nullptr) {
 	    CVT.compute_initial_sampling(nb_points);
-	    
+
 	    try {
 		ProgressTask progress("Lloyd", 100);
 		CVT.set_progress_logger(&progress);
@@ -350,7 +353,7 @@ namespace OGF {
 	    try {
 		ProgressTask progress("Newton", 100);
 		CVT.set_progress_logger(&progress);
-		CVT.Newton_iterations(30, 7);                
+		CVT.Newton_iterations(30, 7);
 	    }
 	    catch(const TaskCanceled&) {
 	    }
@@ -416,7 +419,7 @@ namespace OGF {
     }
 
 /**********************************************************************/
-    
+
     void MeshGrobVolumeCommands::volume_mesh_statistics(
         bool save_histo, index_t nb_bins
     ) {
@@ -429,7 +432,7 @@ namespace OGF {
         Histogram dihedral_angle_other(0.0, 180.0, nb_bins);
         Histogram corner_angle_tri(0.0, 180.0, nb_bins);
         Histogram corner_angle_quad(0.0, 180.0, nb_bins);
-        
+
         for(index_t c: mesh_grob()->cells) {
             MeshCellType type = mesh_grob()->cells.type(c);
             if(type == MESH_CONNECTOR) {
@@ -439,7 +442,7 @@ namespace OGF {
             if(type == MESH_HEX) {
                 ++nb_hex;
                 hex_volume += mesh_cell_volume(*mesh_grob(),c);
-            } 
+            }
         }
 
 
@@ -470,14 +473,14 @@ namespace OGF {
                 corner_angle_quad
             );
         }
-        
+
         if(total_volume == 0.0 || nb_cells == 0) {
             Logger::warn("Stats")
                 << "Mesh does not have any cell and/or zero volume"
                 << std::endl;
             return;
         }
-        Logger::out("Stats") << "Nb hexes " 
+        Logger::out("Stats") << "Nb hexes "
                              << nb_hex
                              << " / Total nb cells "
                              << nb_cells
@@ -510,7 +513,7 @@ namespace OGF {
         }
     }
 
-    
+
     void MeshGrobVolumeCommands::tet_meshing_with_points(
         const MeshGrobName& points_name,
         const NewMeshGrobName& tetrahedra_name,
@@ -528,8 +531,8 @@ namespace OGF {
                 << std::endl;
             refine_surface = false;
         }
-#endif        
-        
+#endif
+
         MeshGrob* points = MeshGrob::find(scene_graph(), points_name);
         if(points == nullptr) {
             Logger::err("TetMesh") << points_name << ": no such point set"
@@ -547,16 +550,16 @@ namespace OGF {
 
         Mesh surface;
         vector<double> inner_points;
-        
+
         {
             Logger::div("Computing the surface");
 
             Delaunay_var delaunay = Delaunay::create(3);
-            RestrictedVoronoiDiagram_var RVD = 
+            RestrictedVoronoiDiagram_var RVD =
                 RestrictedVoronoiDiagram::create(delaunay,mesh_grob());
 
 
-            RestrictedVoronoiDiagram::RDTMode mode =                 
+            RestrictedVoronoiDiagram::RDTMode mode =
                 RestrictedVoronoiDiagram::RDTMode(
                     RestrictedVoronoiDiagram::RDT_MULTINERVE     |
                     RestrictedVoronoiDiagram::RDT_RVC_CENTROIDS  |
@@ -576,16 +579,16 @@ namespace OGF {
                 // seed or the centroid of the connected component of the
                 // RVD cell should be used.
                 mesh_reorder(*mesh_grob(), MESH_ORDER_MORTON);
-                mesh_grob()->update();                
+                mesh_grob()->update();
             }
 
             delaunay->set_vertices(
                 points->vertices.nb(), points->vertices.point_ptr(0)
             );
-            
+
             RVD->compute_RDT(surface, mode);
 
-#ifdef GEOGRAM_WITH_VORPALINE            
+#ifdef GEOGRAM_WITH_VORPALINE
             if(refine_surface) {
                 max_distance *= surface_average_edge_length(*mesh_grob());
                 mesh_refine(surface, *mesh_grob(), max_distance);
@@ -622,7 +625,7 @@ namespace OGF {
             Delaunay_var delaunay = Delaunay::create(3,"tetgen");
             delaunay->set_constraints(&surface);
             delaunay->set_vertices(inner_points.size()/3, inner_points.data());
-            
+
             vector<double> pts(delaunay->nb_vertices() * 3);
             vector<index_t> tet2v(delaunay->nb_cells() * 4);
             for(index_t v = 0; v < delaunay->nb_vertices(); ++v) {
@@ -639,7 +642,7 @@ namespace OGF {
             tets->cells.assign_tet_mesh(3, pts, tet2v, true);
             tets->cells.connect();
             tets->cells.compute_borders();
-            tets->update();            
+            tets->update();
             tets->show_stats("TetMeshing");
         }
         CmdLine::set_arg("algo:predicates",predicates_mode_bkp);
@@ -668,7 +671,7 @@ namespace OGF {
                                   << std::endl;
             return;
         }
-        
+
         MeshGrob* remesh = MeshGrob::find_or_create(
             scene_graph(), hexdom_name
         );
@@ -676,13 +679,13 @@ namespace OGF {
 
         mesh_tet2hex(
             *mesh_grob(), *remesh,
-            min_normal_cos, max_corner_cos,            
+            min_normal_cos, max_corner_cos,
             prisms, pyramids
         );
 
         mesh_grob()->update();
         remesh->cells.connect();
-        remesh->cells.compute_borders();        
+        remesh->cells.compute_borders();
         remesh->update();
 #else
         ogf_argused(hexdom_name);
@@ -690,10 +693,10 @@ namespace OGF {
         ogf_argused(pyramids);
         ogf_argused(min_normal_cos);
         ogf_argused(max_corner_cos);
-        
+
         Logger::err("HexDom") << "Needs Vorpaline/Vorpalib, contact authors"
                               << std::endl;
-#endif        
+#endif
     }
 
 
@@ -732,7 +735,7 @@ namespace OGF {
 
         mesh_grob()->facets.clear();
         mesh_grob()->vertices.remove_isolated();
-        
+
         kill_cell.assign(mesh_grob()->cells.nb(), 0);
         for(index_t cell: mesh_grob()->cells) {
             if(mesh_grob()->cells.type(cell) == MESH_TET) {
@@ -743,7 +746,7 @@ namespace OGF {
 
         index_t v_offset =
             mesh_grob()->vertices.create_vertices(delaunay->nb_vertices());
-        
+
         for(index_t v=0; v<delaunay->nb_vertices(); ++v) {
             const double* from = delaunay->vertex_ptr(v);
             double* to = mesh_grob()->vertices.point_ptr(v_offset+v);
@@ -770,7 +773,7 @@ namespace OGF {
         // onto a quad face.
 
         kill_cell.assign(mesh_grob()->cells.nb(), 0);
-        
+
         std::set<quadindex> quad_faces;
         Logger::out("Mesh") << "Finding quad faces" << std::endl;
         for(index_t cell: mesh_grob()->cells) {
@@ -809,15 +812,15 @@ namespace OGF {
             Logger::out("Mesh") << "Did not find any new sliver"
                                 << std::endl;
         }
-        
+
         mesh_grob()->cells.connect();
         mesh_grob()->cells.compute_borders();
         mesh_grob()->facets.connect();
-        
+
         mesh_grob()->update();
-        
+
     }
-    
+
     void MeshGrobVolumeCommands::display_volume() {
 	Logger::out("Mesh") << "Cells volume    = "
 			    << mesh_cells_volume(*mesh_grob()) << std::endl;
@@ -833,6 +836,5 @@ namespace OGF {
 	mesh_grob()->cells.compute_borders();
 	mesh_grob()->update();
     }
-    
-}
 
+}

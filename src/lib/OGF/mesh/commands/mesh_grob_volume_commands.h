@@ -23,18 +23,18 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
  * As an exception to the GPL, Graphite can be linked with the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_MESH_COMMANDS_MESH_GROB_VOLUME_COMMANDS_H
 #define H_OGF_MESH_COMMANDS_MESH_GROB_VOLUME_COMMANDS_H
@@ -64,15 +64,17 @@ namespace OGF {
 	 * \brief MeshGrobVolumeCommands destructor.
 	 */
 	 ~MeshGrobVolumeCommands() override;
-	
+
     gom_slots:
 
        /*********************************************************************/
-        
+
         /**
          * \brief Fills a closed surface mesh with tetrahedra, using tetgen.
-         * \param[in] preprocess Tentatively fix degeneracies 
+         * \param[in] preprocess Tentatively fix degeneracies
          *  in the input mesh
+	 * \param[in] merge_coplanar_facets if preprocess is set, merge
+	 *  coplanar facets in input before tetrahedralizing
          * \param[in] epsilon if preprocess is set, tolerance for merging
          *  vertices, in percent of bbox diagonal
          * \param[in] max_hole_area if preprocess is set, tolerance for filling
@@ -83,6 +85,7 @@ namespace OGF {
          */
         void tet_meshing(
             bool preprocess=false,
+	    bool merge_coplanar_facets=false,
             double epsilon=0.001,
             double max_hole_area=0.01,
             bool refine=false,
@@ -100,14 +103,14 @@ namespace OGF {
          *  in the generated mesh.
          * \param[in] prisms generate prisms.
          * \param[in] pyramids generate pyramids.
-         * \param[in] border_refine refine border in order to lower 
+         * \param[in] border_refine refine border in order to lower
          *  Haussdorff distance.
-         * \param[in] border_max_dist maximum distance to reference, 
+         * \param[in] border_max_dist maximum distance to reference,
          *  as a fraction of input mesh average edge length (TODO: check).
          * \advanced
-         * \param[in] min_normal_cos minimum angle cosine 
+         * \param[in] min_normal_cos minimum angle cosine
          *  between two triangular faces merged into an hex face.
-         * \param[in] max_corner_cos  maximum angle cosine 
+         * \param[in] max_corner_cos  maximum angle cosine
          *  at a quad corner.
          */
         void hex_dominant_meshing(
@@ -136,17 +139,17 @@ namespace OGF {
 	 * \param[in] nb_cells number of Voronoi cells to generate
 	 * \param[in] simplification specifies how cells and faces should
 	 *  be simplified
-	 * \param[in] angle_threshold (in degrees) simplify boundary edges 
+	 * \param[in] angle_threshold (in degrees) simplify boundary edges
 	 *  whenever their facets have normal angle smaller than threshold
 	 * \param[in] shrink optional shrink factor for displaying cells
 	 * \advanced
 	 * \param[in] points optional name of the pointset used to compute the
 	 *  Voronoi diagram
-	 * \param[in] exact if true, all intersection perdicates are 
+	 * \param[in] exact if true, all intersection perdicates are
 	 *  evaluated with exact arithmetics and symbolic perturbations
-	 * \param[in] generate_ids if true, generate ids in attributes. 
+	 * \param[in] generate_ids if true, generate ids in attributes.
 	 *  Necessary to output OVM files.
-	 * \param[in] medial_axis if true, generate an approximation of 
+	 * \param[in] medial_axis if true, generate an approximation of
 	 *  the medial axis (by removing facets from the computed mesh).
 	 */
 	void Voronoi_meshing(
@@ -161,10 +164,10 @@ namespace OGF {
 	    bool generate_ids = true,
 	    bool medial_axis = false
 	);
-	
+
 
         /*********************************************************************/
-	
+
         /**
          * \brief Computes and displays various statistics for a hex-dominant
          *  mesh.
@@ -173,16 +176,16 @@ namespace OGF {
          * \param[in] nb_bins number of bins in the computed histograms
          */
         void volume_mesh_statistics(
-            bool save_histo=false,            
+            bool save_histo=false,
             index_t nb_bins=100
         );
-        
+
         /*********************************************************************/
 
         /**
-         * \brief Creates a tetrahedral mesh from a closed surface mesh 
+         * \brief Creates a tetrahedral mesh from a closed surface mesh
          *  and a pointset, using tetgen. Initial closed surface is remeshed.
-         * \param[in] points a pointset that will be inserted into the 
+         * \param[in] points a pointset that will be inserted into the
          *  generated tetrahedral mesh
          * \param[in] tetrahedra the name of the generated tetrahedralized
          *  mesh
@@ -208,9 +211,9 @@ namespace OGF {
          * \param[in] prisms generate prisms.
          * \param[in] pyramids generate pyramids.
          * \advanced
-         * \param[in] min_normal_cos minimum angle cosine 
+         * \param[in] min_normal_cos minimum angle cosine
          *  between two triangular faces merged into an hex face.
-         * \param[in] max_corner_cos  maximum angle cosine 
+         * \param[in] max_corner_cos  maximum angle cosine
          *  at a quad corner.
          * \menu Advanced
          */
@@ -225,7 +228,7 @@ namespace OGF {
         /*********************************************************************/
 
         /**
-	 * \brief Extracts the boundary of the zone with tetrahedral cells and 
+	 * \brief Extracts the boundary of the zone with tetrahedral cells and
 	 *  remeshes it using Tetgen.
          * \param[in] quality 1.0 for high quality, 5.0 for low quality.
          * \menu Advanced
@@ -247,7 +250,6 @@ namespace OGF {
 	 */
 	void compute_borders();
     };
-    
+
 }
 #endif
-
