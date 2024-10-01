@@ -17,7 +17,7 @@ gom.connect(
 gom.connect(
    scene_graph.values_changed,
    scene_graph.scene_graph_shader_manager.update_focus
-) 
+)
 gom.connect(main.render_area.dropped_file, scene_graph.load_object)
 
 --------------------------------------------------------------------
@@ -101,10 +101,10 @@ function graphite_gui.draw()
        return
     end
     graphite_gui.lock = true
-    
+
     if not graphite_gui.presentation_mode() then
        graphite_gui.draw_menu_bar()
-       
+
        if main.tooltip ~= '' then
           if imgui.BeginTooltip() then
              imgui.Text(main.tooltip)
@@ -128,9 +128,18 @@ function graphite_gui.draw()
          collectgarbage()
     end
     graphite_gui.lock = false
-end    
+end
 
-gom.connect(main.redraw_request, graphite_gui.draw)
+-- \brief Calls the function that handles the GUI and catches errors
+function graphite_gui.protected_draw()
+   local status, error = pcall(graphite_gui.draw)
+   if not status then
+       gom.err(error)
+       graphite_gui.lock = false
+   end
+end
+
+gom.connect(main.redraw_request, graphite_gui.protected_draw)
 
 --==============================================================================
 
@@ -138,8 +147,8 @@ function graphite_gui.escape()
    local gp_visible = false
    if GraphitePoint ~= nil then
       gp_visible = GraphitePoint.visible
-   end      
-   main.full_screen = false 
+   end
+   main.full_screen = false
    preferences_window.load_preferences('user');
    if gp_visible then
       GraphitePoint.visible = true
@@ -150,11 +159,11 @@ gom.connect(main.render_area.key_down, graphite_gui.escape)
    .if_arg({name='value', value='escape'})
 
 gom.connect(main.render_area.key_down, main.set_full_screen_mode)
-   .if_arg({name='value', value='F12'})   
-   
+   .if_arg({name='value', value='F12'})
+
 --==============================================================================
 
-gom.connect(main.started, post_init) 
+gom.connect(main.started, post_init)
 
 --==============================================================================
 
