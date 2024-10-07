@@ -75,22 +75,21 @@
 
 // TODO: access numpy array as NL::Vector (the other way round !)
 
-
 /************** NumPy Interop **********************************/
-
 
 /***** NumPy defines *****/
 
 typedef struct {
-    int two;
-    int nd;
-    char typekind;
-    int itemsize;
-    int flags;
-    Py_intptr_t* shape;
-    Py_intptr_t* strides;
-    void *data;
-    PyObject *descr;
+    int two;         // sanity check, should contain the integer value 2
+    int nd;          // number of dimensions
+    char typekind;   // i: integer, b: boolean, u: unsigned integer, f: float
+                     // d: double
+    int itemsize;    // size of each element
+    int flags;       // See belox
+    Py_intptr_t* shape;   // dimensions (length = nd)
+    Py_intptr_t* strides; // strides (length = nd)
+    void *data;      // Pointer to first item
+    PyObject *descr; // Optional descriptor
 } PyArrayInterface;
 
 #define NPY_ARRAY_C_CONTIGUOUS    0x0001
@@ -105,6 +104,7 @@ typedef struct {
 #define NPY_ARRAY_ENSURECOPY      0x0020
 #define NPY_ARRAY_ENSUREARRAY     0x0040
 #define NPY_ARRAY_ELEMENTSTRIDES  0x0080
+#define NPY_ARRAY_HAS_DESCR       0x0800
 #define NPY_ARRAY_UPDATEIFCOPY    0x1000 // Deprecated in 1.14
 #define NPY_ARRAY_WRITEBACKIFCOPY 0x2000
 */
@@ -253,9 +253,11 @@ namespace {
     /**
      * \brief Converts a Python object to C++.
      * \param[in] obj a pointer to the Python object.
+     * \param[in] mtype an optional MetaType. If unspecified, uses a
+     *   default conversion.
      * \return the converted object in an Any.
      */
-    Any python_to_graphite(PyObject* obj);
+    Any python_to_graphite(PyObject* obj, MetaType* mtype = nullptr);
 
     /**
      * \brief Converts a C++ object to Python.
@@ -460,7 +462,12 @@ namespace {
             return -1;
         }
         std::string name = python_to_string(name_in);
-	if(!self->object->set_property(name, python_to_graphite(value))) {
+	MetaType* mtype = nullptr;
+	MetaProperty* mprop = self->object->meta_class()->find_property(name);
+	if(mprop != nullptr) {
+	    mtype = mprop->type();
+	}
+	if(!self->object->set_property(name, python_to_graphite(value, mtype))) {
             return -1;
         }
         return 0;
@@ -1087,24 +1094,28 @@ namespace {
         return PyUnicode_FromString(s.c_str()); // [TODO: is it correct ?]
     }
 
-    Any python_to_graphite(PyObject* obj) {
+    Any python_to_graphite(PyObject* obj, MetaType* mtype) {
+	geo_argused(mtype); // TODO
 	Any result;
-	if(obj != nullptr) {
-	    if(PyGraphite_Check(obj)) {
-		result.set_value(((graphite_Object*)obj)->object);
-	    } else if(obj == Py_True) {
-	        result.set_value(true);
-	    } else if(obj == Py_False) {
-	        result.set_value(false);
-	    } else if(PyLong_Check(obj)) {
-		result.set_value(index_t(PyLong_AsLong(obj)));
-	    } else if(PyFloat_Check(obj)) {
-		result.set_value(PyFloat_AsDouble(obj));
-	    } else if(PyCallable_Check(obj)) {  // PyFunction_Check ?
-		result.set_value(new PythonCallable(obj));
-	    } else {
-		result.set_value(python_to_string(obj));
-	    }
+
+	if(obj == nullptr) {
+	    return result;
+	}
+
+	if(PyGraphite_Check(obj)) {
+	    result.set_value(((graphite_Object*)obj)->object);
+	} else if(obj == Py_True) {
+	    result.set_value(true);
+	} else if(obj == Py_False) {
+	    result.set_value(false);
+	} else if(PyLong_Check(obj)) {
+	    result.set_value(index_t(PyLong_AsLong(obj)));
+	} else if(PyFloat_Check(obj)) {
+	    result.set_value(PyFloat_AsDouble(obj));
+	} else if(PyCallable_Check(obj)) {
+	    result.set_value(new PythonCallable(obj));
+	} else {
+	    result.set_value(python_to_string(obj));
 	}
 	return result;
     }
@@ -1245,8 +1256,10 @@ namespace {
 		}
 		for(index_t i=0; i<nb_args; i++) {
 		    PyObject* cur_arg = PyTuple_GetItem(args,Py_ssize_t(i));
+		    MetaType* mtype = mmethod->ith_arg_type(i);
 		    gom_args.create_arg(
-			mmethod->ith_arg(i)->name(), python_to_graphite(cur_arg)
+			mmethod->ith_arg(i)->name(),
+			python_to_graphite(cur_arg, mtype)
 		    );
 		}
 		for(index_t i=nb_args; i<mmethod->nb_args(); i++) {
@@ -1267,9 +1280,17 @@ namespace {
 	    PyObject* values = PyDict_Values(keywords);
 	    Py_INCREF(values);
 	    for(int i=0; i<nb_keywords; i++) {
+		std::string argname = python_to_string(PyList_GetItem(keys,i));
+		MetaType* mtype = nullptr;
+		if(mmethod != nullptr) {
+		    MetaArg* marg = mmethod->find_arg(argname);
+		    if(marg != nullptr) {
+			mtype = marg->type();
+		    }
+		}
 		gom_args.create_arg(
-		    python_to_string(PyList_GetItem(keys,i)),
-		    python_to_graphite(PyList_GetItem(values,i))
+		    argname,
+		    python_to_graphite(PyList_GetItem(values,i),mtype)
 		);
 	    }
 	    Py_DECREF(keys);
@@ -1708,5 +1729,3 @@ extern "C" gompy_API PyObject* PyInit_gompy(void);
 extern "C" gompy_API PyObject* PyInit_gompy() {
     return PyInit_libgompy();
 }
-
-// imp.load_dynamic('libgompy','C:\\users\\vorpatest\\.ipython\\gompy.dll')

@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 #ifndef H_OGF_SCENE_GRAPH_NL_VECTOR_H
 #define H_OGF_SCENE_GRAPH_NL_VECTOR_H
 
@@ -44,21 +44,21 @@
 namespace OGF {
 
     class Grob;
-    
+
     namespace NL {
-    
+
 	/**
 	 * \brief A scriptable Vector objects.
 	 */
 	gom_class SCENE_GRAPH_API Vector :
 	    public Object, public AttributeStoreObserver {
-	    
+
 	  public:
 	    /**
 	     * \brief Vector constructor.
 	     * \param[in] size number of items
 	     * \param[in] dimension number of elements per item
-	     * \param[in] element_meta_type type of the elements. 
+	     * \param[in] element_meta_type type of the elements.
 	     *  If nullptr defaults to double
 	     */
 	    Vector(
@@ -81,15 +81,15 @@ namespace OGF {
 	     * \param[in] data data pointer
 	     * \param[in] size number of items
 	     * \param[in] dimension number of elements per item
-	     * \param[in] element_meta_type type of the elements. 
-	     * \param[in] read_only indicates whether the vector 
+	     * \param[in] element_meta_type type of the elements.
+	     * \param[in] read_only indicates whether the vector
 	     *  can be modified
 	     */
 	    Vector(
 		Grob* grob,  void* data, index_t size, index_t dimension,
 		MetaType* element_meta_type, bool read_only
 	    );
-	    
+
 	    /**
 	     * \brief Vector destructor.
 	     */
@@ -112,7 +112,7 @@ namespace OGF {
 	    /**
 	     * \brief Gets the data pointer.
 	     * \return a pointer to the first element. All elements are stored
-	     *  contiguously. 
+	     *  contiguously.
 	     */
 	    Memory::pointer data() const {
 		return base_addr_;
@@ -131,9 +131,9 @@ namespace OGF {
 	     *  contiguously. If data type is not index_t, returns nullptr.
 	     */
 	    index_t* data_index_t() const;
-	    
+
 	  gom_properties:
-	    
+
 	    /**
 	     * \copydoc Object::get_nb_elements()
 	     */
@@ -156,7 +156,7 @@ namespace OGF {
 	    index_t get_size() const {
 		return size();
 	    }
-	    
+
 	    /**
 	     * \brief Gets the MetaType of the elements.
 	     * \return a pointer to the MetaType of the elements.
@@ -173,9 +173,9 @@ namespace OGF {
 	    bool get_read_only() const {
 		return read_only_;
 	    }
-	    
+
 	  gom_slots:
-	    
+
 	    /**
 	     * \brief Resizes a vector.
 	     * \details Previous values are not kept.
@@ -190,7 +190,7 @@ namespace OGF {
 	    );
 
 	  protected:
-	    
+
 	    /**
 	     * \brief Tests whether index i is valid.
 	     * \details If index is invalid, displays an error message.
@@ -198,7 +198,7 @@ namespace OGF {
 	     * \retval false otherwise.
 	     */
 	    bool check_index(index_t i) const;
-	    
+
 	  private:
 	    size_t element_size_;
 	    MetaType* element_meta_type_;
@@ -207,11 +207,10 @@ namespace OGF {
 	    AttributeStore* attribute_store_;
 	    bool read_only_;
 	};
-	
+
 	/**********************************************************/
 
     }
 }
 
 #endif
-

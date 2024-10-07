@@ -175,7 +175,7 @@ namespace OGF {
          * \param[in] LFS_samples number of samples.
          *  used to compute gradation.
          */
-        void remesh_smooth(
+        MeshGrob* remesh_smooth(
             const NewMeshGrobName& remesh = "remesh",
             unsigned int nb_points = 30000,
             double tri_shape_adapt = 1.0,
@@ -210,7 +210,7 @@ namespace OGF {
          * \param[in] Newton_m number of inner Newton iterations for CVT.
          * \param[in] RVC_centroids use centroids of restricted Voronoi cells.
          */
-        void remesh_feature_sensitive(
+        MeshGrob* remesh_feature_sensitive(
             const NewMeshGrobName& remesh = "remesh",
             unsigned int nb_points = 30000,
             bool refine = false,
@@ -235,7 +235,7 @@ namespace OGF {
 	 * \param[in] max_scaling_corr maximum scaling correction
 	 *  (use 1.0 to disable).
 	 */
-	void remesh_quad_dominant(
+	MeshGrob* remesh_quad_dominant(
             const NewMeshGrobName& remesh = "remesh",
 	    double rel_edge_len = 1.0,
 	    bool sharp_features = true,

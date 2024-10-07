@@ -342,7 +342,7 @@ namespace OGF {
     }
 
 
-    void MeshGrobSurfaceCommands::remesh_smooth(
+    MeshGrob* MeshGrobSurfaceCommands::remesh_smooth(
         const NewMeshGrobName& surface_name_in,
         unsigned int nb_points,
         double tri_shape_adaptation,
@@ -361,20 +361,20 @@ namespace OGF {
             Logger::err("Remesh")
                 << "remesh should not be the same as mesh"
                 << std::endl;
-            return;
+            return nullptr;
         }
 
         if(mesh_grob()->facets.nb() == 0) {
             Logger::err("Remesh")
                 << "mesh has no facet" << std::endl;
-            return;
+            return nullptr;
         }
 
         if(!mesh_grob()->facets.are_simplices()) {
             Logger::err("Remesh")
                 << "mesh need to be simplicial, use repair"
                 << std::endl;
-            return;
+            return nullptr;
         }
 
         index_t dimension = mesh_grob()->vertices.dimension();
@@ -440,9 +440,10 @@ namespace OGF {
         // Need to update this one as well, since vertices
         //  order may have changed
         mesh_grob()->update();
+	return remesh;
     }
 
-    void MeshGrobSurfaceCommands::remesh_feature_sensitive(
+    MeshGrob* MeshGrobSurfaceCommands::remesh_feature_sensitive(
         const NewMeshGrobName& surface_name,
         unsigned int nb_points,
         bool refine,
@@ -458,20 +459,20 @@ namespace OGF {
             Logger::err("Remesh")
                 << "remesh should not be the same as mesh"
                 << std::endl;
-            return;
+            return nullptr;
         }
 
         if(mesh_grob()->facets.nb() == 0) {
             Logger::err("Remesh")
                 << "mesh has no facet" << std::endl;
-            return;
+            return nullptr;
         }
 
         if(!mesh_grob()->facets.are_simplices()) {
             Logger::err("Remesh")
                 << "mesh need to be simplicial, use repair"
                 << std::endl;
-            return;
+            return nullptr;
         }
 #ifdef GEOGRAM_WITH_VORPALINE
         MeshGrob* remesh = MeshGrob::find_or_create(
@@ -494,6 +495,7 @@ namespace OGF {
         // Need to update this one as well,
         // since vertices order may have changed
         mesh_grob()->update();
+	return remesh;
 #else
         geo_argused(surface_name);
         geo_argused(nb_points);
@@ -513,12 +515,13 @@ namespace OGF {
 			      << std::endl;
 	Logger::err("Remesh") << "or contact@tessael.com"
 			      << std::endl;
+	return nullptr;
 #endif
     }
 
    /***********************************************************/
 
-    void MeshGrobSurfaceCommands::remesh_quad_dominant(
+    MeshGrob* MeshGrobSurfaceCommands::remesh_quad_dominant(
 	const NewMeshGrobName& surface_name,
 	double rel_edge_len,
 	bool sharp_features,
@@ -529,20 +532,20 @@ namespace OGF {
             Logger::err("Remesh")
                 << "remesh should not be the same as mesh"
                 << std::endl;
-            return;
+            return nullptr;
         }
 
         if(mesh_grob()->facets.nb() == 0) {
             Logger::err("Remesh")
                 << "mesh has no facet" << std::endl;
-            return;
+            return nullptr;
         }
 
         if(!mesh_grob()->facets.are_simplices()) {
             Logger::err("Remesh")
                 << "mesh need to be simplicial, use repair"
                 << std::endl;
-            return;
+            return nullptr;
         }
 #ifdef GEOGRAM_WITH_VORPALINE
         MeshGrob* remesh = MeshGrob::find_or_create(
@@ -563,6 +566,7 @@ namespace OGF {
         // Need to update this one as well,
         // since vertices order may have changed
         mesh_grob()->update();
+	return remesh;
 #else
 	geo_argused(surface_name);
 	geo_argused(rel_edge_len);
@@ -577,6 +581,7 @@ namespace OGF {
 			      << std::endl;
 	Logger::err("Remesh") << "or contact@tessael.com"
 			      << std::endl;
+	return nullptr;
 #endif
     }
 
