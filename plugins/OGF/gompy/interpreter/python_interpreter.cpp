@@ -1102,6 +1102,13 @@ namespace {
 	    return result;
 	}
 
+	/*
+	if(mtype != nullptr) {
+	    if(mtype == ogf_meta<XXX>::type()) {
+	    }
+	}
+	*/
+
 	if(PyGraphite_Check(obj)) {
 	    result.set_value(((graphite_Object*)obj)->object);
 	} else if(obj == Py_True) {
