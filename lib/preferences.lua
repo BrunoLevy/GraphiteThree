@@ -49,13 +49,13 @@ function preferences_window.edit_list(label, vals_string, extension)
 	  if result == selected then
 	     result = ''
 	  end
-       end	  
+       end
        preferences_window.selected[label] = nil
    end
    imgui.SameLine()
    if imgui.Button(clear_lbl,w,0) then
        result = ''
-       preferences_window.selected[label] = nil   
+       preferences_window.selected[label] = nil
    end
    if imgui.Button('Add') then
       if preferences_window.edit[label] ~= nil then
@@ -72,7 +72,7 @@ function preferences_window.edit_list(label, vals_string, extension)
    if extension ~= nil then
       imgui.SameLine()
       if imgui.Button(
-         imgui.font_icon('folder-open')      
+         imgui.font_icon('folder-open')
       ) then
     	imgui.OpenFileDialog(
 	    '##edit_file_dlg',
@@ -84,7 +84,7 @@ function preferences_window.edit_list(label, vals_string, extension)
    end
    imgui.SameLine()
 
-   _,preferences_window.edit[label] = 
+   _,preferences_window.edit[label] =
        imgui.FileDialog('##edit_file_dlg',preferences_window.edit[label])
 
    imgui.PushItemWidth(-1)
@@ -124,14 +124,14 @@ function preferences_window.load_preferences(name)
       main.load_preferences(
          gom.get_environment_value('PROJECT_ROOT')..'/lib/'..name..'.ini'
       )
-   end   
+   end
    for _,module in ipairs(graphite_main_window.modules_by_index) do
       module.visible = (
          gom.get_environment_value(
            'gui:module_'..module.name..'_visible'
          ) == 'true'
       )
-   end	 
+   end
 end
 
 -- \brief Activates the display of the preferences window
@@ -168,8 +168,8 @@ preferences_window['draw_Appearance and rendering'] = function()
 	        style,
 		gom.get_environment_value('gui_styles')
 	     )
-   imgui.PopItemWidth()	     
-   if sel then	     
+   imgui.PopItemWidth()
+   if sel then
       gom.set_environment_value('gui:style',style)
       main.set_style(style)
    end
@@ -177,7 +177,7 @@ preferences_window['draw_Appearance and rendering'] = function()
    imgui.Text('Font size')
    imgui.SameLine()
    local font_size = gom.get_environment_value('gui:font_size')
-   imgui.PushItemWidth(-1)      
+   imgui.PushItemWidth(-1)
    sel,font_size = imgui.InputInt('##font_size',font_size)
    imgui.PopItemWidth()
    if sel then
@@ -186,13 +186,13 @@ preferences_window['draw_Appearance and rendering'] = function()
    preferences_window.edit_preference_boolean(
        'Tooltips', 'gui:tooltips'
    )
-   imgui.SameLine()    
+   imgui.SameLine()
    preferences_window.edit_preference_boolean(
        'Shaders selector', 'gui:shaders_selector'
-   )   
+   )
    preferences_window.edit_preference_boolean(
        'Maximize window at startup', 'gfx:full_screen'
-   )   
+   )
    if imgui.Button('Restore default layout',-1,0) then
       preferences_window.load_preferences('default_layout')
    end
@@ -203,18 +203,18 @@ preferences_window['draw_Appearance and rendering'] = function()
    imgui.Text('Default effect')
    imgui.SameLine()
    local effect = gom.get_environment_value('gfx:default_full_screen_effect')
-   imgui.PushItemWidth(-1)      
+   imgui.PushItemWidth(-1)
    sel,effect = autogui.combo_box_value(
                      '##effect',
 		     effect,
 		     gom.get_environment_value('full_screen_effects')
                 )
-   imgui.PopItemWidth()		
+   imgui.PopItemWidth()
    if sel then
       main.camera().effect = effect
    end
    gom.set_environment_value('gfx:default_full_screen_effect', effect)
-   
+
    preferences_window.edit_preference_boolean(
        'Enable undo (saves state before each command)', 'gui:undo'
    )
@@ -240,7 +240,7 @@ end
 -- \brief Draws the 'Startup' pane
 
 function preferences_window.draw_Startup()
-   imgui.Text('\n')   
+   imgui.Text('\n')
    imgui.Text('User Lua files to load at startup.')
    local sel
    local gel_startup_files = gom.get_environment_value('gel:startup_files')
@@ -274,7 +274,7 @@ function preferences_window.draw_Logger()
       '##exclude',
       w, -footer_size, true
    )
-   imgui.Text('features to exclude')   
+   imgui.Text('features to exclude')
    exclude = gom.get_environment_value('log:features_exclude')
    sel,exclude = preferences_window.edit_list("##exclude",exclude)
    if sel then
@@ -294,11 +294,11 @@ function preferences_window.draw_FnKeys()
       if i < 10 then
          imgui.Text('F'..tostring(i)..'  ')
       else
-         imgui.Text('F'..tostring(i))      
+         imgui.Text('F'..tostring(i))
       end
       imgui.SameLine()
       if imgui.Button(
-         imgui.font_icon('folder-open')      
+         imgui.font_icon('folder-open')
       ) then
     	imgui.OpenFileDialog(
 	    '##'..var_name..'##edit_file_dlg',
@@ -308,12 +308,12 @@ function preferences_window.draw_FnKeys()
 	)
       end
       imgui.SameLine()
-      _,preferences_window.edit[var_name] = 
+      _,preferences_window.edit[var_name] =
          imgui.FileDialog(
 	    '##'..var_name..'##edit_file_dlg',
 	    preferences_window.edit[var_name]
 	 )
-      imgui.PushItemWidth(-1)	 
+      imgui.PushItemWidth(-1)
       _,preferences_window.edit[var_name] =
          imgui.TextInput('##'..var_name,preferences_window.edit[var_name]
       )
@@ -331,16 +331,16 @@ function preferences_window.draw_Advanced()
    imgui.Text('   Advanced GUI parameters')
    preferences_window.edit_preference_boolean(
        'Keyboard navigation', 'gui:keyboard_nav'
-   )   
+   )
    preferences_window.edit_preference_boolean(
        'Dockable dialogs', 'gui:viewports'
    )
-   imgui.Text('\n')   
+   imgui.Text('\n')
    imgui.Separator()
    imgui.Text('   Debugging and performance tests')
    preferences_window.edit_preference_boolean(
        'Floating point exceptions', 'sys:FPE'
-   )   
+   )
    preferences_window.edit_preference_boolean(
        'OpenGL exceptions', 'gfx:GL_debug'
    )
@@ -391,11 +391,11 @@ function preferences_window.draw_Advanced()
       gom.set_environment_value('gfx:GL_profile', GL_profile)
    end
    --]]
-   
-   imgui.Text('GLUP profile')   
+
+   imgui.Text('GLUP profile')
    local GLUP_profile = gom.get_environment_value('gfx:GLUP_profile')
    imgui.SameLine()
-   imgui.PushItemWidth(-1)   
+   imgui.PushItemWidth(-1)
    sel,GLUP_profile = autogui.combo_box_value(
 	'##GLUP_profile',
 	GLUP_profile,
@@ -405,29 +405,45 @@ function preferences_window.draw_Advanced()
    if sel then
       gom.set_environment_value('gfx:GLUP_profile', GLUP_profile)
    end
+
+   imgui.Text('Adapter')
+   local gfx_adapter = gom.get_environment_value('gfx:adapter')
+   imgui.SameLine()
+   imgui.PushItemWidth(-1)
+   sel,gfx_adapter = autogui.combo_box_value(
+	'##gfx_adapter',
+	gfx_adapter,
+	'auto;nvidia;intel'
+   )
+   imgui.PopItemWidth()
+   if sel then
+      gom.set_environment_value('gfx:adapter', gfx_adapter)
+   end
+
+
 end
 
 function preferences_window.draw()
    if not main.preferences_loaded() then
-      preferences_window.load_preferences('default_layout')   
+      preferences_window.load_preferences('default_layout')
    end
    imgui.PushID('preferences')
    if preferences_window.visible then
-   
+
       imgui.SetNextWindowSize(
          350*main.scaling(),
          400*main.scaling(),
          ImGuiCond_FirstUseEver
       )
-      
+
       _,preferences_window.visible = imgui.Begin(
          imgui.font_icon('cogs')..'  Preferences',
 	 preferences_window.visible,
 	 ImGuiWindowFlags_NoDocking
       )
-      
+
       if preferences_window.visible then
-      
+
          imgui.BeginTabBar('##tabs')
 	 for i in string.split(
 	    'Appearance and rendering;Plugins;Startup;Logger;FnKeys;Advanced',
@@ -445,7 +461,7 @@ function preferences_window.draw()
 	 _,h = imgui.GetContentRegionAvail()
 	 imgui.Dummy(-1,h-80*main.scaling())
 	 imgui.Separator()
-	 imgui.Text('To take all changes into account,')	 	 
+	 imgui.Text('To take all changes into account,')
 	 imgui.Text('Save configuration and restart Graphite')
 	 if imgui.Button(
 	    imgui.font_icon('save')..' Save config.',
@@ -458,7 +474,7 @@ function preferences_window.draw()
 	    imgui.font_icon('sync-alt')..
 	    '  Reload config.',-1,-1
 	 ) then
-	    preferences_window.load_preferences('user')	 
+	    preferences_window.load_preferences('user')
 	 end
       end
       imgui.End()
@@ -485,6 +501,6 @@ function preferences_window.bind_function_keys()
         .if_arg("value","F" .. i)
         .add_arg("command","preferences_window.function_key(" .. i .. ")")
 	.add_arg("save_in_history","false")
-	.add_arg("log","false")	
+	.add_arg("log","false")
    end
-end   
+end
