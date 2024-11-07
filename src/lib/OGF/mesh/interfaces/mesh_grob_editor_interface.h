@@ -23,18 +23,18 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the 
+ * As an exception to the GPL, Graphite can be linked with the
  *  following (non-GPL) libraries: Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 #ifndef H_OGF_MESH_INTERFACES_MESH_GROB_EDITOR_INTERFACE_H
 #define H_OGF_MESH_INTERFACES_MESH_GROB_EDITOR_INTERFACE_H
 
@@ -48,9 +48,9 @@ namespace OGF {
     namespace NL {
 	class Vector;
     }
-    
+
     /**
-     * \brief A wrapper to script low-level editing operations 
+     * \brief A wrapper to script low-level editing operations
      *  on a MeshGrob.
      */
     gom_class MESH_API MeshGrobEditor : public Interface {
@@ -72,7 +72,7 @@ namespace OGF {
 	MeshGrob* mesh_grob() const {
 	    return dynamic_cast<MeshGrob*>(grob());
 	}
-	
+
       gom_properties:
 	/**
 	 * \brief Sets the dimension of the vertices.
@@ -110,7 +110,7 @@ namespace OGF {
 	 * \return the number of cells.
 	 */
 	index_t get_nb_cells() const;
-	
+
       gom_slots:
 
 	/**
@@ -124,14 +124,14 @@ namespace OGF {
 	 */
 	NL::Vector* find_attribute(
 	    const std::string& attribute_name, bool quiet=false
-	);	
+	);
 
 	/**
 	 * \brief Creates an attribute.
 	 * \param[in] attribute_name the name of the attribute, preceded by
 	 *  the elements (e.g., "vertices.attr_name", "edges.attr_name" etc...).
 	 * \param[in] dimension number of elements per item. Default is 1.
-	 * \param[in] type optional meta type for the attribute elements. 
+	 * \param[in] type optional meta type for the attribute elements.
 	 *  Default is double precision number.
 	 * \return a wrapper around the newly created attribute.
 	 */
@@ -145,7 +145,7 @@ namespace OGF {
 	 * \param[in] attribute_name the name of the attribute, preceded by
 	 *  the elements (e.g., "vertices.attr_name", "edges.attr_name" etc...).
 	 * \param[in] dimension number of elements per item. Default is 1.
-	 * \param[in] type optional meta type for the attribute elements. 
+	 * \param[in] type optional meta type for the attribute elements.
 	 *  Default is double precision number.
 	 * \return a wrapper around the attribute.
 	 */
@@ -166,54 +166,54 @@ namespace OGF {
 
         /**
          * \brief Gets the points
-	 * \return a pointer to a new NL::Vector referring to 
+	 * \return a pointer to a new NL::Vector referring to
 	 *  the array of points
          */
         NL::Vector* get_points() {
             return find_attribute("vertices.point");
         }
-        
+
 	/**
-	 * \brief If the surface mesh is triangulated, 
+	 * \brief If the surface mesh is triangulated,
 	 *   gets the array of triangles.
-	 * \return a pointer to a new NL::Vector referring to 
-	 *  the array of triangles or nullptr if the surface is 
+	 * \return a pointer to a new NL::Vector referring to
+	 *  the array of triangles or nullptr if the surface is
 	 *  not triangulated.
 	 */
 	NL::Vector* get_triangles() const;
 
 	/**
-	 * \brief If the surface mesh is triangulated, gets 
+	 * \brief If the surface mesh is triangulated, gets
 	 *   the array of triangles.
-	 * \return a pointer to a new NL::Vector referring to 
-	 *  the array of adjacent facets of each triangle or 
+	 * \return a pointer to a new NL::Vector referring to
+	 *  the array of adjacent facets of each triangle or
 	 *  nullptr if the surface is not triangulated.
 	 */
 	NL::Vector* get_triangle_adjacents() const;
 
 	/**
-	 * \brief If the volume mesh is tetrahedralized, 
+	 * \brief If the volume mesh is tetrahedralized,
 	 *  gets the array of tetrahedra.
-	 * \return a pointer to a new NL::Vector referring to 
-	 *  the array of tetrahedra or nullptr if the volume mesh 
+	 * \return a pointer to a new NL::Vector referring to
+	 *  the array of tetrahedra or nullptr if the volume mesh
 	 *  is not tetrahedralized.
 	 */
 	NL::Vector* get_tetrahedra() const;
 
 	/**
-	 * \brief If the volume mesh is tetrahedralized, 
+	 * \brief If the volume mesh is tetrahedralized,
 	 *  gets the array of tetrahedra adjacencies.
-	 * \return a pointer to a new NL::Vector referring to the array 
-	 *  of tetrahedra adjacencies or nullptr if the volume mesh is 
+	 * \return a pointer to a new NL::Vector referring to the array
+	 *  of tetrahedra adjacencies or nullptr if the volume mesh is
 	 *  not tetrahedralized.
 	 */
 	NL::Vector* get_tetrahedra_adjacents() const;
-	
+
 	/**
 	 * \brief clears this mesh.
 	 */
 	void clear();
-	
+
 	/**
 	 * \brief Creates a new vertex.
 	 * \details If this is a 2D mesh, \p z is ignored.
@@ -229,11 +229,11 @@ namespace OGF {
 	 * \param[in] x , y , z the coordinates of the vertex.
 	 */
 	void set_vertex(index_t v, double x=0.0, double y=0.0, double z=0.0);
-	
+
 	/**
 	 * \brief Creates multiple vertices.
 	 * \param[in] nb the number of vertices to create.
-	 * \return the index of the first created vertex. 
+	 * \return the index of the first created vertex.
 	 */
 	index_t create_vertices(index_t nb);
 
@@ -264,11 +264,40 @@ namespace OGF {
 
 	/**
 	 * \brief Creates an edge.
-	 * \param[in] v1 , v2 the two extremities of the edge, in 
+	 * \param[in] v1 , v2 the two extremities of the edge, in
 	 *  0..nb_vertices()-1
 	 * \return the index of the newly created edge.
 	 */
 	index_t create_edge(index_t v1, index_t v2);
+
+
+	/**
+	 * \brief Creates triangles.
+	 * \details The facet vertices are uninitialized.
+	 * \param[in] nb_triangles the number of triangles to create.
+	 * \return the index of the first newly created triangle.
+	 */
+	index_t create_triangles(index_t nb_triangles);
+
+	/**
+	 * \brief Creates a chunk of quadrilateral facets.
+	 * \details The facet vertices are uninitialized.
+	 * \param[in] nb_quads the number of quads to create.
+	 * \return the index of the first newly created triangle.
+	 */
+	index_t create_quads(index_t nb_quads);
+
+	/**
+	 * \brief Creates a chunk of facets.
+	 * \details The facet vertices are uninitialized.
+	 * \param[in] nb_facets the number of facets to create.
+	 * \param[in] nb_vertices_per_facet number of vertices in
+	 *   each facet.
+	 * \return the index of the first newly created triangle.
+	 */
+	index_t create_facets(
+	    index_t nb_facets, index_t nb_vertices_per_facet
+	);
 
 	/**
 	 * \brief Computes facet adjacencies.
@@ -290,7 +319,7 @@ namespace OGF {
 	 * \return the global index of the vertex.
 	 */
 	index_t facet_vertex(index_t f, index_t lv) const;
-	
+
 	/**
 	 * \brief Sets a vertex of the facet.
 	 * \param[in] f the facet index.
@@ -319,7 +348,7 @@ namespace OGF {
 	 */
 	void delete_edges(
 	    NL::Vector* to_delete, bool delete_isolated_vertices=true
-	);	
+	);
 
 	/**
 	 * \brief Deletes a set of facets.
@@ -332,7 +361,7 @@ namespace OGF {
 	 */
 	void delete_facets(
 	    NL::Vector* to_delete, bool delete_isolated_vertices=true
-	);	
+	);
 
 	/**
 	 * \brief Deletes a set of cells.
@@ -345,8 +374,8 @@ namespace OGF {
 	 */
 	void delete_cells(
 	    NL::Vector* to_delete, bool delete_isolated_vertices=true
-	);	
-	
+	);
+
       protected:
 
 	/**
@@ -372,7 +401,7 @@ namespace OGF {
 	 * \retval false otherwise.
 	 */
 	bool check_facet_index(index_t f) const;
-	
+
 	/**
 	 * \brief Redisplays the wrapped MeshGrob.
 	 */

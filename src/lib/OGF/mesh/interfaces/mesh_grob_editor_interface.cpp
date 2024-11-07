@@ -166,6 +166,27 @@ namespace OGF {
 	return result;
     }
 
+    index_t MeshGrobEditor::create_facets(
+	index_t nb_facets, index_t nb_vertices_per_facet
+    ) {
+	if(!check_mesh_grob()) {
+	    return 0;
+	}
+	index_t result = mesh_grob()->facets.create_facets(
+	    nb_facets, nb_vertices_per_facet
+	);
+	update();
+	return result;
+    }
+
+    index_t MeshGrobEditor::create_triangles(index_t nb_triangles) {
+	return create_facets(nb_triangles, 3);
+    }
+
+    index_t MeshGrobEditor::create_quads(index_t nb_quads) {
+	return create_facets(nb_quads, 4);
+    }
+
     index_t MeshGrobEditor::create_quad(
 	index_t v1, index_t v2, index_t v3, index_t v4
     ) {
