@@ -144,7 +144,7 @@ namespace OGF {
     index_t MeshGrobEditor::create_facet(index_t nb_vertices) {
         index_t result = mesh_grob()->facets.create_facets(1,nb_vertices);
 	for(index_t lv=0; lv<nb_vertices; ++lv) {
-	  mesh_grob()->facets.set_vertex(result,lv,0);
+	    mesh_grob()->facets.set_vertex(result,lv,0);
 	}
 	update();
 	return result;
@@ -175,6 +175,11 @@ namespace OGF {
 	index_t result = mesh_grob()->facets.create_facets(
 	    nb_facets, nb_vertices_per_facet
 	);
+	for(index_t f=result; f<result+nb_facets; ++f) {
+	    for(index_t le=0; le<nb_vertices_per_facet; ++le) {
+		mesh_grob()->facets.set_vertex(f,le,0);
+	    }
+	}
 	update();
 	return result;
     }
