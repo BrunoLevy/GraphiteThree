@@ -331,13 +331,16 @@ namespace OGF {
           * \param[in] interpolate_attributes interpolate facet corner
           *   attributes on generated intersections. Deactivates coplanar
           *   facets simplification if set.
+	  * \param[in] verbose if set, displays additional information
+	  * \param[in] skeleton if set, stores the intersection line
           */
         void intersect(
             bool remove_internal_shells = true,
             bool simplify_coplanar_facets = true,
             double coplanar_angle_tolerance = 0.001,
             bool interpolate_attributes = false,
-	    bool verbose = false
+	    bool verbose = false,
+	    const NewMeshGrobName& skeleton = ""
         );
 
        /**********************************************************/

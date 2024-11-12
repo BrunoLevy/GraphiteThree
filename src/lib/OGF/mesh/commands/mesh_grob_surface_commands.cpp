@@ -319,7 +319,8 @@ namespace OGF {
         bool simplify_coplanar_facets,
         double coplanar_angle_tolerance,
         bool interpolate_attributes,
-	bool verbose
+	bool verbose,
+	const NewMeshGrobName& skeleton
     ) {
         MeshSurfaceIntersection intersection(*mesh_grob());
         intersection.set_delaunay(true);
@@ -327,6 +328,12 @@ namespace OGF {
         intersection.set_radial_sort(remove_internal_shells);
         intersection.set_interpolate_attributes(interpolate_attributes);
 	intersection.set_verbose(verbose);
+	MeshGrob* skl = nullptr;
+	if(skeleton != "") {
+	    skl = MeshGrob::find_or_create(scene_graph(),skeleton);
+	    skl->clear();
+	    intersection.set_build_skeleton(skl);
+	}
 
         intersection.intersect();
         if(remove_internal_shells) {
@@ -339,6 +346,9 @@ namespace OGF {
 
         show_mesh();
         mesh_grob()->update();
+	if(skl != nullptr) {
+	    skl->update();
+	}
     }
 
 
