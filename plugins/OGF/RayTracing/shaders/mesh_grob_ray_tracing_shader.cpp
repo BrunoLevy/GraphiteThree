@@ -25,19 +25,19 @@
  *  Contact for this Plugin: Bruno Levy - Bruno.Levy@inria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
  * As an exception to the GPL, Graphite can be linked with the following
  * (non-GPL) libraries:
  *     Qt, tetgen, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #include <OGF/RayTracing/shaders/mesh_grob_ray_tracing_shader.h>
 #include <OGF/renderer/context/rendering_context.h>
@@ -53,7 +53,7 @@ namespace OGF {
         OGF::MeshGrob* grob
     ):
 	MeshGrobShader(grob),
-	texture_(0),	
+	texture_(0),
 	AABB_(*grob)
     {
 	// AABB changed facet order, need to notify
@@ -71,7 +71,7 @@ namespace OGF {
 	nb_layers_ = 4;
 	xray_ = false;
 	raytrace_background_ = false;
-	
+
 	facet_normal_.bind(
 	    mesh_grob()->facets.attributes(), "normal"
 	);
@@ -82,7 +82,7 @@ namespace OGF {
 	    mesh_grob()->facet_corners.attributes(), "normal"
 	);
 	bool has_facet_corner_normals =
-	    (facet_corner_normal_.is_bound()); 
+	    (facet_corner_normal_.is_bound());
 	if(!has_facet_corner_normals) {
 	    facet_corner_normal_.bind(
 		mesh_grob()->facet_corners.attributes(), "normal"
@@ -129,13 +129,13 @@ namespace OGF {
 
 	core_color_ = Color(0.0, 0.0, 0.0, 1.0);
     }
-        
+
     RayTracingMeshGrobShader::~RayTracingMeshGrobShader() {
 	if(texture_ != 0) {
 	    glDeleteTextures(1, &texture_);
 	    texture_ = 0;
 	}
-    }        
+    }
 
     void RayTracingMeshGrobShader::draw() {
 	create_or_resize_image_if_needed();
@@ -156,14 +156,14 @@ namespace OGF {
 
 	index_t w = image_->width();
 	index_t h = image_->height();
-	
+
 	if(background_image_.is_null() ||
 	   background_image_->width() != w ||
 	   background_image_->height() != h
 	) {
 	    background_image_ = new Image(Image::RGB, Image::BYTE, w, h);
 	}
-	
+
 	if(background_depth_.is_null() ||
 	   background_depth_->width() != w ||
 	   background_depth_->height() != h
@@ -172,7 +172,7 @@ namespace OGF {
 		Image::GRAY, Image::FLOAT32, w, h
 	    );
 	}
-	
+
 	glReadPixels(
 	    0, 0,
 	    GLsizei(w), GLsizei(h),
@@ -193,7 +193,7 @@ namespace OGF {
 		background_mesh_.vertices.attributes(), "color", 3
 	    );
 	}
-	
+
 	FOR(Y, h) {
 	    FOR(X, w) {
 		// Add tiny displacement because my ray-AABB test is
@@ -217,7 +217,7 @@ namespace OGF {
 		Memory::byte* c = background_image_->pixel_base(X,Y);
 		background_mesh_color_[3*v  ] = double(c[0])/255.0;
 		background_mesh_color_[3*v+1] = double(c[1])/255.0;
-		background_mesh_color_[3*v+2] = double(c[2])/255.0;  
+		background_mesh_color_[3*v+2] = double(c[2])/255.0;
 	    }
 	}
 
@@ -236,7 +236,7 @@ namespace OGF {
 		index_t v21 = (X+1) +  Y    * w;
 		index_t v22 = (X+1) + (Y+1) * w;
 		background_mesh_.facets.create_triangle(v11, v12, v22);
-		background_mesh_.facets.create_triangle(v11, v22, v21);		
+		background_mesh_.facets.create_triangle(v11, v22, v21);
 	    }
 	}
 	background_mesh_.vertices.remove_isolated();
@@ -263,7 +263,7 @@ namespace OGF {
 	glupGetLightVector3fv(Lf);
 	out << "light " << Lf[0] << " " << Lf[1] << " " << Lf[2] << std::endl;
     }
-    
+
     void RayTracingMeshGrobShader::create_or_resize_image_if_needed() {
 
 	// Get window size
@@ -274,7 +274,7 @@ namespace OGF {
 	    Any tmp;
 	    main->get_property("width",tmp);
 	    tmp.get_value(w);
-	    main->get_property("height",tmp);	
+	    main->get_property("height",tmp);
 	    tmp.get_value(h);
 	}
 
@@ -308,7 +308,7 @@ namespace OGF {
 	FOR(i,4) {
 	    viewport_[i] = double(viewport[i]);
 	}
-	
+
 	mat4 modelview;
 	glupGetMatrixdv(GLUP_MODELVIEW_MATRIX, modelview.data());
 	mat3 normalmatrix;
@@ -321,12 +321,12 @@ namespace OGF {
 	mat4 project;
 	glupGetMatrixdv(GLUP_PROJECTION_MATRIX, project.data());
 	project = project.transpose();
-	
+
 	inv_project_modelview_ = (project*modelview).inverse();
 
 	float Lf[3];
 	glupGetLightVector3fv(Lf);
-	
+
 	L_ = vec3(Lf[0], Lf[1], Lf[2]);
 	L_ = normalize(mult(normalmatrix,L_));
     }
@@ -357,7 +357,7 @@ namespace OGF {
 	    I.N = facet_normal_[I.f];
 	    return;
 	}
-	
+
 	// If facet is a triangle, interpolate normals
 	// using barycentric coords in triangle.
 	if(mesh_grob()->facets.nb_vertices(I.f) == 3) {
@@ -383,19 +383,19 @@ namespace OGF {
 	// lambda1 + lambda2 + lambda3.
 
 	vec3 g = Geom::mesh_facet_center(*mesh_grob(),I.f);
-	
+
 	vec3 result(0.0, 0.0, 0.0);
 	double cur_sum = Numeric::max_float64();
-	
+
 	for(index_t c1 = mesh_grob()->facets.corners_begin(I.f);
 	    c1<mesh_grob()->facets.corners_end(I.f); ++c1
 	) {
 	    index_t v1 = mesh_grob()->facet_corners.vertex(c1);
 	    vec3 p1(mesh_grob()->vertices.point_ptr(v1));
 	    index_t c2 = mesh_grob()->facets.next_corner_around_facet(I.f,c1);
-	    index_t v2 = mesh_grob()->facet_corners.vertex(c2);		
+	    index_t v2 = mesh_grob()->facet_corners.vertex(c2);
 	    vec3 p2(mesh_grob()->vertices.point_ptr(v2));
-	    
+
 	    double A =  Geom::triangle_area(g,p1,p2);
 	    double l0 = Geom::triangle_area(I.p, p1,  p2 )/A;
 	    double l1 = Geom::triangle_area(g,   I.p, p2 )/A;
@@ -413,8 +413,8 @@ namespace OGF {
 	    }
 	}
 	I.N=result;
-    } 
-    
+    }
+
     void RayTracingMeshGrobShader::raytrace() {
 	Stopwatch W("Raytracing", show_stats_);
 	parallel_for(0, image_->height(),
@@ -436,6 +436,12 @@ namespace OGF {
 		}
 	    }
 	);
+	if(show_stats_) {
+	    index_t pixels = image_->width() * image_->height();
+	    Logger::out("Raytracing")
+		<< (double(pixels) / (1e6 * W.elapsed_time()))
+		<< " Mpixels/s" << std::endl;
+	}
     }
 
     vec4 RayTracingMeshGrobShader::raytrace_pixel(double x, double y) {
@@ -450,7 +456,7 @@ namespace OGF {
 		    isects.push_back(I);
 		}
 	    );
-	    
+
 	    std::sort(isects.begin(), isects.end(),
 		      [](const MeshFacetsAABB::Intersection& I1,
 			 const MeshFacetsAABB::Intersection& I2) -> bool {
@@ -464,7 +470,7 @@ namespace OGF {
 	    }
 	    double d = (
 		traversed_len * ext_ * length(ray.direction)
-	    ) /	bbox_diag_; 
+	    ) /	bbox_diag_;
 	    geo_clamp(d, 0.0, 1.0);
 	    return vec4(d, d, d, 1.0);
 	}
@@ -475,25 +481,25 @@ namespace OGF {
 	    bool in_shadow = shadows_ && AABB_.ray_intersection(
 		Ray(I.p,L_), Numeric::max_float64(), I.f
 	    );
-	    
+
 	    vec3 Kr(0.0, 0.0, 0.0);
 	    vec3 Ks(0.0, 0.0, 0.0);
 	    double spec=0.0;
-	    
+
 	    compute_normal(I);
-	    
+
 	    if(!in_shadow) {
 		double diff = std::max(0.0, dot(L_,I.N));
 		diff = std::min(diff, 1.0);
-		
+
 		Kr.x += diff * color_.r();
 		Kr.y += diff * color_.g();
-		Kr.z += diff * color_.b();			    
-		
+		Kr.z += diff * color_.b();
+
 		if(spec_ != 0.0) {
 		    vec3 R = normalize(reflect_vector(L_,I.N));
 		    spec = dot(R,normalize(ray.direction));
-		    spec = std::max(spec, 0.0); 
+		    spec = std::max(spec, 0.0);
 		    spec = pow(spec, double(spec_factor_));
 		    spec *= spec_;
 		    Ks.x += spec;
@@ -502,7 +508,7 @@ namespace OGF {
 		}
 	    }
 	    vec3 K;
-			
+
 	    if(transp_) {
 		vec3 Kt(color_.r(), color_.g(), color_.b());
 		double d = 0.0;
@@ -532,7 +538,7 @@ namespace OGF {
 		    vec3 bkg_color = raytrace_background(ray);
 		    color.x *= color.w;
 		    color.y *= color.w;
-		    color.z *= color.w;				
+		    color.z *= color.w;
 		    color.x += (1.0 - color.w) * bkg_color.x;
 		    color.y += (1.0 - color.w) * bkg_color.y;
 		    color.z += (1.0 - color.w) * bkg_color.z;
@@ -559,10 +565,10 @@ namespace OGF {
 		color.w = 0.0;
 	    }
 	}
-	
+
 	return color;
     }
-    
+
     double RayTracingMeshGrobShader::multi_refract(
 	Ray& r, MeshFacetsAABB::Intersection& I
     ) {
@@ -598,7 +604,7 @@ namespace OGF {
 
     vec3 RayTracingMeshGrobShader::raytrace_background(const Ray& r_in) {
 	Ray r(r_in);
-	r.origin -= 1e-6*r.direction; 
+	r.origin -= 1e-6*r.direction;
 	vec3 result(0.0, 0.0, 0.0);
 	MeshFacetsAABB::Intersection I;
 	if(background_mesh_AABB_.ray_nearest_intersection(r, I)) {
@@ -617,7 +623,7 @@ namespace OGF {
 	}
 	return result;
     }
-    
+
     void RayTracingMeshGrobShader::draw_image() {
 	if(texture_ == 0) {
 	    glGenTextures(1, &texture_);
@@ -642,5 +648,5 @@ namespace OGF {
 	glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-    
+
 }
