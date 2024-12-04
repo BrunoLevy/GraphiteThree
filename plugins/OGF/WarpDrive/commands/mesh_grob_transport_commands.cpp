@@ -3404,6 +3404,92 @@ namespace OGF {
         }
     }
 
+
+    void MeshGrobTransportCommands::load_binary_box(
+	const FileName& filename,
+	double xmin, double ymin, double zmin,
+	double xmax, double ymax, double zmax
+    ) {
+        try {
+            FILE* f = fopen(std::string(filename).c_str(),"rb");
+            if(f == nullptr) {
+                throw(std::logic_error(
+                          "Could not open " + std::string(filename)
+                ));
+            }
+
+            fseek(f, 0L, SEEK_END);
+            size_t filesize = size_t(ftell(f));
+            rewind(f);
+
+            if(filesize % 12 != 0) {
+                throw(std::logic_error("Invalid file size"));
+            }
+
+            index_t Ntot = index_t(filesize/12);
+	    index_t N = 0;
+
+	    for(index_t i=0; i<Ntot; ++i) {
+		float xyz[3];
+		if(fread(xyz, sizeof(float), 3, f) != 3) {
+		    throw(std::logic_error("Error while reading file"));
+		}
+		if(
+		    xyz[0] >= float(xmin) && xyz[0] <= float(xmax) &&
+		    xyz[1] >= float(ymin) && xyz[1] <= float(ymax) &&
+		    xyz[2] >= float(zmin) && xyz[2] <= float(zmax)
+		) {
+		    ++N;
+		}
+	    }
+            rewind(f);
+
+            mesh_grob()->clear();
+            mesh_grob()->vertices.set_dimension(3);
+            mesh_grob()->vertices.create_vertices(N);
+	    index_t v = 0;
+            for(index_t i=0; i<Ntot; ++i) {
+                float xyz[3];
+                if(fread(xyz, sizeof(xyz), 1, f) != 1) {
+                    throw(std::logic_error("Error while reading file"));
+                }
+		if(
+		    xyz[0] >= float(xmin) && xyz[0] <= float(xmax) &&
+		    xyz[1] >= float(ymin) && xyz[1] <= float(ymax) &&
+		    xyz[2] >= float(zmin) && xyz[2] <= float(zmax)
+		) {
+		    mesh_grob()->vertices.point_ptr(v)[0] = double(xyz[0]);
+		    mesh_grob()->vertices.point_ptr(v)[1] = double(xyz[1]);
+		    mesh_grob()->vertices.point_ptr(v)[2] = double(xyz[2]);
+		    ++v;
+		}
+            }
+
+            fclose(f);
+        } catch (std::logic_error& err) {
+            Logger::err("Cosmo") << err.what() << std::endl;
+            return;
+        }
+
+        if(mesh_grob()->get_shader() != nullptr) {
+            mesh_grob()->set_shader("Cosmo");
+        }
+    }
+
+    void MeshGrobTransportCommands::wrap_coordinates() {
+	index_t N = mesh_grob()->vertices.nb() * 3;
+	for(index_t i=0; i<N; ++i) {
+	    double& c = mesh_grob()->vertices.point_ptr(0)[i];
+	    while(c < 0.0) {
+		c += 1.0;
+	    }
+	    while(c > 1.0) {
+		c -= 1.0;
+	    }
+	}
+	mesh_grob()->update();
+    }
+
     void MeshGrobTransportCommands::load_Gaia(
         const FileName& filename, double Vscale, double ortho_scale
     ) {

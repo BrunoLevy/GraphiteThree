@@ -715,6 +715,21 @@ namespace OGF {
          */
         void load_binary(const FileName& filename);
 
+        /**
+         * \menu /Cosmo
+         * \brief Loads a box from a flat floating point binary file
+         */
+        void load_binary_box(
+	    const FileName& filename,
+	    double xmin = 0.0, double ymin = 0.0, double zmin = 0.0,
+	    double xmax = 0.0, double ymax = 0.0, double zmax = 0.0
+	);
+
+	/**
+	 * \menu /Cosmo
+	 * \brief Wraps coordinates in the [0,1]^3 box
+	 */
+	void wrap_coordinates();
 
         /**
          * \menu /Cosmo
