@@ -26,7 +26,7 @@ gom.bind_meta_type(menum)
 -- used to retreive the MeshGrob the command
 -- was invoked from, through args.self.grob
 
-function trululu(args) 
+function trululu(args)
     print('trululu args='..tostring(args))
     print('self='..tostring(args.self))
 end
@@ -51,13 +51,13 @@ end
 
 function randomize(args)
 
-    main.save_state() -- needed by undo()/redo() 
+    main.save_state() -- needed by undo()/redo()
 
    -- get our OGF::MeshGrobCustomCommands
    -- (it is args.self)
    local cmd = args.self
    -- now get the MeshGrob from the commands
-   local S = cmd.grob   
+   local S = cmd.grob
 
    -- create a MeshGrobEditor to modify the mesh
    local E = S.I.Editor
@@ -72,9 +72,9 @@ function randomize(args)
       local x = point[3*v]
       local y = point[3*v+1]
       local z = point[3*v+2]
-      x = x + args.howmuch * (math.random() - 0.5) 
-      y = y + args.howmuch * (math.random() - 0.5) 
-      z = z + args.howmuch * (math.random() - 0.5)  
+      x = x + args.howmuch * (math.random() - 0.5)
+      y = y + args.howmuch * (math.random() - 0.5)
+      z = z + args.howmuch * (math.random() - 0.5)
       point[3*v]   = x
       point[3*v+1] = y
       point[3*v+2] = z
@@ -83,7 +83,7 @@ end
 
 -- We are going to create a subclass of OGF::MeshGrobCommands,
 -- let us first get the metaclass associated with OGF::MeshGrobCommands
-superclass = gom.meta_types.OGF.MeshGrobCommands 
+superclass = gom.meta_types.OGF.MeshGrobCommands
 
 -- Create our subclass, that we name OGF::MeshGrobCustomCommands
 -- By default, our commands will land in a new menu 'Custom'
@@ -100,7 +100,7 @@ mclass.add_constructor()
 -- menu item in the 'Custom' menu), and it will call the function trululu each
 -- time the menu item is invoked. You are not obliged to use the same name for both
 -- (but doing so makes sense).
-mtrululu = mclass.add_slot('trululu',trululu) 
+mtrululu = mclass.add_slot('trululu',trululu)
 -- Now create the arguments using the add_arg() function, that takes
 -- - the name of the argument
 -- - the type of the argument
@@ -141,7 +141,7 @@ mfoobar3.create_arg_custom_attribute('attribute','handler','combo_box')
 -- (Note: for boolean attributes, use uint8, it is how they are stored
 --  internally)
 -- For each parameter, you can use a ';'-separated list of alternatives
--- or "" to say that you accept anything. 
+-- or "" to say that you accept anything.
 mfoobar3.create_arg_custom_attribute(
     'attribute','values',
     '$grob.list_attributes("facets","OGF::Numeric::uint8;OGF::Numeric::uint32","1")'
@@ -156,7 +156,7 @@ mrandomize.create_arg_custom_attribute('howmuch','help','amount of perturbation'
 -- And this help bubble is associated with the command
 mrandomize.create_custom_attribute('help','applies a random perturbation to the vertices of a mesh')
 -- It is possible to create menu entries in any existing menu of Graphite, by starting
--- the menu path with '/'. 
+-- the menu path with '/'.
 mrandomize.create_custom_attribute('menu','/Mesh')
 
 -- Make our new Commands visible from MeshGrob
@@ -181,17 +181,17 @@ scene_graph.register_grob_commands(gom.meta_types.OGF.MeshGrob,mclass)
 -- (One can also use separate functions if preferred, as done
 --  in the first part of this tutorial).
 
-function create_shape(args) 
+function create_shape(args)
     print('create shape, args='..tostring(args))
     print('self='..tostring(args.self))
 
-    main.save_state() -- needed by undo()/redo() 
+    main.save_state() -- needed by undo()/redo()
 
     local o = scene_graph.create_object({
         classname='OGF::MeshGrob',name=args.name
     })
 
-    if(args.method == 'square') then 
+    if(args.method == 'square') then
        x1 = 0
        y1 = 0
        x2 = args.size
@@ -202,7 +202,7 @@ function create_shape(args)
           y1 =-y2/2
           y2 = y2/2
        end
-       o.I.Shapes.create_square(x1,y1,0,x2,y1,0,x2,y2,0,x1,y2,0)
+       o.I.Shapes.create_quad({x1,y1,0},{x2,y1,0},{x2,y2,0},{x1,y2,0})
     elseif(args.method == 'cube') then
        x1 = 0
        y1 = 0
@@ -218,8 +218,8 @@ function create_shape(args)
           z1 =-z2/2
           z2 = z2/2
        end
-       o.I.Shapes.create_cube(x1,y1,z1,x2,y2,z2)
-    elseif(args.method == 'sphere') then 
+       o.I.Shapes.create_box({x1,y1,z1},{x2,y2,z2})
+    elseif(args.method == 'sphere') then
        o.I.Shapes.create_sphere({radius=args.radius,precision=args.precision})
     end
 end
@@ -228,14 +228,14 @@ end
 baseclass = gom.meta_types.OGF.SceneGraphCommands
 mclass    = baseclass.create_subclass('OGF::SceneGraphShapesCommands')
 
--- We need a constructor 
+-- We need a constructor
 mclass.add_constructor()
 
 -- The three commands and their arguments, with some examples of
 -- custom attributes.
 -- For creating a menu directly attached to the MenuBar,
 -- note the absolute path '/Shapes' custom attribute
--- that starts with '/' 
+-- that starts with '/'
 
 msquare = mclass.add_slot('square', create_shape)
 msquare.add_arg('name',gom.meta_types.OGF.NewMeshGrobName,'shape')
@@ -278,5 +278,3 @@ scene_graph.register_grob_commands(gom.meta_types.OGF.SceneGraph, mclass)
 -- Your new command classes are a "citizen" of the Graphite Object Model,
 -- with the same "rights" as the ones implemented in C++ (can be scripted
 -- and invoked from the gui)
-
-
