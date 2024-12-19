@@ -33,7 +33,7 @@ end
 scene_graph.clear()
 Omega = scene_graph.create_object('OGF::MeshGrob')
 Omega.rename('Omega')
-Omega.I.Shapes.create_square()
+Omega.I.Shapes.create_quad()
 Omega.I.Surface.triangulate()
 
 -- Create points (random sampling of Omega)

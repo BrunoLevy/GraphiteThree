@@ -147,7 +147,7 @@ end
 
 scene_graph.clear()
 Omega = scene_graph.create_object('OGF::MeshGrob','Omega')
-Omega.I.Shapes.create_square()
+Omega.I.Shapes.create_quad()
 
 points = scene_graph.create_object('OGF::MeshGrob','points')
 scene_graph.current_object = 'points'
