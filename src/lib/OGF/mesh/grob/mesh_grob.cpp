@@ -99,7 +99,7 @@ namespace OGF {
            facets.nb() == 0 &&
            cells.nb() == 0
         ) {
-            shader->set_property("vertices_style", "false;0 1 0 1;2");
+            shader->set_property("vertices_style", "true;0 1 0 1;2");
         }
         return result;
     }
