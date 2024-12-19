@@ -21,7 +21,7 @@ scene_graph.current().shader.mesh_style='true; 0 0 0 1; 2'
 -- Useful for scripts that you wand to execute several times
 C = scene_graph.find_or_create_object('OGF::MeshGrob', 'C')
 C.clear()
-C.I.Shapes.create_cube()
+C.I.Shapes.create_box()
 
 
 ------------------------------------------------------------------------------------

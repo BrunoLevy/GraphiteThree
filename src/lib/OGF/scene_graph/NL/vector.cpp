@@ -81,7 +81,6 @@ namespace OGF {
 	    // Special case for Attribute<bool> (all this because the way
 	    // STL handles vector<bool>, argh...)
 	    if(
-		element_meta_type_ == nullptr &&
 		attribute_store_->element_typeid_name() ==
 		typeid(Numeric::uint8).name()
 	    ) {

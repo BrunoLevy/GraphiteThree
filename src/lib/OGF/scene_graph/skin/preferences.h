@@ -68,7 +68,9 @@ namespace OGF {
 	 * \param[in] name the name of the variable, that should have already
 	 *  been declared using CmdLine::declare_arg()
 	 */
-	void SCENE_GRAPH_API declare_preference_variable(const std::string& name);
+	void SCENE_GRAPH_API declare_preference_variable(
+	    const std::string& name
+	);
 
         /**
          * \brief Declares a variable as a preference variables.

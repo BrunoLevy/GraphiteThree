@@ -543,7 +543,9 @@ namespace OGF {
 	return result;
     }
 
-    Object* Interpreter::create(const std::string& classname, const ArgList& args) {
+    Object* Interpreter::create(
+	const std::string& classname, const ArgList& args
+    ) {
         Object* result = nullptr;
         MetaClass* mclass = Meta::instance()->resolve_meta_class(classname);
         if(mclass != nullptr) {

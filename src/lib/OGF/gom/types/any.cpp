@@ -168,6 +168,9 @@ namespace OGF {
 	if(try_copy_convert_to(this, (size_t*)addr, meta_type)) {
 	    return true;
 	}
+	if(try_copy_convert_to(this, (bool*)addr, meta_type)) {
+	    return true;
+	}
 	return false;
     }
 
