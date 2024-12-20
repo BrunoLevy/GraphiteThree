@@ -3,9 +3,8 @@
 N = 20000 -- number of points
 
 scene_graph.clear()
-Omega = scene_graph.create_object('OGF::MeshGrob')
-Omega.rename('Omega')
-Omega.I.Shapes.create_cube()
+Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
+Omega.I.Shapes.create_box()
 Omega.I.Surface.triangulate()
 Omega.shader.surface_style = 'true; 0.5 0.5 0.5 0.0'
 Omega.shader.volume_style = 'false; 1 1 0 1'

@@ -9,24 +9,24 @@ N=10 -- Number of points. Try this: N=10, N=100, N=150
 -- Computes one step of Euler simulation
 function Euler_step()
    local tau = 0.005 -- Timestep
-   local G=9.81      -- Gravity in m/s^2 
+   local G=9.81      -- Gravity in m/s^2
 
    -- Make particles bounce on borders
    for v = 0,E.nb_vertices-1 do
       bounce_on_borders(v)
    end
 
-   -- Update forces, speeds and positions 
+   -- Update forces, speeds and positions
    -- (Explicit Euler scheme, super simple !)
    for v = 0,E.nb_vertices-1 do
        -- Compute forces: F = - m G Z
       local Fx = 0.0
       local Fy = - mass[v] * G
-      
+
       -- V += tau * a ; F = ma ==> V += tau * F / m
       V[2*v]   = V[2*v]   + tau * Fx / mass[v]
       V[2*v+1] = V[2*v+1] + tau * Fy / mass[v]
- 
+
       -- position += tau * V
       point[3*v]   = point[3*v]   + tau*V[2*v]
       point[3*v+1] = point[3*v+1] + tau*V[2*v+1]
@@ -42,13 +42,13 @@ end
 function bounce_on_borders(v)
    -- Damping of speed when there is a choc
    local damp = 0.9
-   
+
    if point[3*v] > 1.0 then
       point[3*v] = 1.0
       V[2*v]   = -damp * V[2*v]
       V[2*v+1] =  damp * V[2*v+1]
    end
-      
+
    if point[3*v] < 0.0 then
       point[3*v] = 0.0
       V[2*v]   = -damp * V[2*v]
@@ -60,19 +60,19 @@ function bounce_on_borders(v)
       V[2*v]   =  damp * V[2*v]
       V[2*v+1] = -damp * V[2*v+1]
    end
-      
+
    if point[3*v+1] < 0.0 then
       point[3*v+1] = 0.0
-      V[2*v]   =  damp * V[2*v]	  
+      V[2*v]   =  damp * V[2*v]
       V[2*v+1] = -damp * V[2*v+1]
    end
 end
 
 scene_graph.clear()
-Omega = scene_graph.create_object('OGF::MeshGrob','Omega')
+Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
 Omega.I.Shapes.create_quad()
 
-points = scene_graph.create_object('OGF::MeshGrob','points')
+points = scene_graph.create_object(OGF.MeshGrob,'points')
 scene_graph.current_object = 'points'
 
 
@@ -131,7 +131,8 @@ function show_speeds()
        return
    end
    if speeds_display == nil then
-      speeds_display = scene_graph.create_object('OGF::MeshGrob','speeds')
+      speeds_display = scene_graph.create_object(OGF.MeshGrob,'speeds')
+      speeds_display.shader.edges_style='true; 0 0 0 1; 3'
       E_speeds_display = speeds_display.I.Editor
       speeds_display_points = E_speeds_display.find_attribute('vertices.point')
    end
@@ -174,7 +175,7 @@ points.shader.autorange()
 function Euler_steps(n)
    for i=1,n do
       Euler_step()
-      sleep(0.01) 
+      sleep(0.01)
       if Euler_dialog.stopped then
          break
       end
@@ -185,10 +186,10 @@ end
 -- ------------------------------------------
 -- GUI
 -- ------------------------------------------
- 
-Euler_dialog = {} 
+
+Euler_dialog = {}
 Euler_dialog.visible = true
-Euler_dialog.name = 'Euler' 
+Euler_dialog.name = 'Euler'
 Euler_dialog.x = 100
 Euler_dialog.y = 400
 Euler_dialog.w = 150
@@ -201,7 +202,7 @@ Euler_dialog.stopped = false
 function Euler_dialog.draw_window()
    imgui.PushItemWidth(-1)
    imgui.Text('nb timesteps')
-    _,Euler_dialog.nb_steps = 
+    _,Euler_dialog.nb_steps =
        imgui.InputInt('##nb_steps',Euler_dialog.nb_steps)
    _,Euler_dialog.show_speeds =
        imgui.Checkbox('##speeds', Euler_dialog.show_speeds)
@@ -215,10 +216,9 @@ function Euler_dialog.draw_window()
        main.exec_command('Euler_steps(Euler_dialog.nb_steps)')
    end
    if imgui.Button('Stop',-1,0) then
-      Euler_dialog.stopped = true 
+      Euler_dialog.stopped = true
    end
    imgui.PopItemWidth()
 end
 
 graphite_main_window.add_module(Euler_dialog)
-

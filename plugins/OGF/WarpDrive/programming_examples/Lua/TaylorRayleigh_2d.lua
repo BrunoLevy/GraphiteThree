@@ -6,8 +6,7 @@
 N = 3000 -- Number of points
 
 scene_graph.clear()
-Omega = scene_graph.create_object('OGF::MeshGrob')
-Omega.rename('Omega')
+Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
 Omega.I.Shapes.create_quad()
 Omega.I.Surface.triangulate()
 Omega.I.Points.sample_surface({nb_points=N})

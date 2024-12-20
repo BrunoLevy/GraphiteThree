@@ -5,8 +5,7 @@
 
 N = 5000 -- Number of points
 scene_graph.clear()
-Omega = scene_graph.create_object('OGF::MeshGrob')
-Omega.rename('Omega')
+Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
 Omega.I.Shapes.create_sphere()  
 Omega.I.Points.sample_surface({nb_points=N})
 points = scene_graph.resolve('points')
