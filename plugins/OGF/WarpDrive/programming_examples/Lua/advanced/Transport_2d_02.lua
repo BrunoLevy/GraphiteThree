@@ -14,7 +14,7 @@ N = 100 -- Number of points
 
 function compute()
    weight[0] = weight[0] + 0.01
-   OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')   
+   OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
    RVD.shader.autorange()
    RVD.update()
 end
@@ -23,8 +23,7 @@ end
 -- Create domain Omega (a square)
 -- -------------------------------------------------
 scene_graph.clear()
-Omega = scene_graph.create_object('OGF::MeshGrob')
-Omega.rename('Omega')
+Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
 Omega.I.Shapes.create_quad()
 Omega.I.Surface.triangulate()
 
@@ -38,8 +37,7 @@ points = scene_graph.resolve('points')
 -- -------------------------------------------------
 -- Create diagram
 -- -------------------------------------------------
-RVD = scene_graph.create_object('OGF::MeshGrob')
-RVD.rename('RVD')
+RVD = scene_graph.create_object(OGF.MeshGrob,'RVD')
 
 -- -------------------------------------------------
 -- Compute diagram
@@ -47,7 +45,7 @@ RVD.rename('RVD')
 OT = points.I.Transport
 Omega.visible=false
 weight   = NL.create_vector(N)
-OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')   
+OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
 
 -- -------------------------------------------------
 -- Change graphic attributes of diagram
@@ -55,15 +53,15 @@ OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
 RVD.shader.painting='ATTRIBUTE'
 RVD.shader.attribute='facets.chart'
 RVD.shader.colormap = 'plasma;false;732;false;false;;'
-RVD.shader.autorange() 
+RVD.shader.autorange()
 
 -- ------------------------------------------
 -- GUI
 -- ------------------------------------------
- 
-OT_dialog = {} 
+
+OT_dialog = {}
 OT_dialog.visible = true
-OT_dialog.name = 'Transport' 
+OT_dialog.name = 'Transport'
 OT_dialog.x = 100
 OT_dialog.y = 400
 OT_dialog.w = 150
@@ -77,6 +75,3 @@ function OT_dialog.draw_window()
 end
 
 graphite_main_window.add_module(OT_dialog)
-
-
-

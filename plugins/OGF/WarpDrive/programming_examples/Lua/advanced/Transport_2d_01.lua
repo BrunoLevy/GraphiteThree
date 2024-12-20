@@ -10,8 +10,7 @@ N = 100 -- Number of points
 -- Create domain Omega (a square)
 -- -------------------------------------------------
 scene_graph.clear()
-Omega = scene_graph.create_object('OGF::MeshGrob')
-Omega.rename('Omega')
+Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
 Omega.I.Shapes.create_quad()
 Omega.I.Surface.triangulate()
 
@@ -25,8 +24,7 @@ points = scene_graph.resolve('points')
 -- -------------------------------------------------
 -- Create diagram
 -- -------------------------------------------------
-RVD = scene_graph.create_object('OGF::MeshGrob')
-RVD.rename('RVD')
+RVD = scene_graph.create_object(OGF.MeshGrob,'RVD')
 
 -- -------------------------------------------------
 -- Compute diagram
@@ -42,12 +40,4 @@ OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
 RVD.shader.painting='ATTRIBUTE'
 RVD.shader.attribute='facets.chart'
 RVD.shader.colormap = 'plasma;false;732;false;false;;'
-RVD.shader.autorange() 
-
-
-
-
-
-
-
-
+RVD.shader.autorange()

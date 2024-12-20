@@ -53,7 +53,7 @@ end
 function compute_linear_system(H,b)
 
    -- Get the Laguerre diagram (RVD) as a triangulation
-   OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')  
+   OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
    RVD.I.Surface.triangulate()
    RVD.I.Surface.merge_vertices(1e-10)
 
@@ -79,10 +79,10 @@ function compute_linear_system(H,b)
    --      adj0
    --
    -- (Yes, I know, this is stupid and you hate me !!)
-   
+
    Tadj  = RVD.I.Editor.get_triangle_adjacents()
 
-   -- chart[t] indicates the index of the seed that corresponds to the 
+   -- chart[t] indicates the index of the seed that corresponds to the
    --  Laguerre cell that t belongs to
    chart = RVD.I.Editor.find_attribute('facets.chart')
 
@@ -104,17 +104,17 @@ function compute_linear_system(H,b)
      --   For each triangle edge, determine whether the triangle edge
      -- is on a Laguerre cell boundary and accumulate its contribution
      -- to the Hessian
-     
+
      for e=0,2 do
          -- index of adjacent triangle accross edge e
          local tneigh = Tadj[3*t+e]
-	 
+
 	 -- test if we are not on Omega boundary
 	 if tneigh < nt then
-	 
+
 	    -- Triangle tneigh is in the Laguerre cell of j
 	    local j = chart[tneigh]
-	    
+
 	    -- We are on a Laguerre cell boundary only if t and tneigh
 	    -- belong to two different Laguerre cells
 	    if not (j == i) then
@@ -122,9 +122,9 @@ function compute_linear_system(H,b)
 	       -- The two vertices of the edge e in triangle t
 	       local v1 = T[3*t+e]
 	       local v2 = T[3*t+((e+1)%3)]
-	       
+
 	       local hij = distance(XYZ,v1,v2) / (2.0 * distance(seeds_XYZ, i,j))
-	       H.add_coefficient(i,j,-hij)    
+	       H.add_coefficient(i,j,-hij)
 	       H.add_coefficient(i,i,hij)
 	    end
 	 end
@@ -153,7 +153,7 @@ function compute()
       end
       smallest_cell_threshold =
          0.5 * math.min(smallest_cell_area, Omega_measure/N)
-      print('smallest cell threshold = '..tostring(smallest_cell_threshold))	 
+      print('smallest cell threshold = '..tostring(smallest_cell_threshold))
    end
 
    for i=0,N-1 do
@@ -190,8 +190,8 @@ function compute()
 
       -- KMT criterion #1 (Laguerre cell area)
       local KMT_1 = (smallest_cell_area > smallest_cell_threshold)
-      
-      -- KMT criterion #2 (gradient norm)      
+
+      -- KMT criterion #2 (gradient norm)
       local KMT_2 = (g_norm_substep <= (1.0 - 0.5*alpha) * g_norm)
 
       if KMT_1 and KMT_2 then
@@ -203,7 +203,7 @@ function compute()
 	     tostring(smallest_cell_area) .. '>' ..
 	     tostring(smallest_cell_threshold)
       )
-      
+
       print(
          '      KMT #2 (gradient ):'..tostring(KMT_2)..' '..
 	     tostring(g_norm_substep) .. '<=' ..
@@ -219,7 +219,7 @@ function compute()
    -- We recompute it so that display is not cluttered with
    -- the triangle edges (you can comment-out the next line
    -- to see what it looks like if you are interested)
-   OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')   
+   OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
    RVD.shader.autorange()
    RVD.update()
 end
@@ -228,8 +228,7 @@ end
 -- Create domain Omega (a square)
 -- -------------------------------------------------
 scene_graph.clear()
-Omega = scene_graph.create_object('OGF::MeshGrob')
-Omega.rename('Omega')
+Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
 Omega.I.Shapes.create_quad()
 Omega.I.Surface.triangulate()
 
@@ -254,8 +253,7 @@ end
 -- -------------------------------------------------
 -- Create diagram
 -- -------------------------------------------------
-RVD = scene_graph.create_object('OGF::MeshGrob')
-RVD.rename('RVD')
+RVD = scene_graph.create_object(OGF.MeshGrob,'RVD')
 
 -- -------------------------------------------------
 -- Compute diagram
@@ -263,7 +261,7 @@ RVD.rename('RVD')
 OT = points.I.Transport
 Omega.visible=false
 weight   = NL.create_vector(N)
-OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')   
+OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
 
 -- -------------------------------------------------
 -- Change graphic attributes of diagram
@@ -271,15 +269,15 @@ OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
 RVD.shader.painting='ATTRIBUTE'
 RVD.shader.attribute='facets.chart'
 RVD.shader.colormap = 'plasma;false;732;false;false;;'
-RVD.shader.autorange() 
+RVD.shader.autorange()
 
 -- ------------------------------------------
 -- GUI
 -- ------------------------------------------
- 
-OT_dialog = {} 
+
+OT_dialog = {}
 OT_dialog.visible = true
-OT_dialog.name = 'Transport' 
+OT_dialog.name = 'Transport'
 OT_dialog.x = 100
 OT_dialog.y = 400
 OT_dialog.w = 150
@@ -293,6 +291,3 @@ function OT_dialog.draw_window()
 end
 
 graphite_main_window.add_module(OT_dialog)
-
-
-

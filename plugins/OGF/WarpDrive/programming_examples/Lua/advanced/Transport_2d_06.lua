@@ -88,20 +88,20 @@ function one_Newton_step()
 
       -- KMT criterion #1 (Laguerre cell area)
       local KMT_1 = (smallest_cell_area > smallest_cell_threshold)
-      
-      -- KMT criterion #2 (gradient norm)      
+
+      -- KMT criterion #2 (gradient norm)
       local KMT_2 = (g_norm_substep <= (1.0 - 0.5*alpha) * g_norm)
 
       if KMT_1 and KMT_2 then
          break
       end
-      
+
       alpha = alpha / 2.0
    end
 
    NL.blas.copy(weight2, weight)
 
-   OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')   
+   OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
    RVD.shader.autorange()
    RVD.update()
 
@@ -112,8 +112,7 @@ end
 -- Create domain Omega (a square)
 -- -------------------------------------------------
 scene_graph.clear()
-Omega = scene_graph.create_object('OGF::MeshGrob')
-Omega.rename('Omega')
+Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
 Omega.I.Shapes.create_quad()
 Omega.I.Surface.split_quads(5)
 Omega.I.Surface.triangulate()
@@ -140,7 +139,7 @@ end
 Omega.shader.painting='ATTRIBUTE'
 Omega.shader.attribute='vertices.weight'
 Omega.shader.colormap = 'plasma;false;1;false;false;;'
-Omega.shader.autorange() 
+Omega.shader.autorange()
 
 
 
@@ -165,15 +164,14 @@ points.visible=false
 -- -------------------------------------------------
 -- Create diagram
 -- -------------------------------------------------
-RVD = scene_graph.create_object('OGF::MeshGrob')
-RVD.rename('RVD')
+RVD = scene_graph.create_object(OGF.MeshGrob,'RVD')
 
 -- -------------------------------------------------
 -- Compute diagram
 -- -------------------------------------------------
 OT = points.I.Transport
 weight   = NL.create_vector(N)
-OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')   
+OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
 
 -- -------------------------------------------------
 -- Change graphic attributes of diagram
@@ -181,7 +179,7 @@ OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
 RVD.shader.painting='ATTRIBUTE'
 RVD.shader.attribute='facets.chart'
 RVD.shader.colormap = 'plasma;false;732;false;false;;'
-RVD.shader.autorange() 
+RVD.shader.autorange()
 
 if shrink_points then
    Omega.visible = false
@@ -190,10 +188,10 @@ end
 -- ------------------------------------------
 -- GUI
 -- ------------------------------------------
- 
-OT_dialog = {} 
+
+OT_dialog = {}
 OT_dialog.visible = true
-OT_dialog.name = 'Transport' 
+OT_dialog.name = 'Transport'
 OT_dialog.x = 100
 OT_dialog.y = 400
 OT_dialog.w = 150
@@ -207,8 +205,3 @@ function OT_dialog.draw_window()
 end
 
 graphite_main_window.add_module(OT_dialog)
-
-
-
-
-

@@ -10,11 +10,11 @@ N=1000 -- Number of points.
 -- Computes one step of Euler simulation
 function Euler_step()
    local OT = points.I.Transport
- 
+
    -- Timestep
    local tau = 0.001
 
-   -- Stiffness of the 'spring' pressure force that pulls the 
+   -- Stiffness of the 'spring' pressure force that pulls the
    -- points towards the centroids
    local epsilon = 0.004
 
@@ -58,28 +58,25 @@ function Euler_step()
           local v = RVD_chart[f]
           RVD_mass[f] = mass[v]
 	      RVD_V[2*f] = V[2*v]
-	      RVD_V[2*f+1] = V[2*v+1]	  
+	      RVD_V[2*f+1] = V[2*v+1]
       end
-      RVD.shader.autorange()      
+      RVD.shader.autorange()
    end
    points.redraw()
 end
 
-
 scene_graph.clear()
-Omega = scene_graph.create_object('OGF::MeshGrob')
-Omega.rename('Omega')
+Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
 Omega.I.Shapes.create_quad()
 Omega.I.Surface.triangulate()
 Omega.I.Points.sample_surface({nb_points=N})
 scene_graph.current_object = 'points'
 points = scene_graph.resolve('points')
 
-RVD = scene_graph.create_object('OGF::MeshGrob')
-RVD.rename('RVD')
+RVD = scene_graph.create_object(OGF.MeshGrob,'RVD')
 RVD_E = RVD.I.Editor
 RVD_chart = RVD_E.find_or_create_attribute(
-    'facets.chart',1,gom.resolve_meta_type('OGF::index_t')
+    'facets.chart',1,OGF.index_t
 )
 RVD_mass  = RVD_E.find_or_create_attribute('facets.mass')
 RVD_V     = RVD_E.find_or_create_attribute(
@@ -101,12 +98,12 @@ V        = E.find_or_create_attribute(
 centroid = NL.create_vector()
 weight   = NL.create_vector()
 
--- Initialize masses with nice sine wave, 
+-- Initialize masses with nice sine wave,
 -- and heavy fluid on top.
 for v = 0,E.nb_vertices-1 do
    local x = point[3*v]
    local y = point[3*v+1]
-   local f =0.1*math.sin(x*10) 
+   local f =0.1*math.sin(x*10)
    if (y-0.5) > f then
       mass[v] = 3
    else
@@ -131,7 +128,7 @@ function Euler_init()
       point[3*v]   = centroid[2*v]
       point[3*v+1] = centroid[2*v+1]
       V[2*v]   = 0.0
-      V[2*v+1] = 0.0 
+      V[2*v+1] = 0.0
    end
    points.update()
 end
@@ -151,10 +148,10 @@ end
 -- ------------------------------------------
 -- GUI
 -- ------------------------------------------
- 
-Euler_dialog = {} 
+
+Euler_dialog = {}
 Euler_dialog.visible = true
-Euler_dialog.name = 'Euler' 
+Euler_dialog.name = 'Euler'
 Euler_dialog.x = 100
 Euler_dialog.y = 400
 Euler_dialog.w = 150
@@ -167,12 +164,12 @@ Euler_dialog.stopped = false
 function Euler_dialog.draw_window()
    imgui.PushItemWidth(-1)
    imgui.Text('nb timesteps')
-    _,Euler_dialog.nb_steps = 
+    _,Euler_dialog.nb_steps =
        imgui.InputInt('##nb_steps',Euler_dialog.nb_steps)
    imgui.Text('Laguerre')
    imgui.SameLine()
    local sel
-   sel,Euler_dialog.show_Laguerre = 
+   sel,Euler_dialog.show_Laguerre =
        imgui.Checkbox('##show_Laguerre',Euler_dialog.show_Laguerre)
    if sel then
       if Euler_dialog.show_Laguerre then
@@ -203,14 +200,9 @@ function Euler_dialog.draw_window()
        main.exec_command('Euler_steps(Euler_dialog.nb_steps)')
    end
    if imgui.Button('Stop',-1,0) then
-      Euler_dialog.stopped = true 
+      Euler_dialog.stopped = true
    end
    imgui.PopItemWidth()
 end
 
 graphite_main_window.add_module(Euler_dialog)
-
-
-
-
-
