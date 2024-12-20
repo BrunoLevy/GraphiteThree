@@ -5,6 +5,8 @@
 --
 -- Usage: start from command line:
 --  graphite main=clock_main.lua
+--
+-- Note: broken in current version (needs GLUP imported in main interpreter)
 
 if main ~= nil then
     gom.err('Graphite application already exists')
@@ -14,11 +16,12 @@ if main ~= nil then
 end
 
 function handle(alpha, R, r, g, b)
-   GLUP.SetColor(GLUP.FRONT_AND_BACK_COLOR,r,g,b)
+   GLUP.SetColor(GLUP.MESH_COLOR,r,g,b)
+   GLUP.SetMeshWidth(15)
    GLUP.Begin(GLUP.LINES)
       GLUP.Vertex(0,0,0.5)
       GLUP.Vertex(R*math.sin(alpha), R*math.cos(alpha),0.5)
-   GLUP.End() 
+   GLUP.End()
 end
 
 function balls()
@@ -66,11 +69,10 @@ function draw_gui()
 	end
 	imgui.EndMainMenuBar()
     end
-end    
+end
 
 main = gom.create({classname='OGF::Application',interpreter=gom})
 win = main.render_area
 gom.connect(win.redraw_request, draw)
 gom.connect(main.redraw_request,draw_gui)
 main.start()
-

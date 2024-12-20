@@ -6,7 +6,7 @@
 -- Create the surface if it does not already exist,
 -- so that one can modify and run the program multiple
 -- times.
-S = scene_graph.find_or_create_object('OGF::MeshGrob','Surface')
+S = scene_graph.find_or_create_object(OGF.MeshGrob,'Surface')
 
 -- Show the vertices and the mesh
 S.shader.vertices_style='true; 0 1 0 1; 3'
@@ -39,9 +39,3 @@ E.create_quad(2,0,4,6)
 
 -- Compute facet adjacencies
 E.connect_facets()
-
-
-
-
-
-

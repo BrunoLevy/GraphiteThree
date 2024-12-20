@@ -1,6 +1,6 @@
 -- Lua (Keep this comment, this is an indicator for editor's 'run' command)
 
--- An example that shows how to create a mesh 
+-- An example that shows how to create a mesh
 -- programatically by plotting mathematical functions.
 
 -- \brief Maps a grid to the graph of a sine product
@@ -44,8 +44,8 @@ function plot_func(S, func, NU, NV)
       -- using the function passed as parameter: Lua is
       -- really cool ! (note also the multiple return
       -- values, see sphere() and sineprod()
-      local x,y,z = func(u,v) 
-      E.create_vertex(x,y,z) 
+      local x,y,z = func(u,v)
+      E.create_vertex(x,y,z)
     end
  end
  for V = 0,NV-2 do
@@ -65,7 +65,7 @@ end
 -- Creates the surface if it does not already exist,
 -- so that one can modify and run the program multiple
 -- times.
-S = scene_graph.find_or_create_object('OGF::MeshGrob','Surface')
+S = scene_graph.find_or_create_object(OGF.MeshGrob,'Surface')
 
 plot_func(S, sphere, 20, 20)
 --Try this: comment the prev. one and try this one.
@@ -73,8 +73,3 @@ plot_func(S, sphere, 20, 20)
 
 --Try this: implement your own grid mapping functions
 --(torus, Klein bottle, ...)
-
-
-
-
-

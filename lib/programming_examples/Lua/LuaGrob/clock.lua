@@ -4,11 +4,12 @@
 -- Draws an analog clock
 
 function handle(alpha, R, r, g, b)
-   GLUP.SetColor(GLUP.FRONT_AND_BACK_COLOR,r,g,b)
+   GLUP.SetColor(GLUP.MESH_COLOR,r,g,b)
+   GLUP.SetMeshWidth(15)
    GLUP.Begin(GLUP.LINES)
       GLUP.Vertex(0.5,0.5,0.5)
       GLUP.Vertex(0.5+R*math.sin(alpha), 0.5+R*math.cos(alpha),0.5)
-   GLUP.End() 
+   GLUP.End()
 end
 
 function balls()
@@ -45,6 +46,3 @@ function draw()
    balls()
    GLUP.Update()
 end
-
-
-

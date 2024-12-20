@@ -7,7 +7,7 @@
 -- Delete all objects
 scene_graph.clear()
 -- Create object
-scene_graph.create_object('OGF::MeshGrob')
+scene_graph.create_object(OGF.MeshGrob)
 -- Rename current object
 scene_graph.current().rename('MySurface')
 -- Change current object
@@ -19,7 +19,7 @@ scene_graph.current().shader.mesh_style='true; 0 0 0 1; 2'
 
 -- If 'C' already exists, returns it, else creates it
 -- Useful for scripts that you wand to execute several times
-C = scene_graph.find_or_create_object('OGF::MeshGrob', 'C')
+C = scene_graph.find_or_create_object(OGF.MeshGrob, 'C')
 C.clear()
 C.I.Shapes.create_box()
 
@@ -45,7 +45,7 @@ C.I.Shapes.create_box()
 -- * Global Graphite objects are:
 --      main: the OGF::Application
 --      scene_graph
---      scene_graph.scene_graph_shader_manager : the 'shader manager' 
+--      scene_graph.scene_graph_shader_manager : the 'shader manager'
 --      main.render_area                       : the 'rendering window'
 --
 -- * mesh_style is 'on/off; r g b a; width'  (a is supposed to be 1)
@@ -53,9 +53,9 @@ C.I.Shapes.create_box()
 -- * Commands are accessible through object.I.XXX
 --   Try this: in the console, type 'scene_graph.current().I' then
 --      'tab' for autocompletion
---   Autocompletion in terminal in a function call gives the parameters names 
+--   Autocompletion in terminal in a function call gives the parameters names
 --      and default values
--- 
+--
 -- * The scene_graph has a current object
 --   scene_graph.current() returns the current object
 --   scene_graph.current_object returns the name of the current object
@@ -63,5 +63,3 @@ C.I.Shapes.create_box()
 --     is the name of the object you want to set)
 --
 -- * Object with name 'XXX' can be directly obtained through scene_graph.objects.XXX
-
-

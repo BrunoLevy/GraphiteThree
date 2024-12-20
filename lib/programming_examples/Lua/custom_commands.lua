@@ -187,9 +187,7 @@ function create_shape(args)
 
     main.save_state() -- needed by undo()/redo()
 
-    local o = scene_graph.create_object({
-        classname='OGF::MeshGrob',name=args.name
-    })
+    local o = scene_graph.create_object(OGF.MeshGrob, args.name)
 
     if(args.method == 'square') then
        x1 = 0

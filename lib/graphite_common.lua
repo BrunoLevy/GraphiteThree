@@ -72,10 +72,10 @@ end
 -- \param a the time to sleep in seconds
 -- (floating point number)
 
-function sleep(a) 
-    local sec = tonumber(os.clock() + a); 
-    while (os.clock() < sec) do 
-    end 
+function sleep(a)
+    local sec = tonumber(os.clock() + a);
+    while (os.clock() < sec) do
+    end
 end
 
 -- Auto load plugins declared in the sources
@@ -97,7 +97,7 @@ function auto_load_plugins()
 end
 
 -- Post-init mechanism
--- (loads scripts and objects specified on the command line 
+-- (loads scripts and objects specified on the command line
 --  after the GUI is created and ready to start)
 
 function post_init()
@@ -106,7 +106,7 @@ function post_init()
 	scene_graph.scene_graph_shader_manager.full_screen_effect(
 	   gom.get_environment_value('gfx:default_full_screen_effect')
 	)
-    end	   
+    end
 
     auto_load_plugins()
 
@@ -123,7 +123,7 @@ function post_init()
 	    if main ~= nil then
 	       main.exec_command('gom.execute_file(\''..arg..'\')')
 	    else
-	       gom.execute_file(arg)	   
+	       gom.execute_file(arg)
 	    end
 	 else
             scene_graph.load_object(arg)
@@ -135,6 +135,5 @@ end
 
 -- Numerical library, helpers.
 
+OGF = gom.meta_types.OGF
 NL = gom.create({classname = 'OGF::NL::Library'})
-
-

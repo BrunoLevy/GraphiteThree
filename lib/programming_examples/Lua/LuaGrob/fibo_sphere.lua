@@ -17,10 +17,14 @@ function draw()
      local theta = (2*pi)*n/phi;
      local x = r*math.sin(theta);
      local y = r*math.cos(theta);
+     x = 0.5 + x*0.5
+     y = 0.5 + y*0.5
+     z = 0.5 + z*0.5
      GLUP.Color(x,y,z)
-     GLUP.Vertex(x,y,z, 0.1)
+     GLUP.Vertex(x,y,z, 0.05)
    end
   GLUP.End()
   GLUP.Disable(GLUP.VERTEX_COLORS)  
 end
+
 
