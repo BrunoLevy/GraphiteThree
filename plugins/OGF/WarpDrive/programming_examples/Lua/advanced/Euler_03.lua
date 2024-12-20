@@ -132,7 +132,7 @@ end
 search_grid = {}
 search_grid.nU = math.floor(math.sqrt(N))*5
 search_grid.nV = search_grid.nU
-search_grid.first = gom.create('OGF::NL::Vector')
+search_grid.first = OGF.NL.Vector.create()
 
 search_grid.first.resize({
    new_size=search_grid.nU * search_grid.nV,

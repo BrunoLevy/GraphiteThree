@@ -3,7 +3,7 @@
 
 text_editor_gui = {}
 text_editor_gui.visible = false
-text_editor = gom.create({classname='OGF::TextEditor',interpreter=gom})
+text_editor = OGF.TextEditor.create(gom)
 text_editor.text = '-- Lua (Keep this comment, this is an indication for editor\'s \'run\' command)\n\n'
 text_editor_gui.name = 'Programs'
 text_editor_gui.icon = '@code'

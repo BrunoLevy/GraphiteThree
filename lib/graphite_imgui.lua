@@ -2,14 +2,13 @@
 --                Main Lua script for Graphite with ImGUI ///
 -- =============================================================================
 
-main = gom.create({classname='OGF::Application',interpreter=gom})
-
-scene_graph = gom.create({classname='OGF::SceneGraph',interpreter=gom})
+main = gom.meta_types.OGF.Application.create(gom)
+scene_graph = gom.meta_types.OGF.SceneGraph.create(gom)
 scene_graph.render_area = main.render_area
 scene_graph.application = main
 gom.connect(scene_graph.value_changed, main.render_area.update)
 scene_graph.scene_graph_shader_manager =
-    gom.create('OGF::SceneGraphShaderManager')
+    gom.meta_types.OGF.SceneGraphShaderManager.create()
 gom.connect(
     main.render_area.redraw_request,
     scene_graph.scene_graph_shader_manager.draw

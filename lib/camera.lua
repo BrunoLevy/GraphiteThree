@@ -1,9 +1,9 @@
 --  Camera for graphite with Skin_imgui
 ----------------------------------------------------
 
-xform = gom.create('OGF::Transform3d')
-arcball = gom.create('OGF::ArcBall')
-translation = gom.create('OGF::Translation')
+xform = OGF.Transform3d.create()
+arcball = OGF.ArcBall.create()
+translation = OGF.Translation.create()
 
 -- We bind the camera to a global variable so
 -- that scene-graph can save camera position
@@ -106,27 +106,27 @@ function camera_gui.backgrounds()
        main.resolve_icon('backgrounds/blue-white'),
        size,size
      ) then
-	 main.set_style("Light")     
+	 main.set_style("Light")
          main.render_area.background_color_1 = '0.2 0.2 1 1'
          main.render_area.background_color_2 = '1 1 1 1'
      end
-     imgui.SameLine()     
+     imgui.SameLine()
      if imgui.ImageButton(
        'cam_bkgnd_blue-black',
        main.resolve_icon('backgrounds/blue-black'),
        size,size
      ) then
-	 main.set_style("Dark")	      
+	 main.set_style("Dark")
          main.render_area.background_color_1 = '0 0 0.5 1'
          main.render_area.background_color_2 = '0 0 0 1'
      end
-     imgui.SameLine()     
+     imgui.SameLine()
      if imgui.ImageButton(
-       'cam_bkgnd_black',     
+       'cam_bkgnd_black',
        main.resolve_icon('backgrounds/black'),
        size,size
      ) then
-	 main.set_style("Dark")	 	 
+	 main.set_style("Dark")
      end
 
      imgui.PushItemWidth(size*4)
@@ -139,7 +139,7 @@ function camera_gui.backgrounds()
         main.set_style(style)
      end
      imgui.PopItemWidth()
-     
+
      imgui.EndMenu()
 end
 
@@ -171,7 +171,7 @@ function camera_gui.draw_menu()
      if imgui.MenuItem('Save snapshot as...') then
        local extensions =
            gom.get_environment_value('image_write_extensions')
-       extensions = string.gsub(extensions,'*.','')	   
+       extensions = string.gsub(extensions,'*.','')
        imgui.OpenFileDialog(
           '##camera##snapshot_dlg',
           extensions,
@@ -193,7 +193,7 @@ function camera_gui.draw_menu()
   imgui.Separator()
   imgui.NewLine()
   camera_gui.projection_dialog()
-  imgui.NewLine()  
+  imgui.NewLine()
 end
 
 function camera_gui.draw_extra()
@@ -214,7 +214,7 @@ end
 
 autogui.handlers['OGF::ClippingConfig'] =
          function(object, property_name, mtype, tooltip)
-   
+
    local value = object[property_name]
    local words={}
    for word in string.split(value,';') do
@@ -230,7 +230,7 @@ autogui.handlers['OGF::ClippingConfig'] =
    local sel1,sel2,sel3,sel4,sel6,sel7
 
    sel1,active = imgui.Checkbox('##active##'..property_name,active)
-   imgui.SameLine()   
+   imgui.SameLine()
    imgui.Text(property_name)
    autogui.tooltip(tooltip)
 
@@ -239,17 +239,17 @@ autogui.handlers['OGF::ClippingConfig'] =
       sel2,axis = autogui.combo_box_value(
        '##axis##'..property_name,axis,'x;y;z;d'
       )
-      imgui.SameLine()   
+      imgui.SameLine()
       sel3,volume_mode = autogui.combo_box_value(
           '##volume_mode##'..property_name,volume_mode,'std.;cell;strad.;slice'
       )
       imgui.PopItemWidth()
-      imgui.PushItemWidth(main.scaling()*80)   
+      imgui.PushItemWidth(main.scaling()*80)
       sel4, shift = imgui.SliderInt(
             '##shift##'..property_name,shift,-300,300,''
       )
       imgui.PopItemWidth()
-      imgui.SameLine()   
+      imgui.SameLine()
       sel6,invert = imgui.Checkbox('##invert##'..property_name,invert)
       imgui.SameLine()
       if invert then
@@ -261,7 +261,7 @@ autogui.handlers['OGF::ClippingConfig'] =
          imgui.Image(
 	    main.resolve_icon('flip',true),
 	    autogui.icon_size(),autogui.icon_size()
-	 )      
+	 )
       end
       imgui.PushItemWidth(-1)
       sel7, shift = imgui.InputInt(
@@ -271,7 +271,7 @@ autogui.handlers['OGF::ClippingConfig'] =
    end
 
    if sel1 or sel2 or sel3 or sel4 or sel6 or sel7 then
-       local result = 
+       local result =
             tostring(active)..';'
 	     ..axis..';'
 	     ..volume_mode..';'
@@ -290,18 +290,18 @@ end
 function camera_gui.projection(axis)
     camera_gui.home()
     if(    axis == '+X') then
-       xform.rotation_matrix = ' 0 0  1 0   0 1  0 0  -1  0  0 0   0 0 0 1'    
+       xform.rotation_matrix = ' 0 0  1 0   0 1  0 0  -1  0  0 0   0 0 0 1'
     elseif(axis == '-X') then
-       xform.rotation_matrix = ' 0 0 -1 0   0 1  0 0   1  0  0 0   0 0 0 1'    
+       xform.rotation_matrix = ' 0 0 -1 0   0 1  0 0   1  0  0 0   0 0 0 1'
     elseif(axis == '+Y') then
        xform.rotation_matrix = ' 1 0  0 0   0 1  0 0   0  0  1 0   0 0 0 1'
     elseif(axis == '-Y') then
        xform.rotation_matrix = '-1 0  0 0   0 1  0 0   0  0 -1 0   0 0 0 1'
     elseif(axis == '+Z') then
-       xform.rotation_matrix = ' 1 0  0 0   0 0  1 0   0 -1  0 0   0 0 0 1'    
+       xform.rotation_matrix = ' 1 0  0 0   0 0  1 0   0 -1  0 0   0 0 0 1'
     elseif(axis == '-Z') then
        xform.rotation_matrix = ' 1 0  0 0   0 0 -1 0   0  1  0 0   0 0 0 1'
-    end       
+    end
 end
 
 function camera_gui.projection_dialog()
@@ -337,7 +337,7 @@ function camera_gui.projection_dialog()
     imgui.SameLine(offset)
     axis_button('+Z',b)
     imgui.NewLine()
- 
+
     imgui.SameLine(offset-37)
     axis_button('-X',r)
     imgui.SameLine(offset)

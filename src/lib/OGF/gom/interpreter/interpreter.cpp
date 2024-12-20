@@ -525,16 +525,44 @@ namespace OGF {
 	    args_in.nb_args() == 1 &&
 	    args_in.ith_arg_name(0) == "arg#0"
 	) {
-	    // A single argument (supposed to be a string with the classname).
-	    std::string classname = args_in.ith_arg_value(0).as_string();
-	    ArgList args;
-	    result = create(classname, args);
-	    if(result == nullptr) {
-		Logger::err("GOM")
-		    << "create(): could not create object of class: "
-		    << classname
-		    << std::endl;
+	    MetaType* mtype = args_in.ith_arg_type(0);
+
+	    // A single argument, a string with the classname.
+	    if(mtype == ogf_meta<std::string>::type()) {
+		std::string classname = args_in.ith_arg_value(0).as_string();
+		ArgList args;
+		result = create(classname, args);
+		if(result == nullptr) {
+		    Logger::err("GOM")
+			<< "create(): could not create object of class: "
+			<< classname
+			<< std::endl;
+		}
 	    }
+
+	    // A single argument, a MetaClass
+	    if(
+		Any::is_pointer_type(mtype) &&
+		Any::pointed_type(mtype)->is_subtype_of(
+		    ogf_meta<Object>::type()
+		)
+	    ) {
+		Object* object = nullptr;
+		args_in.ith_arg_value(0).get_value(object);
+		MetaClass* mclass = dynamic_cast<MetaClass*>(object);
+		if(mclass != nullptr) {
+		    std::string classname = mclass->name();
+		    ArgList args;
+		    result = create(classname, args);
+		    if(result == nullptr) {
+			Logger::err("GOM")
+			    << "create(): could not create object of class: "
+			    << classname
+			    << std::endl;
+		    }
+		}
+	    }
+
 	} else {
 	    Logger::err("GOM") << "create(): missing classname argument"
 			       << std::endl;

@@ -136,4 +136,4 @@ end
 -- Numerical library, helpers.
 
 OGF = gom.meta_types.OGF
-NL = gom.create({classname = 'OGF::NL::Library'})
+NL = OGF.NL.Library.create()

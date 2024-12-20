@@ -16,4 +16,4 @@
 -- ==============================================================================
 
 gom.execute_file("graphite_common.lua")
-scene_graph = gom.create({classname='OGF::SceneGraph',interpreter=gom})
+scene_graph = OGF.SceneGraph.create(gom)

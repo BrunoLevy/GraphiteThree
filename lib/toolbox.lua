@@ -12,9 +12,9 @@ toolbox_gui.h = 180*main.scaling()
 toolbox_gui.resizable = true
 
 function toolbox_gui.draw_window()
-      graphite_gui.right_pane_width = imgui.GetWindowWidth()      
+      graphite_gui.right_pane_width = imgui.GetWindowWidth()
       if scene_graph.current() ~= nil then
-      
+
             -- Lighten background of buttons for tools selection else
 	    -- we cannot see them.
 	    local pushed_color = false
@@ -46,10 +46,10 @@ function toolbox_gui.draw_window()
 	          size,size
 	       )
 	    end
-	    
-	    imgui.Spacing()	    	    
+
+	    imgui.Spacing()
 	    imgui.Separator()
-	    imgui.Spacing()	    
+	    imgui.Spacing()
 
 	    local grob_class_name = scene_graph.current().meta_class.name
 	    local tool_class_names = gom.get_environment_value(
@@ -58,11 +58,11 @@ function toolbox_gui.draw_window()
 
             for tool_class_name in string.split(tool_class_names,";") do
                local mclass = gom.resolve_meta_type(tool_class_name)
-	       
+
 	       local icon_name = 'tool'
-	       if mclass.has_custom_attribute('icon') then	       
+	       if mclass.has_custom_attribute('icon') then
 	          icon_name = mclass.custom_attribute_value('icon')
-               end		  
+               end
 
 	       if imgui.ImageButton(
 	          'toolbox_'..icon_name,
@@ -81,7 +81,7 @@ function toolbox_gui.draw_window()
 		  -- properties..
 		  if imgui.BeginPopupContextItem(tool_class_name.."##ops") then
 	             tools.tool(tool_class_name)
-		     autogui.properties_editor(tools.current())		  
+		     autogui.properties_editor(tools.current())
 	             imgui.EndPopup()
 	          end
 	       end
@@ -98,19 +98,16 @@ function toolbox_gui.draw_window()
                imgui.PopStyleColor(1)
 	    end
 
-	 end   
+	 end
 end
 
 graphite_main_window.add_module(toolbox_gui)
 
 --------------------------------------------------------
 
-tools = gom.create({
-     classname='OGF::SceneGraphToolsManager',
-     renderer=main.render_area
-}) 
+tools = OGF.SceneGraphToolsManager.create(main.render_area)
 
-ray_pick=gom.create('OGF::RayPicker') 
+ray_pick=OGF.RayPicker.create()
 
 gom.connect(
    main.render_area.mouse_down, ray_pick.grab
@@ -124,13 +121,13 @@ gom.connect(
    main.render_area.mouse_up, ray_pick.release
 ).if_arg('control', 'false').if_arg('shift', 'false')
 
-gom.connect(ray_pick.ray_grab,   tools.grab   ) 
-gom.connect(ray_pick.ray_drag,   tools.drag   )      
-gom.connect(ray_pick.ray_release,tools.release)      
+gom.connect(ray_pick.ray_grab,   tools.grab   )
+gom.connect(ray_pick.ray_drag,   tools.drag   )
+gom.connect(ray_pick.ray_release,tools.release)
 
 gom.connect(
    scene_graph.scene_graph_shader_manager.focus_changed,
    tools.focus
-) 
+)
 
 ----------------------------------------------------------
