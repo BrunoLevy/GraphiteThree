@@ -21,12 +21,12 @@ point    = E.find_attribute('vertices.point')
 -- mass, speed vector and centroid of Laguerre cell
 mass     = E.find_or_create_attribute('vertices.mass')
 
--- Initialize masses with nice sine wave, 
+-- Initialize masses with nice sine wave,
 -- and heavy fluid on top.
 for v = 0,E.nb_vertices-1 do
-   local x = point[3*v]
-   local y = point[3*v+1]
-   local f =0.1*math.sin(x*10) 
+   local x = point[{v,0}]
+   local y = point[{v,1}]
+   local f =0.1*math.sin(x*10)
    if (y-0.5) > f then
       mass[v] = 3
    else
@@ -52,5 +52,3 @@ autogui.open_command_dialog_for_current_object(
    'Euler2d',
    {nb_iter=500}
 )
-
-

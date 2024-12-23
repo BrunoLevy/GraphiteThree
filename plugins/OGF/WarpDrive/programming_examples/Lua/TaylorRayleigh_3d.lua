@@ -21,17 +21,17 @@ mass  = E.find_or_create_attribute('vertices.mass')
 
 
 for v = 0,E.nb_vertices-1 do
-   local x = point[3*v]
-   local y = point[3*v+1]
-   local z = point[3*v+2]
+   local x = point[{v,0}]
+   local y = point[{v,1}]
+   local z = point[{v,2}]
    local f = -0.1*math.cos((x-0.5)*10)*math.cos((y-0.5)*10)
    if z-0.5 > f then
       mass[v] = 3
    else
       mass[v] = 1
-   end 
+   end
 end
- 
+
 points.shader.painting='ATTRIBUTE'
 points.shader.attribute='vertices.mass'
 points.shader.colormap = 'blue_red;true;0;false;false;;'
@@ -47,4 +47,3 @@ autogui.open_command_dialog_for_current_object(
    'Euler3d',
    {nb_iter=100}
 )
-

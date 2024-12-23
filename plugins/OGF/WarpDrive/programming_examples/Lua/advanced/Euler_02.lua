@@ -35,12 +35,12 @@ function Euler_step()
       local Fy = - mass[v] * G
 
       -- V += tau * a ; F = ma ==> V += tau * F / m
-      V[2*v]   = V[2*v]   + tau * Fx / mass[v]
-      V[2*v+1] = V[2*v+1] + tau * Fy / mass[v]
+      V[{v,0}] = V[{v,0}] + tau * Fx / mass[v]
+      V[{v,1}] = V[{v,1}] + tau * Fy / mass[v]
 
       -- position += tau * V
-      point[3*v]   = point[3*v]   + tau*V[2*v]
-      point[3*v+1] = point[3*v+1] + tau*V[2*v+1]
+      point[{v,0}] = point[{v,0}] + tau*V[{v,0}]
+      point[{v,1}] = point[{v,1}] + tau*V[{v,1}]
    end
    show_speeds()
    points.redraw()
@@ -54,28 +54,28 @@ function bounce_on_borders(v)
    -- Damping of speed when there is a choc
    local damp = 0.9
 
-   if point[3*v] > 1.0 then
-      point[3*v] = 1.0
-      V[2*v]   = -damp * V[2*v]
-      V[2*v+1] =  damp * V[2*v+1]
+   if point[{v,0}] > 1.0 then
+      point[{v,0}] = 1.0
+      V[{v,0}] = -damp * V[{v,0}]
+      V[{v,1}] =  damp * V[{v,1}]
    end
 
-   if point[3*v] < 0.0 then
-      point[3*v] = 0.0
-      V[2*v]   = -damp * V[2*v]
-      V[2*v+1] =  damp * V[2*v+1]
+   if point[{v,0}] < 0.0 then
+      point[{v,0}] = 0.0
+      V[{v,0}] = -damp * V[{v,0}]
+      V[{v,1}] =  damp * V[{v,1}]
    end
 
-   if point[3*v+1] > 1.0 then
-      point[3*v+1] = 1.0
-      V[2*v]   =  damp * V[2*v]
-      V[2*v+1] = -damp * V[2*v+1]
+   if point[{v,1}] > 1.0 then
+      point[{v,1}] = 1.0
+      V[{v,0}] =  damp * V[{v,0}]
+      V[{v,1}] = -damp * V[{v,1}]
    end
 
-   if point[3*v+1] < 0.0 then
-      point[3*v+1] = 0.0
-      V[2*v]   =  damp * V[2*v]
-      V[2*v+1] = -damp * V[2*v+1]
+   if point[{v,1}] < 0.0 then
+      point[{v,1}] = 0.0
+      V[{v,0}] =  damp * V[{v,0}]
+      V[{v,1}] = -damp * V[{v,1}]
    end
 end
 
@@ -96,21 +96,21 @@ function bounce(v1,v2)
    local m1 = mass[v1]
    local m2 = mass[v2]
 
-   local Vgx = (m1*V[2*v1]   + m2*V[2*v2]  ) / (m1+m2)
-   local Vgy = (m1*V[2*v1+1] + m2*V[2*v2+1]) / (m1+m2)
+   local Vgx = (m1*V[{v1,0}] + m2*V[{v2,0}]) / (m1+m2)
+   local Vgy = (m1*V[{v1,1}] + m2*V[{v2,1}]) / (m1+m2)
 
    local Vgnorm = math.sqrt(Vgx*Vgx+Vgy*Vgy)
 
    local Nx=-Vgy/Vgnorm
    local Ny= Vgx/Vgnorm
 
-   local dot = V[2*v1]*Nx + V[2*v1+1]*Ny
-   V_new[2*v1  ] = damp * (V[2*v1]   - 2*dot*Nx)
-   V_new[2*v1+1] = damp * (V[2*v1+1] - 2*dot*Ny)
+   local dot = V[{v1,0}]*Nx + V[{v1,1}]*Ny
+   V_new[{v1,0}] = damp * (V[{v1,0}] - 2*dot*Nx)
+   V_new[{v1,1}] = damp * (V[{v1,1}] - 2*dot*Ny)
 
-   dot = V[2*v2]*Nx + V[2*v2+1]*Ny
-   V_new[2*v2  ] = damp * (V[2*v2]   - 2*dot*Nx)
-   V_new[2*v2+1] = damp * (V[2*v2+1] - 2*dot*Ny)
+   dot = V[{v2,0}]*Nx + V[{v2,1}]*Ny
+   V_new[{v2,0}] = damp * (V[{v2,0}] - 2*dot*Nx)
+   V_new[{v2,1}] = damp * (V[{v2,1}] - 2*dot*Ny)
 
 end
 
@@ -123,18 +123,18 @@ end
 -- \retval false otherwise
 
 function choc(v1,v2)
-    local x1 = point[3*v1]
-    local y1 = point[3*v1+1]
-    local x2 = point[3*v2]
-    local y2 = point[3*v2+1]
+    local x1 = point[{v1,0}]
+    local y1 = point[{v1,1}]
+    local x2 = point[{v2,0}]
+    local y2 = point[{v2,1}]
     local dx = x2-x1
     local dy = y2-y1
     local dist = dx*dx+dy*dy
     if dist < radius2 then
-         local vx1 = V[2*v1]
-         local vy1 = V[2*v1+1]
-         local vx2 = V[2*v1]
-         local vy2 = V[2*v1+1]
+         local vx1 = V[{v1,0}]
+         local vy1 = V[{v1,1}]
+         local vx2 = V[{v1,0}]
+         local vy2 = V[{v1,1}]
          if(
              dx*vx1+dy*vy1 > 0.0 or
              dx*vx2+dy*vy2 < 0.0
@@ -174,14 +174,14 @@ vertex_id = E.find_or_create_attribute('vertices.id')
 -- Start with points at centroids, and initial speeds at zero.
 function Euler_init()
     if N == 2 then
-       E.create_vertex(1,0)
-       E.create_vertex(0,0)
+       E.create_vertex({1,0,0})
+       E.create_vertex({0,0,0})
        mass[0] = 1
        mass[1] = 1
-       V[0] = -4
-       V[1] = 4
-       V[2] = 4
-       V[3] = 4
+       V[{0,0}] = -4
+       V[{0,1}] = 4
+       V[{1,0}] = 4
+       V[{1,1}] = 4
        vertex_id[0] = 0
        vertex_id[1] = 1
        show_speeds()
@@ -190,10 +190,10 @@ function Euler_init()
     for v=0,N-1 do
        local x = 0.1 + 0.8*math.random()
        local y = 0.1 + 0.8*math.random()
-       E.create_vertex(x,y)
+       E.create_vertex({x,y,0})
        mass[v] = 1
-       V[2*v]   = 3.0 * (math.random()-0.5)
-       V[2*v+1] = 3.0 * (math.random()-0.5)
+       V[{v,0}] = 3.0 * (math.random()-0.5)
+       V[{v,1}] = 3.0 * (math.random()-0.5)
        vertex_id[v] = v
     end
     points.update()
@@ -217,20 +217,19 @@ function show_speeds()
    end
    speeds_display.clear()
    E_speeds_display.create_vertices(2*N)
-   local off = 3*N
    local scale = 0.05
    if N <= 10 then
       scale = 0.075
    end
    for v=0,N-1 do
-      local x = point[3*v]
-      local y = point[3*v+1]
-      local Vx = V[2*v]
-      local Vy = V[2*v+1]
-      speeds_display_points[3*v]   = x
-      speeds_display_points[3*v+1] = y
-      speeds_display_points[3*v  +off] = x + scale * Vx
-      speeds_display_points[3*v+1+off] = y + scale * Vy
+      local x = point[{v,0}]
+      local y = point[{v,1}]
+      local Vx = V[{v,0}]
+      local Vy = V[{v,1}]
+      speeds_display_points[{v,0}]   = x
+      speeds_display_points[{v,1}] = y
+      speeds_display_points[{v+N,0}] = x + scale * Vx
+      speeds_display_points[{v+N,1}] = y + scale * Vy
       E_speeds_display.create_edge(v, v+N)
    end
    speeds_display.visible=true
