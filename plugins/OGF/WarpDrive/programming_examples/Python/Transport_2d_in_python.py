@@ -52,18 +52,18 @@ def distance(XYZ, v1, v2):
 
 def compute_linear_system(H,b):
    global RVD,OT
-    
+
    # Get the Laguerre diagram (RVD) as a triangulation
-   OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')  
+   OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
    RVD.I.Surface.triangulate()
    RVD.I.Surface.merge_vertices(1e-10)
 
    # vertex v's coordinates are XYZ[v][0], XYZ[v][1]
    XYZ   = numpy.asarray(RVD.I.Editor.find_attribute('vertices.point'))
-   
+
    # Triangle t's vertices indices are T[t][0], T[t][1], T[t][2]
    T     = numpy.asarray(RVD.I.Editor.get_triangles())
-   
+
    # The indices of the triangles adjacent to triangle t are
    #    Tadj[t][0], Tadj[t][1], Tadj[t][2]
    #  WARNING: they do not follow the usual convention for triangulations
@@ -80,53 +80,53 @@ def compute_linear_system(H,b):
    #      adj0
    #
    # (Yes, I know, this is stupid and you hate me !!)
-   
+
    Tadj  = numpy.asarray(RVD.I.Editor.get_triangle_adjacents())
 
-   # chart[t] indicates the index of the seed that corresponds to the 
+   # chart[t] indicates the index of the seed that corresponds to the
    #  Laguerre cell that t belongs to
    chart = numpy.asarray(RVD.I.Editor.find_attribute('facets.chart'))
-   
+
    # The coordinates of the seeds
    seeds_XYZ = numpy.asarray(points.I.Editor.find_attribute('vertices.point'))
 
    # The number of triangles in the triangulation of the Laguerre diagram
    nt = T.shape[0]
-   
+
    # For each triangle of the triangulation of the Laguerre diagram
    for t in range(nt):
 
      # Triangle t is in the Laguerre cell of i
-     i  = numpy.asscalar(chart[t])
+     i  = chart.item(t) # numpy.asscalar(chart[t])
 
      # Accumulate right-hand side (Laguerre cell areas)
 
      b[i] = b[i] + triangle_area(XYZ, T[t,0], T[t,1], T[t,2])
-     
+
      #   For each triangle edge, determine whether the triangle edge
      # is on a Laguerre cell boundary and accumulate its contribution
      # to the Hessian
-     
+
      for e in range(3):
          # index of adjacent triangle accross edge e
          tneigh = Tadj[t,e]
 
 	     # test if we are not on Omega boundary
          if tneigh < nt:
-             
+
             # Triangle tneigh is in the Laguerre cell of j
             j = chart[tneigh]
-	    
+
 	        # We are on a Laguerre cell boundary only if t and tneigh
 	        # belong to two different Laguerre cells
             if not (j == i):
-                
+
                # The two vertices of the edge e in triangle t
                v1 = T[t,e]
                v2 = T[t,((e+1)%3)]
-               
+
                hij = distance(XYZ,v1,v2) / (2.0 * distance(seeds_XYZ, i,j))
-               H.add_coefficient(i,j,-hij)    
+               H.add_coefficient(i,j,-hij)
                H.add_coefficient(i,i,hij)
 
 
@@ -160,7 +160,7 @@ def compute():
       for i in range(N):
          smallest_cell_area = min(smallest_cell_area, b[i])
       smallest_cell_threshold = 0.5 * min(smallest_cell_area, Omega_measure/N)
-      print('smallest cell threshold = '+str(smallest_cell_threshold))	 
+      print('smallest cell threshold = '+str(smallest_cell_threshold))
 
    for i in range(N):
      nu_i = Omega_measure/N  # desired area for Laguerre cell i
@@ -195,18 +195,18 @@ def compute():
       # KMT criterion #1 (Laguerre cell area)
       KMT_1 = (smallest_cell_area > smallest_cell_threshold)
 
-      # KMT criterion #2 (gradient norm)      
+      # KMT criterion #2 (gradient norm)
       KMT_2 = (g_norm_substep <= (1.0 - 0.5*alpha) * g_norm)
 
       if KMT_1 and KMT_2:
          break
- 
+
       print(
          '      KMT #1 (cell area):'+str(KMT_1)+' '+
       	     str(smallest_cell_area) + '>' +
       	     str(smallest_cell_threshold)
       )
-      
+
       print(
          '      KMT #2 (gradient ):'+str(KMT_2)+' '+
       	     str(g_norm_substep) + '<=' +
@@ -232,7 +232,7 @@ def compute():
 scene_graph.clear()
 Omega = scene_graph.create_object('OGF::MeshGrob')
 Omega.rename('Omega')
-Omega.I.Shapes.create_square()
+Omega.I.Shapes.create_quad()
 Omega.I.Surface.triangulate()
 
 # Create points (random sampling of Omega)
@@ -261,7 +261,7 @@ RVD.rename('RVD')
 # -------------------------------------------------
 OT = points.I.Transport
 weight   = NL.create_vector(N)
-OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')   
+OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
 
 # -------------------------------------------------
 # Change graphic attributes of diagram
@@ -270,7 +270,7 @@ Omega.visible=False
 RVD.shader.painting='ATTRIBUTE'
 RVD.shader.attribute='facets.chart'
 RVD.shader.colormap = 'plasma;false;732;false;false;;'
-RVD.shader.autorange() 
+RVD.shader.autorange()
 
 # ------------------------------------------
 # GUI
@@ -286,9 +286,9 @@ RVD.shader.autorange()
 
 gom.interpreter("Lua").execute(command="""
 
-OT_dialog = {} 
+OT_dialog = {}
 OT_dialog.visible = true
-OT_dialog.name = 'Transport' 
+OT_dialog.name = 'Transport'
 OT_dialog.x = 100
 OT_dialog.y = 400
 OT_dialog.w = 150
@@ -304,5 +304,3 @@ end
 graphite_main_window.add_module(OT_dialog)
 
 """,save_in_history=False,log=False)
-
-

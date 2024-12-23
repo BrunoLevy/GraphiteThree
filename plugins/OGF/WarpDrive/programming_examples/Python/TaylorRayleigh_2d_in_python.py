@@ -25,11 +25,11 @@ def Euler_stop():
 
 def Euler_step():
    OT = points.I.Transport
- 
+
    # Timestep
    tau = 0.001
 
-   # Stiffness of the 'spring' pressure force that pulls the 
+   # Stiffness of the 'spring' pressure force that pulls the
    # points towards the centroids
    epsilon = 0.004
 
@@ -56,7 +56,7 @@ def Euler_step():
    points.redraw()
 
 def Euler_steps(n):
-   global Euler_stopped 
+   global Euler_stopped
    Euler_stopped = False
    # todo: figure out why integers became floats through inter-language interop.
    for i in range(n):
@@ -67,10 +67,10 @@ def Euler_steps(n):
 # #####################
 # Initialization
 # #####################
-      
+
 scene_graph.clear()
 Omega = scene_graph.create_object(classname='Mesh',name='Omega')
-Omega.I.Shapes.create_square()
+Omega.I.Shapes.create_quad()
 Omega.I.Surface.triangulate()
 Omega.I.Points.sample_surface(nb_points=N)
 scene_graph.current_object = 'points'
@@ -87,12 +87,12 @@ V         = numpy.asarray(E.find_or_create_attribute(attribute_name='vertices.sp
 Acentroid = gom.create(classname='OGF::NL::Vector',size=E.nb_vertices,dimension=2)
 centroid  = numpy.asarray(Acentroid)
 
-## Initialize masses with nice sine wave, 
+## Initialize masses with nice sine wave,
 ## and heavy fluid on top.
 for v in range(E.nb_vertices):
    x = point[v,0]
    y = point[v,1]
-   f =0.1*math.sin(x*10) 
+   f =0.1*math.sin(x*10)
    if (y-0.5) > f:
       mass[v] = 3
    else:
@@ -113,11 +113,11 @@ def Euler_init():
       point[v,0] = centroid[v,0]
       point[v,1] = centroid[v,1]
       V[v,0] = 0.0
-      V[v,1] = 0.0 
+      V[v,1] = 0.0
    points.update()
 
 Euler_init()
-      
+
 # #####################
 # GUI
 # #####################
@@ -131,9 +131,9 @@ gom.interpreter("Lua").execute(command="""
 
 require('math')
 
-Euler_dialog = {} 
+Euler_dialog = {}
 Euler_dialog.visible = true
-Euler_dialog.name = 'Euler' 
+Euler_dialog.name = 'Euler'
 Euler_dialog.x = 100
 Euler_dialog.y = 400
 Euler_dialog.w = 150
@@ -141,11 +141,11 @@ Euler_dialog.h = 250
 Euler_dialog.width = 400
 Euler_dialog.nb_steps = 1000
 Euler_dialog.icon = '@flask'
- 
+
 function Euler_dialog.draw_window()
    imgui.PushItemWidth(-1)
    imgui.Text('nb timesteps')
-    _,Euler_dialog.nb_steps = 
+    _,Euler_dialog.nb_steps =
        imgui.InputInt('##nb_steps',Euler_dialog.nb_steps)
    imgui.Separator()
    if imgui.Button('run Euler',-1,0) then
@@ -163,4 +163,3 @@ end
 graphite_main_window.add_module(Euler_dialog)
 
 """,save_in_history=False,log=False)
-
