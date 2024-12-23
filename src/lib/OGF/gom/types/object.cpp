@@ -317,6 +317,10 @@ namespace OGF {
 	return 0;
     }
 
+    index_t Object::get_dimension() const {
+	return 0;
+    }
+
     void Object::get_element(index_t i, Any& value) const {
 	geo_argused(i);
 	geo_argused(value);

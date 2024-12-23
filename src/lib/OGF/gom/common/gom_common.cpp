@@ -87,6 +87,10 @@ namespace OGF {
 	ogf_declare_builtin_type<vec3>("OGF::vec3");
 	ogf_declare_builtin_type<vec4>("OGF::vec4");
 
+	ogf_declare_builtin_type<vec2i>("OGF::vec2i");
+	ogf_declare_builtin_type<vec3i>("OGF::vec3i");
+	ogf_declare_builtin_type<vec4i>("OGF::vec4i");
+
 	ogf_declare_builtin_type<mat2>("OGF::mat2");
 	ogf_declare_builtin_type<mat3>("OGF::mat3");
 	ogf_declare_builtin_type<mat4>("OGF::mat4");

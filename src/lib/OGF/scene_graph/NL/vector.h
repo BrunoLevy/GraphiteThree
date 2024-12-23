@@ -96,14 +96,14 @@ namespace OGF {
 	     ~Vector() override;
 
 	    /**
-	     * \brief Gets an element.
+	     * \brief Gets an element by linear index.
 	     * \param[in] i element index, in 0..nb_elements()-1
 	     * \param[out] value the value of the element, stored in an Any.
 	     */
 	    void get_element(index_t i, Any& value) const override;
 
 	    /**
-	     * \brief Sets an element.
+	     * \brief Sets an element by linear index.
 	     * \param[in] i element index, in 0..nb_elements()-1
 	     * \param[in] value the value of the element, stored in an Any.
 	     */
@@ -142,10 +142,9 @@ namespace OGF {
 	    }
 
 	    /**
-	     * \brief Gets the dimension.
-	     * \return the number of elements per item.
+	     * \copydoc Object::get_dimension()
 	     */
-	    index_t get_dimension() const {
+	    index_t get_dimension() const override {
 		return dimension();
 	    }
 

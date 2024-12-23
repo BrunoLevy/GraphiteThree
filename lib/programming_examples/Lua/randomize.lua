@@ -19,17 +19,17 @@ for v=0,E.nb_vertices-1 do
    -- get coordinates of current vertex
    -- (point is a 'vector attribute', with 3
    --  elements per item).
-   local x = point[3*v]
-   local y = point[3*v+1]
-   local z = point[3*v+2]
+   local x = point[{v,0}]
+   local y = point[{v,1}]
+   local z = point[{v,2}]
 
 
    x = x + (math.random() - 0.5) * 0.02
    y = y + (math.random() - 0.5) * 0.02
    z = z + (math.random() - 0.5) * 0.02
 
-   point[3*v]   = x
-   point[3*v+1] = y
-   point[3*v+2] = z
+   point[{v,0}] = x
+   point[{v,1}] = y
+   point[{v,2}] = z
 
 end

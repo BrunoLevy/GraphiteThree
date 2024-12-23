@@ -252,6 +252,30 @@ namespace OGF {
 	 */
 	virtual void set_element(index_t i, const Any& value);
 
+	/**
+	 * \brief Gets an element by item and component.
+	 * \param[in] item, in 0..nb_items()-1
+	 * \param[in] component, in 0..dimension()-1
+	 * \param[out] value the value of the element, stored in an Any.
+	 */
+	void get_element(
+	    index_t item, index_t component, Any& value
+	) const {
+	    get_element(item * get_dimension() + component, value);
+	}
+
+	/**
+	 * \brief Sets an element by item and component.
+	 * \param[in] item, in 0..nb_items()-1
+	 * \param[in] component, in 0..dimension()-1
+	 * \param[in] value the value of the element, stored in an Any.
+	 */
+	void set_element(
+	    index_t item, index_t component, const Any& value
+	) {
+	    set_element(item * get_dimension() + component, value);
+	}
+
         /**
          * \brief Displays the names of all objects that
          *   contain a substring
@@ -270,6 +294,14 @@ namespace OGF {
 	 *  in scripting language.
 	 */
 	virtual index_t get_nb_elements() const;
+
+
+	/**
+	 * \brief Gets the number of elements per item.
+	 * \details Part of the array interface, used by operator[]
+	 *  in scripting language.
+	 */
+	virtual index_t get_dimension() const;
 
         /**
          * \brief Tests wheter signals are enabled.

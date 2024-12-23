@@ -242,51 +242,103 @@ namespace {
     /***************************************************/
 
     /**
-     * \brief Converts a lua object into a Graphite vec2,vec3 or vec4
-     * \tparam N dimension of the vector
+     * \brief Converts a lua object into a value
+     * \tparam T type of the value
      * \param[in] L a pointer to the Lua state
      * \param[in] index the index of the object in thestack
-     * \param[out] result the converted vector
+     * \param[out] result a reference to the read value
+     * \retval true if the conversion was successful
+     * \retval false otherwise (LUA type did not match)
+     */
+    template <class T> inline bool lua_tographiteveccomp(
+	lua_State* L, int index, T& result
+    ) {
+	geo_argused(L);
+	geo_argused(index);
+	geo_argused(result);
+	geo_assert_not_reached;
+    }
+
+    template<> inline bool lua_tographiteveccomp<double>(
+	lua_State* L, int index, double& result
+    ) {
+	if(lua_type(L,index) == LUA_TNUMBER) {
+	    result = lua_tonumber(L,index);
+	    return true;
+	}
+	return false;
+    }
+
+    template<> inline bool lua_tographiteveccomp<Numeric::int32>(
+	lua_State* L, int index, Numeric::int32& result
+    ) {
+	if(lua_type(L,index) == LUA_TNUMBER && lua_isinteger(L,index)) {
+	    result = GEO::Numeric::int32(lua_tointeger(L,index));
+	    return true;
+	}
+	return false;
+    }
+
+
+    /**
+     * \brief Converts a lua object into a Graphite vec2,vec3 or vec4
+     * \tparam N dimension of the vector
+     * \tparam T type of the components
+     * \param[in] L a pointer to the Lua state
+     * \param[in] index the index of the object in thestack
+     * \param[out] result a reference to the converted vector
+     * \retval true if the conversion was successful
+     * \retval false otherwise (mtype does not match, or object on
+     *  the stack is not an integer-indexed table of numbers of the
+     *  correct size).
+     */
+    template<unsigned int N, class T> inline bool lua_tographitevec(
+	lua_State* L, int index, ::GEO::vecng<N,T>& result
+    ) {
+	if(!lua_istable(L,index)) {
+	    return false;
+	}
+
+	index_t cur = 0;
+	bool ok = true;
+
+	for(lua_Integer i=1; lua_geti(L,index,i) != LUA_TNIL; ++i) {
+	    if(cur < N) {
+		ok = ok && lua_tographiteveccomp(L,-1,result[cur]);
+	    }
+	    ++cur;
+	    lua_pop(L,1);
+	}
+	lua_pop(L,1); // lua_geti() pushes smthg on the stack
+	              // even for the last round of the loop !
+
+	return(ok && cur == index_t(N));
+    }
+
+    /**
+     * \brief Converts a lua object into a Graphite vec2,vec3 or vec4
+     * \tparam N dimension of the vector
+     * \tparam T type of the components
+     * \param[in] L a pointer to the Lua state
+     * \param[in] index the index of the object in thestack
+     * \param[out] result the converted vector as an Any
      * \param[in] mtype the meta-type (vec2, vec3 or vec4)
      * \retval true if the conversion was successful
      * \retval false otherwise (mtype does not match, or object on
      *  the stack is not an integer-indexed table of numbers of the
      *  correct size).
      */
-    template<unsigned int N> inline bool lua_tographitevec(
+    template<unsigned int N, class T> inline bool lua_tographitevec(
 	lua_State* L, int index, Any& result, MetaType* mtype
     ) {
-	if(mtype != ogf_meta<::GEO::vecng<N,double> >::type()) {
+	if(mtype != ogf_meta<::GEO::vecng<N,T> >::type()) {
 	    return false;
 	}
-	if(!lua_istable(L,index)) {
+	GEO::vecng<N,T> V;
+	if(!lua_tographitevec(L, index, V)) {
 	    return false;
 	}
-
-	GEO::vecng<N,double> V;
-	index_t cur = 0;
-	bool ok = true;
-
-	for(lua_Integer i=1; lua_geti(L,index,i) != LUA_TNIL; ++i) {
-	    if(lua_type(L,-1) == LUA_TNUMBER) {
-		if(cur < N) {
-		    V[cur] = lua_tonumber(L,-1);
-		}
-		++cur;
-	    } else {
-		ok = false;
-	    }
-	    lua_pop(L,1);
-	}
-	lua_pop(L,1); // lua_geti() pushes smthg on the stack
-	              // even for the last round of the loop !
-
-	if(!ok || cur != index_t(N)) {
-	    return false;
-	}
-
 	result.set_value(V);
-
 	return true;
     }
 
@@ -333,17 +385,30 @@ namespace {
 		}
 	    }
 
-	    if(lua_tographitevec<2>(L, index, result, mtype)) {
+	    if(lua_tographitevec<2,double>(L, index, result, mtype)) {
 		return;
 	    }
 
-	    if(lua_tographitevec<3>(L, index, result, mtype)) {
+	    if(lua_tographitevec<3,double>(L, index, result, mtype)) {
 		return;
 	    }
 
-	    if(lua_tographitevec<4>(L, index, result, mtype)) {
+	    if(lua_tographitevec<4,double>(L, index, result, mtype)) {
 		return;
 	    }
+
+	    if(lua_tographitevec<2,Numeric::int32>(L, index, result, mtype)) {
+		return;
+	    }
+
+	    if(lua_tographitevec<3,Numeric::int32>(L, index, result, mtype)) {
+		return;
+	    }
+
+	    if(lua_tographitevec<4,Numeric::int32>(L, index, result, mtype)) {
+		return;
+	    }
+
 	}
 
 	// Note: for boolean, number and string, we use
@@ -603,14 +668,22 @@ namespace {
      */
     int graphite_array_index(lua_State* L) {
 	geo_debug_assert(lua_isgraphite(L,1));
-	geo_debug_assert(lua_isinteger(L,2));
 	Object* object = lua_tographite(L,1);
-	index_t index = index_t(lua_tointeger(L,2));
 	if(object == nullptr) {
 	    return luaL_error(L, "tried to index nil Graphite object");
 	}
 	Any result;
-	object->get_element(index,result);
+	if(lua_isinteger(L,2)) {
+	    index_t index = index_t(lua_tointeger(L,2));
+	    object->get_element(index,result);
+	} else {
+	    vec2i index;
+	    if(lua_tographitevec(L,2,index)) {
+		object->get_element(
+		    index_t(index[0]), index_t(index[1]), result
+		);
+	    }
+	}
 	lua_pushgraphiteval(L,result);
 	return 1;
     }
@@ -626,12 +699,13 @@ namespace {
     int graphite_index(lua_State* L) {
 	geo_debug_assert(lua_isgraphite(L,1));
 
-	if(lua_isinteger(L,2)) {
-	    return graphite_array_index(L);
-	}
-
-	if(!lua_isstring(L,2)) {
-	    return luaL_error(L, "attribute name is not a string");
+	if(lua_type(L,2) != LUA_TSTRING) {
+	    vec2i index;
+	    if(lua_type(L,2) == LUA_TNUMBER || lua_tographitevec(L,2,index)) {
+		return graphite_array_index(L);
+	    } else {
+		return luaL_error(L, "attribute name is not a string");
+	    }
 	}
 
 	Object* object = lua_tographite(L,1);
@@ -711,10 +785,19 @@ namespace {
 	if(object == nullptr) {
 	    return luaL_error(L, "tried to index nil Graphite object");
 	}
-	index_t index = index_t(lua_tointeger(L,2));
+
 	Any value;
 	lua_tographiteval(L,3,value);
-	object->set_element(index, value);
+
+	if(lua_type(L,2) == LUA_TNUMBER) {
+	    index_t index = index_t(lua_tointeger(L,2));
+	    object->set_element(index, value);
+	} else {
+	    vec2i index;
+	    if(lua_tographitevec(L,2,index)) {
+		object->set_element(index_t(index[0]), index_t(index[1]), value);
+	    }
+	}
 	return 0;
     }
 
@@ -728,8 +811,11 @@ namespace {
     int graphite_newindex(lua_State* L) {
 	geo_debug_assert(lua_isgraphite(L,1));
 
-	if(lua_isinteger(L,2)) {
-	    return graphite_array_newindex(L);
+	{
+	    vec2i index;
+	    if(lua_type(L,2) == LUA_TNUMBER || lua_tographitevec(L,2,index)) {
+		return graphite_array_newindex(L);
+	    }
 	}
 
 	if(!lua_isstring(L,2)) {
