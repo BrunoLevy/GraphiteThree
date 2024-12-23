@@ -16,12 +16,12 @@ smallest_cell_threshold = -1.0
 -- XYZ the coordinates of the mesh vertices (Z is ignored)
 -- v1,v2,v3 the three vertices of the triangle
 function triangle_area(XYZ, v1, v2, v3)
-  local x1 = XYZ[3*v1]
-  local y1 = XYZ[3*v1+1]
-  local x2 = XYZ[3*v2]
-  local y2 = XYZ[3*v2+1]
-  local x3 = XYZ[3*v3]
-  local y3 = XYZ[3*v3+1]
+  local x1 = XYZ[{v1,0}]
+  local y1 = XYZ[{v1,1}]
+  local x2 = XYZ[{v2,0}]
+  local y2 = XYZ[{v2,1}]
+  local x3 = XYZ[{v3,0}]
+  local y3 = XYZ[{v3,1}]
   return math.abs(
     0.5 *(
       (x2-x1)*(y3-y1) - (y2-y1)*(x3-x1)
@@ -33,10 +33,10 @@ end
 -- XYZ the coordinates of the mesh vertices (Z is ignored)
 -- v1 , v2 the mesh extremities index
 function distance(XYZ, v1, v2)
-  local x1 = XYZ[3*v1]
-  local y1 = XYZ[3*v1+1]
-  local x2 = XYZ[3*v2]
-  local y2 = XYZ[3*v2+1]
+  local x1 = XYZ[{v1,0}]
+  local y1 = XYZ[{v1,1}]
+  local x2 = XYZ[{v2,0}]
+  local y2 = XYZ[{v2,1}]
   return math.sqrt(
     (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1)
   )
@@ -99,7 +99,7 @@ function compute_linear_system(H,b)
      local i  = chart[t]
 
      -- Accumulate right-hand side (Laguerre cell areas)
-     b[i] = b[i] + triangle_area(XYZ,T[3*t], T[3*t+1], T[3*t+2])
+     b[i] = b[i] + triangle_area(XYZ, T[{t,0}], T[{t,1}], T[{t,2}])
 
      --   For each triangle edge, determine whether the triangle edge
      -- is on a Laguerre cell boundary and accumulate its contribution
@@ -107,7 +107,7 @@ function compute_linear_system(H,b)
 
      for e=0,2 do
          -- index of adjacent triangle accross edge e
-         local tneigh = Tadj[3*t+e]
+         local tneigh = Tadj[{t,e}]
 
 	 -- test if we are not on Omega boundary
 	 if tneigh < nt then
@@ -120,8 +120,8 @@ function compute_linear_system(H,b)
 	    if not (j == i) then
 
 	       -- The two vertices of the edge e in triangle t
-	       local v1 = T[3*t+e]
-	       local v2 = T[3*t+((e+1)%3)]
+	       local v1 = T[{t,e}]
+	       local v2 = T[{t,(e+1)%3}]
 
 	       local hij = distance(XYZ,v1,v2) / (2.0 * distance(seeds_XYZ, i,j))
 	       H.add_coefficient(i,j,-hij)
@@ -245,8 +245,8 @@ points = scene_graph.resolve('points')
 if shrink_points then
    coords = points.I.Editor.find_attribute('vertices.point')
    for i=0,N-1 do
-      coords[3*i]   = 0.125 + coords[3*i]/4.0
-      coords[3*i+1] = 0.125 + coords[3*i+1]/4.0
+      coords[{i,0}] = 0.125 + coords[{i,0}]/4.0
+      coords[{i,1}] = 0.125 + coords[{i,1}]/4.0
    end
 end
 

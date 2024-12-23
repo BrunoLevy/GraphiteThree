@@ -32,14 +32,14 @@ function Euler_step()
    -- Update forces, speeds and positions (Explicit Euler scheme, super simple !)
    for v = 0,E.nb_vertices-1 do
       -- Compute forces: F = spring_force(point, centroid) - m G Z
-      local Fx = inveps2 * (centroid[2*v]   - point[3*v]  )
-      local Fy = inveps2 * (centroid[2*v+1] - point[3*v+1]) - mass[v] * G
+      local Fx = inveps2 * (centroid[{v,0}] - point[{v,0}])
+      local Fy = inveps2 * (centroid[{v,1}] - point[{v,1}]) - mass[v] * G
       -- V += tau * a ; F = ma ==> V += tau * F / m
-      V[2*v]   = V[2*v]   + tau * Fx / mass[v]
-      V[2*v+1] = V[2*v+1] + tau * Fy / mass[v]
+      V[{v,0}] = V[{v,0}] + tau * Fx / mass[v]
+      V[{v,1}] = V[{v,1}] + tau * Fy / mass[v]
       -- position += tau * V
-      point[3*v]   = point[3*v]   + tau*V[2*v]
-      point[3*v+1] = point[3*v+1] + tau*V[2*v+1]
+      point[{v,0}] = point[{v,0}] + tau*V[{v,0}]
+      point[{v,1}] = point[{v,1}] + tau*V[{v,1}]
    end
    if Euler_dialog.show_Laguerre then
       RVD.visible = true
@@ -57,8 +57,8 @@ function Euler_step()
       for f=0,#RVD_mass-1 do
           local v = RVD_chart[f]
           RVD_mass[f] = mass[v]
-	      RVD_V[2*f] = V[2*v]
-	      RVD_V[2*f+1] = V[2*v+1]
+	      RVD_V[{f,0}] = V[{v,0}]
+	      RVD_V[{f,1}] = V[{v,1}]
       end
       RVD.shader.autorange()
    end
@@ -101,8 +101,8 @@ weight   = NL.create_vector()
 -- Initialize masses with nice sine wave,
 -- and heavy fluid on top.
 for v = 0,E.nb_vertices-1 do
-   local x = point[3*v]
-   local y = point[3*v+1]
+   local x = point[{v,0}]
+   local y = point[{v,1}]
    local f =0.1*math.sin(x*10)
    if (y-0.5) > f then
       mass[v] = 3
@@ -125,10 +125,10 @@ function Euler_init()
       {Omega=Omega,centroids=centroid,weights=weight,mode='EULER_2D'}
    )
    for v = 0,E.nb_vertices-1 do
-      point[3*v]   = centroid[2*v]
-      point[3*v+1] = centroid[2*v+1]
-      V[2*v]   = 0.0
-      V[2*v+1] = 0.0
+      point[{v,0}] = centroid[{v,0}]
+      point[{v,1}] = centroid[{v,1}]
+      V[{v,0}] = 0.0
+      V[{v,1}] = 0.0
    end
    points.update()
 end

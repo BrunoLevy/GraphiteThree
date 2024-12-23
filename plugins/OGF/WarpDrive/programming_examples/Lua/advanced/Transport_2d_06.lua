@@ -131,8 +131,8 @@ E = Omega.I.Editor
 coords = E.find_attribute('vertices.point')
 density = E.create_attribute('vertices.weight')
 for i=0,#density-1 do
-   local x = coords[3*i]
-   local y = coords[3*i+1]
+   local x = coords[{i,0}]
+   local y = coords[{i,1}]
    local s = 0.5 * (1.0 + math.sin(x*10) * math.sin(y*10))
    density[i] = 0.001 + s*s
 end
@@ -154,8 +154,8 @@ coords = E.find_attribute('vertices.point')
 -- -------------------------------------------------
 if shrink_points then
    for i=0,N-1 do
-      coords[3*i]   = 0.125 + coords[3*i]/4.0
-      coords[3*i+1] = 0.125 + coords[3*i+1]/4.0
+      coords[{i,0}] = 0.125 + coords[{i,0}]/4.0
+      coords[{i,1}] = 0.125 + coords[{i,1}]/4.0
    end
 end
 

@@ -19,8 +19,8 @@ function compute()
    Tx = Tx + 0.05
    Ty = Ty + 0.05
    for i=0,N-1 do
-      weight[i] = - 2.0 * Tx * coords[3*i]
-                  - 2.0 * Ty * coords[3*i+1]
+      weight[i] = - 2.0 * Tx * coords[{i,0}]
+                  - 2.0 * Ty * coords[{i,1}]
    end
    OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
    RVD.shader.autorange()
@@ -52,8 +52,8 @@ coords = E.find_attribute('vertices.point')
 -- Shrink points
 -- -------------------------------------------------
 for i=0,N-1 do
-   coords[3*i]   = coords[3*i]/2.0
-   coords[3*i+1] = coords[3*i+1]/2.0
+   coords[{i,0}] = coords[{i,0}]/2.0
+   coords[{i,1}] = coords[{i,1}]/2.0
 end
 
 -- -------------------------------------------------

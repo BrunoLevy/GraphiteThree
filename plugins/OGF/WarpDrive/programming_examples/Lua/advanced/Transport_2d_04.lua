@@ -62,8 +62,8 @@ coords = E.find_attribute('vertices.point')
 -- -------------------------------------------------
 if shrink_points then
    for i=0,N-1 do
-      coords[3*i]   = 0.25 + coords[3*i]/2.0
-      coords[3*i+1] = 0.25 + coords[3*i+1]/2.0
+      coords[{i,0}] = 0.25 + coords[{i,0}]/2.0
+      coords[{i,1}] = 0.25 + coords[{i,1}]/2.0
    end
 end
 
