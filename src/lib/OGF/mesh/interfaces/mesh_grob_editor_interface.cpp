@@ -103,20 +103,16 @@ namespace OGF {
     }
 
 
-    index_t MeshGrobEditor::create_vertex(double x, double y, double z) {
+    index_t MeshGrobEditor::create_vertex(const vec3& V) {
 	if(!check_mesh_grob()) {
 	    return 0;
 	}
-	double p[3];
-	p[0] = x;
-	p[1] = y;
-	p[2] = z;
-	index_t result = mesh_grob()->vertices.create_vertex(p);
+	index_t result = mesh_grob()->vertices.create_vertex(V.data());
 	update();
 	return result;
     }
 
-    void MeshGrobEditor::set_vertex(index_t v, double x, double y, double z) {
+    void MeshGrobEditor::set_vertex(index_t v, const vec3& V) {
 	if(
 	    !check_mesh_grob() ||
 	    !check_vertex_index(v)
@@ -124,10 +120,10 @@ namespace OGF {
 	    return;
 	}
 	double* p = mesh_grob()->vertices.point_ptr(v);
-	p[0] = x;
-	p[1] = y;
+	p[0] = V.x;
+	p[1] = V.y;
 	if(mesh_grob()->vertices.dimension() >= 3) {
-	    p[2] = z;
+	    p[2] = V.z;
 	}
 	update();
     }

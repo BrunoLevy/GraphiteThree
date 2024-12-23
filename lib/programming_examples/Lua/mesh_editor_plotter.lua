@@ -45,7 +45,7 @@ function plot_func(S, func, NU, NV)
       -- really cool ! (note also the multiple return
       -- values, see sphere() and sineprod()
       local x,y,z = func(u,v)
-      E.create_vertex(x,y,z)
+      E.create_vertex({x,y,z})
     end
  end
  for V = 0,NV-2 do

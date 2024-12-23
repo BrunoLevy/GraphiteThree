@@ -20,14 +20,14 @@ E = S.I.Editor
 E.clear()
 
 -- Create the 8 vertices of a cube
-E.create_vertex(0.0, 0.0, 0.0)
-E.create_vertex(0.0, 0.0, 1.0)
-E.create_vertex(0.0, 1.0, 0.0)
-E.create_vertex(0.0, 1.0, 1.0)
-E.create_vertex(1.0, 0.0, 0.0)
-E.create_vertex(1.0, 0.0, 1.0)
-E.create_vertex(1.0, 1.0, 0.0)
-E.create_vertex(1.0, 1.0, 1.0)
+E.create_vertex({0.0, 0.0, 0.0})
+E.create_vertex({0.0, 0.0, 1.0})
+E.create_vertex({0.0, 1.0, 0.0})
+E.create_vertex({0.0, 1.0, 1.0})
+E.create_vertex({1.0, 0.0, 0.0})
+E.create_vertex({1.0, 0.0, 1.0})
+E.create_vertex({1.0, 1.0, 0.0})
+E.create_vertex({1.0, 1.0, 1.0})
 
 -- Create the 6 faces of the cube
 E.create_quad(2,3,1,0)

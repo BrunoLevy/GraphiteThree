@@ -217,18 +217,17 @@ namespace OGF {
 	/**
 	 * \brief Creates a new vertex.
 	 * \details If this is a 2D mesh, \p z is ignored.
-	 * \param[in] x , y , z the coordinates of the vertex.
-	 * \return the index of the newly created vertex.
+	 * \param[in] V a vec3 with the coordinates of the vertex.
 	 */
-	index_t create_vertex(double x=0.0, double y=0.0, double z=0.0);
+	index_t create_vertex(const vec3& V = vec3(0.0, 0.0, 0.0));
 
 	/**
 	 * \brief Sets the coordinates of an existing vertex.
 	 * \details If this is a 2D mesh, \p z is ignored.
 	 * \param[in] v the index of the vertex, in 0..nb_vertices()-1
-	 * \param[in] x , y , z the coordinates of the vertex.
+	 * \param[in] v a vec3 with the coordinates of the vertex.
 	 */
-	void set_vertex(index_t v, double x=0.0, double y=0.0, double z=0.0);
+	void set_vertex(index_t v, const vec3& V = vec3(0.0, 0.0, 0.0));
 
 	/**
 	 * \brief Creates multiple vertices.
@@ -236,7 +235,6 @@ namespace OGF {
 	 * \return the index of the first created vertex.
 	 */
 	index_t create_vertices(index_t nb);
-
 
 	/**
 	 * \brief Creates a facet.

@@ -28,9 +28,9 @@ for v=0,E.nb_vertices-1 do
    -- get coordinates of current vertex
    -- (point is a 'vector attribute', with 3
    --  elements per item).
-   local x = point[3*v]
-   local y = point[3*v+1]
-   local z = point[3*v+2]
+   local x = point[{v,0}]
+   local y = point[{v,1}]
+   local z = point[{v,2}]
 
    -- set the new attribute
    foobar[v] = math.sin(5*x)*math.sin(5*y)*math.sin(5*z)
@@ -43,7 +43,9 @@ S.shader.autorange()
 
 -- Create an attribute of type 'bool', named 'vertices.selection'
 -- It corresponds to the vertices selection in the Toolbox
-selection = E.find_or_create_attribute('vertices.selection',1,gom.resolve_meta_type('bool'))
+selection = E.find_or_create_attribute(
+   'vertices.selection', 1, gom.meta_types.bool
+)
 
 -- Iterate on all the vertices and select
 -- some vertices based on attribute value.
