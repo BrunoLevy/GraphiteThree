@@ -12,18 +12,22 @@
 
 import math,numpy
 
+OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
+
 N = 1000              # Number of points (try with 10000)
 shrink_points = True  # Group points in a smaller area
 
 
 # Computes the area of a mesh triangle
 # XY the coordinates of the mesh vertices
-# v1,v2,v3 the three vertices of the triangle
-def triangle_area(XY, v1, v2, v3):
+# T an array with the three vertices indices of the triangle
+def triangle_area(XY, T):
+  v1 = T[0]
+  v2 = T[1]
+  v3 = T[2]
   U = XY[v2] - XY[v1]
   V = XY[v3] - XY[v1]
   return abs(0.5*(U[0]*V[1] - U[1]*V[0]))
-
 
 # Computes the length of a mesh edge
 # XY the coordinates of the mesh vertices
@@ -38,7 +42,6 @@ def distance(XY, v1, v2):
 #   )
 #  H the matrix of the linear system
 #  b the right-hand side of the linear system
-
 def compute_linear_system(H,b):
    global RVD,OT
 
@@ -48,7 +51,7 @@ def compute_linear_system(H,b):
    RVD.I.Surface.merge_vertices(1e-10)
 
    # vertex v's coordinates are XY[v][0], XY[v][1]
-   XY = numpy.asarray(RVD.I.Editor.find_attribute('vertices.point'))
+   XY = numpy.asarray(RVD.I.Editor.get_points())
 
    # Triangle t's vertices indices are T[t][0], T[t][1], T[t][2]
    T = numpy.asarray(RVD.I.Editor.get_triangles())
@@ -89,7 +92,7 @@ def compute_linear_system(H,b):
      i = chart.item(t) # item() instead of chart[t] because chart[t] is a 1x1 mtx
 
      # Accumulate right-hand side (Laguerre cell areas)
-     b[i] = b[i] + triangle_area(XY, T[t,0], T[t,1], T[t,2])
+     b[i] = b[i] + triangle_area(XY, T[t])
 
      #   For each triangle edge, determine whether the triangle edge
      # is on a Laguerre cell boundary and accumulate its contribution
@@ -98,7 +101,7 @@ def compute_linear_system(H,b):
          # index of adjacent triangle accross edge e
          tneigh = Tadj[t,e]
 
-	 # test if we are not on Omega boundary
+	 # test if we are inside mesh (not on Omega boundary)
          if tneigh < nt:
 
             # Triangle tneigh is in the Laguerre cell of j
@@ -217,31 +220,28 @@ def compute():
 # Create domain Omega (a square)
 # -------------------------------------------------
 scene_graph.clear()
-Omega = scene_graph.create_object('OGF::MeshGrob')
-Omega.rename('Omega')
+Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
 Omega.I.Shapes.create_quad()
 Omega.I.Surface.triangulate()
 
 # Create points (random sampling of Omega)
 Omega.I.Points.sample_surface(nb_points=N,Lloyd_iter=0,Newton_iter=0)
-scene_graph.current_object = 'points'
-points = scene_graph.resolve('points')
+points = scene_graph.objects.points
 
 # -------------------------------------------------
 # Shrink points
 # -------------------------------------------------
 if shrink_points:
-   coords = numpy.asarray(points.I.Editor.find_attribute('vertices.point'))
+   coords = numpy.asarray(points.I.Editor.get_points())
+   # TODO: do that without a loop
    for i in range(N):
-      coords[i,0] = 0.125 + coords[i,0]/4.0
-      coords[i,1] = 0.125 + coords[i,1]/4.0
+      coords[i] = 0.125 + coords[i]/4.0
    points.update()
 
 # -------------------------------------------------
 # Create diagram
 # -------------------------------------------------
-RVD = scene_graph.create_object('OGF::MeshGrob')
-RVD.rename('RVD')
+RVD = scene_graph.create_object(OGF.MeshGrob,'RVD')
 
 # -------------------------------------------------
 # Compute diagram
