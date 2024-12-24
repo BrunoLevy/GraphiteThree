@@ -17,26 +17,26 @@ shrink_points = True  # Group points in a smaller area
 
 
 # Computes the area of a mesh triangle
-# XYZ the coordinates of the mesh vertices (Z is ignored)
+# XY the coordinates of the mesh vertices (Z is ignored)
 # v1,v2,v3 the three vertices of the triangle
-def triangle_area(XYZ, v1, v2, v3):
-  x1 = XYZ[v1,0]
-  y1 = XYZ[v1,1]
-  x2 = XYZ[v2,0]
-  y2 = XYZ[v2,1]
-  x3 = XYZ[v3,0]
-  y3 = XYZ[v3,1]
+def triangle_area(XY, v1, v2, v3):
+  x1 = XY[v1,0]
+  y1 = XY[v1,1]
+  x2 = XY[v2,0]
+  y2 = XY[v2,1]
+  x3 = XY[v3,0]
+  y3 = XY[v3,1]
   return abs(0.5*((x2-x1)*(y3-y1) - (y2-y1)*(x3-x1)))
 
 
 # Computes the length of a mesh edge
-# XYZ the coordinates of the mesh vertices (Z is ignored)
+# XY the coordinates of the mesh vertices (Z is ignored)
 # v1 , v2 the mesh extremities index
-def distance(XYZ, v1, v2):
-  x1 = XYZ[v1,0]
-  y1 = XYZ[v1,1]
-  x2 = XYZ[v2,0]
-  y2 = XYZ[v2,1]
+def distance(XY, v1, v2):
+  x1 = XY[v1,0]
+  y1 = XY[v1,1]
+  x2 = XY[v2,0]
+  y2 = XY[v2,1]
   return math.sqrt(
     (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1)
   )
@@ -58,11 +58,11 @@ def compute_linear_system(H,b):
    RVD.I.Surface.triangulate()
    RVD.I.Surface.merge_vertices(1e-10)
 
-   # vertex v's coordinates are XYZ[v][0], XYZ[v][1]
-   XYZ   = numpy.asarray(RVD.I.Editor.find_attribute('vertices.point'))
+   # vertex v's coordinates are XY[v][0], XY[v][1]
+   XY = numpy.asarray(RVD.I.Editor.find_attribute('vertices.point'))
 
    # Triangle t's vertices indices are T[t][0], T[t][1], T[t][2]
-   T     = numpy.asarray(RVD.I.Editor.get_triangles())
+   T = numpy.asarray(RVD.I.Editor.get_triangles())
 
    # The indices of the triangles adjacent to triangle t are
    #    Tadj[t][0], Tadj[t][1], Tadj[t][2]
@@ -81,14 +81,14 @@ def compute_linear_system(H,b):
    #
    # (Yes, I know, this is stupid and you hate me !!)
 
-   Tadj  = numpy.asarray(RVD.I.Editor.get_triangle_adjacents())
+   Tadj = numpy.asarray(RVD.I.Editor.get_triangle_adjacents())
 
    # chart[t] indicates the index of the seed that corresponds to the
    #  Laguerre cell that t belongs to
    chart = numpy.asarray(RVD.I.Editor.find_attribute('facets.chart'))
 
    # The coordinates of the seeds
-   seeds_XYZ = numpy.asarray(points.I.Editor.find_attribute('vertices.point'))
+   seeds_XY = numpy.asarray(points.I.Editor.find_attribute('vertices.point'))
 
    # The number of triangles in the triangulation of the Laguerre diagram
    nt = T.shape[0]
@@ -97,35 +97,33 @@ def compute_linear_system(H,b):
    for t in range(nt):
 
      # Triangle t is in the Laguerre cell of i
-     i  = chart.item(t) # numpy.asscalar(chart[t])
+     i = chart.item(t) # numpy.asscalar(chart[t])
 
      # Accumulate right-hand side (Laguerre cell areas)
-
-     b[i] = b[i] + triangle_area(XYZ, T[t,0], T[t,1], T[t,2])
+     b[i] = b[i] + triangle_area(XY, T[t,0], T[t,1], T[t,2])
 
      #   For each triangle edge, determine whether the triangle edge
      # is on a Laguerre cell boundary and accumulate its contribution
      # to the Hessian
-
      for e in range(3):
          # index of adjacent triangle accross edge e
          tneigh = Tadj[t,e]
 
-	     # test if we are not on Omega boundary
+	 # test if we are not on Omega boundary
          if tneigh < nt:
 
             # Triangle tneigh is in the Laguerre cell of j
             j = chart[tneigh]
 
-	        # We are on a Laguerre cell boundary only if t and tneigh
-	        # belong to two different Laguerre cells
-            if not (j == i):
+	    # We are on a Laguerre cell boundary only if t and tneigh
+	    # belong to two different Laguerre cells
+            if j != i:
 
                # The two vertices of the edge e in triangle t
                v1 = T[t,e]
                v2 = T[t,((e+1)%3)]
 
-               hij = distance(XYZ,v1,v2) / (2.0 * distance(seeds_XYZ, i,j))
+               hij = distance(XY,v1,v2) / (2.0 * distance(seeds_XY, i,j))
                H.add_coefficient(i,j,-hij)
                H.add_coefficient(i,i,hij)
 
