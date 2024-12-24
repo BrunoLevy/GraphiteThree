@@ -14,6 +14,7 @@
 #   pip install matplotlib==3.0.3
 
 import math,numpy
+OGF = gom.meta_types.OGF # shortcut to Graphite types
 
 Euler_stopped = False
 
@@ -40,7 +41,9 @@ def Euler_step():
 
    # Compute the centroids of the unique Laguerre diagram defined
    # from the points that has constant areas.
-   OT.compute_optimal_Laguerre_cells_centroids(Omega=Omega,centroids=Acentroid,mode='EULER_2D')
+   OT.compute_optimal_Laguerre_cells_centroids(
+       Omega=Omega,centroids=Acentroid,mode='EULER_2D'
+   )
 
    # Update forces, speeds and positions (Explicit Euler scheme, super simple !)
    for v in range(E.nb_vertices):
@@ -83,8 +86,12 @@ point = numpy.asarray(E.find_attribute('vertices.point'))  # [:,[0,1]]
 ## Attributes attached to each vertex:
 ## mass, speed vector and centroid of Laguerre cell
 mass      = numpy.asarray(E.find_or_create_attribute('vertices.mass'))
-V         = numpy.asarray(E.find_or_create_attribute(attribute_name='vertices.speed',dimension=2))
-Acentroid = gom.create(classname='OGF::NL::Vector',size=E.nb_vertices,dimension=2)
+V         = numpy.asarray(
+    E.find_or_create_attribute(attribute_name='vertices.speed',dimension=2)
+)
+Acentroid = gom.create(
+    classname='OGF::NL::Vector',size=E.nb_vertices,dimension=2
+)
 centroid  = numpy.asarray(Acentroid)
 
 ## Initialize masses with nice sine wave,
