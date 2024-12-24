@@ -13,6 +13,9 @@
 #   pip uninstall matplotlib
 #   pip install matplotlib==3.0.3
 
+# TODO: more vector operations instead of by-component.
+#       understand how to modify vertices coordinates in-place through slicing
+
 import math,numpy
 OGF = gom.meta_types.OGF # shortcut to Graphite types
 
@@ -35,7 +38,7 @@ def Euler_step():
    epsilon = 0.004
 
    # Gravity on earth in m/s^2
-   G = 9.81
+   G = numpy.asarray([0,-9.81])
 
    inveps2 = 1.0/(epsilon*epsilon)
 
@@ -49,7 +52,7 @@ def Euler_step():
    for v in range(E.nb_vertices):
       # Compute forces: F = spring_force(point, centroid) - m G Z
       Fx = inveps2 * (centroid[v,0] - point[v,0])
-      Fy = inveps2 * (centroid[v,1] - point[v,1]) - mass[v] * G
+      Fy = inveps2 * (centroid[v,1] - point[v,1]) + mass[v] * G[1]
       # V += tau * a ; F = ma ==> V += tau * F / m
       V[v,0] = V[v,0] + tau * Fx / mass[v]
       V[v,1] = V[v,1] + tau * Fy / mass[v]
@@ -81,7 +84,7 @@ points = scene_graph.objects.points
 E = points.I.Editor
 
 ## Low level access to point coordinates
-point = numpy.asarray(E.find_attribute('vertices.point'))  # [:,[0,1]]
+point = numpy.asarray(E.get_points())
 
 ## Attributes attached to each vertex:
 ## mass, speed vector and centroid of Laguerre cell
@@ -115,7 +118,9 @@ points.shader.autorange()
 # Start with points at centroids, and initial speeds at zero.
 def Euler_init():
    OT = points.I.Transport
-   OT.compute_optimal_Laguerre_cells_centroids(Omega=Omega,centroids=Acentroid,mode='EULER_2D')
+   OT.compute_optimal_Laguerre_cells_centroids(
+       Omega=Omega,centroids=Acentroid,mode='EULER_2D'
+   )
    for v in range(E.nb_vertices):
       point[v,0] = centroid[v,0]
       point[v,1] = centroid[v,1]
