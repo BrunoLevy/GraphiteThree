@@ -17,30 +17,19 @@ shrink_points = True  # Group points in a smaller area
 
 
 # Computes the area of a mesh triangle
-# XY the coordinates of the mesh vertices (Z is ignored)
+# XY the coordinates of the mesh vertices
 # v1,v2,v3 the three vertices of the triangle
 def triangle_area(XY, v1, v2, v3):
-  x1 = XY[v1,0]
-  y1 = XY[v1,1]
-  x2 = XY[v2,0]
-  y2 = XY[v2,1]
-  x3 = XY[v3,0]
-  y3 = XY[v3,1]
-  return abs(0.5*((x2-x1)*(y3-y1) - (y2-y1)*(x3-x1)))
+  U = XY[v2] - XY[v1]
+  V = XY[v3] - XY[v1]
+  return abs(0.5*(U[0]*V[1] - U[1]*V[0]))
 
 
 # Computes the length of a mesh edge
-# XY the coordinates of the mesh vertices (Z is ignored)
+# XY the coordinates of the mesh vertices
 # v1 , v2 the mesh extremities index
 def distance(XY, v1, v2):
-  x1 = XY[v1,0]
-  y1 = XY[v1,1]
-  x2 = XY[v2,0]
-  y2 = XY[v2,1]
-  return math.sqrt(
-    (x2-x1)*(x2-x1) + (y2-y1)*(y2-y1)
-  )
-
+  return numpy.linalg.norm(XY[v2]-XY[v1])
 
 # Computes the linear system to be solved at each Newton step
 # This is a Python implementation equivalent to the builtin (C++)
@@ -97,7 +86,7 @@ def compute_linear_system(H,b):
    for t in range(nt):
 
      # Triangle t is in the Laguerre cell of i
-     i = chart.item(t) # numpy.asscalar(chart[t])
+     i = chart.item(t) # item() instead of chart[t] because chart[t] is a 1x1 mtx
 
      # Accumulate right-hand side (Laguerre cell areas)
      b[i] = b[i] + triangle_area(XY, T[t,0], T[t,1], T[t,2])
