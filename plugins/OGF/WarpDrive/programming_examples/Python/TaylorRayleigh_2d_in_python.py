@@ -13,114 +13,116 @@
 #   pip uninstall matplotlib
 #   pip install matplotlib==3.0.3
 
-import math,numpy
+import math,numpy as np
 OGF = gom.meta_types.OGF # shortcut to Graphite types
 
-Euler_stopped = False
+class Euler:
 
-N=1000 # Number of points.
+    def __init__(self,nb):
+        self.stopped = False
 
-def Euler_stop():
-    global Euler_stopped
-    Euler_stopped = True
+        # Number of points
+        self.nb = nb
 
-def Euler_step():
-   global point,F,V
-   OT = points.I.Transport
+        # Timestep
+        self.tau = 0.001
 
-   # Timestep
-   tau = 0.001
+        # Stiffness of the 'spring' pressure force that pulls the
+        # points towards the centroids
+        self.epsilon = 0.004
+        self.inveps2 = 1.0/(self.epsilon*self.epsilon)
 
-   # Stiffness of the 'spring' pressure force that pulls the
-   # points towards the centroids
-   epsilon = 0.004
+        # Gravity on earth in m/s^2
+        self.G = np.asarray([0,-9.81])
 
-   # Gravity on earth in m/s^2
-   G = numpy.asarray([0,-9.81])
+        scene_graph.clear()
 
-   inveps2 = 1.0/(epsilon*epsilon)
+        # Create domain
+        self.Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
+        self.Omega.I.Shapes.create_quad()
+        self.Omega.I.Surface.triangulate()
 
-   # Compute the centroids of the unique Laguerre diagram defined
-   # from the points that has constant areas.
-   OT.compute_optimal_Laguerre_cells_centroids(
-       Omega=Omega,centroids=Acentroid,mode='EULER_2D'
-   )
+        # Create initial pointset
+        self.Omega.I.Points.sample_surface(nb_points=nb)
+        self.points_obj = scene_graph.objects.points
+        E = self.points_obj.I.Editor
 
-   # Compute forces: F = spring_force(point, centroid) - m G Z
-   F = inveps2 * (centroid - point) + mass[:,numpy.newaxis] * G
-   # V += tau * a ; F = ma ==> V += tau * F / m
-   V += tau * F / mass[:,numpy.newaxis]
-   # Update positions
-   point += tau*V
+        # Attributes attached to each vertex:
+        # point, mass, speed vector
+        # take only x,y ------------------------v
+        self.point = np.asarray(E.get_points())[:,0:2]
+        self.mass = np.asarray(E.find_or_create_attribute('vertices.mass'))
+        self.V = np.asarray(
+            E.find_or_create_attribute(
+                attribute_name='vertices.speed',dimension=2
+            )
+        )
 
-   points.redraw()
+        # Centroid of Laguerre cell, as Graphite vec and numpy array
+        self.centroids_vec = gom.create(
+            classname='OGF::NL::Vector',size=E.nb_vertices,dimension=2
+        )
+        self.centroid = np.asarray(self.centroids_vec)
 
-def Euler_steps(n):
-   global Euler_stopped
-   Euler_stopped = False
-   # todo: figure out why integers became floats through inter-language interop.
-   for i in range(n):
-      if Euler_stopped:
-          break
-      Euler_step()
+        # Initialize masses with nice sine wave,
+        # and heavy fluid on top.
+        for v in range(E.nb_vertices):
+            x = self.point[v,0]
+            y = self.point[v,1]
+            f =0.1*math.sin(x*10)
+            if (y-0.5) > f:
+                self.mass[v] = 3
+            else:
+                self.mass[v] = 1
 
-# #####################
-# Initialization
-# #####################
+        # Display mass attribute
+        self.points_obj.shader.painting  = 'ATTRIBUTE'
+        self.points_obj.shader.attribute = 'vertices.mass'
+        self.points_obj.shader.colormap  = 'blue_red;true;0;false;false;;'
+        self.points_obj.shader.autorange()
 
-scene_graph.clear()
-Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
-Omega.I.Shapes.create_quad()
-Omega.I.Surface.triangulate()
-Omega.I.Points.sample_surface(nb_points=N)
-scene_graph.current_object = 'points'
-points = scene_graph.objects.points
-E = points.I.Editor
+        # Initialize Euler
+        self.points_obj.I.Transport.compute_optimal_Laguerre_cells_centroids(
+            Omega=self.Omega,centroids=self.centroids_vec,mode='EULER_2D'
+        )
+        np.copyto(self.point,self.centroid) # point <- centroid
+        self.V[:,:] = 0                     # V <- 0
+        self.points_obj.update()
 
-## Low level access to point coordinates, ignore Z coordinates
-point = numpy.asarray(E.get_points())[:,0:2]
+    def step(self):
+        # Compute the centroids of the unique Laguerre diagram defined
+        # from the points that has constant areas.
+        self.points_obj.I.Transport.compute_optimal_Laguerre_cells_centroids(
+            Omega=self. Omega,centroids=self.centroids_vec, mode='EULER_2D'
+        )
 
-## Attributes attached to each vertex:
-## mass, speed vector and centroid of Laguerre cell
-mass      = numpy.asarray(E.find_or_create_attribute('vertices.mass'))
-V         = numpy.asarray(
-    E.find_or_create_attribute(attribute_name='vertices.speed',dimension=2)
-)
-Acentroid = gom.create(
-    classname='OGF::NL::Vector',size=E.nb_vertices,dimension=2
-)
-centroid  = numpy.asarray(Acentroid)
+        # Compute forces: F = spring_force(point, centroid) - m G Z
+        F = self.inveps2 * (self.centroid - self.point) + \
+            self.mass[:,np.newaxis] * self.G
+        # V += tau * a ; F = ma ==> V += tau * F / m
+        self.V += self.tau * F / self.mass[:,np.newaxis]
+        # Update positions
+        self.point += self.tau * self.V
 
-## Initialize masses with nice sine wave,
-## and heavy fluid on top.
-for v in range(E.nb_vertices):
-   x = point[v,0]
-   y = point[v,1]
-   f =0.1*math.sin(x*10)
-   if (y-0.5) > f:
-      mass[v] = 3
-   else:
-      mass[v] = 1
+        self.points_obj.redraw()
 
-# Display mass attribute.
-points.shader.painting  = 'ATTRIBUTE'
-points.shader.attribute = 'vertices.mass'
-points.shader.colormap  = 'blue_red;true;0;false;false;;'
-points.shader.autorange()
+    def steps(self,n):
+        self.stopped = False
+        for i in range(n):
+            if self.stopped:
+                break
+            self.step()
 
-# Initialize Euler simulation.
-# Start with points at centroids, and initial speeds at zero.
-def Euler_init():
-   global point,V
-   OT = points.I.Transport
-   OT.compute_optimal_Laguerre_cells_centroids(
-       Omega=Omega,centroids=Acentroid,mode='EULER_2D'
-   )
-   numpy.copyto(point,centroid) # point <- centroid
-   V[:,:] = 0                   # V <- 0
-   points.update()
+    def stop(self):
+        self.stopped = True
 
-Euler_init()
+euler = Euler(1000)
+
+def euler_steps(n):
+    euler.steps(n)
+
+def euler_stop():
+    euler.stop()
 
 # #####################
 # GUI
@@ -157,11 +159,11 @@ function Euler_dialog.draw_window()
        -- the function, this is to ensure that graphic updates will
        -- be possible during the simulation loop.
        main.exec_command(
-          'gom.interpreter("Python").globals.Euler_steps(Euler_dialog.nb_steps)'
+          'gom.interpreter("Python").globals.euler_steps(Euler_dialog.nb_steps)'
        )
    end
    if imgui.Button('Stop',-1,0) then
-      gom.interpreter('Python').globals.Euler_stop()
+      gom.interpreter('Python').globals.euler_stop()
    end
    imgui.PopItemWidth()
 end
