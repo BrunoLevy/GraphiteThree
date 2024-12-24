@@ -25,6 +25,7 @@ def Euler_stop():
     Euler_stopped = True
 
 def Euler_step():
+   global point,F,V
    OT = points.I.Transport
 
    # Timestep
@@ -45,15 +46,13 @@ def Euler_step():
        Omega=Omega,centroids=Acentroid,mode='EULER_2D'
    )
 
-   # Update forces, speeds and positions (Semi-Explicit Euler scheme, simple !)
-   # (TODO: without for loop)
-   for v in range(E.nb_vertices):
-      # Compute forces: F = spring_force(point, centroid) - m G Z
-      F = inveps2 * (centroid[v] - point[v]) + mass[v] * G
-      # V += tau * a ; F = ma ==> V += tau * F / m
-      V[v] = V[v] + tau * F / mass[v]
-      # Update positions using V
-      point[v] = point[v] + tau*V[v]
+   # Compute forces: F = spring_force(point, centroid) - m G Z
+   F = inveps2 * (centroid - point) + mass[:,numpy.newaxis] * G
+   # V += tau * a ; F = ma ==> V += tau * F / m
+   V += tau * F / mass[:,numpy.newaxis]
+   # Update positions
+   point += tau*V
+
    points.redraw()
 
 def Euler_steps(n):
@@ -112,15 +111,17 @@ points.shader.autorange()
 # Initialize Euler simulation.
 # Start with points at centroids, and initial speeds at zero.
 def Euler_init():
+   global point,V
    OT = points.I.Transport
    OT.compute_optimal_Laguerre_cells_centroids(
        Omega=Omega,centroids=Acentroid,mode='EULER_2D'
    )
+   # TODO: without loop
    for v in range(E.nb_vertices):
-      point[v,0] = centroid[v,0]
-      point[v,1] = centroid[v,1]
-      V[v,0] = 0.0
-      V[v,1] = 0.0
+       point[v,0] = centroid[v,0]
+       point[v,1] = centroid[v,1]
+       V[v,0] = 0.0
+       V[v,1] = 0.0
    points.update()
 
 Euler_init()
