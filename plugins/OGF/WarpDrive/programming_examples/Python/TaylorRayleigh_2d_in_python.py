@@ -117,7 +117,7 @@ def Euler_init():
        Omega=Omega,centroids=Acentroid,mode='EULER_2D'
    )
    numpy.copyto(point,centroid) # point <- centroid
-   numpy.copyto(V,numpy.zeros(V.shape)) # V <- 0
+   V[:,:] = 0                   # V <- 0
    points.update()
 
 Euler_init()
