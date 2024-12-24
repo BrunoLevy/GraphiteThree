@@ -13,9 +13,6 @@
 #   pip uninstall matplotlib
 #   pip install matplotlib==3.0.3
 
-# TODO: more vector operations instead of by-component.
-#       understand how to modify vertices coordinates in-place through slicing
-
 import math,numpy
 OGF = gom.meta_types.OGF # shortcut to Graphite types
 
@@ -48,17 +45,15 @@ def Euler_step():
        Omega=Omega,centroids=Acentroid,mode='EULER_2D'
    )
 
-   # Update forces, speeds and positions (Explicit Euler scheme, super simple !)
+   # Update forces, speeds and positions (Semi-Explicit Euler scheme, simple !)
+   # (TODO: without for loop)
    for v in range(E.nb_vertices):
       # Compute forces: F = spring_force(point, centroid) - m G Z
-      Fx = inveps2 * (centroid[v,0] - point[v,0])
-      Fy = inveps2 * (centroid[v,1] - point[v,1]) + mass[v] * G[1]
+      F = inveps2 * (centroid[v] - point[v]) + mass[v] * G
       # V += tau * a ; F = ma ==> V += tau * F / m
-      V[v,0] = V[v,0] + tau * Fx / mass[v]
-      V[v,1] = V[v,1] + tau * Fy / mass[v]
-      # position += tau * V
-      point[v,0] = point[v,0] + tau*V[v,0]
-      point[v,1] = point[v,1] + tau*V[v,1]
+      V[v] = V[v] + tau * F / mass[v]
+      # Update positions using V
+      point[v] = point[v] + tau*V[v]
    points.redraw()
 
 def Euler_steps(n):
@@ -75,7 +70,7 @@ def Euler_steps(n):
 # #####################
 
 scene_graph.clear()
-Omega = scene_graph.create_object(classname='Mesh',name='Omega')
+Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
 Omega.I.Shapes.create_quad()
 Omega.I.Surface.triangulate()
 Omega.I.Points.sample_surface(nb_points=N)
@@ -83,8 +78,8 @@ scene_graph.current_object = 'points'
 points = scene_graph.objects.points
 E = points.I.Editor
 
-## Low level access to point coordinates
-point = numpy.asarray(E.get_points())
+## Low level access to point coordinates, ignore Z coordinates
+point = numpy.asarray(E.get_points())[:,0:2]
 
 ## Attributes attached to each vertex:
 ## mass, speed vector and centroid of Laguerre cell
