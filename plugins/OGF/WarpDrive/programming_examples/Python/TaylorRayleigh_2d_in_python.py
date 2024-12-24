@@ -116,12 +116,8 @@ def Euler_init():
    OT.compute_optimal_Laguerre_cells_centroids(
        Omega=Omega,centroids=Acentroid,mode='EULER_2D'
    )
-   # TODO: without loop
-   for v in range(E.nb_vertices):
-       point[v,0] = centroid[v,0]
-       point[v,1] = centroid[v,1]
-       V[v,0] = 0.0
-       V[v,1] = 0.0
+   numpy.copyto(point,centroid) # point <- centroid
+   numpy.copyto(V,numpy.zeros(V.shape)) # V <- 0
    points.update()
 
 Euler_init()
@@ -160,7 +156,9 @@ function Euler_dialog.draw_window()
        -- we need to 'exec_command' rather than directly calling
        -- the function, this is to ensure that graphic updates will
        -- be possible during the simulation loop.
-       main.exec_command('gom.interpreter("Python").globals.Euler_steps(Euler_dialog.nb_steps)')
+       main.exec_command(
+          'gom.interpreter("Python").globals.Euler_steps(Euler_dialog.nb_steps)'
+       )
    end
    if imgui.Button('Stop',-1,0) then
       gom.interpreter('Python').globals.Euler_stop()
