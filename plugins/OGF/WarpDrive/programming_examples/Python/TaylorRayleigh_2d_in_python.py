@@ -59,9 +59,7 @@ class Euler:
         )
 
         # Centroid of Laguerre cell, as Graphite vec and numpy array
-        self.centroids_vec = gom.create(
-            classname='OGF::NL::Vector',size=E.nb_vertices,dimension=2
-        )
+        self.centroids_vec = OGF.NL.Vector.create(size=E.nb_vertices,dimension=2)
         self.centroid = np.asarray(self.centroids_vec)
 
         # Initialize masses with nice sine wave,
@@ -118,6 +116,7 @@ class Euler:
 
 euler = Euler(1000)
 
+# We need to declare these two functions, that can be called from GUI
 def euler_steps(n):
     euler.steps(n)
 
