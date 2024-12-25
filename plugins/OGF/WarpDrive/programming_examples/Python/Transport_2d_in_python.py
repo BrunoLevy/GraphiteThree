@@ -92,7 +92,7 @@ def compute_linear_system(H,b):
      i = chart.item(t) # item() instead of chart[t] because chart[t] is a 1x1 mtx
 
      # Accumulate right-hand side (Laguerre cell areas)
-     b[i] = b[i] + triangle_area(XY, T[t])
+     b[i] += triangle_area(XY, T[t])
 
      #   For each triangle edge, determine whether the triangle edge
      # is on a Laguerre cell boundary and accumulate its contribution

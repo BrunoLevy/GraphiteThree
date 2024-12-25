@@ -1094,6 +1094,66 @@ namespace {
         return PyUnicode_FromString(s.c_str()); // [TODO: is it correct ?]
     }
 
+    /**
+     * \brief Converts a python object into a Graphite vec2,vec3 or vec4
+     * \tparam N dimension of the vector
+     * \param[in] obj a pointer to the Python object
+     * \param[out] result a reference to the converted vector
+     * \retval true if the conversion was successful
+     * \retval false otherwise (mtype does not match, or object on
+     *  the stack is not an integer-indexed table of numbers of the
+     *  correct size).
+     */
+    template<unsigned int N> inline bool python_tographitevec(
+	PyObject* obj, ::GEO::vecng<N,double>& result
+    ) {
+	if(!PyList_Check(obj)) {
+	    return false;
+	}
+	index_t n = index_t(PyList_Size(obj));
+	if(n != index_t(N)) {
+	    return false;
+	}
+	for(index_t i=0; i<n; ++i) {
+	    PyObject* coord_obj = PyList_GetItem(obj,i);
+	    if(PyFloat_Check(coord_obj)) {
+		result[i] = PyFloat_AsDouble(coord_obj);
+	    } else if(PyLong_Check(coord_obj)) {
+		result[i] = double(PyLong_AsLong(coord_obj));
+	    } else {
+		// TODO: array interface
+		return false;
+	    }
+	}
+	return true;
+    }
+
+    /**
+     * \brief Converts a python object into a Graphite vec2,vec3 or vec4
+     * \tparam N dimension of the vector
+     * \param[in] obj a pointer to the Python object
+     * \param[out] result the converted vector as an Any
+     * \param[in] mtype the meta-type (vec2, vec3 or vec4)
+     * \retval true if the conversion was successful
+     * \retval false otherwise (mtype does not match, or object on
+     *  the stack is not an integer-indexed table of numbers of the
+     *  correct size).
+     */
+    template<unsigned int N> inline bool python_tographitevec(
+	PyObject* obj, Any& result, MetaType* mtype
+    ) {
+	if(mtype != ogf_meta<::GEO::vecng<N,double> >::type()) {
+	    return false;
+	}
+	GEO::vecng<N,double> V;
+	if(!python_tographitevec(obj,V)) {
+	    return false;
+	}
+	result.set_value(V);
+	return true;
+    }
+
+
     Any python_to_graphite(PyObject* obj, MetaType* mtype) {
 	geo_argused(mtype); // TODO
 	Any result;
@@ -1102,12 +1162,17 @@ namespace {
 	    return result;
 	}
 
-	/*
-	if(mtype != nullptr) {
-	    if(mtype == ogf_meta<XXX>::type()) {
-	    }
+	if(python_tographitevec<2>(obj, result, mtype)) {
+	    return result;
 	}
-	*/
+
+	if(python_tographitevec<3>(obj, result, mtype)) {
+	    return result;
+	}
+
+	if(python_tographitevec<4>(obj, result, mtype)) {
+	    return result;
+	}
 
 	if(PyGraphite_Check(obj)) {
 	    result.set_value(((graphite_Object*)obj)->object);
