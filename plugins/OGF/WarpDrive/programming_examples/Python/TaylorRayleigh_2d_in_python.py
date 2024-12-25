@@ -41,8 +41,7 @@ class Euler:
         self.Omega.I.Surface.triangulate()
 
         # Create initial pointset
-        self.Omega.I.Points.sample_surface(nb_points=nb)
-        self.points_obj = scene_graph.objects.points
+        self.points_obj = self.Omega.I.Points.sample_surface(nb_points=nb)
         E = self.points_obj.I.Editor
 
         # Attributes attached to each vertex:
@@ -57,8 +56,8 @@ class Euler:
         )
 
         # Centroid of Laguerre cell, as Graphite vec and numpy array
-        self.centroids_vec = OGF.NL.Vector.create(size=E.nb_vertices,dimension=2)
-        self.centroid = np.asarray(self.centroids_vec)
+        self.centroids_obj = OGF.NL.Vector.create(size=E.nb_vertices,dimension=2)
+        self.centroid = np.asarray(self.centroids_obj)
 
         # Initialize masses with nice sine wave,
         # and heavy fluid on top.
@@ -71,25 +70,29 @@ class Euler:
             else:
                 self.mass[v] = 1
 
+        # Initialize Euler
+        self.points_obj.I.Transport.compute_optimal_Laguerre_cells_centroids(
+            Omega=self.Omega,centroids=self.centroids_obj,mode='EULER_2D'
+        )
+        np.copyto(self.point,self.centroid) # point <- centroid
+        self.V[:,:] = 0                     # V <- 0
+        self.points_obj.update()
+
+        self.set_graphics_options()
+
+
+    def set_graphics_options(self):
         # Display mass attribute
         self.points_obj.shader.painting  = 'ATTRIBUTE'
         self.points_obj.shader.attribute = 'vertices.mass'
         self.points_obj.shader.colormap  = 'blue_red;true;0;false;false;;'
         self.points_obj.shader.autorange()
 
-        # Initialize Euler
-        self.points_obj.I.Transport.compute_optimal_Laguerre_cells_centroids(
-            Omega=self.Omega,centroids=self.centroids_vec,mode='EULER_2D'
-        )
-        np.copyto(self.point,self.centroid) # point <- centroid
-        self.V[:,:] = 0                     # V <- 0
-        self.points_obj.update()
-
     def step(self):
         # Compute the centroids of the unique Laguerre diagram defined
         # from the points that has constant areas.
         self.points_obj.I.Transport.compute_optimal_Laguerre_cells_centroids(
-            Omega=self. Omega,centroids=self.centroids_vec, mode='EULER_2D'
+            Omega=self. Omega,centroids=self.centroids_obj, mode='EULER_2D'
         )
 
         # Compute forces: F = spring_force(point, centroid) - m G Z
@@ -113,7 +116,7 @@ class Euler:
     def stop(self):
         self.stopped = True
 
-euler = Euler(1000)
+euler = Euler(10000)
 
 # We need to declare these two functions, that can be called from GUI
 def euler_steps(n):
