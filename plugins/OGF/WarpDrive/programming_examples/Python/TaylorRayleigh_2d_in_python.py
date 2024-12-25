@@ -19,10 +19,8 @@ OGF = gom.meta_types.OGF # shortcut to Graphite types
 class Euler:
 
     def __init__(self,nb):
+        # Indicates whether simulation is running
         self.stopped = False
-
-        # Number of points
-        self.nb = nb
 
         # Timestep
         self.tau = 0.001
@@ -97,11 +95,12 @@ class Euler:
         # Compute forces: F = spring_force(point, centroid) - m G Z
         F = self.inveps2 * (self.centroid - self.point) + \
             self.mass[:,np.newaxis] * self.G
+
         # V += tau * a ; F = ma ==> V += tau * F / m
         self.V += self.tau * F / self.mass[:,np.newaxis]
+
         # Update positions
         self.point += self.tau * self.V
-
         self.points_obj.redraw()
 
     def steps(self,n):

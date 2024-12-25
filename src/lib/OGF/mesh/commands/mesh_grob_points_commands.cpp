@@ -192,7 +192,7 @@ namespace OGF {
 	return result;
     }
 
-    void MeshGrobPointsCommands::sample_surface(
+    MeshGrob* MeshGrobPointsCommands::sample_surface(
         const NewMeshGrobName& points_name,
         bool copy_normals,
         unsigned int nb_points,
@@ -203,12 +203,12 @@ namespace OGF {
 	if(mesh_grob()->facets.nb() == 0) {
 	    Logger::err("Sample") << "Mesh has no facet"
 				  << std::endl;
-	    return;
+	    return nullptr;
 	}
 	if(!mesh_grob()->facets.are_simplices()) {
 	    Logger::err("Sample") << "Mesh facets are not simplices"
 				  << std::endl;
-	    return;
+	    return nullptr;
 	}
 
         mesh_grob()->vertices.set_dimension(3);
@@ -282,9 +282,11 @@ namespace OGF {
                 "vertices_style", "true;0 1 0 1;2"
             );
         }
+
+	return points;
     }
 
-    void MeshGrobPointsCommands::sample_volume(
+    MeshGrob* MeshGrobPointsCommands::sample_volume(
         const NewMeshGrobName& points_name,
         unsigned int nb_points,
         unsigned int Lloyd_iter,
@@ -302,7 +304,7 @@ namespace OGF {
 	    if(!mesh_grob()->facets.are_simplices()) {
 		Logger::err("CVT") << "Boundary is not triangulated"
 				   << std::endl;
-		return;
+		return nullptr;
 	    }
 	    mesh_tetrahedralize(*mesh_grob());
 	    mesh_grob()->update();
@@ -313,7 +315,7 @@ namespace OGF {
 	    !mesh_grob()->cells.are_simplices()
 	) {
 	    Logger::err("CVT") << "Mesh is not tetrahedralized" << std::endl;
-	    return;
+	    return nullptr;
 	}
 
 	CentroidalVoronoiTesselation CVT(mesh_grob());
@@ -356,6 +358,8 @@ namespace OGF {
                 "vertices_style", "true;0 1 0 1;2"
             );
         }
+
+	return points;
     }
 
 

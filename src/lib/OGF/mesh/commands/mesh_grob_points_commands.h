@@ -23,19 +23,19 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
+ * As an exception to the GPL, Graphite can be linked
  *  with the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_MESH_COMMANDS_MESH_GROB_POINTS_COMMANDS_H
 #define H_OGF_MESH_COMMANDS_MESH_GROB_POINTS_COMMANDS_H
@@ -63,17 +63,17 @@ namespace OGF {
          * \brief MeshGrobPointsCommands destructor.
          */
         ~MeshGrobPointsCommands() override;
-	
+
     gom_slots:
 
         /********************************************************/
-	
+
         /**
 	 * \menu Preprocessing
          * \brief Smoothes a pointset by projection onto local planes.
          * \param[in] nb_iterations number of smoothing iterations.
-         * \param[in] nb_neighbors number of neighbors for estimating 
-         *   tangent plane. 
+         * \param[in] nb_neighbors number of neighbors for estimating
+         *   tangent plane.
          */
         void smooth_point_set(
             unsigned int nb_iterations = 1,
@@ -81,13 +81,13 @@ namespace OGF {
         );
 
         /********************************************************/
-	
+
 	/**
 	 * \menu Preprocessing
 	 * \brief Marks isolated points as selection.
 	 * \param[in] nb number of points in neighborhood
 	 * \param[in] radius maximum neighborhood size
-	 * \param[in] relative_radius radius is relative to 
+	 * \param[in] relative_radius radius is relative to
 	 *   object bbox diagonal.
 	 */
         void detect_outliers(
@@ -97,7 +97,7 @@ namespace OGF {
 	);
 
         /********************************************************/
-	
+
 	/**
 	 * \menu Preprocessing
 	 * \brief Estimates the normal vector to a point-sampled surface
@@ -113,15 +113,15 @@ namespace OGF {
 	 * \retbval false otherwise (when the user pushes the cancel button).
 	 */
 	bool estimate_normals(index_t nb_neighbors = 30, bool reorient=true);
-	
-        /********************************************************/	
+
+        /********************************************************/
 
 	/**
 	 * \menu Preprocessing
 	 * \brief Estimates the density.
-	 * \param[in] radius estimated density is 
+	 * \param[in] radius estimated density is
 	 *   one over number of points within radius
-	 * \param[in] relative_radius radius is relative to 
+	 * \param[in] relative_radius radius is relative to
 	 *   object bbox diagonal.
 	 * \param[in] attribute name of the attribute
 	 *   where to store the estimated density
@@ -132,17 +132,17 @@ namespace OGF {
 	    const std::string& attribute = "density"
 	);
 
-        /********************************************************/	
-	
+        /********************************************************/
+
         /**
 	 * \menu Reconstruction
 	 * \brief Reconstructs a surface from a point set using
 	 *  Simple and Scalable Surface Reconstruction.
-	 * \param[in] radius search radius for neighborhoods 
+	 * \param[in] radius search radius for neighborhoods
 	 *  (in % of bbox diagonal)
 	 * \advanced
 	 * \param[in] nb_smoothing_iterations number of smoothing iterations
-	 * \param[in] nb_neighbors number of neighbors 
+	 * \param[in] nb_neighbors number of neighbors
 	 *  for estimating tangent plane
 	 */
         void reconstruct_surface_SSSR(
@@ -165,7 +165,7 @@ namespace OGF {
             const NewMeshGrobName& reconstruction = "reconstruction",
             unsigned int depth = 8
         );
-        
+
         /********************************************************/
 
 	/**
@@ -176,7 +176,7 @@ namespace OGF {
 	void reconstruct_surface_Delaunay2d();
 
         /********************************************************/
-	
+
 
         /**
 	 * \menu Sampling
@@ -190,7 +190,7 @@ namespace OGF {
          * \param[in] Newton_iter number of Newton iterations for CVT.
          * \param[in] Newton_m number of inner Newton iterations for CVT.
          */
-        void sample_surface(
+        MeshGrob* sample_surface(
             const NewMeshGrobName& points = "points",
             bool copy_normals = false,
             unsigned int nb_points = 30000,
@@ -211,14 +211,14 @@ namespace OGF {
          * \param[in] Newton_iter number of Newton iterations for CVT.
          * \param[in] Newton_m number of inner Newton iterations for CVT.
          */
-	void sample_volume(
+	MeshGrob* sample_volume(
             const NewMeshGrobName& points = "points",
             unsigned int nb_points = 30000,
             unsigned int Lloyd_iter = 5,
             unsigned int Newton_iter = 30,
             unsigned int Newton_m = 7
 	);
-	
+
 
         /********************************************************/
 
@@ -228,7 +228,7 @@ namespace OGF {
 	void delete_selected_points();
 
         /********************************************************/
-        
+
         /**
          * \brief Creates a new vertex at given coordinates.
          * \param[in] x , y , z the coordinates of the point
@@ -250,12 +250,11 @@ namespace OGF {
 	void project_on_surface(
 	    const MeshGrobName& surface
 	);
-       
-    };
-        
-    /********************************************************/
-    
-} 
-    
-#endif
 
+    };
+
+    /********************************************************/
+
+}
+
+#endif
