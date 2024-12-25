@@ -1094,6 +1094,47 @@ namespace {
         return PyUnicode_FromString(s.c_str()); // [TODO: is it correct ?]
     }
 
+    /*********************************************************************/
+
+    /**
+     * \brief Converts a lua object into a value
+     * \tparam T type of the value
+     * \param[in] obj a pointer to a Python object
+     * \param[out] result a reference to the read value
+     * \retval true if the conversion was successful
+     * \retval false otherwise (LUA type did not match)
+     */
+    template <class T> inline bool python_tographiteveccomp(
+	PyObject* obj, T& result
+    ) {
+	geo_argused(obj);
+	geo_assert_not_reached;
+    }
+
+
+    template <> inline bool python_tographiteveccomp<double>(
+	PyObject* obj, double& result
+    ) {
+	if(PyFloat_Check(obj)) {
+	    result = PyFloat_AsDouble(obj);
+	    return true;
+	} else if(PyLong_Check(obj)) {
+	    result = double(PyLong_AsLong(obj));
+	    return true;
+	}
+	return false;
+    }
+
+    template <> inline bool python_tographiteveccomp<Numeric::int32>(
+	PyObject* obj, Numeric::int32& result
+    ) {
+	if(PyLong_Check(obj)) {
+	    result = Numeric::int32(PyLong_AsLong(obj));
+	    return true;
+	}
+	return false;
+    }
+
     /**
      * \brief Converts a python object into a Graphite vec2,vec3 or vec4
      * \tparam N dimension of the vector
@@ -1104,8 +1145,8 @@ namespace {
      *  the stack is not an integer-indexed table of numbers of the
      *  correct size).
      */
-    template<unsigned int N> inline bool python_tographitevec(
-	PyObject* obj, ::GEO::vecng<N,double>& result
+    template<unsigned int N, class T> inline bool python_tographitevec(
+	PyObject* obj, ::GEO::vecng<N,T>& result
     ) {
 	if(!PyList_Check(obj)) {
 	    return false;
@@ -1116,12 +1157,7 @@ namespace {
 	}
 	for(index_t i=0; i<n; ++i) {
 	    PyObject* coord_obj = PyList_GetItem(obj,i);
-	    if(PyFloat_Check(coord_obj)) {
-		result[i] = PyFloat_AsDouble(coord_obj);
-	    } else if(PyLong_Check(coord_obj)) {
-		result[i] = double(PyLong_AsLong(coord_obj));
-	    } else {
-		// TODO: array interface
+	    if(!python_tographiteveccomp(coord_obj, result[i])) {
 		return false;
 	    }
 	}
@@ -1139,13 +1175,13 @@ namespace {
      *  the stack is not an integer-indexed table of numbers of the
      *  correct size).
      */
-    template<unsigned int N> inline bool python_tographitevec(
+    template<unsigned int N, class T> inline bool python_tographitevec(
 	PyObject* obj, Any& result, MetaType* mtype
     ) {
 	if(mtype != ogf_meta<::GEO::vecng<N,double> >::type()) {
 	    return false;
 	}
-	GEO::vecng<N,double> V;
+	::GEO::vecng<N,T> V;
 	if(!python_tographitevec(obj,V)) {
 	    return false;
 	}
@@ -1155,22 +1191,33 @@ namespace {
 
 
     Any python_to_graphite(PyObject* obj, MetaType* mtype) {
-	geo_argused(mtype); // TODO
 	Any result;
 
 	if(obj == nullptr) {
 	    return result;
 	}
 
-	if(python_tographitevec<2>(obj, result, mtype)) {
+	if(python_tographitevec<2,double>(obj, result, mtype)) {
 	    return result;
 	}
 
-	if(python_tographitevec<3>(obj, result, mtype)) {
+	if(python_tographitevec<3,double>(obj, result, mtype)) {
 	    return result;
 	}
 
-	if(python_tographitevec<4>(obj, result, mtype)) {
+	if(python_tographitevec<4,double>(obj, result, mtype)) {
+	    return result;
+	}
+
+	if(python_tographitevec<2,Numeric::int32>(obj, result, mtype)) {
+	    return result;
+	}
+
+	if(python_tographitevec<3,Numeric::int32>(obj, result, mtype)) {
+	    return result;
+	}
+
+	if(python_tographitevec<4,Numeric::int32>(obj, result, mtype)) {
 	    return result;
 	}
 
