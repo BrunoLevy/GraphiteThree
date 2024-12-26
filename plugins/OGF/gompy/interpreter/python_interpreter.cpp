@@ -1138,12 +1138,12 @@ namespace {
     /**
      * \brief Converts a python object into a Graphite vec2,vec3 or vec4
      * \tparam N dimension of the vector
+     * \tparam T type of the coefficients
      * \param[in] obj a pointer to the Python object
      * \param[out] result a reference to the converted vector
      * \retval true if the conversion was successful
-     * \retval false otherwise (mtype does not match, or object on
-     *  the stack is not an integer-indexed table of numbers of the
-     *  correct size).
+     * \retval false otherwise (mtype does not match, or object
+     *  is not a list of the correct size).
      */
     template<unsigned int N, class T> inline bool python_tographitevec(
 	PyObject* obj, ::GEO::vecng<N,T>& result
@@ -1167,13 +1167,13 @@ namespace {
     /**
      * \brief Converts a python object into a Graphite vec2,vec3 or vec4
      * \tparam N dimension of the vector
+     * \tparam T type of the coefficients
      * \param[in] obj a pointer to the Python object
      * \param[out] result the converted vector as an Any
      * \param[in] mtype the meta-type (vec2, vec3 or vec4)
      * \retval true if the conversion was successful
-     * \retval false otherwise (mtype does not match, or object on
-     *  the stack is not an integer-indexed table of numbers of the
-     *  correct size).
+     * \retval false otherwise (mtype does not match, or object
+     *  is not a list of the correct size).
      */
     template<unsigned int N, class T> inline bool python_tographitevec(
 	PyObject* obj, Any& result, MetaType* mtype
@@ -1189,6 +1189,63 @@ namespace {
 	return true;
     }
 
+    /**
+     * \brief Converts a python object into a Graphite mat2, mat3 or mat4
+     * \tparam N dimension of the vector
+     * \tparam T type of the coefficients
+     * \param[in] obj a pointer to the Python object
+     * \param[out] result a reference to the converted matrix
+     * \retval true if the conversion was successful
+     * \retval false otherwise (mtype does not match, or object
+     *  is not a list of the correct size).
+     */
+    template<unsigned int N, class T> inline bool python_tographitemat(
+	PyObject* obj, ::GEO::Matrix<N,T>& result
+    ) {
+	if(!PyList_Check(obj)) {
+	    return false;
+	}
+	index_t n = index_t(PyList_Size(obj));
+	if(n != index_t(N)) {
+	    return false;
+	}
+	for(index_t i=0; i<n; ++i) {
+	    ::GEO::vecng<N,T> row;
+	    PyObject* row_obj = PyList_GetItem(obj,i);
+	    if(!python_tographitevec(row_obj, row)) {
+		return false;
+	    }
+	    for(index_t j=0; j<n; ++j) {
+		result(i,j) = row[j];
+	    }
+	}
+	return true;
+    }
+
+    /**
+     * \brief Converts a python object into a Graphite mat2, mat3 or mat4
+     * \tparam N dimension of the vector
+     * \tparam T type of the coefficients
+     * \param[in] obj a pointer to the Python object
+     * \param[out] result a reference to the converted matrix as an Any
+     * \retval true if the conversion was successful
+     * \retval false otherwise (mtype does not match, or object
+     *  is not a list of the correct size).
+     */
+    template<unsigned int N, class T> inline bool python_tographitemat(
+	PyObject* obj, Any& result, MetaType* mtype
+    ) {
+	if(mtype != ogf_meta<::GEO::Matrix<N,double> >::type()) {
+	    return false;
+	}
+	::GEO::Matrix<N,T> M;
+	if(!python_tographitemat(obj,M)) {
+	    return false;
+	}
+	result.set_value(M);
+	return true;
+    }
+
 
     Any python_to_graphite(PyObject* obj, MetaType* mtype) {
 	Any result;
@@ -1197,28 +1254,43 @@ namespace {
 	    return result;
 	}
 
-	if(python_tographitevec<2,double>(obj, result, mtype)) {
-	    return result;
-	}
+	if(PyList_Check(obj)) {
 
-	if(python_tographitevec<3,double>(obj, result, mtype)) {
-	    return result;
-	}
+	    if(python_tographitevec<2,double>(obj, result, mtype)) {
+		return result;
+	    }
 
-	if(python_tographitevec<4,double>(obj, result, mtype)) {
-	    return result;
-	}
+	    if(python_tographitevec<3,double>(obj, result, mtype)) {
+		return result;
+	    }
 
-	if(python_tographitevec<2,Numeric::int32>(obj, result, mtype)) {
-	    return result;
-	}
+	    if(python_tographitevec<4,double>(obj, result, mtype)) {
+		return result;
+	    }
 
-	if(python_tographitevec<3,Numeric::int32>(obj, result, mtype)) {
-	    return result;
-	}
+	    if(python_tographitevec<2,Numeric::int32>(obj, result, mtype)) {
+		return result;
+	    }
 
-	if(python_tographitevec<4,Numeric::int32>(obj, result, mtype)) {
-	    return result;
+	    if(python_tographitevec<3,Numeric::int32>(obj, result, mtype)) {
+		return result;
+	    }
+
+	    if(python_tographitevec<4,Numeric::int32>(obj, result, mtype)) {
+		return result;
+	    }
+
+	    if(python_tographitemat<2,double>(obj, result, mtype)) {
+		return result;
+	    }
+
+	    if(python_tographitemat<3,double>(obj, result, mtype)) {
+		return result;
+	    }
+
+	    if(python_tographitemat<4,double>(obj, result, mtype)) {
+		return result;
+	    }
 	}
 
 	if(PyGraphite_Check(obj)) {
