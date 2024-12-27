@@ -10,7 +10,7 @@
 #   pip uninstall matplotlib
 #   pip install matplotlib==3.0.3
 
-import math,numpy
+import math, numpy as np
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 
@@ -33,7 +33,7 @@ def triangle_area(XY, T):
 # XY the coordinates of the mesh vertices
 # v1 , v2 the mesh extremities index
 def distance(XY, v1, v2):
-  return numpy.linalg.norm(XY[v2]-XY[v1])
+  return np.linalg.norm(XY[v2]-XY[v1])
 
 # Computes the linear system to be solved at each Newton step
 # This is a Python implementation equivalent to the builtin (C++)
@@ -51,10 +51,10 @@ def compute_linear_system(H,b):
    RVD.I.Surface.merge_vertices(1e-10)
 
    # vertex v's coordinates are XY[v][0], XY[v][1]
-   XY = numpy.asarray(RVD.I.Editor.get_points())
+   XY = np.asarray(RVD.I.Editor.get_points())
 
    # Triangle t's vertices indices are T[t][0], T[t][1], T[t][2]
-   T = numpy.asarray(RVD.I.Editor.get_triangles())
+   T = np.asarray(RVD.I.Editor.get_triangles())
 
    # The indices of the triangles adjacent to triangle t are
    #    Tadj[t][0], Tadj[t][1], Tadj[t][2]
@@ -73,14 +73,14 @@ def compute_linear_system(H,b):
    #
    # (Yes, I know, this is stupid and you hate me !!)
 
-   Tadj = numpy.asarray(RVD.I.Editor.get_triangle_adjacents())
+   Tadj = np.asarray(RVD.I.Editor.get_triangle_adjacents())
 
    # chart[t] indicates the index of the seed that corresponds to the
    #  Laguerre cell that t belongs to
-   chart = numpy.asarray(RVD.I.Editor.find_attribute('facets.chart'))
+   chart = np.asarray(RVD.I.Editor.find_attribute('facets.chart'))
 
    # The coordinates of the seeds
-   seeds_XY = numpy.asarray(points.I.Editor.find_attribute('vertices.point'))
+   seeds_XY = np.asarray(points.I.Editor.find_attribute('vertices.point'))
 
    # The number of triangles in the triangulation of the Laguerre diagram
    nt = T.shape[0]
@@ -232,7 +232,7 @@ points = scene_graph.objects.points
 # Shrink points
 # -------------------------------------------------
 if shrink_points:
-   coords = numpy.asarray(points.I.Editor.get_points())
+   coords = np.asarray(points.I.Editor.get_points())
    # TODO: do that without a loop
    for i in range(N):
       coords[i] = 0.125 + coords[i]/4.0

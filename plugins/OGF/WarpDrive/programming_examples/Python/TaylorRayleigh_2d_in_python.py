@@ -54,6 +54,10 @@ class Euler:
                 attribute_name='vertices.speed',dimension=2
             )
         )
+        self.Vnorm = np.asarray(
+            E.find_or_create_attribute(attribute_name='vertices.speed_norm')
+        )
+
 
         # Centroid of Laguerre cell, as Graphite vec and numpy array
         self.centroids_obj = OGF.NL.Vector.create(size=E.nb_vertices,dimension=2)
@@ -76,6 +80,8 @@ class Euler:
         )
         np.copyto(self.point,self.centroid) # point <- centroid
         self.V[:,:] = 0                     # V <- 0
+
+        scene_graph.current_object = self.points_obj.name
         self.points_obj.update()
 
         self.set_graphics_options()
@@ -90,9 +96,9 @@ class Euler:
 
     def step(self):
         # Compute the centroids of the unique Laguerre diagram defined
-        # from the points that has constant areas.
+        # from the points that has the specified areas.
         self.points_obj.I.Transport.compute_optimal_Laguerre_cells_centroids(
-            Omega=self. Omega,centroids=self.centroids_obj, mode='EULER_2D'
+            Omega=self.Omega,centroids=self.centroids_obj, mode='EULER_2D'
         )
 
         # Compute forces: F = spring_force(point, centroid) - m G Z
@@ -102,8 +108,12 @@ class Euler:
         # V += tau * a ; F = ma ==> V += tau * F / m
         self.V += self.tau * F / self.mass[:,np.newaxis]
 
+        # Compute speed norm for CFD (Colorfull Fluid Dynamics)
+        np.copyto(self.Vnorm,np.linalg.norm(self.V,axis=1))
+
         # Update positions
         self.point += self.tau * self.V
+        self.points_obj.shader.autorange()
         self.points_obj.redraw()
 
     def steps(self,n):
