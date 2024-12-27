@@ -71,7 +71,7 @@ end
 
 -- \brief Formats a matrix or a vector in readable form
 -- \param M the matrix or vector to be displayed, stored in
-    a table. Indices start from 1, following Lua convention
+--   a table. Indices start from 1, following Lua convention
 -- \return \p M encoded in a human-readable string
 
 function string.format_matrix(M)
