@@ -345,6 +345,78 @@ namespace {
     /***************************************************/
 
     /**
+     * \brief Converts a python object into a Graphite mat2, mat3 or mat4
+     * \tparam N dimension of the vector
+     * \tparam T type of the coefficients
+     * \param[in] L a pointer to the Lua state
+     * \param[in] index the index of the object in thestack
+     * \param[out] result a reference to the converted matrix
+     * \retval true if the conversion was successful
+     * \retval false otherwise (mtype does not match, or object
+     *  is not a table of the correct size).
+     */
+    template<unsigned int N, class T> inline bool lua_tographitemat(
+	lua_State* L, int index, ::GEO::Matrix<N,T>& result
+    ) {
+
+	if(!lua_istable(L,index)) {
+	    return false;
+	}
+
+	index_t cur = 0;
+	bool ok = true;
+
+	for(lua_Integer i=1; lua_geti(L,index,i) != LUA_TNIL; ++i) {
+	    ::GEO::vecng<N,T> row;
+	    if(cur < N) {
+		if(lua_tographitevec(L,-1,row)) {
+		    for(index_t j=0; j<index_t(N); ++j) {
+			result(cur,j) = row[j];
+		    }
+		} else {
+		    ok = false;
+		}
+	    }
+	    ++cur;
+	    lua_pop(L,1);
+	}
+	lua_pop(L,1); // lua_geti() pushes smthg on the stack
+	              // even for the last round of the loop !
+
+	return(ok && cur == index_t(N));
+    }
+
+
+    /***************************************************/
+
+    /**
+     * \brief Converts a python object into a Graphite mat2, mat3 or mat4
+     * \tparam N dimension of the vector
+     * \tparam T type of the coefficients
+     * \param[in] L a pointer to the Lua state
+     * \param[in] index the index of the object in thestack
+     * \param[out] result a reference to the converted matrix as an Any
+     * \retval true if the conversion was successful
+     * \retval false otherwise (mtype does not match, or object
+     *  is not a table of the correct size).
+     */
+    template<unsigned int N, class T> inline bool lua_tographitemat(
+	lua_State* L, int index, Any& result, MetaType* mtype
+    ) {
+	if(mtype != ogf_meta<::GEO::Matrix<N,double> >::type()) {
+	    return false;
+	}
+	::GEO::Matrix<N,T> M;
+	if(!lua_tographitemat(L,index,M)) {
+	    return false;
+	}
+	result.set_value(M);
+	return true;
+    }
+
+    /***************************************************/
+
+    /**
      * \brief Converts a LUA value to a graphite value stored
      *  in an Any.
      * \param[in] L a pointer to the LUA state.
@@ -408,6 +480,19 @@ namespace {
 	    if(lua_tographitevec<4,Numeric::int32>(L, index, result, mtype)) {
 		return;
 	    }
+
+	    if(lua_tographitemat<2,double>(L, index, result, mtype)) {
+		return;
+	    }
+
+	    if(lua_tographitemat<3,double>(L, index, result, mtype)) {
+		return;
+	    }
+
+	    if(lua_tographitemat<4,double>(L, index, result, mtype)) {
+		return;
+	    }
+
 
 	}
 
@@ -548,6 +633,71 @@ namespace {
 	}
     }
 
+
+    template <class T> inline void lua_pushveccomp(lua_State* L, T val) {
+	geo_argused(L);
+	geo_argused(val);
+	geo_assert_not_reached;
+    }
+
+    template<> inline void lua_pushveccomp(lua_State* L, double val) {
+	lua_pushnumber(L, val);
+    }
+
+    template<> inline void lua_pushveccomp(lua_State* L, Numeric::int32 val) {
+	lua_pushinteger(L, lua_Integer(val));
+    }
+
+    template <unsigned int N, class T> inline void lua_pushvec(
+	lua_State* L, const ::GEO::vecng<N,T>& V
+    ) {
+	lua_createtable(L, int(N), 0);
+	for(index_t i=0; i<index_t(N); ++i) {
+	    lua_pushveccomp(L,V[i]);
+	    lua_seti(L,-2,lua_Integer(i+1)); // indices start from 1 in Lua
+	}
+    }
+
+    template <unsigned int N, class T> inline bool lua_pushvec(
+	lua_State* L, const Any& val
+    ) {
+	if(val.meta_type() != ogf_meta<::GEO::vecng<N,T> >::type()) {
+	    return false;
+	}
+	::GEO::vecng<N,T> V;
+	val.get_value(V);
+	lua_pushvec(L,V);
+	return true;
+    }
+
+    template <unsigned int N, class T> inline void lua_pushmat(
+	lua_State* L, const ::GEO::Matrix<N,T>& M
+    ) {
+	lua_createtable(L, int(N), 0);
+	for(index_t i=0; i<index_t(N); ++i) {
+	    lua_createtable(L, int(N), 0);
+	    for(index_t j=0; j<index_t(N); ++j) {
+		lua_pushveccomp(L,M(i,j));
+		lua_seti(L,-2,lua_Integer(j+1)); // Indices start from 1 in Lua
+	    }
+	    lua_seti(L,-2,lua_Integer(i+1)); // Indices start from 1 in Lua
+	}
+    }
+
+    template <unsigned int N, class T> inline bool lua_pushmat(
+	lua_State* L, const Any& val
+    ) {
+	if(val.meta_type() != ogf_meta<::GEO::Matrix<N,T> >::type()) {
+	    return false;
+	}
+	::GEO::Matrix<N,T> M;
+	val.get_value(M);
+	lua_pushmat(L,M);
+	return true;
+    }
+
+
+
     /**
      * \brief Pushes a value on the LUA stack.
      * \details The GOM meta type \p mtype is used to determine
@@ -651,6 +801,42 @@ namespace {
 	    size_t val;
 	    value.get_value(val);
 	    lua_pushnumber(L, lua_Number(val));
+	    return;
+	}
+
+	if(lua_pushvec<2,double>(L,value)) {
+	    return;
+	}
+
+	if(lua_pushvec<3,double>(L,value)) {
+	    return;
+	}
+
+	if(lua_pushvec<4,double>(L,value)) {
+	    return;
+	}
+
+	if(lua_pushvec<2,Numeric::int32>(L,value)) {
+	    return;
+	}
+
+	if(lua_pushvec<3,Numeric::int32>(L,value)) {
+	    return;
+	}
+
+	if(lua_pushvec<4,Numeric::int32>(L,value)) {
+	    return;
+	}
+
+	if(lua_pushmat<2,double>(L,value)) {
+	    return;
+	}
+
+	if(lua_pushmat<3,double>(L,value)) {
+	    return;
+	}
+
+	if(lua_pushmat<4,double>(L,value)) {
 	    return;
 	}
 
@@ -828,7 +1014,12 @@ namespace {
 	    return luaL_error(L, "tried to get attribute from nil object");
 	}
 	Any value;
-	lua_tographiteval(L,3,value);
+	MetaType* mtype = nullptr;
+	MetaProperty* mprop = object->meta_class()->find_property(key);
+	if(mprop != nullptr) {
+	    mtype = mprop->type();
+	}
+	lua_tographiteval(L,3,value,mtype);
 	object->set_property(key,value);
 	return 0;
     }

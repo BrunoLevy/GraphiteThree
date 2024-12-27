@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/gom/types/arg_list.h>
@@ -56,7 +56,7 @@ namespace OGF {
     }
 
     void ArgList::append_ith_arg(
-        const ArgList& rhs, index_t i, bool overwrite 
+        const ArgList& rhs, index_t i, bool overwrite
     ) {
         geo_debug_assert(i < rhs.nb_args());
         index_t j = find_arg_index(rhs.argname_[i]);
@@ -75,7 +75,7 @@ namespace OGF {
         for(index_t i=0; i<nb_args(); ++i) {
             out << ith_arg_name(i) << ":" << ith_arg_value(i).as_string() << " ";
         }
-        out << ')';        
+        out << ')';
     }
 
     void ArgList::arg_type_error(
@@ -85,16 +85,18 @@ namespace OGF {
 	    resolve_meta_type_by_typeid_name(expected_typeid_name);
 
 	MetaType* current_type = argval_[i].meta_type();
-	
+
 	Logger::err("GOM")
             << "Arg type error:"
             << " i = " << i
             << " name = " << argname_[i]
-            << " type = " <<
-                   ((current_type != nullptr) ? current_type->name() : "unknown")
+            << " type = " <<(
+	    argval_[i].is_null() ? "null" : (
+		((current_type != nullptr) ? current_type->name() : "unknown")
+	    ))
             << " expected type = "
             << ((expected_type != nullptr) ? expected_type->name() :
-                "unknown: " + expected_typeid_name) 
+                "unknown: " + expected_typeid_name)
             << std::endl;
 
 	std::ostringstream oss;
@@ -119,6 +121,5 @@ namespace OGF {
         name.set_value(object_name);
         return true;
     }
-    
-}
 
+}

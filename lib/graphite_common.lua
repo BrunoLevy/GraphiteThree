@@ -68,6 +68,30 @@ function string.load_file(filename)
     return content
 end
 
+
+-- \brief Formats a matrix or a vector in readable form
+-- \param M the matrix or vector to be displayed, stored in
+    a table. Indices start from 1, following Lua convention
+-- \return \p M encoded in a human-readable string
+
+function string.format_matrix(M)
+   result = '{'
+   local first = true
+   for k,v in ipairs(M) do
+      if not first then
+        result = result .. ','
+      end
+      if type(v) == 'table' then
+        result = result .. string.format_matrix(v)
+      else
+        result = result .. tostring(v)
+      end
+      first = false
+   end
+   result = result .. '}'
+   return result
+end
+
 -- \brief Sleeps during a certain time
 -- \param a the time to sleep in seconds
 -- (floating point number)
