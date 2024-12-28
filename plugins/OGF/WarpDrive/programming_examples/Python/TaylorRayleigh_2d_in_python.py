@@ -1,5 +1,5 @@
 
-# This program implements a simple incompressible fluid simulator in Lua,
+# This program implements a simple incompressible fluid simulator in Python,
 # it is there for educational purposes. More efficient implementations of the
 # fluid simulator are available in the Transport->Compute->Eulerxx commands
 # (the latter is used in TaylorRayleigh_2d.lua, TaylorRayleigh_3d.lua etc...)

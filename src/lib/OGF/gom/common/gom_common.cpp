@@ -45,6 +45,9 @@
 
 namespace GEO {
 
+    /**
+     * \brief Deserializer for smart pointer
+     */
     std::istream& operator>>(
 	std::istream& in, GEO::SmartPointer<GEO::Counted>& smptr
     ) {
@@ -54,6 +57,9 @@ namespace GEO {
 	return in;
     }
 
+    /**
+     * \brief Serializer for smart pointer
+     */
     std::ostream& operator<<(
 	std::ostream& out, const GEO::SmartPointer<GEO::Counted>& smptr
     ) {
@@ -93,6 +99,7 @@ namespace OGF {
         ogf_declare_builtin_type<index_t>("OGF::index_t");
         ogf_declare_builtin_type<size_t>("size_t");
 
+	// Registerd as builtin-type so that it can be stored in an Any
 	ogf_declare_builtin_type<SmartPointer<Counted>>(
 	    "OGF::Memory::smart_pointer"
 	);

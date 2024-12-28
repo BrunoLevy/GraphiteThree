@@ -141,9 +141,8 @@ def compute():
       smallest_cell_threshold = 0.5 * min(np.min(b), Omega_measure/N)
       print('smallest cell threshold = '+str(smallest_cell_threshold))
 
-   # desired area for Laguerre cell i (all the same, could be different)
-   nu_i = Omega_measure/N
-   b[:] = nu_i - b # rhs = desired areas - actual areas
+   # desired area for Laguerre cells (all the same here, but could be different)
+   b[:] = Omega_measure/N - b # rhs = desired areas - actual areas
 
    g_norm = np.linalg.norm(b) # norm of gradient at curent step
                               # (used by KMT criterion #2)
@@ -186,7 +185,6 @@ def compute():
       alpha = alpha / 2.0
 
    np.copyto(weight, weight2)
-   #NL.blas.copy(weight2, weight)
 
    # We have already computed it, but it was triangulated,
    # We recompute it so that display is not cluttered with
