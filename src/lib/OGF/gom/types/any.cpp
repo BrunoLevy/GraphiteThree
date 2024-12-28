@@ -91,6 +91,10 @@ namespace OGF {
         string = stream.str();
     }
 
+    bool Any::is_smart_pointer_type(const MetaType* mtype) {
+	return mtype == ogf_meta<SmartPointer<Counted>>::type();
+    }
+
     bool Any::is_pointer_type(const MetaType* mtype) {
 	return mtype == ogf_meta<std::nullptr_t>::type() ||
 	    (mtype->name()[mtype->name().length()-1] == '*');

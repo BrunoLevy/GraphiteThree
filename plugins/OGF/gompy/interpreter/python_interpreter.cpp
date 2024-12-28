@@ -1246,6 +1246,100 @@ namespace {
 	return true;
     }
 
+    /*****************************************************************/
+
+    bool python_to_nl_vector(PyObject* obj, Any& result, MetaType* mtype) {
+	bool conversion_OK = false;
+	if(mtype != ogf_meta<::OGF::NL::Vector*>::type()) {
+	    return false;
+	}
+
+        if(PyObject_HasAttrString(obj,"__array_struct__")) {
+            PyObject* capsule = PyObject_GetAttrString(obj,"__array_struct__");
+            Py_INCREF(capsule);
+            if(PyCapsule_CheckExact(capsule)) {
+                void* ptr = PyCapsule_GetPointer(capsule,nullptr);
+                geo_assert(ptr != nullptr);
+
+                PyArrayInterface* array_interface =
+                    static_cast<PyArrayInterface*>(ptr);
+
+                if(array_interface != nullptr) {
+		    // sanity check
+		    geo_assert(array_interface->two == 2);
+
+		    char typekind = array_interface->typekind;
+
+
+		    // Workaround. I do not understand why, but when I create
+		    // a numpyarray with datatype 'double', it appears here
+		    // as 'f', so I check itemsize to detect doubles.
+		    // TODO: understand what's going on here.
+		    if(typekind == 'f' && array_interface->itemsize == 8) {
+			typekind = 'd';
+		    }
+
+		    MetaType* element_meta_type = nullptr;
+		    switch(typekind) {
+		    case 'f':
+			element_meta_type = ogf_meta<float>::type();
+			break;
+		    case 'd':
+			element_meta_type = ogf_meta<double>::type();
+			break;
+		    case 'i':
+			element_meta_type =
+			    ogf_meta<Numeric::int32>::type();
+			break;
+		    case 'u':
+			element_meta_type =
+			    ogf_meta<Numeric::uint32>::type();
+			break;
+		    case 'b':
+			element_meta_type =
+			    ogf_meta<Numeric::uint8>::type();
+			break;
+		    }
+
+		    if(
+			array_interface->nd <= 2 &&
+			element_meta_type != nullptr &&
+			(array_interface->flags & NPY_ARRAY_C_CONTIGUOUS) != 0
+		    ) {
+			index_t dim = 1;
+			if(array_interface->nd == 2) {
+			    dim = index_t(array_interface->shape[1]);
+			}
+			SmartPointer<Counted> graphite_vector = new NL::Vector(
+			    nullptr,
+			    array_interface->data,
+			    index_t(array_interface->shape[0]),
+			    dim,
+			    element_meta_type,
+			    ((array_interface->flags & NPY_ARRAY_WRITEABLE) == 0)
+			);
+			result.set_value(graphite_vector);
+			conversion_OK = true;
+		    }
+                }
+            }
+	    if(!conversion_OK) {
+		// There was an array-like object, but it could not be accessed
+		// as a NL::Vector
+		Logger::err("gompy") << "Could not access array as NL::Vector"
+				     << std::endl;
+		// We return a null smart pointer
+		SmartPointer<Counted> graphite_vector;
+		result.set_value(graphite_vector);
+		conversion_OK = true;
+	    }
+            Py_DECREF(capsule);
+	}
+
+	return conversion_OK;
+    }
+
+    /*****************************************************************/
 
     Any python_to_graphite(PyObject* obj, MetaType* mtype) {
 	Any result;
@@ -1291,6 +1385,10 @@ namespace {
 	    if(python_tographitemat<4,double>(obj, result, mtype)) {
 		return result;
 	    }
+	}
+
+	if(python_to_nl_vector(obj, result, mtype)) {
+	    return result;
 	}
 
 	if(PyGraphite_Check(obj)) {

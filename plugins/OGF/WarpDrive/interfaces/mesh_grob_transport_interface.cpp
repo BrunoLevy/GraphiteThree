@@ -23,19 +23,19 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the following 
+ * As an exception to the GPL, Graphite can be linked with the following
  *  (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 #include <OGF/WarpDrive/interfaces/mesh_grob_transport_interface.h>
 #include <OGF/gom/reflection/meta.h>
 #include <OGF/scene_graph/NL/vector.h>
@@ -84,7 +84,8 @@ namespace OGF {
 		    (double*)(centroids->data()),
 		    nullptr, false,
 		    0, nullptr, 0, 0.0,
-		    nullptr, (weights == nullptr) ? nullptr : (double*)weights->data()
+		    nullptr,
+		    (weights == nullptr) ? nullptr : (double*)weights->data()
 		);
 	    } break;
 	    case MeshGrobTransportCommands::EULER_3D: {
@@ -140,7 +141,7 @@ namespace OGF {
 	NL::Vector* measures_in,
 	MeshGrobTransportCommands::EulerMode mode
     ) {
-	NLMatrix Laplacian = nullptr; 
+	NLMatrix Laplacian = nullptr;
 	if(Laplacian_in != nullptr) {
 	    Laplacian = Laplacian_in->implementation();
 	    if(Laplacian->m != Laplacian->n) {
@@ -171,7 +172,7 @@ namespace OGF {
 	    }
 	    measures = (double*)measures_in->data();
 	}
-	
+
 	double* weights = nullptr;
 	if(weights_in != nullptr) {
 	    if(weights_in->get_element_meta_type()!=ogf_meta<double>::type()) {
@@ -190,7 +191,7 @@ namespace OGF {
 			       << std::endl;
 	    return;
 	}
-	
+
 
 	switch(mode) {
 	    case MeshGrobTransportCommands::EULER_2D: {
@@ -209,7 +210,7 @@ namespace OGF {
 		    mesh_grob()->vertices.point_ptr(0),
 		    mesh_grob()->vertices.dimension()
 		);
-		OTM.compute_P1_Laplacian(weights, Laplacian, measures);		
+		OTM.compute_P1_Laplacian(weights, Laplacian, measures);
 	    } break;
 	    case MeshGrobTransportCommands::EULER_ON_SURFACE: {
 		OptimalTransportMapOnSurface OTM(Omega);
@@ -218,16 +219,16 @@ namespace OGF {
 		    mesh_grob()->vertices.point_ptr(0),
 		    mesh_grob()->vertices.dimension()
 		);
-		OTM.compute_P1_Laplacian(weights, Laplacian, measures);		
+		OTM.compute_P1_Laplacian(weights, Laplacian, measures);
 	    } break;
 	}
     }
-    
+
     void MeshGrobTransport::compute_Laguerre_diagram(
 	MeshGrob* Omega,
 	NL::Vector* weights,
 	MeshGrob* RVD,
-	MeshGrobTransportCommands::EulerMode mode	    
+	MeshGrobTransportCommands::EulerMode mode
     ) {
 	if(
 	    weights == nullptr ||
@@ -240,7 +241,7 @@ namespace OGF {
 
 	RVD->clear();
 	RVD->update();
-	
+
 	switch(mode) {
 	    case MeshGrobTransportCommands::EULER_2D: {
 		vector<double> points_in(mesh_grob()->vertices.nb()*2);
@@ -269,29 +270,29 @@ namespace OGF {
 	}
     }
 
-    
+
     double MeshGrobTransport::Omega_measure(
 	MeshGrob* Omega,
-	MeshGrobTransportCommands::EulerMode mode	    
+	MeshGrobTransportCommands::EulerMode mode
     ) {
 	double result = 0;
 	switch(mode) { // HERE
 	    case MeshGrobTransportCommands::EULER_2D: {
 		OptimalTransportMap2d OTM(Omega);
-		result = OTM.total_mass();		
+		result = OTM.total_mass();
 	    } break;
 	    case MeshGrobTransportCommands::EULER_3D: {
 		OptimalTransportMap3d OTM(Omega);
-		result = OTM.total_mass();		
+		result = OTM.total_mass();
 	    } break;
 	    case MeshGrobTransportCommands::EULER_ON_SURFACE: {
 		OptimalTransportMapOnSurface OTM(Omega);
-		result = OTM.total_mass();		
+		result = OTM.total_mass();
 	    } break;
 	}
 	return result;
     }
-    
-    
-    
+
+
+
 }

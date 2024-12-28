@@ -3,15 +3,6 @@
 # it is there for educational purposes. More efficient implementations of the
 # fluid simulator are available in the Transport->Compute->Eulerxx commands
 # (the latter is used in TaylorRayleigh_2d.lua, TaylorRayleigh_3d.lua etc...)
-#
-# Note: with anaconda under Windows 10, sometimes numpy and matplotlib
-# come with broken installations. To fix them, run 'Anaconda Prompt'
-# in administrator mode (right click on entry in start menu, then in
-# 'more...' submenu), then:
-#   pip uninstall numpy
-#   pip install numpy
-#   pip uninstall matplotlib
-#   pip install matplotlib==3.0.3
 
 import math,numpy as np
 OGF = gom.meta_types.OGF # shortcut to Graphite types
@@ -59,9 +50,8 @@ class Euler:
         )
 
 
-        # Centroid of Laguerre cell, as Graphite vec and numpy array
-        self.centroids_obj = OGF.NL.Vector.create(size=E.nb_vertices,dimension=2)
-        self.centroid = np.asarray(self.centroids_obj)
+        # Centroid of Laguerre cell, as numpy array
+        self.centroid = np.ndarray((E.nb_vertices,2),np.double)
 
         # Initialize masses with nice sine wave,
         # and heavy fluid on top.
@@ -76,8 +66,9 @@ class Euler:
 
         # Initialize Euler
         self.points_obj.I.Transport.compute_optimal_Laguerre_cells_centroids(
-            Omega=self.Omega,centroids=self.centroids_obj,mode='EULER_2D'
+            Omega=self.Omega, centroids=self.centroid, mode='EULER_2D'
         )
+
         np.copyto(self.point,self.centroid) # point <- centroid
         self.V[:,:] = 0                     # V <- 0
 
@@ -98,7 +89,7 @@ class Euler:
         # Compute the centroids of the unique Laguerre diagram defined
         # from the points that has the specified areas.
         self.points_obj.I.Transport.compute_optimal_Laguerre_cells_centroids(
-            Omega=self.Omega,centroids=self.centroids_obj, mode='EULER_2D'
+            Omega=self.Omega, centroids=self.centroid, mode='EULER_2D'
         )
 
         # Compute forces: F = spring_force(point, centroid) - m G Z

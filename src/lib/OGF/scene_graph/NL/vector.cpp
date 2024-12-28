@@ -123,17 +123,26 @@ namespace OGF {
 	void Vector::resize(
 	    index_t size, index_t dimension, MetaType* element_meta_type
 	) {
-	    if(!owns_memory_ || read_only_) {
-		Logger::err("NL::Vector")
-		    << "Cannot resize, Vector does not own memory"
-		    << std::endl;
-	    }
 	    if(
 		size == size_ &&
 		dimension == dimension_ &&
 		(element_meta_type == nullptr ||
 		 element_meta_type == element_meta_type_)
 	    ) {
+		return;
+	    }
+
+	    if(!owns_memory_ || read_only_) {
+		Logger::err("NL::Vector")
+		    << "Cannot resize, Vector does not own memory"
+		    << std::endl;
+
+		std::cerr
+		    << size << "," << size_ << " "
+		    << dimension << "," << dimension_ << " "
+		    << element_meta_type->name() << "," << element_meta_type_->name()
+		    << std::endl;
+
 		return;
 	    }
 

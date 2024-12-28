@@ -59,6 +59,7 @@ namespace OGF {
         MetaTypesScope* OGF = meta_types->create_subscope("OGF");
         OGF->create_subscope("NL");
         OGF->create_subscope("Numeric");
+        OGF->create_subscope("Memory");
         meta_types->create_subscope("std");
         meta_types_ = meta_types;
         if(default_interpreter_ == nullptr) {

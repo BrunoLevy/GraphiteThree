@@ -1,14 +1,5 @@
 # Tutorial on Optimal Transport
 # "by-hand" computation of Hessian and gradient (almost fully in Python)
-#
-# Note: with anaconda under Windows 10, sometimes numpy and matplotlib
-# come with broken installations. To fix them, run 'Anaconda Prompt'
-# in administrator mode (right click on entry in start menu, then in
-# 'more...' submenu), then:
-#   pip uninstall numpy
-#   pip install numpy
-#   pip uninstall matplotlib
-#   pip install matplotlib==3.0.3
 
 import math, numpy as np
 
@@ -16,7 +7,6 @@ OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 
 N = 1000              # Number of points (try with 10000)
 shrink_points = True  # Group points in a smaller area
-
 
 # Computes the area of a mesh triangle
 # XY the coordinates of the mesh vertices
@@ -85,6 +75,8 @@ def compute_linear_system(H,b):
    # The number of triangles in the triangulation of the Laguerre diagram
    nt = T.shape[0]
 
+   b[:] = 0
+
    # For each triangle of the triangulation of the Laguerre diagram
    for t in range(nt):
 
@@ -139,48 +131,36 @@ def compute():
 
    # compute L(Laplacian) and b(init. with Laguerre cells areas)
    L = NL.create_matrix(N,N) # P1 Laplacian of Laguerre cells
-   b = NL.create_vector(N)   # right-hand side
+   b = np.ndarray(N,np.float64) # right-hand side
 
    compute_linear_system(L,b)
 
    # compute minimal legal area for Laguerre cells (KMT criterion #1)
    # (computed at the first run, when Laguerre diagram = Voronoi diagram)
    if smallest_cell_threshold == -1.0:
-      smallest_cell_area = b[0]
-      for i in range(N):
-         smallest_cell_area = min(smallest_cell_area, b[i])
-      smallest_cell_threshold = 0.5 * min(smallest_cell_area, Omega_measure/N)
+      smallest_cell_threshold = 0.5 * min(np.min(b), Omega_measure/N)
       print('smallest cell threshold = '+str(smallest_cell_threshold))
 
-   for i in range(N):
-     nu_i = Omega_measure/N  # desired area for Laguerre cell i
-     b[i] = nu_i - b[i]      # rhs = desired area - actual area
+   # desired area for Laguerre cell i (all the same, could be different)
+   nu_i = Omega_measure/N
+   b[:] = nu_i - b # rhs = desired areas - actual areas
 
-   g_norm = NL.blas.nrm2(b)  # norm of gradient at curent step
-                             # (used by KMT criterion #2)
+   g_norm = np.linalg.norm(b) # norm of gradient at curent step
+                              # (used by KMT criterion #2)
 
-   p = NL.create_vector(N)   # Newton step vector
+   p = np.ndarray(N,np.float64)
    L.solve_symmetric(b,p)   # solve for p in Lp=b
    alpha = 1.0              # Steplength
-   weight2 = NL.create_vector(N)
 
    # Divide steplength by 2 until both KMT criteria are satisfied
    for k in range(10):
       # print('   Substep: k = '+tostring(k)+'  alpha='+alpha)
-      NL.blas.copy(weight, weight2)
-      NL.blas.axpy(alpha, p, weight2) # weight2 = weight + alpha * p
+      weight2 = weight + alpha * p
       OT.compute_Laguerre_cells_measures(Omega, weight2, b, 'EULER_2D')
-      smallest_cell_area = b[0]
-      for i in range(N):
-         smallest_cell_area = min(smallest_cell_area, b[i])
+      smallest_cell_area = np.min(b)
 
       # Compute gradient norm at current substep
-      g_norm_substep = 0.0
-      for i in range(N):
-         g_i = b[i] - Omega_measure/N
-         g_norm_substep = g_norm_substep + g_i * g_i
-
-      g_norm_substep = math.sqrt(g_norm_substep)
+      g_norm_substep = np.linalg.norm(b - Omega_measure/N)
 
       # KMT criterion #1 (Laguerre cell area)
       KMT_1 = (smallest_cell_area > smallest_cell_threshold)
@@ -205,7 +185,8 @@ def compute():
 
       alpha = alpha / 2.0
 
-   NL.blas.copy(weight2, weight)
+   np.copyto(weight, weight2)
+   #NL.blas.copy(weight2, weight)
 
    # We have already computed it, but it was triangulated,
    # We recompute it so that display is not cluttered with
@@ -233,9 +214,7 @@ points = scene_graph.objects.points
 # -------------------------------------------------
 if shrink_points:
    coords = np.asarray(points.I.Editor.get_points())
-   # TODO: do that without a loop
-   for i in range(N):
-      coords[i] = 0.125 + coords[i]/4.0
+   coords[:] = 0.125 + coords/4.0
    points.update()
 
 # -------------------------------------------------
@@ -247,7 +226,7 @@ RVD = scene_graph.create_object(OGF.MeshGrob,'RVD')
 # Compute diagram
 # -------------------------------------------------
 OT = points.I.Transport
-weight   = NL.create_vector(N)
+weight = np.zeros(N,np.float64)
 OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
 
 # -------------------------------------------------

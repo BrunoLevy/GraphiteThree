@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_BASIC_TYPES_ANY_H
@@ -66,7 +66,7 @@ namespace OGF {
 	 * \brief The size in bytes for storing values in the buffer
 	 *  rather than doing dynamic allocation.
 	 */
-	enum { BUFFER_SIZE = 40 };	
+	enum { BUFFER_SIZE = 40 };
 
       public:
 
@@ -98,7 +98,7 @@ namespace OGF {
 	void reset() {
 	    destroy();
 	}
-	
+
 	/**
 	 * \brief Any copy constructor.
 	 * \param[in] rhs the Any to be copied.
@@ -120,13 +120,13 @@ namespace OGF {
 	    }
 	    return *this;
 	}
-	
+
 	/**
 	 * \brief Gets a string representation.
 	 * \return a string representation of the stored argument
 	 */
 	std::string as_string() const {
-	    std::string result;	    
+	    std::string result;
 	    if(value_ != nullptr) {
 		convert_to_string(meta_type_, result, value_);
 	    }
@@ -144,6 +144,8 @@ namespace OGF {
 
 	/**
 	 * \brief Gets the LifeCycle.
+	 * \details The LifeCycle knows how to construct, copy, and destroy
+	 *  objects of a given type.
 	 * \return a pointer to the LifeCycle.
 	 */
 	LifeCycle* life_cycle() const;
@@ -161,18 +163,18 @@ namespace OGF {
 	    destroy();
 	    meta_type_ = new_type;
 
-#if defined(GEO_COMPILER_GCC)	    
+#if defined(GEO_COMPILER_GCC)
 // GCC does not see that we use placement new in the buffer
 // only if object size is smaller than BUFFER_SIZE and
-// generates a warning.	    
+// generates a warning.
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wplacement-new"
 #elif defined(GEO_COMPILER_MSVC)
-// MSVC barks on test with constant condition.	    
+// MSVC barks on test with constant condition.
 #pragma warning(push)
-#pragma warning(disable:4127) 	    
-#endif	    
-	    
+#pragma warning(disable:4127)
+#endif
+
 	    if(sizeof(T) <= BUFFER_SIZE) {
 		in_buffer_ = true;
 		value_ = buffer_;
@@ -186,12 +188,12 @@ namespace OGF {
 #pragma GCC diagnostic pop
 #elif defined(GEO_COMPILER_MSVC)
 #pragma warning(pop)
-#endif	    
-	    
+#endif
+
 	}
 
 	/**
-	 * \brief Sets the value of this Any (overload for 
+	 * \brief Sets the value of this Any (overload for
 	 *  string literals).
 	 * \details Strings literals are stored internally as
 	 *  std::string.
@@ -200,7 +202,7 @@ namespace OGF {
 	void set_value(const char* value) {
 	    set_value<std::string>(std::string(value));
 	}
-	
+
 	/**
 	 * \brief Gets the stored value.
 	 * \param[out] value the stored value.
@@ -262,7 +264,7 @@ namespace OGF {
 		    value = index_t(tmp);
 		    return true;
 		}
-		
+
 	    }
 	    {
 		double tmp;
@@ -270,7 +272,7 @@ namespace OGF {
 		    value = index_t(tmp);
 		    return true;
 		}
-		
+
 	    }
 	    return false;
 	}
@@ -298,7 +300,7 @@ namespace OGF {
 		    value = signed_index_t(tmp);
 		    return true;
 		}
-		
+
 	    }
 	    {
 		double tmp;
@@ -306,7 +308,7 @@ namespace OGF {
 		    value = signed_index_t(tmp);
 		    return true;
 		}
-		
+
 	    }
 	    return false;
 	}
@@ -381,7 +383,7 @@ namespace OGF {
 
 	/**
 	 * \brief Gets the stored value (pointers overload).
-	 * \details More complicated than using the default function, 
+	 * \details More complicated than using the default function,
 	 *  this is because AnyStore<B> is not a subtype of AnyStore<A>
 	 *  if B is a subclass of A (inheritance does not play
 	 *  well with templates).
@@ -392,6 +394,13 @@ namespace OGF {
 	template <class T> bool get_value(T*& value) const {
 	    value = nullptr;
 	    if(is_null()) {
+		return true;
+	    }
+
+	    if(is_smart_pointer_type(meta_type())) {
+		// TODO: check pointer types
+		Counted* counted = value_as<Counted*>();
+		value = reinterpret_cast<T*>(counted);
 		return true;
 	    }
 
@@ -420,7 +429,7 @@ namespace OGF {
 		return false;
 	    }
 	    */
-	    
+
 	    value = (T*)(value_as<Memory::pointer>());
 	    return true;
 	}
@@ -487,10 +496,10 @@ namespace OGF {
 	    // If meta types do not match, try conversions.
 	    return copy_convert_to(addr, meta_type);
 	}
-	
+
         /**
          * \brief Converts an object of a given type into a string.
-         * \details It does the same thing as ogf_convert_to_string(), 
+         * \details It does the same thing as ogf_convert_to_string(),
          *  namely it uses the Serializer registered in the Meta repository.
          *  We cannot use ogf_convert_to_string() since it would introduce
          *  a circular dependency in Meta, that uses ArgList.
@@ -505,7 +514,7 @@ namespace OGF {
 
         /**
          * \brief Converts a string into an object of a given type.
-         * \details It does the same thing as ogf_convert_from_string(), 
+         * \details It does the same thing as ogf_convert_from_string(),
          *  namely it uses the Serializer registered in the Meta repository.
          *  We cannot use ogf_convert_from_string() since it would introduce
          *  a circular dependency in Meta, that uses ArgList.
@@ -526,6 +535,13 @@ namespace OGF {
 	static bool is_pointer_type(const MetaType* mtype);
 
 	/**
+	 * \brief Tests whether a MetaType is a smart pointer type.
+	 * \retval true if MetaType is SmartPointer<Counted>.
+	 * \retval false otherwise.
+	 */
+	static bool is_smart_pointer_type(const MetaType* mtype);
+
+	/**
 	 * \brief Gets the deferenced type.
 	 * \param[in] mtype a pointer MetaType.
 	 * \return the deferenced type.
@@ -535,7 +551,7 @@ namespace OGF {
 	/**
 	 * \brief Tests whether a pointer type can be casted
 	 *  to an object type.
-	 * \param[in] derived_pointer_type the MetaType of the derived 
+	 * \param[in] derived_pointer_type the MetaType of the derived
 	 *  pointer type.
 	 * \param[in] base_pointer_type the MetaType of the base pointer type.
 	 * \retval true if pointers of type derived_pointer_type can be casted
@@ -543,7 +559,7 @@ namespace OGF {
 	 * \retval false otherwise.
 	 */
 	static bool pointer_can_be_casted_to(
-	    const MetaType* derived_pointer_type,	    
+	    const MetaType* derived_pointer_type,
 	    const MetaType* base_pointer_type
 	);
 
@@ -574,7 +590,7 @@ namespace OGF {
       protected:
 
 	/**
-	 * \brief Tentatively converts the value stored in this Any to a type 
+	 * \brief Tentatively converts the value stored in this Any to a type
 	 *  and if successful, store it at a specified address.
 	 * \param[out] addr a memory address where to store the value
 	 * \param[in] meta_type the MetaType
@@ -582,7 +598,7 @@ namespace OGF {
 	 * \retval false if no conversion is available.
 	 */
 	bool copy_convert_to(Memory::pointer addr, MetaType* meta_type) const;
-	
+
 	/**
 	 * \brief Gets the value as a specific type.
 	 * \tparam T the type.
@@ -605,7 +621,7 @@ namespace OGF {
 		life_cycle()->destroy(value_);
 		in_buffer_ = false;
 	    } else {
-		life_cycle()->delete_object(value_);		
+		life_cycle()->delete_object(value_);
 	    }
 	    value_ = nullptr;
 	    meta_type_ = nullptr;
@@ -633,14 +649,14 @@ namespace OGF {
 	}
 
 	static std::string meta_type_name(const MetaType* mt);
-	
+
       private:
 	Memory::pointer value_;
 	Memory::byte buffer_[BUFFER_SIZE];
 	bool in_buffer_;
 	MetaType* meta_type_;
     };
-    
+
 }
 
 #ifdef GEO_COMPILER_CLANG

@@ -43,14 +43,35 @@
 #include <geogram/basic/geometry.h>
 #include <string>
 
+namespace GEO {
+
+    std::istream& operator>>(
+	std::istream& in, GEO::SmartPointer<GEO::Counted>& smptr
+    ) {
+	GEO::Counted* ptr;
+	::OGF::ogf_meta<void*>::serializer()->serialize_read(in, &ptr);
+	smptr = ptr;
+	return in;
+    }
+
+    std::ostream& operator<<(
+	std::ostream& out, const GEO::SmartPointer<GEO::Counted>& smptr
+    ) {
+	const GEO::Counted* ptr = smptr.get();
+	::OGF::ogf_meta<void*>::serializer()->serialize_write(out, &ptr);
+	return out;
+    }
+
+}
+
 namespace OGF {
 
 /****************************************************************/
 
     void gom_libinit::initialize() {
         Logger::out("Init") << "<gom>" << std::endl;
-        //_____________________________________________________________
 
+        /********************************************************/
 
         Meta::initialize() ;
 
@@ -71,6 +92,10 @@ namespace OGF {
         ogf_declare_builtin_type<index_t>("GEO::index_t");
         ogf_declare_builtin_type<index_t>("OGF::index_t");
         ogf_declare_builtin_type<size_t>("size_t");
+
+	ogf_declare_builtin_type<SmartPointer<Counted>>(
+	    "OGF::Memory::smart_pointer"
+	);
 
         ogf_declare_builtin_type<Numeric::uint8>("OGF::Numeric::uint8");
         ogf_declare_builtin_type<Numeric::int8>("OGF::Numeric::int8");
