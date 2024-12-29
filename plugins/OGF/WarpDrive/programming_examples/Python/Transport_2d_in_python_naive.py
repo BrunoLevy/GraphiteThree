@@ -1,5 +1,7 @@
 # Tutorial on Optimal Transport
 # "by-hand" computation of Hessian and gradient (almost fully in Python)
+# Naive version, with for loops (see Transport_2d_in_python for a more
+# efficient version)
 
 import math, numpy as np
 

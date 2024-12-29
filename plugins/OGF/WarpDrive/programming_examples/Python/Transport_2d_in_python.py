@@ -1,11 +1,12 @@
 # Tutorial on Optimal Transport
 # "by-hand" computation of Hessian and gradient (almost fully in Python)
+# Version that exploit numpy array functions
 
 import math, numpy as np
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 
-N = 100000              # Number of points (try with 10000)
+N = 1000              # Number of points (try with 10000, 100000
 shrink_points = True  # Group points in a smaller area
 
 # Computes the area of a mesh triangle
