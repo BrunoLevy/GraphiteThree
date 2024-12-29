@@ -105,9 +105,9 @@ def compute_linear_system(H,b):
      edge = edge[edge[:,1] != -1]        # remove edges on border (adjacent = -1)
      edge[:,1] = chart[edge[:,1]]        # 1: adjacent seed index (j)
      edge = edge[edge[:,0] != edge[:,1]] # remove edges that stay in same cell
-     I = edge[:,0]  # get arrays of i's, j's, v1's and v2's
-     J = edge[:,1]  # (we could directly use edge[], but this makes code
-     V1 = edge[:,2] #  more legible)
+     I = edge[:,0].copy()  # get arrays of i's, j's, v1's and v2's.
+     J = edge[:,1].copy()  # We need to copy I and J to have contiguous arrays
+     V1 = edge[:,2]        # (H.add_coefficients() requires that).
      V2 = edge[:,3]
 
      # Now we can compute a vector of coefficient (note: V1,V2,I,J are vectors)
@@ -117,13 +117,9 @@ def compute_linear_system(H,b):
      diag = np.zeros(N,np.float64)
      np.add.at(diag,I,-coeff)
 
-     # TODO: bulk matrix fill functions in OGF::NL::Matrix class
-     for t in range(edge.shape[0]):
-       H.add_coefficient(edge[t,0], edge[t,1], coeff[t])
-
-     for i in range(N):
-       H.add_coefficient(i, i, diag[i])
-
+     # Insert coefficients and diagonal into matrix
+     H.add_coefficients(I,J,coeff)
+     H.add_coefficients_to_diagonal(diag)
 
 # minimal legal area for Laguerre cells (KMT criterion #1)
 # (computed at the first run, when Laguerre diagram = Voronoi diagram)

@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 #ifndef H_OGF_SCENE_GRAPH_NL_MATRIX_H
 #define H_OGF_SCENE_GRAPH_NL_MATRIX_H
 
@@ -70,7 +70,7 @@ namespace OGF {
 	     * \brief Preconditioners.
 	     */
 	    enum Preconditioner { None, Jacobi, SSOR};
-	    
+
 	    /**
 	     * \brief Matrix constructor.
 	     * \param[in] m number of rows.
@@ -99,13 +99,13 @@ namespace OGF {
 	    /**
 	     * \brief Gets the format of the matrix.
 	     * \retval Dynamic is the default format. Supports add_coefficient()
-	     * \retval CRS for Compressed Row Storage. 
+	     * \retval CRS for Compressed Row Storage.
 	     * \retval Factorized for solving linear systems.
 	     */
 	    Format get_format() const;
-	    
+
 	  gom_slots:
-	    
+
 	    /**
 	     * \brief Adds a coefficient.
 	     * \details If the coefficient already exists, a is added
@@ -116,6 +116,26 @@ namespace OGF {
 	     */
 	    void add_coefficient(index_t i, index_t j, double a);
 
+
+	    /**
+	     * \brief Adds a vector of coefficient.
+	     * \details If the coefficient already exists, or if there
+	     *  are duplicated entries, a is added to its previous value.
+	     * \param[in] I vector of row indices, should be integers
+	     * \param[in] J vector of column indices, should be integers
+	     * \param[in] A vector of values to be added, should be doubles
+	     */
+	    void add_coefficients(
+		const Vector* I, const Vector* J, const Vector* A
+	    );
+
+	    /**
+	     * \brief Adds a vector of coefficient.
+	     * \param[in] A vector of values to be added, should be doubles
+	     *  and size should be smaller than min(m,n)
+	     */
+	    void add_coefficients_to_diagonal(const Vector* A);
+
 	    /**
 	     * \brief Computes a matrix vector product.
 	     * \param[in] x the vector to be multiplied. Should have
@@ -125,7 +145,7 @@ namespace OGF {
 	    void mult(const Vector* x, Vector* y) const;
 
 	    /**
-	     * \brief Compresses the matrix from the dynamic format to 
+	     * \brief Compresses the matrix from the dynamic format to
 	     *  the CRS format.
 	     * \details When the matrix is compressed, matrix vector product
 	     *  are faster, but add_coefficient() can no longer be called.
@@ -134,9 +154,9 @@ namespace OGF {
 
 	    /**
 	     * \brief Factorizes the matrix.
-	     * \details This depends on OpenNL extensions that may be 
+	     * \details This depends on OpenNL extensions that may be
 	     *  unsupported on the architecture.
-	     * \param[in] factorization one of 
+	     * \param[in] factorization one of
 	     *   - SuperLU      : plain SuperLU algorithm
 	     *   - SuperLU_perm : SuperLU with permutation
 	     *   - SuperLU_sym  : SuperLU with permutation for symmetric matrix
@@ -152,7 +172,7 @@ namespace OGF {
 	     * \param[in] precond one of None, Jacobi, SSOR
 	     * \param[in] max_iter maximum number of iterations
 	     * \param[in] eps convergence criterion. Iterations are stopped
-	     *  whenever \f$ \| Ax - b\| / \| b \| \f$ is smaller than 
+	     *  whenever \f$ \| Ax - b\| / \| b \| \f$ is smaller than
 	     *  eps.
 	     */
 	    void solve_iterative(
@@ -166,7 +186,7 @@ namespace OGF {
 	     * \brief Solves a linear system using a direct solver.
 	     * \param[in] b the right hand side
 	     * \param[out] x the solution
-	     * \param[in] factorization one of 
+	     * \param[in] factorization one of
 	     *   SuperLU, SuperLU_perm, SuperLU_sym, Cholmod
 	     */
 	    void solve_direct(
@@ -175,11 +195,11 @@ namespace OGF {
 	    );
 
 	    /**
-	     * \brief Solves a linear system with a symmetric matrix 
+	     * \brief Solves a linear system with a symmetric matrix
 	     *  using default paramerers.
 	     * \param[in] b the right hand side
 	     * \param[out] x the solution
-	     * \param[in] direct_solver if true, 
+	     * \param[in] direct_solver if true,
 	     *   tentatively use a direct solver.
 	     */
 	    void solve_symmetric(
@@ -195,7 +215,7 @@ namespace OGF {
 	     NLMatrix implementation() const {
 		return impl_;
 	    }
-	    
+
 	  protected:
 
 	    /**
@@ -205,11 +225,11 @@ namespace OGF {
 	     */
 	    Matrix(NLMatrix impl) : impl_(impl) {
 	    }
-	    
+
 	  private:
 	    NLMatrix impl_;
 	};
-	
+
     }
 }
 

@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/scene_graph/NL/matrix.h>
@@ -87,7 +87,7 @@ namespace {
 	std::string arg_name_full =
 	    std::string(arg_name) + "(" +
 	    String::to_string(vector->get_nb_elements()) + ")";
-	
+
 	if(vector->get_element_meta_type() != ogf_meta<double>::type()) {
 	    Logger::err("NL") << func_name_full << " " << arg_name_full
 			      << " is not a vector of doubles"
@@ -111,7 +111,7 @@ namespace {
 
 	return true;
     }
-    
+
 }
 
 namespace OGF {
@@ -131,7 +131,7 @@ namespace OGF {
 	}
 
 	index_t Matrix::get_n() const {
-	    return index_t(impl_->n);	    
+	    return index_t(impl_->n);
 	}
 
 	Matrix::Format Matrix::get_format() const {
@@ -156,11 +156,127 @@ namespace OGF {
 	    ) {
 		Logger::err("NL")
 		    << "Matrix(" << impl_->m << "," << impl_->n
-		    << ")::add_coefficient(" << i << "," << j 
+		    << ")::add_coefficient(" << i << "," << j
 		    << ") index out of bound" << std::endl;
 		return;
 	    }
 	    nlSparseMatrixAdd((NLSparseMatrix*)(impl_), i, j, a);
+	}
+
+
+	void Matrix::add_coefficients(
+	    const Vector* I, const Vector* J, const Vector* A
+	) {
+	    if(
+		I->get_element_meta_type()!=ogf_meta<Numeric::uint32>::type() &&
+		I->get_element_meta_type()!=ogf_meta<Numeric::int32>::type()
+	    ) {
+		Logger::err("NL")
+		    << "Matrix(" << impl_->m << "," << impl_->n
+		    << ")::add_coefficients()"
+		    << " I is not an integer vector"
+		    << std::endl;
+		return;
+	    }
+	    if(
+		J->get_element_meta_type()!=ogf_meta<Numeric::uint32>::type() &&
+		J->get_element_meta_type()!=ogf_meta<Numeric::int32>::type()
+	    ) {
+		Logger::err("NL")
+		    << "Matrix(" << impl_->m << "," << impl_->n
+		    << ")::add_coefficients()"
+		    << " J is not an integer vector"
+		    << std::endl;
+		return;
+	    }
+	    if(A->get_element_meta_type()!=ogf_meta<double>::type()) {
+		Logger::err("NL")
+		    << "Matrix(" << impl_->m << "," << impl_->n
+		    << ")::add_coefficients()"
+		    << " A is not a vector of doubles"
+		    << std::endl;
+		return;
+	    }
+	    if(
+		I->dimension() != 1 || J->dimension() != 1 ||
+		A->dimension() != 1
+	    ) {
+		Logger::err("NL")
+		    << "Matrix(" << impl_->m << "," << impl_->n
+		    << ")::add_coefficients()"
+		    << " wrong dimension"
+		    << std::endl;
+		return;
+	    }
+
+	    if(
+		I->nb_elements() != J->nb_elements() ||
+		J->nb_elements() != A->nb_elements()
+	    ) {
+		Logger::err("NL")
+		    << "Matrix(" << impl_->m << "," << impl_->n
+		    << ")::add_coefficients()"
+		    << " vector size mismatch"
+		    << std::endl;
+		return;
+	    }
+
+	    const index_t* p_i = reinterpret_cast<index_t*>(I->data());
+	    const index_t* p_j = reinterpret_cast<index_t*>(J->data());
+	    const double*  p_a = A->data_double();
+
+	    for(index_t k=0; k<I->nb_elements(); ++k) {
+		if(
+		    p_i[k] >= index_t(impl_->m) ||
+		    p_j[k] >= index_t(impl_->n)
+		) {
+		    Logger::err("NL")
+			<< "Matrix(" << impl_->m << "," << impl_->n
+			<< ")::add_coefficients()"
+			<< " coefficient larger than matrix size"
+			<< std::endl;
+		    return;
+		}
+	    }
+
+	    for(index_t k=0; k<I->nb_elements(); ++k) {
+		nlSparseMatrixAdd(
+		    (NLSparseMatrix*)(impl_), p_i[k], p_j[k], p_a[k]
+		);
+	    }
+	}
+
+	void Matrix::add_coefficients_to_diagonal(const Vector* A) {
+	    if(A->get_element_meta_type()!=ogf_meta<double>::type()) {
+		Logger::err("NL")
+		    << "Matrix(" << impl_->m << "," << impl_->n
+		    << ")::add_coefficients()"
+		    << " A is not a vector of doubles"
+		    << std::endl;
+		return;
+	    }
+	    if(A->dimension() != 1) {
+		Logger::err("NL")
+		    << "Matrix(" << impl_->m << "," << impl_->n
+		    << ")::add_coefficients()"
+		    << " wrong dimension"
+		    << std::endl;
+		return;
+	    }
+	    if(A->nb_elements() > get_m() || A->nb_elements() > get_n()) {
+		Logger::err("NL")
+		    << "Matrix(" << impl_->m << "," << impl_->n
+		    << ")::add_coefficients()"
+		    << " wrong size"
+		    << std::endl;
+		return;
+	    }
+	    const double* p_a = A->data_double();
+	    for(index_t k=0; k<A->nb_elements(); ++k) {
+		nlSparseMatrixAdd(
+		    (NLSparseMatrix*)(impl_), k, k, p_a[k]
+		);
+	    }
 	}
 
 	void Matrix::mult(const Vector* x, Vector* y) const {
@@ -231,14 +347,14 @@ namespace OGF {
 		case None: {
 		} break;
 		case Jacobi: {
-		    P = nlNewJacobiPreconditioner(impl_);		    
+		    P = nlNewJacobiPreconditioner(impl_);
 		} break;
 		case SSOR: {
-		    P = nlNewSSORPreconditioner(impl_, 1.5);		    
+		    P = nlNewSSORPreconditioner(impl_, 1.5);
 		} break;
 	    }
 
-	    
+
 	    NLenum nl_solver = NL_BICGSTAB;
 	    switch(solver) {
 		case CG: {
@@ -251,22 +367,22 @@ namespace OGF {
 		    nl_solver = NL_BICGSTAB;
 		} break;
 	    }
-	    
+
 	    NLuint inner_iter = 5;
 
 	    Memory::clear(x->data(),sizeof(double)*get_n());
-	    
-	    
+
+
 	    nlSolveSystemIterative(
 		nlHostBlas(), impl_, P, b->data_double(), x->data_double(),
 		nl_solver, eps, max_iter, inner_iter
 	    );
-	    
+
 	    if(P != nullptr) {
 		nlDeleteMatrix(P);
 	    }
 	}
-	
+
 
 	void Matrix::solve_direct(
 	    const Vector* b, Vector* x,
@@ -294,7 +410,7 @@ namespace OGF {
 	}
 
 	void Matrix::solve_symmetric(
-	    const Vector* b, Vector* x, bool direct_solver 
+	    const Vector* b, Vector* x, bool direct_solver
 	) {
 	    if(direct_solver) {
 		if(nlInitExtension("CHOLMOD")) {
