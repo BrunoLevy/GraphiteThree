@@ -1,6 +1,6 @@
 # Tutorial on Optimal Transport
 # "by-hand" computation of Hessian and gradient (almost fully in Python)
-# Version that exploit numpy array functions
+# Version that exploit numpy array functions (much faster than naive version)
 
 import math, numpy as np
 
@@ -85,6 +85,9 @@ def compute_linear_system(H,b):
    b[:] = 0
    np.add.at(b, chart, triangle_area(XY,T))
 
+   # Diagonal, initialized to zero
+   diag = np.zeros(N,np.float64)
+
    # For each triangle t, for each edge e of t ...
    # ... swap loops to exploit numpy array functions
    for e in range(3):
@@ -93,7 +96,7 @@ def compute_linear_system(H,b):
      #   [ i, j, v1, v2 ] where:
      #     i: seed index
      #     j: adjacent seed index (Laguerre cell on the other side of e)
-     #     v1, v2: vertices of the triangle edge
+     #     v1, v2: vertices of the triangle edge e
      # We assemble them in the same array so that we can remove the entries
      # that we do not want (triangle edges on the border of Omega, and triangle
      # edges that stay in the same Laguerre cell).
@@ -113,13 +116,14 @@ def compute_linear_system(H,b):
      # Now we can compute a vector of coefficient (note: V1,V2,I,J are vectors)
      coeff = -distance(XY,V1,V2) / (2.0 * distance(seeds_XY,I,J))
 
-     # Diagonal entries are minus the sum of extra-diagonal entries
-     diag = np.zeros(N,np.float64)
+     # Accumulate minus the sum of extra-diagonal entries to the diagonal
      np.add.at(diag,I,-coeff)
 
-     # Insert coefficients and diagonal into matrix
+     # Insert coefficients into matrix
      H.add_coefficients(I,J,coeff)
-     H.add_coefficients_to_diagonal(diag)
+
+   # Insert diagonal into matrix
+   H.add_coefficients_to_diagonal(diag)
 
 # minimal legal area for Laguerre cells (KMT criterion #1)
 # (computed at the first run, when Laguerre diagram = Voronoi diagram)
