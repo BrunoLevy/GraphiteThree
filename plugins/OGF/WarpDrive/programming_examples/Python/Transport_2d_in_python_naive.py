@@ -5,29 +5,25 @@ import math, numpy as np
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 
-N = 100000              # Number of points (try with 10000)
+N = 1000              # Number of points (try with 10000)
 shrink_points = True  # Group points in a smaller area
 
 # Computes the area of a mesh triangle
 # XY the coordinates of the mesh vertices
 # T an array with the three vertices indices of the triangle
-# Works also when T is an array of triangles (then it returns
-# the array of triangle areas). This is why the ellipsis (...)
-# is used (here it means indexing/slicing through the last dimension)
 def triangle_area(XY, T):
-  v1 = T[...,0]
-  v2 = T[...,1]
-  v3 = T[...,2]
+  v1 = T[0]
+  v2 = T[1]
+  v3 = T[2]
   U = XY[v2] - XY[v1]
   V = XY[v3] - XY[v1]
-  return np.abs(0.5*(U[...,0]*V[...,1] - U[...,1]*V[...,0]))
+  return abs(0.5*(U[0]*V[1] - U[1]*V[0]))
 
 # Computes the length of a mesh edge
 # XY the coordinates of the mesh vertices
 # v1 , v2 the mesh extremities index
 def distance(XY, v1, v2):
-  axis = v1.ndim if type(v1) is np.ndarray else 0
-  return np.linalg.norm(XY[v2]-XY[v1],axis=axis)
+  return np.linalg.norm(XY[v2]-XY[v1])
 
 # Computes the linear system to be solved at each Newton step
 # This is a Python implementation equivalent to the builtin (C++)
@@ -79,38 +75,42 @@ def compute_linear_system(H,b):
    # The number of triangles in the triangulation of the Laguerre diagram
    nt = T.shape[0]
 
-   # Compute cell areas by summing each triangle's contribution
    b[:] = 0
-   np.add.at(b, chart, triangle_area(XY,T))
 
-   for e in range(3):
-     print('<Assemble matrix>')
-     edge = np.ndarray((nt,4),np.int32)
-     edge[:,0] = chart                   # 0,1: Voronoi edge
-     edge[:,1] = Tadj[:,e]               # .. but 1 starts with triangle adjacent
-     edge[:,2] = T[:,e]                  # 2,3: triangle edge (dual to Voronoi)
-     edge[:,3] = T[:,(e+1) % 3]          #
-     edge = edge[edge[:,1] != -1]        # remove edges on border (adjacent = -1)
-     edge[:,1] = chart[edge[:,1]]        # lookup neighor chart
-     edge = edge[edge[:,0] != edge[:,1]] # remove edges that stay in same cell
-     I = edge[:,0]
-     J = edge[:,1]
-     V1 = edge[:,2]
-     V2 = edge[:,3]
-     #coeff =  -np.linalg.norm(XY[V2]-XY[V1],axis=1) / \
-     #         (2.0 * np.linalg.norm(seeds_XY[J]-seeds_XY[I],axis=1))
-     coeff = -distance(XY,V1,V2) / (2.0 * distance(seeds_XY,I,J))
-     diag = np.zeros(N,np.float64)
-     np.add.at(diag,I,-coeff)
-     print('</Assemble matrix>')
+   # For each triangle of the triangulation of the Laguerre diagram
+   for t in range(nt):
 
-     print('<Fill matrix>')
-     for t in range(edge.shape[0]):
-       H.add_coefficient(edge[t,0], edge[t,1], coeff[t])
+     # Triangle t is in the Laguerre cell of i
+     i = chart.item(t) # item() instead of chart[t] because chart[t] is a 1x1 mtx
 
-     for i in range(N):
-       H.add_coefficient(i, i, diag[i])
-     print('</Fill matrix>')
+     # Accumulate right-hand side (Laguerre cell areas)
+     b[i] += triangle_area(XY, T[t])
+
+     #   For each triangle edge, determine whether the triangle edge
+     # is on a Laguerre cell boundary and accumulate its contribution
+     # to the Hessian
+     for e in range(3):
+         # index of adjacent triangle accross edge e
+         tneigh = Tadj[t,e]
+
+	 # test if we are inside mesh (not on Omega boundary)
+         if tneigh < nt:
+
+            # Triangle tneigh is in the Laguerre cell of j
+            j = chart[tneigh]
+
+	    # We are on a Laguerre cell boundary only if t and tneigh
+	    # belong to two different Laguerre cells
+            if j != i:
+
+               # The two vertices of the edge e in triangle t
+               v1 = T[t,e]
+               v2 = T[t,((e+1)%3)]
+
+               hij = distance(XY,v1,v2) / (2.0 * distance(seeds_XY, i,j))
+               H.add_coefficient(i,j,-hij)
+               H.add_coefficient(i,i,hij)
+
 
 # minimal legal area for Laguerre cells (KMT criterion #1)
 # (computed at the first run, when Laguerre diagram = Voronoi diagram)
@@ -167,6 +167,9 @@ def compute():
       # KMT criterion #2 (gradient norm)
       KMT_2 = (g_norm_substep <= (1.0 - 0.5*alpha) * g_norm)
 
+      if KMT_1 and KMT_2:
+         break
+
       print(
          '      KMT #1 (cell area):'+str(KMT_1)+' '+
       	     str(smallest_cell_area) + '>' +
@@ -178,9 +181,6 @@ def compute():
       	     str(g_norm_substep) + '<=' +
       	     str((1.0 - 0.5*alpha) * g_norm)
       )
-
-      if KMT_1 and KMT_2:
-         break
 
       alpha = alpha / 2.0
 
