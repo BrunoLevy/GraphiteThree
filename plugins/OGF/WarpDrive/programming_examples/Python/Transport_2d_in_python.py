@@ -24,7 +24,8 @@ def triangle_area(XY, T):
 
 # Computes the length of a mesh edge
 # XY the coordinates of the mesh vertices
-# v1 , v2 the mesh extremities index
+# v1 , v2 the mesh extremities indices. Can be also arrays (then it
+# returns the array of distances).
 def distance(XY, v1, v2):
   axis = v1.ndim if type(v1) is np.ndarray else 0
   return np.linalg.norm(XY[v2]-XY[v1],axis=axis)
@@ -83,34 +84,45 @@ def compute_linear_system(H,b):
    b[:] = 0
    np.add.at(b, chart, triangle_area(XY,T))
 
+   # For each triangle t, for each edge e of t ...
+   # ... swap loops to exploit numpy array functions
    for e in range(3):
-     print('<Assemble matrix>')
+
+     # Create an array that encodes for each triangle edge e:
+     #   [ i, j, v1, v2 ] where:
+     #     i: seed index
+     #     j: adjacent seed index (Laguerre cell on the other side of e)
+     #     v1, v2: vertices of the triangle edge
+     # We assemble them in the same array so that we can remove the entries
+     # that we do not want (triangle edges on the border of Omega, and triangle
+     # edges that stay in the same Laguerre cell).
      edge = np.ndarray((nt,4),np.int32)
-     edge[:,0] = chart                   # 0,1: Voronoi edge
-     edge[:,1] = Tadj[:,e]               # .. but 1 starts with triangle adjacent
+     edge[:,0] = chart                   # 0: seed index (i)
+     edge[:,1] = Tadj[:,e]               # 1: adjacent triangle (for now)
      edge[:,2] = T[:,e]                  # 2,3: triangle edge (dual to Voronoi)
-     edge[:,3] = T[:,(e+1) % 3]          #
+     edge[:,3] = T[:,(e+1) % 3]          #   (see comment on mesh indexing)
      edge = edge[edge[:,1] != -1]        # remove edges on border (adjacent = -1)
-     edge[:,1] = chart[edge[:,1]]        # lookup neighor chart
+     edge[:,1] = chart[edge[:,1]]        # 1: adjacent seed index (j)
      edge = edge[edge[:,0] != edge[:,1]] # remove edges that stay in same cell
-     I = edge[:,0]
-     J = edge[:,1]
-     V1 = edge[:,2]
+     I = edge[:,0]  # get arrays of i's, j's, v1's and v2's
+     J = edge[:,1]  # (we could directly use edge[], but this makes code
+     V1 = edge[:,2] #  more legible)
      V2 = edge[:,3]
-     #coeff =  -np.linalg.norm(XY[V2]-XY[V1],axis=1) / \
-     #         (2.0 * np.linalg.norm(seeds_XY[J]-seeds_XY[I],axis=1))
+
+     # Now we can compute a vector of coefficient (note: V1,V2,I,J are vectors)
      coeff = -distance(XY,V1,V2) / (2.0 * distance(seeds_XY,I,J))
+
+     # Diagonal entries are minus the sum of extra-diagonal entries
      diag = np.zeros(N,np.float64)
      np.add.at(diag,I,-coeff)
-     print('</Assemble matrix>')
 
-     print('<Fill matrix>')
+     # TODO: bulk matrix fill functions in OGF::NL::Matrix class
      for t in range(edge.shape[0]):
        H.add_coefficient(edge[t,0], edge[t,1], coeff[t])
 
      for i in range(N):
        H.add_coefficient(i, i, diag[i])
-     print('</Fill matrix>')
+
 
 # minimal legal area for Laguerre cells (KMT criterion #1)
 # (computed at the first run, when Laguerre diagram = Voronoi diagram)
