@@ -2,9 +2,11 @@
 # "by-hand" computation of Hessian and gradient (almost fully in Python)
 # Version that exploit numpy array functions (much faster than naive version)
 
-import math, numpy as np
+import math, ctypes, numpy as np
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
+
+NO_INDEX = ctypes.c_uint32(-1).value
 
 N = 1000              # Number of points (try with 10000, 100000
 shrink_points = True  # Group points in a smaller area
@@ -92,7 +94,7 @@ def compute_linear_system(H,b):
    # ... swap loops to exploit numpy array functions
    for e in range(3):
 
-     # Create an array that encodes for each triangle edge e:
+     # Create a qidx (quad index) array that encodes for each triangle edge e:
      #   [ i, j, v1, v2 ] where:
      #     i: seed index
      #     j: adjacent seed index (Laguerre cell on the other side of e)
@@ -100,18 +102,22 @@ def compute_linear_system(H,b):
      # We assemble them in the same array so that we can remove the entries
      # that we do not want (triangle edges on the border of Omega, and triangle
      # edges that stay in the same Laguerre cell).
-     edge = np.ndarray((nt,4),np.int32)
-     edge[:,0] = chart                   # 0: seed index (i)
-     edge[:,1] = Tadj[:,e]               # 1: adjacent triangle (for now)
-     edge[:,2] = T[:,e]                  # 2,3: triangle edge (dual to Voronoi)
-     edge[:,3] = T[:,(e+1) % 3]          #   (see comment on mesh indexing)
-     edge = edge[edge[:,1] != -1]        # remove edges on border (adjacent = -1)
-     edge[:,1] = chart[edge[:,1]]        # 1: adjacent seed index (j)
-     edge = edge[edge[:,0] != edge[:,1]] # remove edges that stay in same cell
-     I = edge[:,0].copy()  # get arrays of i's, j's, v1's and v2's.
-     J = edge[:,1].copy()  # We need to copy I and J to have contiguous arrays
-     V1 = edge[:,2]        # (H.add_coefficients() requires that).
-     V2 = edge[:,3]
+
+     qidx = np.column_stack((chart, Tadj[:,e], T[:,e], T[:,(e+1)%3]))
+     #                        |         |       |           |
+     # 0: seed index (i) -----'         |       +-----------'
+     # 1: adj trgl accross e (for now) -'       |
+     # 2,3: triangle edge (dual to Voronoi) ----'
+     # (see comment on mesh indexing)
+
+     qidx = qidx[qidx[:,1] != NO_INDEX]  # remove edges on border (adjacent = -1)
+     qidx[:,1] = chart[qidx[:,1]]        # 1: adjacent seed index (j)
+     qidx = qidx[qidx[:,0] != qidx[:,1]] # remove edges that stay in same cell
+
+     I = qidx[:,0].copy()  # get arrays of i's, j's, v1's and v2's.
+     J = qidx[:,1].copy()  # We need to copy I and J to have contiguous arrays
+     V1 = qidx[:,2]        # (H.add_coefficients() requires that).
+     V2 = qidx[:,3]
 
      # Now we can compute a vector of coefficient (note: V1,V2,I,J are vectors)
      coeff = -distance(XY,V1,V2) / (2.0 * distance(seeds_XY,I,J))
