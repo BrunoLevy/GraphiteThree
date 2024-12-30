@@ -11,9 +11,11 @@ N = 1000 # number of points, try 10000
 
 class Transport:
 
-  # \param[in] N number of points
-  # \param[in] shrink_points if set, group points in a small zone
   def __init__(self, N, shrink_points):
+    """
+    @param[in] N number of points
+    @param[in] shrink_points if set, group points in a small zone
+    """
     self.verbose = False
     self.N = N
 
@@ -56,15 +58,22 @@ class Transport:
     self.RVD.shader.colormap = 'plasma;false;732;false;false;;'
     self.RVD.shader.autorange()
 
-  # \brief Computes the optimal transport
   def compute(self):
+    """
+    @brief Computes the optimal transport
+    @details Calls one_iteration() until measure error of worst cell
+      is smaller than 1%
+    """
+
     threshold = self.nu_i * 0.01
     while(self.one_iteration() > threshold):
       pass
 
-  # \brief One iteration of Newton
-  # \return the measure error of the worst cell
   def one_iteration(self):
+    """
+    @brief One iteration of Newton
+    @return the measure error of the worst cell
+    """
     if self.verbose:
       print('Newton step')
 
@@ -137,16 +146,6 @@ class Transport:
 
     np.copyto(self.weight, weight2)
 
-    # We have already computed it, but it was triangulated,
-    # We recompute it so that display is not cluttered with
-    # the triangle edges (you can comment-out the next line
-    # to see what it looks like if you are interested)
-    self.OT.compute_Laguerre_diagram(
-      self.Omega, self.weight, self.RVD, 'EULER_2D'
-    )
-    self.RVD.shader.autorange()
-    self.RVD.update()
-
     # Return measure error of the worst cell
     worst_cell_measure_error = np.max(np.abs(b))
     worst_percent = 100.0 * worst_cell_measure_error / self.nu_i
@@ -157,16 +156,18 @@ class Transport:
       )
     return worst_cell_measure_error
 
-  # \brief Computes the matrix of the linear system to be solved
-  #  at each Newton step
-  # \details Uses the current Laguerre diagram (in self.RVD).
-  #  This is a Python implementation equivalent to the builtin (C++)
-  #   OT.compute_Laguerre_cells_P1_Laplacian(
-  #      Omega, weight, H, b, 'EULER_2D'
-  #   )
-  # \return the Hessian matrix of the Kantorovich dual
-
   def compute_Hessian(self):
+    """
+    @brief Computes the matrix of the linear system to be solved
+      at each Newton step
+    @details Uses the current Laguerre diagram (in self.RVD).
+    This is a Python implementation equivalent to the builtin (C++)
+     OT.compute_Laguerre_cells_P1_Laplacian(
+        Omega, weight, H, b, 'EULER_2D'
+     )
+    @return the Hessian matrix of the Kantorovich dual
+    """
+
     # Creates a sparse matrix using OpenNL
     H = NL.create_matrix(self.N,self.N)
 
@@ -237,14 +238,16 @@ class Transport:
             H.add_coefficient(i,i,hij)
     return H
 
-  # \brief Computes the measures of the Laguerre cells
-  # \details Uses the current Laguerre diagram (in self.RVD).
-  #  This is a Python implementation equivalent to the builtin (C++)
-  #   OT.compute_Laguerre_cells_measures(
-  #      Omega, weights, b, 'EULER_2D'
-  #   )
-  # \return an array with the cells measures
   def compute_Laguerre_cells_measures(self):
+    """
+    @brief Computes the measures of the Laguerre cells
+    @details Uses the current Laguerre diagram (in self.RVD).
+     This is a Python implementation equivalent to the builtin (C++)
+      OT.compute_Laguerre_cells_measures(
+         Omega, weights, b, 'EULER_2D'
+      )
+    @return an array with the cells measures
+    """
     b = np.ndarray(self.N,np.float64)
     # See comments about XY,T,trgl_seed,nt in compute_Hessian()
     XY = np.asarray(self.RVD.I.Editor.get_points())
@@ -258,12 +261,13 @@ class Transport:
 
     return b
 
-
-  # \brief Computes the area of a mesh triangle
-  # \param[in] XY the coordinates of the mesh vertices
-  # \param[in] T an array with the three vertices indices of the triangle
-  # \return the area of the triangle
   def triangle_area(self, XY, T):
+    """
+    @brief Computes the area of a mesh triangle
+    @param[in] XY the coordinates of the mesh vertices
+    @param[in] T an array with the three vertices indices of the triangle
+    @return the area of the triangle
+    """
     v1 = T[0]
     v2 = T[1]
     v3 = T[2]
@@ -271,22 +275,38 @@ class Transport:
     V = XY[v3] - XY[v1]
     return abs(0.5*(U[0]*V[1] - U[1]*V[0]))
 
-  # \brief Computes the length of a mesh edge
-  # \param[in] XY the coordinates of the mesh vertices
-  # \param[in] v1 , v2 the mesh extremities index
-  # \return the distance between the two vertices
   def distance(self, XY, v1, v2):
+    """
+    @brief Computes the length of a mesh edge
+    @param[in] XY the coordinates of the mesh vertices
+    @param[in] v1 , v2 the mesh extremities index
+    @return the distance between the two vertices
+    """
     return np.linalg.norm(XY[v2]-XY[v1])
+
+  def show(self):
+    # We have already computed the Laguerre diagram, but it was triangulated,
+    # We recompute it so that display is not cluttered with
+    # the triangle edges (you can comment-out the next line
+    # to see what it looks like if you are interested)
+    self.OT.compute_Laguerre_diagram(
+      self.Omega, self.weight, self.RVD, 'EULER_2D'
+    )
+    self.RVD.shader.autorange()
+    self.RVD.update()
+
+
 
 transport = Transport(N,True)
 # transport.verbose = True # uncomment to display Newton convergence
 
 def compute():
   transport.compute()
+  transport.show()
 
 def one_iteration():
   transport.one_iteration()
-
+  transport.show()
 
 # ------------------------------------------
 # GUI
