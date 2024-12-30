@@ -6,254 +6,329 @@ import math, ctypes, numpy as np
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 
-NO_INDEX = ctypes.c_uint32(-1).value
+N = 1000 # number of points, try 10000, 100000 (be ready to wait a bit)
 
-N = 1000              # Number of points (try with 10000, 100000
-shrink_points = True  # Group points in a smaller area
+class Transport:
 
-# Computes the area of a mesh triangle
-# XY the coordinates of the mesh vertices
-# T an array with the three vertices indices of the triangle
-# Works also when T is an array of triangles (then it returns
-# the array of triangle areas). This is why the ellipsis (...)
-# is used (here it means indexing/slicing through the last dimension)
-def triangle_area(XY, T):
-  v1 = T[...,0]
-  v2 = T[...,1]
-  v3 = T[...,2]
-  U = XY[v2] - XY[v1]
-  V = XY[v3] - XY[v1]
-  return np.abs(0.5*(U[...,0]*V[...,1] - U[...,1]*V[...,0]))
+  def __init__(self, N: int, shrink_points: bool):
+    """
+    @param[in] N number of points
+    @param[in] shrink_points if set, group points in a small zone
+    """
+    self.verbose = False
+    self.N = N
 
-# Computes the length of a mesh edge
-# XY the coordinates of the mesh vertices
-# v1 , v2 the mesh extremities indices. Can be also arrays (then it
-# returns the array of distances).
-def distance(XY, v1, v2):
-  axis = v1.ndim if type(v1) is np.ndarray else 0
-  return np.linalg.norm(XY[v2]-XY[v1],axis=axis)
+    # Create domain Omega (a square)
+    scene_graph.clear()
+    self.Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
+    self.Omega.I.Shapes.create_quad()
+    # self.Omega.I.Shapes.create_ngon(nb_edges=300) # try this instead of square
+    self.Omega.I.Surface.triangulate()
 
-# Computes the linear system to be solved at each Newton step
-# This is a Python implementation equivalent to the builtin (C++)
-#   OT.compute_Laguerre_cells_P1_Laplacian(
-#      Omega, weight, H, b, 'EULER_2D'
-#   )
-#  H the matrix of the linear system
-#  b the right-hand side of the linear system
-def compute_linear_system(H,b):
-   global RVD,OT
+    # Create points (random sampling of Omega)
+    self.Omega.I.Points.sample_surface(nb_points=N,Lloyd_iter=0,Newton_iter=0)
+    self.points = scene_graph.objects.points
 
-   # Get the Laguerre diagram (RVD) as a triangulation
-   OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
-   RVD.I.Surface.triangulate()
-   RVD.I.Surface.merge_vertices(1e-10)
+    # Shrink points
+    if shrink_points:
+      coords = np.asarray(self.points.I.Editor.get_points())
+      coords[:] = 0.125 + coords/4.0
+      self.points.update()
 
-   # vertex v's coordinates are XY[v][0], XY[v][1]
-   XY = np.asarray(RVD.I.Editor.get_points())
+    # Compute Laguerre diagram
+    self.RVD = scene_graph.create_object(OGF.MeshGrob,'RVD')
+    self.OT = self.points.I.Transport
+    self.weight = np.zeros(self.N,np.float64)
+    self.compute_Laguerre_diagram(self.weight)
 
-   # Triangle t's vertices indices are T[t][0], T[t][1], T[t][2]
-   T = np.asarray(RVD.I.Editor.get_triangles())
+    # Measure of the whole domain
+    self.Omega_measure = self.OT.Omega_measure(self.Omega, 'EULER_2D')
+    self.nu_i = self.Omega_measure / self.N
 
-   # The indices of the triangles adjacent to triangle t are
-   #    Tadj[t][0], Tadj[t][1], Tadj[t][2]
-   #  WARNING: they do not follow the usual convention for triangulations
-   #  (this is because GEOGRAM also supports arbitrary polygons)
-   #
-   # It is like that:
-   #
-   #        2
-   #       / \
-   # adj2 /   \ adj1
-   #     /     \
-   #    /       \
-   #   0 ------- 1
-   #      adj0
-   #
-   # (Yes, I know, this is stupid and you hate me !!)
+    # minimal legal area for Laguerre cells (KMT criterion #1)
+    # (computed at the first run, when Laguerre diagram = Voronoi diagram)
+    self.smallest_cell_threshold = -1.0
 
-   Tadj = np.asarray(RVD.I.Editor.get_triangle_adjacents())
+    # Change graphic attributes of diagram
+    self.Omega.visible=False
 
-   # chart[t] indicates the index of the seed that corresponds to the
-   #  Laguerre cell that t belongs to
-   chart = np.asarray(RVD.I.Editor.find_attribute('facets.chart'))
+    self.show()
 
-   # The coordinates of the seeds
-   seeds_XY = np.asarray(points.I.Editor.find_attribute('vertices.point'))
+  def compute(self):
+    """
+    @brief Computes the optimal transport
+    @details Calls one_iteration() until measure error of worst cell
+      is smaller than 1%
+    """
+    threshold = self.nu_i * 0.01
+    while(self.one_iteration() > threshold):
+      pass
 
-   # The number of triangles in the triangulation of the Laguerre diagram
-   nt = T.shape[0]
+  def one_iteration(self):
+    """
+    @brief One iteration of Newton
+    @return the measure error of the worst cell
+    """
+    if self.verbose:
+      print('Newton step')
 
-   # Compute cell areas by summing each triangle's contribution
-   b[:] = 0
-   np.add.at(b, chart, triangle_area(XY,T))
+    # compute Hessian and b(init. with Laguerre cells areas)
+    H = self.compute_Hessian()
 
-   # Diagonal, initialized to zero
-   diag = np.zeros(N,np.float64)
+    # rhs (- grad of Kantorovich dual) = actual measures - desired measures
+    b = np.ndarray(self.N, np.float64)
+    self.compute_Laguerre_cells_measures(b)
 
-   # For each triangle t, for each edge e of t ...
-   # ... swap loops to exploit numpy array functions
-   for e in range(3):
+    # compute minimal legal area for Laguerre cells (KMT criterion #1)
+    # (computed at the first run, when Laguerre diagram = Voronoi diagram)
+    if self.smallest_cell_threshold == -1.0:
+      self.smallest_cell_threshold = 0.5 * min(np.min(b), self.nu_i)
+      if self.verbose:
+        print('smallest cell threshold = '+str(self.smallest_cell_threshold))
 
-     # Create a qidx (quad index) array that encodes for each triangle edge e:
-     #   [ i, j, v1, v2 ] where:
-     #     i: seed index
-     #     j: adjacent seed index (Laguerre cell on the other side of e)
-     #     v1, v2: vertices of the triangle edge e
-     # We assemble them in the same array so that we can remove the entries
-     # that we do not want (triangle edges on the border of Omega, and triangle
-     # edges that stay in the same Laguerre cell).
+    # desired area for Laguerre cells (same for all pt, but could be different)
+    b[:] = self.nu_i - b # rhs = desired areas - actual areas
 
-     qidx = np.column_stack((chart, Tadj[:,e], T[:,e], T[:,(e+1)%3]))
-     #                        |         |       |           |
-     # 0: seed index (i) -----'         |       +-----------'
-     # 1: adj trgl accross e (for now) -'       |
-     # 2,3: triangle edge (dual to Voronoi) ----'
-     # (see comment on mesh indexing)
+    g_norm = np.linalg.norm(b) # norm of gradient at curent step
+                               # (used by KMT criterion #2)
 
-     qidx = qidx[qidx[:,1] != NO_INDEX]  # remove edges on border (adjacent = -1)
-     qidx[:,1] = chart[qidx[:,1]]        # 1: adjacent seed index (j)
-     qidx = qidx[qidx[:,0] != qidx[:,1]] # remove edges that stay in same cell
+    p = np.ndarray(self.N,np.float64) # Newton step
+    H.solve_symmetric(b,p)       # solve for p in Lp=b
+    alpha = 1.0                  # Steplength
 
-     I = qidx[:,0].copy()  # get arrays of i's, j's, v1's and v2's.
-     J = qidx[:,1].copy()  # We need to copy I and J to have contiguous arrays
-     V1 = qidx[:,2]        # (H.add_coefficients() requires that).
-     V2 = qidx[:,3]
+    # Divide steplength by 2 until both KMT criteria are satisfied
+    for k in range(10):
+      if self.verbose:
+        print('   Substep: k = '+str(k)+'  alpha='+str(alpha))
+      weight2 = self.weight + alpha * p
 
-     # Now we can compute a vector of coefficient (note: V1,V2,I,J are vectors)
-     coeff = -distance(XY,V1,V2) / (2.0 * distance(seeds_XY,I,J))
+      # rhs (- grad of Kantorovich dual) = actual measures - desired measures
+      self.compute_Laguerre_diagram(weight2)
+      self.compute_Laguerre_cells_measures(b)
 
-     # Accumulate minus the sum of extra-diagonal entries to the diagonal
-     np.add.at(diag,I,-coeff)
-
-     # Insert coefficients into matrix
-     H.add_coefficients(I,J,coeff)
-
-   # Insert diagonal into matrix
-   H.add_coefficients_to_diagonal(diag)
-
-# minimal legal area for Laguerre cells (KMT criterion #1)
-# (computed at the first run, when Laguerre diagram = Voronoi diagram)
-
-smallest_cell_threshold = -1.0
-
-#-- ---------------------------------------------------
-#-- Do one Newton step when button is pushed
-#-- ---------------------------------------------------
-
-def compute():
-   global smallest_cell_threshold, smallest_cell_area, weight
-   global Omega_measure, N
-   print('Newton step')
-
-   # Measure of the whole domain
-   Omega_measure = OT.Omega_measure(Omega, 'EULER_2D')
-
-   # compute L(Laplacian) and b(init. with Laguerre cells areas)
-   L = NL.create_matrix(N,N) # P1 Laplacian of Laguerre cells
-   b = np.ndarray(N,np.float64) # right-hand side
-
-   compute_linear_system(L,b)
-
-   # compute minimal legal area for Laguerre cells (KMT criterion #1)
-   # (computed at the first run, when Laguerre diagram = Voronoi diagram)
-   if smallest_cell_threshold == -1.0:
-      smallest_cell_threshold = 0.5 * min(np.min(b), Omega_measure/N)
-      print('smallest cell threshold = '+str(smallest_cell_threshold))
-
-   # desired area for Laguerre cells (all the same here, but could be different)
-   b[:] = Omega_measure/N - b # rhs = desired areas - actual areas
-
-   g_norm = np.linalg.norm(b) # norm of gradient at curent step
-                              # (used by KMT criterion #2)
-
-   p = np.ndarray(N,np.float64)
-   L.solve_symmetric(b,p)   # solve for p in Lp=b
-   alpha = 1.0              # Steplength
-
-   # Divide steplength by 2 until both KMT criteria are satisfied
-   for k in range(10):
-      # print('   Substep: k = '+tostring(k)+'  alpha='+alpha)
-      weight2 = weight + alpha * p
-      OT.compute_Laguerre_cells_measures(Omega, weight2, b, 'EULER_2D')
       smallest_cell_area = np.min(b)
-
-      # Compute gradient norm at current substep
-      g_norm_substep = np.linalg.norm(b - Omega_measure/N)
+      b -= self.nu_i
+      g_norm_substep = np.linalg.norm(b)
 
       # KMT criterion #1 (Laguerre cell area)
-      KMT_1 = (smallest_cell_area > smallest_cell_threshold)
+      KMT_1 = (smallest_cell_area > self.smallest_cell_threshold)
 
       # KMT criterion #2 (gradient norm)
       KMT_2 = (g_norm_substep <= (1.0 - 0.5*alpha) * g_norm)
 
-      print(
-         '      KMT #1 (cell area):'+str(KMT_1)+' '+
-      	     str(smallest_cell_area) + '>' +
-      	     str(smallest_cell_threshold)
-      )
+      if self.verbose:
+        print(
+          '      KMT #1 (cell area):'+str(KMT_1)+' '+
+      	  str(smallest_cell_area) + '>' +
+      	  str(self.smallest_cell_threshold)
+        )
 
-      print(
-         '      KMT #2 (gradient ):'+str(KMT_2)+' '+
-      	     str(g_norm_substep) + '<=' +
-      	     str((1.0 - 0.5*alpha) * g_norm)
-      )
+        print(
+          '      KMT #2 (gradient ):'+str(KMT_2)+' '+
+      	  str(g_norm_substep) + '<=' +
+      	  str((1.0 - 0.5*alpha) * g_norm)
+        )
 
       if KMT_1 and KMT_2:
          break
 
       alpha = alpha / 2.0
 
-   np.copyto(weight, weight2)
+    np.copyto(self.weight, weight2)
 
-   # We have already computed it, but it was triangulated,
-   # We recompute it so that display is not cluttered with
-   # the triangle edges (you can comment-out the next line
-   # to see what it looks like if you are interested)
-   OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
-   RVD.shader.autorange()
-   RVD.update()
+    # Return measure error of the worst cell
+    worst_cell_measure_error = np.max(np.abs(b))
+    worst_percent = 100.0 * worst_cell_measure_error / self.nu_i
+    if self.verbose:
+      print(
+        'Worst cell measure error = ' + str(worst_cell_measure_error) + \
+        '(' + str(worst_percent) + '%)'
+      )
+    return worst_cell_measure_error
+
+  def compute_Laguerre_diagram(self, weights: np.ndarray):
+    """
+    @brief Computes a Laguerre diagram from a weight vector
+    @param[in] weights the weights vector
+    """
+    self.OT.compute_Laguerre_diagram(self.Omega, weights, self.RVD, 'EULER_2D')
+    self.RVD.update()
+    self.RVD.I.Surface.triangulate()
+    self.RVD.I.Surface.merge_vertices(1e-10)
+    self.RVD.shader.painting='ATTRIBUTE'
+    self.RVD.shader.attribute='facets.chart'
+    self.RVD.shader.colormap = 'plasma;false;732;false;false;;'
+    self.RVD.shader.mesh_style = 'false;0 0 0 1;1' # Try this: comment this line
+    self.RVD.shader.autorange()
+
+  def compute_Hessian(self):
+    """
+    @brief Computes the matrix of the linear system to be solved
+      at each Newton step
+    @details Uses the current Laguerre diagram (in self.RVD).
+    This is a Python implementation equivalent to the builtin (C++)
+     OT.compute_Laguerre_cells_P1_Laplacian(
+        Omega, weight, H, b, 'EULER_2D'
+     )
+    @return the Hessian matrix of the Kantorovich dual
+    """
+
+    # Creates a sparse matrix using OpenNL
+    H = NL.create_matrix(self.N,self.N)
+
+    # vertex v's coordinates are XY[v][0], XY[v][1]
+    XY = np.asarray(self.RVD.I.Editor.get_points())
+
+    # Triangle t's vertices indices are T[t][0], T[t][1], T[t][2]
+    T = np.asarray(self.RVD.I.Editor.get_triangles())
+
+    # The indices of the triangles adjacent to triangle t are
+    #    Tadj[t][0], Tadj[t][1], Tadj[t][2]
+    #  WARNING: they do not follow the usual convention for triangulations
+    #  (this is because GEOGRAM also supports arbitrary polygons)
+    #
+    # It is like that:
+    #
+    #        2
+    #       / \
+    # adj2 /   \ adj1
+    #     /     \
+    #    /       \
+    #   0 ------- 1
+    #      adj0
+    #
+    # (Yes, I know, this is stupid and you hate me !!)
+
+    Tadj = np.asarray(self.RVD.I.Editor.get_triangle_adjacents())
+
+    # trgl_seed[t] indicates the index of the seed that corresponds to the
+    #  Laguerre cell that contains t
+    trgl_seed = np.asarray(self.RVD.I.Editor.find_attribute('facets.chart'))
+
+    # The coordinates of the seeds
+    seeds_XY = np.asarray(self.points.I.Editor.find_attribute('vertices.point'))
+
+    # Diagonal, initialized to zero
+    diag = np.zeros(N,np.float64)
+
+    # special value for Tadj that indicates edge on border
+    NO_INDEX = ctypes.c_uint32(-1).value
+
+    # For each triangle t, for each edge e of t ...
+    # ... swap loops to exploit numpy array functions
+    for e in range(3):
+
+      # Create a qidx (quad index) array that encodes for each triangle edge e:
+      #   [ i, j, v1, v2 ] where:
+      #     i: seed index
+      #     j: adjacent seed index (Laguerre cell on the other side of e)
+      #     v1, v2: vertices of the triangle edge e
+      # We assemble them in the same array so that we can remove the entries
+      # that we do not want (triangle edges on the border of Omega, and triangle
+      # edges that stay in the same Laguerre cell).
+
+      qidx = np.column_stack((trgl_seed, Tadj[:,e], T[:,e], T[:,(e+1)%3]))
+      #                           |         |       |           |
+      #    0: seed index (i) -----'         |       +-----------'
+      #    1: adj trgl accross e (for now) -'       |
+      #    2,3: triangle edge (dual to Voronoi) ----'
+      #    (see comment on mesh indexing)
+
+      qidx = qidx[qidx[:,1] != NO_INDEX]  # remove edges on border
+      qidx[:,1] = trgl_seed[qidx[:,1]]    # 1: adjacent seed index (j)
+      qidx = qidx[qidx[:,0] != qidx[:,1]] # remove edges that stay in same cell
+
+      I = qidx[:,0].copy()  # get arrays of i's, j's, v1's and v2's.
+      J = qidx[:,1].copy()  # We need to copy I and J to have contiguous arrays
+      V1 = qidx[:,2]        # (H.add_coefficients() requires that).
+      V2 = qidx[:,3]
+
+      # Now we can compute a vector of coefficient (note: V1,V2,I,J are vectors)
+      coeff = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
+
+      # Accumulate minus the sum of extra-diagonal entries to the diagonal
+      np.add.at(diag,I,-coeff)
+
+      # Insert coefficients into matrix
+      H.add_coefficients(I,J,coeff)
+
+    # Insert diagonal into matrix
+    H.add_coefficients_to_diagonal(diag)
+
+    return H
+
+  def compute_Laguerre_cells_measures(self, measures: np.ndarray):
+    """
+    @brief Computes the measures of the Laguerre cells
+    @out measures: the vector of Laguerre cells measures
+    @details Uses the current Laguerre diagram (in self.RVD).
+     This is a Python implementation equivalent to the builtin (C++)
+      OT.compute_Laguerre_cells_measures(
+         Omega, weights, b, 'EULER_2D'
+      )
+    @return an array with the cells measures
+    """
+    # See comments about XY,T,trgl_seed,nt in compute_Hessian()
+    XY = np.asarray(self.RVD.I.Editor.get_points())
+    T = np.asarray(self.RVD.I.Editor.get_triangles())
+    trgl_seed = np.asarray(self.RVD.I.Editor.find_attribute('facets.chart'))
+    measures[:] = 0
+    np.add.at(measures, trgl_seed, self.triangle_area(XY,T))
+
+  def triangle_area(self, XY, T):
+    """
+    @brief Computes the area of a mesh triangle
+    @param[in] XY the coordinates of the mesh vertices
+    @param[in] T an array with the three vertices indices of the triangle
+    @details Works also when T is an array of triangles (then it returns
+     the array of triangle areas). This is why the ellipsis (...)
+     is used (here it means indexing/slicing through the last dimension)
+    """
+    v1 = T[...,0]
+    v2 = T[...,1]
+    v3 = T[...,2]
+    U = XY[v2] - XY[v1]
+    V = XY[v3] - XY[v1]
+    return np.abs(0.5*(U[...,0]*V[...,1] - U[...,1]*V[...,0]))
+
+  def distance(self, XY, v1, v2):
+    """
+    @brief Computes the length of a mesh edge
+    @param[in] XY the coordinates of the mesh vertices
+    @param[in] v1 , v2 the mesh extremities indices.
+    @details v1 and v2 can be also arrays (then returns the array of distances).
+    """
+    axis = v1.ndim if type(v1) is np.ndarray else 0
+    return np.linalg.norm(XY[v2]-XY[v1],axis=axis)
+
+  def show(self):
+    """
+    @brief Prepares the RVD for display
+    @details Unglues the charts so that we better see the Laguerre cells
+    """
+    self.RVD.I.Surface.unglue_charts()
+
+  def unshow(self):
+    """
+    @brief To be called before each computation
+    @details Re-glues the charts so that the Hessian can be computed
+    """
+    self.RVD.I.Surface.merge_vertices(1e-10)
 
 
-# -------------------------------------------------
-# Create domain Omega (a square)
-# -------------------------------------------------
-scene_graph.clear()
-Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
-Omega.I.Shapes.create_quad()
-Omega.I.Surface.triangulate()
+transport = Transport(N,True)
+# transport.verbose = True # uncomment to display Newton convergence
 
-# Create points (random sampling of Omega)
-Omega.I.Points.sample_surface(nb_points=N,Lloyd_iter=0,Newton_iter=0)
-points = scene_graph.objects.points
+# We need these two global functions to plug the GUI
+def compute():
+  transport.unshow()
+  transport.compute()
+  transport.show()
 
-# -------------------------------------------------
-# Shrink points
-# -------------------------------------------------
-if shrink_points:
-   coords = np.asarray(points.I.Editor.get_points())
-   coords[:] = 0.125 + coords/4.0
-   points.update()
-
-# -------------------------------------------------
-# Create diagram
-# -------------------------------------------------
-RVD = scene_graph.create_object(OGF.MeshGrob,'RVD')
-
-# -------------------------------------------------
-# Compute diagram
-# -------------------------------------------------
-OT = points.I.Transport
-weight = np.zeros(N,np.float64)
-OT.compute_Laguerre_diagram(Omega, weight, RVD, 'EULER_2D')
-
-# -------------------------------------------------
-# Change graphic attributes of diagram
-# -------------------------------------------------
-Omega.visible=False
-RVD.shader.painting='ATTRIBUTE'
-RVD.shader.attribute='facets.chart'
-RVD.shader.colormap = 'plasma;false;732;false;false;;'
-RVD.shader.autorange()
+def one_iteration():
+  transport.unshow()
+  transport.one_iteration()
+  transport.show()
 
 # ------------------------------------------
 # GUI
@@ -279,8 +354,11 @@ OT_dialog.h = 200
 OT_dialog.width = 400
 
 function OT_dialog.draw_window()
-   if imgui.Button('Compute',-1,-1) then
+   if imgui.Button('Compute transport',-1,70) then
       gom.interpreter('Python').globals.compute()
+   end
+   if imgui.Button('One iteration',-1,70) then
+      gom.interpreter('Python').globals.one_iteration()
    end
 end
 

@@ -23,6 +23,7 @@ class Transport:
     scene_graph.clear()
     self.Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
     self.Omega.I.Shapes.create_quad()
+    # self.Omega.I.Shapes.create_ngon(nb_edges=300) # try this instead of square
     self.Omega.I.Surface.triangulate()
 
     # Create points (random sampling of Omega)
@@ -158,7 +159,7 @@ class Transport:
     self.RVD.shader.painting='ATTRIBUTE'
     self.RVD.shader.attribute='facets.chart'
     self.RVD.shader.colormap = 'plasma;false;732;false;false;;'
-    self.RVD.shader.mesh_style = 'false;0 0 0 1;1'
+    self.RVD.shader.mesh_style = 'false;0 0 0 1;1' # Try this: comment this line
     self.RVD.shader.autorange()
 
   def compute_Hessian(self):
