@@ -7,11 +7,14 @@ import math, numpy as np
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 
+N = 1000 # number of points, try 10000
+
 class Transport:
 
   # \param[in] N number of points
   # \param[in] shrink_points if set, group points in a small zone
   def __init__(self, N, shrink_points):
+    self.verbose = False
     self.N = N
 
     # Create domain Omega (a square)
@@ -40,6 +43,7 @@ class Transport:
 
     # Measure of the whole domain
     self.Omega_measure = self.OT.Omega_measure(self.Omega, 'EULER_2D')
+    self.nu_i = self.Omega_measure / self.N
 
     # minimal legal area for Laguerre cells (KMT criterion #1)
     # (computed at the first run, when Laguerre diagram = Voronoi diagram)
@@ -52,42 +56,60 @@ class Transport:
     self.RVD.shader.colormap = 'plasma;false;732;false;false;;'
     self.RVD.shader.autorange()
 
-  def one_iteration(self):
-    print('Newton step')
+  # \brief Computes the optimal transport
+  def compute(self):
+    threshold = self.nu_i * 0.01
+    while(self.one_iteration() > threshold):
+      pass
 
-    # compute L(Laplacian) and b(init. with Laguerre cells areas)
-    L = NL.create_matrix(self.N,self.N) # P1 Laplacian of Laguerre cells
-    b = np.ndarray(self.N,np.float64) # right-hand side
-    self.compute_linear_system(L,b)
+  # \brief One iteration of Newton
+  # \return the measure error of the worst cell
+  def one_iteration(self):
+    if self.verbose:
+      print('Newton step')
+
+    # Get the Laguerre diagram (RVD) as a triangulation
+    #  used by compute_Hessian() and compute_Laguerre_cells_measures()
+    self.OT.compute_Laguerre_diagram(
+      self.Omega, self.weight, self.RVD, 'EULER_2D'
+    )
+    self.RVD.I.Surface.triangulate()
+    self.RVD.I.Surface.merge_vertices(1e-10)
+
+    # compute Hessian and b(init. with Laguerre cells areas)
+    H = self.compute_Hessian()
+
+    # rhs (- grad of Kantorovich dual) = actual measures - desired measures
+    b = self.compute_Laguerre_cells_measures()
 
     # compute minimal legal area for Laguerre cells (KMT criterion #1)
     # (computed at the first run, when Laguerre diagram = Voronoi diagram)
     if self.smallest_cell_threshold == -1.0:
-      self.smallest_cell_threshold = 0.5 * min(
-        np.min(b),
-        self.Omega_measure/self.N
-      )
-      print('smallest cell threshold = '+str(self.smallest_cell_threshold))
+      self.smallest_cell_threshold = 0.5 * min(np.min(b), self.nu_i)
+      if self.verbose:
+        print('smallest cell threshold = '+str(self.smallest_cell_threshold))
 
     # desired area for Laguerre cells (same for all pt, but could be different)
-    b[:] = self.Omega_measure/self.N - b # rhs = desired areas - actual areas
+    b[:] = self.nu_i - b # rhs = desired areas - actual areas
 
     g_norm = np.linalg.norm(b) # norm of gradient at curent step
                                # (used by KMT criterion #2)
 
     p = np.ndarray(self.N,np.float64) # Newton step
-    L.solve_symmetric(b,p)       # solve for p in Lp=b
+    H.solve_symmetric(b,p)       # solve for p in Lp=b
     alpha = 1.0                  # Steplength
 
     # Divide steplength by 2 until both KMT criteria are satisfied
     for k in range(10):
-      # print('   Substep: k = '+tostring(k)+'  alpha='+alpha)
+      if self.verbose:
+        print('   Substep: k = '+str(k)+'  alpha='+str(alpha))
       weight2 = self.weight + alpha * p
+
+      # rhs (- grad of Kantorovich dual) = actual measures - desired measures
       self.OT.compute_Laguerre_cells_measures(self.Omega, weight2, b, 'EULER_2D')
       smallest_cell_area = np.min(b)
-
-      # Compute gradient norm at current substep
-      g_norm_substep = np.linalg.norm(b - self.Omega_measure/self.N)
+      b -= self.nu_i
+      g_norm_substep = np.linalg.norm(b)
 
       # KMT criterion #1 (Laguerre cell area)
       KMT_1 = (smallest_cell_area > self.smallest_cell_threshold)
@@ -95,20 +117,21 @@ class Transport:
       # KMT criterion #2 (gradient norm)
       KMT_2 = (g_norm_substep <= (1.0 - 0.5*alpha) * g_norm)
 
+      if self.verbose:
+        print(
+          '      KMT #1 (cell area):'+str(KMT_1)+' '+
+      	  str(smallest_cell_area) + '>' +
+      	  str(self.smallest_cell_threshold)
+        )
+
+        print(
+          '      KMT #2 (gradient ):'+str(KMT_2)+' '+
+      	  str(g_norm_substep) + '<=' +
+      	  str((1.0 - 0.5*alpha) * g_norm)
+        )
+
       if KMT_1 and KMT_2:
          break
-
-      print(
-         '      KMT #1 (cell area):'+str(KMT_1)+' '+
-      	     str(smallest_cell_area) + '>' +
-      	     str(self.smallest_cell_threshold)
-      )
-
-      print(
-         '      KMT #2 (gradient ):'+str(KMT_2)+' '+
-      	     str(g_norm_substep) + '<=' +
-      	     str((1.0 - 0.5*alpha) * g_norm)
-      )
 
       alpha = alpha / 2.0
 
@@ -124,22 +147,28 @@ class Transport:
     self.RVD.shader.autorange()
     self.RVD.update()
 
+    # Return measure error of the worst cell
+    worst_cell_measure_error = np.max(np.abs(b))
+    worst_percent = 100.0 * worst_cell_measure_error / self.nu_i
+    if self.verbose:
+      print(
+        'Worst cell measure error = ' + str(worst_cell_measure_error) + \
+        '(' + str(worst_percent) + '%)'
+      )
+    return worst_cell_measure_error
 
-  # Computes the linear system to be solved at each Newton step
-  # This is a Python implementation equivalent to the builtin (C++)
+  # \brief Computes the matrix of the linear system to be solved
+  #  at each Newton step
+  # \details Uses the current Laguerre diagram (in self.RVD).
+  #  This is a Python implementation equivalent to the builtin (C++)
   #   OT.compute_Laguerre_cells_P1_Laplacian(
   #      Omega, weight, H, b, 'EULER_2D'
   #   )
-  #  H the matrix of the linear system
-  #  b the right-hand side of the linear system
-  def compute_linear_system(self, H, b):
+  # \return the Hessian matrix of the Kantorovich dual
 
-    # Get the Laguerre diagram (RVD) as a triangulation
-    self.OT.compute_Laguerre_diagram(
-      self.Omega, self.weight, self.RVD, 'EULER_2D'
-    )
-    self.RVD.I.Surface.triangulate()
-    self.RVD.I.Surface.merge_vertices(1e-10)
+  def compute_Hessian(self):
+    # Creates a sparse matrix using OpenNL
+    H = NL.create_matrix(self.N,self.N)
 
     # vertex v's coordinates are XY[v][0], XY[v][1]
     XY = np.asarray(self.RVD.I.Editor.get_points())
@@ -166,9 +195,9 @@ class Transport:
 
     Tadj = np.asarray(self.RVD.I.Editor.get_triangle_adjacents())
 
-    # chart[t] indicates the index of the seed that corresponds to the
-    #  Laguerre cell that t belongs to
-    chart = np.asarray(self.RVD.I.Editor.find_attribute('facets.chart'))
+    # trgl_seed[t] indicates the index of the seed that corresponds to the
+    #  Laguerre cell that contains t
+    trgl_seed = np.asarray(self.RVD.I.Editor.find_attribute('facets.chart'))
 
     # The coordinates of the seeds
     seeds_XY = np.asarray(self.points.I.Editor.find_attribute('vertices.point'))
@@ -176,16 +205,11 @@ class Transport:
     # The number of triangles in the triangulation of the Laguerre diagram
     nt = T.shape[0]
 
-    b[:] = 0
-
     # For each triangle of the triangulation of the Laguerre diagram
     for t in range(nt):
 
       # Triangle t is in the Laguerre cell of i
-      i = chart.item(t) # item() instead of chart[t], chart[t] is a 1x1 mtx
-
-      # Accumulate right-hand side (Laguerre cell areas)
-      b[i] += self.triangle_area(XY, T[t])
+      i = trgl_seed.item(t) # item() instead of trgl_seed[t] that is a 1x1 mtx
 
       #   For each triangle edge, determine whether the triangle edge
       # is on a Laguerre cell boundary and accumulate its contribution
@@ -198,7 +222,7 @@ class Transport:
         if tneigh < nt:
 
           # Triangle tneigh is in the Laguerre cell of j
-          j = chart[tneigh]
+          j = trgl_seed[tneigh]
 
 	  # We are on a Laguerre cell boundary only if t and tneigh
 	  # belong to two different Laguerre cells
@@ -211,6 +235,29 @@ class Transport:
             hij = self.distance(XY,v1,v2) / (2.0 * self.distance(seeds_XY, i,j))
             H.add_coefficient(i,j,-hij)
             H.add_coefficient(i,i,hij)
+    return H
+
+  # \brief Computes the measures of the Laguerre cells
+  # \details Uses the current Laguerre diagram (in self.RVD).
+  #  This is a Python implementation equivalent to the builtin (C++)
+  #   OT.compute_Laguerre_cells_measures(
+  #      Omega, weights, b, 'EULER_2D'
+  #   )
+  # \return an array with the cells measures
+  def compute_Laguerre_cells_measures(self):
+    b = np.ndarray(self.N,np.float64)
+    # See comments about XY,T,trgl_seed,nt in compute_Hessian()
+    XY = np.asarray(self.RVD.I.Editor.get_points())
+    T = np.asarray(self.RVD.I.Editor.get_triangles())
+    trgl_seed = np.asarray(self.RVD.I.Editor.find_attribute('facets.chart'))
+    nt = T.shape[0]
+    b[:] = 0
+    for t in range(nt):
+      i = trgl_seed.item(t) # item() instead of trgl_seed[t] that is a 1x1 mtx
+      b[i] += self.triangle_area(XY, T[t])
+
+    return b
+
 
   # \brief Computes the area of a mesh triangle
   # \param[in] XY the coordinates of the mesh vertices
@@ -231,9 +278,13 @@ class Transport:
   def distance(self, XY, v1, v2):
     return np.linalg.norm(XY[v2]-XY[v1])
 
-transport = Transport(1000,True)
+transport = Transport(N,True)
+# transport.verbose = True # uncomment to display Newton convergence
 
 def compute():
+  transport.compute()
+
+def one_iteration():
   transport.one_iteration()
 
 
@@ -261,9 +312,14 @@ OT_dialog.h = 200
 OT_dialog.width = 400
 
 function OT_dialog.draw_window()
-   if imgui.Button('Compute',-1,-1) then
+   imgui.PushItemWidth(-1)
+   if imgui.Button('Compute transport') then
       gom.interpreter('Python').globals.compute()
    end
+   if imgui.Button('One iteration') then
+      gom.interpreter('Python').globals.one_iteration()
+   end
+   imgui.PopItemWidth()
 end
 
 graphite_main_window.add_module(OT_dialog)
