@@ -136,13 +136,6 @@ namespace OGF {
 		Logger::err("NL::Vector")
 		    << "Cannot resize, Vector does not own memory"
 		    << std::endl;
-
-		std::cerr
-		    << size << "," << size_ << " "
-		    << dimension << "," << dimension_ << " "
-		    << element_meta_type->name() << "," << element_meta_type_->name()
-		    << std::endl;
-
 		return;
 	    }
 
