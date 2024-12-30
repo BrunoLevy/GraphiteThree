@@ -67,7 +67,7 @@ class Transport:
     """
     threshold = self.nu_i * 0.01 # 1% of desired cell area
     while(self.one_iteration() > threshold):
-      pass
+      self.RVD.redraw()
 
   def one_iteration(self):
     """
@@ -89,6 +89,8 @@ class Transport:
     H.solve_symmetric(self.b,self.p) # solve for p in Lp=b
     alpha = 1.0                      # Steplength
     self.weight += self.p            # Start with Newton step
+
+    main.lock_updates()
 
     # Divide steplength by 2 until both KMT criteria are satisfied
     for k in range(10):
@@ -113,6 +115,8 @@ class Transport:
       alpha = alpha / 2.0
       self.weight -= alpha * self.p
 
+    main.unlock_updates()
+
     worst_area_error = np.max(np.abs(self.b))
     self.log('Worst cell error = ',100.0 * worst_area_error / self.nu_i,'%')
     return worst_area_error
@@ -126,6 +130,7 @@ class Transport:
     self.RVD.update()
     self.RVD.I.Surface.triangulate()
     self.RVD.I.Surface.merge_vertices(1e-10)
+#   self.RVD.shader.mesh_style = 'false;0 0 0 1;1'
 
   def compute_Hessian(self):
     """
@@ -332,12 +337,13 @@ OT_dialog.w = 150
 OT_dialog.h = 200
 OT_dialog.width = 400
 
+-- using main.exec_command() so that it is queued and can update graphics
 function OT_dialog.draw_window()
    if imgui.Button('Compute transport',-1,70) then
-      gom.interpreter('Python').globals.compute()
+      main.exec_command('gom.interpreter("Python").globals.compute()')
    end
    if imgui.Button('One iteration',-1,70) then
-      gom.interpreter('Python').globals.one_iteration()
+      main.exec_command('gom.interpreter("Python").globals.one_iteration()')
    end
 end
 

@@ -254,6 +254,21 @@ namespace OGF {
          */
         virtual void post_draw();
 
+
+	/**
+	 * \brief Lock updates.
+	 * \details If this function is called, updates are ignored.
+	 *  It is useful when a RenderingContext operation is occuring, to
+	 *  prevent the Console for triggering a drawing operation.
+	 */
+	virtual void lock_updates();
+
+	/**
+	 * \brief Unlock updates.
+	 * \see lock_updates()
+	 */
+	virtual void unlock_updates();
+
     gom_properties:
 
         /**

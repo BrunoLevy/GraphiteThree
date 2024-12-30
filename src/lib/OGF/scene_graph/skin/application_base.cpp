@@ -307,6 +307,12 @@ namespace OGF {
         }
     }
 
+    void ApplicationBase::lock_updates() {
+    }
+
+    void ApplicationBase::unlock_updates() {
+    }
+
 /**************************************************************/
 
     ApplicationBase::

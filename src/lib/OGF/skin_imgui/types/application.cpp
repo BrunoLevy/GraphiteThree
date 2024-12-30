@@ -335,11 +335,13 @@ namespace OGF {
     }
 
     void Application::lock_updates() {
+	ApplicationBase::lock_updates();
 	impl_->lock_updates();
     }
 
     void Application::unlock_updates() {
 	impl_->unlock_updates();
+	ApplicationBase::unlock_updates();
     }
 
     const std::string& Application::get_style() const {

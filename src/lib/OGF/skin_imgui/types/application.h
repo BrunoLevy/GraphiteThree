@@ -120,19 +120,17 @@ namespace OGF {
          */
         void set_font_size(index_t value) override;
 
-	/**
-	 * \brief Lock updates.
-	 * \details If this function is called, updates are ignored.
-	 *  It is useful when a RenderingContext operation is occuring, to
-	 *  prevent the Console for triggering a drawing operation.
-	 */
-	void lock_updates();
 
 	/**
-	 * \brief Unlock updates.
-	 * \see lock_updates()
+	 * \copydoc ApplicationBase::lock_updates()
 	 */
-	void unlock_updates();
+	void lock_updates() override;
+
+	/**
+	 * \copydoc ApplicationBase::unlock_updates()
+	 */
+	void unlock_updates() override;
+
 
 	/**
 	 * \copydoc ApplicationBase::draw()
