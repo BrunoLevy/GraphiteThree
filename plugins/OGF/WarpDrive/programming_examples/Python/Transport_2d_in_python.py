@@ -43,11 +43,18 @@ class Transport:
 
     # Measure of the whole domain
     self.Omega_measure = self.OT.Omega_measure(self.Omega, 'EULER_2D')
+
+    # Desired area for each cell
     self.nu_i = self.Omega_measure / self.N
 
-    # minimal legal area for Laguerre cells (KMT criterion #1)
-    # (computed at the first run, when Laguerre diagram = Voronoi diagram)
-    self.smallest_cell_threshold = -1.0
+    # Variables for Newton iteration
+    self.b = np.ndarray(self.N, np.float64) # right-hand side
+    self.p = np.ndarray(self.N, np.float64) # Newton step
+
+    # Minimal legal area for Laguerre cells (KMT criterion #1)
+    self.compute_Laguerre_cells_measures(self.b)
+    self.smallest_cell_threshold = 0.5 * min(np.min(self.b), self.nu_i)
+
 
     # Change graphic attributes of diagram
     self.Omega.visible=False
@@ -75,40 +82,29 @@ class Transport:
     # compute Hessian and b(init. with Laguerre cells areas)
     H = self.compute_Hessian()
 
-    # rhs (- grad of Kantorovich dual) = actual measures - desired measures
-    b = np.ndarray(self.N, np.float64)
-    self.compute_Laguerre_cells_measures(b)
+    # rhs (- grad of Kantorovich dual) = desired areas - actual areas
+    self.compute_Laguerre_cells_measures(self.b)
+    self.b[:] = self.nu_i - self.b
 
-    # compute minimal legal area for Laguerre cells (KMT criterion #1)
-    # (computed at the first run, when Laguerre diagram = Voronoi diagram)
-    if self.smallest_cell_threshold == -1.0:
-      self.smallest_cell_threshold = 0.5 * min(np.min(b), self.nu_i)
-      if self.verbose:
-        print('smallest cell threshold = '+str(self.smallest_cell_threshold))
+    g_norm = np.linalg.norm(self.b) # norm of gradient at current step
+                                    # (used by KMT criterion #2)
 
-    # desired area for Laguerre cells (same for all pt, but could be different)
-    b[:] = self.nu_i - b # rhs = desired areas - actual areas
-
-    g_norm = np.linalg.norm(b) # norm of gradient at curent step
-                               # (used by KMT criterion #2)
-
-    p = np.ndarray(self.N,np.float64) # Newton step
-    H.solve_symmetric(b,p)       # solve for p in Lp=b
-    alpha = 1.0                  # Steplength
+    H.solve_symmetric(self.b,self.p) # solve for p in Lp=b
+    alpha = 1.0                     # Steplength
+    self.weight += self.p           # Start with Newton step
 
     # Divide steplength by 2 until both KMT criteria are satisfied
     for k in range(10):
       if self.verbose:
         print('   Substep: k = '+str(k)+'  alpha='+str(alpha))
-      weight2 = self.weight + alpha * p
 
       # rhs (- grad of Kantorovich dual) = actual measures - desired measures
-      self.compute_Laguerre_diagram(weight2)
-      self.compute_Laguerre_cells_measures(b)
+      self.compute_Laguerre_diagram(self.weight)
+      self.compute_Laguerre_cells_measures(self.b)
 
-      smallest_cell_area = np.min(b)
-      b -= self.nu_i
-      g_norm_substep = np.linalg.norm(b)
+      smallest_cell_area = np.min(self.b)
+      self.b -= self.nu_i
+      g_norm_substep = np.linalg.norm(self.b)
 
       # KMT criterion #1 (Laguerre cell area)
       KMT_1 = (smallest_cell_area > self.smallest_cell_threshold)
@@ -133,11 +129,10 @@ class Transport:
          break
 
       alpha = alpha / 2.0
-
-    np.copyto(self.weight, weight2)
+      self.weight -= alpha * self.p
 
     # Return measure error of the worst cell
-    worst_cell_measure_error = np.max(np.abs(b))
+    worst_cell_measure_error = np.max(np.abs(self.b))
     worst_percent = 100.0 * worst_cell_measure_error / self.nu_i
     if self.verbose:
       print(

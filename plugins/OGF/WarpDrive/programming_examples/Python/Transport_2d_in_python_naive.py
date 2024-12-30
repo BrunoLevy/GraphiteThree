@@ -44,11 +44,14 @@ class Transport:
 
     # Measure of the whole domain
     self.Omega_measure = self.OT.Omega_measure(self.Omega, 'EULER_2D')
+
+    # Desired area for each cell
     self.nu_i = self.Omega_measure / self.N
 
-    # minimal legal area for Laguerre cells (KMT criterion #1)
-    # (computed at the first run, when Laguerre diagram = Voronoi diagram)
-    self.smallest_cell_threshold = -1.0
+    # Minimal legal area for Laguerre cells (KMT criterion #1)
+    b = np.ndarray(self.N, np.float64)
+    self.compute_Laguerre_cells_measures(b)
+    self.smallest_cell_threshold = 0.5 * min(np.min(b), self.nu_i)
 
     # Change graphic attributes of diagram
     self.Omega.visible=False
@@ -76,19 +79,10 @@ class Transport:
     # compute Hessian and b(init. with Laguerre cells areas)
     H = self.compute_Hessian()
 
-    # rhs (- grad of Kantorovich dual) = actual measures - desired measures
+    # rhs (- grad of Kantorovich dual) = desired areas - actual areas
     b = np.ndarray(self.N, np.float64)
     self.compute_Laguerre_cells_measures(b)
-
-    # compute minimal legal area for Laguerre cells (KMT criterion #1)
-    # (computed at the first run, when Laguerre diagram = Voronoi diagram)
-    if self.smallest_cell_threshold == -1.0:
-      self.smallest_cell_threshold = 0.5 * min(np.min(b), self.nu_i)
-      if self.verbose:
-        print('smallest cell threshold = '+str(self.smallest_cell_threshold))
-
-    # desired area for Laguerre cells (same for all pt, but could be different)
-    b[:] = self.nu_i - b # rhs = desired areas - actual areas
+    b[:] = self.nu_i - b
 
     g_norm = np.linalg.norm(b) # norm of gradient at curent step
                                # (used by KMT criterion #2)
