@@ -39,9 +39,7 @@ class Transport:
     self.RVD = scene_graph.create_object(OGF.MeshGrob,'RVD')
     self.OT = self.points.I.Transport
     self.weight = np.zeros(self.N,np.float64)
-    self.OT.compute_Laguerre_diagram(
-      self.Omega, self.weight, self.RVD, 'EULER_2D'
-    )
+    self.compute_Laguerre_diagram(self.weight)
 
     # Measure of the whole domain
     self.Omega_measure = self.OT.Omega_measure(self.Omega, 'EULER_2D')
@@ -53,10 +51,8 @@ class Transport:
 
     # Change graphic attributes of diagram
     self.Omega.visible=False
-    self.RVD.shader.painting='ATTRIBUTE'
-    self.RVD.shader.attribute='facets.chart'
-    self.RVD.shader.colormap = 'plasma;false;732;false;false;;'
-    self.RVD.shader.autorange()
+
+    self.show()
 
   def compute(self):
     """
@@ -75,14 +71,6 @@ class Transport:
     """
     if self.verbose:
       print('Newton step')
-
-    # Get the Laguerre diagram (RVD) as a triangulation
-    #  used by compute_Hessian() and compute_Laguerre_cells_measures()
-    self.OT.compute_Laguerre_diagram(
-      self.Omega, self.weight, self.RVD, 'EULER_2D'
-    )
-    self.RVD.I.Surface.triangulate()
-    self.RVD.I.Surface.merge_vertices(1e-10)
 
     # compute Hessian and b(init. with Laguerre cells areas)
     H = self.compute_Hessian()
@@ -114,7 +102,9 @@ class Transport:
       weight2 = self.weight + alpha * p
 
       # rhs (- grad of Kantorovich dual) = actual measures - desired measures
-      self.OT.compute_Laguerre_cells_measures(self.Omega, weight2, b, 'EULER_2D')
+      self.compute_Laguerre_diagram(weight2)
+      b = self.compute_Laguerre_cells_measures()
+
       smallest_cell_area = np.min(b)
       b -= self.nu_i
       g_norm_substep = np.linalg.norm(b)
@@ -154,6 +144,21 @@ class Transport:
         '(' + str(worst_percent) + '%)'
       )
     return worst_cell_measure_error
+
+  def compute_Laguerre_diagram(self, weights: np.ndarray):
+    """
+    @brief Computes a Laguerre diagram from a weight vector
+    @param[in] weights the weights vector
+    """
+    self.OT.compute_Laguerre_diagram(self.Omega, weights, self.RVD, 'EULER_2D')
+    self.RVD.update()
+    self.RVD.I.Surface.triangulate()
+    self.RVD.I.Surface.merge_vertices(1e-10)
+    self.RVD.shader.painting='ATTRIBUTE'
+    self.RVD.shader.attribute='facets.chart'
+    self.RVD.shader.colormap = 'plasma;false;732;false;false;;'
+    self.RVD.shader.mesh_style = 'false;0 0 0 1;1'
+    self.RVD.shader.autorange()
 
   def compute_Hessian(self):
     """
@@ -284,24 +289,31 @@ class Transport:
     return np.linalg.norm(XY[v2]-XY[v1])
 
   def show(self):
-    # We have already computed the Laguerre diagram, but it was triangulated,
-    # We recompute it so that display is not cluttered with
-    # the triangle edges (you can comment-out the next line
-    # to see what it looks like if you are interested)
-    self.OT.compute_Laguerre_diagram(
-      self.Omega, self.weight, self.RVD, 'EULER_2D'
-    )
-    self.RVD.shader.autorange()
-    self.RVD.update()
+    """
+    @brief Prepares the RVD for display
+    @details Unglues the charts so that we better see the Laguerre cells
+    """
+    self.RVD.I.Surface.unglue_charts()
+
+  def unshow(self):
+    """
+    @brief To be called before each computation
+    @details Re-glues the charts so that the Hessian can be computed
+    """
+    self.RVD.I.Surface.merge_vertices(1e-10)
+
 
 transport = Transport(N,True)
 # transport.verbose = True # uncomment to display Newton convergence
 
+# We need these two global functions to plug the GUI
 def compute():
+  transport.unshow()
   transport.compute()
   transport.show()
 
 def one_iteration():
+  transport.unshow()
   transport.one_iteration()
   transport.show()
 
@@ -329,14 +341,12 @@ OT_dialog.h = 200
 OT_dialog.width = 400
 
 function OT_dialog.draw_window()
-   imgui.PushItemWidth(-1)
-   if imgui.Button('Compute transport') then
+   if imgui.Button('Compute transport',-1,70) then
       gom.interpreter('Python').globals.compute()
    end
-   if imgui.Button('One iteration') then
+   if imgui.Button('One iteration',-1,70) then
       gom.interpreter('Python').globals.one_iteration()
    end
-   imgui.PopItemWidth()
 end
 
 graphite_main_window.add_module(OT_dialog)
