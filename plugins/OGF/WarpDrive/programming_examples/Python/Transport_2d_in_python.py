@@ -47,18 +47,16 @@ class Transport:
     # Desired area for each cell
     self.nu_i = self.Omega_measure / self.N
 
-    # Variables for Newton iteration
+    # Variables for Newton iteration (it is better to allocate them one for all)
     self.b = np.ndarray(self.N, np.float64) # right-hand side
     self.p = np.ndarray(self.N, np.float64) # Newton step
 
     # Minimal legal area for Laguerre cells (KMT criterion #1)
     self.compute_Laguerre_cells_measures(self.b)
-    self.smallest_cell_threshold = 0.5 * min(np.min(self.b), self.nu_i)
-
+    self.area_threshold = 0.5 * min(np.min(self.b), self.nu_i)
 
     # Change graphic attributes of diagram
     self.Omega.visible=False
-
     self.show()
 
   def compute(self):
@@ -67,7 +65,7 @@ class Transport:
     @details Calls one_iteration() until measure error of worst cell
       is smaller than 1%
     """
-    threshold = self.nu_i * 0.01
+    threshold = self.nu_i * 0.01 # 1% of desired cell area
     while(self.one_iteration() > threshold):
       pass
 
@@ -76,8 +74,7 @@ class Transport:
     @brief One iteration of Newton
     @return the measure error of the worst cell
     """
-    if self.verbose:
-      print('Newton step')
+    self.log('===== Newton step')
 
     # compute Hessian and b(init. with Laguerre cells areas)
     H = self.compute_Hessian()
@@ -90,40 +87,25 @@ class Transport:
                                     # (used by KMT criterion #2)
 
     H.solve_symmetric(self.b,self.p) # solve for p in Lp=b
-    alpha = 1.0                     # Steplength
-    self.weight += self.p           # Start with Newton step
+    alpha = 1.0                      # Steplength
+    self.weight += self.p            # Start with Newton step
 
     # Divide steplength by 2 until both KMT criteria are satisfied
     for k in range(10):
-      if self.verbose:
-        print('   Substep: k = '+str(k)+'  alpha='+str(alpha))
+      self.log(' Substep: k=',k,'  alpha=',alpha)
 
       # rhs (- grad of Kantorovich dual) = actual measures - desired measures
       self.compute_Laguerre_diagram(self.weight)
       self.compute_Laguerre_cells_measures(self.b)
-
-      smallest_cell_area = np.min(self.b)
+      smallest_area = np.min(self.b)     # used by KMT_1
       self.b -= self.nu_i
-      g_norm_substep = np.linalg.norm(self.b)
+      g_norm_k = np.linalg.norm(self.b)  # used by KMT_2
 
-      # KMT criterion #1 (Laguerre cell area)
-      KMT_1 = (smallest_cell_area > self.smallest_cell_threshold)
+      KMT_1 = (smallest_area > self.area_threshold)  # KMT 1: cell area
+      KMT_2 = (g_norm_k <= (1.0-0.5*alpha) * g_norm) # KMT 2: gradient norm
 
-      # KMT criterion #2 (gradient norm)
-      KMT_2 = (g_norm_substep <= (1.0 - 0.5*alpha) * g_norm)
-
-      if self.verbose:
-        print(
-          '      KMT #1 (cell area):'+str(KMT_1)+' '+
-      	  str(smallest_cell_area) + '>' +
-      	  str(self.smallest_cell_threshold)
-        )
-
-        print(
-          '      KMT #2 (gradient ):'+str(KMT_2)+' '+
-      	  str(g_norm_substep) + '<=' +
-      	  str((1.0 - 0.5*alpha) * g_norm)
-        )
+      self.log(' KMT #1 (area):',KMT_1,' ',smallest_area,'>',self.area_threshold)
+      self.log(' KMT #2 (grad):',KMT_2,' ',g_norm_k,'<=',(1.0-0.5*alpha)*g_norm)
 
       if KMT_1 and KMT_2:
          break
@@ -131,15 +113,9 @@ class Transport:
       alpha = alpha / 2.0
       self.weight -= alpha * self.p
 
-    # Return measure error of the worst cell
-    worst_cell_measure_error = np.max(np.abs(self.b))
-    worst_percent = 100.0 * worst_cell_measure_error / self.nu_i
-    if self.verbose:
-      print(
-        'Worst cell measure error = ' + str(worst_cell_measure_error) + \
-        '(' + str(worst_percent) + '%)'
-      )
-    return worst_cell_measure_error
+    worst_area_error = np.max(np.abs(self.b))
+    self.log('Worst cell error = ',100.0 * worst_area_error / self.nu_i,'%')
+    return worst_area_error
 
   def compute_Laguerre_diagram(self, weights: np.ndarray):
     """
@@ -150,11 +126,6 @@ class Transport:
     self.RVD.update()
     self.RVD.I.Surface.triangulate()
     self.RVD.I.Surface.merge_vertices(1e-10)
-    self.RVD.shader.painting='ATTRIBUTE'
-    self.RVD.shader.attribute='facets.chart'
-    self.RVD.shader.colormap = 'plasma;false;732;false;false;;'
-    self.RVD.shader.mesh_style = 'false;0 0 0 1;1' # Try this: comment this line
-    self.RVD.shader.autorange()
 
   def compute_Hessian(self):
     """
@@ -302,6 +273,11 @@ class Transport:
     @details Unglues the charts so that we better see the Laguerre cells
     """
     self.RVD.I.Surface.unglue_charts()
+    self.RVD.shader.painting='ATTRIBUTE'
+    self.RVD.shader.attribute='facets.chart'
+    self.RVD.shader.colormap = 'plasma;false;732;false;false;;'
+    self.RVD.shader.mesh_style = 'false;0 0 0 1;1' # Try this: comment this line
+    self.RVD.shader.autorange()
 
   def unshow(self):
     """
@@ -309,6 +285,14 @@ class Transport:
     @details Re-glues the charts so that the Hessian can be computed
     """
     self.RVD.I.Surface.merge_vertices(1e-10)
+
+  def log(self, *args):
+    """
+    @brief Displays a log message if verbose is set
+    """
+    if self.verbose:
+      msg = str.join('',[str(arg) for arg in args])
+      print(msg)
 
 
 transport = Transport(N,True)
