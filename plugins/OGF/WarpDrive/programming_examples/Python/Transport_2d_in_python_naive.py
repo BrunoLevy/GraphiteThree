@@ -11,7 +11,7 @@ N = 1000 # number of points, try 10000
 
 class Transport:
 
-  def __init__(self, N, shrink_points):
+  def __init__(self, N: int, shrink_points: bool):
     """
     @param[in] N number of points
     @param[in] shrink_points if set, group points in a small zone
@@ -76,7 +76,8 @@ class Transport:
     H = self.compute_Hessian()
 
     # rhs (- grad of Kantorovich dual) = actual measures - desired measures
-    b = self.compute_Laguerre_cells_measures()
+    b = np.ndarray(self.N, np.float64)
+    self.compute_Laguerre_cells_measures(b)
 
     # compute minimal legal area for Laguerre cells (KMT criterion #1)
     # (computed at the first run, when Laguerre diagram = Voronoi diagram)
@@ -103,7 +104,7 @@ class Transport:
 
       # rhs (- grad of Kantorovich dual) = actual measures - desired measures
       self.compute_Laguerre_diagram(weight2)
-      b = self.compute_Laguerre_cells_measures()
+      self.compute_Laguerre_cells_measures(b)
 
       smallest_cell_area = np.min(b)
       b -= self.nu_i
@@ -242,9 +243,10 @@ class Transport:
             H.add_coefficient(i,i,hij)
     return H
 
-  def compute_Laguerre_cells_measures(self):
+  def compute_Laguerre_cells_measures(self, measures: np.ndarray):
     """
     @brief Computes the measures of the Laguerre cells
+    @out measures: the vector of Laguerre cells measures
     @details Uses the current Laguerre diagram (in self.RVD).
      This is a Python implementation equivalent to the builtin (C++)
       OT.compute_Laguerre_cells_measures(
@@ -252,18 +254,15 @@ class Transport:
       )
     @return an array with the cells measures
     """
-    b = np.ndarray(self.N,np.float64)
     # See comments about XY,T,trgl_seed,nt in compute_Hessian()
     XY = np.asarray(self.RVD.I.Editor.get_points())
     T = np.asarray(self.RVD.I.Editor.get_triangles())
     trgl_seed = np.asarray(self.RVD.I.Editor.find_attribute('facets.chart'))
     nt = T.shape[0]
-    b[:] = 0
+    measures[:] = 0
     for t in range(nt):
       i = trgl_seed.item(t) # item() instead of trgl_seed[t] that is a 1x1 mtx
-      b[i] += self.triangle_area(XY, T[t])
-
-    return b
+      measures[i] += self.triangle_area(XY, T[t])
 
   def triangle_area(self, XY, T):
     """
