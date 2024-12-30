@@ -64,7 +64,6 @@ class Transport:
     @details Calls one_iteration() until measure error of worst cell
       is smaller than 1%
     """
-
     threshold = self.nu_i * 0.01
     while(self.one_iteration() > threshold):
       pass
@@ -294,8 +293,6 @@ class Transport:
     )
     self.RVD.shader.autorange()
     self.RVD.update()
-
-
 
 transport = Transport(N,True)
 # transport.verbose = True # uncomment to display Newton convergence
