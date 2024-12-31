@@ -2,7 +2,7 @@
 # "by-hand" computation of Hessian and gradient (almost fully in Python)
 # Version that exploit numpy array functions (much faster than naive version)
 
-import math, ctypes, numpy as np
+import math, ctypes, datetime, numpy as np
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 
@@ -16,7 +16,7 @@ class Transport:
     @param[in] N number of points
     @param[in] shrink_points if set, group points in a small zone
     """
-    self.verbose = False
+    self.verbose = True
     self.N = N
 
     scene_graph.clear() # Delete all Graphite objects
@@ -38,7 +38,7 @@ class Transport:
       self.seeds.update()
 
     # Compute Laguerre diagram
-    self.RVD = scene_graph.create_object(OGF.MeshGrob,'RVD')
+    self.Laguerre = scene_graph.create_object(OGF.MeshGrob,'Laguerre')
     self.psi = np.zeros(self.N,np.float64)
     self.compute_Laguerre_diagram(self.psi)
 
@@ -56,15 +56,20 @@ class Transport:
     self.Omega.visible=False
     self.show()
 
+    # Make Graphite's logger less verbose (so that we can better see our logs)
+    gom.set_environment_value('log:features_exclude','Validate;timings')
+
   def compute(self):
     """
     @brief Computes the optimal transport
     @details Calls one_iteration() until measure error of worst cell
       is smaller than 1%
     """
+    starttime = datetime.datetime.now()
     threshold = self.nu_i * 0.01 # 1% of desired cell area
     while(self.one_iteration() > threshold):
-      self.RVD.redraw()
+      self.Laguerre.redraw()
+    self.log('Total elapsed time for OT:',datetime.datetime.now()-starttime)
 
   def one_iteration(self):
     """
@@ -118,34 +123,34 @@ class Transport:
     @param[in] weights the weights vector
     """
     self.seeds.I.Transport.compute_Laguerre_diagram(
-      self.Omega, weights, self.RVD, 'EULER_2D'
+      self.Omega, weights, self.Laguerre, 'EULER_2D'
     )
-    self.RVD.update()
-    self.RVD.I.Surface.triangulate()
-    self.RVD.I.Surface.merge_vertices(1e-10)
+    self.Laguerre.update()
+    self.Laguerre.I.Surface.triangulate()
+    self.Laguerre.I.Surface.merge_vertices(1e-10)
 
   def compute_Hessian(self):
     """
     @brief Computes the matrix of the system to be solved at each Newton step
-    @details Uses the current Laguerre diagram (in self.RVD).
+    @details Uses the current Laguerre diagram (in self.Laguerre).
     @return the Hessian matrix of the Kantorovich dual
     """
 
     H = NL.create_matrix(self.N,self.N) # Creates a sparse matrix using OpenNL
 
     # vertex v's coords are XY[v][0], XY[v][1]
-    XY = np.asarray(self.RVD.I.Editor.get_points())
+    XY = np.asarray(self.Laguerre.I.Editor.get_points())
 
     # Triangle t's vertices indices are T[t][0], T[t][1], T[t][2]
-    T = np.asarray(self.RVD.I.Editor.get_triangles())
+    T = np.asarray(self.Laguerre.I.Editor.get_triangles())
 
     Tadj = np.asarray( # Trgls adjacent to t: Tadj[t][0], Tadj[t][1], Tadj[t][2]
-      self.RVD.I.Editor.get_triangle_adjacents()
+      self.Laguerre.I.Editor.get_triangle_adjacents()
     )[:,[1,2,0]] # <- permute columns to match conventions for triangulations:
     # different in geogram meshes because they also support n-sided polygons
 
     # trgl_seed[t]: index of the seed s such that t is in s's Laguerre cell
-    trgl_seed = np.asarray(self.RVD.I.Editor.find_attribute('facets.chart'))
+    trgl_seed = np.asarray(self.Laguerre.I.Editor.find_attribute('facets.chart'))
 
     # The coordinates of the seeds
     seeds_XY = np.asarray(self.seeds.I.Editor.find_attribute('vertices.point'))
@@ -192,12 +197,12 @@ class Transport:
     """
     @brief Computes the measures of the Laguerre cells
     @out measures: the vector of Laguerre cells measures
-    @details Uses the current Laguerre diagram (in self.RVD)
+    @details Uses the current Laguerre diagram (in self.Laguerre)
     """
     # See comments about XY,T,trgl_seed,nt in compute_Hessian()
-    XY = np.asarray(self.RVD.I.Editor.get_points())
-    T = np.asarray(self.RVD.I.Editor.get_triangles())
-    trgl_seed = np.asarray(self.RVD.I.Editor.find_attribute('facets.chart'))
+    XY = np.asarray(self.Laguerre.I.Editor.get_points())
+    T = np.asarray(self.Laguerre.I.Editor.get_triangles())
+    trgl_seed = np.asarray(self.Laguerre.I.Editor.find_attribute('facets.chart'))
     measures[:] = 0
     np.add.at(measures, trgl_seed, self.triangle_area(XY,T))
 
@@ -232,19 +237,19 @@ class Transport:
     @brief Prepares the RVD for display
     @details Unglues the charts so that we better see the Laguerre cells
     """
-    self.RVD.I.Surface.unglue_charts()
-    self.RVD.shader.painting='ATTRIBUTE'
-    self.RVD.shader.attribute='facets.chart'
-    self.RVD.shader.colormap = 'plasma;false;732;false;false;;'
-    self.RVD.shader.mesh_style = 'false;0 0 0 1;1' # Try this: comment this line
-    self.RVD.shader.autorange()
+    self.Laguerre.I.Surface.unglue_charts()
+    self.Laguerre.shader.painting='ATTRIBUTE'
+    self.Laguerre.shader.attribute='facets.chart'
+    self.Laguerre.shader.colormap = 'plasma;false;732;false;false;;'
+    self.Laguerre.shader.mesh_style = 'false;0 0 0 1;1'
+    self.Laguerre.shader.autorange()
 
   def unshow(self):
     """
     @brief To be called before each computation
     @details Re-glues the charts so that the Hessian can be computed
     """
-    self.RVD.I.Surface.merge_vertices(1e-10)
+    self.Laguerre.I.Surface.merge_vertices(1e-10)
 
   def log(self, *args):
     """
