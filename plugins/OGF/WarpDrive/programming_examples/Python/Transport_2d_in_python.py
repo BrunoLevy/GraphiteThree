@@ -16,7 +16,7 @@ class Transport:
     @param[in] N number of points
     @param[in] shrink_points if set, group points in a small zone
     """
-    self.verbose = True
+    self.verbose = False
     self.N = N
 
     scene_graph.clear() # Delete all Graphite objects
@@ -126,13 +126,8 @@ class Transport:
 
   def compute_Hessian(self):
     """
-    @brief Computes the matrix of the linear system to be solved
-      at each Newton step
+    @brief Computes the matrix of the system to be solved at each Newton step
     @details Uses the current Laguerre diagram (in self.RVD).
-    This is a Python implementation equivalent to the builtin (C++)
-     self.seeds.I.Transport.compute_Laguerre_cells_P1_Laplacian(
-        Omega, weight, H, b, 'EULER_2D'
-     )
     @return the Hessian matrix of the Kantorovich dual
     """
 
@@ -197,11 +192,7 @@ class Transport:
     """
     @brief Computes the measures of the Laguerre cells
     @out measures: the vector of Laguerre cells measures
-    @details Uses the current Laguerre diagram (in self.RVD).
-     This is a Python implementation equivalent to the builtin (C++)
-      self.seeds.I.compute_Laguerre_cells_measures(
-         Omega, weights, b, 'EULER_2D'
-      )
+    @details Uses the current Laguerre diagram (in self.RVD)
     """
     # See comments about XY,T,trgl_seed,nt in compute_Hessian()
     XY = np.asarray(self.RVD.I.Editor.get_points())
