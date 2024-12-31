@@ -157,40 +157,42 @@ class Transport:
     diag = np.zeros(N,np.float64)        # Diagonal, initialized to zero
     NO_INDEX = ctypes.c_uint32(-1).value # special value for Tadj: edge on border
 
-    for e in range(3): # For each trgl t, for each edge e of t (loops swapped)
 
-      # Create a qidx (quad index) array that encodes for each triangle edge e:
-      #   [ i, j, v1, v2 ] where:
-      #     i: seed index
-      #     j: adjacent seed index (Laguerre cell on the other side of e)
-      #     v1, v2: vertices of the triangle edge e
-      # We assemble them in the same array so that we can remove the entries
-      # that we do not want (triangle edges on the border of Omega, and triangle
-      # edges that stay in the same Laguerre cell).
+    # Create a qidx (quad index) array that encodes for each triangle edge e:
+    #   [ i, j, v1, v2 ] where:
+    #     i: seed index
+    #     j: adjacent seed index (Laguerre cell on the other side of e)
+    #     v1, v2: vertices of the triangle edge e
+    # We assemble them in the same array so that we can remove the entries
+    # that we do not want (triangle edges on the border of Omega, and triangle
+    # edges that stay in the same Laguerre cell).
 
-      qidx = np.column_stack((trgl_seed, Tadj[:,e], T[:,(e+1)%3], T[:,(e+2)%3]))
-      #                           |         |             |             |
-      #    0: seed index (i) -----'         |             '------+------'
-      #    1: adj trgl accross e (for now) -'                    |
-      #    2,3: triangle edge (dual to Voronoi) -----------------'
+    qidx = np.column_stack((trgl_seed, Tadj[:,0], T[:,1], T[:,2],
+                            trgl_seed, Tadj[:,1], T[:,2], T[:,0],
+                            trgl_seed, Tadj[:,2], T[:,0], T[:,1]))
+    #                           |         |        |       |
+    #    0: seed index (i) -----'         |        '---+---'
+    #    1: adj trgl accross e (for now) -'            |
+    #    2,3: triangle edge (dual to Voronoi) ---------'
 
-      qidx = qidx[qidx[:,1] != NO_INDEX]  # remove edges on border
-      qidx[:,1] = trgl_seed[qidx[:,1]]    # 1: adjacent seed index (j)
-      qidx = qidx[qidx[:,0] != qidx[:,1]] # remove edges that stay in same cell
+    qidx = qidx.reshape(-1,4) # reshape from (nt,12) to ((3*nt),4)
 
-      I = qidx[:,0].copy()  # get arrays of i's, j's, v1's and v2's.
-      J = qidx[:,1].copy()  # We need to copy I and J to have contiguous arrays
-      V1 = qidx[:,2]        # (H.add_coefficients() requires that).
-      V2 = qidx[:,3]
+    qidx = qidx[qidx[:,1] != NO_INDEX]  # remove edges on border
+    qidx[:,1] = trgl_seed[qidx[:,1]]    # 1: adjacent seed index (j)
+    qidx = qidx[qidx[:,0] != qidx[:,1]] # remove edges that stay in same cell
 
-      # Now we can compute a vector of coefficient (note: V1,V2,I,J are vectors)
-      coeff = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
+    I = qidx[:,0].copy()  # get arrays of i's, j's, v1's and v2's.
+    J = qidx[:,1].copy()  # We need to copy I and J to have contiguous arrays
+    V1 = qidx[:,2]        # (H.add_coefficients() requires that).
+    V2 = qidx[:,3]
 
-      # Accumumate coefficients into matrix
-      np.add.at(diag,I,-coeff)      # diag = minus sum extra-diagonal coeffs
-      H.add_coefficients(I,J,coeff) # accumulate coeffs into matrix
+    # Now we can compute a vector of coefficient (note: V1,V2,I,J are vectors)
+    coeff = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
 
-    H.add_coefficients_to_diagonal(diag) # accumulate diag (note: outside loop)
+    # Accumumate coefficients into matrix
+    np.add.at(diag,I,-coeff)             # diag = minus sum extra-diagonal coeffs
+    H.add_coefficients(I,J,coeff)        # accumulate coeffs into matrix
+    H.add_coefficients_to_diagonal(diag) # accumulate diag
     return H
 
   def compute_Laguerre_cells_measures(self, measures: np.ndarray):
