@@ -12,14 +12,16 @@ class Transport:
 
   def __init__(self, N: int, shrink_points: bool):
     """
+    @brief Transport constructor
     @param[in] N number of points
     @param[in] shrink_points if set, group points in a small zone
     """
-    self.verbose = False
+    self.verbose = True
     self.N = N
 
+    scene_graph.clear() # Delete all Graphite objects
+
     # Create domain Omega (a square)
-    scene_graph.clear()
     self.Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
     self.Omega.I.Shapes.create_quad()
     # self.Omega.I.Shapes.create_ngon(nb_edges=300) # try this instead of square
@@ -27,33 +29,28 @@ class Transport:
 
     # Create points (random sampling of Omega)
     self.Omega.I.Points.sample_surface(nb_points=N,Lloyd_iter=0,Newton_iter=0)
-    self.points = scene_graph.objects.points
+    self.seeds = scene_graph.objects.points
 
-    # Shrink points
+    # To demonstrate more interesting transport, cluster points in a zone
     if shrink_points:
-      coords = np.asarray(self.points.I.Editor.get_points())
+      coords = np.asarray(self.seeds.I.Editor.get_points())
       coords[:] = 0.125 + coords/4.0
-      self.points.update()
+      self.seeds.update()
 
     # Compute Laguerre diagram
     self.RVD = scene_graph.create_object(OGF.MeshGrob,'RVD')
-    self.OT = self.points.I.Transport
-    self.weight = np.zeros(self.N,np.float64)
-    self.compute_Laguerre_diagram(self.weight)
-
-    # Measure of the whole domain
-    self.Omega_measure = self.OT.Omega_measure(self.Omega, 'EULER_2D')
-
-    # Desired area for each cell
-    self.nu_i = self.Omega_measure / self.N
+    self.psi = np.zeros(self.N,np.float64)
+    self.compute_Laguerre_diagram(self.psi)
 
     # Variables for Newton iteration (it is better to allocate them one for all)
-    self.b = np.ndarray(self.N, np.float64) # right-hand side
-    self.p = np.ndarray(self.N, np.float64) # Newton step
+    self.b = np.ndarray(self.N, np.float64)        # right-hand side
+    self.p = np.ndarray(self.N, np.float64)        # Newton step
 
-    # Minimal legal area for Laguerre cells (KMT criterion #1)
-    self.compute_Laguerre_cells_measures(self.b)
-    self.area_threshold = 0.5 * min(np.min(self.b), self.nu_i)
+    # Measure of whole domain, desired areas and minimum legal area (KMT #1)
+    self.compute_Laguerre_cells_measures(self.b)   # b <- areas of Laguerre cells
+    self.Omega_measure = np.sum(self.b)            # Measure of the whole domain
+    self.nu_i = self.Omega_measure / self.N        # Desired area for each cell
+    self.area_threshold = 0.5 * min(np.min(self.b), self.nu_i) # KMT criterion #1
 
     # Change graphic attributes of diagram
     self.Omega.visible=False
@@ -71,54 +68,48 @@ class Transport:
 
   def one_iteration(self):
     """
-    @brief One iteration of Newton
-    @return the measure error of the worst cell
+    @brief One iteration of Newton-Kitagawa-Merigot-Thibert iteration
+    @return the measure error of the worst cell (L_infty norm of gradient)
     """
     self.log('===== Newton step')
 
-    # compute Hessian and b(init. with Laguerre cells areas)
-    H = self.compute_Hessian()
+    H = self.compute_Hessian() # Hessian of Kantorovich dual (sparse matrix)
 
-    # rhs (- grad of Kantorovich dual) = desired areas - actual areas
+    # rhs (minus gradient of Kantorovich dual) = desired areas - actual areas
     self.compute_Laguerre_cells_measures(self.b)
     self.b[:] = self.nu_i - self.b
 
-    g_norm = np.linalg.norm(self.b) # norm of gradient at current step
-                                    # (used by KMT criterion #2)
-
+    g_norm = np.linalg.norm(self.b)  # norm of gradient at current step (KMT #2)
     H.solve_symmetric(self.b,self.p) # solve for p in Lp=b
     alpha = 1.0                      # Steplength
-    self.weight += self.p            # Start with Newton step
-
-    main.lock_updates()
+    self.psi += self.p            # Start with Newton step
 
     # Divide steplength by 2 until both KMT criteria are satisfied
+    main.lock_updates() # hide graphic updates (try this: uncomment + other one )
     for k in range(10):
       self.log(' Substep: k=',k,'  alpha=',alpha)
 
       # rhs (- grad of Kantorovich dual) = actual measures - desired measures
-      self.compute_Laguerre_diagram(self.weight)
+      self.compute_Laguerre_diagram(self.psi)
       self.compute_Laguerre_cells_measures(self.b)
-      smallest_area = np.min(self.b)     # used by KMT_1
+
+      # Check KMT criteria #1 (cell area) and #2 (gradient norm)
+      smallest_area = np.min(self.b)
       self.b -= self.nu_i
-      g_norm_k = np.linalg.norm(self.b)  # used by KMT_2
-
-      KMT_1 = (smallest_area > self.area_threshold)  # KMT 1: cell area
-      KMT_2 = (g_norm_k <= (1.0-0.5*alpha) * g_norm) # KMT 2: gradient norm
-
+      g_norm_k = np.linalg.norm(self.b)
+      KMT_1 = (smallest_area > self.area_threshold)  # criterion 1: cell area
+      KMT_2 = (g_norm_k <= (1.0-0.5*alpha) * g_norm) # criterion 2: gradient norm
       self.log(' KMT #1 (area):',KMT_1,' ',smallest_area,'>',self.area_threshold)
       self.log(' KMT #2 (grad):',KMT_2,' ',g_norm_k,'<=',(1.0-0.5*alpha)*g_norm)
-
       if KMT_1 and KMT_2:
          break
 
       alpha = alpha / 2.0
-      self.weight -= alpha * self.p
-
-    main.unlock_updates()
+      self.psi -= alpha * self.p
+    main.unlock_updates() # show graphic updates (uncomment also this one)
 
     worst_area_error = np.max(np.abs(self.b))
-    self.log('Worst cell error = ',100.0 * worst_area_error / self.nu_i,'%')
+    self.log('Worst cell area error = ',100.0 * worst_area_error / self.nu_i,'%')
     return worst_area_error
 
   def compute_Laguerre_diagram(self, weights: np.ndarray):
@@ -126,11 +117,12 @@ class Transport:
     @brief Computes a Laguerre diagram from a weight vector
     @param[in] weights the weights vector
     """
-    self.OT.compute_Laguerre_diagram(self.Omega, weights, self.RVD, 'EULER_2D')
+    self.seeds.I.Transport.compute_Laguerre_diagram(
+      self.Omega, weights, self.RVD, 'EULER_2D'
+    )
     self.RVD.update()
     self.RVD.I.Surface.triangulate()
     self.RVD.I.Surface.merge_vertices(1e-10)
-#   self.RVD.shader.mesh_style = 'false;0 0 0 1;1'
 
   def compute_Hessian(self):
     """
@@ -138,56 +130,34 @@ class Transport:
       at each Newton step
     @details Uses the current Laguerre diagram (in self.RVD).
     This is a Python implementation equivalent to the builtin (C++)
-     OT.compute_Laguerre_cells_P1_Laplacian(
+     self.seeds.I.Transport.compute_Laguerre_cells_P1_Laplacian(
         Omega, weight, H, b, 'EULER_2D'
      )
     @return the Hessian matrix of the Kantorovich dual
     """
 
-    # Creates a sparse matrix using OpenNL
-    H = NL.create_matrix(self.N,self.N)
+    H = NL.create_matrix(self.N,self.N) # Creates a sparse matrix using OpenNL
 
-    # vertex v's coordinates are XY[v][0], XY[v][1]
+    # vertex v's coords are XY[v][0], XY[v][1]
     XY = np.asarray(self.RVD.I.Editor.get_points())
 
     # Triangle t's vertices indices are T[t][0], T[t][1], T[t][2]
     T = np.asarray(self.RVD.I.Editor.get_triangles())
 
-    # The indices of the triangles adjacent to triangle t are
-    #    Tadj[t][0], Tadj[t][1], Tadj[t][2]
-    #  WARNING: they do not follow the usual convention for triangulations
-    #  (this is because GEOGRAM also supports arbitrary polygons)
-    #
-    # It is like that:
-    #
-    #        2
-    #       / \
-    # adj2 /   \ adj1
-    #     /     \
-    #    /       \
-    #   0 ------- 1
-    #      adj0
-    #
-    # (Yes, I know, this is stupid and you hate me !!)
+    Tadj = np.asarray( # Trgls adjacent to t: Tadj[t][0], Tadj[t][1], Tadj[t][2]
+      self.RVD.I.Editor.get_triangle_adjacents()
+    )[:,[1,2,0]] # <- permute columns to match conventions for triangulations:
+    # different in geogram meshes because they also support n-sided polygons
 
-    Tadj = np.asarray(self.RVD.I.Editor.get_triangle_adjacents())
-
-    # trgl_seed[t] indicates the index of the seed that corresponds to the
-    #  Laguerre cell that contains t
+    # trgl_seed[t]: index of the seed s such that t is in s's Laguerre cell
     trgl_seed = np.asarray(self.RVD.I.Editor.find_attribute('facets.chart'))
 
     # The coordinates of the seeds
-    seeds_XY = np.asarray(self.points.I.Editor.find_attribute('vertices.point'))
+    seeds_XY = np.asarray(self.seeds.I.Editor.find_attribute('vertices.point'))
+    diag = np.zeros(N,np.float64)        # Diagonal, initialized to zero
+    NO_INDEX = ctypes.c_uint32(-1).value # special value for Tadj: edge on border
 
-    # Diagonal, initialized to zero
-    diag = np.zeros(N,np.float64)
-
-    # special value for Tadj that indicates edge on border
-    NO_INDEX = ctypes.c_uint32(-1).value
-
-    # For each triangle t, for each edge e of t ...
-    # ... swap loops to exploit numpy array functions
-    for e in range(3):
+    for e in range(3): # For each trgl t, for each edge e of t (loops swapped)
 
       # Create a qidx (quad index) array that encodes for each triangle edge e:
       #   [ i, j, v1, v2 ] where:
@@ -198,12 +168,11 @@ class Transport:
       # that we do not want (triangle edges on the border of Omega, and triangle
       # edges that stay in the same Laguerre cell).
 
-      qidx = np.column_stack((trgl_seed, Tadj[:,e], T[:,e], T[:,(e+1)%3]))
-      #                           |         |       |           |
-      #    0: seed index (i) -----'         |       +-----------'
-      #    1: adj trgl accross e (for now) -'       |
-      #    2,3: triangle edge (dual to Voronoi) ----'
-      #    (see comment on mesh indexing)
+      qidx = np.column_stack((trgl_seed, Tadj[:,e], T[:,(e+1)%3], T[:,(e+2)%3]))
+      #                           |         |             |             |
+      #    0: seed index (i) -----'         |             '------+------'
+      #    1: adj trgl accross e (for now) -'                    |
+      #    2,3: triangle edge (dual to Voronoi) -----------------'
 
       qidx = qidx[qidx[:,1] != NO_INDEX]  # remove edges on border
       qidx[:,1] = trgl_seed[qidx[:,1]]    # 1: adjacent seed index (j)
@@ -217,15 +186,11 @@ class Transport:
       # Now we can compute a vector of coefficient (note: V1,V2,I,J are vectors)
       coeff = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
 
-      # Accumulate minus the sum of extra-diagonal entries to the diagonal
-      np.add.at(diag,I,-coeff)
+      # Accumumate coefficients into matrix
+      np.add.at(diag,I,-coeff)      # diag = minus sum extra-diagonal coeffs
+      H.add_coefficients(I,J,coeff) # accumulate coeffs into matrix
 
-      # Insert coefficients into matrix
-      H.add_coefficients(I,J,coeff)
-
-    # Insert diagonal into matrix
-    H.add_coefficients_to_diagonal(diag)
-
+    H.add_coefficients_to_diagonal(diag) # accumulate diag (note: outside loop)
     return H
 
   def compute_Laguerre_cells_measures(self, measures: np.ndarray):
@@ -234,10 +199,9 @@ class Transport:
     @out measures: the vector of Laguerre cells measures
     @details Uses the current Laguerre diagram (in self.RVD).
      This is a Python implementation equivalent to the builtin (C++)
-      OT.compute_Laguerre_cells_measures(
+      self.seeds.I.compute_Laguerre_cells_measures(
          Omega, weights, b, 'EULER_2D'
       )
-    @return an array with the cells measures
     """
     # See comments about XY,T,trgl_seed,nt in compute_Hessian()
     XY = np.asarray(self.RVD.I.Editor.get_points())
@@ -303,20 +267,34 @@ class Transport:
 transport = Transport(N,True)
 # transport.verbose = True # uncomment to display Newton convergence
 
-# We need these two global functions to plug the GUI
-def compute():
-  transport.unshow()
-  transport.compute()
-  transport.show()
-
-def one_iteration():
-  transport.unshow()
-  transport.one_iteration()
-  transport.show()
 
 # ------------------------------------------
 # GUI
 # ------------------------------------------
+
+# We need these two global functions to plug the GUI
+
+locked = False # avoid running multiple times if user presses button.
+
+def compute():
+  global locked
+  if locked:
+    return
+  locked = True
+  transport.unshow()
+  transport.compute()
+  transport.show()
+  locked = False
+
+def one_iteration():
+  global locked
+  if locked:
+    return
+  locked = True
+  transport.unshow()
+  transport.one_iteration()
+  transport.show()
+  locked = False
 
 # The GUI is written in Lua, and communicates
 # with Python through Graphite's interop layer.
