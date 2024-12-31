@@ -92,10 +92,10 @@ class Transport:
       # rhs (- grad of Kantorovich dual) = actual measures - desired measures
       self.compute_Laguerre_diagram(self.psi)
       self.compute_Laguerre_cells_measures(self.b)
+      smallest_area = np.min(self.b) # for KMT criterion 1
+      self.b -= self.nu_i
 
       # Check KMT criteria #1 (cell area) and #2 (gradient norm)
-      smallest_area = np.min(self.b)
-      self.b -= self.nu_i
       g_norm_k = np.linalg.norm(self.b)
       KMT_1 = (smallest_area > self.area_threshold)  # criterion 1: cell area
       KMT_2 = (g_norm_k <= (1.0-0.5*alpha) * g_norm) # criterion 2: gradient norm
@@ -303,6 +303,8 @@ def one_iteration():
 # Calling back the Python function 'compute' from LUA is
 # done as follows:
 #   gom.interpreter('Python').globals.compute()
+# It is called through main.exec_command() that is queued outside
+# GUI rendering loop so that it can display animated graphics
 
 gom.interpreter("Lua").execute(command="""
 
@@ -315,7 +317,6 @@ OT_dialog.w = 150
 OT_dialog.h = 200
 OT_dialog.width = 400
 
--- using main.exec_command() so that it is queued and can update graphics
 function OT_dialog.draw_window()
    if imgui.Button('Compute transport',-1,70) then
       main.exec_command('gom.interpreter("Python").globals.compute()')
