@@ -73,7 +73,8 @@
 #endif
 
 
-// TODO: access numpy array as NL::Vector (the other way round !)
+// TODO:
+//  - isubclass(), isinstance() for NL Vectors (jax complains)
 
 /************** NumPy Interop **********************************/
 
@@ -1896,19 +1897,33 @@ namespace OGF {
 	// redirect output and error to Graphite console.
 	if(use_embedded_interpreter_) {
 	    PyRun_SimpleString(
-		"class GraphiteStream:                \n"
-		"  def __init__(self, func):          \n"
-		"     self.func = func                \n"
-		"  def write(self, string):           \n"
-		"     if string != \'\\n\':           \n"
-		"        self.func(string)            \n"
-		"  def flush(self):                   \n"
-		"     return                          \n"
-		"                                     \n"
-		"import sys                           \n"
-		"sys.stdout = GraphiteStream(gom.out) \n"
-		"sys.stderr = GraphiteStream(gom.err) \n"
-		"sys.displayhook = gom.out            \n"
+		"class OutGraphiteStream:                   \n"
+		"  def __init__(self):                      \n"
+		"     pass                                  \n"
+		"  def write(self, string):                 \n"
+		"     if string != \'\\n\':                 \n"
+		"        gom.out(string)                    \n"
+		"  def flush(self):                         \n"
+		"     pass                                  \n"
+		"class ErrGraphiteStream:                   \n"
+		"  def __init__(self):                      \n"
+		"     self.buffer = str()                   \n"
+		"  def write(self, string):                 \n"
+		"     for c in string:                      \n"
+		"        self.putc(c)                       \n"
+		"  def putc(self,c):                        \n"
+		"     if c == '\\\n':                       \n"
+		"        self.flush()                       \n"
+		"     else:                                 \n"
+		"        self.buffer += c                   \n"
+		"  def flush(self):                         \n"
+		"     gom.err(self.buffer)                  \n"
+		"     self.buffer = str()                   \n"
+		"                                           \n"
+		"import sys                                 \n"
+		"sys.stdout = OutGraphiteStream()           \n"
+		"sys.stderr = ErrGraphiteStream()           \n"
+		"sys.displayhook = gom.out                  \n"
 	    );
 	}
 	Process::enable_FPE(FPE_bkp);

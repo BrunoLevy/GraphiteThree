@@ -2,7 +2,8 @@
 # "by-hand" computation of Hessian and gradient (almost fully in Python)
 # Version that exploit numpy array functions (much faster than naive version)
 
-import math, ctypes, datetime, numpy as np
+import math, ctypes, datetime
+import numpy as np
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 
@@ -43,8 +44,8 @@ class Transport:
     self.compute_Laguerre_diagram(self.psi)
 
     # Variables for Newton iteration (it is better to allocate them one for all)
-    self.b = np.ndarray(self.N, np.float64)        # right-hand side
-    self.p = np.ndarray(self.N, np.float64)        # Newton step
+    self.b = np.empty(self.N, np.float64) # right-hand side
+    self.p = np.empty(self.N, np.float64) # Newton step
 
     # Measure of whole domain, desired areas and minimum legal area (KMT #1)
     self.compute_Laguerre_cells_measures(self.b)   # b <- areas of Laguerre cells
@@ -113,7 +114,7 @@ class Transport:
       self.psi -= alpha * self.p
     main.unlock_updates() # show graphic updates (uncomment also this one)
 
-    worst_area_error = np.max(np.abs(self.b))
+    worst_area_error = np.linalg.norm(self.b, ord=np.inf) # L_infty norm of grad
     self.log('Worst cell area error = ',100.0 * worst_area_error / self.nu_i,'%')
     return worst_area_error
 
@@ -154,7 +155,7 @@ class Transport:
 
     # The coordinates of the seeds
     seeds_XY = np.asarray(self.seeds.I.Editor.find_attribute('vertices.point'))
-    diag = np.zeros(N,np.float64)        # Diagonal, initialized to zero
+    diag = np.zeros(self.N,np.float64)   # Diagonal, initialized to zero
     NO_INDEX = ctypes.c_uint32(-1).value # special value for Tadj: edge on border
 
 

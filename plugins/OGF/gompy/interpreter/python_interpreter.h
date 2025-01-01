@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_GOM_PYTHON_INTERPRETER_H
@@ -71,16 +71,16 @@ namespace OGF {
 	 * \brief PythonCallable destructor.
 	 */
          ~PythonCallable() override;
-	
+
     private:
 	struct _object* impl_;
     };
-    
-    
+
+
     /*****************************************************************/
-    
+
     /**
-     * \brief The main class that interfaces the Python interpreter 
+     * \brief The main class that interfaces the Python interpreter
      *  with Graphite.
      */
     gom_class gompy_API PythonInterpreter : public Interpreter {
@@ -89,7 +89,7 @@ namespace OGF {
          * \brief PythonInterpreter constructor.
          */
         PythonInterpreter();
-        
+
         /**
          * \brief PythonInterpreter destructor.
          */
@@ -99,7 +99,7 @@ namespace OGF {
 	 * \copydoc Interpreter::reset()
 	 */
 	void reset() override;
-	
+
         /**
          * \copydoc Interpreter::execute()
          */
@@ -107,7 +107,7 @@ namespace OGF {
             const std::string& command, bool save_in_history, bool log
         ) override;
 
-	
+
         /**
          * \copydoc Interpreter::execute_file()
          */
@@ -117,7 +117,7 @@ namespace OGF {
 	 * \copydoc Interpreter::bind()
 	 */
          void bind(const std::string& id, const Any& value) override;
-	
+
 	/**
 	 * \copydoc Interpreter::resolve()
 	 */
@@ -132,7 +132,7 @@ namespace OGF {
 
 	/**
 	 * \brief Displays a Python error message.
-	 * \details Removes the repetition of the source-code between 
+	 * \details Removes the repetition of the source-code between
 	 *  square brackets which is of little use to tue user.
 	 * \param[in] msg the error message to display.
 	 */
@@ -142,7 +142,7 @@ namespace OGF {
 	 * \copydoc Interpreter::list_names()
 	 */
         void list_names(std::vector<std::string>& names) const override;
-	
+
       protected:
 	/**
 	 * \copydoc Interpreter::get_keys()
@@ -154,9 +154,9 @@ namespace OGF {
       private:
 	struct _object* main_module_;
 	bool use_embedded_interpreter_;
-    }; 
+    };
 
-} 
+}
 
 
-#endif 
+#endif
