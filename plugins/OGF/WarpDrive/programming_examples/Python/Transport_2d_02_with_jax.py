@@ -18,6 +18,10 @@ N = 1000 # number of points, try 10000, 100000 (be ready to wait a bit)
 class Transport:
 
   def asarray(self,o):
+    """
+    @brief Accesses a GOM Vector as a jax array
+    @details Needed because GOM typing is not fully compliant with CPython
+    """
     tmp = np.asarray(o)
     return jnp.asarray(tmp)
 
@@ -55,14 +59,13 @@ class Transport:
     self.compute_Laguerre_diagram(self.psi)
 
     # Variables for Newton iteration (it is better to allocate them one for all)
-    self.b = jnp.empty(self.N, jnp.float64) # right-hand side
-    self.p = jnp.empty(self.N, jnp.float64) # Newton step
+    self.p = np.empty(self.N, np.float64) # Newton step
 
     # Measure of whole domain, desired areas and minimum legal area (KMT #1)
-    self.b = self.compute_Laguerre_cells_measures()   # b <- areas of Laguerre cells
+    self.b = self.compute_Laguerre_cells_measures() # b <- Laguerre cells areas
     self.Omega_measure = jnp.sum(self.b)            # Measure of the whole domain
-    self.nu_i = self.Omega_measure / self.N        # Desired area for each cell
-    self.area_threshold = 0.5 * min(jnp.min(self.b), self.nu_i) # KMT criterion #1
+    self.nu_i = self.Omega_measure / self.N         # Desired area for each cell
+    self.area_threshold = 0.5*min(jnp.min(self.b),self.nu_i) # KMT criterion  #1
 
     # Change graphic attributes of diagram
     self.Omega.visible=False
@@ -81,7 +84,7 @@ class Transport:
     threshold = self.nu_i * 0.01 # 1% of desired cell area
     while(self.one_iteration() > threshold):
       self.Laguerre.redraw()
-    self.log('Total elapsed time for OT:',datetime.datetime.now()-starttime)
+    self.log(f'Total elapsed time for OT: {datetime.datetime.now()-starttime}')
 
   def one_iteration(self):
     """
@@ -97,15 +100,17 @@ class Transport:
     self.b = self.nu_i - self.b
 
     g_norm = jnp.linalg.norm(self.b)  # norm of gradient at current step (KMT #2)
-    H.solve_symmetric(np.asarray(self.b),np.asarray(self.p)) # solve for p in Lp=b
+    H.solve_symmetric(                # solve for p in Lp=b
+      np.asarray(self.b),np.asarray(self.p)
+    )
 
-    alpha = 1.0                      # Steplength
-    self.psi += self.p            # Start with Newton step
+    alpha = 1.0         # Steplength
+    self.psi += self.p  # Start with Newton step
 
     # Divide steplength by 2 until both KMT criteria are satisfied
     main.lock_updates() # hide graphic updates (try this: uncomment + other one )
     for k in range(10):
-      self.log(' Substep: k=',k,'  alpha=',alpha)
+      self.log(f' Substep: k={k}')
 
       # rhs (- grad of Kantorovich dual) = actual measures - desired measures
       self.compute_Laguerre_diagram(self.psi)
@@ -117,8 +122,8 @@ class Transport:
       g_norm_k = jnp.linalg.norm(self.b)
       KMT_1 = (smallest_area > self.area_threshold)  # criterion 1: cell area
       KMT_2 = (g_norm_k <= (1.0-0.5*alpha) * g_norm) # criterion 2: gradient norm
-      self.log(' KMT #1 (area):',KMT_1,' ',smallest_area,'>',self.area_threshold)
-      self.log(' KMT #2 (grad):',KMT_2,' ',g_norm_k,'<=',(1.0-0.5*alpha)*g_norm)
+      self.log(f' KMT #1 (area): {KMT_1} {smallest_area}>{self.area_threshold}')
+      self.log(f' KMT #2 (grad): {KMT_2} {g_norm_k}<={(1.0-0.5*alpha)*g_norm}')
       if KMT_1 and KMT_2:
          break
 
@@ -126,8 +131,8 @@ class Transport:
       self.psi -= alpha * self.p
     main.unlock_updates() # show graphic updates (uncomment also this one)
 
-    worst_area_error = jnp.linalg.norm(self.b, ord=jnp.inf) # L_infty norm of grad
-    self.log('Worst cell area error = ',100.0 * worst_area_error / self.nu_i,'%')
+    worst_area_error = jnp.linalg.norm(self.b, ord=jnp.inf) # grad L_infty norm
+    self.log(f'Worst cell area error = {100.0 * worst_area_error / self.nu_i}%')
     return worst_area_error
 
   def compute_Laguerre_diagram(self, weights):
@@ -157,13 +162,13 @@ class Transport:
     # Triangle t's vertices indices are T[t][0], T[t][1], T[t][2]
     T = self.asarray(self.Laguerre.I.Editor.get_triangles())
 
-    Tadj = self.asarray( # Trgls adjacent to t: Tadj[t][0], Tadj[t][1], Tadj[t][2]
+    Tadj = self.asarray( # Trgls adjacent to t:Tadj[t][0], Tadj[t][1], Tadj[t][2]
       self.Laguerre.I.Editor.get_triangle_adjacents()
     )[:,[1,2,0]] # <- permute columns to match conventions for triangulations:
     # different in geogram meshes because they also support n-sided polygons
 
     # trgl_seed[t]: index of the seed s such that t is in s's Laguerre cell
-    trgl_seed = self.asarray(self.Laguerre.I.Editor.find_attribute('facets.chart'))
+    trgl_seed=self.asarray(self.Laguerre.I.Editor.find_attribute('facets.chart'))
 
     # The coordinates of the seeds
     seeds_XY = self.asarray(self.seeds.I.Editor.find_attribute('vertices.point'))
@@ -192,7 +197,7 @@ class Transport:
 
     qidx = qidx[qidx[:,1] != NO_INDEX]  # remove edges on border
     # qidx[:,1] = trgl_seed[qidx[:,1]]    # 1: adjacent seed index (j)
-    qidx = jnp.column_stack((qidx[:,0], trgl_seed[qidx[:,1]], qidx[:,2], qidx[:,3]))
+    qidx = jnp.column_stack((qidx[:,0],trgl_seed[qidx[:,1]],qidx[:,2],qidx[:,3]))
     qidx = qidx[qidx[:,0] != qidx[:,1]] # remove edges that stay in same cell
 
     I = qidx[:,0]  # get arrays of i's, j's, v1's and v2's.
@@ -204,10 +209,12 @@ class Transport:
     coeff = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
 
     # Accumumate coefficients into matrix
-    diag = jnp.add.at(diag,I,-coeff,inplace=False) # diag = minus sum extra-diagonal coeffs
-    H.add_coefficients(
+    diag=jnp.add.at(    # diagonal = minus sum extra-diagonal coefficients
+      diag,I,-coeff,inplace=False
+    )
+    H.add_coefficients( # accumulate coeffs into matrix
       np.asarray(I),np.asarray(J),np.asarray(coeff)
-    ) # accumulate coeffs into matrix
+    )
     H.add_coefficients_to_diagonal(np.asarray(diag)) # accumulate diag
     return H
 
@@ -220,9 +227,13 @@ class Transport:
     # See comments about XY,T,trgl_seed,nt in compute_Hessian()
     XY = self.asarray(self.Laguerre.I.Editor.get_points())
     T = self.asarray(self.Laguerre.I.Editor.get_triangles())
-    trgl_seed = self.asarray(self.Laguerre.I.Editor.find_attribute('facets.chart'))
+    trgl_seed = self.asarray(
+      self.Laguerre.I.Editor.find_attribute('facets.chart')
+    )
     measures = jnp.zeros(self.N, jnp.float64)
-    measures = jnp.add.at(measures, trgl_seed, self.triangle_area(XY,T), inplace=False)
+    measures = jnp.add.at(
+      measures, trgl_seed, self.triangle_area(XY,T), inplace=False
+    )
     return measures
 
   def triangle_area(self, XY, T):
