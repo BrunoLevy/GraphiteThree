@@ -18,7 +18,7 @@ from functools import partial
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 
-N = 30 # number of points, try 10000, 100000 (be ready to wait a bit)
+N = 1000 # number of points, try 10000, 100000 (be ready to wait a bit)
 
 class Transport:
 
@@ -29,7 +29,7 @@ class Transport:
     """
     tmp = np.asarray(o)
     dtype = tmp.dtype
-    if dtype == np.uint32: # change dtype because OOB indexing does not work with uint !
+    if dtype == np.uint32: # change dtype, OOB indexing does not work with uint !
         dtype = jnp.int32
     return jnp.asarray(tmp,dtype=dtype)
 
@@ -39,7 +39,7 @@ class Transport:
     @param[in] N number of points
     @param[in] shrink_points if set, group points in a small zone
     """
-    self.verbose = False
+    self.verbose = True
     self.N = N
 
     scene_graph.clear() # Delete all Graphite objects
@@ -183,30 +183,34 @@ class Transport:
 
     # There is one entry per triangle half-edge (3*nt entries)
     # I is the seed associated with the triangle
-    # J is the seed on the other side of the triangle's edge (can be -1 on border)
+    # J is the seed on the other side of the triangle's edge (NO_INDEX on border)
     # V1 and V2 are the two vertices of the triangle
     I  = self.asjax(self.Laguerre.I.Editor.find_attribute('facets.chart'))
-    J  = jnp.where(Tadj[:,:] != NO_INDEX, I[Tadj[:,:]], NO_INDEX).transpose().flatten()
+    J  = jnp.where( # Lookup seed on other side of edge, take border into account
+      Tadj[:,:] != NO_INDEX, I[Tadj[:,:]], NO_INDEX
+    ).transpose().flatten()
     I  = jnp.concatenate((I,I,I))
     V1 = jnp.concatenate((T[:,1], T[:,2], T[:,0]))
     V2 = jnp.concatenate((T[:,2], T[:,0], T[:,1]))
 
     # Now we can compute a vector of coefficient (note: V1,V2,I,J are vectors)
     coeff = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
-    coeff = jnp.where(
+    coeff = jnp.where( # Mask coefficients that correspond to border edges
       jnp.logical_and(I[:] != J[:], J[:] != NO_INDEX), coeff[:], 0.0
-    ) # Mask border edges
+    )
 
     # Accumumate coefficients into matrix and diagonal
     H.add_coefficients( # accumulate coeffs into matrix
       np.asarray(I),np.asarray(J),np.asarray(coeff),True #<- ignore_OOB
     )
 
-    diag = jnp.zeros(self.N,jnp.float64)     # Diagonal, initialized to zero
-    diag=jnp.add.at(                         # diagonal = minus sum extra-diagonal coefficients
+    self.log(f'----------- nb quadruplets={coeff.shape[0]}')
+
+    diag = jnp.zeros(self.N,jnp.float64) # Diagonal (initialized to zero)
+    diag=jnp.add.at(                     # =minus sum extra-diagonal coefficients
       diag,I,-coeff,inplace=False
     )
-    H.add_coefficients_to_diagonal(np.asarray(diag)) # accumulate diag
+    H.add_coefficients_to_diagonal(np.asarray(diag)) # accumulate diagonal into H
     return H
 
   def compute_Laguerre_cells_measures(self):
