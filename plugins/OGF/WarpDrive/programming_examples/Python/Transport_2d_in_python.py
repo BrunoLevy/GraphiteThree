@@ -70,7 +70,7 @@ class Transport:
     threshold = self.nu_i * 0.01 # 1% of desired cell area
     while(self.one_iteration() > threshold):
       self.Laguerre.redraw()
-    self.log('Total elapsed time for OT:',datetime.datetime.now()-starttime)
+    self.log(f'Total elapsed time for OT: {datetime.datetime.now()-starttime}')
 
   def one_iteration(self):
     """
@@ -93,7 +93,7 @@ class Transport:
     # Divide steplength by 2 until both KMT criteria are satisfied
     main.lock_updates() # hide graphic updates (try this: uncomment + other one )
     for k in range(10):
-      self.log(' Substep: k=',k,'  alpha=',alpha)
+      self.log(f' Substep: k={k}')
 
       # rhs (- grad of Kantorovich dual) = actual measures - desired measures
       self.compute_Laguerre_diagram(self.psi)
@@ -105,8 +105,8 @@ class Transport:
       g_norm_k = np.linalg.norm(self.b)
       KMT_1 = (smallest_area > self.area_threshold)  # criterion 1: cell area
       KMT_2 = (g_norm_k <= (1.0-0.5*alpha) * g_norm) # criterion 2: gradient norm
-      self.log(' KMT #1 (area):',KMT_1,' ',smallest_area,'>',self.area_threshold)
-      self.log(' KMT #2 (grad):',KMT_2,' ',g_norm_k,'<=',(1.0-0.5*alpha)*g_norm)
+      self.log(f' KMT #1 (area): {KMT_1} {smallest_area}>{self.area_threshold}')
+      self.log(f' KMT #2 (grad): {KMT_2} {g_norm_k}<={(1.0-0.5*alpha)*g_norm}')
       if KMT_1 and KMT_2:
          break
 
@@ -115,7 +115,7 @@ class Transport:
     main.unlock_updates() # show graphic updates (uncomment also this one)
 
     worst_area_error = np.linalg.norm(self.b, ord=np.inf) # L_infty norm of grad
-    self.log('Worst cell area error = ',100.0 * worst_area_error / self.nu_i,'%')
+    self.log(f'Worst cell area error = {100.0 * worst_area_error / self.nu_i}%')
     return worst_area_error
 
   def compute_Laguerre_diagram(self, weights: np.ndarray):
