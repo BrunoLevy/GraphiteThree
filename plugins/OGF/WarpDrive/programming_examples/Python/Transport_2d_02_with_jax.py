@@ -1,14 +1,16 @@
 # Tutorial on Optimal Transport
 # "by-hand" computation of Hessian and gradient (almost fully in Python)
 # Version that uses JAX
-
-# TODO: - use padding to have (nearly) same numbers of triangles / quadruplets,
-#         to avoid jax recompilation.
-#       - see how jax can cache compiled functions for various sizes
+# Note: slower than numpy version, because it recompiles functions whenever
+#  array sizes change !!
+# TODO: For triangle areas:
+#       - use padding
+#       - see how JAX can cache compiled functions for various sizes (because
+# number of triangles varies more wildy than number of quadruplets !!)
 
 
 import jax
-jax.config.update("jax_enable_x64", True)
+jax.config.update('jax_enable_x64', True)
 #jax.config.update('jax_disable_jit', True)
 
 import math, ctypes, datetime
@@ -19,20 +21,30 @@ from functools import partial
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 
-N = 1000 # number of points, try 10000, 100000 (be ready to wait a bit)
+N = 10000 # number of points, try 10000, 100000 (be ready to wait a bit)
 
 class Transport:
 
   def asjax(self,o):
     """
     @brief Accesses a GOM Vector as a jax array
-    @details Needed because GOM typing is not fully compliant with CPython
+    @details Needed because GOM typing is not fully compliant with CPython.
+       In addition pads data to reduce JAX recompiling.
     """
     tmp = np.asarray(o)
     dtype = tmp.dtype
     if dtype == np.uint32: # change dtype, OOB indexing does not work with uint !
         dtype = jnp.int32
-    return jnp.asarray(tmp,dtype=dtype)
+    tmp = jnp.asarray(tmp,dtype=dtype) # converted to JAX array
+    return tmp
+    # padding
+    #chunk_size = 128
+    #pad = chunk_size - (tmp.shape[0] % chunk_size)
+    #if tmp.ndim == 1:
+    #  return jnp.pad(tmp,(0,pad),constant_values=-1)
+    #else:
+    #  return jnp.pad(tmp,((0,pad),(0,0)),constant_values=-1)
+
 
   def __init__(self, N: int, shrink_points: bool):
     """
@@ -40,7 +52,7 @@ class Transport:
     @param[in] N number of points
     @param[in] shrink_points if set, group points in a small zone
     """
-    self.verbose = True
+    self.verbose = False
     self.N = N
 
     scene_graph.clear() # Delete all Graphite objects
@@ -93,7 +105,7 @@ class Transport:
     threshold = self.nu_i * 0.01 # 1% of desired cell area
     while(self.one_iteration() > threshold):
       self.Laguerre.redraw()
-    self.log(f'Total elapsed time for OT: {datetime.datetime.now()-starttime}')
+    print(f'Total elapsed time for OT: {datetime.datetime.now()-starttime}')
 
   def one_iteration(self):
     """
@@ -176,13 +188,20 @@ class Transport:
     )[:,[1,2,0]] # <- permute columns to match conventions for triangulations:
     # different in geogram meshes because they also support n-sided polygons
 
+    Tseed = self.asjax(self.Laguerre.I.Editor.find_attribute('facets.chart'))
 
     # The coordinates of the seeds
     seeds_XY = self.asjax(self.seeds.I.Editor.find_attribute('vertices.point'))
 
-    self.log(f'=====> nb quadruplets = {T.shape[0]*3}')
-
-    I,J,coeff = self.assemble_Hessian(XY,T, Tadj, seeds_XY)
+    #self.log(f'=====> nb quadruplets = {T.shape[0]*3}')
+    # pad all arrays to avoid recompiling assemble_Hessian() too often
+    XY       = self.pad(XY)
+    T        = self.pad(T)
+    Tadj     = self.pad(Tadj)
+    Tseed    = self.pad(Tseed)
+    seeds_XY = self.pad(seeds_XY)
+    self.log(f'=====> nb quadruplets (padded) = {T.shape[0]*3}')
+    I,J,coeff = self.assemble_Hessian(XY, T, Tadj, Tseed, seeds_XY)
 
     # Accumumate coefficients into matrix and diagonal
     H.add_coefficients( # accumulate coeffs into matrix
@@ -196,9 +215,17 @@ class Transport:
     H.add_coefficients_to_diagonal(np.asarray(diag)) # accumulate diagonal into H
     return H
 
+  def pad(self, M):
+    chunk_size = 128
+    pad = chunk_size - (M.shape[0] % chunk_size)
+    if M.ndim == 1:
+      return jnp.pad(M,(0,pad),constant_values=-1)
+    else:
+      return jnp.pad(M,((0,pad),(0,0)),constant_values=-1)
+
   @partial(jit, static_argnums=(0,))
-  def assemble_Hessian(self, XY, T, Tadj, seeds_XY):
-    self.log(f'=====> recompiling {type(XY)}')
+  def assemble_Hessian(self, XY, T, Tadj, Tseed, seeds_XY):
+    self.log(f'=====> recompiling assemble_Hessian() {type(XY)}')
 
     NO_INDEX = -1 # Special value for invalid indices (edge on border)
 
@@ -206,7 +233,7 @@ class Transport:
     # I is the seed associated with the triangle
     # J is the seed on the other side of the triangle's edge (NO_INDEX on border)
     # V1 and V2 are the two vertices of the triangle
-    I  = self.asjax(self.Laguerre.I.Editor.find_attribute('facets.chart'))
+    I = Tseed
     J  = Tadj.transpose().flatten()
     J  = jnp.where(J[:] != NO_INDEX, I[J], NO_INDEX) # lookup seed on other side
     I  = jnp.concatenate((I,I,I))
@@ -235,13 +262,14 @@ class Transport:
 
   @partial(jit, static_argnums=(0,))
   def triangles_areas(self, XY, T, Tseed):
-    self.log(f'=====> recompiling {type(XY)}')
+    self.log(f'=====> recompiling triangle_areas() {type(XY)}')
     V1 = T[:,0]
     V2 = T[:,1]
     V3 = T[:,2]
     U = XY[V2] - XY[V1]
     V = XY[V3] - XY[V1]
     Tareas = jnp.abs(0.5*(U[:,0]*V[:,1] - U[:,1]*V[:,0]))
+    Tareas = jnp.where(T[:,0] != -1, Tareas[:], 0.0) # Mask padding
     areas = jnp.zeros(self.N, jnp.float64)
     areas = jnp.add.at(areas, Tseed, Tareas, inplace=False)
     return areas
