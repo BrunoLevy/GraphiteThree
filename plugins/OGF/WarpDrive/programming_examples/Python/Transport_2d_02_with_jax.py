@@ -36,14 +36,13 @@ class Transport:
     if dtype == np.uint32: # change dtype, OOB indexing does not work with uint !
         dtype = jnp.int32
     tmp = jnp.asarray(tmp,dtype=dtype) # converted to JAX array
-    return self.pad(tmp)
     # padding
-    #chunk_size = 128
-    #pad = chunk_size - (tmp.shape[0] % chunk_size)
-    #if tmp.ndim == 1:
-    #  return jnp.pad(tmp,(0,pad),constant_values=-1)
-    #else:
-    #  return jnp.pad(tmp,((0,pad),(0,0)),constant_values=-1)
+    chunk_size = 128
+    pad = chunk_size - (tmp.shape[0] % chunk_size)
+    if tmp.ndim == 1:
+      return jnp.pad(tmp,(0,pad),constant_values=-1)
+    else:
+      return jnp.pad(tmp,((0,pad),(0,0)),constant_values=-1)
 
 
   def __init__(self, N: int, shrink_points: bool):
@@ -216,14 +215,6 @@ class Transport:
     H.add_coefficients_to_diagonal(np.asarray(diag)) # accumulate diagonal into H
     return H
 
-  def pad(self, M):
-    chunk_size = 128
-    pad = chunk_size - (M.shape[0] % chunk_size)
-    if M.ndim == 1:
-      return jnp.pad(M,(0,pad),constant_values=-1)
-    else:
-      return jnp.pad(M,((0,pad),(0,0)),constant_values=-1)
-
   @partial(jit, static_argnums=(0,))
   def assemble_Hessian(self, XY, T, Tadj, Tseed, seeds_XY):
     self.log(f'=====> recompiling assemble_Hessian() {type(XY)}')
@@ -234,7 +225,7 @@ class Transport:
     # I is the seed associated with the triangle
     # J is the seed on the other side of the triangle's edge (NO_INDEX on border)
     # V1 and V2 are the two vertices of the triangle
-    I = Tseed
+    I  = Tseed
     J  = Tadj.transpose().flatten()
     J  = jnp.where(J[:] != NO_INDEX, I[J], NO_INDEX) # lookup seed on other side
     I  = jnp.concatenate((I,I,I))
@@ -261,13 +252,14 @@ class Transport:
   @partial(jit, static_argnums=(0,))
   def triangles_areas(self, XY, T, Tseed):
     self.log(f'=====> recompiling triangle_areas() {type(XY)}')
+    NO_INDEX=-1
     V1 = T[:,0]
     V2 = T[:,1]
     V3 = T[:,2]
     U = XY[V2] - XY[V1]
     V = XY[V3] - XY[V1]
     Tareas = jnp.abs(0.5*(U[:,0]*V[:,1] - U[:,1]*V[:,0]))
-    Tareas = jnp.where(T[:,0] != -1, Tareas[:], 0.0) # Mask padding
+    Tareas = jnp.where(T[:,0] != NO_INDEX, Tareas[:], 0.0) # Mask padding
     areas = jnp.zeros(self.N, jnp.float64)
     areas = jnp.add.at(areas, Tseed, Tareas, inplace=False)
     return areas
