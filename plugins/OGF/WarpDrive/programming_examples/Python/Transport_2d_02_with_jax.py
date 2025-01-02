@@ -36,7 +36,7 @@ class Transport:
     if dtype == np.uint32: # change dtype, OOB indexing does not work with uint !
         dtype = jnp.int32
     tmp = jnp.asarray(tmp,dtype=dtype) # converted to JAX array
-    return tmp
+    return self.pad(tmp)
     # padding
     #chunk_size = 128
     #pad = chunk_size - (tmp.shape[0] % chunk_size)
@@ -91,6 +91,11 @@ class Transport:
     # Change graphic attributes of diagram
     self.Omega.visible=False
     self.show()
+
+    # The coordinates of the seeds
+    self.seeds_XY = self.asjax(
+      self.seeds.I.Editor.find_attribute('vertices.point')
+    )
 
     # Make Graphite's logger less verbose (so that we can better see our logs)
     gom.set_environment_value('log:features_exclude','Validate;timings')
@@ -168,6 +173,18 @@ class Transport:
     self.Laguerre.I.Surface.triangulate()
     self.Laguerre.I.Surface.merge_vertices(1e-10)
 
+    # vertex v's coords are XY[v][0], XY[v][1]
+    self.XY = self.asjax(self.Laguerre.I.Editor.get_points())
+
+    # Triangle t's vertices indices are T[t][0], T[t][1], T[t][2]
+    self.T = self.asjax(self.Laguerre.I.Editor.get_triangles())
+
+    # Triangle t bebongs to Laguerre cell of seed Tseed[t]
+    self.Tseed = self.asjax(
+      self.Laguerre.I.Editor.find_attribute('facets.chart')
+    )
+
+
   def compute_Hessian(self):
     """
     @brief Computes the matrix of the system to be solved at each Newton step
@@ -177,31 +194,15 @@ class Transport:
 
     H = NL.create_matrix(self.N,self.N) # Creates a sparse matrix using OpenNL
 
-    # vertex v's coords are XY[v][0], XY[v][1]
-    XY = self.asjax(self.Laguerre.I.Editor.get_points())
-
-    # Triangle t's vertices indices are T[t][0], T[t][1], T[t][2]
-    T = self.asjax(self.Laguerre.I.Editor.get_triangles())
-
     Tadj = self.asjax( # Trgls adjacent to t:Tadj[t][0], Tadj[t][1], Tadj[t][2]
       self.Laguerre.I.Editor.get_triangle_adjacents()
     )[:,[1,2,0]] # <- permute columns to match conventions for triangulations:
     # different in geogram meshes because they also support n-sided polygons
 
-    Tseed = self.asjax(self.Laguerre.I.Editor.find_attribute('facets.chart'))
-
-    # The coordinates of the seeds
-    seeds_XY = self.asjax(self.seeds.I.Editor.find_attribute('vertices.point'))
-
-    #self.log(f'=====> nb quadruplets = {T.shape[0]*3}')
-    # pad all arrays to avoid recompiling assemble_Hessian() too often
-    XY       = self.pad(XY)
-    T        = self.pad(T)
-    Tadj     = self.pad(Tadj)
-    Tseed    = self.pad(Tseed)
-    seeds_XY = self.pad(seeds_XY)
-    self.log(f'=====> nb quadruplets (padded) = {T.shape[0]*3}')
-    I,J,coeff = self.assemble_Hessian(XY, T, Tadj, Tseed, seeds_XY)
+    self.log(f'=====> nb quadruplets = {self.T.shape[0]*3}')
+    I,J,coeff = self.assemble_Hessian(
+      self.XY, self.T, Tadj, self.Tseed, self.seeds_XY
+    )
 
     # Accumumate coefficients into matrix and diagonal
     H.add_coefficients( # accumulate coeffs into matrix
@@ -253,12 +254,9 @@ class Transport:
     @return the vector of Laguerre cells measures
     @details Uses the current Laguerre diagram (in self.Laguerre)
     """
-    # See comments about XY,T,trgl_seed,nt in compute_Hessian()
-    XY = self.asjax(self.Laguerre.I.Editor.get_points())
-    T = self.asjax(self.Laguerre.I.Editor.get_triangles())
-    trgl_seed = self.asjax(self.Laguerre.I.Editor.find_attribute('facets.chart'))
-    self.log(f'=====> nb triangles = {T.shape[0]}')
-    return self.triangles_areas(XY, T, trgl_seed)
+    # See comments about XY,T,trgl_seed,nt in compute_Laguerre_diagram()
+    self.log(f'=====> nb triangles = {self.T.shape[0]}')
+    return self.triangles_areas(self.XY, self.T, self.Tseed)
 
   @partial(jit, static_argnums=(0,))
   def triangles_areas(self, XY, T, Tseed):
