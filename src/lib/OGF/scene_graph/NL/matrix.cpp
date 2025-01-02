@@ -165,7 +165,7 @@ namespace OGF {
 
 
 	void Matrix::add_coefficients(
-	    const Vector* I, const Vector* J, const Vector* A
+	    const Vector* I, const Vector* J, const Vector* A, bool ignore_OOB
 	) {
 	    if(
 		I->get_element_meta_type()!=ogf_meta<Numeric::uint32>::type() &&
@@ -225,24 +225,38 @@ namespace OGF {
 	    const index_t* p_j = reinterpret_cast<index_t*>(J->data());
 	    const double*  p_a = A->data_double();
 
-	    for(index_t k=0; k<I->nb_elements(); ++k) {
-		if(
-		    p_i[k] >= index_t(impl_->m) ||
-		    p_j[k] >= index_t(impl_->n)
-		) {
-		    Logger::err("NL")
-			<< "Matrix(" << impl_->m << "," << impl_->n
-			<< ")::add_coefficients()"
-			<< " coefficient larger than matrix size"
-			<< std::endl;
-		    return;
+	    if(ignore_OOB) {
+		for(index_t k=0; k<I->nb_elements(); ++k) {
+		    if(
+			p_i[k] >= index_t(impl_->m) ||
+			p_j[k] >= index_t(impl_->n)
+		    ) {
+			continue;
+		    }
+		    nlSparseMatrixAdd(
+			(NLSparseMatrix*)(impl_), p_i[k], p_j[k], p_a[k]
+		    );
 		}
-	    }
+	    } else {
+		for(index_t k=0; k<I->nb_elements(); ++k) {
+		    if(
+			p_i[k] >= index_t(impl_->m) ||
+			p_j[k] >= index_t(impl_->n)
+		    ) {
+			Logger::err("NL")
+			    << "Matrix(" << impl_->m << "," << impl_->n
+			    << ")::add_coefficients()"
+			    << " coefficient larger than matrix size"
+			    << std::endl;
+			return;
+		    }
+		}
 
-	    for(index_t k=0; k<I->nb_elements(); ++k) {
-		nlSparseMatrixAdd(
-		    (NLSparseMatrix*)(impl_), p_i[k], p_j[k], p_a[k]
-		);
+		for(index_t k=0; k<I->nb_elements(); ++k) {
+		    nlSparseMatrixAdd(
+			(NLSparseMatrix*)(impl_), p_i[k], p_j[k], p_a[k]
+		    );
+		}
 	    }
 	}
 

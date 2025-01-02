@@ -18,7 +18,7 @@ from functools import partial
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 
-N = 1000 # number of points, try 10000, 100000 (be ready to wait a bit)
+N = 30 # number of points, try 10000, 100000 (be ready to wait a bit)
 
 class Transport:
 
@@ -28,7 +28,10 @@ class Transport:
     @details Needed because GOM typing is not fully compliant with CPython
     """
     tmp = np.asarray(o)
-    return jnp.asarray(tmp)
+    dtype = tmp.dtype
+    if dtype == np.uint32: # change dtype because OOB indexing does not work with uint !
+        dtype = jnp.int32
+    return jnp.asarray(tmp,dtype=dtype)
 
   def __init__(self, N: int, shrink_points: bool):
     """
@@ -172,53 +175,36 @@ class Transport:
     )[:,[1,2,0]] # <- permute columns to match conventions for triangulations:
     # different in geogram meshes because they also support n-sided polygons
 
-    # trgl_seed[t]: index of the seed s such that t is in s's Laguerre cell
-    trgl_seed=self.asjax(self.Laguerre.I.Editor.find_attribute('facets.chart'))
 
     # The coordinates of the seeds
     seeds_XY = self.asjax(self.seeds.I.Editor.find_attribute('vertices.point'))
-    diag = jnp.zeros(self.N,jnp.float64)   # Diagonal, initialized to zero
-    NO_INDEX = ctypes.c_uint32(-1).value # special value for Tadj: edge on border
 
+    NO_INDEX = -1 # Special value for invalid indices (edge on border)
 
-    # Create a qidx (quad index) array that encodes for each triangle edge e:
-    #   [ i, j, v1, v2 ] where:
-    #     i: seed index
-    #     j: adjacent seed index (Laguerre cell on the other side of e)
-    #     v1, v2: vertices of the triangle edge e
-    # We assemble them in the same array so that we can remove the entries
-    # that we do not want (triangle edges on the border of Omega, and triangle
-    # edges that stay in the same Laguerre cell).
-
-    qidx = jnp.column_stack((trgl_seed, Tadj[:,0], T[:,1], T[:,2],
-                            trgl_seed, Tadj[:,1], T[:,2], T[:,0],
-                            trgl_seed, Tadj[:,2], T[:,0], T[:,1]))
-    #                           |         |        |       |
-    #    0: seed index (i) -----'         |        '---+---'
-    #    1: adj trgl accross e (for now) -'            |
-    #    2,3: triangle edge (dual to Voronoi) ---------'
-
-    qidx = qidx.reshape(-1,4) # reshape from (nt,12) to ((3*nt),4)
-
-    qidx = qidx[qidx[:,1] != NO_INDEX]  # remove edges on border
-    # qidx[:,1] = trgl_seed[qidx[:,1]]    # 1: adjacent seed index (j)
-    qidx = jnp.column_stack((qidx[:,0],trgl_seed[qidx[:,1]],qidx[:,2],qidx[:,3]))
-    qidx = qidx[qidx[:,0] != qidx[:,1]] # remove edges that stay in same cell
-
-    I = qidx[:,0]  # get arrays of i's, j's, v1's and v2's.
-    J = qidx[:,1]
-    V1 = qidx[:,2]
-    V2 = qidx[:,3]
+    # There is one entry per triangle half-edge (3*nt entries)
+    # I is the seed associated with the triangle
+    # J is the seed on the other side of the triangle's edge (can be -1 on border)
+    # V1 and V2 are the two vertices of the triangle
+    I  = self.asjax(self.Laguerre.I.Editor.find_attribute('facets.chart'))
+    J  = jnp.where(Tadj[:,:] != NO_INDEX, I[Tadj[:,:]], NO_INDEX).transpose().flatten()
+    I  = jnp.concatenate((I,I,I))
+    V1 = jnp.concatenate((T[:,1], T[:,2], T[:,0]))
+    V2 = jnp.concatenate((T[:,2], T[:,0], T[:,1]))
 
     # Now we can compute a vector of coefficient (note: V1,V2,I,J are vectors)
     coeff = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
+    coeff = jnp.where(
+      jnp.logical_and(I[:] != J[:], J[:] != NO_INDEX), coeff[:], 0.0
+    ) # Mask border edges
 
-    # Accumumate coefficients into matrix
-    diag=jnp.add.at(    # diagonal = minus sum extra-diagonal coefficients
-      diag,I,-coeff,inplace=False
-    )
+    # Accumumate coefficients into matrix and diagonal
     H.add_coefficients( # accumulate coeffs into matrix
-      np.asarray(I),np.asarray(J),np.asarray(coeff)
+      np.asarray(I),np.asarray(J),np.asarray(coeff),True #<- ignore_OOB
+    )
+
+    diag = jnp.zeros(self.N,jnp.float64)     # Diagonal, initialized to zero
+    diag=jnp.add.at(                         # diagonal = minus sum extra-diagonal coefficients
+      diag,I,-coeff,inplace=False
     )
     H.add_coefficients_to_diagonal(np.asarray(diag)) # accumulate diag
     return H

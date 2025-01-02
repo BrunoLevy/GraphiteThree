@@ -124,9 +124,12 @@ namespace OGF {
 	     * \param[in] I vector of row indices, should be integers
 	     * \param[in] J vector of column indices, should be integers
 	     * \param[in] A vector of values to be added, should be doubles
+	     * \param[in] ignore_OOB if set, ignores out-of-bound indices,
+	     *  else reports errors on out-of-bound indices.
 	     */
 	    void add_coefficients(
-		const Vector* I, const Vector* J, const Vector* A
+		const Vector* I, const Vector* J, const Vector* A,
+		bool ignore_OOB = false
 	    );
 
 	    /**
