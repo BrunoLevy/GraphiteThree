@@ -1,8 +1,14 @@
 # Tutorial on Optimal Transport
 # "by-hand" computation of Hessian and gradient (almost fully in Python)
-# Version that exploit numpy array functions (much faster than naive version)
+# Version that uses JAX
+# Note: slower than Transport_2d_in_python.py based on plain numpy,
+# to be investigated...
+
+import jax
+jax.config.update("jax_enable_x64", True)
 
 import math, ctypes, datetime
+import jax.numpy as jnp
 import numpy as np
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
@@ -10,6 +16,10 @@ OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 N = 1000 # number of points, try 10000, 100000 (be ready to wait a bit)
 
 class Transport:
+
+  def asarray(self,o):
+    tmp = np.asarray(o)
+    return jnp.asarray(tmp)
 
   def __init__(self, N: int, shrink_points: bool):
     """
@@ -27,6 +37,7 @@ class Transport:
     self.Omega.I.Shapes.create_quad()
     # self.Omega.I.Shapes.create_ngon(nb_edges=300) # try this instead of square
     self.Omega.I.Surface.triangulate()
+    self.Omega.visible = False
 
     # Create points (random sampling of Omega)
     self.Omega.I.Points.sample_surface(nb_points=N,Lloyd_iter=0,Newton_iter=0)
@@ -40,18 +51,18 @@ class Transport:
 
     # Compute Laguerre diagram
     self.Laguerre = scene_graph.create_object(OGF.MeshGrob,'Laguerre')
-    self.psi = np.zeros(self.N,np.float64)
+    self.psi = jnp.zeros(self.N,jnp.float64)
     self.compute_Laguerre_diagram(self.psi)
 
     # Variables for Newton iteration (it is better to allocate them one for all)
-    self.b = np.empty(self.N, np.float64) # right-hand side
-    self.p = np.empty(self.N, np.float64) # Newton step
+    self.b = jnp.empty(self.N, jnp.float64) # right-hand side
+    self.p = jnp.empty(self.N, jnp.float64) # Newton step
 
     # Measure of whole domain, desired areas and minimum legal area (KMT #1)
-    self.compute_Laguerre_cells_measures(self.b)   # b <- areas of Laguerre cells
-    self.Omega_measure = np.sum(self.b)            # Measure of the whole domain
+    self.b = self.compute_Laguerre_cells_measures()   # b <- areas of Laguerre cells
+    self.Omega_measure = jnp.sum(self.b)            # Measure of the whole domain
     self.nu_i = self.Omega_measure / self.N        # Desired area for each cell
-    self.area_threshold = 0.5 * min(np.min(self.b), self.nu_i) # KMT criterion #1
+    self.area_threshold = 0.5 * min(jnp.min(self.b), self.nu_i) # KMT criterion #1
 
     # Change graphic attributes of diagram
     self.Omega.visible=False
@@ -82,11 +93,12 @@ class Transport:
     H = self.compute_Hessian() # Hessian of Kantorovich dual (sparse matrix)
 
     # rhs (minus gradient of Kantorovich dual) = desired areas - actual areas
-    self.compute_Laguerre_cells_measures(self.b)
-    self.b[:] = self.nu_i - self.b
+    self.b = self.compute_Laguerre_cells_measures()
+    self.b = self.nu_i - self.b
 
-    g_norm = np.linalg.norm(self.b)  # norm of gradient at current step (KMT #2)
-    H.solve_symmetric(self.b,self.p) # solve for p in Lp=b
+    g_norm = jnp.linalg.norm(self.b)  # norm of gradient at current step (KMT #2)
+    H.solve_symmetric(np.asarray(self.b),np.asarray(self.p)) # solve for p in Lp=b
+
     alpha = 1.0                      # Steplength
     self.psi += self.p            # Start with Newton step
 
@@ -97,12 +109,12 @@ class Transport:
 
       # rhs (- grad of Kantorovich dual) = actual measures - desired measures
       self.compute_Laguerre_diagram(self.psi)
-      self.compute_Laguerre_cells_measures(self.b)
-      smallest_area = np.min(self.b) # for KMT criterion 1
+      self.b = self.compute_Laguerre_cells_measures()
+      smallest_area = jnp.min(self.b) # for KMT criterion 1
       self.b -= self.nu_i
 
       # Check KMT criteria #1 (cell area) and #2 (gradient norm)
-      g_norm_k = np.linalg.norm(self.b)
+      g_norm_k = jnp.linalg.norm(self.b)
       KMT_1 = (smallest_area > self.area_threshold)  # criterion 1: cell area
       KMT_2 = (g_norm_k <= (1.0-0.5*alpha) * g_norm) # criterion 2: gradient norm
       self.log(' KMT #1 (area):',KMT_1,' ',smallest_area,'>',self.area_threshold)
@@ -114,17 +126,17 @@ class Transport:
       self.psi -= alpha * self.p
     main.unlock_updates() # show graphic updates (uncomment also this one)
 
-    worst_area_error = np.linalg.norm(self.b, ord=np.inf) # L_infty norm of grad
+    worst_area_error = jnp.linalg.norm(self.b, ord=jnp.inf) # L_infty norm of grad
     self.log('Worst cell area error = ',100.0 * worst_area_error / self.nu_i,'%')
     return worst_area_error
 
-  def compute_Laguerre_diagram(self, weights: np.ndarray):
+  def compute_Laguerre_diagram(self, weights):
     """
     @brief Computes a Laguerre diagram from a weight vector
     @param[in] weights the weights vector
     """
     self.seeds.I.Transport.compute_Laguerre_diagram(
-      self.Omega, weights, self.Laguerre, 'EULER_2D'
+      self.Omega, np.asarray(weights), self.Laguerre, 'EULER_2D'
     )
     self.Laguerre.update()
     self.Laguerre.I.Surface.triangulate()
@@ -140,22 +152,22 @@ class Transport:
     H = NL.create_matrix(self.N,self.N) # Creates a sparse matrix using OpenNL
 
     # vertex v's coords are XY[v][0], XY[v][1]
-    XY = np.asarray(self.Laguerre.I.Editor.get_points())
+    XY = self.asarray(self.Laguerre.I.Editor.get_points())
 
     # Triangle t's vertices indices are T[t][0], T[t][1], T[t][2]
-    T = np.asarray(self.Laguerre.I.Editor.get_triangles())
+    T = self.asarray(self.Laguerre.I.Editor.get_triangles())
 
-    Tadj = np.asarray( # Trgls adjacent to t: Tadj[t][0], Tadj[t][1], Tadj[t][2]
+    Tadj = self.asarray( # Trgls adjacent to t: Tadj[t][0], Tadj[t][1], Tadj[t][2]
       self.Laguerre.I.Editor.get_triangle_adjacents()
     )[:,[1,2,0]] # <- permute columns to match conventions for triangulations:
     # different in geogram meshes because they also support n-sided polygons
 
     # trgl_seed[t]: index of the seed s such that t is in s's Laguerre cell
-    trgl_seed = np.asarray(self.Laguerre.I.Editor.find_attribute('facets.chart'))
+    trgl_seed = self.asarray(self.Laguerre.I.Editor.find_attribute('facets.chart'))
 
     # The coordinates of the seeds
-    seeds_XY = np.asarray(self.seeds.I.Editor.find_attribute('vertices.point'))
-    diag = np.zeros(self.N,np.float64)   # Diagonal, initialized to zero
+    seeds_XY = self.asarray(self.seeds.I.Editor.find_attribute('vertices.point'))
+    diag = jnp.zeros(self.N,jnp.float64)   # Diagonal, initialized to zero
     NO_INDEX = ctypes.c_uint32(-1).value # special value for Tadj: edge on border
 
 
@@ -168,7 +180,7 @@ class Transport:
     # that we do not want (triangle edges on the border of Omega, and triangle
     # edges that stay in the same Laguerre cell).
 
-    qidx = np.column_stack((trgl_seed, Tadj[:,0], T[:,1], T[:,2],
+    qidx = jnp.column_stack((trgl_seed, Tadj[:,0], T[:,1], T[:,2],
                             trgl_seed, Tadj[:,1], T[:,2], T[:,0],
                             trgl_seed, Tadj[:,2], T[:,0], T[:,1]))
     #                           |         |        |       |
@@ -179,35 +191,39 @@ class Transport:
     qidx = qidx.reshape(-1,4) # reshape from (nt,12) to ((3*nt),4)
 
     qidx = qidx[qidx[:,1] != NO_INDEX]  # remove edges on border
-    qidx[:,1] = trgl_seed[qidx[:,1]]    # 1: adjacent seed index (j)
+    # qidx[:,1] = trgl_seed[qidx[:,1]]    # 1: adjacent seed index (j)
+    qidx = jnp.column_stack((qidx[:,0], trgl_seed[qidx[:,1]], qidx[:,2], qidx[:,3]))
     qidx = qidx[qidx[:,0] != qidx[:,1]] # remove edges that stay in same cell
 
-    I = qidx[:,0].copy()  # get arrays of i's, j's, v1's and v2's.
-    J = qidx[:,1].copy()  # We need to copy I and J to have contiguous arrays
-    V1 = qidx[:,2]        # (H.add_coefficients() requires that).
+    I = qidx[:,0]  # get arrays of i's, j's, v1's and v2's.
+    J = qidx[:,1]
+    V1 = qidx[:,2]
     V2 = qidx[:,3]
 
     # Now we can compute a vector of coefficient (note: V1,V2,I,J are vectors)
     coeff = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
 
     # Accumumate coefficients into matrix
-    np.add.at(diag,I,-coeff)             # diag = minus sum extra-diagonal coeffs
-    H.add_coefficients(I,J,coeff)        # accumulate coeffs into matrix
-    H.add_coefficients_to_diagonal(diag) # accumulate diag
+    diag = jnp.add.at(diag,I,-coeff,inplace=False) # diag = minus sum extra-diagonal coeffs
+    H.add_coefficients(
+      np.asarray(I),np.asarray(J),np.asarray(coeff)
+    ) # accumulate coeffs into matrix
+    H.add_coefficients_to_diagonal(np.asarray(diag)) # accumulate diag
     return H
 
-  def compute_Laguerre_cells_measures(self, measures: np.ndarray):
+  def compute_Laguerre_cells_measures(self):
     """
     @brief Computes the measures of the Laguerre cells
-    @out measures: the vector of Laguerre cells measures
+    @return the vector of Laguerre cells measures
     @details Uses the current Laguerre diagram (in self.Laguerre)
     """
     # See comments about XY,T,trgl_seed,nt in compute_Hessian()
-    XY = np.asarray(self.Laguerre.I.Editor.get_points())
-    T = np.asarray(self.Laguerre.I.Editor.get_triangles())
-    trgl_seed = np.asarray(self.Laguerre.I.Editor.find_attribute('facets.chart'))
-    measures[:] = 0
-    np.add.at(measures, trgl_seed, self.triangle_area(XY,T))
+    XY = self.asarray(self.Laguerre.I.Editor.get_points())
+    T = self.asarray(self.Laguerre.I.Editor.get_triangles())
+    trgl_seed = self.asarray(self.Laguerre.I.Editor.find_attribute('facets.chart'))
+    measures = jnp.zeros(self.N, jnp.float64)
+    measures = jnp.add.at(measures, trgl_seed, self.triangle_area(XY,T), inplace=False)
+    return measures
 
   def triangle_area(self, XY, T):
     """
@@ -223,7 +239,7 @@ class Transport:
     v3 = T[...,2]
     U = XY[v2] - XY[v1]
     V = XY[v3] - XY[v1]
-    return np.abs(0.5*(U[...,0]*V[...,1] - U[...,1]*V[...,0]))
+    return jnp.abs(0.5*(U[...,0]*V[...,1] - U[...,1]*V[...,0]))
 
   def distance(self, XY, v1, v2):
     """
@@ -233,7 +249,7 @@ class Transport:
     @details v1 and v2 can be also arrays (then returns the array of distances).
     """
     axis = v1.ndim if hasattr(v1,'ndim') else 0
-    return np.linalg.norm(XY[v2]-XY[v1],axis=axis)
+    return jnp.linalg.norm(XY[v2]-XY[v1],axis=axis)
 
   def show(self):
     """

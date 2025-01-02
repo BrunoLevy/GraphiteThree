@@ -684,52 +684,6 @@ namespace {
 	return result;
     }
 
-    // TEMP TEST
-    PyObject* graphite_array_inspect(PyObject* self_in, PyObject* pyobject_in) {
-        geo_argused(self_in);
-	geo_argused(pyobject_in);
-        Logger::out("GOM") << "Test Numpy array interop" << std::endl;
-
-        if(PyObject_HasAttrString(pyobject_in,"__array_struct__")) {
-            Logger::out("GOM") << "  has __array_struct__ attribute"
-                               << std::endl;
-            PyObject* capsule = PyObject_GetAttrString(
-                pyobject_in,"__array_struct__"
-            );
-            Py_INCREF(capsule);
-            if(PyCapsule_CheckExact(capsule)) {
-                Logger::out("GOM") << "  it is a capsule, good !" << std::endl;
-
-                void* ptr = PyCapsule_GetPointer(capsule,nullptr);
-                geo_assert(ptr != nullptr);
-                PyArrayInterface* array_interface =
-                    static_cast<PyArrayInterface*>(ptr);
-
-                if(array_interface == nullptr) {
-                    Logger::out("GOM") << "   array interface is null"
-                                       << std::endl;
-                } else {
-                    Logger::out("GOM")
-                        << "--array interface--" << std::endl
-                        << "      two: " << array_interface->two << std::endl
-                        << "       nd: " << array_interface->nd  << std::endl
-                        << " typekind: " << array_interface->typekind
-                        << std::endl
-                        << "    flags: " << array_interface->flags << std::endl
-                        << std::endl;
-                }
-            } else {
-                Logger::out("GOM") << "No capsule found" << std::endl;
-            }
-            Py_DECREF(capsule);
-        } else {
-            Logger::out("GOM") << "No __array_struct__" << std::endl;
-        }
-        Py_INCREF(Py_None);
-        return Py_None;
-    }
-
-
     /**
      * \brief Methods definition for Python wrapper around Graphite object.
      */
@@ -740,12 +694,6 @@ namespace {
 	    METH_NOARGS,
 	    "Implementation of dir() for Graphite objects"
 	},
-        {
-            "array_inspect",
-            graphite_array_inspect,
-            METH_O,
-            "Inspect NumPy arrays (test)"
-        }, // TEMP TEST
         {
             nullptr, /* ml_name */
             nullptr, /* ml_meth */
