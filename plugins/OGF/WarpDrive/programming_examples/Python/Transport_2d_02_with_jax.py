@@ -1,15 +1,20 @@
 # Tutorial on Optimal Transport
 # "by-hand" computation of Hessian and gradient (almost fully in Python)
 # Version that uses JAX
+
 # Note: slower than Transport_2d_in_python.py based on plain numpy,
-# to be investigated...
+#  This is because JAX recompiles each jax.numpy function for each different array size !
+#  Either there is a way of overcoming this, or JAX is not well adapted to unstructured data.
 
 import jax
 jax.config.update("jax_enable_x64", True)
+#jax.config.update('jax_disable_jit', True)
 
 import math, ctypes, datetime
 import jax.numpy as jnp
 import numpy as np
+from jax import jit
+from functools import partial
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 
@@ -17,7 +22,7 @@ N = 1000 # number of points, try 10000, 100000 (be ready to wait a bit)
 
 class Transport:
 
-  def asarray(self,o):
+  def asjax(self,o):
     """
     @brief Accesses a GOM Vector as a jax array
     @details Needed because GOM typing is not fully compliant with CPython
@@ -31,7 +36,7 @@ class Transport:
     @param[in] N number of points
     @param[in] shrink_points if set, group points in a small zone
     """
-    self.verbose = True
+    self.verbose = False
     self.N = N
 
     scene_graph.clear() # Delete all Graphite objects
@@ -157,21 +162,21 @@ class Transport:
     H = NL.create_matrix(self.N,self.N) # Creates a sparse matrix using OpenNL
 
     # vertex v's coords are XY[v][0], XY[v][1]
-    XY = self.asarray(self.Laguerre.I.Editor.get_points())
+    XY = self.asjax(self.Laguerre.I.Editor.get_points())
 
     # Triangle t's vertices indices are T[t][0], T[t][1], T[t][2]
-    T = self.asarray(self.Laguerre.I.Editor.get_triangles())
+    T = self.asjax(self.Laguerre.I.Editor.get_triangles())
 
-    Tadj = self.asarray( # Trgls adjacent to t:Tadj[t][0], Tadj[t][1], Tadj[t][2]
+    Tadj = self.asjax( # Trgls adjacent to t:Tadj[t][0], Tadj[t][1], Tadj[t][2]
       self.Laguerre.I.Editor.get_triangle_adjacents()
     )[:,[1,2,0]] # <- permute columns to match conventions for triangulations:
     # different in geogram meshes because they also support n-sided polygons
 
     # trgl_seed[t]: index of the seed s such that t is in s's Laguerre cell
-    trgl_seed=self.asarray(self.Laguerre.I.Editor.find_attribute('facets.chart'))
+    trgl_seed=self.asjax(self.Laguerre.I.Editor.find_attribute('facets.chart'))
 
     # The coordinates of the seeds
-    seeds_XY = self.asarray(self.seeds.I.Editor.find_attribute('vertices.point'))
+    seeds_XY = self.asjax(self.seeds.I.Editor.find_attribute('vertices.point'))
     diag = jnp.zeros(self.N,jnp.float64)   # Diagonal, initialized to zero
     NO_INDEX = ctypes.c_uint32(-1).value # special value for Tadj: edge on border
 
@@ -225,32 +230,22 @@ class Transport:
     @details Uses the current Laguerre diagram (in self.Laguerre)
     """
     # See comments about XY,T,trgl_seed,nt in compute_Hessian()
-    XY = self.asarray(self.Laguerre.I.Editor.get_points())
-    T = self.asarray(self.Laguerre.I.Editor.get_triangles())
-    trgl_seed = self.asarray(
-      self.Laguerre.I.Editor.find_attribute('facets.chart')
-    )
-    measures = jnp.zeros(self.N, jnp.float64)
-    measures = jnp.add.at(
-      measures, trgl_seed, self.triangle_area(XY,T), inplace=False
-    )
-    return measures
+    XY = self.asjax(self.Laguerre.I.Editor.get_points())
+    T = self.asjax(self.Laguerre.I.Editor.get_triangles())
+    trgl_seed = self.asjax(self.Laguerre.I.Editor.find_attribute('facets.chart'))
+    return self.triangles_areas(XY, T, trgl_seed)
 
-  def triangle_area(self, XY, T):
-    """
-    @brief Computes the area of a mesh triangle
-    @param[in] XY the coordinates of the mesh vertices
-    @param[in] T an array with the three vertices indices of the triangle
-    @details Works also when T is an array of triangles (then it returns
-     the array of triangle areas). This is why the ellipsis (...)
-     is used (here it means indexing/slicing through the last dimension)
-    """
-    v1 = T[...,0]
-    v2 = T[...,1]
-    v3 = T[...,2]
-    U = XY[v2] - XY[v1]
-    V = XY[v3] - XY[v1]
-    return jnp.abs(0.5*(U[...,0]*V[...,1] - U[...,1]*V[...,0]))
+  # @partial(jit, static_argnums=(0,)) # arg, recompiles for each different size
+  def triangles_areas(self, XY, T, Tseed):
+    V1 = T[:,0]
+    V2 = T[:,1]
+    V3 = T[:,2]
+    U = XY[V2] - XY[V1]
+    V = XY[V3] - XY[V1]
+    Tareas = jnp.abs(0.5*(U[:,0]*V[:,1] - U[:,1]*V[:,0]))
+    areas = jnp.zeros(self.N, jnp.float64)
+    areas = jnp.add.at(areas, Tseed, Tareas, inplace=False)
+    return areas
 
   def distance(self, XY, v1, v2):
     """
@@ -318,6 +313,8 @@ def one_iteration():
     return
   locked = True
   transport.unshow()
+#  with jax.log_compiles():
+#     transport.one_iteration()
   transport.one_iteration()
   transport.show()
   locked = False
