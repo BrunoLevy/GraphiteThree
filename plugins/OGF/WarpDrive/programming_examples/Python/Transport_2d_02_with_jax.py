@@ -36,8 +36,7 @@ class Transport:
     if dtype == np.uint32: # change dtype, OOB indexing does not work with uint !
         dtype = jnp.int32
     tmp = jnp.asarray(tmp,dtype=dtype) # converted to JAX array
-    # padding
-    chunk_size = 128
+    chunk_size = 128                   # padding (avoid recompiling too often)
     pad = chunk_size - (tmp.shape[0] % chunk_size)
     if tmp.ndim == 1:
       return jnp.pad(tmp,(0,pad),constant_values=-1)
@@ -96,6 +95,13 @@ class Transport:
       self.seeds.I.Editor.find_attribute('vertices.point')
     )
 
+    self.regularization = 0.0
+    self.direct = True
+
+    if self.direct:               # if using direct solver, one needs to regul
+      self.regularization = 1e-3  # because matrix is singular ([1,1...1] in ker)
+
+
     # Make Graphite's logger less verbose (so that we can better see our logs)
     gom.set_environment_value('log:features_exclude','Validate;timings')
 
@@ -124,9 +130,12 @@ class Transport:
     self.b = self.compute_Laguerre_cells_measures()
     self.b = self.nu_i - self.b
 
+    if self.regularization != 0.0:
+      self.b = self.b - self.regularization * self.nu_i * self.psi
+
     g_norm = jnp.linalg.norm(self.b)  # norm of gradient at current step (KMT #2)
     H.solve_symmetric(                # solve for p in Lp=b
-      np.asarray(self.b),np.asarray(self.p)
+      np.asarray(self.b), np.asarray(self.p), self.direct
     )
 
     alpha = 1.0         # Steplength
@@ -212,6 +221,8 @@ class Transport:
     diag=jnp.add.at(                     # =minus sum extra-diagonal coefficients
       diag,I,-coeff,inplace=False
     )
+    if self.regularization != 0.0:
+      diag = diag + self.regularization * self.nu_i
     H.add_coefficients_to_diagonal(np.asarray(diag)) # accumulate diagonal into H
     return H
 
