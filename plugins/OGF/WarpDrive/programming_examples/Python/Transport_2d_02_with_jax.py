@@ -2,9 +2,9 @@
 # "by-hand" computation of Hessian and gradient (almost fully in Python)
 # Version that uses JAX
 
-# Note: slower than Transport_2d_in_python.py based on plain numpy,
-#  This is because JAX recompiles each jax.numpy function for each different array size !
-#  Either there is a way of overcoming this, or JAX is not well adapted to unstructured data.
+# TODO: - use padding to have (nearly) same numbers of triangles / quadruplets,
+# to avoid jax recompilation.
+#       - write Jax precompiled functions for triangles and quadruplets
 
 import jax
 jax.config.update("jax_enable_x64", True)
@@ -186,16 +186,15 @@ class Transport:
     # J is the seed on the other side of the triangle's edge (NO_INDEX on border)
     # V1 and V2 are the two vertices of the triangle
     I  = self.asjax(self.Laguerre.I.Editor.find_attribute('facets.chart'))
-    J  = jnp.where( # Lookup seed on other side of edge, take border into account
-      Tadj[:,:] != NO_INDEX, I[Tadj[:,:]], NO_INDEX
-    ).transpose().flatten()
+    J  = Tadj.transpose().flatten()
+    J  = jnp.where(J[:] != NO_INDEX, I[J], NO_INDEX) # lookup seed on other side
     I  = jnp.concatenate((I,I,I))
     V1 = jnp.concatenate((T[:,1], T[:,2], T[:,0]))
     V2 = jnp.concatenate((T[:,2], T[:,0], T[:,1]))
 
     # Now we can compute a vector of coefficient (note: V1,V2,I,J are vectors)
     coeff = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
-    coeff = jnp.where( # Mask coefficients that correspond to border edges
+    coeff = jnp.where( # Mask coeffs that correspond to borfer and internal edges
       jnp.logical_and(I[:] != J[:], J[:] != NO_INDEX), coeff[:], 0.0
     )
 
