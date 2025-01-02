@@ -3,8 +3,9 @@
 # Version that uses JAX
 
 # TODO: - use padding to have (nearly) same numbers of triangles / quadruplets,
-# to avoid jax recompilation.
-#       - write Jax precompiled functions for triangles and quadruplets
+#         to avoid jax recompilation.
+#       - see how jax can cache compiled functions for various sizes
+
 
 import jax
 jax.config.update("jax_enable_x64", True)
@@ -179,6 +180,26 @@ class Transport:
     # The coordinates of the seeds
     seeds_XY = self.asjax(self.seeds.I.Editor.find_attribute('vertices.point'))
 
+    self.log(f'=====> nb quadruplets = {T.shape[0]*3}')
+
+    I,J,coeff = self.assemble_Hessian(XY,T, Tadj, seeds_XY)
+
+    # Accumumate coefficients into matrix and diagonal
+    H.add_coefficients( # accumulate coeffs into matrix
+      np.asarray(I),np.asarray(J),np.asarray(coeff),True #<- ignore_OOB
+    )
+
+    diag = jnp.zeros(self.N,jnp.float64) # Diagonal (initialized to zero)
+    diag=jnp.add.at(                     # =minus sum extra-diagonal coefficients
+      diag,I,-coeff,inplace=False
+    )
+    H.add_coefficients_to_diagonal(np.asarray(diag)) # accumulate diagonal into H
+    return H
+
+  @partial(jit, static_argnums=(0,))
+  def assemble_Hessian(self, XY, T, Tadj, seeds_XY):
+    self.log(f'=====> recompiling {type(XY)}')
+
     NO_INDEX = -1 # Special value for invalid indices (edge on border)
 
     # There is one entry per triangle half-edge (3*nt entries)
@@ -197,20 +218,7 @@ class Transport:
     coeff = jnp.where( # Mask coeffs that correspond to borfer and internal edges
       jnp.logical_and(I[:] != J[:], J[:] != NO_INDEX), coeff[:], 0.0
     )
-
-    # Accumumate coefficients into matrix and diagonal
-    H.add_coefficients( # accumulate coeffs into matrix
-      np.asarray(I),np.asarray(J),np.asarray(coeff),True #<- ignore_OOB
-    )
-
-    self.log(f'----------- nb quadruplets={coeff.shape[0]}')
-
-    diag = jnp.zeros(self.N,jnp.float64) # Diagonal (initialized to zero)
-    diag=jnp.add.at(                     # =minus sum extra-diagonal coefficients
-      diag,I,-coeff,inplace=False
-    )
-    H.add_coefficients_to_diagonal(np.asarray(diag)) # accumulate diagonal into H
-    return H
+    return I,J,coeff
 
   def compute_Laguerre_cells_measures(self):
     """
@@ -222,10 +230,12 @@ class Transport:
     XY = self.asjax(self.Laguerre.I.Editor.get_points())
     T = self.asjax(self.Laguerre.I.Editor.get_triangles())
     trgl_seed = self.asjax(self.Laguerre.I.Editor.find_attribute('facets.chart'))
+    self.log(f'=====> nb triangles = {T.shape[0]}')
     return self.triangles_areas(XY, T, trgl_seed)
 
-  # @partial(jit, static_argnums=(0,)) # arg, recompiles for each different size
+  @partial(jit, static_argnums=(0,))
   def triangles_areas(self, XY, T, Tseed):
+    self.log(f'=====> recompiling {type(XY)}')
     V1 = T[:,0]
     V2 = T[:,1]
     V3 = T[:,2]
