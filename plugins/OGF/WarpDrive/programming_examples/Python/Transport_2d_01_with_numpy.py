@@ -1,49 +1,15 @@
 # Tutorial on Optimal Transport
 # "by-hand" computation of Hessian and gradient (almost fully in Python)
-# Version that uses JAX
-# Note: slower than numpy version, because it recompiles functions whenever
-#  array sizes change !!
-# TODO: For triangle areas:
-#       - use padding
-#       - see how JAX can cache compiled functions for various sizes (because
-# number of triangles varies more wildy than number of quadruplets !!)
-
-
-import jax
-jax.config.update('jax_enable_x64', True)
-#jax.config.update('jax_disable_jit', True)
-#jax.config.update("jax_explain_cache_misses", True)
+# Version that uses numpy
 
 import math, ctypes, datetime
-import jax.numpy as jnp
 import numpy as np
-from jax import jit
-from functools import partial
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 
-N = 10000 # number of points, try 10000, 100000 (be ready to wait a bit)
+N = 1000 # number of points, try 10000, 100000 (be ready to wait a bit)
 
 class Transport:
-
-  def asjax(self,o):
-    """
-    @brief Accesses a GOM Vector as a jax array
-    @details Needed because GOM typing is not fully compliant with CPython.
-       In addition pads data to reduce JAX recompiling.
-    """
-    tmp = np.asarray(o)
-    dtype = tmp.dtype
-    if dtype == np.uint32: # change dtype, OOB indexing does not work with uint !
-        dtype = jnp.int32
-    tmp = jnp.asarray(tmp,dtype=dtype) # converted to JAX array
-    chunk_size = 1024                  # padding (avoid recompiling too often)
-    pad = chunk_size - (tmp.shape[0] % chunk_size)
-    if tmp.ndim == 1:
-      return jnp.pad(tmp,(0,pad),constant_values=-1)
-    else:
-      return jnp.pad(tmp,((0,pad),(0,0)),constant_values=-1)
-
 
   def __init__(self, N: int, shrink_points: bool):
     """
@@ -92,7 +58,7 @@ class Transport:
     self.show()
 
     # The coordinates of the seeds
-    self.seeds_XY = self.asjax(
+    self.seeds_XY = self.asnumpy(
       self.seeds.I.Editor.find_attribute('vertices.point')
     )
 
@@ -181,13 +147,13 @@ class Transport:
     self.Laguerre.I.Surface.merge_vertices(1e-10)
 
     # vertex v's coords are XY[v][0], XY[v][1]
-    self.XY = self.asjax(self.Laguerre.I.Editor.get_points())
+    self.XY = self.asnumpy(self.Laguerre.I.Editor.get_points())
 
     # Triangle t's vertices indices are T[t][0], T[t][1], T[t][2]
-    self.T = self.asjax(self.Laguerre.I.Editor.get_triangles())
+    self.T = self.asnumpy(self.Laguerre.I.Editor.get_triangles())
 
     # Triangle t bebongs to Laguerre cell of seed Tseed[t]
-    self.Tseed = self.asjax(
+    self.Tseed = self.asnumpy(
       self.Laguerre.I.Editor.find_attribute('facets.chart')
     )
 
@@ -201,7 +167,7 @@ class Transport:
 
     H = NL.create_matrix(self.N,self.N) # Creates a sparse matrix using OpenNL
 
-    Tadj = self.asjax( # Trgls adjacent to t:Tadj[t][0], Tadj[t][1], Tadj[t][2]
+    Tadj = self.asnumpy( # Trgls adjacent to t:Tadj[t][0], Tadj[t][1], Tadj[t][2]
       self.Laguerre.I.Editor.get_triangle_adjacents()
     )[:,[1,2,0]] # <- permute columns to match conventions for triangulations:
     #  different in geogram meshes because they also support n-sided polygons
@@ -217,15 +183,14 @@ class Transport:
     )
 
     diag = jnp.zeros(self.N,jnp.float64) # Diagonal (initialized to zero)
-    diag=jnp.add.at(                     # =minus sum extra-diagonal coefficients
-      diag,I,-coeff,inplace=False
+    jnp.add.at(                          # =minus sum extra-diagonal coefficients
+      diag,I,-coeff
     )
     if self.regularization != 0.0:
       diag = diag + self.regularization * self.nu_i
     H.add_coefficients_to_diagonal(np.asarray(diag)) # accumulate diagonal into H
     return H
 
-  @partial(jit, static_argnums=(0,))
   def assemble_Hessian(self, XY, T, Tadj, Tseed, seeds_XY):
     """
     @brief Assembles the Hessian of the Kantorovich dual
@@ -266,23 +231,26 @@ class Transport:
     @details Uses the current Laguerre diagram (in self.Laguerre)
     """
     # See comments about XY,T,trgl_seed,nt in compute_Laguerre_diagram()
-    self.log(f'=====> nb triangles = {self.T.shape[0]}')
-    return self.triangles_areas(self.XY, self.T, self.Tseed)
+    measures = np.zeros(N)
+    measures[:] = 0
+    np.add.at(measures, self.Tseed, self.triangle_area(self.XY,self.T))
+    return measures
 
-  @partial(jit, static_argnums=(0,))
-  def triangles_areas(self, XY, T, Tseed):
-    self.log(f'=====> recompiling triangle_areas() {type(XY)}')
-    NO_INDEX=-1
-    V1 = T[:,0]
-    V2 = T[:,1]
-    V3 = T[:,2]
-    U = XY[V2] - XY[V1]
-    V = XY[V3] - XY[V1]
-    Tareas = jnp.abs(0.5*(U[:,0]*V[:,1] - U[:,1]*V[:,0]))
-    Tareas = jnp.where(T[:,0] != NO_INDEX, Tareas[:], 0.0) # Mask padding
-    areas = jnp.zeros(self.N, jnp.float64)
-    areas = jnp.add.at(areas, Tseed, Tareas, inplace=False)
-    return areas
+  def triangle_area(self, XY, T):
+    """
+    @brief Computes the area of a mesh triangle
+    @param[in] XY the coordinates of the mesh vertices
+    @param[in] T an array with the three vertices indices of the triangle
+    @details Works also when T is an array of triangles (then it returns
+     the array of triangle areas). This is why the ellipsis (...)
+     is used (here it means indexing/slicing through the last dimension)
+    """
+    v1 = T[...,0]
+    v2 = T[...,1]
+    v3 = T[...,2]
+    U = XY[v2] - XY[v1]
+    V = XY[v3] - XY[v1]
+    return np.abs(0.5*(U[...,0]*V[...,1] - U[...,1]*V[...,0]))
 
   def distance(self, XY, v1, v2):
     """
@@ -321,6 +289,16 @@ class Transport:
       msg = str.join('',[str(arg) for arg in args])
       print(msg)
 
+  def asnumpy(self,o):
+    """
+    @brief Accesses a GOM Vector as a jax array
+    @details Needed because GOM typing is not fully compliant with CPython.
+       In addition pads data to reduce JAX recompiling.
+    """
+    dtype = np.float64
+    if o.element_meta_type == OGF.index_t:
+       dtype = np.int32
+    return np.asarray(o,dtype=dtype)
 
 transport = Transport(N,True)
 # transport.verbose = True # uncomment to display Newton convergence
