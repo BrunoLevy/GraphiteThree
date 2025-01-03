@@ -168,7 +168,6 @@ class Transport:
       self.Laguerre.I.Editor.find_attribute('facets.chart')
     )
 
-
   def compute_Hessian(self):
     """
     @brief Computes the matrix of the system to be solved at each Newton step
@@ -241,9 +240,8 @@ class Transport:
     )
 
     # Note: this masking technique works also with numpy (we can do like
-    #  that also in Transport_2d_01_with_numpy.py), because in numpy
-    #  "fancy indexing" clamps indices like in jax (whereas in numpy, indexing
-    #  individual elements does bounds checking unlike in jax).
+    #  that also in Transport_2d_01_with_numpy.py), because we use -1 for
+    #  NO_INDEX, and negative indices mean starting from end of array.
 
     return I,J,coeff
 
