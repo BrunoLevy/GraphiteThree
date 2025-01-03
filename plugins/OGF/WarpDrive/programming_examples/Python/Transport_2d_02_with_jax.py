@@ -2,12 +2,8 @@
 # "by-hand" computation of Hessian and gradient (almost fully in Python)
 # Version that uses JAX
 # Note: slower than numpy version, because it recompiles functions whenever
-#  array sizes change !!
-# TODO: For triangle areas:
-#       - use padding
-#       - see how JAX can cache compiled functions for various sizes (because
-# number of triangles varies more wildy than number of quadruplets !!)
-
+#  array sizes change ! (now that we use padding it is less often, but still
+#  too often).
 
 import jax
 jax.config.update('jax_enable_x64', True)
