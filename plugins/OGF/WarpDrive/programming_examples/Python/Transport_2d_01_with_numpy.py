@@ -274,8 +274,8 @@ class Transport:
   def asnumpy(self,o):
     """
     @brief Accesses a GOM Vector as a jax array
-    @details Needed because GOM typing is not fully compliant with CPython.
-       In addition pads data to reduce JAX recompiling.
+    @details Adapts dtype, so that NO_INDEX entries are set to -1
+     instead of ctype.uint.value(-1)
     """
     dtype = np.float64
     if o.element_meta_type == OGF.index_t:
