@@ -22,7 +22,7 @@ from functools import partial
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 
-N = 10000 # number of points, try 10000, 100000 (be ready to wait a bit)
+N = 1000 # number of points, try 10000, 100000 (be ready to wait a bit)
 
 class Transport:
 
@@ -234,10 +234,21 @@ class Transport:
     V2 = jnp.concatenate((T[:,2], T[:,0], T[:,1]))
 
     # Now we can compute a vector of coefficient (note: V1,V2,I,J are vectors)
+    # We do not take care of filtering entries, becuase indexing with NO_INDEX
+    # entries in I,J,V1,V2 are clamped to the size of the seeds_XY and XY arrays
+    # but ...
     coeff = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
-    coeff = jnp.where( # Mask coeffs that correspond to borfer and internal edges
+
+    # ... we need to mask coeffs that correspond to border and internal edges
+    coeff = jnp.where(
       jnp.logical_and(I[:] != J[:], J[:] != NO_INDEX), coeff[:], 0.0
     )
+
+    # Note: this masking technique works also with numpy (we can do like
+    #  that also in Transport_2d_01_with_numpy.py), because in numpy
+    #  "fancy indexing" clamps indices like in jax (whereas in numpy, indexing
+    #  individual elements does bounds checking unlike in jax).
+
     return I,J,coeff
 
   def compute_Laguerre_cells_measures(self):
@@ -349,8 +360,6 @@ def one_iteration():
     return
   locked = True
   transport.unshow()
-#  with jax.log_compiles():
-#     transport.one_iteration()
   transport.one_iteration()
   transport.show()
   locked = False

@@ -206,7 +206,7 @@ class Transport:
 
     NO_INDEX = -1 # Special value for invalid indices (edge on border)
 
-    # There is one entry per triangle half-edge (3*nt entries)
+    # Compute one entry per triangle half-edge (3*nt entries) with:
     # I is the seed associated with the triangle
     # J is the seed on the other side of the triangle's edge (NO_INDEX on border)
     # V1 and V2 are the two vertices of the triangle
@@ -217,12 +217,22 @@ class Transport:
     V1 = np.concatenate((T[:,1], T[:,2], T[:,0]))
     V2 = np.concatenate((T[:,2], T[:,0], T[:,1]))
 
-    # Now we can compute a vector of coefficient (note: V1,V2,I,J are vectors)
+    # Remove (i,j,v1,v2) index quadruplets that correspond to
+    #   - border triangle edges (j == NO_INDEX)
+    #   - triangle edges inside Laguerre cell (i == j)
+    qidx = np.column_stack((I,J,V1,V2))
+    qidx = qidx[np.logical_and(I != J, J != NO_INDEX)]
+
+    I  = qidx[:,0] # re-extract I,J,V1,V2
+    J  = qidx[:,1]
+    V1 = qidx[:,2]
+    V2 = qidx[:,3]
+
+    # Now we can compute the vector of coefficient (note: V1,V2,I,J are vectors)
     coeff = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
-    coeff = np.where( # Mask coeffs that correspond to borfer and internal edges
-      np.logical_and(I[:] != J[:], J[:] != NO_INDEX), coeff[:], 0.0
-    )
-    return I,J,coeff
+
+    # Need to copy I,J (NL::Vector does not support non-contiguous arrays)
+    return I.copy(), J.copy(), coeff
 
   def compute_Laguerre_cells_measures(self):
     """
@@ -232,7 +242,6 @@ class Transport:
     """
     # See comments about XY,T,trgl_seed,nt in compute_Laguerre_diagram()
     measures = np.zeros(N)
-    measures[:] = 0
     np.add.at(measures, self.Tseed, self.triangle_area(self.XY,self.T))
     return measures
 
