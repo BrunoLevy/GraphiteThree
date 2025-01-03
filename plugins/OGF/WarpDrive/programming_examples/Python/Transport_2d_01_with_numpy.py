@@ -41,7 +41,7 @@ class Transport:
 
     # Compute Laguerre diagram
     self.Laguerre = scene_graph.create_object(OGF.MeshGrob,'Laguerre')
-    self.psi = jnp.zeros(self.N,jnp.float64)
+    self.psi = np.zeros(self.N,np.float64)
     self.compute_Laguerre_diagram(self.psi)
 
     # Variables for Newton iteration (it is better to allocate them one for all)
@@ -49,9 +49,9 @@ class Transport:
 
     # Measure of whole domain, desired areas and minimum legal area (KMT #1)
     self.b = self.compute_Laguerre_cells_measures() # b <- Laguerre cells areas
-    self.Omega_measure = jnp.sum(self.b)            # Measure of the whole domain
+    self.Omega_measure = np.sum(self.b)            # Measure of the whole domain
     self.nu_i = self.Omega_measure / self.N         # Desired area for each cell
-    self.area_threshold = 0.5*min(jnp.min(self.b),self.nu_i) # KMT criterion  #1
+    self.area_threshold = 0.5*min(np.min(self.b),self.nu_i) # KMT criterion  #1
 
     # Change graphic attributes of diagram
     self.Omega.visible=False
@@ -98,7 +98,7 @@ class Transport:
     if self.regularization != 0.0:
       self.b = self.b - self.regularization * self.nu_i * self.psi
 
-    g_norm = jnp.linalg.norm(self.b)  # norm of gradient at current step (KMT #2)
+    g_norm = np.linalg.norm(self.b)  # norm of gradient at current step (KMT #2)
     H.solve_symmetric(                # solve for p in Lp=b
       np.asarray(self.b), np.asarray(self.p), self.direct
     )
@@ -114,11 +114,11 @@ class Transport:
       # rhs (- grad of Kantorovich dual) = actual measures - desired measures
       self.compute_Laguerre_diagram(self.psi)
       self.b = self.compute_Laguerre_cells_measures()
-      smallest_area = jnp.min(self.b) # for KMT criterion 1
+      smallest_area = np.min(self.b) # for KMT criterion 1
       self.b -= self.nu_i
 
       # Check KMT criteria #1 (cell area) and #2 (gradient norm)
-      g_norm_k = jnp.linalg.norm(self.b)
+      g_norm_k = np.linalg.norm(self.b)
       KMT_1 = (smallest_area > self.area_threshold)  # criterion 1: cell area
       KMT_2 = (g_norm_k <= (1.0-0.5*alpha) * g_norm) # criterion 2: gradient norm
       self.log(f' KMT #1 (area): {KMT_1} {smallest_area}>{self.area_threshold}')
@@ -130,7 +130,7 @@ class Transport:
       self.psi -= alpha * self.p
     main.unlock_updates() # show graphic updates (uncomment also this one)
 
-    worst_area_error = jnp.linalg.norm(self.b, ord=jnp.inf) # grad L_infty norm
+    worst_area_error = np.linalg.norm(self.b, ord=np.inf) # grad L_infty norm
     self.log(f'Worst cell area error = {100.0 * worst_area_error / self.nu_i}%')
     return worst_area_error
 
@@ -182,8 +182,8 @@ class Transport:
       np.asarray(I),np.asarray(J),np.asarray(coeff),True #<- ignore_OOB
     )
 
-    diag = jnp.zeros(self.N,jnp.float64) # Diagonal (initialized to zero)
-    jnp.add.at(                          # =minus sum extra-diagonal coefficients
+    diag = np.zeros(self.N,np.float64) # Diagonal (initialized to zero)
+    np.add.at(                          # =minus sum extra-diagonal coefficients
       diag,I,-coeff
     )
     if self.regularization != 0.0:
@@ -212,15 +212,15 @@ class Transport:
     # V1 and V2 are the two vertices of the triangle
     I  = Tseed
     J  = Tadj.transpose().flatten()
-    J  = jnp.where(J[:] != NO_INDEX, I[J], NO_INDEX) # lookup seed on other side
-    I  = jnp.concatenate((I,I,I))
-    V1 = jnp.concatenate((T[:,1], T[:,2], T[:,0]))
-    V2 = jnp.concatenate((T[:,2], T[:,0], T[:,1]))
+    J  = np.where(J[:] != NO_INDEX, I[J], NO_INDEX) # lookup seed on other side
+    I  = np.concatenate((I,I,I))
+    V1 = np.concatenate((T[:,1], T[:,2], T[:,0]))
+    V2 = np.concatenate((T[:,2], T[:,0], T[:,1]))
 
     # Now we can compute a vector of coefficient (note: V1,V2,I,J are vectors)
     coeff = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
-    coeff = jnp.where( # Mask coeffs that correspond to borfer and internal edges
-      jnp.logical_and(I[:] != J[:], J[:] != NO_INDEX), coeff[:], 0.0
+    coeff = np.where( # Mask coeffs that correspond to borfer and internal edges
+      np.logical_and(I[:] != J[:], J[:] != NO_INDEX), coeff[:], 0.0
     )
     return I,J,coeff
 
@@ -260,7 +260,18 @@ class Transport:
     @details v1 and v2 can be also arrays (then returns the array of distances).
     """
     axis = v1.ndim if hasattr(v1,'ndim') else 0
-    return jnp.linalg.norm(XY[v2]-XY[v1],axis=axis)
+    return np.linalg.norm(XY[v2]-XY[v1],axis=axis)
+
+  def asnumpy(self,o):
+    """
+    @brief Accesses a GOM Vector as a jax array
+    @details Needed because GOM typing is not fully compliant with CPython.
+       In addition pads data to reduce JAX recompiling.
+    """
+    dtype = np.float64
+    if o.element_meta_type == OGF.index_t:
+       dtype = np.int32
+    return np.asarray(o,dtype=dtype)
 
   def show(self):
     """
@@ -289,16 +300,6 @@ class Transport:
       msg = str.join('',[str(arg) for arg in args])
       print(msg)
 
-  def asnumpy(self,o):
-    """
-    @brief Accesses a GOM Vector as a jax array
-    @details Needed because GOM typing is not fully compliant with CPython.
-       In addition pads data to reduce JAX recompiling.
-    """
-    dtype = np.float64
-    if o.element_meta_type == OGF.index_t:
-       dtype = np.int32
-    return np.asarray(o,dtype=dtype)
 
 transport = Transport(N,True)
 # transport.verbose = True # uncomment to display Newton convergence

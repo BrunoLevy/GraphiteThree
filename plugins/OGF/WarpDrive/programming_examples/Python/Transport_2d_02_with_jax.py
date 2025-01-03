@@ -26,25 +26,6 @@ N = 10000 # number of points, try 10000, 100000 (be ready to wait a bit)
 
 class Transport:
 
-  def asjax(self,o):
-    """
-    @brief Accesses a GOM Vector as a jax array
-    @details Needed because GOM typing is not fully compliant with CPython.
-       In addition pads data to reduce JAX recompiling.
-    """
-    tmp = np.asarray(o)
-    dtype = tmp.dtype
-    if dtype == np.uint32: # change dtype, OOB indexing does not work with uint !
-        dtype = jnp.int32
-    tmp = jnp.asarray(tmp,dtype=dtype) # converted to JAX array
-    chunk_size = 1024                  # padding (avoid recompiling too often)
-    pad = chunk_size - (tmp.shape[0] % chunk_size)
-    if tmp.ndim == 1:
-      return jnp.pad(tmp,(0,pad),constant_values=-1)
-    else:
-      return jnp.pad(tmp,((0,pad),(0,0)),constant_values=-1)
-
-
   def __init__(self, N: int, shrink_points: bool):
     """
     @brief Transport constructor
@@ -293,6 +274,24 @@ class Transport:
     """
     axis = v1.ndim if hasattr(v1,'ndim') else 0
     return jnp.linalg.norm(XY[v2]-XY[v1],axis=axis)
+
+  def asjax(self,o):
+    """
+    @brief Accesses a GOM Vector as a jax array
+    @details Needed because GOM typing is not fully compliant with CPython.
+       In addition pads data to reduce JAX recompiling.
+    """
+    tmp = np.asarray(o)
+    dtype = tmp.dtype
+    if dtype == np.uint32: # change dtype, OOB indexing does not work with uint !
+        dtype = jnp.int32
+    tmp = jnp.asarray(tmp,dtype=dtype) # converted to JAX array
+    chunk_size = 1024                  # padding (avoid recompiling too often)
+    pad = chunk_size - (tmp.shape[0] % chunk_size)
+    if tmp.ndim == 1:
+      return jnp.pad(tmp,(0,pad),constant_values=-1)
+    else:
+      return jnp.pad(tmp,((0,pad),(0,0)),constant_values=-1)
 
   def show(self):
     """
