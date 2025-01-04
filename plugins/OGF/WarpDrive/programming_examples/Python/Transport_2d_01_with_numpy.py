@@ -2,22 +2,25 @@
 # "by-hand" computation of Hessian and gradient (almost fully in Python)
 # Version that uses numpy
 
-import math, ctypes, datetime
+import math, datetime
 import numpy as np
+import scipy
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 
-N = 1000 # number of points, try 10000, 100000 (be ready to wait a bit)
+N = 1000             # number of points, try 10000, 100000
+verbose = False      # set to True for logging stats during iterative algo
+shrink_points = True # regroup points in smaller zone to make it more difficult
 
 class Transport:
 
-  def __init__(self, N: int, shrink_points: bool):
+  def __init__(self, N: int, shrink_points: bool, verbose: bool):
     """
     @brief Transport constructor
     @param[in] N number of points
-    @param[in] shrink_points if set, group points in a small zone
+    @param[in] shrink_points if set, regroup points in a small zone
     """
-    self.verbose = False
+    self.verbose = verbose
     self.N = N
 
     scene_graph.clear() # Delete all Graphite objects
@@ -44,9 +47,6 @@ class Transport:
     self.psi = np.zeros(self.N,np.float64)
     self.compute_Laguerre_diagram(self.psi)
 
-    # Variables for Newton iteration (it is better to allocate them one for all)
-    self.p = np.empty(self.N, np.float64) # Newton step
-
     # Measure of whole domain, desired areas and minimum legal area (KMT #1)
     self.b = self.compute_Laguerre_cells_measures() # b <- Laguerre cells areas
     self.Omega_measure = np.sum(self.b)            # Measure of the whole domain
@@ -62,11 +62,12 @@ class Transport:
       self.seeds.I.Editor.find_attribute('vertices.point')
     )
 
+    # Parameters for linear solver
     self.regularization = 0.0
     self.direct = True
-
-    if self.direct:               # if using direct solver, one needs to regul
+    if self.direct:               # if using direct solver, one needs regulariz.
       self.regularization = 1e-3  # because matrix is singular ([1,1...1] in ker)
+    self.use_scipy = True         # one can use scipy or OpenNL for the solver
 
     # Make Graphite's logger less verbose (so that we can better see our logs)
     gom.set_environment_value('log:features_exclude','Validate;timings')
@@ -99,12 +100,16 @@ class Transport:
       self.b = self.b - self.regularization * self.nu_i * self.psi
 
     g_norm = np.linalg.norm(self.b)  # norm of gradient at current step (KMT #2)
-    H.solve_symmetric(                # solve for p in Lp=b
-      np.asarray(self.b), np.asarray(self.p), self.direct
-    )
 
-    alpha = 1.0         # Steplength
-    self.psi += self.p  # Start with Newton step
+    # solve for p in Lp=b
+    if self.use_scipy:
+      p = scipy.sparse.linalg.spsolve(H, self.b)
+    else:
+      p = np.empty(self.N, np.float64)
+      H.solve_symmetric(self.b, p, self.direct)
+
+    alpha = 1.0    # Steplength
+    self.psi += p  # Start with Newton step
 
     # Divide steplength by 2 until both KMT criteria are satisfied
     main.lock_updates() # hide graphic updates (try this: uncomment + other one )
@@ -127,7 +132,7 @@ class Transport:
          break
 
       alpha = alpha / 2.0
-      self.psi -= alpha * self.p
+      self.psi -= alpha * p
     main.unlock_updates() # show graphic updates (uncomment also this one)
 
     worst_area_error = np.linalg.norm(self.b, ord=np.inf) # grad L_infty norm
@@ -157,7 +162,6 @@ class Transport:
       self.Laguerre.I.Editor.find_attribute('facets.chart')
     )
 
-
   def compute_Hessian(self):
     """
     @brief Computes the matrix of the system to be solved at each Newton step
@@ -165,30 +169,28 @@ class Transport:
     @return the Hessian matrix of the Kantorovich dual
     """
 
-    H = NL.create_matrix(self.N,self.N) # Creates a sparse matrix using OpenNL
-
     Tadj = self.asnumpy( # Trgls adjacent to t:Tadj[t][0], Tadj[t][1], Tadj[t][2]
       self.Laguerre.I.Editor.get_triangle_adjacents()
-    )[:,[1,2,0]] # <- permute columns to match conventions for triangulations:
-    #  different in geogram meshes because they also support n-sided polygons
+    )[:,[1,2,0]] # <- permute columns to match std convention for triangulations:
+    #   different in geogram meshes because they also support n-sided polygons
 
-    self.log(f'=====> nb quadruplets = {self.T.shape[0]*3}')
     I,J,coeff = self.assemble_Hessian(
       self.XY, self.T, Tadj, self.Tseed, self.seeds_XY
     )
-
-    # Accumumate coefficients into matrix and diagonal
-    H.add_coefficients( # accumulate coeffs into matrix
-      np.asarray(I),np.asarray(J),np.asarray(coeff),True #<- ignore_OOB
-    )
-
     diag = np.zeros(self.N,np.float64) # Diagonal (initialized to zero)
-    np.add.at(                          # =minus sum extra-diagonal coefficients
-      diag,I,-coeff
-    )
+    np.add.at(diag,I,-coeff)           # =minus sum extra-diagonal coefficients
     if self.regularization != 0.0:
       diag = diag + self.regularization * self.nu_i
-    H.add_coefficients_to_diagonal(np.asarray(diag)) # accumulate diagonal into H
+
+    if self.use_scipy: # Using scipy sparse matrices
+      H = scipy.sparse.csr_matrix( (coeff,(I,J)), shape=(self.N,self.N) )
+      s = np.arange(self.N,dtype=np.int32)
+      H += scipy.sparse.csr_matrix( (diag,(s,s)),shape=(self.N,self.N) )
+    else:              # Using geogram/OpenNL linear algebra
+      H = NL.create_matrix(self.N,self.N) # Creates a sparse matrix using OpenNL
+      H.add_coefficients(I,J,coeff,True)  # accumulate coeffs into H, ignore OOBs
+      H.add_coefficients_to_diagonal(diag) # accumulate diagonal into H
+
     return H
 
   def assemble_Hessian(self, XY, T, Tadj, Tseed, seeds_XY):
@@ -308,9 +310,7 @@ class Transport:
       print(msg)
 
 
-transport = Transport(N,True)
-# transport.verbose = True # uncomment to display Newton convergence
-
+transport = Transport(N, shrink_points, verbose)
 
 # ------------------------------------------
 # GUI
