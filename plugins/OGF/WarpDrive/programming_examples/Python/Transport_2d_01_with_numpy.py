@@ -64,7 +64,7 @@ class Transport:
 
     # Parameters for linear solver
     self.regularization = 0.0
-    self.direct = True
+    self.direct = True            # one can use a direct or an iterative solver
     if self.direct:               # if using direct solver, one needs regulariz.
       self.regularization = 1e-3  # because matrix is singular ([1,1...1] in ker)
     self.use_scipy = True         # one can use scipy or OpenNL for the solver
@@ -99,17 +99,10 @@ class Transport:
     if self.regularization != 0.0:
       b -= self.regularization * self.nu_i * self.psi
 
-    g_norm = np.linalg.norm(b) # norm of gradient at current step (KMT #2)
-
-    # solve for p in Lp=b
-    if self.use_scipy:
-      p = scipy.sparse.linalg.spsolve(H, b)
-    else:
-      p = np.empty(self.N, np.float64)
-      H.solve_symmetric(b, p, self.direct)
-
-    alpha = 1.0    # Steplength
-    self.psi += p  # Start with Newton step
+    g_norm = np.linalg.norm(b)        # norm of gradient at current step (KMT #2)
+    p = self.solve_linear_system(H,b) # solve for p in H*p=b
+    alpha = 1.0                       # Steplength
+    self.psi += p                     # Start with Newton step
 
     # Divide steplength by 2 until both KMT criteria are satisfied
     main.lock_updates() # hide graphic updates (try this: uncomment + other one )
@@ -139,6 +132,35 @@ class Transport:
     self.log(f'Worst cell area error = {100.0 * worst_area_error / self.nu_i}%')
     return worst_area_error
 
+  def solve_linear_system(self, H, b):
+    """
+    @brief Solves a linear system
+    @details Works in direct or iterative mode, with scipy and with OpenNL
+    @param[in] H the matrix of the linear system
+    @param[in] b the right hand side
+    @return p such that H p = b
+    """
+    if self.use_scipy:
+      if self.direct:
+        p = scipy.sparse.linalg.spsolve(H, b)
+      else:
+        linalg = scipy.sparse.linalg
+        NxN = (self.N, self.N)
+        # A: operator:       y <- (H + diag)*x
+        # M: preconditioner: y <- diag@{-1}*x
+        p,info = linalg.cg(
+          A=linalg.LinearOperator(NxN, matvec = lambda x: H@x + H.diag*x),
+          b=b,
+          # tol=1e-3, # depends on scipy version... default is 1e-5
+          M=linalg.LinearOperator(NxN, matvec = lambda x: x / H.diag)
+        )
+        if info != 0:
+          print(f'CG did not converge, info={info}',info)
+    else:
+      p = np.empty(self.N, np.float64)
+      H.solve_symmetric(b, p, self.direct)
+    return p
+
   def compute_Laguerre_diagram(self, weights):
     """
     @brief Computes a Laguerre diagram from a weight vector
@@ -165,7 +187,10 @@ class Transport:
   def compute_Hessian(self):
     """
     @brief Computes the matrix of the system to be solved at each Newton step
-    @details Uses the current Laguerre diagram (in self.Laguerre).
+    @details Uses the current Laguerre diagram (in self.Laguerre). Works in
+     scipy and in OpenNL mode. In the (scipy,iterative) combination, the
+     diagonal of the matrix is stored separately in a dynamically created
+     'diag' field of the returned scipy sparse matrix.
     @return the Hessian matrix of the Kantorovich dual
     """
 
@@ -184,9 +209,12 @@ class Transport:
 
     if self.use_scipy: # Using scipy sparse matrices
       H = scipy.sparse.csr_matrix( (coeff,(I,J)), shape=(self.N,self.N) )
-      s = np.arange(self.N,dtype=np.int32)
-      H += scipy.sparse.csr_matrix( (diag,(s,s)),shape=(self.N,self.N) )
-    else:              # Using geogram/OpenNL linear algebra
+      if self.direct:
+        s = np.arange(self.N,dtype=np.int32)
+        H += scipy.sparse.csr_matrix( (diag,(s,s)), shape=(self.N,self.N) )
+      else:
+        H.diag = diag # store diagonal separately if using iterative solver
+    else: # Using OpenNL sparse matrices
       H = NL.create_matrix(self.N,self.N) # Creates a sparse matrix using OpenNL
       H.add_coefficients(I,J,coeff,True)  # accumulate coeffs into H, ignore OOBs
       H.add_coefficients_to_diagonal(diag) # accumulate diagonal into H
@@ -273,7 +301,7 @@ class Transport:
 
   def asnumpy(self,o):
     """
-    @brief Accesses a GOM Vector as a jax array
+    @brief Accesses a GOM Vector as a numpy array
     @details Adapts dtype, so that NO_INDEX entries are set to -1
      instead of ctype.uint.value(-1)
     """
