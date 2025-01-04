@@ -2,10 +2,6 @@
 # "by-hand" computation of Hessian and gradient (almost fully in Python)
 # Version that uses numpy
 
-# NOTE: with scipy,iterative solver,50K points, last linsolve does not converge.
-# (but it converges with OpenNL), to be checked by logging iterates using
-#  callback function)
-
 import math, datetime
 import numpy as np
 import scipy
@@ -151,11 +147,14 @@ class Transport:
         NxN = (self.N, self.N)
         # A: operator:       y <- (H + diag)*x
         # M: preconditioner: y <- diag@{-1}*x
+        self.iter = 0
         p,info = linalg.cg(
           A=linalg.LinearOperator(NxN, matvec = lambda x: H@x + H.diag*x),
           b=b,
-          M=linalg.LinearOperator(NxN, matvec = lambda x: x / H.diag)
-          #,tol=1e-3*np.linalg.norm(b) # or rtol=1e-3, depends on scipy version
+          M=linalg.LinearOperator(NxN, matvec = lambda x: x / H.diag),
+          callback = self.log_iter if self.verbose else None,
+          atol = 0.0, # normally the default, but larger on older scipy ver.
+          tol  = 1e-3 # or rtol=1e-3 instead of tol, depends on scipy ver.
         )
         if info != 0:
           print(f'CG did not converge, info={info}',info)
@@ -163,6 +162,15 @@ class Transport:
       p = np.empty(self.N, np.float64)
       H.solve_symmetric(b, p, self.direct)
     return p
+
+  def log_iter(self, x):
+    """
+    @brief Logs conjugate gradient iterations
+    @details Used as a callback for scipy.sparse.linalg.cg()
+    """
+    self.iter = self.iter + 1
+    if self.iter % 100 == 0:
+      print(f'CG iter: {self.iter}')
 
   def compute_Laguerre_diagram(self, weights):
     """
