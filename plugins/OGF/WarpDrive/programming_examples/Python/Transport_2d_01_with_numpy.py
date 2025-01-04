@@ -202,8 +202,6 @@ class Transport:
     @return I,J,VAL row,column,value arrays, with the extra-diagonal coeffs
     @details One needs to compute the diagonal (= -sum of extra-diagonal coeffs)
     """
-    self.log(f'=====> recompiling assemble_Hessian() {type(XY)}')
-
     NO_INDEX = -1 # Special value for invalid indices (edge on border)
 
     # Compute one entry per triangle half-edge (3*nt entries) with:
