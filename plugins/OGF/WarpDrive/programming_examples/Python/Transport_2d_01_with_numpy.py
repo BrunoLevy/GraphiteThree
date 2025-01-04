@@ -48,10 +48,10 @@ class Transport:
     self.compute_Laguerre_diagram(self.psi)
 
     # Measure of whole domain, desired areas and minimum legal area (KMT #1)
-    self.b = self.compute_Laguerre_cells_measures() # b <- Laguerre cells areas
-    self.Omega_measure = np.sum(self.b)            # Measure of the whole domain
-    self.nu_i = self.Omega_measure / self.N         # Desired area for each cell
-    self.area_threshold = 0.5*min(np.min(self.b),self.nu_i) # KMT criterion  #1
+    areas = self.compute_Laguerre_cells_measures()
+    self.Omega_measure = np.sum(areas)             # Measure of the whole domain
+    self.nu_i = self.Omega_measure / self.N        # Desired area for each cell
+    self.area_threshold = 0.5*min(np.min(areas),self.nu_i) # KMT criterion  #1
 
     # Change graphic attributes of diagram
     self.Omega.visible=False
@@ -94,19 +94,19 @@ class Transport:
     H = self.compute_Hessian() # Hessian of Kantorovich dual (sparse matrix)
 
     # rhs (minus gradient of Kantorovich dual) = desired areas - actual areas
-    self.b = self.compute_Laguerre_cells_measures()
-    self.b = self.nu_i - self.b
+    b = self.compute_Laguerre_cells_measures()
+    b = self.nu_i - b
     if self.regularization != 0.0:
-      self.b = self.b - self.regularization * self.nu_i * self.psi
+      b -= self.regularization * self.nu_i * self.psi
 
-    g_norm = np.linalg.norm(self.b)  # norm of gradient at current step (KMT #2)
+    g_norm = np.linalg.norm(b) # norm of gradient at current step (KMT #2)
 
     # solve for p in Lp=b
     if self.use_scipy:
-      p = scipy.sparse.linalg.spsolve(H, self.b)
+      p = scipy.sparse.linalg.spsolve(H, b)
     else:
       p = np.empty(self.N, np.float64)
-      H.solve_symmetric(self.b, p, self.direct)
+      H.solve_symmetric(b, p, self.direct)
 
     alpha = 1.0    # Steplength
     self.psi += p  # Start with Newton step
@@ -118,12 +118,12 @@ class Transport:
 
       # rhs (- grad of Kantorovich dual) = actual measures - desired measures
       self.compute_Laguerre_diagram(self.psi)
-      self.b = self.compute_Laguerre_cells_measures()
-      smallest_area = np.min(self.b) # for KMT criterion 1
-      self.b -= self.nu_i
+      b = self.compute_Laguerre_cells_measures()
+      smallest_area = np.min(b) # for KMT criterion 1
+      b -= self.nu_i
 
       # Check KMT criteria #1 (cell area) and #2 (gradient norm)
-      g_norm_k = np.linalg.norm(self.b)
+      g_norm_k = np.linalg.norm(b)
       KMT_1 = (smallest_area > self.area_threshold)  # criterion 1: cell area
       KMT_2 = (g_norm_k <= (1.0-0.5*alpha) * g_norm) # criterion 2: gradient norm
       self.log(f' KMT #1 (area): {KMT_1} {smallest_area}>{self.area_threshold}')
@@ -135,7 +135,7 @@ class Transport:
       self.psi -= alpha * p
     main.unlock_updates() # show graphic updates (uncomment also this one)
 
-    worst_area_error = np.linalg.norm(self.b, ord=np.inf) # grad L_infty norm
+    worst_area_error = np.linalg.norm(b, ord=np.inf) # grad L_infty norm
     self.log(f'Worst cell area error = {100.0 * worst_area_error / self.nu_i}%')
     return worst_area_error
 
