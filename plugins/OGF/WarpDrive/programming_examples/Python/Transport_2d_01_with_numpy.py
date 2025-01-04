@@ -2,6 +2,10 @@
 # "by-hand" computation of Hessian and gradient (almost fully in Python)
 # Version that uses numpy
 
+# NOTE: with scipy,iterative solver,50K points, last linsolve does not converge.
+# (but it converges with OpenNL), to be checked by logging iterates using
+#  callback function)
+
 import math, datetime
 import numpy as np
 import scipy
@@ -64,9 +68,9 @@ class Transport:
 
     # Parameters for linear solver
     self.regularization = 0.0
-    self.direct = True            # one can use a direct or an iterative solver
+    self.direct = False           # one can use a direct or an iterative solver
     if self.direct:               # if using direct solver, one needs regulariz.
-      self.regularization = 1e-3  # because matrix is singular ([1,1...1] in ker)
+      self.regularization = 1e-6  # because matrix is singular ([1,1...1] in ker)
     self.use_scipy = True         # one can use scipy or OpenNL for the solver
 
     # Make Graphite's logger less verbose (so that we can better see our logs)
@@ -94,8 +98,7 @@ class Transport:
     H = self.compute_Hessian() # Hessian of Kantorovich dual (sparse matrix)
 
     # rhs (minus gradient of Kantorovich dual) = desired areas - actual areas
-    b = self.compute_Laguerre_cells_measures()
-    b = self.nu_i - b
+    b = self.nu_i - self.compute_Laguerre_cells_measures()
     if self.regularization != 0.0:
       b -= self.regularization * self.nu_i * self.psi
 
@@ -109,14 +112,14 @@ class Transport:
     for k in range(10):
       self.log(f' Substep: k={k}')
 
-      # rhs (- grad of Kantorovich dual) = actual measures - desired measures
+      # g (grad of Kantorovich dual) at substep = actual areas - desired areas
       self.compute_Laguerre_diagram(self.psi)
-      b = self.compute_Laguerre_cells_measures()
-      smallest_area = np.min(b) # for KMT criterion 1
-      b -= self.nu_i
+      g = self.compute_Laguerre_cells_measures()
+      smallest_area = np.min(g) # for KMT criterion 1
+      g -= self.nu_i
 
       # Check KMT criteria #1 (cell area) and #2 (gradient norm)
-      g_norm_k = np.linalg.norm(b)
+      g_norm_k = np.linalg.norm(g)
       KMT_1 = (smallest_area > self.area_threshold)  # criterion 1: cell area
       KMT_2 = (g_norm_k <= (1.0-0.5*alpha) * g_norm) # criterion 2: gradient norm
       self.log(f' KMT #1 (area): {KMT_1} {smallest_area}>{self.area_threshold}')
@@ -151,8 +154,8 @@ class Transport:
         p,info = linalg.cg(
           A=linalg.LinearOperator(NxN, matvec = lambda x: H@x + H.diag*x),
           b=b,
-          # tol=1e-3, # depends on scipy version... default is 1e-5
           M=linalg.LinearOperator(NxN, matvec = lambda x: x / H.diag)
+          #,tol=1e-3*np.linalg.norm(b) # or rtol=1e-3, depends on scipy version
         )
         if info != 0:
           print(f'CG did not converge, info={info}',info)
