@@ -218,9 +218,12 @@ class Transport:
     )[:,[1,2,0]] # <- permute columns to match std convention for triangulations:
     #   different in geogram meshes because they also support n-sided polygons
 
-    I,J,VAL = self.compute_Hessian_I_J_VAL_extradiagonal(
+    I,J,VAL = Transport.compute_Hessian_I_J_VAL_extradiagonal(
       self.XY, self.T, Tadj, self.Tseed, self.seeds_XY
     )
+    if not self.use_scipy: # NL::Vector does not support non-contiguous arrays
+      I = I.copy()
+      J = J.copy()
     diag = np.zeros(self.N,np.float64) # Diagonal (initialized to zero)
     np.add.at(diag,I,-VAL)             # =minus sum extra-diagonal coefficients
     if self.regularization != 0.0:
@@ -235,12 +238,12 @@ class Transport:
         H.diag = diag # store diagonal separately if using iterative solver
     else: # Using OpenNL sparse matrices
       H = NL.create_matrix(self.N,self.N) # Creates a sparse matrix using OpenNL
-      H.add_coefficients(I,J,coeff,True)  # accumulate coeffs into H, ignore OOBs
+      H.add_coefficients(I,J,VAL,True)  # accumulate coeffs into H, ignore OOBs
       H.add_coefficients_to_diagonal(diag) # accumulate diagonal into H
 
     return H
 
-  def compute_Hessian_I_J_VAL_extradiagonal(self, XY, T, Tadj, Tseed, seeds_XY):
+  def compute_Hessian_I_J_VAL_extradiagonal(XY, T, Tadj, Tseed, seeds_XY):
     """
     @brief Assembles the Hessian of the Kantorovich dual
     @param[in] XY (nv,3) array with the vertices of the triangles
@@ -276,11 +279,7 @@ class Transport:
     V2 = qidx[:,3]
 
     # Now we can compute the vector of coefficient (note: V1,V2,I,J are vectors)
-    VAL = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
-
-    if not self.use_scipy: # NL::Vector does not support non-contiguous arrays
-      I = I.copy()
-      J = J.copy()
+    VAL = -Transport.distance(XY,V1,V2) / (2.0*Transport.distance(seeds_XY,I,J))
 
     return I, J, VAL
 
@@ -292,10 +291,10 @@ class Transport:
     """
     # See comments about XY,T,trgl_seed,nt in compute_Laguerre_diagram()
     measures = np.zeros(self.N)
-    np.add.at(measures, self.Tseed, self.triangle_area(self.XY,self.T))
+    np.add.at(measures, self.Tseed, Transport.triangle_area(self.XY,self.T))
     return measures
 
-  def triangle_area(self, XY, T):
+  def triangle_area(XY, T):
     """
     @brief Computes the area of a mesh triangle
     @param[in] XY the coordinates of the mesh vertices
@@ -311,7 +310,7 @@ class Transport:
     V = XY[v3] - XY[v1]
     return np.abs(0.5*(U[...,0]*V[...,1] - U[...,1]*V[...,0]))
 
-  def distance(self, XY, v1, v2):
+  def distance(XY, v1, v2):
     """
     @brief Computes the length of a mesh edge
     @param[in] XY the coordinates of the mesh vertices
