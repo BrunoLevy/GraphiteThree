@@ -9,10 +9,6 @@
 import jax
 jax.config.update('jax_enable_x64', True)
 #jax.config.update('jax_disable_jit', True)
-
-# Note: when activating this, at second execution there are some unexplained
-# recompilations / cache misses (I am probably not doing things right, to be
-# understood ...)
 #jax.config.update("jax_explain_cache_misses", True)
 
 import math, datetime
@@ -100,10 +96,22 @@ class Transport:
     starttime = datetime.datetime.now()
     threshold = self.nu_i * 0.01 # 1% of desired cell area
 
+    H_cache_size = Transport.compute_Hessian_I_J_VAL_extradiagonal._cache_size()
+    g_cache_size = Transport.triangles_areas._cache_size()
+
+    print(f'H cache sz: {H_cache_size}, g cache sz: {g_cache_size}')
+
     while(self.one_iteration() > threshold):
       self.Laguerre.redraw()
 
     print(f'Total elapsed time for OT: {datetime.datetime.now()-starttime}')
+
+    H_cache_size = Transport.compute_Hessian_I_J_VAL_extradiagonal._cache_size()\
+                   - H_cache_size
+    g_cache_size = Transport.triangles_areas._cache_size() - g_cache_size
+
+    print(f'H recomp: {H_cache_size}, g recomp: {g_cache_size}')
+
 
   def one_iteration(self):
     """
@@ -227,7 +235,7 @@ class Transport:
     )[:,[1,2,0]] # <- permute columns to match std convention for triangulations:
     #   different in geogram meshes because they also support n-sided polygons
 
-    I,J,VAL = self.compute_Hessian_I_J_VAL_extradiagonal(
+    I,J,VAL = Transport.compute_Hessian_I_J_VAL_extradiagonal(
       self.XY, self.T, Tadj, self.Tseed, self.seeds_XY
     )
     diag = jnp.zeros(self.N,jnp.float64) # Diagonal (initialized to zero) ...
@@ -247,8 +255,8 @@ class Transport:
 
     return H
 
-  @partial(jit, static_argnums=(0,))
-  def compute_Hessian_I_J_VAL_extradiagonal(self, XY, T, Tadj, Tseed, seeds_XY):
+  @jit
+  def compute_Hessian_I_J_VAL_extradiagonal(XY, T, Tadj, Tseed, seeds_XY):
     """
     @brief Assembles the Hessian of the Kantorovich dual
     @param[in] XY (nv,3) array with the vertices of the triangles
@@ -273,7 +281,7 @@ class Transport:
     V2 = jnp.concatenate((T[:,2], T[:,0], T[:,1]))
 
     # Now we can compute the vector of coefficient (note: V1,V2,I,J are vectors)
-    VAL = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
+    VAL = -Transport.distance(XY,V1,V2) / (2.0*Transport.distance(seeds_XY,I,J))
 
     # mask values associated with
     #   - border triangle edges (j == NO_INDEX)
@@ -299,10 +307,10 @@ class Transport:
     """
     # See comments about XY,T,trgl_seed,nt in compute_Laguerre_diagram()
     areas = jnp.zeros(self.N, jnp.float64)
-    return self.triangles_areas(areas, self.XY, self.T, self.Tseed)
+    return Transport.triangles_areas(areas, self.XY, self.T, self.Tseed)
 
-  @partial(jit, static_argnums=(0,))
-  def triangles_areas(self, areas_in, XY, T, Tseed):
+  @jit
+  def triangles_areas(areas_in, XY, T, Tseed):
     NO_INDEX=-1
     V1 = T[:,0]
     V2 = T[:,1]
@@ -314,7 +322,7 @@ class Transport:
     areas = jnp.add.at(areas_in, Tseed, Tareas, inplace=False)
     return areas
 
-  def distance(self, XY, v1, v2):
+  def distance(XY, v1, v2):
     """
     @brief Computes the length of a mesh edge
     @param[in] XY the coordinates of the mesh vertices
