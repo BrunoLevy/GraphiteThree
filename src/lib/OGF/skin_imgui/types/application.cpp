@@ -469,9 +469,7 @@ namespace OGF {
     void Application::exec_command_now(
 	const std::string& command, bool add_to_history
     ) {
-	interpreter()->execute(
-	    command, add_to_history, false
-	);
+	interpreter()->execute(command, add_to_history, false);
     }
 
     void Application::flush_command_queue() {

@@ -8,27 +8,33 @@ import scipy
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 
-N = 1000             # number of points, try 10000, 100000
-verbose = False      # set to True for logging stats during iterative algo
-shrink_points = True # regroup points in smaller zone to make it more difficult
-
 class Transport:
 
-  def __init__(self, N: int, shrink_points: bool, verbose: bool):
+  def __init__(
+      self, N: int, shrink_points: bool,
+      use_direct_solver: bool = True,
+      use_scipy: bool = True,
+      verbose: bool = False
+  ):
     """
     @brief Transport constructor
     @param[in] N number of points
     @param[in] shrink_points if set, regroup points in a small zone
+    @param[in] use_direct_solver: direct (if set) or iterative solver otherwise
+    @param[in] use_scipy: scipy (if set) or OpenNL otherwise
+    @param[in] verbose log Newton iterations if set
     """
-    self.verbose = verbose
     self.N = N
+    self.direct = use_direct_solver
+    self.use_scipy = use_scipy
+    self.verbose = verbose
 
     scene_graph.clear() # Delete all Graphite objects
 
     # Create domain Omega (a square)
     self.Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
-    self.Omega.I.Shapes.create_quad()
-    # self.Omega.I.Shapes.create_ngon(nb_edges=300) # try this instead of square
+    # self.Omega.I.Shapes.create_quad()
+    self.Omega.I.Shapes.create_ngon(nb_edges=50) # try this instead of square
     self.Omega.I.Surface.triangulate()
     self.Omega.visible = False
 
@@ -64,10 +70,8 @@ class Transport:
 
     # Parameters for linear solver
     self.regularization = 0.0
-    self.direct = False           # one can use a direct or an iterative solver
     if self.direct:               # if using direct solver, one needs regulariz.
       self.regularization = 1e-6  # because matrix is singular ([1,1...1] in ker)
-    self.use_scipy = True         # one can use scipy or OpenNL for the solver
 
     # Make Graphite's logger less verbose (so that we can better see our logs)
     gom.set_environment_value('log:features_exclude','Validate;timings')
@@ -270,8 +274,11 @@ class Transport:
     # Now we can compute the vector of coefficient (note: V1,V2,I,J are vectors)
     coeff = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
 
-    # Need to copy I,J (NL::Vector does not support non-contiguous arrays)
-    return I.copy(), J.copy(), coeff
+    if not self.use_scipy: # NL::Vector does not support non-contiguous arrays
+      I = I.copy()
+      J = J.copy()
+
+    return I, J, coeff
 
   def compute_Laguerre_cells_measures(self):
     """
@@ -280,7 +287,7 @@ class Transport:
     @details Uses the current Laguerre diagram (in self.Laguerre)
     """
     # See comments about XY,T,trgl_seed,nt in compute_Laguerre_diagram()
-    measures = np.zeros(N)
+    measures = np.zeros(self.N)
     np.add.at(measures, self.Tseed, self.triangle_area(self.XY,self.T))
     return measures
 
@@ -349,37 +356,54 @@ class Transport:
       print(msg)
 
 
-transport = Transport(N, shrink_points, verbose)
+transport = Transport(1000, True)
 
-# ------------------------------------------
+# ******************************************************************************
 # GUI
-# ------------------------------------------
+# ******************************************************************************
 
-# We need these two global functions to plug the GUI
+# We need a couple of global functions that can be called by the GUI
 
-locked = False # avoid running multiple times if user presses button.
+# Lock/unlock mechanism to avoid running multiple commands if user presses
+# buttons frantically
+
+locked = False
+
+def lock():
+  global locked
+  result = not locked
+  locked = True
+  if not result:
+    print('Could not lock (another command is running)')
+  return result
+
+def unlock():
+  global locked
+  locked = False
+
+# *************************************************************************
+
+def restart(N, shrink_points, use_direct_solver, use_scipy, verbose):
+  global transport
+  if lock():
+    transport = Transport(
+      N, shrink_points, use_direct_solver, use_scipy, verbose
+    )
+    unlock()
 
 def compute():
-  global locked
-  if locked:
-    return
-  locked = True
-  transport.unshow()
-  transport.compute()
-  transport.show()
-  locked = False
+  if lock():
+    transport.unshow()
+    transport.compute()
+    transport.show()
+    unlock()
 
 def one_iteration():
-  global locked
-  if locked:
-    return
-  locked = True
-  transport.unshow()
-#  with jax.log_compiles():
-#     transport.one_iteration()
-  transport.one_iteration()
-  transport.show()
-  locked = False
+  if lock():
+    transport.unshow()
+    transport.one_iteration()
+    transport.show()
+    unlock()
 
 # The GUI is written in Lua, and communicates
 # with Python through Graphite's interop layer.
@@ -399,16 +423,33 @@ OT_dialog.name = 'Transport'
 OT_dialog.x = 100
 OT_dialog.y = 400
 OT_dialog.w = 150
-OT_dialog.h = 200
+OT_dialog.h = 300
 OT_dialog.width = 400
+OT_dialog.N = 1000
+OT_dialog.shrink = true
+OT_dialog.direct = true
+OT_dialog.use_scipy = true
+OT_dialog.verbose = false
 
 function OT_dialog.draw_window()
-   if imgui.Button('Compute transport',-1,70) then
+   if imgui.Button('Compute transport',-1,50) then
       main.exec_command('gom.interpreter("Python").globals.compute()')
    end
-   if imgui.Button('One iteration',-1,70) then
+   if imgui.Button('One iteration',-1,50) then
       main.exec_command('gom.interpreter("Python").globals.one_iteration()')
    end
+   if imgui.Button('Restart',-1,50) then
+      gom.interpreter("Python").globals.restart(
+         OT_dialog.N, OT_dialog.shrink,
+         OT_dialog.direct, OT_dialog.use_scipy,
+         OT_dialog.verbose
+      )
+   end
+   _,OT_dialog.N = imgui.InputInt('N',OT_dialog.N)
+   _,OT_dialog.shrink = imgui.Checkbox('shrink', OT_dialog.shrink)
+   _,OT_dialog.direct = imgui.Checkbox('direct solver', OT_dialog.direct)
+   _,OT_dialog.use_scipy = imgui.Checkbox('scipy', OT_dialog.use_scipy)
+   _,OT_dialog.verbose = imgui.Checkbox('verbose', OT_dialog.verbose)
 end
 
 graphite_main_window.add_module(OT_dialog)
