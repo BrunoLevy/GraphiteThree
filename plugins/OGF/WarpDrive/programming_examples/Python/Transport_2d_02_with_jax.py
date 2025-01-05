@@ -95,9 +95,22 @@ class Transport:
     """
     starttime = datetime.datetime.now()
     threshold = self.nu_i * 0.01 # 1% of desired cell area
+
+
+    nb_grad_compiles = self.triangles_areas._cache_size()
+    nb_Hess_compiles = self.compute_Hessian_I_J_VAL_extradiagonal._cache_size()
+
+    print(f'Hess cache size: {nb_Hess_compiles}')
+    print(f'grad cache size: {nb_grad_compiles}')
+
     while(self.one_iteration() > threshold):
       self.Laguerre.redraw()
+    nb_grad_compiles = self.triangles_areas._cache_size() - nb_grad_compiles
+    nb_Hess_compiles = self.compute_Hessian_I_J_VAL_extradiagonal._cache_size() \
+                       -nb_Hess_compiles
     print(f'Total elapsed time for OT: {datetime.datetime.now()-starttime}')
+    print(f'Hess compiles: {nb_Hess_compiles}')
+    print(f'grad compiles: {nb_grad_compiles}')
 
   def one_iteration(self):
     """
@@ -292,28 +305,21 @@ class Transport:
     @details Uses the current Laguerre diagram (in self.Laguerre)
     """
     # See comments about XY,T,trgl_seed,nt in compute_Laguerre_diagram()
-    measures = jnp.zeros(self.N)
-    measures = jnp.add.at(
-      measures, self.Tseed, self.triangle_area(self.XY,self.T), inplace = False
-    )
-    return measures
+    return self.triangles_areas(self.XY, self.T, self.Tseed)
 
   @partial(jit, static_argnums=(0,))
-  def triangle_area(self, XY, T):
-    """
-    @brief Computes the area of a mesh triangle
-    @param[in] XY the coordinates of the mesh vertices
-    @param[in] T an array with the three vertices indices of the triangle
-    @details Works also when T is an array of triangles (then it returns
-     the array of triangle areas). This is why the ellipsis (...)
-     is used (here it means indexing/slicing through the last dimension)
-    """
-    v1 = T[:,0]
-    v2 = T[:,1]
-    v3 = T[:,2]
-    U = XY[v2] - XY[v1]
-    V = XY[v3] - XY[v1]
-    return jnp.abs(0.5*(U[:,0]*V[:,1] - U[:,1]*V[:,0]))
+  def triangles_areas(self, XY, T, Tseed):
+    NO_INDEX=-1
+    V1 = T[:,0]
+    V2 = T[:,1]
+    V3 = T[:,2]
+    U = XY[V2] - XY[V1]
+    V = XY[V3] - XY[V1]
+    Tareas = jnp.abs(0.5*(U[:,0]*V[:,1] - U[:,1]*V[:,0]))
+    Tareas = jnp.where(T[:,0] != NO_INDEX, Tareas[:], 0.0) # Mask padding
+    areas = jnp.zeros(self.N, jnp.float64)
+    areas = jnp.add.at(areas, Tseed, Tareas, inplace=False)
+    return areas
 
   def distance(self, XY, v1, v2):
     """
