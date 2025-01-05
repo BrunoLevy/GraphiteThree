@@ -1,6 +1,10 @@
 # Tutorial on Optimal Transport
-# "by-hand" computation of Hessian and gradient (almost fully in Python)
-# Version that uses jax
+# Semi-discrete Optimal Transport in 2D, everything in Python (except 2D
+# Laguere diagram construction)
+# Version that uses jax and scipy
+# Runs approximately at the same speed as the numpy version (but having a jax
+# version paves the way to a GPU version and to more complicated derivatives
+# computations)
 
 import jax
 jax.config.update('jax_enable_x64', True)
@@ -19,12 +23,13 @@ OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 class Transport:
 
   def __init__(
-      self, N: int, shrink_points: bool,
+      self, N: int, Nsides: int, shrink_points: bool,
       use_direct_solver: bool = True, verbose: bool = False
   ):
     """
     @brief Transport constructor
     @param[in] N number of points
+    @param[in] Nsides number of edges of polygonal domain
     @param[in] shrink_points if set, regroup points in a small zone
     @param[in] use_direct_solver: direct (if set) or iterative solver otherwise
     @param[in] verbose log Newton iterations if set
@@ -37,8 +42,10 @@ class Transport:
 
     # Create domain Omega (a square)
     self.Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
-    self.Omega.I.Shapes.create_quad()
-    #self.Omega.I.Shapes.create_ngon(nb_edges=50) # try this instead of square
+    if Nsides == 4:
+      self.Omega.I.Shapes.create_quad()
+    else:
+      self.Omega.I.Shapes.create_ngon(nb_edges=max(Nsides,3))
     self.Omega.I.Surface.triangulate()
     self.Omega.visible = False
 
@@ -67,7 +74,7 @@ class Transport:
     self.Omega.visible=False
     self.show()
 
-    # The coordinates of the seeds
+    # The coordinates of the seeds
     self.seeds_XY = self.asjax(
       self.seeds.I.Editor.find_attribute('vertices.point')
     )
@@ -234,6 +241,7 @@ class Transport:
 
     return H
 
+  @partial(jit, static_argnums=(0,))
   def compute_Hessian_I_J_VAL_extradiagonal(self, XY, T, Tadj, Tseed, seeds_XY):
     """
     @brief Assembles the Hessian of the Kantorovich dual
@@ -290,6 +298,7 @@ class Transport:
     )
     return measures
 
+  @partial(jit, static_argnums=(0,))
   def triangle_area(self, XY, T):
     """
     @brief Computes the area of a mesh triangle
@@ -299,12 +308,12 @@ class Transport:
      the array of triangle areas). This is why the ellipsis (...)
      is used (here it means indexing/slicing through the last dimension)
     """
-    v1 = T[...,0]
-    v2 = T[...,1]
-    v3 = T[...,2]
+    v1 = T[:,0]
+    v2 = T[:,1]
+    v3 = T[:,2]
     U = XY[v2] - XY[v1]
     V = XY[v3] - XY[v1]
-    return jnp.abs(0.5*(U[...,0]*V[...,1] - U[...,1]*V[...,0]))
+    return jnp.abs(0.5*(U[:,0]*V[:,1] - U[:,1]*V[:,0]))
 
   def distance(self, XY, v1, v2):
     """
@@ -313,8 +322,7 @@ class Transport:
     @param[in] v1 , v2 the mesh extremities indices.
     @details v1 and v2 can be also arrays (then returns the array of distances).
     """
-    axis = v1.ndim if hasattr(v1,'ndim') else 0
-    return jnp.linalg.norm(XY[v2]-XY[v1],axis=axis)
+    return jnp.linalg.norm(XY[v2]-XY[v1],axis=1)
 
   def asjax(self,o):
     """
@@ -327,7 +335,7 @@ class Transport:
     if dtype == np.uint32: # change dtype, OOB indexing does not work with uint !
         dtype = jnp.int32
     tmp = jnp.asarray(tmp,dtype=dtype) # converted to JAX array
-    chunk_size = 1024                  # padding (avoid recompiling too often)
+    chunk_size = 128                   # padding (avoid recompiling too often)
     pad = chunk_size - (tmp.shape[0] % chunk_size)
     if tmp.ndim == 1:
       return jnp.pad(tmp,(0,pad),constant_values=-1)
@@ -362,7 +370,7 @@ class Transport:
       print(msg)
 
 
-transport = Transport(1000, True)
+transport = Transport(1000, 4, True)
 
 # ******************************************************************************
 # GUI
@@ -389,11 +397,11 @@ def unlock():
 
 # *************************************************************************
 
-def restart(N, shrink_points, use_direct_solver, verbose):
+def restart(N, Nsides, shrink_points, use_direct_solver, verbose):
   global transport
   if lock():
     transport = Transport(
-      N, shrink_points, use_direct_solver, verbose
+      N, Nsides, shrink_points, use_direct_solver, verbose
     )
     unlock()
 
@@ -432,6 +440,7 @@ OT_dialog.w = 150
 OT_dialog.h = 300
 OT_dialog.width = 400
 OT_dialog.N = 1000
+OT_dialog.Nsides = 4
 OT_dialog.shrink = true
 OT_dialog.direct = true
 OT_dialog.verbose = false
@@ -445,12 +454,13 @@ function OT_dialog.draw_window()
    end
    if imgui.Button('Restart',-1,50) then
       gom.interpreter("Python").globals.restart(
-         OT_dialog.N, OT_dialog.shrink,
+         OT_dialog.N, OT_dialog.Nsides, OT_dialog.shrink,
          OT_dialog.direct,
          OT_dialog.verbose
       )
    end
    _,OT_dialog.N = imgui.InputInt('N',OT_dialog.N)
+   _,OT_dialog.Nsides = imgui.InputInt('sides',OT_dialog.Nsides)
    _,OT_dialog.shrink = imgui.Checkbox('shrink', OT_dialog.shrink)
    _,OT_dialog.direct = imgui.Checkbox('direct solver', OT_dialog.direct)
    _,OT_dialog.verbose = imgui.Checkbox('verbose', OT_dialog.verbose)

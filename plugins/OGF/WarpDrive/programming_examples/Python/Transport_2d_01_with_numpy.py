@@ -1,6 +1,7 @@
 # Tutorial on Optimal Transport
-# "by-hand" computation of Hessian and gradient (almost fully in Python)
-# Version that uses numpy
+# Semi-discrete Optimal Transport in 2D, everything in Python (except 2D
+# Laguere diagram construction)
+# Version that uses numpy and scipy
 
 import math, datetime
 import numpy as np
@@ -11,7 +12,7 @@ OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 class Transport:
 
   def __init__(
-      self, N: int, shrink_points: bool,
+      self, N: int, Nsides: int, shrink_points: bool,
       use_direct_solver: bool = True,
       use_scipy: bool = True,
       verbose: bool = False
@@ -19,6 +20,7 @@ class Transport:
     """
     @brief Transport constructor
     @param[in] N number of points
+    @param[in] Nsides number of edges of polygonal domain
     @param[in] shrink_points if set, regroup points in a small zone
     @param[in] use_direct_solver: direct (if set) or iterative solver otherwise
     @param[in] use_scipy: scipy (if set) or OpenNL otherwise
@@ -31,10 +33,12 @@ class Transport:
 
     scene_graph.clear() # Delete all Graphite objects
 
-    # Create domain Omega (a square)
+    # Create domain Omega (a polygon)
     self.Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
-    # self.Omega.I.Shapes.create_quad()
-    self.Omega.I.Shapes.create_ngon(nb_edges=50) # try this instead of square
+    if Nsides == 4:
+      self.Omega.I.Shapes.create_quad()
+    else:
+      self.Omega.I.Shapes.create_ngon(nb_edges=max(Nsides,3))
     self.Omega.I.Surface.triangulate()
     self.Omega.visible = False
 
@@ -356,7 +360,7 @@ class Transport:
       print(msg)
 
 
-transport = Transport(1000, True)
+transport = Transport(1000, 4, True)
 
 # ******************************************************************************
 # GUI
@@ -383,11 +387,11 @@ def unlock():
 
 # *************************************************************************
 
-def restart(N, shrink_points, use_direct_solver, use_scipy, verbose):
+def restart(N, Nsides, shrink_points, use_direct_solver, use_scipy, verbose):
   global transport
   if lock():
     transport = Transport(
-      N, shrink_points, use_direct_solver, use_scipy, verbose
+      N, Nsides, shrink_points, use_direct_solver, use_scipy, verbose
     )
     unlock()
 
@@ -426,6 +430,7 @@ OT_dialog.w = 150
 OT_dialog.h = 300
 OT_dialog.width = 400
 OT_dialog.N = 1000
+OT_dialog.Nsides = 4
 OT_dialog.shrink = true
 OT_dialog.direct = true
 OT_dialog.use_scipy = true
@@ -440,12 +445,13 @@ function OT_dialog.draw_window()
    end
    if imgui.Button('Restart',-1,50) then
       gom.interpreter("Python").globals.restart(
-         OT_dialog.N, OT_dialog.shrink,
+         OT_dialog.N, OT_dialog.Nsides, OT_dialog.shrink,
          OT_dialog.direct, OT_dialog.use_scipy,
          OT_dialog.verbose
       )
    end
    _,OT_dialog.N = imgui.InputInt('N',OT_dialog.N)
+   _,OT_dialog.Nsides = imgui.InputInt('sides',OT_dialog.Nsides)
    _,OT_dialog.shrink = imgui.Checkbox('shrink', OT_dialog.shrink)
    _,OT_dialog.direct = imgui.Checkbox('direct solver', OT_dialog.direct)
    _,OT_dialog.use_scipy = imgui.Checkbox('scipy', OT_dialog.use_scipy)
