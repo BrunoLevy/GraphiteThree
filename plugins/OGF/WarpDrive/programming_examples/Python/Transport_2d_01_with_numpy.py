@@ -443,6 +443,7 @@ function OT_dialog.draw_window()
    if imgui.Button('One iteration',-1,50) then
       main.exec_command('gom.interpreter("Python").globals.one_iteration()')
    end
+   imgui.Separator()
    if imgui.Button('Restart',-1,50) then
       gom.interpreter("Python").globals.restart(
          OT_dialog.N, OT_dialog.Nsides, OT_dialog.shrink,

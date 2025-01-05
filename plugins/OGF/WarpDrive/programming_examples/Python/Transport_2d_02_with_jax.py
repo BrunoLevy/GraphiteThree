@@ -96,21 +96,10 @@ class Transport:
     starttime = datetime.datetime.now()
     threshold = self.nu_i * 0.01 # 1% of desired cell area
 
-
-    nb_grad_compiles = self.triangles_areas._cache_size()
-    nb_Hess_compiles = self.compute_Hessian_I_J_VAL_extradiagonal._cache_size()
-
-    print(f'Hess cache size: {nb_Hess_compiles}')
-    print(f'grad cache size: {nb_grad_compiles}')
-
     while(self.one_iteration() > threshold):
       self.Laguerre.redraw()
-    nb_grad_compiles = self.triangles_areas._cache_size() - nb_grad_compiles
-    nb_Hess_compiles = self.compute_Hessian_I_J_VAL_extradiagonal._cache_size() \
-                       -nb_Hess_compiles
+
     print(f'Total elapsed time for OT: {datetime.datetime.now()-starttime}')
-    print(f'Hess compiles: {nb_Hess_compiles}')
-    print(f'grad compiles: {nb_grad_compiles}')
 
   def one_iteration(self):
     """
@@ -425,6 +414,12 @@ def one_iteration():
     transport.show()
     unlock()
 
+def clear_JAX_caches():
+  if lock():
+    jax.clear_caches()
+    unlock()
+
+
 # The GUI is written in Lua, and communicates
 # with Python through Graphite's interop layer.
 # The function for the GUI is in a big string,
@@ -458,6 +453,7 @@ function OT_dialog.draw_window()
    if imgui.Button('One iteration',-1,50) then
       main.exec_command('gom.interpreter("Python").globals.one_iteration()')
    end
+   imgui.Separator()
    if imgui.Button('Restart',-1,50) then
       gom.interpreter("Python").globals.restart(
          OT_dialog.N, OT_dialog.Nsides, OT_dialog.shrink,
@@ -470,6 +466,10 @@ function OT_dialog.draw_window()
    _,OT_dialog.shrink = imgui.Checkbox('shrink', OT_dialog.shrink)
    _,OT_dialog.direct = imgui.Checkbox('direct solver', OT_dialog.direct)
    _,OT_dialog.verbose = imgui.Checkbox('verbose', OT_dialog.verbose)
+   imgui.Separator()
+   if imgui.Button('Clear JAX caches',-1,50) then
+      gom.interpreter("Python").globals.clear_JAX_caches()
+   end
 end
 
 graphite_main_window.add_module(OT_dialog)
