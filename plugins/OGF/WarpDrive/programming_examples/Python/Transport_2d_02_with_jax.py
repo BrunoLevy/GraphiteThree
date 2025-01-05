@@ -9,6 +9,10 @@
 import jax
 jax.config.update('jax_enable_x64', True)
 #jax.config.update('jax_disable_jit', True)
+
+# Note: when activating this, at second execution there are some unexplained
+# recompilations / cache misses (I am probably not doing things right, to be
+# understood ...)
 #jax.config.update("jax_explain_cache_misses", True)
 
 import math, datetime
@@ -294,10 +298,11 @@ class Transport:
     @details Uses the current Laguerre diagram (in self.Laguerre)
     """
     # See comments about XY,T,trgl_seed,nt in compute_Laguerre_diagram()
-    return self.triangles_areas(self.XY, self.T, self.Tseed)
+    areas = jnp.zeros(self.N, jnp.float64)
+    return self.triangles_areas(areas, self.XY, self.T, self.Tseed)
 
   @partial(jit, static_argnums=(0,))
-  def triangles_areas(self, XY, T, Tseed):
+  def triangles_areas(self, areas_in, XY, T, Tseed):
     NO_INDEX=-1
     V1 = T[:,0]
     V2 = T[:,1]
@@ -306,8 +311,7 @@ class Transport:
     V = XY[V3] - XY[V1]
     Tareas = jnp.abs(0.5*(U[:,0]*V[:,1] - U[:,1]*V[:,0]))
     Tareas = jnp.where(T[:,0] != NO_INDEX, Tareas[:], 0.0) # Mask padding
-    areas = jnp.zeros(self.N, jnp.float64)
-    areas = jnp.add.at(areas, Tseed, Tareas, inplace=False)
+    areas = jnp.add.at(areas_in, Tseed, Tareas, inplace=False)
     return areas
 
   def distance(self, XY, v1, v2):
