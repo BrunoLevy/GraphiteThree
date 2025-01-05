@@ -1,42 +1,44 @@
 # Tutorial on Optimal Transport
 # "by-hand" computation of Hessian and gradient (almost fully in Python)
-# Version that uses JAX
-# Note: slower than numpy version, because it recompiles functions whenever
-#  array sizes change ! (now that we use padding it is less often, but still
-#  too often).
+# Version that uses jax
 
 import jax
 jax.config.update('jax_enable_x64', True)
 #jax.config.update('jax_disable_jit', True)
 #jax.config.update("jax_explain_cache_misses", True)
 
-import math, ctypes, datetime
+import math, datetime
 import jax.numpy as jnp
-import numpy as np
 from jax import jit
 from functools import partial
+import numpy as np
+import scipy
 
 OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 
-N = 1000 # number of points, try 10000, 100000 (be ready to wait a bit)
-
 class Transport:
 
-  def __init__(self, N: int, shrink_points: bool):
+  def __init__(
+      self, N: int, shrink_points: bool,
+      use_direct_solver: bool = True, verbose: bool = False
+  ):
     """
     @brief Transport constructor
     @param[in] N number of points
-    @param[in] shrink_points if set, group points in a small zone
+    @param[in] shrink_points if set, regroup points in a small zone
+    @param[in] use_direct_solver: direct (if set) or iterative solver otherwise
+    @param[in] verbose log Newton iterations if set
     """
-    self.verbose = False
     self.N = N
+    self.direct = use_direct_solver
+    self.verbose = verbose
 
     scene_graph.clear() # Delete all Graphite objects
 
     # Create domain Omega (a square)
     self.Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
     self.Omega.I.Shapes.create_quad()
-    # self.Omega.I.Shapes.create_ngon(nb_edges=300) # try this instead of square
+    #self.Omega.I.Shapes.create_ngon(nb_edges=50) # try this instead of square
     self.Omega.I.Surface.triangulate()
     self.Omega.visible = False
 
@@ -55,29 +57,25 @@ class Transport:
     self.psi = jnp.zeros(self.N,jnp.float64)
     self.compute_Laguerre_diagram(self.psi)
 
-    # Variables for Newton iteration (it is better to allocate them one for all)
-    self.p = np.empty(self.N, np.float64) # Newton step
-
     # Measure of whole domain, desired areas and minimum legal area (KMT #1)
-    self.b = self.compute_Laguerre_cells_measures() # b <- Laguerre cells areas
-    self.Omega_measure = jnp.sum(self.b)            # Measure of the whole domain
-    self.nu_i = self.Omega_measure / self.N         # Desired area for each cell
-    self.area_threshold = 0.5*min(jnp.min(self.b),self.nu_i) # KMT criterion  #1
+    areas = self.compute_Laguerre_cells_measures()
+    self.Omega_measure = jnp.sum(areas)             # Measure of the whole domain
+    self.nu_i = self.Omega_measure / self.N        # Desired area for each cell
+    self.area_threshold = 0.5*min(jnp.min(areas),self.nu_i) # KMT criterion  #1
 
     # Change graphic attributes of diagram
     self.Omega.visible=False
     self.show()
 
-    # The coordinates of the seeds
+    # The coordinates of the seeds
     self.seeds_XY = self.asjax(
       self.seeds.I.Editor.find_attribute('vertices.point')
     )
 
+    # Parameters for linear solver
     self.regularization = 0.0
-    self.direct = True
-
-    if self.direct:               # if using direct solver, one needs to regul
-      self.regularization = 1e-3  # because matrix is singular ([1,1...1] in ker)
+    if self.direct:               # if using direct solver, one needs regulariz.
+      self.regularization = 1e-6  # because matrix is singular ([1,1...1] in ker)
 
     # Make Graphite's logger less verbose (so that we can better see our logs)
     gom.set_environment_value('log:features_exclude','Validate;timings')
@@ -104,32 +102,28 @@ class Transport:
     H = self.compute_Hessian() # Hessian of Kantorovich dual (sparse matrix)
 
     # rhs (minus gradient of Kantorovich dual) = desired areas - actual areas
-    self.b = self.compute_Laguerre_cells_measures()
-    self.b = self.nu_i - self.b
+    b = self.nu_i - self.compute_Laguerre_cells_measures()
     if self.regularization != 0.0:
-      self.b = self.b - self.regularization * self.nu_i * self.psi
+      b -= self.regularization * self.nu_i * self.psi
 
-    g_norm = jnp.linalg.norm(self.b)  # norm of gradient at current step (KMT #2)
-    H.solve_symmetric(                # solve for p in Lp=b
-      np.asarray(self.b), np.asarray(self.p), self.direct
-    )
-
-    alpha = 1.0         # Steplength
-    self.psi += self.p  # Start with Newton step
+    g_norm = jnp.linalg.norm(b)      # norm of gradient at current step (KMT #2)
+    p = self.solve_linear_system(H,b) # solve for p in H*p=b
+    alpha = 1.0                       # Steplength
+    self.psi += p                     # Start with Newton step
 
     # Divide steplength by 2 until both KMT criteria are satisfied
     main.lock_updates() # hide graphic updates (try this: uncomment + other one )
     for k in range(10):
       self.log(f' Substep: k={k}')
 
-      # rhs (- grad of Kantorovich dual) = actual measures - desired measures
+      # g (grad of Kantorovich dual) at substep = actual areas - desired areas
       self.compute_Laguerre_diagram(self.psi)
-      self.b = self.compute_Laguerre_cells_measures()
-      smallest_area = jnp.min(self.b) # for KMT criterion 1
-      self.b -= self.nu_i
+      g = self.compute_Laguerre_cells_measures()
+      smallest_area = jnp.min(g) # for KMT criterion 1
+      g -= self.nu_i
 
       # Check KMT criteria #1 (cell area) and #2 (gradient norm)
-      g_norm_k = jnp.linalg.norm(self.b)
+      g_norm_k = jnp.linalg.norm(g)
       KMT_1 = (smallest_area > self.area_threshold)  # criterion 1: cell area
       KMT_2 = (g_norm_k <= (1.0-0.5*alpha) * g_norm) # criterion 2: gradient norm
       self.log(f' KMT #1 (area): {KMT_1} {smallest_area}>{self.area_threshold}')
@@ -138,12 +132,49 @@ class Transport:
          break
 
       alpha = alpha / 2.0
-      self.psi -= alpha * self.p
+      self.psi -= alpha * p
     main.unlock_updates() # show graphic updates (uncomment also this one)
 
-    worst_area_error = jnp.linalg.norm(self.b, ord=jnp.inf) # grad L_infty norm
+    worst_area_error = jnp.linalg.norm(b, ord=jnp.inf) # grad L_infty norm
     self.log(f'Worst cell area error = {100.0 * worst_area_error / self.nu_i}%')
     return worst_area_error
+
+  def solve_linear_system(self, H, b):
+    """
+    @brief Solves a linear system
+    @details Works in direct or iterative mode, with scipy
+    @param[in] H the matrix of the linear system
+    @param[in] b the right hand side
+    @return p such that H p = b
+    """
+    if self.direct:
+      p = scipy.sparse.linalg.spsolve(H, b)
+    else:
+      linalg = scipy.sparse.linalg
+      NxN = (self.N, self.N)
+      # A: operator:       y <- (H + diag)*x
+      # M: preconditioner: y <- diag@{-1}*x
+      self.iter = 0
+      p,info = linalg.cg(
+        A=linalg.LinearOperator(NxN, matvec = lambda x: H@x + H.diag*x),
+        b=b,
+        M=linalg.LinearOperator(NxN, matvec = lambda x: x / H.diag),
+        callback = self.log_iter if self.verbose else None,
+        atol = 0.0, # normally the default, but larger on older scipy ver.
+        tol  = 1e-3 # or rtol=1e-3 instead of tol, depends on scipy ver.
+      )
+      if info != 0:
+        print(f'CG did not converge, info={info}',info)
+    return p
+
+  def log_iter(self, x):
+    """
+    @brief Logs conjugate gradient iterations
+    @details Used as a callback for scipy.sparse.linalg.cg()
+    """
+    self.iter = self.iter + 1
+    if self.iter % 100 == 0:
+      print(f'CG iter: {self.iter}')
 
   def compute_Laguerre_diagram(self, weights):
     """
@@ -171,38 +202,39 @@ class Transport:
   def compute_Hessian(self):
     """
     @brief Computes the matrix of the system to be solved at each Newton step
-    @details Uses the current Laguerre diagram (in self.Laguerre).
+    @details Uses the current Laguerre diagram (in self.Laguerre). Works in
+     scipy and in OpenNL mode. In the (scipy,iterative) combination, the
+     diagonal of the matrix is stored separately in a dynamically created
+     'diag' field of the returned scipy sparse matrix.
     @return the Hessian matrix of the Kantorovich dual
     """
 
-    H = NL.create_matrix(self.N,self.N) # Creates a sparse matrix using OpenNL
-
     Tadj = self.asjax( # Trgls adjacent to t:Tadj[t][0], Tadj[t][1], Tadj[t][2]
       self.Laguerre.I.Editor.get_triangle_adjacents()
-    )[:,[1,2,0]] # <- permute columns to match conventions for triangulations:
-    #  different in geogram meshes because they also support n-sided polygons
+    )[:,[1,2,0]] # <- permute columns to match std convention for triangulations:
+    #   different in geogram meshes because they also support n-sided polygons
 
-    self.log(f'=====> nb quadruplets = {self.T.shape[0]*3}')
-    I,J,coeff = self.assemble_Hessian(
+    I,J,VAL = self.compute_Hessian_I_J_VAL_extradiagonal(
       self.XY, self.T, Tadj, self.Tseed, self.seeds_XY
     )
-
-    # Accumumate coefficients into matrix and diagonal
-    H.add_coefficients( # accumulate coeffs into matrix
-      np.asarray(I),np.asarray(J),np.asarray(coeff),True #<- ignore_OOB
-    )
-
-    diag = jnp.zeros(self.N,jnp.float64) # Diagonal (initialized to zero)
-    diag=jnp.add.at(                     # =minus sum extra-diagonal coefficients
-      diag,I,-coeff,inplace=False
+    diag = jnp.zeros(self.N,jnp.float64) # Diagonal (initialized to zero) ...
+    diag = jnp.add.at( # ... = minus sum extra-diagonal coefficients
+      diag,I,-VAL,inplace = False
     )
     if self.regularization != 0.0:
       diag = diag + self.regularization * self.nu_i
-    H.add_coefficients_to_diagonal(np.asarray(diag)) # accumulate diagonal into H
+
+    # Beware parenth-----------------v (construct sparse matrix from I,J,VAL)
+    H = scipy.sparse.csr_matrix( (VAL,(I,J)), shape=(self.N,self.N) )
+    if self.direct: # if using direct solver, inject diag coeffs into mtx
+      s = jnp.arange(self.N,dtype=jnp.int32)
+      H += scipy.sparse.csr_matrix( (diag,(s,s)), shape=(self.N,self.N) )
+    else:
+      H.diag = diag # store diagonal separately if using iterative solver
+
     return H
 
-  @partial(jit, static_argnums=(0,))
-  def assemble_Hessian(self, XY, T, Tadj, Tseed, seeds_XY):
+  def compute_Hessian_I_J_VAL_extradiagonal(self, XY, T, Tadj, Tseed, seeds_XY):
     """
     @brief Assembles the Hessian of the Kantorovich dual
     @param[in] XY (nv,3) array with the vertices of the triangles
@@ -213,11 +245,9 @@ class Transport:
     @return I,J,VAL row,column,value arrays, with the extra-diagonal coeffs
     @details One needs to compute the diagonal (= -sum of extra-diagonal coeffs)
     """
-    self.log(f'=====> recompiling assemble_Hessian() {type(XY)}')
-
     NO_INDEX = -1 # Special value for invalid indices (edge on border)
 
-    # There is one entry per triangle half-edge (3*nt entries)
+    # Compute one entry per triangle half-edge (3*nt entries) with:
     # I is the seed associated with the triangle
     # J is the seed on the other side of the triangle's edge (NO_INDEX on border)
     # V1 and V2 are the two vertices of the triangle
@@ -228,22 +258,24 @@ class Transport:
     V1 = jnp.concatenate((T[:,1], T[:,2], T[:,0]))
     V2 = jnp.concatenate((T[:,2], T[:,0], T[:,1]))
 
-    # Now we can compute a vector of coefficient (note: V1,V2,I,J are vectors)
-    # We do not take care of filtering entries, becuase indexing with NO_INDEX
-    # entries in I,J,V1,V2 are clamped to the size of the seeds_XY and XY arrays
-    # but ...
-    coeff = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
+    # Now we can compute the vector of coefficient (note: V1,V2,I,J are vectors)
+    VAL = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
 
-    # ... we need to mask coeffs that correspond to border and internal edges
-    coeff = jnp.where(
-      jnp.logical_and(I[:] != J[:], J[:] != NO_INDEX), coeff[:], 0.0
+    # mask values associated with
+    #   - border triangle edges (j == NO_INDEX)
+    #   - triangle edges inside Laguerre cell (i == j)
+    #   - padding (i == NO_INDEX and j == NO_INDEX)
+    VAL = jnp.where(
+      jnp.logical_and( J[:] != NO_INDEX, I[:] != J[:]),
+      VAL[:], 0.0
     )
 
-    # Note: this masking technique works also with numpy (we can do like
-    #  that also in Transport_2d_01_with_numpy.py), because we use -1 for
-    #  NO_INDEX, and negative indices mean starting from end of array.
+    # scipy does not clamp invalid indices so we need to mask them
+    # It will add 0 to H(0,0) since we masked VAL right before
+    I = jnp.where( I[:] != NO_INDEX, I[:], 0)
+    J = jnp.where( J[:] != NO_INDEX, J[:], 0)
 
-    return I,J,coeff
+    return I, J, VAL
 
   def compute_Laguerre_cells_measures(self):
     """
@@ -252,23 +284,27 @@ class Transport:
     @details Uses the current Laguerre diagram (in self.Laguerre)
     """
     # See comments about XY,T,trgl_seed,nt in compute_Laguerre_diagram()
-    self.log(f'=====> nb triangles = {self.T.shape[0]}')
-    return self.triangles_areas(self.XY, self.T, self.Tseed)
+    measures = jnp.zeros(self.N)
+    measures = jnp.add.at(
+      measures, self.Tseed, self.triangle_area(self.XY,self.T), inplace = False
+    )
+    return measures
 
-  @partial(jit, static_argnums=(0,))
-  def triangles_areas(self, XY, T, Tseed):
-    self.log(f'=====> recompiling triangle_areas() {type(XY)}')
-    NO_INDEX=-1
-    V1 = T[:,0]
-    V2 = T[:,1]
-    V3 = T[:,2]
-    U = XY[V2] - XY[V1]
-    V = XY[V3] - XY[V1]
-    Tareas = jnp.abs(0.5*(U[:,0]*V[:,1] - U[:,1]*V[:,0]))
-    Tareas = jnp.where(T[:,0] != NO_INDEX, Tareas[:], 0.0) # Mask padding
-    areas = jnp.zeros(self.N, jnp.float64)
-    areas = jnp.add.at(areas, Tseed, Tareas, inplace=False)
-    return areas
+  def triangle_area(self, XY, T):
+    """
+    @brief Computes the area of a mesh triangle
+    @param[in] XY the coordinates of the mesh vertices
+    @param[in] T an array with the three vertices indices of the triangle
+    @details Works also when T is an array of triangles (then it returns
+     the array of triangle areas). This is why the ellipsis (...)
+     is used (here it means indexing/slicing through the last dimension)
+    """
+    v1 = T[...,0]
+    v2 = T[...,1]
+    v3 = T[...,2]
+    U = XY[v2] - XY[v1]
+    V = XY[v3] - XY[v1]
+    return jnp.abs(0.5*(U[...,0]*V[...,1] - U[...,1]*V[...,0]))
 
   def distance(self, XY, v1, v2):
     """
@@ -326,37 +362,54 @@ class Transport:
       print(msg)
 
 
-transport = Transport(N,True)
-# transport.verbose = True # uncomment to display Newton convergence
+transport = Transport(1000, True)
 
-
-# ------------------------------------------
+# ******************************************************************************
 # GUI
-# ------------------------------------------
+# ******************************************************************************
 
-# We need these two global functions to plug the GUI
+# We need a couple of global functions that can be called by the GUI
 
-locked = False # avoid running multiple times if user presses button.
+# Lock/unlock mechanism to avoid running multiple commands if user presses
+# buttons frantically
+
+locked = False
+
+def lock():
+  global locked
+  result = not locked
+  locked = True
+  if not result:
+    print('Could not lock (another command is running)')
+  return result
+
+def unlock():
+  global locked
+  locked = False
+
+# *************************************************************************
+
+def restart(N, shrink_points, use_direct_solver, verbose):
+  global transport
+  if lock():
+    transport = Transport(
+      N, shrink_points, use_direct_solver, verbose
+    )
+    unlock()
 
 def compute():
-  global locked
-  if locked:
-    return
-  locked = True
-  transport.unshow()
-  transport.compute()
-  transport.show()
-  locked = False
+  if lock():
+    transport.unshow()
+    transport.compute()
+    transport.show()
+    unlock()
 
 def one_iteration():
-  global locked
-  if locked:
-    return
-  locked = True
-  transport.unshow()
-  transport.one_iteration()
-  transport.show()
-  locked = False
+  if lock():
+    transport.unshow()
+    transport.one_iteration()
+    transport.show()
+    unlock()
 
 # The GUI is written in Lua, and communicates
 # with Python through Graphite's interop layer.
@@ -376,16 +429,31 @@ OT_dialog.name = 'Transport'
 OT_dialog.x = 100
 OT_dialog.y = 400
 OT_dialog.w = 150
-OT_dialog.h = 200
+OT_dialog.h = 300
 OT_dialog.width = 400
+OT_dialog.N = 1000
+OT_dialog.shrink = true
+OT_dialog.direct = true
+OT_dialog.verbose = false
 
 function OT_dialog.draw_window()
-   if imgui.Button('Compute transport',-1,70) then
+   if imgui.Button('Compute transport',-1,50) then
       main.exec_command('gom.interpreter("Python").globals.compute()')
    end
-   if imgui.Button('One iteration',-1,70) then
+   if imgui.Button('One iteration',-1,50) then
       main.exec_command('gom.interpreter("Python").globals.one_iteration()')
    end
+   if imgui.Button('Restart',-1,50) then
+      gom.interpreter("Python").globals.restart(
+         OT_dialog.N, OT_dialog.shrink,
+         OT_dialog.direct,
+         OT_dialog.verbose
+      )
+   end
+   _,OT_dialog.N = imgui.InputInt('N',OT_dialog.N)
+   _,OT_dialog.shrink = imgui.Checkbox('shrink', OT_dialog.shrink)
+   _,OT_dialog.direct = imgui.Checkbox('direct solver', OT_dialog.direct)
+   _,OT_dialog.verbose = imgui.Checkbox('verbose', OT_dialog.verbose)
 end
 
 graphite_main_window.add_module(OT_dialog)

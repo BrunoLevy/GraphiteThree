@@ -214,17 +214,17 @@ class Transport:
     )[:,[1,2,0]] # <- permute columns to match std convention for triangulations:
     #   different in geogram meshes because they also support n-sided polygons
 
-    I,J,coeff = self.assemble_Hessian(
+    I,J,VAL = self.compute_Hessian_I_J_VAL_extradiagonal(
       self.XY, self.T, Tadj, self.Tseed, self.seeds_XY
     )
     diag = np.zeros(self.N,np.float64) # Diagonal (initialized to zero)
-    np.add.at(diag,I,-coeff)           # =minus sum extra-diagonal coefficients
+    np.add.at(diag,I,-VAL)             # =minus sum extra-diagonal coefficients
     if self.regularization != 0.0:
       diag = diag + self.regularization * self.nu_i
 
-    if self.use_scipy: # Using scipy sparse matrices
-      H = scipy.sparse.csr_matrix( (coeff,(I,J)), shape=(self.N,self.N) )
-      if self.direct:
+    if self.use_scipy: # Beware parenth---v (construct spmat from I,J,VAL)
+      H = scipy.sparse.csr_matrix( (VAL,(I,J)), shape=(self.N,self.N) )
+      if self.direct: # if using direct solver, inject diag coeffs into mtx
         s = np.arange(self.N,dtype=np.int32)
         H += scipy.sparse.csr_matrix( (diag,(s,s)), shape=(self.N,self.N) )
       else:
@@ -236,7 +236,7 @@ class Transport:
 
     return H
 
-  def assemble_Hessian(self, XY, T, Tadj, Tseed, seeds_XY):
+  def compute_Hessian_I_J_VAL_extradiagonal(self, XY, T, Tadj, Tseed, seeds_XY):
     """
     @brief Assembles the Hessian of the Kantorovich dual
     @param[in] XY (nv,3) array with the vertices of the triangles
@@ -272,13 +272,13 @@ class Transport:
     V2 = qidx[:,3]
 
     # Now we can compute the vector of coefficient (note: V1,V2,I,J are vectors)
-    coeff = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
+    VAL = -self.distance(XY,V1,V2) / (2.0 * self.distance(seeds_XY,I,J))
 
     if not self.use_scipy: # NL::Vector does not support non-contiguous arrays
       I = I.copy()
       J = J.copy()
 
-    return I, J, coeff
+    return I, J, VAL
 
   def compute_Laguerre_cells_measures(self):
     """
