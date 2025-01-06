@@ -227,7 +227,7 @@ class Transport:
     diag = np.zeros(self.N,np.float64) # Diagonal (initialized to zero)
     np.add.at(diag,I,-VAL)             # =minus sum extra-diagonal coefficients
     if self.regularization != 0.0:
-      diag = diag + self.regularization * self.nu_i
+      diag += self.regularization * self.nu_i
 
     if self.use_scipy: # Beware parenth---v (construct spmat from I,J,VAL)
       H = scipy.sparse.csr_matrix( (VAL,(I,J)), shape=(self.N,self.N) )

@@ -230,7 +230,7 @@ class Transport:
       self.Laguerre.I.Editor.find_attribute('facets.chart')
     )
 
-    # nb non-empty cells (.at[I].set() does not accumulate, unlike .add.at())
+    # Number of non-empty cells
     return jnp.sum(jnp.zeros(self.N,jnp.int32).at[self.Tseed].set(1))
 
   def compute_Hessian(self):
@@ -251,14 +251,11 @@ class Transport:
     I,J,VAL = Transport.compute_Hessian_I_J_VAL_extradiagonal(
       self.XY, self.T, Tadj, self.Tseed, self.seeds_XY
     )
-    diag = jnp.zeros(self.N,jnp.float64) # Diagonal (initialized to zero) ...
-    diag = jnp.add.at( # ... = minus sum extra-diagonal coefficients
-      diag,I,-VAL,inplace = False
-    )
+    diag = jnp.zeros(self.N,jnp.float64).at[I].add(-VAL)
     if self.regularization != 0.0:
-      diag = diag + self.regularization * self.nu_i
+      diag += self.regularization * self.nu_i
 
-    # Beware parenth-----------------v (construct sparse matrix from I,J,VAL)
+    # Beware parenthesis--------------v (construct sparse matrix from I,J,VAL)
     H = scipy.sparse.csr_matrix( (VAL,(I,J)), shape=(self.N,self.N) )
     if self.direct: # if using direct solver, inject diag coeffs into mtx
       s = jnp.arange(self.N,dtype=jnp.int32)
@@ -334,7 +331,8 @@ class Transport:
     V = XY[V3] - XY[V1]
     Tareas = jnp.abs(0.5*(U[:,0]*V[:,1] - U[:,1]*V[:,0]))
     Tareas = jnp.where(T[:,0] != NO_INDEX, Tareas[:], 0.0) # Mask padding
-    return jnp.add.at(areas_in, Tseed, Tareas, inplace=False)
+    #return jnp.add.at(areas_in, Tseed, Tareas, inplace=False)
+    return areas_in.at[Tseed].add(Tareas)
 
   def distance(XY, v1, v2):
     """
