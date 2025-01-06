@@ -68,7 +68,7 @@ if(${GRAPHITE_FOUND_PYTHON})
 
    add_library(gompy ${SOURCES})
 
-   target_link_libraries(gompy scene_graph skin gom_gom gom)
+   target_link_libraries(gompy scene_graph gom_gom gom)
    target_link_libraries(gompy renderer basic)
    target_link_libraries(gompy geogram_gfx geogram)
    target_link_libraries(gompy ${PYTHON_LIBRARIES})

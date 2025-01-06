@@ -105,7 +105,7 @@ class Transport:
     self.H_evals = 0
 
 
-    print(f'H cache sz: {H_cache_size}, g cache sz: {g_cache_size}')
+    print(f'H cache size: {H_cache_size}, g cache size: {g_cache_size}')
 
     while(self.one_iteration() > threshold):
       self.Laguerre.redraw()
@@ -116,7 +116,8 @@ class Transport:
                    - H_cache_size
     g_cache_size = Transport.cells_areas._cache_size() - g_cache_size
 
-    print(f'H recomp: {H_cache_size}/{self.H_evals}, g recomp: {g_cache_size}/{self.g_evals}')
+    print(f'H recompiles: {H_cache_size}/{self.H_evals}' +
+          f',  g recompiles: {g_cache_size}/{self.g_evals}')
 
 
   def one_iteration(self):
