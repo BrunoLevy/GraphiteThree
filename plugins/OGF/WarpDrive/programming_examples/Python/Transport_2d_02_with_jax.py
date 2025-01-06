@@ -14,7 +14,6 @@ jax.config.update('jax_enable_x64', True)
 import math, datetime
 import jax.numpy as jnp
 from jax import jit
-from functools import partial
 import numpy as np
 import scipy
 
@@ -59,7 +58,7 @@ class Transport:
     # To demonstrate more interesting transport, cluster points in a zone
     if shrink_points:
       coords = np.asarray(self.seeds.I.Editor.get_points())
-      coords[:] = 0.125 + coords/4.0
+      coords[:,0:2] = 0.125 + coords[:,0:2]/4.0
       self.seeds.update()
 
     # Compute Laguerre diagram

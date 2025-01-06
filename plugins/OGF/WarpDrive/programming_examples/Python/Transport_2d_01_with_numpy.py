@@ -49,7 +49,7 @@ class Transport:
     # To demonstrate more interesting transport, cluster points in a zone
     if shrink_points:
       coords = np.asarray(self.seeds.I.Editor.get_points())
-      coords[:] = 0.125 + coords/4.0
+      coords[:,0:2] = 0.125 + coords[:,0:2]/4.0
       self.seeds.update()
 
     # Compute Laguerre diagram
@@ -186,7 +186,7 @@ class Transport:
     @param[in] weights the weights vector
     """
     self.seeds.I.Transport.compute_Laguerre_diagram(
-      self.Omega, np.asarray(weights), self.Laguerre, 'EULER_2D'
+      self.Omega, weights, self.Laguerre, 'EULER_2D'
     )
     self.Laguerre.update()
     self.Laguerre.I.Surface.triangulate()
