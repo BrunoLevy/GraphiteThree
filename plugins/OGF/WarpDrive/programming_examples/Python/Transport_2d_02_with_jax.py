@@ -38,6 +38,9 @@ class Transport:
     self.direct = use_direct_solver
     self.verbose = verbose
 
+    self.H_evals = 0 # tracing H and g evaluations
+    self.g_evals = 0 #
+
     scene_graph.clear() # Delete all Graphite objects
 
     # Create domain Omega (a square)
@@ -97,7 +100,10 @@ class Transport:
     threshold = self.nu_i * 0.01 # 1% of desired cell area
 
     H_cache_size = Transport.compute_Hessian_I_J_VAL_extradiagonal._cache_size()
-    g_cache_size = Transport.triangles_areas._cache_size()
+    g_cache_size = Transport.cells_areas._cache_size()
+    self.g_evals = 0
+    self.H_evals = 0
+
 
     print(f'H cache sz: {H_cache_size}, g cache sz: {g_cache_size}')
 
@@ -108,9 +114,9 @@ class Transport:
 
     H_cache_size = Transport.compute_Hessian_I_J_VAL_extradiagonal._cache_size()\
                    - H_cache_size
-    g_cache_size = Transport.triangles_areas._cache_size() - g_cache_size
+    g_cache_size = Transport.cells_areas._cache_size() - g_cache_size
 
-    print(f'H recomp: {H_cache_size}, g recomp: {g_cache_size}')
+    print(f'H recomp: {H_cache_size}/{self.H_evals}, g recomp: {g_cache_size}/{self.g_evals}')
 
 
   def one_iteration(self):
@@ -138,19 +144,22 @@ class Transport:
       self.log(f' Substep: k={k}')
 
       # g (grad of Kantorovich dual) at substep = actual areas - desired areas
-      self.compute_Laguerre_diagram(self.psi)
-      g = self.compute_Laguerre_cells_measures()
-      smallest_area = jnp.min(g) # for KMT criterion 1
-      g -= self.nu_i
+      nb_non_empty = self.compute_Laguerre_diagram(self.psi)
+      if nb_non_empty < self.N:
+        self.log('>*< has empty cells')
+      else:
+        g = self.compute_Laguerre_cells_measures()
+        smallest_area = jnp.min(g) # for KMT criterion 1
+        g -= self.nu_i
 
-      # Check KMT criteria #1 (cell area) and #2 (gradient norm)
-      g_norm_k = jnp.linalg.norm(g)
-      KMT_1 = (smallest_area > self.area_threshold)  # criterion 1: cell area
-      KMT_2 = (g_norm_k <= (1.0-0.5*alpha) * g_norm) # criterion 2: gradient norm
-      self.log(f' KMT #1 (area): {KMT_1} {smallest_area}>{self.area_threshold}')
-      self.log(f' KMT #2 (grad): {KMT_2} {g_norm_k}<={(1.0-0.5*alpha)*g_norm}')
-      if KMT_1 and KMT_2:
-         break
+        # Check KMT criteria #1 (cell area) and #2 (gradient norm)
+        g_norm_k = jnp.linalg.norm(g)
+        KMT_1 = (smallest_area > self.area_threshold)  # criterion 1: cell area
+        KMT_2 = (g_norm_k <= (1.0-0.5*alpha) * g_norm) # criterion 2: grad norm
+        self.log(f' KMT #1 (area):{KMT_1} {smallest_area}>{self.area_threshold}')
+        self.log(f' KMT #2 (grad):{KMT_2} {g_norm_k}<={(1.0-0.5*alpha)*g_norm}')
+        if KMT_1 and KMT_2:
+          break
 
       alpha = alpha / 2.0
       self.psi -= alpha * p
@@ -201,6 +210,7 @@ class Transport:
     """
     @brief Computes a Laguerre diagram from a weight vector
     @param[in] weights the weights vector
+    @return number of non-empty cells
     """
     self.seeds.I.Transport.compute_Laguerre_diagram(
       self.Omega, np.asarray(weights), self.Laguerre, 'EULER_2D'
@@ -219,6 +229,9 @@ class Transport:
     self.Tseed = self.asjax(
       self.Laguerre.I.Editor.find_attribute('facets.chart')
     )
+
+    # nb non-empty cells (.at[I].set() does not accumulate, unlike .add.at())
+    return jnp.sum(jnp.zeros(self.N,jnp.int32).at[self.Tseed].set(1))
 
   def compute_Hessian(self):
     """
@@ -253,6 +266,7 @@ class Transport:
     else:
       H.diag = diag # store diagonal separately if using iterative solver
 
+    self.H_evals += 1
     return H
 
   @jit
@@ -307,10 +321,11 @@ class Transport:
     """
     # See comments about XY,T,trgl_seed,nt in compute_Laguerre_diagram()
     areas = jnp.zeros(self.N, jnp.float64)
-    return Transport.triangles_areas(areas, self.XY, self.T, self.Tseed)
+    self.g_evals += 1
+    return Transport.cells_areas(areas, self.XY, self.T, self.Tseed)
 
   @jit
-  def triangles_areas(areas_in, XY, T, Tseed):
+  def cells_areas(areas_in, XY, T, Tseed):
     NO_INDEX=-1
     V1 = T[:,0]
     V2 = T[:,1]
@@ -319,8 +334,7 @@ class Transport:
     V = XY[V3] - XY[V1]
     Tareas = jnp.abs(0.5*(U[:,0]*V[:,1] - U[:,1]*V[:,0]))
     Tareas = jnp.where(T[:,0] != NO_INDEX, Tareas[:], 0.0) # Mask padding
-    areas = jnp.add.at(areas_in, Tseed, Tareas, inplace=False)
-    return areas
+    return jnp.add.at(areas_in, Tseed, Tareas, inplace=False)
 
   def distance(XY, v1, v2):
     """
