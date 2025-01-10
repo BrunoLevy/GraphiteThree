@@ -25,21 +25,24 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_SKIN_IMGUI_ICON_REPOSITORY_H
 #define H_SKIN_IMGUI_ICON_REPOSITORY_H
 
 #include <OGF/skin_imgui/common/common.h>
-#include <geogram_gfx/third_party/imgui/imgui.h>
-#include <geogram_gfx/basic/GL.h> 
+
+
+#include <geogram_gfx/imgui_ext/imgui_ext.h>
+
+#include <geogram_gfx/basic/GL.h>
 
 #include <map>
 #include <set>
@@ -74,7 +77,7 @@ namespace OGF {
          * \details If the specified name is already bound, then an
          *  error message is displayed.
          * \param[in] icon_name the name of the icon
-         * \param[in] gl_texture the OpenGL texture that 
+         * \param[in] gl_texture the OpenGL texture that
 	 *   corresponds to the icon.
          */
         void bind_icon(const std::string& icon_name, GLuint gl_texture);
@@ -85,22 +88,22 @@ namespace OGF {
          *  the lib/icons/ subdirectories of the OGF_PATH. If it is not
          *  found, then it is replaced with the "on_icon" icon (a red cross).
          * \param[in] icon_name the name of the icon
-	 * \param[in] mipmap if true, and if the icon was not already in the 
+	 * \param[in] mipmap if true, and if the icon was not already in the
 	 *  repository, create mipmaps.
          * \return the ImTextureID that corresponds to the icon.
          */
         ImTextureID resolve_icon(
 	    const std::string& icon_name, bool mipmap=false
 	) const;
-    
+
     private:
 	typedef union {
 	    ImTextureID im_texture_id;
 	    GLuint gl_texture_id;
 	} Icon;
-	
+
         std::map<std::string, Icon> icons_;
-	
+
 	/** \brief To notify not found icons only once. */
 	mutable std::set<std::string> not_found_;
     };
@@ -110,4 +113,3 @@ namespace OGF {
 }
 
 #endif
-

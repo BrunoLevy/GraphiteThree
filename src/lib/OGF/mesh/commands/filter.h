@@ -23,18 +23,18 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the following 
+ * As an exception to the GPL, Graphite can be linked with the following
  *  (non-GPL) libraries:  Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_MESH_COMMANDS_FILTER_H
 #define H_OGF_MESH_COMMANDS_FILTER_H
@@ -83,7 +83,7 @@ namespace OGF {
 
         /**
          * \brief Tests an element by value
-         * \param[in] item the element to be tested
+         * \param[in] value the element value to be tested
          * \retval true if the element is in the subset
          * \retval false otherwise
          */
@@ -98,8 +98,8 @@ namespace OGF {
         /**
          * \brief used in 'values' mode (ctor, floating_point = true)
          */
-        void parse_values(const std::string& destription);        
-        
+        void parse_values(const std::string& destription);
+
     private:
         index_t size_;
         vector<double> include_items_;

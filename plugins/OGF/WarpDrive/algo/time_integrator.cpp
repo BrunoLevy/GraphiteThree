@@ -83,11 +83,11 @@ namespace {
     }
 
     /**
-     * \brief Computes the velocity with the method of characteristics 
+     * \brief Computes the velocity with the method of characteristics
      * (cf Stam99) (i.e. semi-lagrangian advection method).
      * \note not implemented yet.
      */
-    void compute_semi_Lagrangian(
+    [[noreturn]] void compute_semi_Lagrangian(
 	double current_time, double delta_t, const vec3& vertex, vec3 &veloc,
 	const VelocityField* m_veloc
     ) {
@@ -107,7 +107,7 @@ namespace OGF {
 	time_integrator_t algo, const VelocityField* m_veloc
     ) {
 	switch(algo) {
-	    case RUNGE_KUTTA_2 : 
+	    case RUNGE_KUTTA_2 :
 		compute_Runge_Kutta_2(
 		    current_time, delta_t, vertex, veloc, m_veloc
 		) ;
@@ -123,9 +123,8 @@ namespace OGF {
 		);
 		break;
 	    case SIMPLE :
-		m_veloc->get_velocity(current_time, vertex, veloc); 
+		m_veloc->get_velocity(current_time, vertex, veloc);
 		break;
 	}
     }
 }
-

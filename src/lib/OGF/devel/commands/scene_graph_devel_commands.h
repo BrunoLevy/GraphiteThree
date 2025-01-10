@@ -26,15 +26,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 
 
 #ifndef H_OGF_DEVEL_COMMANDS_SCENE_GRAPH_DEVEL_COMMANDS_H
@@ -65,7 +65,7 @@ namespace OGF {
         /**
          * \brief SceneGraphDevelCommands destructor.
          */
-        virtual ~SceneGraphDevelCommands();
+        ~SceneGraphDevelCommands() override;
 
     gom_slots:
         /**
@@ -79,7 +79,7 @@ namespace OGF {
          * \brief Creates C++ skeleton sources for a new plugin.
          * \param[in] plugin_name the name of the plugin
          * \param[in] author your name
-         * \param[in] contact your contact info (only used to be included 
+         * \param[in] contact your contact info (only used to be included
          *  in the generated headers, you can leave blank if you wish)
          * \param[in] autoload if true, the plugin will be loaded next time
          *  Graphite is started (once the plugin is compiled)
@@ -96,20 +96,20 @@ namespace OGF {
          * \brief Creates a new Commands class in a plugin.
          * \param[in] plugin_name the name of the plugin
          * \param[in] type the Grob class the commands should be attached to
-         * \param[in] name for instance "FooBar" 
+         * \param[in] name for instance "FooBar"
          *  for "OGF::MeshGrobFooBarCommands"
          * \menu /Devel
          */
         void create_commands(
             const DynamicModuleName& plugin_name,
-            const GrobClassName& type, 
+            const GrobClassName& type,
             const std::string& name
         );
 
         /**
          * \brief Creates a new Commands class for the SceneGraph in a plugin.
          * \param[in] plugin_name the name of the plugin
-         * \param[in] name for instance "FooBar" 
+         * \param[in] name for instance "FooBar"
          *  for "OGF::SceneGraphFooBarCommands"
          * \menu /Devel
          */
@@ -118,7 +118,7 @@ namespace OGF {
             const std::string& name
         );
 
-        
+
         /**
          * \brief Creates a new Shader class in a plugin.
          * \param[in] plugin_name the name of the plugin
@@ -129,7 +129,7 @@ namespace OGF {
          * \menu /Devel
          */
         void create_shader(
-            const DynamicModuleName& plugin_name, 
+            const DynamicModuleName& plugin_name,
             const GrobClassName& type,
             const std::string& name,
             const std::string& base_class_name=""
@@ -147,7 +147,7 @@ namespace OGF {
         void create_tool(
             const DynamicModuleName& plugin_name,
             const GrobClassName& type,
-            const std::string& name,            
+            const std::string& name,
             const std::string& base_class_name = ""
         );
 
@@ -167,11 +167,11 @@ namespace OGF {
             const std::string& file_extension = "",
             const std::string& base_class_name = ""
         );
-        
+
         /**
          * \brief Creates a new class in a plugin.
          * \param[in] plugin_name the name of the plugin
-         * \param[in] subdirectory relative path to the subdirectory where 
+         * \param[in] subdirectory relative path to the subdirectory where
          *  the class files should be created
          * \param[in] class_name the name of the class to be created
          * \menu /Devel
@@ -185,7 +185,7 @@ namespace OGF {
         /**
          * \brief Creates a new file in a plugin.
          * \param[in] plugin_name the name of the plugin
-         * \param[in] subdirectory relative path to the subdirectory where 
+         * \param[in] subdirectory relative path to the subdirectory where
          *  the class files should be created
          * \param[in] name the name of the file to be created, without extension
          * \menu /Devel
@@ -199,5 +199,3 @@ namespace OGF {
 }
 
 #endif
-
-

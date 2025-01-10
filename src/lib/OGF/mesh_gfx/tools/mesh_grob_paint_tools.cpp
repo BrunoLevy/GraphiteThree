@@ -40,7 +40,6 @@
 #include <OGF/renderer/context/rendering_context.h>
 #include <OGF/gom/reflection/meta.h>
 
-#include <geogram_gfx/third_party/imgui/imgui.h>
 #include <geogram/mesh/mesh_geometry.h>
 #include <geogram/image/image_library.h>
 #include <geogram/image/image_rasterizer.h>

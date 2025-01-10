@@ -324,8 +324,7 @@ namespace OGF {
 	/**
 	 * \brief Computes a reflected ray.
 	 * \param[in] ray incident ray.
-	 * \param[in] P the point where reflection occurs.
-	 * \param[in] N the unit vector at \p P.
+	 * \param[in] I the intersection (has reflection point and unit vector)
 	 * \return the reflected ray.
 	 */
 	static Ray reflect_ray(

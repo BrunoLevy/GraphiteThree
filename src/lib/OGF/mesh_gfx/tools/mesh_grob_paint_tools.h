@@ -252,7 +252,7 @@ namespace OGF {
 
         /**
          * \brief Paints a rectangle
-         * \param[in] raypick
+         * \param[in] raypick a const reference to a RayPick
          * \param[in] x0 , y0 , x1 , y1 image bounds (device coordinates)
          * \param[in] mask an optional mask. Black pixels do not belong to
          *  the selection, non-zero pixels belong to selection. Image is

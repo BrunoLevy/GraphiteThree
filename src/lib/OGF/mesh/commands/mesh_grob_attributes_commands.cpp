@@ -383,7 +383,7 @@ namespace OGF {
 	    0, mesh_grob()->vertices.nb(),
 	    [
 		surface, &AABB, &color, &tex_coord, &texture, &to_tex_coord,
-		copy_tex_coords, this
+		this
 	    ](index_t v) {
 		vec3 p(mesh_grob()->vertices.point_ptr(v));
 		vec3 q;

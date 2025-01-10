@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/gom/reflection/meta_class.h>
@@ -118,7 +118,7 @@ namespace {
 	    }
 	}
     }
-    
+
     std::vector<std::string> include_path;
     std::string input_path;
     std::string output_path;
@@ -130,10 +130,10 @@ namespace {
 	    if (argv[i]) {
 		if (!strncmp(argv[i], "-deps", 5)) {
 		    dependencies = true;
-		    Swig_mark_arg(i);                
+		    Swig_mark_arg(i);
 		} else if(!strcmp(argv[i], "-E")) {
 		    save_preprocessor_output=true;
-		    Swig_mark_arg(i);                                
+		    Swig_mark_arg(i);
 		} else if (!strncmp(argv[i], "-I", 2)) {
 		    // Add a new directory search path
 		    std::string include_dir = OGF::FileSystem::normalized_path(
@@ -149,7 +149,7 @@ namespace {
 		} else if(!strncmp(argv[i], "-D", 2)) {
 		    // TODO: add support for -Dxxx=yyy
 		    std::string def = std::string(argv[i]+2) + " 1";
-		    Preprocessor_define((DOH *)(def.c_str()), 0);           
+		    Preprocessor_define((DOH *)(def.c_str()), 0);
 		    Swig_mark_arg(i);
 		} else if(!strncmp(argv[i], "-i", 2)) {
 		    input_path = OGF::FileSystem::normalized_path(
@@ -164,10 +164,10 @@ namespace {
 		} else if (
 		    !strcmp(argv[i],"-version") ||
 		    !strcmp(argv[i],"-h")       ||
-		    !strcmp(argv[i],"-help") 
+		    !strcmp(argv[i],"-help")
 		    ) {
 		    fprintf(stderr,"\nSWIG Version %s\n", PACKAGE_VERSION);
-		    fprintf(stderr,"Modified for Graphite/GOM\n"); 
+		    fprintf(stderr,"Modified for Graphite/GOM\n");
 		    fprintf(stderr,"Copyright (c) 1995-1998\n");
 		    fprintf(stderr,"University of Utah and the Regents of \n");
 		    fprintf(stderr,"the University of California\n");
@@ -187,7 +187,7 @@ namespace {
 		<< std::endl;
 	    exit(EXIT_FAILURE);
 	}
-	
+
 	for(size_t i=0; i<include_path.size(); ++i) {
 	    if(!OGF::FileSystem::is_directory(include_path[i])) {
 		OGF::Logger::err("Gom::CodeGen")
@@ -197,7 +197,7 @@ namespace {
 		exit(EXIT_FAILURE);
 	    }
 	}
-	
+
 	if(output_path == "") {
 	    OGF::Logger::err("Gom::CodeGen")
 		<< "Output file was not specified (missing -oFileName.cpp)"
@@ -205,11 +205,11 @@ namespace {
 	    exit(EXIT_FAILURE);
 	}
     }
-    
+
     bool is_gom_header(const std::string& filename) {
 	return (
 	    OGF::FileSystem::extension(filename) == "h" &&
-	    OGF::TextUtils::file_contains_string(filename, "gom_class") 
+	    OGF::TextUtils::file_contains_string(filename, "gom_class")
 	    );
     }
 
@@ -230,7 +230,7 @@ namespace {
 		);
 	}
     }
-    
+
     void find_gom_headers(
 	const std::string& path, std::vector<std::string>& gom_headers
     ) {
@@ -246,7 +246,7 @@ namespace {
 		OGF::FileSystem::get_subdirectories(
 		    current_directory, remaining_directories , false
 		);
-            
+
 		std::vector<std::string> files_in_directory;
 		OGF::FileSystem::get_directory_entries(
 		    current_directory, files_in_directory, false
@@ -265,15 +265,15 @@ namespace {
     }
 
     void assemble_swig_source(const std::vector<std::string>& gom_headers) {
-	input_file = (char*)"tmp_gomgen.cpp";
+	input_file = const_cast<char*>("tmp_gomgen.cpp");
 	std::ofstream out((char*)input_file);
 	for(size_t i=0; i<gom_headers.size(); ++i) {
 	    out << "#include <" << gom_headers[i] << ">" << std::endl;
 	}
     }
-    
+
     void cleanup_swig_source() {
-	OGF::FileSystem::delete_file((char*)input_file);    
+	OGF::FileSystem::delete_file((char*)input_file);
     }
 
     DOH* run_preprocessor(int argc, char** argv) {
@@ -344,20 +344,20 @@ namespace {
 		out << "//   " << include_path[i] << std::endl;
 	    }
 	    out << "// Input path:" << std::endl;
-	    out << "//   " << input_path << std::endl;        
+	    out << "//   " << input_path << std::endl;
 	    out << "// Output file:" << std::endl;
 	    out << "//   " << output_path << std::endl;
 	    out << std::endl;
 	    out << std::endl;
-	    
+
 	    for(size_t i =0; i<sources.size(); ++i) {
 		out << "#include <" << sources[i] << ">" << std::endl;
 	    }
 	    out << "#include <OGF/gom/types/gom_implementation.h>" << std::endl;
 	    out << std::endl;
 	    out << std::endl;
-	    
-	    
+
+
 	    out << "#ifdef GEO_COMPILER_GCC" << std::endl;
 	    out << "#pragma GCC diagnostic ignored \"-Wunused-parameter\""
 		<< std::endl;
@@ -365,12 +365,12 @@ namespace {
 		<< std::endl;
 	    out << "#endif" << std::endl;
 	    out << std::endl;
-	    
+
 	    out << "#ifdef GEO_COMPILER_MSVC" << std::endl;
 	    out << "#pragma warning(disable: 4100)" << std::endl;
 	    out << "#endif" << std::endl;
 	    out << std::endl;
-	    
+
 	    out << "#ifdef GEO_COMPILER_CLANG" << std::endl;
 	    out << "#pragma GCC diagnostic ignored \"-Wweak-vtables\""
 		<< std::endl;
@@ -379,14 +379,14 @@ namespace {
 	    out << "#pragma GCC diagnostic ignored \"-Wunused-parameter\""
 		<< std::endl;
 	    out << "#endif" << std::endl;
-	    
-	    
+
+
 	    out << std::endl;
 	    out << std::endl;
-	    
+
 	    const std::vector<OGF::MetaClass*> classes =
 		get_swig_gom_generated_classes();
-	    
+
 	    OGF::GomCodeGenerator generator;
 	    OGF::Logger::out("Gom::CodeGen") << ">>" << std::endl;
 	    generator.generate(out, classes, get_package_name(input_path));
@@ -403,7 +403,7 @@ int main(int argc, char** argv) {
     Swig_warnfilter("201,202,309,401,403,501,502,503,512,321,322",1);
     Preprocessor_init();
     Language* lang = get_swig_gom_language();
-    
+
     Preprocessor_define((DOH *) "SWIG 1", 0);
     Preprocessor_define((DOH *) "__STDC__ 1", 0);
     Preprocessor_define((DOH *) "GOMGEN 1", 0);
@@ -428,7 +428,7 @@ int main(int argc, char** argv) {
 
     // Report preprocessor errors as warnings
     Preprocessor_error_as_warning(1);
-    
+
     // Turn on -includeall and -ignoremissing flags
     Preprocessor_include_all(1);
     Preprocessor_ignore_missing(1);
@@ -436,7 +436,7 @@ int main(int argc, char** argv) {
     parse_command_line(argc, argv);
 
     set_swig_gom_package(get_package_name(input_path),input_path);
-    
+
     // Define the __cplusplus symbol
     if (CPlusPlus) {
         Preprocessor_define((DOH *) "__cplusplus 1", 0);
@@ -458,7 +458,7 @@ int main(int argc, char** argv) {
     find_gom_headers(input_path, gom_headers);
 
     if(dependencies) {
-        std::ofstream out(output_path.c_str());        
+        std::ofstream out(output_path.c_str());
         for(size_t i=0; i<gom_headers.size(); ++i) {
             out << gom_headers[i] << std::endl;
         }
@@ -467,7 +467,7 @@ int main(int argc, char** argv) {
         Preprocessor_register_comment_CB(doxyparse);
         DOH* cpps = run_preprocessor(argc,argv);
         cleanup_swig_source();
-        // Register a null file with the file handler 
+        // Register a null file with the file handler
         Swig_register_filebyname("null", NewString(""));
         std::ofstream out(output_path.c_str());
         run_generator(lang,gom_headers,cpps,out,argc,argv);

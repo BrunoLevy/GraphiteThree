@@ -23,19 +23,19 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
+ * As an exception to the GPL, Graphite can be linked
  *  with the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_LUAGROB_COMMANDS_LUAGROB_COMMANDS_H
 #define H_OGF_LUAGROB_COMMANDS_LUAGROB_COMMANDS_H
@@ -53,7 +53,7 @@ namespace OGF {
     /**
      * \brief Base class for Commands related with a LuaGrob object.
      */
-    gom_attribute(abstract,"true") 
+    gom_attribute(abstract,"true")
     gom_class LUAGROB_API LuaGrobCommands : public Commands {
     public:
 
@@ -65,11 +65,11 @@ namespace OGF {
         /**
          * \brief LuaGrobCommands destructor.
          */
-        virtual ~LuaGrobCommands();
+        ~LuaGrobCommands() override;
 
         /**
          * \brief Gets the LuaGrob
-         * \return a pointer to the LuaGrob these Commands are 
+         * \return a pointer to the LuaGrob these Commands are
          *  associated with
          */
         LuaGrob* lua_grob() const {
@@ -92,7 +92,7 @@ namespace OGF {
     /**
      * \brief The name of an existing or not LUA (.lua) file.
      */
-    typedef Name<LuaFile,true> NewLuaFileName;    
+    typedef Name<LuaFile,true> NewLuaFileName;
 
     /**
      * \brief Commands to load and save the LUA program in a LuaGrob.
@@ -107,8 +107,8 @@ namespace OGF {
 	/**
 	 * \brief LuaGrobShaderCommands destructor.
 	 */
-	virtual ~LuaGrobProgramCommands();
-	
+	~LuaGrobProgramCommands() override;
+
       gom_slots:
 	void run();
 	void set_autorun(bool autorun);
@@ -116,7 +116,7 @@ namespace OGF {
 	void save_program(const NewLuaFileName& file_name);
 	void clear();
     };
-    
+
     /**
      * \brief Commands to load and save the LUA shader program in a LuaGrob.
      */
@@ -130,8 +130,8 @@ namespace OGF {
 	/**
 	 * \brief LuaGrobShaderCommands destructor.
 	 */
-	virtual ~LuaGrobShaderCommands();
-	
+	~LuaGrobShaderCommands() override;
+
       gom_slots:
 	void load_shader(const LuaFileName& file_name);
 	void save_shader(const NewLuaFileName& file_name);
@@ -139,4 +139,3 @@ namespace OGF {
     };
 }
 #endif
-
