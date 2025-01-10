@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_RENDERER_CONTEXT_OVERLAY_H
@@ -46,7 +46,7 @@ namespace OGF {
      * \brief A display list that memorizes simple graphic primitives to
      *  be displayed over the 3D rendering window.
      * \details Used by some tools. We cannot directly use ImDrawList API,
-     *  because mouse event handler of the 3D window are called completely 
+     *  because mouse event handler of the 3D window are called completely
      *  independelty of ImGui, so we need a "protocol" to communicate
      *  between the two worlds.
      */
@@ -70,8 +70,8 @@ namespace OGF {
          * \param[in] p1 , p2 the 2D coordinates of the extremities of the
          *  segment. One may use Tool::project_point() to obtain them from
          *  real-world coordinates.
-         * \param[in] the color, with alpha
-         * \param[in] thickness line thickness (ImGui can draw antialiased 
+         * \param[in] color the color, with alpha
+         * \param[in] thickness line thickness (ImGui can draw antialiased
          *  thick lines).
          */
         void segment(vec2 p1, vec2 p2, Color color, double thickness=1.0);
@@ -81,8 +81,8 @@ namespace OGF {
          * \param[in] p1 , p2 the 2D coordinates of two corners of the
          *  rectangle. One may use Tool::project_point() to obtain them from
          *  real-world coordinates.
-         * \param[in] the color, with alpha
-         * \param[in] thickness line thickness (ImGui can draw antialiased 
+         * \param[in] color the color, with alpha
+         * \param[in] thickness line thickness (ImGui can draw antialiased
          *  thick lines).
          */
         void rect(vec2 p1, vec2 p2, Color color, double thickness=1.0);
@@ -92,7 +92,7 @@ namespace OGF {
          * \param[in] p1 , p2 the 2D coordinates of two corners of the
          *  rectangle. One may use Tool::project_point() to obtain them from
          *  real-world coordinates.
-         * \param[in] the color, with alpha
+         * \param[in] color the color, with alpha
          */
         void fillrect(vec2 p1, vec2 p2, Color color);
 
@@ -102,8 +102,8 @@ namespace OGF {
          *  circle. One may use Tool::project_point() to obtain them from
          *  real-world coordinates.
          * \param[in] R the radius of the circle
-         * \param[in] the color, with alpha
-         * \param[in] thickness line thickness (ImGui can draw antialiased 
+         * \param[in] color the color, with alpha
+         * \param[in] thickness line thickness (ImGui can draw antialiased
          *  thick lines).
          */
         void circle(vec2 p1, double R, Color color, double thickness=1.0);
@@ -123,7 +123,7 @@ namespace OGF {
          * \param[in] p1 , p2 , p3 the 2D coordinates of two corners of the
          *  rectangle. One may use Tool::project_point() to obtain them from
          *  real-world coordinates.
-         * \param[in] the color, with alpha
+         * \param[in] color the color, with alpha
          */
         void filltriangle(vec2 p1, vec2 p2, vec2 p3, Color color);
 
@@ -135,7 +135,7 @@ namespace OGF {
          * \param[in] the color, with alpha
          */
         void fillquad(vec2 p1, vec2 p2, vec2 p3, vec2 p4, Color color);
-        
+
     private:
         enum PrimitiveType {
             OVL_SEGMENT =0,
@@ -153,8 +153,7 @@ namespace OGF {
         };
         vector<Primitive> primitives_;
     };
-    
+
 }
 
 #endif
-

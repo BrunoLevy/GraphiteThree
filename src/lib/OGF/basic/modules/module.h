@@ -25,21 +25,21 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 #ifndef H_OGF_BASIC_MODULES_MODULE_H
 #define H_OGF_BASIC_MODULES_MODULE_H
 
 /**
  * \file OGF/basic/modules/module.h
- * \brief Class to represent information about a Graphite/// module 
+ * \brief Class to represent information about a Graphite/// module
  *  (i.e. a plugin).
  */
 
@@ -65,8 +65,8 @@ namespace OGF {
 	/**
 	 * \brief Module destructor.
 	 */
-	virtual ~Module();
-	
+	~Module() override;
+
         /**
          * \brief Gets the name of the module.
          * \return a const reference to the name
@@ -90,7 +90,7 @@ namespace OGF {
         /**
          * \brief Gets the vendor of this module
          * \return a string with the name of the vendor of
-         *  this module (usually "OGF" for 
+         *  this module (usually "OGF" for
          *  "Open Graphics Foundation")
          */
         const std::string& vendor() {
@@ -118,20 +118,20 @@ namespace OGF {
 
         /**
          * \brief Sets the version of the module.
-         * \param[in] version_in a string that represents 
+         * \param[in] version_in a string that represents
          *  the version of the module
          * \details This function is not meant to be
          *  used by client code. It is called automatically
          *  in the initializer of the module.
          */
-        void set_version(const std::string& version_in) { 
-            version_ = version_in; 
+        void set_version(const std::string& version_in) {
+            version_ = version_in;
         }
 
         /**
          * \brief Tests whether this module is dynamic.
          * \details Dynamic modules are those that are loaded
-         *  on-demand by Graphite, i.e. those that are not 
+         *  on-demand by Graphite, i.e. those that are not
          *  linked with Graphite.
          */
         bool is_dynamic() const {
@@ -171,7 +171,7 @@ namespace OGF {
         void set_is_system(bool x) {
             is_system_ = x;
         }
-        
+
         /**
          * \brief Gets the information string.
          * \return a string that gives a short description
@@ -192,7 +192,7 @@ namespace OGF {
         void set_info(const std::string& info_in) {
             info_ = info_in;
         }
-        
+
         /**
          * \brief Declares a Module object to the ModuleManager.
          * \details Ownership of the module object is transfered
@@ -206,8 +206,8 @@ namespace OGF {
         static bool bind_module(
             const std::string& module_name, Module* module
         );
-        
-        /** 
+
+        /**
          * \brief Removes a Module object from the ModuleManager.
          * \param[in] module_name name of the module.
          * \retval true if the module could be successfully unbound
@@ -216,7 +216,7 @@ namespace OGF {
          */
         static bool unbind_module(const std::string& module_name);
 
-        /** 
+        /**
          * \brief Retreives a Module object by name.
          * \param[in] module_name name of the module
          * \return the module object associated with \p module_name

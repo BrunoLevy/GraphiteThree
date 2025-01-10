@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 #ifndef H_OGF_BASIC_MODULES_MODMGR_H
 #define H_OGF_BASIC_MODULES_MODMGR_H
 
@@ -64,9 +64,9 @@ typedef void (*ModuleTerminateFunc)() ;
 //____________________________________________________________________________
 
 namespace OGF {
-    
+
     /**
-     * \brief Manages dynamically loadable modules. 
+     * \brief Manages dynamically loadable modules.
      */
     class BASIC_API ModuleManager : public Environment {
     public:
@@ -102,13 +102,13 @@ namespace OGF {
         static ModuleManager* instance() ;
 
         /**
-         * \brief Loads a dynamic module. 
+         * \brief Loads a dynamic module.
          * \details Searches a dll that matches the module name in the
          *  OGF path, managed by the FileManager.
-         * \param[in] module_name the name of the module, as displayed 
+         * \param[in] module_name the name of the module, as displayed
          *  to the user (without "lib" prefix, without ".dll" or ".so"
          *  extension)
-         * \param[in] quiet if true, status messages are displayed 
+         * \param[in] quiet if true, status messages are displayed
          * \retval true if the module was successfully loaded
          * \retval false otherwise
          * \see FileManager
@@ -130,7 +130,7 @@ namespace OGF {
             const std::string& module_name, Module* module
         ) ;
 
-        /** 
+        /**
          * \brief Removes a Module object from the ModuleManager.
          * \param[in] module_name name of the module.
          * \retval true if the module could be successfully unbound
@@ -139,7 +139,7 @@ namespace OGF {
          */
         bool unbind_module(const std::string& module_name) ;
 
-        /** 
+        /**
          * \brief Retreives a Module object by name.
          * \param[in] module_name name of the module
          * \return the module object associated with \p module_name
@@ -149,16 +149,16 @@ namespace OGF {
 
         /**
          * \brief overloads Environment::get_local_value()
-         * \details Defines the "loaded_modules" and 
+         * \details Defines the "loaded_modules" and
          *  "loaded_dynamic_modules" variables.
          * \param[in] name name of the variable to be queried
          * \param[out] value value of the variable
          * \retval true if a variable with \p name was found
          * \retval false otherwise
          */
-        virtual bool get_local_value(
+        bool get_local_value(
             const std::string& name, std::string& value
-        ) const;
+        ) const override;
 
         /**
          * \brief overloads Environment::set_local_value()
@@ -169,9 +169,9 @@ namespace OGF {
          * \retval true if a variable with \p name could be set to \p value
          * \retval false otherwise
          */
-        virtual bool set_local_value(
+        bool set_local_value(
             const std::string& name, const std::string& value
-        );
+        ) override;
 
 	/**
 	 * \brief Finds a pointer to a function by its name.
@@ -202,23 +202,23 @@ namespace OGF {
 	 * \param[in] path the path to be added.
 	 */
 	static void append_dynamic_libraries_path(const std::string& path);
-	
+
     protected:
         /**
          * \brief Forbids construction by client code.
          */
         ModuleManager() ;
-        
+
         /**
          * \brief Forbids destruction by client code.
          */
-        ~ModuleManager() ;
+        ~ModuleManager() override;
 
         /**
          * \brief Terminates all the modules registered in the system.
          */
         void do_terminate_modules() ;
-        
+
     private:
         std::vector<ModuleTerminateFunc> to_terminate_ ;
         std::vector<void*> module_handles_ ;
