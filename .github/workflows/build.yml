@@ -1,0 +1,67 @@
+name: Build
+
+on:
+  workflow_dispatch
+
+jobs:
+  build:
+    name: ${{ matrix.name }} (${{ matrix.config }})
+    runs-on:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, macos-14, windows-2022]
+        config: [Debug, Release]
+        include:
+          - os: macos-14
+            name: macOS
+          - os: ubuntu-22.04
+            name: Linux
+          - os: windows-2022
+            name: Windows
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Checkout exploragram
+        uses: actions/checkout@v3
+        with:
+          repository: BrunoLevy/exploragram
+          path: geogram/src/lib/exploragram
+
+################### Linux/MacOS ###############################################
+
+      - name: Dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+            sudo apt-get update
+            sudo apt-get install xorg-dev
+
+      - name: Configure (Linux/MacOS)
+        if: runner.os != 'Windows'
+        run: |
+          cp doc/binary_win_dist/Plugins.txt plugins/OGF/Plugins.txt
+          echo "platform="\
+          `./configure.sh --show-platform`-${{ matrix.config }} >> $GITHUB_ENV
+
+      - name: Build (Linux/MacOS)
+        if: runner.os != 'Windows'
+        run: |
+          cd build/${{ env.platform }};\
+          make -j2 2>&1 |tee ../../build_log.txt
+
+################### Windows ##################################################
+
+      - name: Configure (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          copy doc/binary_win_dist/Plugins.txt plugins/OGF/Plugins.txt
+          ./configure.bat
+
+      - name: Build (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          cmake --build build/Windows --config ${{ matrix.config }} `
+          | tee -filepath build_log.txt

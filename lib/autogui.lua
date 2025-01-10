@@ -24,9 +24,8 @@ autogui.handlers = {}
 
 autogui.input_text_flags = 0
 
-
 -- \brief Margin to avoid the "auto-growing" effect on some dialogs
-autogui.margin = 5
+autogui.margin = 10
 
 --------------------------------------------------------------------------------
 
@@ -169,7 +168,7 @@ function autogui.editable_combo_box(object, property_name, values, tooltip)
    autogui.Text(property_name)
    autogui.tooltip(tooltip)
 
-   imgui.PushItemWidth(-1-autogui.icon_size()-25)
+   imgui.PushItemWidth(-1-autogui.icon_size()-autogui.margin*4)
 
    local sel,new_value = imgui.TextInput(
 	'##properties##1_'..property_name,
@@ -444,7 +443,7 @@ autogui.colormaps = {
   {'transparent', false},
   {'grayscale', true},
   {'misc', false},
-  {'rainbow2', false},  
+  {'rainbow2', false},
 }
 
 -- \brief Edits a colormap name
