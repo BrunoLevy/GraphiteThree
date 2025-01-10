@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_META_MEMBERS_META_PROPERTY_H
@@ -70,7 +70,7 @@ namespace OGF {
         /**
          * \brief MetaMethodSetProperty destructor.
          */
-        virtual ~MetaMethodSetProperty() ;
+        ~MetaMethodSetProperty() override ;
 
         /**
          * \brief Invokes the setter on a target object.
@@ -78,9 +78,9 @@ namespace OGF {
          * \param[in] args a const reference to the arguments list
          * \param[out] return_value the return value, as an Any
          */
-        virtual bool invoke(
+        bool invoke(
             Object* target, const ArgList& args, Any& return_value
-        ) ;
+        ) override ;
 
         /**
          * \brief Gets the MetaProperty
@@ -113,7 +113,7 @@ namespace OGF {
         /**
          * \brief MetaMethodGetProperty destructor.
          */
-        virtual ~MetaMethodGetProperty() ;
+        ~MetaMethodGetProperty() override ;
 
         /**
          * \brief Invokes the getter on a target object.
@@ -121,9 +121,9 @@ namespace OGF {
          * \param[in] args a const reference to the arguments list
          * \param[out] return_value the return value, as an Any
          */
-        virtual bool invoke(
+        bool invoke(
             Object* target, const ArgList& args, Any& return_value
-        ) ;
+        ) override ;
 
         /**
          * \brief Gets the MetaProperty
@@ -144,7 +144,7 @@ namespace OGF {
      */
     gom_class GOM_API MetaProperty : public MetaMember {
     public:
-        
+
         /**
          * \brief MetaProperty constructor
          * \param[in] name name of the property
@@ -155,7 +155,7 @@ namespace OGF {
         MetaProperty(
             const std::string& name, MetaClass* container,
             const std::string& type_name,
-            bool read_only = false 
+            bool read_only = false
         ) ;
 
         /**
@@ -174,10 +174,10 @@ namespace OGF {
         /**
          * \brief MetaProperty destructor.
          */
-        virtual ~MetaProperty() ;
+        ~MetaProperty() override ;
 
       gom_slots:
-	
+
         /**
          * \brief Tests whether this MetaProperty is read only.
          * \retval true if this MetaProperty is read only
@@ -193,7 +193,7 @@ namespace OGF {
          */
         const std::string& type_name() const {
             return type_name_ ;
-        } 
+        }
 
         /**
          * \brief Gets the type.
@@ -231,7 +231,7 @@ namespace OGF {
          */
         virtual bool get_value(const Object* target, Any& value) ;
 
-	
+
         /**
          * \brief Specify whether this MetaProperty is read only.
          * \param[in] x true if the property is set to read only, false
@@ -277,7 +277,7 @@ namespace OGF {
     protected:
         /**
          * \brief Sets the type name of this property.
-         * \param[in] type_name_in the C++ type name of this property, 
+         * \param[in] type_name_in the C++ type name of this property,
          *  as a string
          */
         void set_type_name(const std::string& type_name_in) {
@@ -299,5 +299,4 @@ namespace OGF {
 //______________________________________________________
 
 }
-#endif 
-
+#endif

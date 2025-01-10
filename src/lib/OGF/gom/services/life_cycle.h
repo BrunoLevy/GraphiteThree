@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_BASIC_ERTTI_SERIALIZER_H
@@ -70,7 +70,7 @@ namespace OGF {
 	/**
 	 * \brief LifeCycle destructor.
 	 */
-	virtual ~LifeCycle();
+	~LifeCycle() override;
 
 	/**
 	 * \brief Gets the size of an object.
@@ -91,7 +91,7 @@ namespace OGF {
 	bool is_pod() const {
 	    return is_pod_;
 	}
-	
+
 	/**
 	 * \brief Calls the constructor of an object.
 	 * \param[in] address the address of the object
@@ -122,7 +122,7 @@ namespace OGF {
 	 * \param[in] lhs the address of the left hand side.
 	 * \param[in] rhs the address of the right hand side.
 	 */
-	virtual void assign(Memory::pointer lhs, Memory::pointer rhs) = 0;	
+	virtual void assign(Memory::pointer lhs, Memory::pointer rhs) = 0;
 
 	/**
 	 * \brief Calls the constructor of objects in an array.
@@ -159,7 +159,7 @@ namespace OGF {
 	 * \param[in] nb number of objects
 	 * \details No memory allocation is done.
 	 */
-	virtual void assign_array(Memory::pointer lhs, Memory::pointer rhs, index_t nb) = 0;	
+	virtual void assign_array(Memory::pointer lhs, Memory::pointer rhs, index_t nb) = 0;
 
 	/**
 	 * \brief Dynamically allocates a new object.
@@ -174,7 +174,7 @@ namespace OGF {
 	 * \return the address of the new object.
 	 */
 	virtual Memory::pointer new_object(Memory::pointer rhs) = 0;
-	
+
 	/**
 	 * \brief Deletes an object.
 	 * \param[in] address the address of the object.
@@ -189,11 +189,11 @@ namespace OGF {
 
 	/**
 	 * \brief Deletes an array of objects.
-	 * \param[in] address the address of the object array to 
+	 * \param[in] address the address of the object array to
 	 *  be deleted.
 	 */
 	virtual void delete_array(Memory::pointer address) = 0;
-	
+
       private:
 	size_t object_size_;
 	bool is_pod_;
@@ -205,7 +205,7 @@ namespace OGF {
     typedef SmartPointer<LifeCycle> LifeCycle_var;
 
     /*************************************************************************/
-    
+
     /**
      * \brief Concrete implementation of LifeCycle.
      */
@@ -231,7 +231,7 @@ namespace OGF {
 	void copy_construct(Memory::pointer lhs, Memory::pointer rhs) override {
 	    new(lhs)T(*(T*)rhs);
 	}
-	
+
 	/**
 	 * \copydoc LifeCycle::destroy()
 	 */
@@ -245,7 +245,7 @@ namespace OGF {
 	 */
 	void assign(Memory::pointer lhs, Memory::pointer rhs) override {
 	    *(T*)lhs=*(T*)rhs;
-	}	
+	}
 
 	/**
 	 * \copydoc LifeCycle::construct_array()
@@ -264,7 +264,7 @@ namespace OGF {
 	    Memory::pointer lhs, Memory::pointer rhs, index_t nb
 	) override {
 	    T* lhs_array = (T*)lhs;
-	    T* rhs_array = (T*)rhs;	    
+	    T* rhs_array = (T*)rhs;
 	    for(index_t i=0; i<nb; ++i) {
 		new(&lhs_array[i])T(rhs_array[i]);
 	    }
@@ -288,11 +288,11 @@ namespace OGF {
 	    Memory::pointer lhs, Memory::pointer rhs, index_t nb
 	) override {
 	    T* lhs_array = (T*)lhs;
-	    T* rhs_array = (T*)rhs;	    
+	    T* rhs_array = (T*)rhs;
 	    for(index_t i=0; i<nb; ++i) {
 		lhs_array[i] = rhs_array[i];
 	    }
-	}	
+	}
 
 	/**
 	 * \copydoc LifeCycle::new_object()
@@ -307,7 +307,7 @@ namespace OGF {
 	Memory::pointer new_object(Memory::pointer rhs) override {
 	    return Memory::pointer(new T(*(T*)rhs));
 	}
-	
+
 	/**
 	 * \copydoc LifeCycle::delete_object()
 	 */
@@ -319,7 +319,7 @@ namespace OGF {
 	 * \copydoc LifeCycle::new_array()
 	 */
 	Memory::pointer new_array(index_t nb) override {
-	    return Memory::pointer(new T[nb]);	    
+	    return Memory::pointer(new T[nb]);
 	}
 
 	/**
@@ -328,9 +328,9 @@ namespace OGF {
 	void delete_array(Memory::pointer address) override {
 	    delete[]((T*)address);
 	}
-	
+
     };
-    
+
 }
 
 #ifdef GEO_COMPILER_CLANG

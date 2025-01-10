@@ -84,7 +84,7 @@ namespace OGF {
 	 * \brief Gets the dimension
 	 * \return the dimension of the vertices, one of 2,3
 	 */
-	index_t get_dimension() const;
+	index_t get_dimension() const override;
 
 	/**
 	 * \brief Gets the number of vertices.
@@ -225,7 +225,7 @@ namespace OGF {
 	 * \brief Sets the coordinates of an existing vertex.
 	 * \details If this is a 2D mesh, \p z is ignored.
 	 * \param[in] v the index of the vertex, in 0..nb_vertices()-1
-	 * \param[in] v a vec3 with the coordinates of the vertex.
+	 * \param[in] V a vec3 with the coordinates of the vertex.
 	 */
 	void set_vertex(index_t v, const vec3& V = vec3(0.0, 0.0, 0.0));
 

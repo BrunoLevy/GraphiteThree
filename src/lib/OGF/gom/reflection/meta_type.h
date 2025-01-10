@@ -161,15 +161,16 @@ namespace OGF {
     public:
         MetaInformation() {
         }
-        virtual ~MetaInformation() ;
+
+        ~MetaInformation() override;
 
 
         /**
          * \copydoc Object::search()
          */
-        virtual void search(
+        void search(
             const std::string& needle, const std::string& path = ""
-        );
+        ) override;
 
     gom_slots:
 

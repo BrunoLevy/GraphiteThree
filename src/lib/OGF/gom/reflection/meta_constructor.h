@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_META_MEMBERS_META_CONSTRUCTOR_H
@@ -55,7 +55,7 @@ namespace OGF {
     public:
         /**
          * \brief Constructs a new MetaConstructor.
-         * \details The constructed MetaConstructor is 
+         * \details The constructed MetaConstructor is
          *  automatically added to the MetaClass. The
          *  generic method adapter for constructors is
          *  automatically defined as the method adapter.
@@ -66,8 +66,8 @@ namespace OGF {
 	/**
 	 * \brief MetaConstructor destructor.
 	 */
-	virtual ~MetaConstructor();
-	
+	~MetaConstructor() override ;
+
         /**
          * \brief Gets the factory associated
          *  with this MetaConstructor.
@@ -103,7 +103,7 @@ namespace OGF {
          * \retval false otherwise
          */
         static bool constructor_method_adapter(
-            Object* target, 
+            Object* target,
             const std::string& method_name, const ArgList& args,
             Any& ret_val
         );

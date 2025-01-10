@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 #include <OGF/gom/codegen/codegen.h>
 
 #include <OGF/gom/reflection/meta.h>
@@ -46,7 +46,7 @@
 
 namespace OGF {
 
-    GomCodeGenerator::GomCodeGenerator() : out_(nullptr) { 
+    GomCodeGenerator::GomCodeGenerator() : out_(nullptr) {
         pass_by_value_.insert("int");
         pass_by_value_.insert("unsigned int");
         pass_by_value_.insert("long");
@@ -54,7 +54,7 @@ namespace OGF {
         pass_by_value_.insert("float");
         pass_by_value_.insert("double");
         pass_by_value_.insert("bool");
-        pass_by_value_.insert("GEO::index_t");        
+        pass_by_value_.insert("GEO::index_t");
     }
 
     void GomCodeGenerator::generate(
@@ -75,10 +75,10 @@ namespace OGF {
         }
 
 // MSVC does not see gom_package_initialize if its in namespace OGF
-// and g++ does not see it if it's *not* in namespace OGF...        
-#ifndef GEO_OS_WINDOWS        
+// and g++ does not see it if it's *not* in namespace OGF...
+#ifndef GEO_OS_WINDOWS
         out() << "namespace OGF {" << std::endl;
-#endif        
+#endif
         out() << "   void gom_package_initialize_"
               << package_name << "() {" << std::endl;
         for(unsigned int i=0; i<sorted_.size(); i++) {
@@ -88,10 +88,10 @@ namespace OGF {
                   << "();" << std::endl;
         }
         out() << "   }" << std::endl;
-        
-#ifndef GEO_OS_WINDOWS                
+
+#ifndef GEO_OS_WINDOWS
         out() << "}" << std::endl;
-#endif        
+#endif
     }
 
     void GomCodeGenerator::generate(MetaClass* type) {
@@ -113,7 +113,7 @@ namespace OGF {
         }
 
         Logger::out("Gom::CodeGen") << type->name() << std::endl;
-        
+
         out() << "namespace OGF {" << std::endl;
         out() << std::endl;
         out() << std::endl;
@@ -127,7 +127,7 @@ namespace OGF {
             sorted_.push_back(type);
         }
     }
-        
+
     void GomCodeGenerator::generate_builtin(MetaBuiltinType* mbuiltin) {
         out() << "   if(!Meta::instance()->meta_type_is_bound("
               << stringify(mbuiltin->name()) << ")) {" << std::endl;
@@ -146,7 +146,7 @@ namespace OGF {
     void GomCodeGenerator::generate_enum(MetaEnum* menum) {
         out() << "   if(!Meta::instance()->meta_type_is_bound("
               << stringify(menum->name()) << ")) {" << std::endl;
-        out() << "      MetaEnum* menum = ogf_declare_enum<" 
+        out() << "      MetaEnum* menum = ogf_declare_enum<"
               << menum->name()
               << ">(" << stringify(menum->name()) << ");"
               << std::endl;
@@ -170,7 +170,7 @@ namespace OGF {
             if(cur_type == nullptr) {
                 MetaBuiltinType* cur_builtin = new MetaBuiltinType(it);
                 Meta::instance()->bind_meta_type(cur_builtin);
-            } 
+            }
         }
 
 
@@ -185,7 +185,7 @@ namespace OGF {
         for(unsigned int i=0; i<meta_slots.size(); i++) {
             MetaSlot* mslot = meta_slots[i];
             if(
-                mslot->nb_args() == 1 && 
+                mslot->nb_args() == 1 &&
                 mslot->ith_arg(0)->type_name() == "OGF::ArgList"
             ) {
                 generate_method_adapter_arglist(mslot);
@@ -225,18 +225,18 @@ namespace OGF {
               << std::endl;
 
         out() << "   " << "ogf_declare_pointer_type<" << mclass->name()
-              << "*>(" << stringify(mclass->name() + "*" ) << ");" 
-              << std::endl; 
+              << "*>(" << stringify(mclass->name() + "*" ) << ");"
+              << std::endl;
 
         for(auto& it : used_types) {
-	    
+
             MetaType* cur_type = Meta::instance()->resolve_meta_type(it);
-            
+
             MetaEnum* cur_enum = dynamic_cast<MetaEnum*>(cur_type);
             if(cur_enum != nullptr) {
                 generate_enum(cur_enum);
                 continue;
-            } 
+            }
             MetaBuiltinType* cur_builtin = dynamic_cast<MetaBuiltinType*>(
                 cur_type
             );
@@ -245,9 +245,9 @@ namespace OGF {
                 continue;
             }
         }
-        
+
         if(
-            mclass->nb_members(false) != 0 || 
+            mclass->nb_members(false) != 0 ||
             mclass->nb_custom_attributes() != 0
         ) {
             out() << "   MetaClass* mclass = ";
@@ -265,7 +265,7 @@ namespace OGF {
                 Logger::warn("GomGen") << mclass->name()
                                        << " has no superclass" << std::endl;
             }
-            out() << mclass->name() << ">(" 
+            out() << mclass->name() << ">("
                   << stringify(mclass->name()) ;
             out() << ");" << std::endl;
         } else {
@@ -274,7 +274,7 @@ namespace OGF {
                   << stringify(mclass->name()) << ", " << std::endl
                   << "      "
                   << stringify(mclass->super_class()->name());
-            out() << std::endl 
+            out() << std::endl
                   << "   );" << std::endl;
         }
 
@@ -283,10 +283,10 @@ namespace OGF {
             MetaConstructor* constructor = meta_constructors[ii];
             out() << "   {" << std::endl;
             out() << "      ";
-            out() << "MetaConstructor* cur_constructor = new MetaConstructor(" 
+            out() << "MetaConstructor* cur_constructor = new MetaConstructor("
                   << std::endl
                   << "         "
-                  << "mclass" 
+                  << "mclass"
                   << std::endl
                   << "      );" << std::endl;
             for(index_t i=0; i<constructor->nb_args(); i++) {
@@ -300,15 +300,15 @@ namespace OGF {
                 if(arg->has_default_value()) {
                     out() << "         cur_arg.default_value().set_value("
                           << stringify_default_value(arg)
-                          << ");" << std::endl; 
+                          << ");" << std::endl;
                 }
                 generate_attributes(arg,"cur_arg", false);
                 out() << "         cur_constructor->add_arg(cur_arg); "
                       << std::endl;
                 out() << "      }" << std::endl;
             }
-            out() << "      cur_constructor->set_factory(" << std::endl 
-                  << "         new " 
+            out() << "      cur_constructor->set_factory(" << std::endl
+                  << "         new "
                   << factory_name(constructor) << "()" << std::endl
                   << "      );" << std::endl;
             generate_attributes(constructor, "cur_constructor");
@@ -322,26 +322,26 @@ namespace OGF {
             out() << "      MetaProperty* cur_prop = new MetaProperty("
                   << std::endl
                   << "         "
-                  << stringify(prop->name()) << ", " 
+                  << stringify(prop->name()) << ", "
                   << "mclass" << ","
                   << stringify(prop->type_name()) << ", "
                   << (prop->read_only() ? "true" : "false")
                   << std::endl
                   << "      );" << std::endl;
             out() << "      ";
-            out() << "cur_prop->meta_method_get()->set_method_adapter(" 
+            out() << "cur_prop->meta_method_get()->set_method_adapter("
                   << std::endl;
             out() << "         "
-                  << method_adapter_name(prop->meta_method_get()) 
+                  << method_adapter_name(prop->meta_method_get())
                   << std::endl;
             out() << "      );" << std::endl;
-            
+
             if(!prop->read_only()) {
                 out() << "      " <<
-                    "cur_prop->meta_method_set()->set_method_adapter(" 
+                    "cur_prop->meta_method_set()->set_method_adapter("
                       << std::endl;
                 out() << "         "
-                      << method_adapter_name(prop->meta_method_set()) 
+                      << method_adapter_name(prop->meta_method_set())
                       << std::endl;
                 out() << "      );" << std::endl;
             }
@@ -353,10 +353,10 @@ namespace OGF {
             MetaSlot* slot = meta_slots[ii];
             out() << "   {" << std::endl;
             out() << "      ";
-            out() << "MetaSlot* cur_slot = new MetaSlot(" 
+            out() << "MetaSlot* cur_slot = new MetaSlot("
                   << std::endl
                   << "         "
-                  << stringify(slot->name()) << ", " 
+                  << stringify(slot->name()) << ", "
                   << "mclass" << ", "
                   << stringify(slot->return_type_name())
                   << std::endl
@@ -372,14 +372,14 @@ namespace OGF {
                 if(arg->has_default_value()) {
                     out() << "         cur_arg.default_value().set_value("
                           << stringify_default_value(arg)
-                          << ");" << std::endl; 
+                          << ");" << std::endl;
                 }
                 generate_attributes(arg, "cur_arg", false);
                 out() << "         cur_slot->add_arg(cur_arg); "
                       << std::endl;
                 out() << "      }" << std::endl;
             }
-            out() << "      cur_slot->set_method_adapter(" << std::endl 
+            out() << "      cur_slot->set_method_adapter(" << std::endl
                   << "         " << method_adapter_name(slot) << std::endl
                   << "      );" << std::endl;
 
@@ -396,11 +396,11 @@ namespace OGF {
             if(signal->nb_args() != 0 || signal->nb_custom_attributes() != 0) {
                 out() << "MetaSignal* cur_signal = ";
             }
-            out() << "new MetaSignal(" 
+            out() << "new MetaSignal("
                   << std::endl
                   << "         "
-                  << stringify(signal->name()) << ", " 
-                  << "mclass" 
+                  << stringify(signal->name()) << ", "
+                  << "mclass"
                   << std::endl
                   << "      );" << std::endl;
             for(index_t i=0; i<signal->nb_args(); i++) {
@@ -414,7 +414,7 @@ namespace OGF {
                 if(arg->has_default_value()) {
                     out() << "         cur_arg.default_value().set_value("
                           << stringify_default_value(arg)
-                          << ");" << std::endl; 
+                          << ");" << std::endl;
                 }
                 generate_attributes(arg, "cur_arg", false);
                 out() << "         cur_signal->add_arg(cur_arg); "
@@ -434,7 +434,7 @@ namespace OGF {
         MetaMethod* method
     ) {
         out() << "static bool " << method_adapter_name(method)
-              << "(" << std::endl 
+              << "(" << std::endl
               << "   Object* gom__target_in__, " << std::endl
               << "   const std::string& gom__method_name__, " << std::endl
               << "   const ArgList& gom__args__, " << std::endl
@@ -442,21 +442,21 @@ namespace OGF {
               << ") {"
               << std::endl;
 
-        out() << "   " << method->container_meta_class()->name() 
+        out() << "   " << method->container_meta_class()->name()
               << "* gom__target__ = "
               << "dynamic_cast<" << method->container_meta_class()->name()
-              << "*>(" << std::endl 
-              << "      gom__target_in__" << std::endl 
+              << "*>(" << std::endl
+              << "      gom__target_in__" << std::endl
               << "   );" << std::endl;
 
-        out() << "   if(gom__target__ == nullptr) { return false; }" 
+        out() << "   if(gom__target__ == nullptr) { return false; }"
               << std::endl;
 
 	out() << "   ";
         if(method->return_type_name() != "void") {
             out() << method->return_type()->name() << " "
                   << " gom__result__ = ";
-        } 
+        }
         out() << "gom__target__->" << method->name() << "(gom__args__);";
         out() << std::endl;
 
@@ -469,14 +469,14 @@ namespace OGF {
         } else {
             out() << "   return true;" << std::endl;
         }
-	
+
         out() << "}" << std::endl;
-        out() << std::endl; 
+        out() << std::endl;
     }
 
     void GomCodeGenerator::generate_method_adapter(MetaMethod* method) {
         out() << "static bool " << method_adapter_name(method)
-              << "(" << std::endl 
+              << "(" << std::endl
               << "   Object* gom__target_in__, " << std::endl
               << "   const std::string& gom__method_name__, " << std::endl
               << "   const ArgList& gom__args__, " << std::endl
@@ -484,25 +484,25 @@ namespace OGF {
               << ") {"
               << std::endl;
 
-        out() << "   " << method->container_meta_class()->name() 
+        out() << "   " << method->container_meta_class()->name()
               << "* gom__target__ = "
               << "dynamic_cast<" << method->container_meta_class()->name()
-              << "*>(" << std::endl 
-              << "      gom__target_in__" << std::endl 
+              << "*>(" << std::endl
+              << "      gom__target_in__" << std::endl
               << "   );" << std::endl;
 
-        out() << "   if(gom__target__ == nullptr) { return false; }" 
+        out() << "   if(gom__target__ == nullptr) { return false; }"
               << std::endl;
-            
+
         for(index_t i=0; i<method->nb_args(); i++) {
             const MetaArg* arg = method->ith_arg(i);
             std::string name = arg->name();
             std::string type = arg->type()->name();
-            out() << "   "  << type << " " << name << "=" 
+            out() << "   "  << type << " " << name << "="
                   << "gom__args__.get_arg<" << type << ">("
                   << stringify(name) << ");" << std::endl;
         }
-            
+
 
         out() << "   ";
         if(method->return_type_name() != "void") {
@@ -518,8 +518,8 @@ namespace OGF {
             if(i < method->nb_args() - 1) {
                 out() << ", ";
             }
-        }       
-        
+        }
+
         out() << "); " << std::endl;
 
         if(method->return_type_name() != "void") {
@@ -530,51 +530,51 @@ namespace OGF {
         } else {
             out() << "   return true;" << std::endl;
         }
-            
+
         out() << "}" << std::endl;
-        out() << std::endl; 
+        out() << std::endl;
     }
 
     void GomCodeGenerator::generate_signal_adapter(MetaSignal* signal) {
-        out() << "void " 
+        out() << "void "
               << signal->container_meta_class()->name()
               << "::" << signal->name() << "(";
-            
+
         for(index_t i=0; i<signal->nb_args(); i++) {
             const MetaArg* arg = signal->ith_arg(i);
             std::string type = arg->type()->name();
             std::string name = arg->name();
             if(pass_by_value(arg->type_name())) {
                 out() << type << " " << name;
-            } else { 
+            } else {
                 out() << "const " << type << "& " << name;
             }
             if(i < signal->nb_args() - 1) {
                 out() << ", ";
             }
-        }       
-        out() << ") {" << std::endl; 
+        }
+        out() << ") {" << std::endl;
         out() << "   ArgList gom__args__;" << std::endl;
         for(index_t i=0; i<signal->nb_args(); i++) {
             const MetaArg* arg = signal->ith_arg(i);
             std::string name = arg->name();
-            out() << "   gom__args__.create_arg(" 
+            out() << "   gom__args__.create_arg("
                   << stringify(name)
                   << "," << name
                   << ");" << std::endl;
         }
-        out() << "   emit_signal(" 
+        out() << "   emit_signal("
               << stringify(signal->name())
               << ", gom__args__);" << std::endl;
-        out() << "}" << std::endl; 
+        out() << "}" << std::endl;
         out() << std::endl;
     }
-        
+
     void GomCodeGenerator::generate_factory(MetaConstructor* constructor) {
         out() << "class " << factory_name(constructor) << " : public Factory {"
               << std::endl;
         out() << "   public:" << std::endl;
-        out() << "   virtual Object* create(const ArgList& gom__args__) {"
+        out() << "   Object* create(const ArgList& gom__args__) override {"
               << std::endl;
 
         for(index_t i=0; i<constructor->nb_args(); i++) {
@@ -582,7 +582,7 @@ namespace OGF {
             std::string name = arg->name();
             std::string type = arg->type()->name();
 
-            out() << "      " << type << " " << name << "=" 
+            out() << "      " << type << " " << name << "="
                   << "gom__args__.get_arg<" << type << ">("
                   << stringify(name) << ");" << std::endl;
         }
@@ -600,7 +600,7 @@ namespace OGF {
             if(i < constructor->nb_args() - 1) {
                 out() << ", ";
             }
-        }       
+        }
 
         out() << std::endl;
         out() << "      );" << std::endl;
@@ -616,17 +616,17 @@ namespace OGF {
     ) {
         for(index_t i=0; i<info->nb_custom_attributes(); i++) {
             if(is_pointer) {
-                out() << "         " << 
+                out() << "         " <<
                     variable_name << "->create_custom_attribute(" << std::endl;
             } else {
-                out() << "         " << 
+                out() << "         " <<
                     variable_name << ".create_custom_attribute(" << std::endl;
             }
 
-            out() << "             " 
+            out() << "             "
                   << stringify(info->ith_custom_attribute_name(i))
                   << "," << std::endl;
-            out() << "             " 
+            out() << "             "
                   << stringify(info->ith_custom_attribute_value(i))
                   << std::endl;
             out() << "         );" << std::endl;
@@ -643,7 +643,7 @@ namespace OGF {
     ) {
 	std::string result = marg->default_value().as_string();
 	MetaType* mtype = marg->type();
-	
+
 	// String literals need quotes.
 	// If meta type is std::string, or if meta type name
 	// contains Name, then we guess that we need quotes.
@@ -665,7 +665,7 @@ namespace OGF {
 	return result;
     }
 
-    
+
     std::string GomCodeGenerator::colons_to_underscores(const std::string& s) {
         std::string result = s;
         for(size_t i=0; i<s.size(); ++i) {
@@ -684,7 +684,7 @@ namespace OGF {
 
     std::string GomCodeGenerator::factory_name(MetaConstructor* method) {
         return "GOM__" +
-            colons_to_underscores(method->container_meta_class()->name()) + 
+            colons_to_underscores(method->container_meta_class()->name()) +
             "__" + method->name() + "__";
     }
 
@@ -699,4 +699,3 @@ namespace OGF {
     }
 
 }
-

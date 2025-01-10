@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_META_MEMBERS_META_SLOT_H
@@ -48,7 +48,7 @@
 
 namespace OGF {
 
-    
+
     /**
      * \brief The representation of a slot in the Meta repository.
      */
@@ -59,7 +59,7 @@ namespace OGF {
          * \brief MetaSlot constructor.
          * \param[in] name name of the slot
          * \param[in] container the MetaClass this MetaSlot belongs to
-         * \param[in] return_type_name the C++ return type name, as a 
+         * \param[in] return_type_name the C++ return type name, as a
          *  string
          */
         MetaSlot(
@@ -76,22 +76,21 @@ namespace OGF {
          */
         MetaSlot(
             const std::string& name, MetaClass* container,
-            MetaType* return_type 
+            MetaType* return_type
         ) ;
 
         /**
          * \brief MetaSlot destructor.
          */
-        virtual ~MetaSlot() ;
+        ~MetaSlot() override;
     } ;
 
     /**
      * \brief Automatic reference-counted pointer to a MetaSlot.
      */
     typedef SmartPointer<MetaSlot> MetaSlot_var ;
-    
+
 //______________________________________________________
 
 }
-#endif 
-
+#endif

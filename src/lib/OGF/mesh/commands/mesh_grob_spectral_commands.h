@@ -23,15 +23,15 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked 
+ * As an exception to the GPL, Graphite can be linked
  *  with the following (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
@@ -55,7 +55,7 @@ namespace OGF {
      */
     gom_class MeshGrobSpectralCommands : public MeshGrobCommands {
     public:
-        
+
         /**
          * \brief MeshGrobSpectralCommands constructor.
          */
@@ -66,7 +66,7 @@ namespace OGF {
          * \brief MeshGrobSpectralCommands destructor.
          */
          ~MeshGrobSpectralCommands() override;
-	
+
     gom_slots:
         /**
          * \brief Computes manifold harmonics (Laplacien eigenfunctions)
@@ -74,11 +74,11 @@ namespace OGF {
 	 * \param[in] nb_eigens number of eigenfunctions to compute
 	 * \param[in] discretization discretization of the Laplace Beltrami
 	 *  operator
-	 * \param[in] attribute name of the attribute used to store the 
+	 * \param[in] attribute name of the attribute used to store the
 	 *  eigenvectors
 	 * \param[in] shift eigen shift applied to explore a certain part
 	 *  of the spectrum.
-	 * \param[in] nb_eigens_per_band if non-zero, 
+	 * \param[in] nb_eigens_per_band if non-zero,
 	 *   use band-by-band computation.
 	 * \param[in] print_spectrum if true, prints eigenvalue to the terminal.
          */
@@ -93,7 +93,6 @@ namespace OGF {
 
 
         /**
-         * \brief Computes manifold harmonics (Laplacien eigenfunctions)
          * \menu /Surface/Spectral
          * \brief Computes a spectral embedding.
          * \param[in] x_eigen the eigenfunction to be used for x
@@ -106,7 +105,7 @@ namespace OGF {
             index_t z_eigen=3
         );
     };
-    
+
 }
 
 

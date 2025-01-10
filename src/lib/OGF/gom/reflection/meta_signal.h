@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 
@@ -53,7 +53,7 @@ namespace OGF {
      */
     gom_class GOM_API MetaSignal : public MetaMethod {
     public:
-        
+
         /**
          * \brief MetaSignal constructor.
          * \param[in] name name of the signal
@@ -64,10 +64,10 @@ namespace OGF {
         /**
          * \brief MetaSignal destructor.
          */
-        virtual ~MetaSignal() ;
+        ~MetaSignal() override;
 
     protected:
-        
+
         /**
          * \brief the method adapter for signals.
          * \param[in] target the object which signal should be invoked
@@ -76,7 +76,7 @@ namespace OGF {
          * \param[out] ret_val the return value, as a string
          */
         static bool signal_method_adapter(
-            Object* target, 
+            Object* target,
             const std::string& method_name, const ArgList& args,
             Any& ret_val
         ) ;
@@ -86,9 +86,8 @@ namespace OGF {
      * \brief Automatic reference-counted pointer to a MetaSignal.
      */
     typedef SmartPointer<MetaSignal> MetaSignal_var ;
-    
-//______________________________________________________
-    
-}
-#endif 
 
+//______________________________________________________
+
+}
+#endif

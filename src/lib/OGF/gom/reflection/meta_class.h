@@ -552,7 +552,7 @@ namespace OGF {
          * \return the created object
          * \see MetaClass::best_constructor()
          */
-        virtual Object* create(const ArgList& args);
+        Object* create(const ArgList& args) override ;
 
         /**
          * \brief Gets the MetaClass.

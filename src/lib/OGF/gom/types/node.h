@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 
 #ifndef H_OGF_GOM_TYPES_NODE_H
 #define H_OGF_GOM_TYPES_NODE_H
@@ -57,10 +57,10 @@ namespace OGF {
      */
     gom_class GOM_API Node : public Object {
     public:
-        
+
         /**
          * \brief Node constructor.
-         * \param[in] parent a pointer to this Node's parent if 
+         * \param[in] parent a pointer to this Node's parent if
          *  it exists, or nullptr otherwise.
          */
         explicit Node(Node* parent = nullptr) ;
@@ -68,12 +68,12 @@ namespace OGF {
         /**
          * \brief Node destructor.
          */
-        virtual ~Node() ;
+        ~Node() override ;
 
         /**
          * \brief Adds a child to this Node.
          * \details Reference-counted pointers are stored in
-         *  the Node (memory ownership is transferred to the 
+         *  the Node (memory ownership is transferred to the
          *  Node).
          * \param[in] child a pointer to the child to be added.
          */
@@ -92,9 +92,9 @@ namespace OGF {
          * \return a pointer to the child of index \p i
          * \pre i < get_nb_children()
          */
-        Node* ith_child(index_t i) const { 
+        Node* ith_child(index_t i) const {
             ogf_assert(i < get_nb_children()) ;
-            return children_[i] ; 
+            return children_[i] ;
         }
 
     gom_properties:
@@ -134,7 +134,7 @@ namespace OGF {
             geo_assert(i != NO_INDEX && j != NO_INDEX);
             std::swap(children_[i], children_[j]);
         }
-        
+
     private:
         std::vector< SmartPointer<Node> > children_ ;
         Node* parent_ ;
@@ -149,4 +149,3 @@ namespace OGF {
 
 }
 #endif
-
