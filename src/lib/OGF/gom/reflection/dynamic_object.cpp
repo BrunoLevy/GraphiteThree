@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/gom/reflection/dynamic_object.h>
@@ -40,7 +40,7 @@
 namespace OGF {
 
     /*************************************************************************/
-    
+
     bool DynamicObject::set_property(const std::string& name, const Any& value) {
         // We first need to test if property is one of
         // Object properties. Then we let Object do the
@@ -50,7 +50,7 @@ namespace OGF {
         ) {
             return Object::set_property(name, value);
         }
-        
+
         if(!has_property(name)) {
             Logger::err("GOM")
                 << meta_class()->name() << "::" << name << " : no such property"
@@ -71,7 +71,7 @@ namespace OGF {
         ) {
             return Object::get_property(name, value);
         }
-        
+
         if(!has_property(name)) {
             Logger::err("GOM")
                 << meta_class()->name() << "::" << name << " : no such property"
@@ -110,7 +110,7 @@ namespace OGF {
     }
 
     /*************************************************************************/
-    
+
     DynamicMetaSlot::DynamicMetaSlot(
         const std::string& name, MetaClass* container,
         Callable* action,
@@ -118,7 +118,7 @@ namespace OGF {
     ) : MetaSlot(name, container, return_type_name), action_(action) {
         set_method_adapter(
             [](
-                Object* target, 
+                Object* target,
                 const std::string& method_name, const ArgList& args,
                 Any& ret_val
             )->bool {
@@ -167,8 +167,8 @@ namespace OGF {
             marg->default_value().set_value(default_value);
         }
     }
-    
-    
+
+
     void DynamicMetaSlot::create_arg_custom_attribute(
         const std::string& arg_name,
         const std::string& name, const std::string& value
@@ -198,7 +198,7 @@ namespace OGF {
         }
         marg->set_custom_attribute(name,value);
     }
-    
+
     void DynamicMetaSlot::pre_delete() {
         action_.reset(); // crash on LuaCallable destructor
                          // if I do not articially increase refcount
@@ -206,14 +206,17 @@ namespace OGF {
                          // to be fixed (there is a tiny memory leak here)
         MetaSlot::pre_delete();
     }
-    
+
     /**********************************************************************/
-    
+
     DynamicMetaClass::DynamicMetaClass(
-        const std::string& class_name, 
+        const std::string& class_name,
         const std::string& super_class_name,
         bool is_abstract
     ) : MetaClass(class_name, super_class_name, is_abstract) {
+    }
+
+    DynamicMetaClass::~DynamicMetaClass() {
     }
 
     MetaConstructor* DynamicMetaClass::add_constructor(Callable* action) {
@@ -221,12 +224,12 @@ namespace OGF {
         result->set_factory(new DynamicFactoryMetaClass(this, action));
         return result;
     }
-    
+
     DynamicMetaSlot* DynamicMetaClass::add_slot(
         const std::string& name, Callable* action,
         const std::string& return_type
     ) {
         return new DynamicMetaSlot(name, this, action, return_type);
     }
-    
+
 }

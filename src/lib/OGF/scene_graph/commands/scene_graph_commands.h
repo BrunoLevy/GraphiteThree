@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_SCENE_GRAPH_TYPES_SG_FILE_COMMANDS_H
@@ -43,7 +43,7 @@
 
 /**
  * \file OGF/scene_graph/commands/scene_graph_commands.h
- * \brief classes for Commands that act on the whole SceneGraph. 
+ * \brief classes for Commands that act on the whole SceneGraph.
  */
 
 namespace OGF {
@@ -51,7 +51,7 @@ namespace OGF {
     /**
      * \brief Base class for Commands that act on the whole SceneGraph.
      */
-    gom_attribute(abstract, "true") 
+    gom_attribute(abstract, "true")
     gom_class SCENE_GRAPH_API SceneGraphCommands : public Commands {
     public:
         /**
@@ -64,7 +64,7 @@ namespace OGF {
 	 * \brief SceneGraphCommands destructor.
 	 */
 	 ~SceneGraphCommands() override;
-	
+
         /**
          * \brief Gets the SceneGraph.
          * \return a pointer to the SceneGraph
@@ -90,8 +90,8 @@ namespace OGF {
 	/**
 	 * \brief SceneGraphSceneCommands destructor.
 	 */
-	~SceneGraphSceneCommands();
-	
+	~SceneGraphSceneCommands() override;
+
     gom_slots:
         /**
          * \brief Creates a new object.
@@ -136,7 +136,7 @@ namespace OGF {
          * \brief Displays the attributes of the current object.
          */
         void display_current_attributes();
-        
+
         /**
          * \menu System/Parameters
          * \brief Sets a global parameter.

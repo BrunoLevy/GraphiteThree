@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_GOM_TYPES_CONNECTION_H
@@ -69,7 +69,7 @@ namespace OGF {
         /**
          * \brief Connection constructor.
          * \param[in] source a pointer to the source object
-         * \param[in] sig_name the name of the source's signal 
+         * \param[in] sig_name the name of the source's signal
          */
         Connection(
 	    Object* source, const std::string& sig_name
@@ -78,7 +78,7 @@ namespace OGF {
         /**
          * \brief Connection destructor
          */
-        virtual ~Connection();
+        ~Connection() override;
 
         /**
          * \brief Invokes the target with an arguments list.
@@ -87,7 +87,7 @@ namespace OGF {
          * \param[in] args a const reference to the arguments list
 	 * \param[out] ret_val on exit, contains "void".
          */
-	virtual bool invoke(const ArgList& args, Any& ret_val);
+	bool invoke(const ArgList& args, Any& ret_val) override;
 
 
         /**
@@ -99,7 +99,7 @@ namespace OGF {
 	virtual bool invoke_target(
 	    const ArgList& args, Any& ret_val
 	) = 0;
-	
+
 	/**
 	 * \brief Gets the source.
 	 * \return a pointer to the source object.
@@ -115,14 +115,14 @@ namespace OGF {
 	const std::string& signal_name() const {
 	    return signal_name_;
 	}
-	
+
       gom_slots:
-	
+
         /**
          * \brief Adds a condition on an argument.
          * \details An argument condition tests whether
          *  one of the signal's argument is equal to a
-         *  specified value. The slot of the target is 
+         *  specified value. The slot of the target is
          *  called only if all argument conditions are satisfied.
          * \param[in] name name of the argument
          * \param[in] value to be tested, it can be either the
@@ -134,7 +134,7 @@ namespace OGF {
         ) {
             if(conditions_.has_arg(name)) {
 		Logger::err("GOM")
-		    << "if_arg(): duplicate condition for " << name 
+		    << "if_arg(): duplicate condition for " << name
 		    << std::endl;
                 return this;
             }
@@ -166,7 +166,7 @@ namespace OGF {
         /**
          * \brief Renames an argument.
          * \details Each time the signal is triggered, all the arguments
-         *  specified by this function are renamed before being sent 
+         *  specified by this function are renamed before being sent
          *  to the target's slot.
          * \param[in] name name of the argument
          * \param[in] new_name new name of the argument
@@ -175,7 +175,7 @@ namespace OGF {
         Connection* rename_arg(const std::string& name, const std::string& new_name) {
             if(rename_args_.has_arg(name)) {
 		Logger::err("GOM")
-		    << "rename_arg(): duplicate rename for " << name 
+		    << "rename_arg(): duplicate rename for " << name
 		    << std::endl;
                 return this;
             }
@@ -201,7 +201,7 @@ namespace OGF {
          *  connected to
          */
         void remove();
-        
+
     protected:
         /**
          * \brief Tests whether an argument list satisfies the
@@ -258,7 +258,7 @@ namespace OGF {
 	/**
 	 * \brief SlotConnection constructor.
          * \param[in] source a pointer to the source object
-         * \param[in] sig_name the name of the source's signal 
+         * \param[in] sig_name the name of the source's signal
 	 * \param[in] target a pointer to the target object
 	 * \param[in] slot_name the name of the target's slot
 	 * \details Target is not reference-counted.
@@ -274,19 +274,19 @@ namespace OGF {
 	bool invoke_target(
 	    const ArgList& args, Any& ret_val
 	) override;
-	
+
       private:
 	Object* target_;
 	std::string slot_name_;
     };
 
-    /**********************************************************************/    
+    /**********************************************************************/
 
     /**
      * \brief A Connection between a signal and an abstract Callable object.
-     * \details It is not used for signal-slot connection because both 
+     * \details It is not used for signal-slot connection because both
      *  CallableConnection and Request do reference counting on their arguments,
-     *  thus this would prevent objects from being garbage-collected. For 
+     *  thus this would prevent objects from being garbage-collected. For
      *  signal-slot connections, SlotConnection is used instead.
      */
     gom_class GOM_API CallableConnection : public Connection {
@@ -294,7 +294,7 @@ namespace OGF {
 	/**
 	 * \brief CallableConnection constructor.
          * \param[in] source a pointer to the source object
-         * \param[in] sig_name the name of the source's signal 
+         * \param[in] sig_name the name of the source's signal
 	 * \param[in] target a pointer to the target Callable object
 	 * \details Target is reference-counted.
 	 */
@@ -308,14 +308,14 @@ namespace OGF {
 	bool invoke_target(
 	    const ArgList& args, Any& ret_val
 	) override;
-	
+
       private:
 	Callable_var target_;
     };
-    
 
-    /**********************************************************************/    
-    
+
+    /**********************************************************************/
+
     /**
      * \brief A list of connections.
      * \details Each slot of an object has an associated ConnectionList.
@@ -352,7 +352,7 @@ namespace OGF {
     };
 
     /******************************************************************/
-    
+
 }
 
 #endif

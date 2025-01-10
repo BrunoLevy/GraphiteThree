@@ -36,7 +36,7 @@
 
 
 #ifndef H_OGF_SCENE_GRAPH_TOOLS_SCENE_GRAPH_TOOLS_MGR_H
-#define H_OGF_SCENE_GRAPH_TOOS_SCENE_GRAPH_TOOLS_MGR_H
+#define H_OGF_SCENE_GRAPH_TOOLS_SCENE_GRAPH_TOOLS_MGR_H
 
 #include <OGF/scene_graph_gfx/common/common.h>
 #include <OGF/scene_graph_gfx/tools/tools_manager.h>

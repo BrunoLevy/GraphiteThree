@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_META_TYPES_DYNAMIC_OBJECT_H
@@ -92,7 +92,7 @@ namespace OGF {
     private:
         Callable_var action_;
     };
-    
+
     /******************************************************************/
 
     /**
@@ -106,7 +106,7 @@ namespace OGF {
          * \param[in] container the MetaClass this MetaSlot belongs to
          * \param[in] action a callable object with the action to be
          *  executed each time the slot is called.
-         * \param[in] return_type_name the C++ return type name, as a 
+         * \param[in] return_type_name the C++ return type name, as a
          *  string
          */
         DynamicMetaSlot(
@@ -136,7 +136,7 @@ namespace OGF {
         void set_arg_default_value(
             const std::string& name, const std::string& default_value
         );
-        
+
         /**
          * \brief Creates a new custom attribute
          * \param[in] arg_name name of the argument
@@ -159,14 +159,14 @@ namespace OGF {
             const std::string& arg_name,
             const std::string& name, const std::string& value
         );
-        
+
     public:
         void pre_delete() override;
-        
+
     protected:
         Callable_var action_;
     };
-    
+
     /**
      * \brief A MetaClass that can be created in Lua.
      * \details It is possible to create new GOM classes and objects in Lua.
@@ -178,14 +178,19 @@ namespace OGF {
          * \param[in] class_name the C++ class name
          * \param[in] super_class_name the C++ name of the super class
          * \param[in] is_abstract indicates whether the class is abstract
-         *  (e.g. with pure virtual methods) or not. Abstract classes 
+         *  (e.g. with pure virtual methods) or not. Abstract classes
          *  cannot be constructed.
          */
         explicit DynamicMetaClass(
-            const std::string& class_name, 
+            const std::string& class_name,
             const std::string& super_class_name,
             bool is_abstract = false
         );
+
+	/**
+	 * \brief DynamicMetaClass destructor
+	 */
+	~DynamicMetaClass() override;
 
     gom_slots:
 
@@ -194,18 +199,18 @@ namespace OGF {
          * \param[in] action an optional action to be invoked each time this
          *  constructor is called
          * \return the created MetaConstructor
-         * \details one can create the arguments by calling 
+         * \details one can create the arguments by calling
          *  MetaConstructor::add_arg() on the returned MetaConstructor
          */
         MetaConstructor* add_constructor(Callable* action=nullptr);
-        
+
         /**
          * \brief Creates a new slot
          * \param[in] name the name of the slot
          * \param[in] action the function to be called when the slot is invoked
-         * \param[in] return_type an optional string with the return type 
+         * \param[in] return_type an optional string with the return type
          * \return the created DynamicMetaSlot
-         * \details one can create the arguments by calling 
+         * \details one can create the arguments by calling
          *  DynamicMetaSlot::add_arg() on the returned DynamicMetaSlot.
          */
         DynamicMetaSlot* add_slot(
@@ -217,5 +222,3 @@ namespace OGF {
 }
 
 #endif
-
-

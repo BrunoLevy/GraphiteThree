@@ -585,7 +585,7 @@ namespace OGF {
         /**
          * \brief Interpreter destructor.
          */
-        virtual ~Interpreter();
+        ~Interpreter() override;
 
         /**
          * \brief Initializes the interpreter subsystem, and

@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 #ifndef H_OGF_SCENE_GRAPH_NL_LIBRARY_H
 #define H_OGF_SCENE_GRAPH_NL_LIBRARY_H
 
@@ -47,7 +47,7 @@ namespace OGF {
 
 	class Vector;
 	class Matrix;
-	
+
 	/**
 	 * \brief Scripting interface to the OpenNL library.
 	 */
@@ -62,8 +62,8 @@ namespace OGF {
 	    /**
 	     * \brief Library destructor.
 	     */
-	    virtual ~Library();
-	    
+	    virtual ~Library() override;
+
 	  gom_slots:
 	    /**
 	     * \brief Creates a vector.
@@ -88,7 +88,7 @@ namespace OGF {
 	    Blas* get_blas() const {
 		return blas_;
 	    }
-	    
+
 	  private:
 	    Blas_var blas_;
 	};
