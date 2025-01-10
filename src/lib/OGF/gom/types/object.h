@@ -266,8 +266,8 @@ namespace OGF {
 
 	/**
 	 * \brief Sets an element by item and component.
-	 * \param[in] item, in 0..nb_items()-1
-	 * \param[in] component, in 0..dimension()-1
+	 * \param[in] item in 0..nb_items()-1
+	 * \param[in] component in 0..dimension()-1
 	 * \param[in] value the value of the element, stored in an Any.
 	 */
 	void set_element(

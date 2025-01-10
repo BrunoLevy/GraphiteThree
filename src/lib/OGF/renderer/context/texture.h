@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 #ifndef H_OGF_RENDERER_CONTEXT_TEXTURE_H
 #define H_OGF_RENDERER_CONTEXT_TEXTURE_H
 
@@ -66,7 +66,7 @@ namespace OGF {
          * \details Deletes the associated OpenGL texture
          *  if it was created.
          */
-        ~Texture();
+        ~Texture() override;
 
 
         /**
@@ -107,7 +107,7 @@ namespace OGF {
          * \param[in] filtering the OpenGL filtering mode
          * \param[in] wrapping the wrapping mode for texture
          *  coordinates
-         * \note For now, only 2d textures are implemented, and 
+         * \note For now, only 2d textures are implemented, and
          *   not all datatypes/storage work (under work...)
          */
         void create_from_image(
@@ -120,14 +120,14 @@ namespace OGF {
          * \brief Creates a texture from raw data.
          * \param[in] ptr a pointer to image data
          * \param[in] color_encoding the color encoding of the data
-         * \param[in] component_encoding the data type used for 
+         * \param[in] component_encoding the data type used for
          *  the color components
          * \param[in] width image width
          * \param[in] height image height (or 1 for 1d textures)
          * \param[in] depth image depth (or 1 for 1d and 2d textures)
          * \param[in] filtering the OpenGL filtering mode
          * \param[in] wrapping the wrapping mode for texture coordinates
-         * \note For now, only 2d textures are implemented, and 
+         * \note For now, only 2d textures are implemented, and
          *   not all datatypes/storage work (under work...)
          */
         void create_from_data(
@@ -160,7 +160,7 @@ namespace OGF {
 	/**
 	 * \brief Resets the id of this texture.
 	 * \details If a texture was created, then the association
-	 *  with this Texture is forgotten, and this Texture's 
+	 *  with this Texture is forgotten, and this Texture's
 	 *  destructor no longer destroys the OpenGL texture.
 	 */
 	void reset_id() {
@@ -196,17 +196,17 @@ namespace OGF {
 	void set_wrapping(GLint wrapping) {
 	    wrapping_ = wrapping;
 	}
-	
+
     protected:
 
         /**
          * \brief Initializes texture data for a 1d texture.
          * \param[in] ptr pointer to texture data
          * \param[in] color_encoding the color encoding of the data
-         * \param[in] component_encoding the data type used for 
+         * \param[in] component_encoding the data type used for
          *  the color components
          * \param[in] width the width of the texture
-         */  
+         */
         void create_from_data_1d(
             Memory::pointer ptr,
             Image::ColorEncoding color_encoding,
@@ -218,11 +218,11 @@ namespace OGF {
          * \brief Initializes texture data for a 2d texture.
          * \param[in] ptr pointer to texture data
          * \param[in] color_encoding the color encoding of the data
-         * \param[in] component_encoding the data type used for 
+         * \param[in] component_encoding the data type used for
          *  the color components
          * \param[in] width the width of the texture
          * \param[in] height the height of the texture
-         */  
+         */
         void create_from_data_2d(
             Memory::pointer ptr,
             Image::ColorEncoding color_encoding,
@@ -234,12 +234,12 @@ namespace OGF {
          * \brief Initializes texture data for a 2d texture.
          * \param[in] ptr pointer to texture data
          * \param[in] color_encoding the color encoding of the data
-         * \param[in] component_encoding the data type used for 
+         * \param[in] component_encoding the data type used for
          *  the color components
          * \param[in] width the width of the texture
          * \param[in] height the height of the texture
          * \param[in] depth the height of the texture
-         */  
+         */
         void create_from_data_3d(
             Memory::pointer ptr,
             Image::ColorEncoding color_encoding,
@@ -253,9 +253,9 @@ namespace OGF {
          *  textures from Image color encoding and component
          *  encoding.
          * \param[in] color_encoding the color encoding of the data
-         * \param[in] component_encoding the data type used for 
+         * \param[in] component_encoding the data type used for
          *  the color components
-         * \param[out] internal_format the internal format used 
+         * \param[out] internal_format the internal format used
          *  by OpenGL texture (parameter of glTexImagenD())
          * \param[out] format the OpenGL format used to pass image
          *  data to the OpenGL texture (parameter of glTexImagenD())
@@ -269,7 +269,7 @@ namespace OGF {
             GLenum& format,
             GLenum& type
         );
-        
+
     private:
         index_t dimension_;
         index_t sizes_[3];
@@ -288,4 +288,3 @@ namespace OGF {
 
 }
 #endif
-

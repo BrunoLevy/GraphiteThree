@@ -35,8 +35,6 @@
  */
 
 #include <OGF/renderer/context/overlay.h>
-#include <geogram_gfx/third_party/imgui/imgui.h>
-
 
 #ifdef GEO_COMPILER_GCC_FAMILY
 #pragma GCC diagnostic push
@@ -49,6 +47,7 @@
 #endif
 #endif
 
+#include <geogram_gfx/third_party/imgui/imgui.h>
 #include <geogram_gfx/third_party/imgui/imgui_internal.h>
 
 #if defined(GEO_COMPILER_GCC_FAMILY)

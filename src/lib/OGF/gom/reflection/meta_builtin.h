@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_META_TYPES_META_BUILTIN_H
@@ -63,7 +63,7 @@ namespace OGF {
         /**
          * \brief MetaBuiltinType destructor.
          */
-        virtual ~MetaBuiltinType() ;
+        ~MetaBuiltinType() override ;
 
     gom_slots:
         /**
@@ -77,8 +77,7 @@ namespace OGF {
     /**
      * \brief Automatic reference-counted pointer to a MetaBuiltinType.
      */
-    typedef SmartPointer<MetaBuiltinType> MetaBuiltinType_var ;   
+    typedef SmartPointer<MetaBuiltinType> MetaBuiltinType_var ;
 }
 
-#endif 
-
+#endif

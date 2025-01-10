@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_META_TYPES_META_ENUM_H
@@ -65,7 +65,7 @@ namespace OGF {
         /**
          * \brief MetaEnum destructor.
          */
-        virtual ~MetaEnum() ;
+        ~MetaEnum() override ;
 
       gom_slots:
         /**
@@ -127,8 +127,8 @@ namespace OGF {
          * \return the symbolic name associated with \p value
          * \pre has_value(value)
          */
-        const std::string& get_name_by_value(int value) const ; 
-	
+        const std::string& get_name_by_value(int value) const ;
+
         /**
          * \brief Adds a new value to this MetaEnum.
          * \param[in] name symbolic name
@@ -157,5 +157,4 @@ namespace OGF {
     typedef SmartPointer<MetaEnum> MetaEnum_var ;
 }
 
-#endif 
-
+#endif

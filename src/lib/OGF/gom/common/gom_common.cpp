@@ -48,7 +48,7 @@ namespace GEO {
     /**
      * \brief Deserializer for smart pointer
      */
-    std::istream& operator>>(
+    inline std::istream& operator>>(
 	std::istream& in, GEO::SmartPointer<GEO::Counted>& smptr
     ) {
 	GEO::Counted* ptr;
@@ -60,7 +60,7 @@ namespace GEO {
     /**
      * \brief Serializer for smart pointer
      */
-    std::ostream& operator<<(
+    inline std::ostream& operator<<(
 	std::ostream& out, const GEO::SmartPointer<GEO::Counted>& smptr
     ) {
 	const GEO::Counted* ptr = smptr.get();

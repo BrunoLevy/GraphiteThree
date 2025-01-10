@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 
 #ifndef H_OGF_RENDERER_CONTEXT_RENDERING_CONTEXT_H
 #define H_OGF_RENDERER_CONTEXT_RENDERING_CONTEXT_H
@@ -63,7 +63,7 @@ namespace OGF {
     *  and light sources. It also provides functionalities
     *  for picking.
     */
-    
+
     class RENDERER_API RenderingContext : public Counted {
     public:
 
@@ -78,8 +78,8 @@ namespace OGF {
         /**
          * \brief RenderingContext destructor.
          */
-        ~RenderingContext();
-        
+        ~RenderingContext() override;
+
         /**
          * \brief Gets the current RenderingContext.
          * \return a pointer to the current RenderingContext
@@ -94,7 +94,7 @@ namespace OGF {
          *  occuring.
          * \details This concerns all the rendering contexts
          *  (thus a static method).
-         * \retval true if a rendering operation is currently 
+         * \retval true if a rendering operation is currently
          *  occuring
          * \retval false otherwise
          */
@@ -102,7 +102,7 @@ namespace OGF {
 
 
         /**
-         * \brief Tests whether a picking operation is 
+         * \brief Tests whether a picking operation is
          *  occuring.
          * \details This concerns all the rendering contexts
          *  (this a static method).
@@ -111,8 +111,8 @@ namespace OGF {
          * \retval false otherwise
          */
         static bool is_currently_picking();
-        
-        
+
+
         /**
          * \brief Gets the width.
          * \return the width of this RenderingContext in pixels.
@@ -131,7 +131,7 @@ namespace OGF {
 
         /**
          * \brief Tests whether this RenderingContext is initialized.
-         * \details A RenderingContext is initialized once the first 
+         * \details A RenderingContext is initialized once the first
          *  drawing event was processed.
          * \retval true if this RenderingContext is initialized
          * \retval false otherwise
@@ -142,7 +142,7 @@ namespace OGF {
 
         /**
          * \brief Makes this RenderingContext the current one.
-         * \details OpenGL uses global variables. Since several 
+         * \details OpenGL uses global variables. Since several
          * 3D graphic windows may be
          * opened at the same time, the corresponding renderer
          * has to be 'made current' before issuing 3D drawing
@@ -158,7 +158,7 @@ namespace OGF {
          *  a lock, that is released by done_current()
          */
         virtual void done_current();
-        
+
         /**
          * \brief Meant to make the rendered frame visible.
          * \details Base class implementation does nothing.
@@ -221,9 +221,9 @@ namespace OGF {
 
         /**
          * \brief Begins a new frame.
-         * \details This clears the color and depth buffer, 
-         *  and setups the viewing matrix. This function 
-         *  calls make_current() before issuing any OpenGL 
+         * \details This clears the color and depth buffer,
+         *  and setups the viewing matrix. This function
+         *  calls make_current() before issuing any OpenGL
          *  call.
          */
         virtual void begin_frame();
@@ -231,13 +231,13 @@ namespace OGF {
         /**
          * \brief Terminates a frame.
          */
-        virtual void end_frame(); 
+        virtual void end_frame();
 
 
         /**
          * \brief Gets the primary background color.
          * \details The primary background color is used to clear
-         *  the color buffer. 
+         *  the color buffer.
          * \return a const reference to the primary background color
          */
         const Color& background_color() const;
@@ -252,7 +252,7 @@ namespace OGF {
         /**
          * \brief Gets the secondary background color.
          * \details If the secondary background color is different from
-         *  the primary background color, then a vertical colorramp is 
+         *  the primary background color, then a vertical colorramp is
          *  generated in the background.
          * \return a const reference to the secondary background color
          */
@@ -261,7 +261,7 @@ namespace OGF {
         /**
          * \brief Sets the secondary background color.
          * \details If the secondary background color is different from
-         *  the primary background color, then a vertical colorramp is 
+         *  the primary background color, then a vertical colorramp is
          *  generated in the background.
          * \param[in] c a const reference to the secondary background color
          */
@@ -283,7 +283,7 @@ namespace OGF {
          *  background texture.
          * \param[in] ptr a pointer to image data
          * \param[in] color_encoding the color encoding of the data
-         * \param[in] component_encoding the data type used for the 
+         * \param[in] component_encoding the data type used for the
          *  color components
          * \param[in] width image width
          * \param[in] height image height
@@ -308,7 +308,7 @@ namespace OGF {
          * \return a const reference to the lighting matrix.
          */
         const mat4& lighting_matrix() const;
-        
+
         /**
          * \brief Gets the clipping matrix.
          * \details The clipping matrix transforms the clipping plane.
@@ -395,7 +395,7 @@ namespace OGF {
         void set_clipping_mode(GLUPclipMode mode) {
             clipping_mode_ = mode;
         }
-        
+
         /**
          * \brief Tests whether this RenderingContext uses double buffering.
          * \retval true if double buffering is used
@@ -419,10 +419,10 @@ namespace OGF {
          * \param[in] b true if double buffering should be used, false otherwise
          */
         virtual void set_double_buffer(bool b);
-        
+
         /**
          * Copies the color buffer onto the specified image.
-         * \param[out] image The image, it should have the same size as 
+         * \param[out] image The image, it should have the same size as
 	 *  this RenderingContext and should be in RGB mode.
 	 * \param[in] make_current if true, makes this rendering context
 	 *  the current rendering context before reading the pixels.
@@ -455,14 +455,14 @@ namespace OGF {
 
         /**
          * \brief Gets the OpenGL extension.
-         * \return a string with the list of the supported OpenGL 
+         * \return a string with the list of the supported OpenGL
          *  extensions
          */
         std::string gl_extensions() const;
 
         /**
          * \brief Gets the information on the GPU.
-         * \return a string with the OpenGL renderer, version and 
+         * \return a string with the OpenGL renderer, version and
          *  vendor
          */
         std::string get_gpu_information() const;
@@ -505,7 +505,7 @@ namespace OGF {
         /**
          * \brief Transforms screen coordinates to normalized
          *  device coordinates (viewport transform).
-         * \param[in] x , y the integer coordinates of a point, in 
+         * \param[in] x , y the integer coordinates of a point, in
          *  screen space.
          * \return the coordinates of the point in normalized device
          *  coordinates (both between -1.0 and 1.0).
@@ -517,7 +517,7 @@ namespace OGF {
          *  screen coordinates (inverse viewport transform).
          * \parma[in] ndc the normalized device coordinates of the
          *  point (x and y between -1.0 and 1.0).
-         * \param[out] x , y the integer coordinates of the point, in 
+         * \param[out] x , y the integer coordinates of the point, in
          *  screen space
          */
         void ndc_to_screen(const vec2& ndc, index_t& x, index_t& y) const;
@@ -532,14 +532,14 @@ namespace OGF {
 
         /**
          * \brief Exits picking mode.
-         * \details This function should be called after end_frame(). 
+         * \details This function should be called after end_frame().
          */
         virtual void end_picking();
 
         /**
-         * \brief Gets the picked id that was encoded in the pixel color 
+         * \brief Gets the picked id that was encoded in the pixel color
          *  under the mouse pointer.
-         * \details Some specialized shaders replace the color with 
+         * \details Some specialized shaders replace the color with
          *  (color-coded) identifiers.
          * \return the picked id
          */
@@ -548,14 +548,14 @@ namespace OGF {
         }
 
         /**
-         * \brief Gets the depth of the picked point in screen 
+         * \brief Gets the depth of the picked point in screen
          *   coordinates.
          * \return the depth of the picked point
          */
         double picked_depth() const {
             return picked_depth_;
         }
-        
+
         /**
          * \brief Gets the picked point in world coordinates.
          * \return a const reference to the picked point
@@ -580,7 +580,7 @@ namespace OGF {
          * \return the world-coordinates of the point.
          */
         vec3 unproject(const vec2& p_ndc, double depth) const;
-        
+
         /**
          * \brief Tests whether there was any OpenGL error.
          * \details Displays error messages in the console as obtained by
@@ -591,7 +591,7 @@ namespace OGF {
         /**
          * \brief Gets the default frame buffer id.
          * \details Some versions of Qt use a FrameBufferObject instead of
-         *  a full OpenGL context in rendering widgets. 
+         *  a full OpenGL context in rendering widgets.
          * \return the id of the default frame buffer object used with this
          *  context, or 0 if no frame buffer object is used.
          */
@@ -620,7 +620,7 @@ namespace OGF {
         Overlay& overlay() {
             return overlay_;
         }
-        
+
     protected:
 
         /**
@@ -628,7 +628,7 @@ namespace OGF {
          * \details If a background texture was specified, uses the texture,
          *  else generates a colorramp between the primary background color
          *  and the secondary background color.
-         * \see set_background_color(), set_background_color_2(), 
+         * \see set_background_color(), set_background_color_2(),
          *  set_background_image(), update_background_image_from_data()
          */
         virtual void draw_background();
@@ -644,7 +644,7 @@ namespace OGF {
          * \param[in] zNear depth coordinate of the near plane
          * \param[in] zFar depth coordinate of the far plane
          */
-        void setup_projection_ortho(double zNear, double zFar);        
+        void setup_projection_ortho(double zNear, double zFar);
 
         /**
          * \brief Setups the OpenGL projection matrix in orthographic mode.
@@ -661,7 +661,7 @@ namespace OGF {
         );
 
         /**
-         * \brief Setups the OpenGL model view transform from the viewing 
+         * \brief Setups the OpenGL model view transform from the viewing
          *  parameters.
          * \param[in] zScreen screen projection plane
          */
@@ -702,7 +702,7 @@ namespace OGF {
         /**
          * \brief Indicates whether this RenderingContext is
          *  initialized.
-         * \details This function is called by the RenderArea widget, 
+         * \details This function is called by the RenderArea widget,
          *  after the first repaint event, once the RenderingContext
          *  is ready for rendering.
          * \param[in] x true if this rendering context is initialized,
@@ -714,8 +714,8 @@ namespace OGF {
 
         /**
          * \brief Sets the width
-         * \details This function is just used to indicate to this 
-         *  RenderingContext what is its current width 
+         * \details This function is just used to indicate to this
+         *  RenderingContext what is its current width
          *  (it does not resize the RenderingContext).
          * \param[in] w the width
          */
@@ -725,18 +725,18 @@ namespace OGF {
 
         /**
          * \brief Sets the height
-         * \details This function is just used to indicate to this 
-         *  RenderingContext what is its current height 
+         * \details This function is just used to indicate to this
+         *  RenderingContext what is its current height
          *  (it does not resize the RenderingContext).
          * \param[in] h the height
          */
         void set_height(index_t h) {
             height_ = h;
         }
-        
+
         /**
-         * \brief Queries the Graphite environment for global 
-         *  rendering parameters, e.g. stereo & perspective, 
+         * \brief Queries the Graphite environment for global
+         *  rendering parameters, e.g. stereo & perspective,
          *  and updates member variables if this RenderingContext accordingly.
          */
         void get_view_parameters();
@@ -751,10 +751,10 @@ namespace OGF {
 
 
     protected:
-        
+
         static RenderingContext* current_;
         bool initialized_;
-        
+
         index_t width_;
         index_t height_;
         bool double_buffer_;
@@ -763,20 +763,20 @@ namespace OGF {
         int viewport_y_;
         int viewport_width_;
         int viewport_height_;
-        
+
         mat4 viewing_matrix_;
         mutable mat4 inverse_viewing_matrix_;
         mutable bool inverse_viewing_matrix_dirty_;
 
         bool lighting_;
         mat4 lighting_matrix_;
-        
+
         bool clipping_;
         mat4 clipping_matrix_;
         vec4 clipping_equation_;
         bool clipping_viewer_;
         GLUPclipMode clipping_mode_;
-        
+
         Color background_color_;
         Color background_color_2_;
         Texture_var background_texture_;
@@ -809,7 +809,7 @@ namespace OGF {
          */
         GLuint frame_buffer_id_;
         bool frame_buffer_id_init_;
-        
+
         static bool geogram_gfx_initialized_;
 
         /**
@@ -821,27 +821,27 @@ namespace OGF {
 
         /**
          * \brief The number of RenderingContext instances
-         *  that are currently picking something, or that 
+         *  that are currently picking something, or that
          *  contain a picking image in their color buffer.
          */
         static index_t nb_picking_locks_;
 
         /**
          * \brief The GLUP context.
-         * \details The GLUP API provides immediate-mode 
+         * \details The GLUP API provides immediate-mode
          *  OpenGL-like primitives and other ones, such
          *  as tetrahedra, hexahedra etc...
          */
         GLUPcontext glup_context_;
 	bool owns_glup_context_;
-	
+
         bool use_core_profile_;
         bool use_ES_profile_;
 
 	bool transparent_;
 
         Overlay overlay_;
-        
+
 	friend class RenderArea;
     };
 
@@ -850,7 +850,5 @@ namespace OGF {
 /******************************************************************/
 
 }
-      
+
 #endif
-
-

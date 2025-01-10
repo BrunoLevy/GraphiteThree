@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_GOM_INTERPRETER_H
@@ -59,8 +59,8 @@ namespace OGF {
     class Request;
     class Callable;
     class Connection;
-    
-    /*************************************************************************/ 
+
+    /*************************************************************************/
 
     /**
      * \brief A naming scope in an Interpreter.
@@ -100,13 +100,13 @@ namespace OGF {
         void search(
             const std::string& needle, const std::string& path=""
         ) override;
-        
+
       protected:
 	Object* object_;
     };
-    
+
     typedef SmartPointer<Scope> Scope_var;
-    
+
     /*************************************************************************/
 
     /**
@@ -136,12 +136,12 @@ namespace OGF {
 	 */
 	void list_names(std::vector<std::string>& names) const override;
     };
-    
-    /************************************************************************/ 
-    
+
+    /************************************************************************/
+
     /**
      * \brief The Scope that contains all interfaces of an object.
-     * \details Encapsulates query_interface() in such a way that 
+     * \details Encapsulates query_interface() in such a way that
      *  automatic completion works when using object.I.
      */
     gom_class GOM_API InterfaceScope : public Scope {
@@ -169,18 +169,18 @@ namespace OGF {
 	void list_names(std::vector<std::string>& names) const override;
     };
 
-    /*************************************************************************/ 
+    /*************************************************************************/
 
     /**
      * \brief A Scope that contains MetaTypes.
-     * \details Encapsulates query_interface() in such a way that 
+     * \details Encapsulates query_interface() in such a way that
      *  automatic completion works when using object.I.
      */
     gom_class GOM_API MetaTypesScope : public Scope {
       public:
 	/**
 	 * \brief MetaTypesScope constructor.
-	 * \param[in] prefix optional prefix for object names, 
+	 * \param[in] prefix optional prefix for object names,
          *   for instance "OGF::" or "std::"
 	 */
 	MetaTypesScope(const std::string& prefix = "");
@@ -202,23 +202,23 @@ namespace OGF {
 
     gom_slots:
         MetaTypesScope* create_subscope(const std::string& name);
-        
+
     private:
         std::string prefix_;
         std::map<std::string, Scope_var> subscopes_;
     };
 
 
-    /*************************************************************************/ 
+    /*************************************************************************/
 
-    
+
     /**
      * \brief Abstract base class for the GOM interpreter.
      * \details It is completely independent of the used
      *  interpreted language. It is implemented in the gel_lua
      *  (and upcoming gel_python libraries).
      */
-    gom_attribute(abstract,"true")         
+    gom_attribute(abstract,"true")
     gom_class GOM_API Interpreter : public Object {
 
     public:
@@ -232,15 +232,15 @@ namespace OGF {
 	 * \brief Clears all variables, restarts from initial state.
 	 */
 	virtual void reset()=0;
-	
+
 	/**
 	 * \brief Finds a variable by id.
 	 * \param[in] id the id, can be either a previously bound id
-	 *  defined in the interpreter, or an id of the form 
-	 *  "@ClassName::#instance", where ClassName is the name of a 
-	 *  class registered to GOM, and instance an integer that refers 
+	 *  defined in the interpreter, or an id of the form
+	 *  "@ClassName::#instance", where ClassName is the name of a
+	 *  class registered to GOM, and instance an integer that refers
 	 *  to a specific instance of that
-	 *  class (the latter form of ids is used by the VCR system for 
+	 *  class (the latter form of ids is used by the VCR system for
 	 *  recording events received by the GUI widgets).
 	 * \param[in] quiet if true, do not display error messages.
 	 * \return an any with the variable attached to \p id in
@@ -260,11 +260,11 @@ namespace OGF {
 
 	/**
 	 * \brief Lists the global variable names in this Interpreter..
-	 * \param[out] names a vector of strings with the names 
+	 * \param[out] names a vector of strings with the names
 	 *  of the global variables.
 	 */
 	virtual void list_names(std::vector<std::string>& names) const;
-	
+
 	/**
 	 * \brief Evaluates a string with an expression.
 	 * \param[in] expression a string with an expression.
@@ -275,10 +275,10 @@ namespace OGF {
 	    const std::string& expression, bool quiet=true
 	) const;
 
-	
+
     gom_slots:
 	/**
-	 * \brief Outputs to the logger the methods, 
+	 * \brief Outputs to the logger the methods,
 	 *  slots, properties, property values
 	 *  of a given object.
 	 * \param[in] object a pointer to the object.
@@ -286,7 +286,7 @@ namespace OGF {
 	void inspect(Object* object);
 
 	/**
-	 * \brief Outputs to the logger the methods, 
+	 * \brief Outputs to the logger the methods,
 	 *  slots, properties of a given MetaClass.
 	 * \param[in] meta_type a pointer to the MetaType.
 	 */
@@ -306,13 +306,13 @@ namespace OGF {
 	 * \param[in] object the object to be bound
 	 */
 	void bind_object(const std::string& id, Object* object);
-	
+
 	/**
 	 * \brief Finds an objet by id.
 	 * \param[in] id the id, can be either a previously bound id
-	 *  defined in the interpreter, or an id of the form 
-	 *  "@ClassName::#instance", where ClassName is the name of a 
-	 *  class registered to GOM, and instance an integer that refers 
+	 *  defined in the interpreter, or an id of the form
+	 *  "@ClassName::#instance", where ClassName is the name of a
+	 *  class registered to GOM, and instance an integer that refers
 	 *  to a specific instance of that class.
 	 * \param[in] quiet if true, do not display error messages.
 	 * \return a pointer to the Object attached to \p id in
@@ -336,7 +336,7 @@ namespace OGF {
 	Object* resolve_object_by_global_id(
 	    const std::string& id, bool quiet=true
 	) const;
-	
+
 	/**
 	 * \brief Evaluates a string with an expression.
 	 * \param[in] expression a string with an expression.
@@ -360,9 +360,9 @@ namespace OGF {
 
 	/**
 	 * \brief Finds a MetaType by name.
-	 * \param[in] type_name the name of the MetaType 
+	 * \param[in] type_name the name of the MetaType
 	 * (with 'OGF::' scope if need be).
-	 * \return a pointer to the MetaType or nil if there where 
+	 * \return a pointer to the MetaType or nil if there where
 	 *  no such MetaType.
 	 */
 	virtual MetaType* resolve_meta_type(const std::string& type_name) const;
@@ -378,10 +378,10 @@ namespace OGF {
 
 	/**
 	 * \brief Creates an object.
-	 * \param[in] args the ArgList, with at least an argument classname. 
+	 * \param[in] args the ArgList, with at least an argument classname.
 	 * The other arguments
 	 *  are passed to the constructor.
-	 * \return a pointer to the created object or nil if an error 
+	 * \return a pointer to the created object or nil if an error
 	 *  was encountered.
 	 */
 	virtual Object* create(const ArgList& args);
@@ -414,7 +414,7 @@ namespace OGF {
          * \retval false otherwise
          */
         virtual bool execute(
-            const std::string& command, 
+            const std::string& command,
             bool save_in_history = true,
             bool log = true
         ) = 0;
@@ -454,7 +454,7 @@ namespace OGF {
 	virtual void warn(
 	    const std::string& message, const std::string& tag = "GOM"
 	);
-	
+
 	/**
 	 * \brief Displays a status message.
 	 * \param[in] message the message.
@@ -468,7 +468,7 @@ namespace OGF {
 	 * \param[in] path the path to be added.
 	 */
 	virtual void append_dynamic_libraries_path(const std::string& path);
-	
+
 	/**
 	 * \brief Loads a plug-in.
 	 * \param[in] module_name the name of the plug-in.
@@ -509,8 +509,10 @@ namespace OGF {
         /**
          * \copydoc Object::search()
          */
-        void search(const std::string& needle, const std::string& path="");
-        
+        void search(
+	    const std::string& needle, const std::string& path=""
+	) override;
+
       public:
         /**
          * \brief Gets the default interpreter.
@@ -519,7 +521,7 @@ namespace OGF {
         static Interpreter* default_interpreter() {
             return default_interpreter_;
         }
-	
+
       gom_properties:
 	/**
 	 * \brief Gets the history.
@@ -538,7 +540,7 @@ namespace OGF {
 
 	/**
 	 * \brief Gets the filename extensions for the interpreted language.
-	 * \return the extension without the dot ("lua" for Lua, 
+	 * \return the extension without the dot ("lua" for Lua,
 	 *  "py" for Python).
 	 */
 	const std::string& get_filename_extension() const {
@@ -560,9 +562,9 @@ namespace OGF {
         Scope* get_meta_types() const {
             return meta_types_;
         }
-        
+
       public:
-	
+
         /**
          * \brief Gets the instance of the interpreter that interprets
 	 *  a given language.
@@ -579,14 +581,14 @@ namespace OGF {
         static Interpreter* instance_by_file_extension(
 	    const std::string& extension
 	);
-	
+
         /**
          * \brief Interpreter destructor.
          */
         virtual ~Interpreter();
-        
+
         /**
-         * \brief Initializes the interpreter subsystem, and 
+         * \brief Initializes the interpreter subsystem, and
          *  defines the interpreter to be used.
          * \details This function is called at Graphite startup by
          *  the library that creates the interpreter (gel_python2 or
@@ -594,7 +596,7 @@ namespace OGF {
          *  function directly.
          * \param[in] instance the interpreter to be used.
 	 * \param[in] language the name of the interpreted language.
-	 * \param[in] extension file extension for the interpreted language, 
+	 * \param[in] extension file extension for the interpreted language,
 	 *  without the point.
          */
         static void initialize(
@@ -604,16 +606,16 @@ namespace OGF {
 
 
 	/**
-	 * \brief Terminates an interpreter and removes a given language 
+	 * \brief Terminates an interpreter and removes a given language
 	 *  from the list of interpreters.
 	 * \param[in] language the name of the language to be terminated.
-	 * \param[in] extension file extension for the interpreted language, 
+	 * \param[in] extension file extension for the interpreted language,
 	 *  without the point.
 	 */
 	static void terminate(
 	    const std::string& language, const std::string& extension
 	);
-	
+
         /**
          * \brief Terminates the interpreter subsystem, and deallocates
          *  the interpreter.
@@ -631,7 +633,7 @@ namespace OGF {
 	Object* create(const std::string& classname, const ArgList& args);
 
 	/**
-	 * \brief Gets the possible automatic completions from a partial 
+	 * \brief Gets the possible automatic completions from a partial
 	 *  command entered by the user in the command line.
 	 * \param[in] line the command line to be completed.
 	 * \param[in] startw , endw the position of the word to be completed.
@@ -642,8 +644,8 @@ namespace OGF {
 	    const std::string& line, index_t startw, index_t endw,
 	    const std::string& cmpword, std::vector<std::string>& matches
 	);
-	
-        
+
+
         /**
          * \brief Saves the history to a file.
          * \param[in] file_name name of the file where the history should
@@ -703,11 +705,11 @@ namespace OGF {
 	void filter_completion_candidates(
 	    const std::string& prefix, std::vector<std::string>& completions
 	);
-	
+
 	/**
 	 * \brief Gets all possible keys in a certain context.
 	 * \param[in] context the name of a variable.
-	 * \param[out] keys the name of all the data members and function 
+	 * \param[out] keys the name of all the data members and function
 	 *  members of the variable.
 	 */
 	virtual void get_keys(
@@ -717,7 +719,7 @@ namespace OGF {
 	/**
 	 * \brief Gets all possible keys in a certain context.
 	 * \param[in] context the name of a variable.
-	 * \param[out] keys the name of all the data members and function 
+	 * \param[out] keys the name of all the data members and function
 	 *  members of the variable.
 	 */
 	virtual void get_keys(
@@ -739,7 +741,7 @@ namespace OGF {
 	 * \param[in] mclass the meta class.
 	 */
 	void inspect_meta_class(Object* object, MetaClass* mclass);
-	
+
 	/**
 	 * \brief Outputs to the logger the signature of a method.
 	 * \param[in] mmethod a pointer to the MetaMethod.
@@ -748,7 +750,7 @@ namespace OGF {
 
 	/**
 	 * \brief Sets the name of the interpreted language.
-	 * \param[in] language the name of the interpreted 
+	 * \param[in] language the name of the interpreted
 	 *  language.
 	 */
 	void set_language(const std::string& language) {
@@ -782,12 +784,12 @@ namespace OGF {
 	 *  value pairs by the target language.
 	 */
 	virtual std::string name_value_pair_call(const std::string& args) const;
-	
+
     protected:
         std::vector<std::string> history_;
 	std::string language_;
 	std::string extension_;
-	
+
     private:
         static std::map<
 	    std::string, SmartPointer<Interpreter>
@@ -795,15 +797,15 @@ namespace OGF {
 	static std::map<std::string, Interpreter*>
 	    instance_by_file_extension_;
         static Interpreter* default_interpreter_;
-	
+
 	Scope_var globals_;
         Scope_var meta_types_;
     };
 
     typedef SmartPointer<Interpreter> Interpreter_var;
-    
+
     /*************************************************************************/
 
-} 
+}
 
-#endif 
+#endif
