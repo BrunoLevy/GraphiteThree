@@ -9,7 +9,12 @@ if(WIN32)
 #  Insert flags here if there are some MSVC warnings to deactivate.
 else()
    add_definitions(-Wno-unused -Wno-sign-compare -Wno-strict-aliasing)
+   if(
+       "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR
+       "${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang"
+   )
+      add_definitions(-Wno-deprecated-declarations) # swig uses sprintf
+   endif()
 endif()
 
 add_subdirectory(swig)
-

@@ -114,7 +114,7 @@ namespace OGF {
          *  circle. One may use Tool::project_point() to obtain them from
          *  real-world coordinates.
          * \param[in] R the radius of the circle
-         * \param[in] the color, with alpha
+         * \param[in] color the color, with alpha
          */
         void fillcircle(vec2 p1, double R, Color color);
 
@@ -132,7 +132,7 @@ namespace OGF {
          * \param[in] p1 , p2 , p3 , p4 the 2D coordinates of two corners of the
          *  rectangle. One may use Tool::project_point() to obtain them from
          *  real-world coordinates.
-         * \param[in] the color, with alpha
+         * \param[in] color the color, with alpha
          */
         void fillquad(vec2 p1, vec2 p2, vec2 p3, vec2 p4, Color color);
 
