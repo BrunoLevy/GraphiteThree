@@ -3792,8 +3792,9 @@ namespace OGF {
 
     /**************************************************************/
 
-    index_t copy_cell(
-        Mesh* target, Mesh* source, index_t i, double shrink, bool flip, bool edges
+    static index_t copy_cell(
+        Mesh* target, Mesh* source, index_t i,
+	double shrink, bool flip, bool edges
     ) {
         Attribute<index_t> chart(source->facets.attributes(),"chart");
 
@@ -3816,28 +3817,33 @@ namespace OGF {
         }
 
         vec3 G(0.0, 0.0, 0.0);
-        index_t v = first_v;
-        do {
-            G += vec3(source->vertices.point_ptr(v));
-            v = nxt[v];
-        } while(v != first_v);
-        G = (1.0/double(nxt.size()))*G;
+	{
+	    index_t v = first_v;
+	    do {
+		G += vec3(source->vertices.point_ptr(v));
+		v = nxt[v];
+	    } while(v != first_v);
+	    G = (1.0/double(nxt.size()))*G;
+	}
 
         index_t newf = target->facets.create_polygon(index_t(nxt.size()));
-        v = first_v;
-        index_t lv = 0;
-        index_t N = index_t(nxt.size());
-        do {
-            vec3 p = shrink*G+(1.0-shrink)*vec3(source->vertices.point_ptr(v));
-            // p.z = z;
-            target->facets.set_vertex(
-                newf,
-                flip ? N-1-lv : lv,
-                target->vertices.create_vertex(p.data())
-            );
-            v = nxt[v];
-            ++lv;
-        } while(v != first_v);
+	index_t N = index_t(nxt.size());
+	{
+	    index_t v = first_v;
+	    index_t lv = 0;
+	    do {
+		vec3 p =
+		    shrink*G+(1.0-shrink)*vec3(source->vertices.point_ptr(v));
+		// p.z = z;
+		target->facets.set_vertex(
+		    newf,
+		    flip ? N-1-lv : lv,
+		    target->vertices.create_vertex(p.data())
+		);
+		v = nxt[v];
+		++lv;
+	    } while(v != first_v);
+	}
 
         if(edges) {
             for(index_t lv=0; lv<N; ++lv) {
@@ -3849,7 +3855,7 @@ namespace OGF {
         return newf;
     }
 
-    vec3 mesh_facet_centroid(const Mesh& M, index_t f) {
+    static vec3 mesh_facet_centroid(const Mesh& M, index_t f) {
         vec3 mg(0.0, 0.0, 0.0);
         double m=0.0;
         const double* p0 = M.vertices.point_ptr(
@@ -3860,7 +3866,9 @@ namespace OGF {
             i + 1 < M.facets.corners_end(f); i++
         ) {
             const double* p1 = M.vertices.point_ptr(M.facet_corners.vertex(i));
-            const double* p2 = M.vertices.point_ptr(M.facet_corners.vertex(i + 1));
+            const double* p2 = M.vertices.point_ptr(
+		M.facet_corners.vertex(i + 1)
+	    );
             double A = GEO::Geom::triangle_area(
                 p0, p1, p2, coord_index_t(3)
             );
@@ -3872,7 +3880,9 @@ namespace OGF {
         return (1.0/m)*mg;
     }
 
-    void connect(Mesh* M, index_t f1, index_t f2, const std::string& name) {
+    static void connect(
+	Mesh* M, index_t f1, index_t f2, const std::string& name
+    ) {
 
         double z1 = M->vertices.point_ptr(M->facets.vertex(f1,0))[2];
         double z2 = M->vertices.point_ptr(M->facets.vertex(f2,0))[2];
@@ -4003,7 +4013,9 @@ namespace OGF {
             return;
         }
 
-        Attribute<index_t> to_delete(mesh_grob()->facets.attributes(),"to_delete");
+        Attribute<index_t> to_delete(
+	    mesh_grob()->facets.attributes(),"to_delete"
+	);
 
         for(index_t i=0; i<N; ++i) {
             bool flip = false;

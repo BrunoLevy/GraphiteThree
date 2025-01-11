@@ -472,8 +472,16 @@ namespace OGF {
                 }
             }
         } break;
-        default: {
-        } break;
+	case MESH_NONE:
+	case MESH_EDGES:
+	case MESH_ALL_ELEMENTS:
+	case MESH_FACET_CORNERS:
+	case MESH_CELL_CORNERS:
+	case MESH_CELL_FACETS:
+	case MESH_ALL_SUBELEMENTS: {
+	    Logger::err("Filter") << "Invalid localisation"
+				     << std::endl;
+	} break;
         }
         Object* shd = mesh->get_shader();
         if(shd != nullptr) {

@@ -44,6 +44,7 @@ jobs:
         run: |
           cp doc/binary_win_dist/Plugins.txt plugins/OGF/Plugins.txt
           ./configure.sh
+          (cd geogram; ./configure.sh)
           echo "platform="\
           `./geogram/configure.sh --show-platform`-${{ matrix.config }} >> $GITHUB_ENV
 

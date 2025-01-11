@@ -1109,8 +1109,14 @@ namespace OGF {
                     }
                 }
             } break;
-            default: {
-            } break;
+	    case MESH_NONE:
+	    case MESH_EDGES:
+	    case MESH_ALL_ELEMENTS:
+	    case MESH_FACET_CORNERS:
+	    case MESH_CELL_CORNERS:
+	    case MESH_CELL_FACETS:
+	    case MESH_ALL_SUBELEMENTS:
+		break;
             }
         } else {
 
@@ -1337,7 +1343,8 @@ namespace OGF {
                             return false;
                         }
                         paint_attribute(
-                            mesh_grob(),where,attribute_name,component,f,op,value_
+                            mesh_grob(),where,
+			    attribute_name,component,f,op,value_
                         );
                         return true;
                     }
@@ -1362,8 +1369,15 @@ namespace OGF {
                     }
                 );
             } break;
-            default: {
-            } break;
+	    case MESH_NONE:
+	    case MESH_VERTICES:
+	    case MESH_EDGES:
+	    case MESH_ALL_ELEMENTS:
+	    case MESH_FACET_CORNERS:
+	    case MESH_CELL_CORNERS:
+	    case MESH_CELL_FACETS:
+	    case MESH_ALL_SUBELEMENTS:
+		break;
             }
         } else if(where == MESH_VERTICES) {
             vector<index_t> vertices;
@@ -1471,7 +1485,7 @@ namespace OGF {
             mesh_grob(), attribute_element_type, attribute_name, component
         );
 
-        double value;
+        double value = 0.0;
         bool with_value = false;
         index_t element_id = index_t(-1);
         MeshElementsFlags element_type = MESH_NONE;

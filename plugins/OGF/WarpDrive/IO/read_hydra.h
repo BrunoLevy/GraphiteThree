@@ -25,7 +25,7 @@
 namespace GEO {
 
     /******************************************************************/
-    
+
     /**
      * \brief Loads data from Fortran files
      * \details Fortran files are organized into records. Each record
@@ -81,7 +81,7 @@ namespace GEO {
         bool record_is_open() const {
             return record_size_ != 0;
         }
-        
+
         /**
          * \brief Opens a FORTRAN record, and reads record size.
          * \return the length of the record, in bytes
@@ -118,12 +118,12 @@ namespace GEO {
                     std::logic_error(
 #ifdef WITH_READ_HYDRA
                         "invalid FORTRAN record size"
-#else                        
+#else
                         String::format(
                             "invalid FORTRAN record size:expected %d got %d",
                             record_size_, check
                         )
-#endif                        
+#endif
                     )
                 );
             }
@@ -170,7 +170,7 @@ namespace GEO {
                 ));
             }
         }
-        
+
     private:
         FILE* f_;
         uint32_t record_size_;
@@ -234,7 +234,7 @@ namespace GEO {
             begin_record();
             read(ver);
             end_record();
-            
+
             begin_record();
             read(ibuf);
             read(ibuf1);
@@ -284,7 +284,7 @@ namespace GEO {
          * \param[in] filename the name of the file, if it ends with
          *  ".bin" then a binary file is saved, else an ascii file
          * \details Throws an exception if the file cannot be saved
-         *  or if record size does not fit the legal size for an 
+         *  or if record size does not fit the legal size for an
          *  array of floats
          */
         void save_vector_array_record(const std::string& filename) {
@@ -302,12 +302,12 @@ namespace GEO {
                 (filename.length() >= 4 &&
                  filename.substr(filename.length()-4) == ".bin");
 
-            bool xyz = 
+            bool ext_xyz =
                 (filename.length() >= 4 &&
                  filename.substr(filename.length()-4) == ".xyz");
-                
+
             FILE* out = fopen(filename.c_str(),binary ? "wb" : "w");
-            
+
             if(out == nullptr) {
                 throw(std::logic_error(
                           "could not create file " + filename
@@ -318,10 +318,10 @@ namespace GEO {
 
             // Write number of points if extension is ".xyz" file
             // (so that Graphite can load it faster)
-            if(xyz) {
+            if(ext_xyz) {
                 OK = OK && (fprintf(out,"%d\n",size) != 0);
             }
-            
+
             for(uint32_t i=0; i<size; ++i) {
                 float xyz[3];
                 read(xyz);
@@ -339,13 +339,19 @@ namespace GEO {
                     throw(std::logic_error("Error while writing file"));
                 }
             }
-            
+
             fclose(out);
-            
+
             end_record();
         }
-        
+
     public:
+
+#ifdef __clang__
+#pragma GCC diaggnostic push
+#pragma GCC diagnostic ignored "-Wnested-anon-types"
+#endif
+
         int32_t ver[3];
         struct {
             union {
@@ -382,7 +388,7 @@ namespace GEO {
                 } d;
             };
         } ibuf1;
-        
+
         struct {
             union {
                 int32_t I[100];
@@ -394,7 +400,7 @@ namespace GEO {
                     int32_t intl;   /**< must be 0 (1 for interlacing) */
                     int32_t nlmx;   /**< maximum number of refinement levels */
                     float perr;     /**< percent err for gravy, use 7.7 or 2.0 */
-                    float dtnorm;   /**< mult for tstep, 
+                    float dtnorm;   /**< mult for tstep,
                                          use 1 unless particles go haywire */
                     float sft0;     /**< z=0 softening */
                     float sftmin;   /**< minimum softening */
@@ -417,8 +423,8 @@ namespace GEO {
                 } d;
             };
         } ibuf2;
-        
-        
+
+
         struct {
             union {
                 int32_t I[200];
@@ -427,8 +433,13 @@ namespace GEO {
                 } d;
             };
         } ibuf;
+
+#ifdef __clang__
+#pragma GCC diaggnostic pop
+#endif
+
     };
-    
+
     /************************************************************/
 }
 
@@ -445,7 +456,7 @@ int main(int argc, char** argv) {
     std::string input;
     std::string output_pos;
     std::string output_velo;
-    
+
     while(i < argc) {
         std::string cur_arg = argv[i];
         ++i;
@@ -512,26 +523,26 @@ int main(int argc, char** argv) {
         uint32_t NPART = in.nb_particles();
         fprintf(stderr," `---> nb particles = %d\n",NPART) ;
 
-        std::cerr << "Loading itype..." << std::endl;        
+        std::cerr << "Loading itype..." << std::endl;
         in.skip_itype();
-        
-        std::cerr << "Loading rm..." << std::endl;                
+
+        std::cerr << "Loading rm..." << std::endl;
         in.skip_rm();
-        
-        std::cerr << "Loading r..." << std::endl;                
+
+        std::cerr << "Loading r..." << std::endl;
         if(output_pos == "") {
             in.skip_r();
         } else {
             in.save_vector_array_record(output_pos);
         }
-        
-        std::cerr << "Loading v..." << std::endl;                
+
+        std::cerr << "Loading v..." << std::endl;
         if(output_velo == "") {
             in.skip_v();
         } else {
             in.save_vector_array_record(output_velo);
         }
-        
+
     } catch(const std::logic_error& ex) {
         std::cerr << "Fatal error: " << ex.what() << std::endl;
         return 1;

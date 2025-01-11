@@ -353,8 +353,7 @@ namespace OGF {
 	/**
 	 * \brief Computes a refracted ray.
 	 * \param[in] ray incident ray.
-	 * \param[in] P the point where refraction occurs.
-	 * \param[in] N the unit vector at \p P.
+	 * \param[in] I the intersection (that has point and normal)
 	 * \param[in] n1 the refraction index of the first material.
 	 * \param[in] n2 the refraction index of the second material.
 	 * \return the refracted ray.

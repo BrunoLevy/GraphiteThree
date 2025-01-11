@@ -327,7 +327,7 @@ namespace OGF {
 	float Lf[3];
 	glupGetLightVector3fv(Lf);
 
-	L_ = vec3(Lf[0], Lf[1], Lf[2]);
+	L_ = vec3(double(Lf[0]), double(Lf[1]), double(Lf[2]));
 	L_ = normalize(mult(normalmatrix,L_));
     }
 
@@ -507,7 +507,6 @@ namespace OGF {
 		    Ks.z += spec;
 		}
 	    }
-	    vec3 K;
 
 	    if(transp_) {
 		vec3 Kt(color_.r(), color_.g(), color_.b());

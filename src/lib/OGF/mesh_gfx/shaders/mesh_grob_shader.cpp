@@ -1136,8 +1136,14 @@ namespace OGF {
                     }
                 }
             } break;
-            default:
-              break;
+	    case MESH_NONE:
+	    case MESH_EDGES:
+	    case MESH_ALL_ELEMENTS:
+	    case MESH_FACET_CORNERS:
+	    case MESH_CELL_CORNERS:
+	    case MESH_CELL_FACETS:
+	    case MESH_ALL_SUBELEMENTS:
+		break;
             }
             bary_ = vec3(0.0, 0.0, 0.0);
             double bary_cnt = 0.0;
