@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/skin_imgui/types/rendering_context.h>
@@ -47,10 +47,10 @@ namespace OGF {
 	// redraw while we are doing rendering ops.
 	Application::instance()->lock_updates();
 	if(!FBO_.initialized()) {
-	    GEO_CHECK_GL();	    	    		
+	    GEO_CHECK_GL();
 	    FBO_.initialize(get_width(), get_height(), true, GL_RGBA, false);
 	    initialized_ = true;
-	    GEO_CHECK_GL();	    	    		
+	    GEO_CHECK_GL();
 	}
 	GEO_CHECK_GL();
 	FBO_.bind_as_framebuffer();
@@ -59,10 +59,10 @@ namespace OGF {
 
     void SkinImGUIRenderingContext::end_frame() {
 	RenderingContext::end_frame();
-	GEO_CHECK_GL();	    	    	    
+	GEO_CHECK_GL();
 	FBO_.unbind();
 	GEO_CHECK_GL();
-	Application::instance()->unlock_updates();	
+	Application::instance()->unlock_updates();
     }
 
     void SkinImGUIRenderingContext::resize(index_t w, index_t h) {
@@ -71,21 +71,25 @@ namespace OGF {
 	    FBO_.resize(w,h);
 	}
     }
-	
+
     void SkinImGUIRenderingContext::draw_last_frame() {
-	glDisable(GL_DEPTH_TEST);	    
+	glDisable(GL_DEPTH_TEST);
 	glActiveTexture(GL_TEXTURE0);
 	FBO_.bind_as_texture();
-	GEO_CHECK_GL();	    	    	    
+	GEO_CHECK_GL();
 	glViewport(0,0,GLint(get_width()),GLint(get_height()));
-	GEO_CHECK_GL();	    	    	    
+	GEO_CHECK_GL();
 	draw_unit_textured_quad();
-	GEO_CHECK_GL();	    	    	    
+	GEO_CHECK_GL();
 	FBO_.unbind();
 	glEnable(GL_DEPTH_TEST);
     }
 
-    void SkinImGUIRenderingContext::snapshot(Image* image, bool make_current) {
+    void SkinImGUIRenderingContext::snapshot(
+	Image* image, bool make_current,
+	index_t x0, index_t y0,
+	index_t w, index_t h
+    ) {
 	// Bind FBO as framebuffer only if not already bound.
 	// Binding if already bound would work, but this would
 	// also overwrite the previously backed up binding state,
@@ -95,12 +99,12 @@ namespace OGF {
 	if(make_current && need_to_bind) {
 	    FBO_.bind_as_framebuffer();
 	}
-	RenderingContext::snapshot(image, make_current);
+
+	RenderingContext::snapshot(image, make_current, x0, y0, w, h);
+
 	if(make_current && need_to_bind) {
 	    FBO_.unbind();
 	}
     }
 
 }
-
-

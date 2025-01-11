@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 
 #ifndef H_SKIN_IMGUI_RENDERING_CONTEXT_H
 #define H_SKIN_IMGUI_RENDERING_CONTEXT_H
@@ -45,9 +45,9 @@
 #include <geogram_gfx/GLUP/GLUP.h>
 
 namespace OGF {
-    
+
     /**
-     * \brief A class derived from RenderingContext that interfaces 
+     * \brief A class derived from RenderingContext that interfaces
      *  the Application class with Graphite.
      * \details Uses a FrameBufferObject so that the GUI can be refreshed
      *  without needing to redraw 3D content.
@@ -86,17 +86,13 @@ namespace OGF {
 	void draw_last_frame();
 
 	/**
-	 * \brief Copies the content of this RenderingContext
-	 *  to an Image.
-	 * \param[out] image a pointer to the image. It should have
-	 *  RGB or RGBA storage, and have the same size as this
-	 *  RenderingContext.
-	 * \param[in] hide_gui if true, gui elements are not captured
-	 *  (only the content of the frame buffer object), else the
-	 *  current OpenGL framebuffer is copied (with the GUI if it
-	 *  called after GUI refresh).
+	 * \copydoc RenderingContext::snapshot()
 	 */
-	void snapshot(Image* image, bool hide_gui=true);
+	void snapshot(
+	    Image* image, bool make_current=true,
+	    index_t x0 = 0, index_t y0 = 0,
+	    index_t w = 0, index_t h = 0
+	) override;
 
     private:
 	FrameBufferObject FBO_;
