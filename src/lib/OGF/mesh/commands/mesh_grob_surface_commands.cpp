@@ -746,11 +746,6 @@ namespace OGF {
 	const std::string& attribute, ChartParameterizer algo, bool verbose
     ) {
 	switch(algo) {
-	    case PARAM_PROJECTION:
-		Logger::out("Param") << "Not implemented for single chart"
-				     << std::endl;
-		return;
-	    break;
 	    case PARAM_LSCM:
 		mesh_compute_LSCM(*mesh_grob(), attribute, false, "", verbose);
 		break;
@@ -765,6 +760,10 @@ namespace OGF {
 		}
 		mesh_compute_ABF_plus_plus(*mesh_grob(), attribute, verbose);
 		break;
+	    case PARAM_PROJECTION:
+	        Logger::out("Param") << "Not implemented for single chart"
+				     << std::endl;
+		return;
 	}
 	show_UV("vertices." + attribute);
 	mesh_grob()->update();

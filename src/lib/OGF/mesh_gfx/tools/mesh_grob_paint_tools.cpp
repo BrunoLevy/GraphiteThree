@@ -524,8 +524,8 @@ namespace {
                     // Note: glReadPixels and rasterizer use the opposite
                     // convention for the Y coordinate-------------v
                     if(*mask->pixel_base_byte_ptr(x,mask->height()-y-1) == 0) {
-                        *(Numeric::uint32*)picking_image->pixel_base(x,y) =
-                            Numeric::uint32(-1);
+                        *picking_image->pixel_base_int32_ptr(x,y) =
+                            Numeric::int32(-1);
                     }
                 }
             }
@@ -533,14 +533,14 @@ namespace {
 
         // Get all the picked ids, by sorting the pixels of the image by
         // value then using std::unique
-        Numeric::uint32* begin = (Numeric::uint32*)(picking_image->base_mem());
-        Numeric::uint32* end =
-            begin + picking_image->width() * picking_image->height();
+        Numeric::int32* begin = picking_image->pixel_base_int32_ptr(0,0);
+        Numeric::int32* end =
+	    begin + picking_image->width() * picking_image->height();
         std::sort(begin, end);
         end = std::unique(begin,end);
-        for(index_t* p=begin; p!=end; ++p) {
-            if(*p != index_t(-1)) {
-                doit(*p);
+        for(Numeric::int32* p=begin; p!=end; ++p) {
+            if(*p != -1) {
+                doit(index_t(*p));
             }
         }
     }

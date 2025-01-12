@@ -87,7 +87,7 @@ namespace {
      * (cf Stam99) (i.e. semi-lagrangian advection method).
      * \note not implemented yet.
      */
-    [[noreturn]] void compute_semi_Lagrangian(
+    void compute_semi_Lagrangian(
 	double current_time, double delta_t, const vec3& vertex, vec3 &veloc,
 	const VelocityField* m_veloc
     ) {
