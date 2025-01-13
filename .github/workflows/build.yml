@@ -72,3 +72,10 @@ jobs:
         run: |
           cmake --build build/Windows --config ${{ matrix.config }} `
           | tee -filepath build_log.txt
+
+###############################################################################
+
+      - name: Install gompy
+        if: runner.os != 'Windows'
+        run: build/${{ env.platform }}/bin/graphite batch=true \
+           lib/programming_examples/Python/install_gompy.lua

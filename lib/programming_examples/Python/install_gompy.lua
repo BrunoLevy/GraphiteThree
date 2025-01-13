@@ -8,7 +8,9 @@
 
 require('io')
 
-console_gui.show()
+if console_gui ~= nil then
+   console_gui.show()
+end
 
 -- Query libraries directory and gompy lib name from Graphite
 --------------------------------------------------------------
