@@ -77,4 +77,6 @@ jobs:
 
       - name: Install gompy
         if: runner.os != 'Windows'
-        run: build/${{ env.platform }}/bin/graphite batch=true lib/programming_examples/Python/install_gompy.lua
+        run: |
+          cat plugins/OGF/Plugins.txt\;
+          build/${{ env.platform }}/bin/graphite batch=true lib/programming_examples/Python/install_gompy.lua
