@@ -86,7 +86,5 @@ jobs:
       - name: Test gompy with a script
         if: runner.os != 'Windows'
         run: |
-          echo PYTHONPATH=$PYTHONPATH
-          ls $HOME/etc/python
-          which python3
+          export PYTHONPATH=$HOME/etc/python:$PYTHONPATH
           python3 lib/programming_examples/Python/gompy_example.py
