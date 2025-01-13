@@ -379,11 +379,11 @@ namespace {
         return pyresult;
     }
 
-    long graphite_Object_hash(PyObject* self_in) {
+    Py_hash_t graphite_Object_hash(PyObject* self_in) {
         geo_debug_assert(PyGraphite_Check(self_in));
 	graphite_Object* self = (graphite_Object*)self_in;
 	Object* object = self->object;
-        return (long)object;
+        return Py_hash_t(object);
     }
 
     PyObject* graphite_Object_getattro(PyObject* self_in, PyObject* name_in) {
