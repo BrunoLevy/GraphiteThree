@@ -48,7 +48,6 @@ jobs:
         if: runner.os != 'Windows'
         run: |
           cp cmake/default_plugins.txt plugins/OGF/Plugins.txt
-          cat plugins/OGF/Plugins.txt
           ./configure.sh
           (cd geogram; ./configure.sh)
           echo "platform="\
@@ -80,6 +79,6 @@ jobs:
       - name: Install gompy
         if: runner.os != 'Windows'
         run: |
-          pwd
-          cat plugins/OGF/Plugins.txt
+          export PYTHONPATH=$HOME/etc/python:$PYTHONPATH
+          mkdir -p $HOME/etc/python
           build/${{ env.platform }}/bin/graphite batch=true lib/programming_examples/Python/install_gompy.lua
