@@ -82,6 +82,7 @@ jobs:
           export PYTHONPATH=$HOME/etc/python:$PYTHONPATH
           mkdir -p $HOME/etc/python
           build/${{ env.platform }}/bin/graphite batch=true lib/programming_examples/Python/install_gompy.lua
+          cat $HOME/etc/python/gompy.py
 
       - name: Test gompy with a script
         if: runner.os != 'Windows'
