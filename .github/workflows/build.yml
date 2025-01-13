@@ -33,7 +33,6 @@ jobs:
 
       - name: Install Python
         uses: actions/setup-python@v5
-        run: python3 --version
 
 ################### Linux/MacOS ###############################################
 
