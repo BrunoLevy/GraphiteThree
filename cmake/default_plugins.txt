@@ -1,0 +1,7 @@
+# Default plugins bundled with Graphite distribution
+
+add_subdirectory(gompy)      # Python support
+add_subdirectory(WarpDrive)  # Optimal transport
+add_subdirectory(RayTracing) # Transparency and shadows 
+
+
