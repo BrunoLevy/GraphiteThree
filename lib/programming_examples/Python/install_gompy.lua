@@ -17,8 +17,14 @@ end
 gompy_dir = gom.get_environment_value('PROJECT_ROOT') .. '/' ..
             gom.get_environment_value('LIBRARIES_SUBDIRECTORY')
 
-gompy_lib = gom.get_environment_value('DLL_PREFIX')..'gompy'..
-            gom.get_environment_value('DLL_EXTENSION')
+ext = gom.get_environment_value('DLL_EXTENSION')
+
+-- On mac, we create a .so symlink (Python refuses to load .dylib files)
+if ext == '.dylib'
+   ext = '.so'
+end
+
+gompy_lib = gom.get_environment_value('DLL_PREFIX')..'gompy'..ext
 
 -- Query python path from Python interpreter
 --------------------------------------------
