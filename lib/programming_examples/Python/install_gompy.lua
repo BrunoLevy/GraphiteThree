@@ -87,8 +87,13 @@ else
    F:write("   '"..path_to_gompy..gompy_lib.."'\n")
    F:write(")\n")
 
-   F:write("print('-----> spec = ')\n") -- debugging
-   F:write("print(spec)\n") -- debugging
+-- debugging -------------------------------------------
+   F:write("print('-----> spec = ')\n")
+   F:write("print(spec)\n")
+   F:write("import ctypes\n")
+   F:write("libgompy = ctypes.CDLL('"..path_to_gompy..gompy_lib.."')\n")
+   F:write("print(libgompy)\n")
+-- -----------------------------------------------------
 
    F:write("module=importlib.util.module_from_spec(spec)\n")
    F:write("spec.loader.exec_module(module)\n")
