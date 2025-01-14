@@ -94,12 +94,11 @@ jobs:
       - name: Install gompy (Windows)
         if: runner.os == 'Windows'
         run: |
-          mkdir etc/python
-          set PYTHONPATH=etc/python
+          mkdir $HOME/etc/python
+          echo "PYTHONPATH=$HOME/etc/python" | Out-File -FilePath $env:GITHUB_ENV -Append
           build/Windows/bin/${{ matrix.config }}/graphite.exe batch=true lib/programming_examples/Python/install_gompy.lua
 
       - name: Test gompy with a script (Windows)
         if: runner.os == 'Windows'
         run: |
-          set PYTHONPATH=etc/python
           python3.exe lib/programming_examples/Python/gompy_example.py
