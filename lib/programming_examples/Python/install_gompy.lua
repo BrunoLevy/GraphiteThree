@@ -27,6 +27,14 @@ if ext == '.dylib' then
    ext = '.so'
 end
 
+-- On Windows, we need to copy the .dll file as a .pyd file, because
+-- Python extension modules cannot have the .dll extension...
+if ext == '.dll' then
+   os.execute('copy '..gompy_dir..'/libgompy.dll '..gompy_dir..'/libgompy.pyd')
+   ext = '.pyd'
+end
+
+
 gompy_lib = gom.get_environment_value('DLL_PREFIX')..'gompy'..ext
 
 -- Query python path from Python interpreter
