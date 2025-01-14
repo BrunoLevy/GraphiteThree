@@ -86,6 +86,9 @@ else
    F:write("   'gompy',\n")
    F:write("   '"..path_to_gompy..gompy_lib.."'\n")
    F:write(")\n")
+
+   F:write("print(spec)\n") -- debugging
+
    F:write("module=importlib.util.module_from_spec(spec)\n")
    F:write("spec.loader.exec_module(module)\n")
 

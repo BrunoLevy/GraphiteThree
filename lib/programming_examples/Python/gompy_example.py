@@ -1,9 +1,5 @@
 # To be run outside Graphite (after gompy is installed)
 
-# Try invalidate cache for MacOS
-import importlib
-importlib.invalidate_caches()
-
 import gompy
 OGF = gom.meta_types.OGF
 
