@@ -777,35 +777,35 @@ namespace {
 
     PyGetSetDef graphite_Object_getsets[] = {
 	{
-	    (char*)"__class__",
+	    const_cast<char*>("__class__"),
 	    graphite_get_class,
 	    nullptr,
 	    nullptr,
 	    nullptr
 	},
 	{
-	    (char*)"__bases__",
+	    const_cast<char*>("__bases__"),
 	    graphite_get_bases,
 	    nullptr,
 	    nullptr,
 	    nullptr
 	},
 	{
-	    (char*)"__array_struct__",
+	    const_cast<char*>("__array_struct__"),
 	    graphite_get_array_struct,
 	    nullptr,
 	    nullptr,
 	    nullptr
 	},
 	{
-	    (char*)"I",
+	    const_cast<char*>("I"),
 	    graphite_get_interfaces,
 	    nullptr,
 	    nullptr,
 	    nullptr
 	},
 	{
-	    (char*)"__doc__",
+	    const_cast<char*>("__doc__"),
 	    graphite_get_doc,
 	    nullptr,
 	    nullptr,
@@ -867,7 +867,7 @@ namespace {
      *  around Graphite object.
      */
     PyTypeObject graphite_ObjectType = {
-        PyVarObject_HEAD_INIT(NULL, 0)
+        PyVarObject_HEAD_INIT(nullptr, 0)
         "graphite.Object",        // tp_name
         sizeof(graphite_Object)   // tp_basicsize
 	// The rest is left uninitialized, and is set to zero using
@@ -901,7 +901,7 @@ namespace {
 
     PyGetSetDef graphite_Callable_getsets[] = {
 	{
-	    (char*)"__doc__",
+	    const_cast<char*>("__doc__"),
 	    graphite_get_doc,
 	    nullptr,
 	    nullptr,
@@ -921,7 +921,7 @@ namespace {
      *  around Graphite object.
      */
     PyTypeObject graphite_CallableType = {
-        PyVarObject_HEAD_INIT(NULL, 0)
+        PyVarObject_HEAD_INIT(nullptr, 0)
         "graphite.Callable",      // tp_name
         sizeof(graphite_Object)   // tp_basicsize
 	// The rest is left uninitialized, and is set to zero using
@@ -959,7 +959,7 @@ namespace {
      *  around Graphite object.
      */
     PyTypeObject graphite_MetaClassType = {
-        PyVarObject_HEAD_INIT(NULL, 0)
+        PyVarObject_HEAD_INIT(nullptr, 0)
         "graphite.MetaClass",     // tp_name
         sizeof(graphite_Object)   // tp_basicsize
 	// The rest is left uninitialized, and is set to zero using
@@ -1902,7 +1902,7 @@ namespace OGF {
 
 	bool FPE_bkp = Process::FPE_enabled();
 	Process::enable_FPE(false);
-        int res = PyRun_SimpleString((char*)(command.c_str()));
+        int res = PyRun_SimpleString(const_cast<char*>(command.c_str()));
 	Process::enable_FPE(FPE_bkp);
 
         if(res == -1) {
@@ -1965,7 +1965,7 @@ namespace OGF {
 
 	bool FPE_bkp = Process::FPE_enabled();
 	Process::enable_FPE(false);
-        int res = PyRun_SimpleFile(f, (char*)gel_file.c_str() );
+        int res = PyRun_SimpleFile(f, const_cast<char*>(gel_file.c_str()));
 	Process::enable_FPE(FPE_bkp);
 
         fclose(f);
