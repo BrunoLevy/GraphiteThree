@@ -82,6 +82,8 @@ jobs:
           export PYTHONPATH=$HOME/etc/python:$PYTHONPATH
           mkdir -p $HOME/etc/python
           build/${{ env.platform }}/bin/graphite batch=true lib/programming_examples/Python/install_gompy.lua
+          ls build/${{ env.platform }}/lib/
+          ln -s build/${{ env.platform }}/lib/libgompy.dylib build/${{ env.platform }}/lib/libgompy.so
           cat $HOME/etc/python/gompy.py
 
       - name: Test gompy with a script
