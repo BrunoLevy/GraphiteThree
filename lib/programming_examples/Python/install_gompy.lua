@@ -27,12 +27,12 @@ if ext == '.dylib' then
    ext = '.so'
 end
 
--- On Windows, we need to copy the .dll file as a .pyd file, because
+-- On Windows, we need to copy the .dll file as a .so file, because
 -- Python extension modules cannot have the .dll extension...
 if ext == '.dll' then
-   print('We are on windows, copy dll to pyd')
-   cmd = 'copy '..gompy_dir..'gompy.dll '..gompy_dir..'gompy.pyd'
-   cmd = cmd:gsub('/','\\\\')
+   print('We are on windows, copy dll to so')
+   cmd = 'copy '..gompy_dir..'gompy.dll '..gompy_dir..'gompy.so'
+   cmd = cmd:gsub('/','\\')
    os.execute(cmd)
    print(cmd)
    os.execute('dir '..gompy_dir)
