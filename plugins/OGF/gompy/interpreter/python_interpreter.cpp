@@ -48,6 +48,7 @@
 #ifdef GEO_COMPILER_CLANG
 // Python uses 'long long' considered to be not c++98 by Clang.
 #pragma GCC diagnostic ignored "-Wc++98-compat-pedantic"
+#pragma GCC diagnostic ignored "-Wdisabled-macro-expansion"
 #endif
 
 #ifdef GEO_COMPILER_GCC_FAMILY
