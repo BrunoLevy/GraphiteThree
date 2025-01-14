@@ -20,7 +20,7 @@ gompy_dir = gom.get_environment_value('PROJECT_ROOT') .. '/' ..
 ext = gom.get_environment_value('DLL_EXTENSION')
 
 -- On mac, we create a .so symlink (Python refuses to load .dylib files)
-if ext == '.dylib'
+if ext == '.dylib' then
    ext = '.so'
 end
 
