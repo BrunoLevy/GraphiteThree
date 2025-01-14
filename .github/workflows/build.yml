@@ -92,6 +92,7 @@ jobs:
 ###############################################################################
 
       - name: Set PYTHONPATH (Windows)
+        if: runner.os == 'Windows'
         run: |
           mkdir $HOME/etc/python
           echo "PYTHONPATH=$HOME/etc/python" | Out-File -FilePath $env:GITHUB_ENV -Append
