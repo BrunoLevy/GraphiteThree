@@ -108,7 +108,7 @@ jobs:
           build/Windows/bin/${{ matrix.config }}/graphite.exe batch=true `
           lib/programming_examples/Python/install_gompy.lua
           type $HOME/etc/python/gompy.py
-          dir build/Windows/lib/${{ matrix.config }}
+          dir build/Windows/bin/${{ matrix.config }}
 
       - name: Test gompy (Windows)
         if: runner.os == 'Windows'
