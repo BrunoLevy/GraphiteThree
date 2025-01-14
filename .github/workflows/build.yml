@@ -89,9 +89,7 @@ jobs:
 
       - name: Test gompy (Linux/MacOS)
         if: runner.os != 'Windows'
-        run: |
-          export PYTHONPATH=$HOME/etc/python:$PYTHONPATH
-          python3 lib/programming_examples/Python/gompy_example.py
+        run: python3 lib/programming_examples/Python/gompy_example.py
 
 ####### Python config / install gomy / test gompy (Windows) #################
 
@@ -108,5 +106,4 @@ jobs:
 
       - name: Test gompy (Windows)
         if: runner.os == 'Windows'
-        run: |
-          python3.exe lib/programming_examples/Python/gompy_example.py
+        run: python3.exe lib/programming_examples/Python/gompy_example.py
