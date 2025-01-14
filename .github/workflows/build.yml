@@ -82,7 +82,7 @@ jobs:
           export PYTHONPATH=$HOME/etc/python:$PYTHONPATH
           mkdir -p $HOME/etc/python
           build/${{ env.platform }}/bin/graphite batch=true lib/programming_examples/Python/install_gompy.lua
-          ln -s build/${{ env.platform }}/lib/libgompy.dylib build/${{ env.platform }}/lib/libgompy.so
+          cp build/${{ env.platform }}/lib/libgompy.dylib build/${{ env.platform }}/lib/libgompy.so
           ls build/${{ env.platform }}/lib/
           cat $HOME/etc/python/gompy.py
 
