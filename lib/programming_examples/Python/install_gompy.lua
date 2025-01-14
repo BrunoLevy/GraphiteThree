@@ -30,9 +30,10 @@ end
 -- On Windows, we need to copy the .dll file as a .pyd file, because
 -- Python extension modules cannot have the .dll extension...
 if ext == '.dll' then
+   print('We are on windows, copy dll to pyd')
    os.execute('copy '..gompy_dir..'/gompy.dll '..gompy_dir..'/gompy.pyd')
    ext = '.pyd'
-   print('copy '..gompy_dir..'/gompy.dll '..gompy_dir..'/gompy.pyd')
+   print('copy '..gompy_dir..'gompy.dll '..gompy_dir..'gompy.pyd')
    os.execute('dir '..gompy_dir)
 end
 
