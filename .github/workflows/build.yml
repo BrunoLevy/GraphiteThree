@@ -95,11 +95,11 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           mkdir %userprofile%/etc/python
-          set PYTHONPATH=%userprofile%/etc/python;%PYTHONPATH%
+          set PYTHONPATH=%userprofile%/etc/python
           build/Windows/bin/${{ matrix.config }}/graphite.exe batch=true lib/programming_examples/Python/install_gompy.lua
 
       - name: Test gompy with a script (Windows)
         if: runner.os == 'Windows'
         run: |
-          set PYTHONPATH=%userprofile%/etc/python;%PYTHONPATH%
+          set PYTHONPATH=%userprofile%/etc/python
           python3.exe lib/programming_examples/Python/gompy_example.py
