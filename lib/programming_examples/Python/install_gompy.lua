@@ -32,6 +32,8 @@ end
 if ext == '.dll' then
    os.execute('copy '..gompy_dir..'/gompy.dll '..gompy_dir..'/gompy.pyd')
    ext = '.pyd'
+   print('copy '..gompy_dir..'/gompy.dll '..gompy_dir..'/gompy.pyd')
+   os.execute('dir '..gompy_dir)
 end
 
 
