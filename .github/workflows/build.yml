@@ -51,7 +51,8 @@ jobs:
           ./configure.sh
           (cd geogram; ./configure.sh)
           echo "platform="\
-          `./geogram/configure.sh --show-platform`-${{ matrix.config }} >> $GITHUB_ENV
+          `./geogram/configure.sh --show-platform`-${{ matrix.config }} \
+          >> $GITHUB_ENV
 
       - name: Build (Linux/MacOS)
         if: runner.os != 'Windows'
@@ -85,24 +86,27 @@ jobs:
       - name: Install gompy (Linux/MacOS)
         if: runner.os != 'Windows'
         run: |
-          build/${{ env.platform }}/bin/graphite batch=true lib/programming_examples/Python/install_gompy.lua
+          build/${{ env.platform }}/bin/graphite batch=true \
+          lib/programming_examples/Python/install_gompy.lua
 
       - name: Test gompy (Linux/MacOS)
         if: runner.os != 'Windows'
         run: python3 lib/programming_examples/Python/gompy_example.py
 
-####### Python config / install gomy / test gompy (Windows) #################
+####### Python config / install gompy / test gompy (Windows) #################
 
       - name: Python config (Windows)
         if: runner.os == 'Windows'
         run: |
           mkdir $HOME/etc/python
-          echo "PYTHONPATH=$HOME/etc/python" | Out-File -FilePath $env:GITHUB_ENV -Append
+          echo "PYTHONPATH=$HOME/etc/python" | Out-File -FilePath `
+          $env:GITHUB_ENV -Append
 
       - name: Install gompy (Windows)
         if: runner.os == 'Windows'
         run: |
-          build/Windows/bin/${{ matrix.config }}/graphite.exe batch=true lib/programming_examples/Python/install_gompy.lua
+          build/Windows/bin/${{ matrix.config }}/graphite.exe batch=true `
+          lib/programming_examples/Python/install_gompy.lua
 
       - name: Test gompy (Windows)
         if: runner.os == 'Windows'
