@@ -1777,6 +1777,9 @@ namespace OGF {
     PythonInterpreter::PythonInterpreter() : main_module_(nullptr) {
 	use_embedded_interpreter_ = (Py_IsInitialized() == 0);
 
+	std::cerr << "use_embedded_interpreter_ = " << use_embedded_interpreter_
+		  << std::endl;
+
 	bool FPE_bkp = Process::FPE_enabled();
 	Process::enable_FPE(false);
 
@@ -2070,6 +2073,7 @@ namespace OGF {
  */
 extern "C" gompy_API PyObject* PyInit_libgompy(void);
 extern "C" gompy_API PyObject* PyInit_libgompy() {
+    printf("Calling PyInit_libgompy\n");
     CmdLine::declare_arg("gel", "Python",
 	    "Name of the graphite embedded language runtime"
     );
