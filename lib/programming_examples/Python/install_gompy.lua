@@ -7,6 +7,7 @@
 --------------------------------------------------------------
 
 require('io')
+require('os')
 
 if console_gui ~= nil then
    console_gui.show()
@@ -19,8 +20,10 @@ gompy_dir = gom.get_environment_value('PROJECT_ROOT') .. '/' ..
 
 ext = gom.get_environment_value('DLL_EXTENSION')
 
--- On mac, we create a .so symlink (Python refuses to load .dylib files)
+-- On mac, we need to copy the .dylib file as a .so file, because
+-- Python extension modules cannot have the .dylib extension...
 if ext == '.dylib' then
+   os.execute('cp '..gompy_dir..'/libgompy.dylib '..gompy_dir..'/libgompy.so')
    ext = '.so'
 end
 
