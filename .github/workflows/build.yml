@@ -94,9 +94,9 @@ jobs:
       - name: Install gompy (Windows)
         if: runner.os == 'Windows'
         run: |
-          build/Windows/${{ matrix.config }})/bin/graphite.exe batch=true lib/programming_examples/Python/install_gompy.lua
+          build/Windows/${{ matrix.config }}/bin/graphite.exe batch=true lib/programming_examples/Python/install_gompy.lua
 
       - name: Test gompy with a script (Windows)
-        if: runner.os != 'Windows'
+        if: runner.os == 'Windows'
         run: |
           python3.exe lib/programming_examples/Python/gompy_example.py
