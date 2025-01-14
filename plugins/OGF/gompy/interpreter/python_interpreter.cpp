@@ -1777,9 +1777,6 @@ namespace OGF {
     PythonInterpreter::PythonInterpreter() : main_module_(nullptr) {
 	use_embedded_interpreter_ = (Py_IsInitialized() == 0);
 
-	std::cerr << "use_embedded_interpreter_ = " << use_embedded_interpreter_
-		  << std::endl;
-
 	bool FPE_bkp = Process::FPE_enabled();
 	Process::enable_FPE(false);
 
