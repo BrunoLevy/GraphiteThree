@@ -83,7 +83,7 @@ if not string.ends_with(path_to_gompy,'/') then
    path_to_gompy = path_to_gompy..'/'
 end
 if FileSystem.os_name() == 'Windows' then
-   path_to_gompy = path_to_gompy:gsub('/','\\')
+   path_to_gompy = path_to_gompy:gsub('/','\\\\')
 end
 
 if install_dir == nil then
