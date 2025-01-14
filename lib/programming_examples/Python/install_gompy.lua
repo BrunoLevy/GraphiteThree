@@ -32,7 +32,7 @@ end
 if ext == '.dll' then
    print('We are on windows, copy dll to pyd')
    cmd = 'copy '..gompy_dir..'gompy.dll '..gompy_dir..'gompy.pyd'
-   cmd = cmd.gsub('/','\\\\')
+   cmd = cmd:gsub('/','\\\\')
    os.execute(cmd)
    print(cmd)
    os.execute('dir '..gompy_dir)
