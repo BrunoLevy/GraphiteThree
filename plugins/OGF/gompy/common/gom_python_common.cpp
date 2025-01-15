@@ -56,7 +56,7 @@ namespace OGF {
     void gom_python_libinit::initialize() {
         Logger::out("Init") << "<gom_python>" << std::endl;
 
-        //_____________________________________________________________
+        /*************************************************************/
 
         gom_package_initialize(gompy) ;
 
@@ -68,7 +68,7 @@ namespace OGF {
 	    Interpreter::initialize(interp, "Python", "py");
 	}
 
-        //_____________________________________________________________
+        /*************************************************************/
 
         Module* module_info = new Module;
         module_info->set_name("gom_python");
@@ -81,11 +81,12 @@ namespace OGF {
 
     void gom_python_libinit::terminate() {
         Logger::out("Init") << "<~gom_python>" << std::endl;
-        //_____________________________________________________________
+
+        /*************************************************************/
 
 	Interpreter::terminate("Python", "py");
 
-        //_____________________________________________________________
+        /*************************************************************/
 
         Module::unbind_module("gom_python");
         Logger::out("Init") << "</~gom_python>" << std::endl;

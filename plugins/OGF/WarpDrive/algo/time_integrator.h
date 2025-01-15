@@ -40,26 +40,22 @@
 
 namespace OGF {
 
-    enum time_integrator_t {
-	SIMPLE=0, RUNGE_KUTTA_2=1, RUNGE_KUTTA_4=2, SEMI_LAGRANGIAN=3
-    };
+    enum time_integrator_t {SIMPLE=0, RUNGE_KUTTA_2=1, RUNGE_KUTTA_4=2};
 
     class VelocityField;
-    
+
     /**
-     * \brief Computes a velocity with the specified algorithm and 
+     * \brief Computes a velocity with the specified algorithm and
      *  the specified velocity driver.
-     * \details Implements some general methods to compute 
+     * \details Implements some general methods to compute
      *  velocities (Simple, RK2, RK4). By David Lopez, June 2010
-     * \note SEMI_LAGRANGIAN is not implemented yet.
      */
     void WarpDrive_API time_integrator(
 	double current_time, double delta_t,
 	const vec3& vertex, vec3 &veloc,
 	time_integrator_t algo, const VelocityField* m_veloc
     );
-	
+
 }
 
 #endif
-

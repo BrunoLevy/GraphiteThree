@@ -1058,6 +1058,7 @@ namespace {
 	PyObject* obj, T& result
     ) {
 	geo_argused(obj);
+	geo_argused(result);
 	geo_assert_not_reached;
     }
 

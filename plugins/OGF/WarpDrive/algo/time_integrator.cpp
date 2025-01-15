@@ -81,23 +81,6 @@ namespace {
 	k4 = delta_t * veloc_tmp;
 	veloc = (1./6. * ( k1 + k4 ) + 1./3. * ( k2 + k3 ) ) / delta_t ;
     }
-
-    /**
-     * \brief Computes the velocity with the method of characteristics
-     * (cf Stam99) (i.e. semi-lagrangian advection method).
-     * \note not implemented yet.
-     */
-    void compute_semi_Lagrangian(
-	double current_time, double delta_t, const vec3& vertex, vec3 &veloc,
-	const VelocityField* m_veloc
-    ) {
-	geo_argused(current_time);
-	geo_argused(delta_t);
-	geo_argused(vertex);
-	geo_argused(veloc);
-	geo_argused(m_veloc);
-	geo_assert_not_reached;
-    }
 }
 
 namespace OGF {
@@ -114,11 +97,6 @@ namespace OGF {
 		break;
 	    case RUNGE_KUTTA_4 :
 		compute_Runge_Kutta_4(
-		    current_time, delta_t, vertex, veloc, m_veloc
-		);
-		break;
-	    case SEMI_LAGRANGIAN:
-		compute_semi_Lagrangian(
 		    current_time, delta_t, vertex, veloc, m_veloc
 		);
 		break;
