@@ -25,20 +25,20 @@
  *  Contact for this Plugin: Bruno Levy - Bruno.Levy@inria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
  * As an exception to the GPL, Graphite can be linked with the following
  * (non-GPL) libraries:
  *     Qt, tetgen, SuperLU, WildMagic and CGAL
  */
- 
- 
+
+
 #include <OGF/gompy/common/common.h>
 #include <OGF/gompy/interpreter/python_interpreter.h>
 #include <OGF/basic/modules/module.h>
@@ -54,7 +54,6 @@ extern "C" {
 namespace OGF {
 
     void gom_python_libinit::initialize() {
-
         Logger::out("Init") << "<gom_python>" << std::endl;
 
         //_____________________________________________________________
@@ -68,7 +67,7 @@ namespace OGF {
 	    Interpreter* interp = new PythonInterpreter();
 	    Interpreter::initialize(interp, "Python", "py");
 	}
-	
+
         //_____________________________________________________________
 
         Module* module_info = new Module;
@@ -79,19 +78,19 @@ namespace OGF {
         Module::bind_module("gom_python", module_info);
         Logger::out("Init") << "</gom_python>" << std::endl;
     }
-    
+
     void gom_python_libinit::terminate() {
         Logger::out("Init") << "<~gom_python>" << std::endl;
         //_____________________________________________________________
 
 	Interpreter::terminate("Python", "py");
-	
+
         //_____________________________________________________________
 
         Module::unbind_module("gom_python");
         Logger::out("Init") << "</~gom_python>" << std::endl;
     }
-    
+
     gom_python_libinit::gom_python_libinit() {
         increment_users();
     }
@@ -99,30 +98,30 @@ namespace OGF {
     gom_python_libinit::~gom_python_libinit() {
         decrement_users();
     }
-    
+
     void gom_python_libinit::increment_users() {
         // Note that count_ is incremented before calling
         // initialize, else it would still be equal to
-        // zero at module initialization time, which 
+        // zero at module initialization time, which
         // may cause duplicate initialization of libraries.
         count_++;
         if(count_ == 1) {
             initialize();
         }
     }
-    
+
     void gom_python_libinit::decrement_users() {
         count_--;
         if(count_ == 0) {
             terminate();
         }
     }
-    
+
     int gom_python_libinit::count_ = 0;
 }
 
 // The initialization and termination functions
-// are also declared using C linkage in order to 
+// are also declared using C linkage in order to
 // enable dynamic linking of modules.
 
 extern "C" void gompy_API OGF_gompy_initialize(void);

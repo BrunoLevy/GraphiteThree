@@ -1780,49 +1780,47 @@ namespace OGF {
 	bool FPE_bkp = Process::FPE_enabled();
 	Process::enable_FPE(false);
 
-        // If Python library is installed in Graphite, then set
-        // Python system path to that library.
-        const std::vector<std::string>& ogf_path =
-            FileManager::instance()->ogf_path();
-        if(
-	    use_embedded_interpreter_ &&
-            ogf_path.size() > 0 &&
-            FileSystem::is_directory(ogf_path[0] + "/lib/Python")
-        ) {
-            Logger::out("GOMpy")
-                << "Found local python lib. directory in Graphite: "
-                << ogf_path[0] + "/lib/Python"
-                << std::endl;
-            Logger::out("GOMpy")
-		<< " -> Setting python path there." << std::endl;
-            std::string python_path;
-            for(index_t i=0; i<ogf_path.size(); ++i) {
-                if(python_path == "") {
-#ifdef GEO_OS_WINDOWS
-                    python_path += ";";
-#else
-                    python_path += ":";
-#endif
-                }
-                python_path += ogf_path[i] + "/lib/Python";
-            }
-
-#if (PY_MINOR_VERSION >= 5)
-	    wchar_t* w_python_path =
-		Py_DecodeLocale(python_path.c_str(), nullptr);
-#else
-            wchar_t* w_python_path =
-		_Py_char2wchar(python_path.c_str(), nullptr);
-#endif
-	    Py_SetPath(w_python_path); // Deprecated, TODO, find how to say that
-	    PyMem_RawFree(w_python_path);
-        }
-
-        // Needed since our module is not in a separate shared object.
-
 	if(use_embedded_interpreter_) {
+	    PyConfig config;
+	    PyConfig_InitPythonConfig(&config);
+
+
+	    // If there are Python subdirectories in OGF_PATH, add them
+	    // to Python path.
+	    const std::vector<std::string>& ogf_path =
+		FileManager::instance()->ogf_path();
+	    if(
+		ogf_path.size() > 0 &&
+		FileSystem::is_directory(ogf_path[0] + "/lib/Python")
+	    ) {
+		Logger::out("GOMpy")
+		    << "Found local python lib. directory in Graphite: "
+		    << ogf_path[0] + "/lib/Python"
+		    << std::endl;
+		Logger::out("GOMpy")
+		    << " -> Setting python path there." << std::endl;
+		std::string python_path;
+		for(index_t i=0; i<ogf_path.size(); ++i) {
+		    if(python_path.length() != 0) {
+#ifdef GEO_OS_WINDOWS
+			python_path += ';';
+#else
+			python_path += ':';
+#endif
+		    }
+		    python_path += (ogf_path[i] + "/lib/Python");
+		}
+		config.pythonpath_env =
+		    Py_DecodeLocale(python_path.c_str(), nullptr);
+	    }
+
+
+	    // Needed since our module is not in a separate shared object.
 	    PyImport_AppendInittab("GOM", PyInit_gom);
-	    Py_Initialize();
+	    Py_InitializeFromConfig(&config);
+
+	    // PyMem_RawFree(config.pythonpath_env);
+               // TODO: do we need to do that ?
 
 	    // What follows is the low-level equivalent to:
 	    //PyRun_SimpleString("import GOM");
@@ -2070,7 +2068,6 @@ namespace OGF {
  */
 extern "C" gompy_API PyObject* PyInit_libgompy(void);
 extern "C" gompy_API PyObject* PyInit_libgompy() {
-    printf("Calling PyInit_libgompy\n");
     CmdLine::declare_arg("gel", "Python",
 	    "Name of the graphite embedded language runtime"
     );
