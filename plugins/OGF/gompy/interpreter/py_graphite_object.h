@@ -72,6 +72,9 @@ namespace OGF {
 	 * \param[in] managed true if reference counting is enabled (default),
 	 *  false otherwise. Reference counting is disabled for the interpreter
 	 *  itself, else it creates a circular reference.
+	 * \details Returns an object, a callable or a meta-class depending on
+	 *  \p object type. If \p object is an NL::Vector, creates also the
+	 *  array interface for numpy interop.
 	 */
 	PyObject* PyGraphiteObject_New(Object* object, bool managed=true);
 

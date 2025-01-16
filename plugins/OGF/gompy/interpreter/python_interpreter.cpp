@@ -128,71 +128,11 @@ namespace {
         return m;
     }
 
-    /*****************************************************************/
-
 }
 
+   /*****************************************************************/
+
 namespace OGF {
-
-    /*****************************************************************/
-
-    PythonCallable::PythonCallable(PyObject* impl) : impl_(impl) {
-        Py_INCREF(impl);
-        geo_assert(PyCallable_Check(impl_));
-    }
-
-    PythonCallable::~PythonCallable() {
-        geo_assert(impl_ != nullptr);
-        Py_DECREF(impl_);
-        impl_ = nullptr;
-    }
-
-    bool PythonCallable::invoke(const ArgList& args_in, Any& ret_val) {
-	// TODO: check number of parameters
-	//   (Python: inspect.signature(func).parameters)
-        // TODO: check reference counting, is this correct ?
-
-	bool FPE_bkp = Process::FPE_enabled();
-	Process::enable_FPE(false);
-
-        PyObject* args = PyTuple_New(Py_ssize_t(args_in.nb_args()));
-        Py_INCREF(args);
-        PyObject* kw = PyDict_New();
-        Py_INCREF(kw);
-        for(unsigned int i=0; i<args_in.nb_args(); i++) {
-            PyObject* name = string_to_python(args_in.ith_arg_name(i));
-            PyObject* value = graphite_to_python(args_in.ith_arg_value(i));
-            //  PyTuple_SetItem(args, i, value);
-            // Does not work with this one, using the other one.
-            PyTuple_SET_ITEM(args, i, value);
-            Py_INCREF(value); // I think I need to do that
-            PyDict_SetItem(kw, name, value);
-            // I'm not sure whether I should incref on
-            // name and value, it seems that it's not the
-            // case (according to the doc)
-        }
-
-        geo_assert(impl_ != nullptr);
-        geo_assert(PyCallable_Check(impl_));
-
-        PyObject* result = PyObject_Call(impl_, args, nullptr);
-            // Finally I'm not using kw...
-	ret_val = python_to_graphite(result);
-        Py_DECREF(args);
-        Py_DECREF(kw);
-
-	if(result == nullptr) {
-	    PyErr_Print();
-	}
-
-	Py_XDECREF(result);
-
-	Process::enable_FPE(FPE_bkp);
-
-	return true;
-    }
-
-    /*****************************************************************/
 
     PythonInterpreter::PythonInterpreter() : main_module_(nullptr) {
 	use_embedded_interpreter_ = (Py_IsInitialized() == 0);
