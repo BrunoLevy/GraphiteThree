@@ -193,7 +193,80 @@ namespace {
 	result.set_value(M);
 	return true;
     }
+
+    /*************************************************************************/
+
+    template<class T> inline PyObject* graphiteveccomp_to_python(
+	T value
+    ) {
+	geo_argused(value);
+	geo_assert_not_reached;
+    }
+
+    template<> inline PyObject* graphiteveccomp_to_python<double>(
+	double value
+    ) {
+	return PyFloat_FromDouble(value);
+    }
+
+    template<> inline PyObject*
+    graphiteveccomp_to_python<Numeric::int32>(
+	Numeric::int32 value
+    ) {
+	return PyLong_FromLong(long(value));
+    }
+
+
+    template <unsigned int N, class T> inline PyObject* graphitevec_to_python(
+	const ::GEO::vecng<N,T>& V
+    ) {
+	PyObject* result = PyList_New(N);
+	for(index_t i=0; i<N; ++i) {
+	    PyList_SetItem(result, i, graphiteveccomp_to_python(V[i]));
+	}
+	return result;
+    }
+
+    template <unsigned int N, class T> inline PyObject* graphitevec_to_python(
+	const Any& val
+    ) {
+	if(val.meta_type() != ogf_meta<::GEO::vecng<N,T> >::type()) {
+	    return nullptr;
+	}
+	::GEO::vecng<N,T> V;
+	val.get_value(V);
+	return graphitevec_to_python(V);
+    }
+
+
+    template <unsigned int N, class T> inline PyObject* graphitemat_to_python(
+	const ::GEO::Matrix<N,T>& M
+    ) {
+	PyObject* result = PyList_New(N);
+	for(index_t i=0; i<index_t(N); ++i) {
+	    PyObject* row = PyList_New(N);
+	    for(index_t j=0; j<index_t(N); ++j) {
+		PyList_SetItem(row, j, graphiteveccomp_to_python(M(i,j)));
+	    }
+	    PyList_SetItem(result, i, row);
+	}
+	return result;
+    }
+
+    template <unsigned int N, class T> inline PyObject* graphitemat_to_python(
+	const Any& val
+    ) {
+	if(val.meta_type() != ogf_meta<::GEO::Matrix<N,T> >::type()) {
+	    return nullptr;
+	}
+	::GEO::Matrix<N,T> M;
+	val.get_value(M);
+	return graphitemat_to_python(M);
+    }
+
 }
+
+/*****************************************************************************/
 
 namespace OGF {
 
@@ -240,5 +313,41 @@ namespace OGF {
 
 	return false;
     }
+
+    /***********************************************************************/
+
+    PyObject* graphite_mat_vec_to_python(const Any& arg) {
+	PyObject* result = nullptr;
+	if(result == nullptr) {
+	    result = graphitevec_to_python<2,double>(arg);
+	}
+	if(result == nullptr) {
+	    result = graphitevec_to_python<3,double>(arg);
+	}
+	if(result == nullptr) {
+	    result = graphitevec_to_python<4,double>(arg);
+	}
+	if(result == nullptr) {
+	    result = graphitevec_to_python<2,Numeric::int32>(arg);
+	}
+	if(result == nullptr) {
+	    result = graphitevec_to_python<3,Numeric::int32>(arg);
+	}
+	if(result == nullptr) {
+	    result = graphitevec_to_python<4,Numeric::int32>(arg);
+	}
+	if(result == nullptr) {
+	    result = graphitemat_to_python<2,double>(arg);
+	}
+	if(result == nullptr) {
+	    result = graphitemat_to_python<3,double>(arg);
+	}
+	if(result == nullptr) {
+	    result = graphitemat_to_python<4,double>(arg);
+	}
+	return result;
+    }
+
+    /***********************************************************************/
 
 }

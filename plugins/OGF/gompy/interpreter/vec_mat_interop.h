@@ -57,6 +57,15 @@ namespace OGF {
      */
     bool python_to_graphite_mat_vec(PyObject* obj, Any& result, MetaType* mtype);
 
+
+    /**
+     * \brief Converts a Graphite object into a Python object
+     * \details Works with vec2, vec3, vec4 of doubles and integers, and
+     *   with mat4 of doubles.
+     * \param[in] matvec the input vec or mat stored in an Any
+     * \return the Python object, or nullptr if conversion was not possible
+     */
+    PyObject* graphite_mat_vec_to_python(const Any& matvec);
 }
 
 #endif
