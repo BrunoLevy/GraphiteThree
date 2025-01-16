@@ -39,43 +39,49 @@
 
 #include <OGF/gompy/common/common.h>
 #include <OGF/gompy/interpreter/python.h>
+#include <OGF/scene_graph/NL/vector.h>
+
+/**
+ * \file OGF/gom_python/interpreter/vec_mat_interop.h
+ * \brief Functions to exchange NL::Vector objects between Python and Graphite
+ */
 
 namespace OGF {
 
     class Any;
     class MetaType;
 
-    namespace NL {
-	class Vector;
+    namespace GOMPY {
+
+	/**
+	 * \brief Converts a Python object to a NL Vector
+	 * \param[in] the Python object
+	 * \param[out] result the NL vector stored in a Any
+	 * \param[in] mtype the expected meta-type:
+	 *    ogf_meta<::OGF::NL::Vector*>::type()
+	 * \retval true if conversion was successful, that is, Python object
+	 *   supports array interface and mttype corresponds to NL::Vector*
+	 *   meta-type
+	 * \retval false otherwise
+	 */
+	bool python_to_nl_vector(PyObject* obj, Any& result, MetaType* mtype);
+
+	/**
+	 * \brief Creates an array interface to a Graphite NL::Vector
+	 * \param[in] vector a pointer to the NL::Vector
+	 * \return a PyCapsule that contains the PyArrayInterface
+	 * \details Used for NumPy interop.
+	 */
+	PyObject* create_array_interface(NL::Vector* vector);
+
+	/**
+	 * \brief Deletes a PyArrayInterface encapsulated in a PyCapsule.
+	 * \param[in] capsule a pointer to
+	 *  the PyCapsule to be deleted.
+	 * \details Used for NumPy interop.
+	 */
+	void delete_array_interface(PyObject* capsule);
     }
-
-    /**
-     * \brief Converts a Python object to a NL Vector
-     * \param[in] the Python object
-     * \param[out] result the NL vector stored in a Any
-     * \param[in] mtype the expected meta-type:
-     *    ogf_meta<::OGF::NL::Vector*>::type()
-     * \retval true if conversion was successful, that is, Python object
-     *   supports array interface and mttype corresponds to NL::Vector* meta-type
-     * \retval false otherwise
-     */
-    bool python_to_nl_vector(PyObject* obj, Any& result, MetaType* mtype);
-
-    /**
-     * \brief Creates an array interface to a Graphite NL::Vector
-     * \param[in] vector a pointer to the NL::Vector
-     * \return a PyCapsule that contains the PyArrayInterface
-     * \details Used for NumPy interop.
-     */
-    PyObject* create_array_interface(NL::Vector* vector);
-
-    /**
-     * \brief Deletes a PyArrayInterface encapsulated in a PyCapsule.
-     * \param[in] capsule a pointer to
-     *  the PyCapsule to be deleted.
-     * \details Used for NumPy interop.
-     */
-    void delete_array_interface(PyObject* capsule);
 }
 
 #endif

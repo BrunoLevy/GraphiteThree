@@ -34,49 +34,50 @@
  *  the Software into proprietary programs.
  */
 
-#ifndef H_OGF_GOM_PYTHON_VEC_MAT_INTEROP_H
-#define H_OGF_GOM_PYTHON_VEC_MAT_INTEROP_H
+#ifndef H_OGF_GOM_PYTHON_PY_GRAPHITE_CALLABLE_H
+#define H_OGF_GOM_PYTHON_PY_GRAPHITE_CALLABLE_H
 
 #include <OGF/gompy/common/common.h>
-#include <OGF/gompy/interpreter/python.h>
+#include <OGF/gom/types/callable.h>
 
 /**
- * \file OGF/gom_python/interpreter/vec_mat_interop.h
- * \brief Functions to exchange vec2,vec3,vec4 and mat4 objects
- *  between Python and Graphite
+ * \file OGF/gom_python/interpreter/py_graphite_callable.h
+ * \brief Graphite callables exported to Python and Python callables exported
+ *  to Graphite.
  */
+
+struct _object;
 
 namespace OGF {
 
-    class Any;
-    class MetaType;
+    /*****************************************************************/
 
-    namespace GOMPY {
+    /**
+     * \brief GOM wrapper around a Python function.
+     */
+    gom_class gompy_API PythonCallable : public Callable {
+    public:
+        /**
+         * \brief PythonCallable constructor.
+         */
+        PythonCallable(struct _object* impl);
 
-	/**
-	 * \brief Converts a Python object into a Graphite vec or mat type
-	 * \details Works with vec2, vec3, vec4 of doubles and integers, and
-	 *   with mat4 of doubles.
-	 * \param[in] obj a pointer to the Python object
-	 * \param[out] result the result, as an Any
-	 * \param[in] mtype a pointer to the expected meta-type
-	 * \retval true if conversion was successful
-	 * \retval false otherwise
-	 */
-	bool python_to_graphite_mat_vec(
-	    PyObject* obj, Any& result, MetaType* mtype
-	);
-
+        /**
+         * \copydoc Callable::invoke()
+         */
+         bool invoke(const ArgList& args, Any& ret_val) override;
 
 	/**
-	 * \brief Converts a Graphite object into a Python object
-	 * \details Works with vec2, vec3, vec4 of doubles and integers, and
-	 *   with mat4 of doubles.
-	 * \param[in] matvec the input vec or mat stored in an Any
-	 * \return the Python object, or nullptr if conversion was not possible
+	 * \brief PythonCallable destructor.
 	 */
-	PyObject* graphite_mat_vec_to_python(const Any& matvec);
-    }
+         ~PythonCallable() override;
+
+    private:
+	struct _object* impl_;
+    };
+
+    /*****************************************************************/
+
 }
 
 #endif

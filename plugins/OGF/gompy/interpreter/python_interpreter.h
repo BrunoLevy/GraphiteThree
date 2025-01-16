@@ -39,7 +39,6 @@
 
 #include <OGF/gompy/common/common.h>
 #include <OGF/gom/interpreter/interpreter.h>
-#include <OGF/gom/types/callable.h>
 
 /**
  * \file OGF/gom_python/interpreter/python_interpreter.h
@@ -49,33 +48,6 @@
 struct _object;
 
 namespace OGF {
-
-    /*****************************************************************/
-
-    /**
-     * \brief GOM wrapper around a Python function.
-     */
-    gom_class gompy_API PythonCallable : public Callable {
-    public:
-        /**
-         * \brief PythonCallable constructor.
-         */
-        PythonCallable(struct _object* impl);
-
-        /**
-         * \copydoc Callable::invoke()
-         */
-         bool invoke(const ArgList& args, Any& ret_val) override;
-
-	/**
-	 * \brief PythonCallable destructor.
-	 */
-         ~PythonCallable() override;
-
-    private:
-	struct _object* impl_;
-    };
-
 
     /*****************************************************************/
 

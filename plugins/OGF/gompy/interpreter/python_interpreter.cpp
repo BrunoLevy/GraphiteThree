@@ -37,7 +37,9 @@
 
 #include <OGF/gompy/interpreter/python_interpreter.h>
 #include <OGF/gompy/interpreter/python.h>
-#include <OGF/gompy/interpreter/vec_mat_interop.h>
+#include <OGF/gompy/interpreter/py_graphite_object.h>
+#include <OGF/gompy/interpreter/py_graphite_callable.h>
+#include <OGF/gompy/interpreter/interop.h>
 #include <OGF/gompy/interpreter/nl_vector_interop.h>
 #include <OGF/gom/reflection/meta.h>
 #include <OGF/gom/lua/lua_interpreter.h>
@@ -48,12 +50,16 @@
 #include <geogram/basic/file_system.h>
 #include <geogram/basic/command_line.h>
 
+/*************************************************************************/
 
 // TODO:
 //  - isubclass(), isinstance() for NL Vectors (jax complains)
 
+/*************************************************************************/
+
 namespace {
     using namespace OGF;
+    using namespace OGF::GOMPY;
 
     /*************************************************************************/
 
@@ -73,70 +79,6 @@ namespace {
 	PyObject* array_struct;
     };
 
-    /**
-     * \brief Converts a Python object to a string.
-     * \param[in] obj a pointer to the Python object.
-     * \return a string representation of the object.
-     */
-    std::string python_to_string(PyObject* obj);
-
-    /**
-     * \brief Converts a string to a Python string.
-     * \param[in] s the string to be converted.
-     * \return the string a s a Python object.
-     */
-    PyObject* string_to_python(const std::string& s);
-
-    /**
-     * \brief Converts a Python object to C++.
-     * \param[in] obj a pointer to the Python object.
-     * \param[in] mtype an optional MetaType. If unspecified, uses a
-     *   default conversion.
-     * \return the converted object in an Any.
-     */
-    Any python_to_graphite(PyObject* obj, MetaType* mtype = nullptr);
-
-    /**
-     * \brief Converts a C++ object to Python.
-     * \param[in] value the C++ object stored in an Any.
-     * \param[in] mtype an optional MetaType. If unspecified, uses the
-     *  type of the Any.
-     * \return the object converted to a Python object.
-     */
-    PyObject* graphite_to_python(const Any& value, MetaType* mtype = nullptr);
-
-    /**
-     * \brief Tests whether a Python object is a Graphite object.
-     * \param[in] obj a pointer to the object.
-     * \retval true if the object is a Graphite object.
-     * \retval false otherwise.
-     */
-    bool PyGraphite_Check(PyObject* obj);
-
-    /**
-     * \brief Creates a new Python wrapper around a Graphite object.
-     * \param[in] object a pointer to the object to be wrapped.
-     * \param[in] managed true if reference counting is enabled (default),
-     *  false otherwise. Reference counting is disabled for the interpreter
-     *  itself, else it creates a circular reference.
-     */
-    graphite_Object* graphite_Object_new(
-	Object* object=nullptr, bool managed=true
-    );
-
-    /**
-     * \brief Converts Python arguments to a GOM ArgList.
-     * \param[in] args the arguments.
-     * \param[in] keywords the optional arguments as name-value pairs.
-     * \param[out] gom_args the constructed GOM ArgList.
-     * \param[in] mmethod an optional pointer to the MetaMethod
-     *  that will receive the arguments. It is needed if keywords
-     *  are not specified.
-     */
-    void python_tographiteargs(
-	PyObject* args, PyObject* keywords,
-	ArgList& gom_args, MetaMethod* mmethod = nullptr
-    );
 
     /**
      * \brief Tests whether a getter exists for the specified
@@ -257,11 +199,11 @@ namespace {
 	    // this creates circular references, preventing objects from
 	    // being deallocated.
 	    bool managed = (dynamic_cast<Interpreter*>(object) == nullptr);
-            graphite_Object* result = graphite_Object_new(
+            PyObject* result = PyGraphiteObject_New(
 		new Request(object, mmethod, managed)
 	    );
             Py_INCREF(result);
-            return (PyObject *)result;
+            return result;
 	}
 
 	// Case 3: resolving symbol in Scope.
@@ -278,7 +220,7 @@ namespace {
         if(object_as_meta_class != nullptr) {
             MetaMember* mmember = object_as_meta_class->find_member(name);
             if(mmember != nullptr) {
-                PyObject* result = (PyObject*)graphite_Object_new(mmember);
+                PyObject* result = PyGraphiteObject_New(mmember);
                 Py_INCREF(result);
                 return result;
             }
@@ -544,9 +486,7 @@ namespace {
 	geo_debug_assert(PyGraphite_Check(self_in));
 	graphite_Object* self = (graphite_Object*)self_in;
 	Object* object = self->object;
-	PyObject* result =(PyObject*)graphite_Object_new(
-	    object->meta_class()
-	);
+	PyObject* result = PyGraphiteObject_New(object->meta_class());
 	Py_INCREF(result);
 	return result;
     }
@@ -566,9 +506,7 @@ namespace {
 	MetaClass* superclass = mclass->super_class();
 	PyObject* result = PyTuple_New(superclass != nullptr);
 	if(superclass != nullptr) {
-	    PyTuple_SetItem(
-		result, 0, (PyObject*)graphite_Object_new(superclass)
-	    );
+	    PyTuple_SetItem(result, 0, PyGraphiteObject_New(superclass));
 	}
 	Py_INCREF(result);
 	return result;
@@ -579,7 +517,7 @@ namespace {
 	geo_debug_assert(PyGraphite_Check(self_in));
 	graphite_Object* self = (graphite_Object*)self_in;
 	Object* object = self->object;
-	PyObject* result =(PyObject*)graphite_Object_new(
+	PyObject* result = PyGraphiteObject_New(
 	    new InterfaceScope(object)
 	);
 	Py_INCREF(result);
@@ -826,282 +764,13 @@ namespace {
     }
 
 
-    /**************************** Utilities ****************************/
-
-    graphite_Object* graphite_Object_new(Object* object, bool managed) {
-	graphite_Object *self = nullptr;
-	PyTypeObject* type = nullptr;
-	if(dynamic_cast<MetaClass*>(object) != nullptr) {
-	    type = &graphite_MetaClassType;
-	} else if(dynamic_cast<Callable*>(object) != nullptr) {
-	    type = &graphite_CallableType;
-	} else {
-	    type = &graphite_ObjectType;
-	}
-	self = (graphite_Object *)type->tp_alloc(type, 0);
-        self->object = object;
-	self->managed = managed;
-	if(self->managed) {
-	    Counted::ref(self->object);
-	}
-	return self;
-    }
-
-    bool PyGraphite_Check(PyObject* obj) {
-        return PyObject_IsInstance(obj, (PyObject*)&graphite_ObjectType) != 0;
-    }
-
-    std::string python_to_string(PyObject* obj) {
-        std::string result;
-        if(PyUnicode_Check(obj)) {
-            Py_ssize_t size;
-            const char* str = PyUnicode_AsUTF8AndSize(obj, &size);
-            result = std::string(str, size_t(size));
-        } else if(PyGraphite_Check(obj)) {
-            Object* graphite_obj = ((graphite_Object*)obj)->object;
-            ogf_convert_to_string(graphite_obj, result);
-        } else if(obj == Py_True) {
-            result = "true";
-        } else if(obj == Py_False) {
-            result = "false";
-        } else {
-            PyObject* s = PyObject_Str(obj);
-            Py_ssize_t size;
-            const char* str = PyUnicode_AsUTF8AndSize(s, &size);
-                  // [TODO: check whether this is correct]
-            result = std::string(str, size_t(size));
-            Py_DECREF(s);
-        }
-        return result;
-    }
-
-    PyObject* string_to_python(const std::string& s) {
-        return PyUnicode_FromString(s.c_str()); // [TODO: is it correct ?]
-    }
-
-    /*****************************************************************/
-
-    Any python_to_graphite(PyObject* obj, MetaType* mtype) {
-	Any result;
-	if(obj == nullptr) {
-	    return result;
-	}
-	if(python_to_graphite_mat_vec(obj, result, mtype)) {
-	    return result;
-	}
-	if(python_to_nl_vector(obj, result, mtype)) {
-	    return result;
-	}
-	if(PyGraphite_Check(obj)) {
-	    result.set_value(((graphite_Object*)obj)->object);
-	} else if(obj == Py_True) {
-	    result.set_value(true);
-	} else if(obj == Py_False) {
-	    result.set_value(false);
-	} else if(PyLong_Check(obj)) {
-	    result.set_value(index_t(PyLong_AsLong(obj)));
-	} else if(PyFloat_Check(obj)) {
-	    result.set_value(PyFloat_AsDouble(obj));
-	} else if(PyCallable_Check(obj)) {
-	    result.set_value(new PythonCallable(obj));
-	} else {
-	    result.set_value(python_to_string(obj));
-	}
-	return result;
-    }
-
-    /*************************************************************************/
-
-    PyObject* graphite_to_python(const Any& arg, MetaType* mtype) {
-
-	if(mtype == nullptr && !arg.is_null()) {
-	    mtype = arg.meta_type();
-	}
-
-	if(mtype != nullptr && Any::is_pointer_type(mtype)) {
-	    MetaType* pmtype = Any::pointed_type(mtype);
-            if(dynamic_cast<MetaClass*>(pmtype) != nullptr) {
-		Object* object = nullptr;
-		arg.get_value(object);
-
-
-                // if object pointer is null, return None
-                if(object == nullptr) {
-                    Py_INCREF(Py_None);
-                    return Py_None;
-                }
-
-                graphite_Object* result = graphite_Object_new(object);
-                Py_INCREF(result);
-
-		// If object is a vector, create information for interop
-		// with numpy.
-		NL::Vector* object_as_vector = dynamic_cast<NL::Vector*>(object);
-		if(object_as_vector != nullptr) {
-		    PyObject* array_interface =	create_array_interface(
-			object_as_vector
-		    );
-		    Py_INCREF(array_interface);
-		    result->array_struct = array_interface;
-		}
-
-                return (PyObject*)result;
-	    }
-	}
-
-	if(mtype == nullptr || mtype == ogf_meta<void>::type()) {
-            Py_INCREF(Py_None);
-            return Py_None;
-        }
-
-	if(mtype == ogf_meta<bool>::type()) {
-	    bool value;
-	    arg.get_value(value);
-	    if(value) {
-                Py_INCREF(Py_True);
-                return Py_True;
-	    } else {
-                Py_INCREF(Py_False);
-                return Py_False;
-	    }
-	}
-
-	if(mtype == ogf_meta<int>::type()) {
-	    int value;
-	    arg.get_value(value);
-            return PyLong_FromLong(long(value));
-	}
-
-	if(mtype == ogf_meta<unsigned int>::type()) {
-	    unsigned int value;
-	    arg.get_value(value);
-            return PyLong_FromUnsignedLong((unsigned long)(value));
-	}
-
-	if(mtype == ogf_meta<long>::type()) {
-	    long value;
-	    arg.get_value(value);
-            return PyLong_FromLong(value);
-	}
-
-	if(mtype == ogf_meta<unsigned long>::type()) {
-	    unsigned long value;
-	    arg.get_value(value);
-            return PyLong_FromUnsignedLong(value);
-	}
-
-	if(mtype == ogf_meta<index_t>::type()) {
-	    index_t value;
-	    arg.get_value(value);
-            return PyLong_FromLong(long(value));
-	}
-
-	if(mtype == ogf_meta<signed_index_t>::type()) {
-	    signed_index_t value;
-	    arg.get_value(value);
-            return PyLong_FromUnsignedLong((unsigned long)(value));
-	}
-
-	if(mtype == ogf_meta<float>::type()) {
-	    float value;
-	    arg.get_value(value);
-            return PyFloat_FromDouble(double(value));
-	}
-
-	if(mtype == ogf_meta<double>::type()) {
-	    double value;
-	    arg.get_value(value);
-            return PyFloat_FromDouble(value);
-	}
-
-	PyObject* result = graphite_mat_vec_to_python(arg);
-	if(result != nullptr) {
-	    return result;
-	}
-
-	std::string value = arg.as_string();
-	return string_to_python(value);
-    }
-
-    void python_tographiteargs(
-	PyObject* args, PyObject* keywords,
-	ArgList& gom_args, MetaMethod* mmethod
-    ) {
-	gom_args.clear();
-        if(keywords == nullptr) {
-	    if(mmethod == nullptr) {
-		// Standard call (no keywords), no meta-method specified
-		// -> create an ArgList with all the arguments
-		// (used to call foreign Callable objects, e.g. LuaCallable).
-		index_t nb_args = index_t(PyTuple_Size(args));
-		for(index_t i=0; i<nb_args; i++) {
-		    PyObject* cur_arg = PyTuple_GetItem(args,Py_ssize_t(i));
-		    gom_args.create_arg(
-			"arg#" + String::to_string(i),
-			python_to_graphite(cur_arg)
-		    );
-		}
-	    } else {
-		MetaClass* mclass = mmethod->container_meta_class();
-		index_t nb_args = index_t(PyTuple_Size(args));
-		if(nb_args > mmethod->nb_args()) {
-		    Logger::err("GOMPy")
-			<< "Graphite request: too many arguments for method "
-			<< mclass->name() << "::"
-			<< mmethod->name() << std::endl;
-		    return;
-		}
-		for(index_t i=0; i<nb_args; i++) {
-		    PyObject* cur_arg = PyTuple_GetItem(args,Py_ssize_t(i));
-		    MetaType* mtype = mmethod->ith_arg_type(i);
-		    gom_args.create_arg(
-			mmethod->ith_arg(i)->name(),
-			python_to_graphite(cur_arg, mtype)
-		    );
-		}
-		for(index_t i=nb_args; i<mmethod->nb_args(); i++) {
-		    if(!mmethod->ith_arg(i)->has_default_value()) {
-			Logger::err("GOMPy")
-			    << "Graphite request: missing args for method "
-			    << mclass->name() << "::"
-			    << mmethod->name() << std::endl;
-			return;
-		    }
-		}
-	    }
-        } else {
-	    ogf_assert(PyDict_Check(keywords));
-	    Py_ssize_t nb_keywords = PyDict_Size(keywords);
-	    PyObject* keys = PyDict_Keys(keywords);
-	    Py_INCREF(keys);
-	    PyObject* values = PyDict_Values(keywords);
-	    Py_INCREF(values);
-	    for(int i=0; i<nb_keywords; i++) {
-		std::string argname = python_to_string(PyList_GetItem(keys,i));
-		MetaType* mtype = nullptr;
-		if(mmethod != nullptr) {
-		    MetaArg* marg = mmethod->find_arg(argname);
-		    if(marg != nullptr) {
-			mtype = marg->type();
-		    }
-		}
-		gom_args.create_arg(
-		    argname,
-		    python_to_graphite(PyList_GetItem(values,i),mtype)
-		);
-	    }
-	    Py_DECREF(keys);
-	    Py_DECREF(values);
-	}
-    }
-
     /*****************************************************************/
 
     PyObject* graphite_interpreter(PyObject* self_in, PyObject* args_in) {
 	geo_argused(self_in);
 	geo_argused(args_in);
 	Interpreter* interpreter = Interpreter::instance_by_language("Python");
-	PyObject* result = (PyObject*)graphite_Object_new(interpreter);
+	PyObject* result = PyGraphiteObject_New(interpreter);
 	Py_INCREF(result);
 	return result;
     }
@@ -1165,6 +834,52 @@ namespace {
 }
 
 namespace OGF {
+
+    namespace GOMPY {
+
+    /**************************** Utilities ****************************/
+
+	PyObject* PyGraphiteObject_New(Object* object, bool managed) {
+	    graphite_Object *self = nullptr;
+	    PyTypeObject* type = nullptr;
+	    if(dynamic_cast<MetaClass*>(object) != nullptr) {
+		type = &graphite_MetaClassType;
+	    } else if(dynamic_cast<Callable*>(object) != nullptr) {
+		type = &graphite_CallableType;
+	    } else {
+		type = &graphite_ObjectType;
+	    }
+	    self = (graphite_Object *)type->tp_alloc(type, 0);
+	    self->object = object;
+	    self->managed = managed;
+	    if(self->managed) {
+		Counted::ref(self->object);
+	    }
+
+	    // If object is a vector, create information for interop
+	    // with numpy.
+	    NL::Vector* object_as_vector =  dynamic_cast<NL::Vector*>(object);
+	    if(object_as_vector != nullptr) {
+		PyObject* array_interface =
+		    create_array_interface(object_as_vector);
+		Py_INCREF(array_interface);
+		self->array_struct = array_interface;
+	    }
+
+	    return reinterpret_cast<PyObject*>(self);
+	}
+
+	bool PyGraphite_Check(PyObject* obj) {
+	    return PyObject_IsInstance(
+		obj, (PyObject*)&graphite_ObjectType
+	    ) != 0;
+	}
+
+	Object* PyGraphite_GetObject(PyObject* obj) {
+	    geo_debug_assert(PyGraphite_Check(obj));
+	    return reinterpret_cast<graphite_Object*>(obj)->object;
+	}
+    }
 
     /*****************************************************************/
 
@@ -1282,12 +997,12 @@ namespace OGF {
 	    PyObject_SetAttrString(main_module_, "GOM", gom_module);
 	    Py_XDECREF(gom_module);
 
-	    PyObject* gom = (PyObject*)(graphite_Object_new(this, false));
+	    PyObject* gom = PyGraphiteObject_New(this, false);
 	    Py_INCREF(gom);
 	    PyObject_SetAttrString(main_module_, "gom", gom);
 	} else {
 	    main_module_ = PyImport_AddModule("__main__");
-	    PyObject* gom = (PyObject*)(graphite_Object_new(this, false));
+	    PyObject* gom = PyGraphiteObject_New(this, false);
 	    Py_INCREF(gom);
 	    PyObject_SetAttrString(main_module_, "gom", gom);
 	}

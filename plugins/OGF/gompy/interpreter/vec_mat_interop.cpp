@@ -270,74 +270,80 @@ namespace {
 
 namespace OGF {
 
-    bool python_to_graphite_mat_vec(PyObject* obj, Any& result, MetaType* mtype){
-	if(!PyList_Check(obj)) {
+    namespace GOMPY {
+
+	bool python_to_graphite_mat_vec(
+	    PyObject* obj, Any& result, MetaType* mtype
+	) {
+	    if(!PyList_Check(obj)) {
+		return false;
+	    }
+	    if(python_tographitevec<2,double>(obj, result, mtype)) {
+		return true;
+	    }
+	    if(python_tographitevec<3,double>(obj, result, mtype)) {
+		return true;
+	    }
+	    if(python_tographitevec<4,double>(obj, result, mtype)) {
+		return true;
+	    }
+	    if(python_tographitevec<2,Numeric::int32>(obj, result, mtype)) {
+		return true;
+	    }
+	    if(python_tographitevec<3,Numeric::int32>(obj, result, mtype)) {
+		return true;
+	    }
+	    if(python_tographitevec<4,Numeric::int32>(obj, result, mtype)) {
+		return true;
+	    }
+	    if(python_tographitemat<2,double>(obj, result, mtype)) {
+		return true;
+	    }
+	    if(python_tographitemat<3,double>(obj, result, mtype)) {
+		return true;
+	    }
+	    if(python_tographitemat<4,double>(obj, result, mtype)) {
+		return true;
+	    }
 	    return false;
 	}
-	if(python_tographitevec<2,double>(obj, result, mtype)) {
-	    return true;
+
+	/***********************************************************************/
+
+	PyObject* graphite_mat_vec_to_python(const Any& arg) {
+	    PyObject* result = nullptr;
+	    if(result == nullptr) {
+		result = graphitevec_to_python<2,double>(arg);
+	    }
+	    if(result == nullptr) {
+		result = graphitevec_to_python<3,double>(arg);
+	    }
+	    if(result == nullptr) {
+		result = graphitevec_to_python<4,double>(arg);
+	    }
+	    if(result == nullptr) {
+		result = graphitevec_to_python<2,Numeric::int32>(arg);
+	    }
+	    if(result == nullptr) {
+		result = graphitevec_to_python<3,Numeric::int32>(arg);
+	    }
+	    if(result == nullptr) {
+		result = graphitevec_to_python<4,Numeric::int32>(arg);
+	    }
+	    if(result == nullptr) {
+		result = graphitemat_to_python<2,double>(arg);
+	    }
+	    if(result == nullptr) {
+		result = graphitemat_to_python<3,double>(arg);
+	    }
+	    if(result == nullptr) {
+		result = graphitemat_to_python<4,double>(arg);
+	    }
+	    return result;
 	}
-	if(python_tographitevec<3,double>(obj, result, mtype)) {
-	    return true;
-	}
-	if(python_tographitevec<4,double>(obj, result, mtype)) {
-	    return true;
-	}
-	if(python_tographitevec<2,Numeric::int32>(obj, result, mtype)) {
-	    return true;
-	}
-	if(python_tographitevec<3,Numeric::int32>(obj, result, mtype)) {
-	    return true;
-	}
-	if(python_tographitevec<4,Numeric::int32>(obj, result, mtype)) {
-	    return true;
-	}
-	if(python_tographitemat<2,double>(obj, result, mtype)) {
-	    return true;
-	}
-	if(python_tographitemat<3,double>(obj, result, mtype)) {
-	    return true;
-	}
-	if(python_tographitemat<4,double>(obj, result, mtype)) {
-	    return true;
-	}
-	return false;
-    }
 
     /***********************************************************************/
 
-    PyObject* graphite_mat_vec_to_python(const Any& arg) {
-	PyObject* result = nullptr;
-	if(result == nullptr) {
-	    result = graphitevec_to_python<2,double>(arg);
-	}
-	if(result == nullptr) {
-	    result = graphitevec_to_python<3,double>(arg);
-	}
-	if(result == nullptr) {
-	    result = graphitevec_to_python<4,double>(arg);
-	}
-	if(result == nullptr) {
-	    result = graphitevec_to_python<2,Numeric::int32>(arg);
-	}
-	if(result == nullptr) {
-	    result = graphitevec_to_python<3,Numeric::int32>(arg);
-	}
-	if(result == nullptr) {
-	    result = graphitevec_to_python<4,Numeric::int32>(arg);
-	}
-	if(result == nullptr) {
-	    result = graphitemat_to_python<2,double>(arg);
-	}
-	if(result == nullptr) {
-	    result = graphitemat_to_python<3,double>(arg);
-	}
-	if(result == nullptr) {
-	    result = graphitemat_to_python<4,double>(arg);
-	}
-	return result;
     }
-
-    /***********************************************************************/
 
 }
