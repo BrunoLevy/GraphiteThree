@@ -86,13 +86,11 @@ namespace OGF {
 	    PyObject* self_in, PyObject* rhs_in, int op
 	) {
 	    geo_debug_assert(PyGraphite_Check(self_in));
-	    graphite_Object* self = (graphite_Object*)self_in;
-	    Object* object = self->object;
+	    Object* object = PyGraphite_GetObject(self_in);
 	    Object* other = nullptr;
 
 	    if(PyGraphite_Check(self_in)) {
-		graphite_Object* rhs = (graphite_Object*)rhs_in;
-		other = rhs->object;
+		other = PyGraphite_GetObject(rhs_in);
 	    } else {
 		if(self_in != Py_None) {
 		    Py_RETURN_NOTIMPLEMENTED;
@@ -125,19 +123,17 @@ namespace OGF {
 	    return pyresult;
 	}
 
-	Py_hash_t graphite_Object_hash(PyObject* self_in) {
-	    geo_debug_assert(PyGraphite_Check(self_in));
-	    graphite_Object* self = (graphite_Object*)self_in;
-	    Object* object = self->object;
+	Py_hash_t graphite_Object_hash(PyObject* self) {
+	    geo_debug_assert(PyGraphite_Check(self));
+	    Object* object = PyGraphite_GetObject(self);
 	    return Py_hash_t(object);
 	}
 
 	PyObject* graphite_Object_getattro(
-	    PyObject* self_in, PyObject* name_in
+	    PyObject* self, PyObject* name_in
 	) {
-	    geo_debug_assert(PyGraphite_Check(self_in));
-	    graphite_Object* self = (graphite_Object*)self_in;
-	    Object* object = self->object;
+	    geo_debug_assert(PyGraphite_Check(self));
+	    Object* object = PyGraphite_GetObject(self);
 	    if(object == nullptr) {
 		Logger::err("GOMPy")
 		    << "tried to get attribute from nullptr object"
@@ -148,11 +144,10 @@ namespace OGF {
 	    std::string name = python_to_string(name_in);
 
 	    // Case 1: regular property
-	    MetaProperty* mprop =
-		self->object->meta_class()->find_property(name);
+	    MetaProperty* mprop = object->meta_class()->find_property(name);
 	    if(mprop != nullptr) {
 		Any value;
-		if(!self->object->get_property(name, value)) {
+		if(!object->get_property(name, value)) {
 		    Py_INCREF(Py_None);
 		    return Py_None;
 		}
@@ -199,43 +194,39 @@ namespace OGF {
 	    }
 
 	    // All other cases: use Python generic attribute mechanism.
-	    PyObject* result = PyObject_GenericGetAttr(self_in, name_in);
+	    PyObject* result = PyObject_GenericGetAttr(self, name_in);
 	    return(result);
 	}
 
 
 	int graphite_Object_setattro(
-	    PyObject* self_in, PyObject* name_in, PyObject* value
+	    PyObject* self, PyObject* name_in, PyObject* value
 	) {
-	    geo_debug_assert(PyGraphite_Check(self_in));
-	    graphite_Object* self = (graphite_Object*)self_in;
-	    if(self->object == nullptr) {
+	    geo_debug_assert(PyGraphite_Check(self));
+	    Object* object = PyGraphite_GetObject(self);
+	    if(object == nullptr) {
 		return -1;
 	    }
 	    std::string name = python_to_string(name_in);
 	    MetaType* mtype = nullptr;
-	    MetaProperty* mprop =
-		self->object->meta_class()->find_property(name);
+	    MetaProperty* mprop = object->meta_class()->find_property(name);
 	    if(mprop != nullptr) {
 		mtype = mprop->type();
 	    }
-	    if(!self->object->set_property(
-		   name, python_to_graphite(value, mtype))
-	    ) {
+	    if(!object->set_property(name, python_to_graphite(value, mtype))) {
 		return -1;
 	    }
 	    return 0;
 	}
 
-	PyObject* graphite_str(PyObject* self_in) {
-	    geo_debug_assert(PyGraphite_Check(self_in));
-	    graphite_Object* self = (graphite_Object*)self_in;
-
-	    if(self->object == nullptr) {
+	PyObject* graphite_str(PyObject* self) {
+	    geo_debug_assert(PyGraphite_Check(self));
+	    Object* object = PyGraphite_GetObject(self);
+	    if(object == nullptr) {
 		return string_to_python("<null GOM Object>");
 	    }
 
-	    MetaClass* mclass = self->object->meta_class();
+	    MetaClass* mclass = object->meta_class();
 
 	    std::ostringstream out;
 	    out << "[GOM " << mclass->name() << "]";
@@ -243,12 +234,12 @@ namespace OGF {
 	}
 
 	PyObject* graphite_call(
-	    PyObject* self_in, PyObject* args, PyObject* keywords
+	    PyObject* self, PyObject* args, PyObject* keywords
 	) {
-	    geo_debug_assert(PyGraphite_Check(self_in));
-	    graphite_Object* self = (graphite_Object*)self_in;
+	    geo_debug_assert(PyGraphite_Check(self));
+	    Object* object = PyGraphite_GetObject(self);
 
-	    if(self->object == nullptr) {
+	    if(object == nullptr) {
 		Logger::err("GOMPy")
 		    << "Graphite request: missing object" << std::endl;
 		Py_INCREF(Py_None);
@@ -257,7 +248,7 @@ namespace OGF {
 
 
 	    Callable_var c;
-	    MetaClass*  mclass = dynamic_cast<MetaClass*>(self->object);
+	    MetaClass*  mclass = dynamic_cast<MetaClass*>(object);
 	    MetaMethod* method = nullptr;
 
 	    // If target is a meta_class, try to invoke constructor
@@ -268,7 +259,7 @@ namespace OGF {
 		}
 	    } else {
 		// Else, test if target is a callable
-		c = dynamic_cast<Callable*>(self->object);
+		c = dynamic_cast<Callable*>(object);
 		Request* r = dynamic_cast<Request*>(c.get());
 		if(r != nullptr) {
 		    method = r->method();
@@ -318,72 +309,72 @@ namespace OGF {
 	    );
 	}
 
-	Py_ssize_t graphite_array_len(PyObject* self_in) {
-	    geo_debug_assert(PyGraphite_Check(self_in));
-	    graphite_Object* self = (graphite_Object*)self_in;
-	    if(self->object == nullptr) {
+	Py_ssize_t graphite_array_len(PyObject* self) {
+	    geo_debug_assert(PyGraphite_Check(self));
+	    Object* object = PyGraphite_GetObject(self);
+	    if(object == nullptr) {
 		Logger::err("GOMPy") << "tried to index null object"
 				     << std::endl;
 		return 0;
 	    }
-	    return Py_ssize_t(self->object->get_nb_elements());
+	    return Py_ssize_t(object->get_nb_elements());
 	}
 
-	PyObject* graphite_array_index(PyObject* self_in, PyObject* index) {
-	    geo_debug_assert(PyGraphite_Check(self_in));
-	    graphite_Object* self = (graphite_Object*)self_in;
+	PyObject* graphite_array_index(PyObject* self, PyObject* index) {
+	    geo_debug_assert(PyGraphite_Check(self));
+	    Object* object = PyGraphite_GetObject(self);
 	    Any result;
 	    if(!PyLong_Check(index)) {
 		Logger::err("GOMPy") << "index is not an integer"
 				     << std::endl;
 		return graphite_to_python(result);
 	    }
-	    if(self->object == nullptr) {
+	    if(object == nullptr) {
 		Logger::err("GOMPy") << "tried to index null object"
 				     << std::endl;
 		return graphite_to_python(result);
 	    }
-	    self->object->get_element(
+	    object->get_element(
 		index_t(PyLong_AsLong(index)), result
 	    );
 	    return graphite_to_python(result);
 	}
 
 	int graphite_array_ass_index(
-	    PyObject* self_in, PyObject* index, PyObject* value_in
+	    PyObject* self, PyObject* index, PyObject* value_in
 	) {
-	    geo_debug_assert(PyGraphite_Check(self_in));
-	    graphite_Object* self = (graphite_Object*)self_in;
+	    geo_debug_assert(PyGraphite_Check(self));
+	    Object* object = PyGraphite_GetObject(self);
 	    if(!PyLong_Check(index)) {
 		Logger::err("GOMPy") << "index is not an integer"
 				     << std::endl;
 		return -1;
 	    }
-	    if(self->object == nullptr) {
+	    if(object == nullptr) {
 		Logger::err("GOMPy") << "tried to index null object"
 				     << std::endl;
 		return -1;
 	    }
 	    Any value = python_to_graphite(value_in);
-	    self->object->set_element(
+	    object->set_element(
 		index_t(PyLong_AsLong(index)), value
 	    );
 	    return 0;
 	}
 
-	PyObject* graphite_dir_method(PyObject* self_in, PyObject* args_in) {
+	PyObject* graphite_dir_method(PyObject* self, PyObject* args_in) {
 	    geo_argused(args_in);
-	    geo_debug_assert(PyGraphite_Check(self_in));
-	    graphite_Object* self = (graphite_Object*)self_in;
+	    geo_debug_assert(PyGraphite_Check(self));
+	    Object* object = PyGraphite_GetObject(self);
 	    PyObject* result = nullptr;
 
-	    if(self->object == nullptr) {
+	    if(object == nullptr) {
 		Logger::err("GOMpy") << "dir() called on null object"
 				     << std::endl;
 		return result;
 	    }
 
-	    Scope* scope = dynamic_cast<Scope*>(self->object);
+	    Scope* scope = dynamic_cast<Scope*>(object);
 	    if(scope != nullptr) {
 		std::vector<std::string> names;
 		scope->list_names(names);
@@ -400,10 +391,10 @@ namespace OGF {
 	    }
 
 	    bool query_superclasses = false;
-	    MetaClass* meta_class = dynamic_cast<MetaClass*>(self->object);
+	    MetaClass* meta_class = dynamic_cast<MetaClass*>(object);
 	    if(meta_class == nullptr) {
 		query_superclasses = true;
-		meta_class = self->object->meta_class();
+		meta_class = object->meta_class();
 	    }
 
 	    if(meta_class == nullptr) {
@@ -456,21 +447,19 @@ namespace OGF {
 	};
 
 
-	PyObject* graphite_get_class(PyObject* self_in, void* closure) {
+	PyObject* graphite_get_class(PyObject* self, void* closure) {
 	    geo_argused(closure);
-	    geo_debug_assert(PyGraphite_Check(self_in));
-	    graphite_Object* self = (graphite_Object*)self_in;
-	    Object* object = self->object;
+	    geo_debug_assert(PyGraphite_Check(self));
+	    Object* object = PyGraphite_GetObject(self);
 	    PyObject* result = PyGraphiteObject_New(object->meta_class());
 	    Py_INCREF(result);
 	    return result;
 	}
 
-	PyObject* graphite_get_bases(PyObject* self_in, void* closure) {
+	PyObject* graphite_get_bases(PyObject* self, void* closure) {
 	    geo_argused(closure);
-	    geo_debug_assert(PyGraphite_Check(self_in));
-	    graphite_Object* self = (graphite_Object*)self_in;
-	    Object* object = self->object;
+	    geo_debug_assert(PyGraphite_Check(self));
+	    Object* object = PyGraphite_GetObject(self);
 	    MetaClass* mclass = dynamic_cast<MetaClass*>(object);
 	    if(mclass == nullptr) {
 		Logger::err("GOMPy") << "__bases__ queried on non-class object"
@@ -487,11 +476,10 @@ namespace OGF {
 	    return result;
 	}
 
-	PyObject* graphite_get_interfaces(PyObject* self_in, void* closure) {
+	PyObject* graphite_get_interfaces(PyObject* self, void* closure) {
 	    geo_argused(closure);
-	    geo_debug_assert(PyGraphite_Check(self_in));
-	    graphite_Object* self = (graphite_Object*)self_in;
-	    Object* object = self->object;
+	    geo_debug_assert(PyGraphite_Check(self));
+	    Object* object = PyGraphite_GetObject(self);
 	    PyObject* result = PyGraphiteObject_New(
 		new InterfaceScope(object)
 	    );
@@ -507,11 +495,10 @@ namespace OGF {
 	    return self->array_struct;
 	}
 
-	PyObject* graphite_get_doc(PyObject* self_in, void* closure) {
+	PyObject* graphite_get_doc(PyObject* self, void* closure) {
 	    geo_argused(closure);
-	    geo_debug_assert(PyGraphite_Check(self_in));
-	    graphite_Object* self = (graphite_Object*)self_in;
-	    Object* object = self->object;
+	    geo_debug_assert(PyGraphite_Check(self));
+	    Object* object = PyGraphite_GetObject(self);
 	    std::string result_string;
 	    if(object == nullptr) {
 		result_string = "null";
