@@ -34,22 +34,19 @@
  *  the Software into proprietary programs.
  */
 
-#ifndef H_OGF_GOM_PYTHON_PY_GRAPHITE_CALLABLE_H
-#define H_OGF_GOM_PYTHON_PY_GRAPHITE_CALLABLE_H
+#ifndef H_OGF_GOM_PYTHON_PY_GRAPHITE_METACLASS_H
+#define H_OGF_GOM_PYTHON_PY_GRAPHITE_METACLASS_H
 
 #include <OGF/gompy/common/common.h>
 #include <OGF/gompy/interpreter/python.h>
 
-/**
- * \file OGF/gom_python/interpreter/py_graphite_callable.h
- * \brief Graphite callables exported to Python
- */
-
 namespace OGF {
+
     namespace GOMPY {
-	void init_graphite_CallableType();
-	extern PyTypeObject graphite_CallableType;
+	void init_graphite_MetaClassType();
+	extern PyTypeObject graphite_MetaClassType;
     }
+
 }
 
 #endif

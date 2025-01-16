@@ -34,22 +34,49 @@
  *  the Software into proprietary programs.
  */
 
-#ifndef H_OGF_GOM_PYTHON_PY_GRAPHITE_CALLABLE_H
-#define H_OGF_GOM_PYTHON_PY_GRAPHITE_CALLABLE_H
+#ifndef H_OGF_GOM_PYTHON_PYTHON_CALLABLE_H
+#define H_OGF_GOM_PYTHON_PYTHON_CALLABLE_H
 
 #include <OGF/gompy/common/common.h>
-#include <OGF/gompy/interpreter/python.h>
+#include <OGF/gom/types/callable.h>
 
 /**
- * \file OGF/gom_python/interpreter/py_graphite_callable.h
- * \brief Graphite callables exported to Python
+ * \file OGF/gom_python/interpreter/gom_python_callable.h
+ * \brief Python callables exported to Graphite.
  */
 
+struct _object;
+
 namespace OGF {
-    namespace GOMPY {
-	void init_graphite_CallableType();
-	extern PyTypeObject graphite_CallableType;
-    }
+
+    /*****************************************************************/
+
+    /**
+     * \brief GOM wrapper around a Python function.
+     */
+    gom_class gompy_API PythonCallable : public Callable {
+    public:
+        /**
+         * \brief PythonCallable constructor.
+         */
+        PythonCallable(struct _object* impl);
+
+        /**
+         * \copydoc Callable::invoke()
+         */
+         bool invoke(const ArgList& args, Any& ret_val) override;
+
+	/**
+	 * \brief PythonCallable destructor.
+	 */
+         ~PythonCallable() override;
+
+    private:
+	struct _object* impl_;
+    };
+
+    /*****************************************************************/
+
 }
 
 #endif

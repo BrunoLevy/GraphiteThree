@@ -38,7 +38,7 @@
 #include <OGF/gompy/interpreter/vec_mat_interop.h>
 #include <OGF/gompy/interpreter/nl_vector_interop.h>
 #include <OGF/gompy/interpreter/py_graphite_object.h>
-#include <OGF/gompy/interpreter/py_graphite_callable.h>
+#include <OGF/gompy/interpreter/gom_python_callable.h>
 #include <OGF/gom/reflection/meta.h>
 
 namespace OGF {

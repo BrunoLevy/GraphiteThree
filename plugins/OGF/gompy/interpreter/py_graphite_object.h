@@ -40,7 +40,14 @@
 #include <OGF/gompy/common/common.h>
 #include <OGF/gompy/interpreter/python.h>
 
+/**
+ * \file OGF/gom_python/interpreter/py_graphite_object.h
+ * \brief Python wrapper around a Graphite object and utilities
+ */
+
 namespace OGF {
+
+    class Object;
 
     namespace GOMPY {
 
@@ -67,6 +74,39 @@ namespace OGF {
 	 *  itself, else it creates a circular reference.
 	 */
 	PyObject* PyGraphiteObject_New(Object* object, bool managed=true);
+
+	/**********************************************************************/
+
+	/**
+	 * \brief A Python wrapper for Graphite objects.
+	 */
+	struct graphite_Object {
+	    PyObject_HEAD
+
+	    /** \brief Pointer to the implementation. */
+	    Object* object;
+
+	    /** \brief true if reference-counted, false otherwise. */
+	    bool managed;
+
+	    /** \brief Pointer to array interface or nullptr. */
+	    PyObject* array_struct;
+	};
+
+	void init_graphite_ObjectType();
+
+	extern PyTypeObject graphite_ObjectType;
+	extern PyGetSetDef graphite_Object_getsets[];
+
+	PyObject* graphite_get_doc(PyObject* self_in, void* closure);
+	PyObject* graphite_Object_new(
+	    PyTypeObject *type, PyObject *args, PyObject *kwds
+	);
+	void graphite_Object_dealloc(PyObject* self_in);
+	PyObject* graphite_call(
+	    PyObject* self_in, PyObject* args, PyObject* keywords
+	);
+
     }
 }
 
