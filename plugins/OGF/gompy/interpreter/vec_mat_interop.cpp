@@ -274,43 +274,33 @@ namespace OGF {
 	if(!PyList_Check(obj)) {
 	    return false;
 	}
-
 	if(python_tographitevec<2,double>(obj, result, mtype)) {
 	    return true;
 	}
-
 	if(python_tographitevec<3,double>(obj, result, mtype)) {
 	    return true;
 	}
-
 	if(python_tographitevec<4,double>(obj, result, mtype)) {
 	    return true;
 	}
-
 	if(python_tographitevec<2,Numeric::int32>(obj, result, mtype)) {
 	    return true;
 	}
-
 	if(python_tographitevec<3,Numeric::int32>(obj, result, mtype)) {
 	    return true;
 	}
-
 	if(python_tographitevec<4,Numeric::int32>(obj, result, mtype)) {
 	    return true;
 	}
-
 	if(python_tographitemat<2,double>(obj, result, mtype)) {
 	    return true;
 	}
-
 	if(python_tographitemat<3,double>(obj, result, mtype)) {
 	    return true;
 	}
-
 	if(python_tographitemat<4,double>(obj, result, mtype)) {
 	    return true;
 	}
-
 	return false;
     }
 
