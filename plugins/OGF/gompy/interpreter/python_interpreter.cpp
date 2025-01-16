@@ -36,6 +36,8 @@
 
 
 #include <OGF/gompy/interpreter/python_interpreter.h>
+#include <OGF/gompy/interpreter/python.h>
+#include <OGF/gompy/interpreter/vec_mat_interop.h>
 #include <OGF/gom/reflection/meta.h>
 #include <OGF/gom/lua/lua_interpreter.h>
 #include <OGF/basic/os/file_manager.h>
@@ -44,34 +46,6 @@
 #include <geogram/basic/logger.h>
 #include <geogram/basic/file_system.h>
 #include <geogram/basic/command_line.h>
-
-#ifdef GEO_COMPILER_CLANG
-// Python uses 'long long' considered to be not c++98 by Clang.
-#pragma GCC diagnostic ignored "-Wc++98-compat-pedantic"
-#pragma GCC diagnostic ignored "-Wdisabled-macro-expansion"
-#endif
-
-#ifdef GEO_COMPILER_GCC_FAMILY
-#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
-#endif
-
-
-#ifdef GEO_OS_WINDOWS
-// Python's distribution under Windows
-// has some problems, seems they have
-// forgotten to include the debugging
-// library.
-#   ifdef _DEBUG
-#      undef _DEBUG
-#      include <Python.h>
-#      define _DEBUG
-#   else
-
-#      include <Python.h>
-#   endif
-#else
-#  include <Python.h>
-#endif
 
 
 // TODO:
@@ -982,8 +956,8 @@ namespace {
 	 * made the autocompleter systematically add '(' to object
 	 * names.
 	 */
-	graphite_MetaClassType.tp_dealloc    = graphite_Object_dealloc;
 	graphite_MetaClassType.tp_call       = graphite_call;
+	graphite_MetaClassType.tp_dealloc    = graphite_Object_dealloc;
 	graphite_MetaClassType.tp_flags      = Py_TPFLAGS_DEFAULT;
 	graphite_MetaClassType.tp_getset     = graphite_Object_getsets;
 	graphite_MetaClassType.tp_base       = &graphite_ObjectType;
@@ -1042,159 +1016,6 @@ namespace {
 
     PyObject* string_to_python(const std::string& s) {
         return PyUnicode_FromString(s.c_str()); // [TODO: is it correct ?]
-    }
-
-    /*********************************************************************/
-
-    /**
-     * \brief Converts a lua object into a value
-     * \tparam T type of the value
-     * \param[in] obj a pointer to a Python object
-     * \param[out] result a reference to the read value
-     * \retval true if the conversion was successful
-     * \retval false otherwise (LUA type did not match)
-     */
-    template <class T> inline bool python_tographiteveccomp(
-	PyObject* obj, T& result
-    ) {
-	geo_argused(obj);
-	geo_argused(result);
-	geo_assert_not_reached;
-    }
-
-
-    template <> inline bool python_tographiteveccomp<double>(
-	PyObject* obj, double& result
-    ) {
-	if(PyFloat_Check(obj)) {
-	    result = PyFloat_AsDouble(obj);
-	    return true;
-	} else if(PyLong_Check(obj)) {
-	    result = double(PyLong_AsLong(obj));
-	    return true;
-	}
-	return false;
-    }
-
-    template <> inline bool python_tographiteveccomp<Numeric::int32>(
-	PyObject* obj, Numeric::int32& result
-    ) {
-	if(PyLong_Check(obj)) {
-	    result = Numeric::int32(PyLong_AsLong(obj));
-	    return true;
-	}
-	return false;
-    }
-
-    /**
-     * \brief Converts a python object into a Graphite vec2,vec3 or vec4
-     * \tparam N dimension of the vector
-     * \tparam T type of the coefficients
-     * \param[in] obj a pointer to the Python object
-     * \param[out] result a reference to the converted vector
-     * \retval true if the conversion was successful
-     * \retval false otherwise (mtype does not match, or object
-     *  is not a list of the correct size).
-     */
-    template<unsigned int N, class T> inline bool python_tographitevec(
-	PyObject* obj, ::GEO::vecng<N,T>& result
-    ) {
-	if(!PyList_Check(obj)) {
-	    return false;
-	}
-	index_t n = index_t(PyList_Size(obj));
-	if(n != index_t(N)) {
-	    return false;
-	}
-	for(index_t i=0; i<n; ++i) {
-	    PyObject* coord_obj = PyList_GetItem(obj,i);
-	    if(!python_tographiteveccomp(coord_obj, result[i])) {
-		return false;
-	    }
-	}
-	return true;
-    }
-
-    /**
-     * \brief Converts a python object into a Graphite vec2,vec3 or vec4
-     * \tparam N dimension of the vector
-     * \tparam T type of the coefficients
-     * \param[in] obj a pointer to the Python object
-     * \param[out] result the converted vector as an Any
-     * \param[in] mtype the meta-type (vec2, vec3 or vec4)
-     * \retval true if the conversion was successful
-     * \retval false otherwise (mtype does not match, or object
-     *  is not a list of the correct size).
-     */
-    template<unsigned int N, class T> inline bool python_tographitevec(
-	PyObject* obj, Any& result, MetaType* mtype
-    ) {
-	if(mtype != ogf_meta<::GEO::vecng<N,double> >::type()) {
-	    return false;
-	}
-	::GEO::vecng<N,T> V;
-	if(!python_tographitevec(obj,V)) {
-	    return false;
-	}
-	result.set_value(V);
-	return true;
-    }
-
-    /**
-     * \brief Converts a python object into a Graphite mat2, mat3 or mat4
-     * \tparam N dimension of the vector
-     * \tparam T type of the coefficients
-     * \param[in] obj a pointer to the Python object
-     * \param[out] result a reference to the converted matrix
-     * \retval true if the conversion was successful
-     * \retval false otherwise (mtype does not match, or object
-     *  is not a list of the correct size).
-     */
-    template<unsigned int N, class T> inline bool python_tographitemat(
-	PyObject* obj, ::GEO::Matrix<N,T>& result
-    ) {
-	if(!PyList_Check(obj)) {
-	    return false;
-	}
-	index_t n = index_t(PyList_Size(obj));
-	if(n != index_t(N)) {
-	    return false;
-	}
-	for(index_t i=0; i<n; ++i) {
-	    ::GEO::vecng<N,T> row;
-	    PyObject* row_obj = PyList_GetItem(obj,i);
-	    if(!python_tographitevec(row_obj, row)) {
-		return false;
-	    }
-	    for(index_t j=0; j<n; ++j) {
-		result(i,j) = row[j];
-	    }
-	}
-	return true;
-    }
-
-    /**
-     * \brief Converts a python object into a Graphite mat2, mat3 or mat4
-     * \tparam N dimension of the vector
-     * \tparam T type of the coefficients
-     * \param[in] obj a pointer to the Python object
-     * \param[out] result a reference to the converted matrix as an Any
-     * \retval true if the conversion was successful
-     * \retval false otherwise (mtype does not match, or object
-     *  is not a list of the correct size).
-     */
-    template<unsigned int N, class T> inline bool python_tographitemat(
-	PyObject* obj, Any& result, MetaType* mtype
-    ) {
-	if(mtype != ogf_meta<::GEO::Matrix<N,double> >::type()) {
-	    return false;
-	}
-	::GEO::Matrix<N,T> M;
-	if(!python_tographitemat(obj,M)) {
-	    return false;
-	}
-	result.set_value(M);
-	return true;
     }
 
     /*****************************************************************/
@@ -1294,54 +1115,15 @@ namespace {
 
     Any python_to_graphite(PyObject* obj, MetaType* mtype) {
 	Any result;
-
 	if(obj == nullptr) {
 	    return result;
 	}
-
-	if(PyList_Check(obj)) {
-
-	    if(python_tographitevec<2,double>(obj, result, mtype)) {
-		return result;
-	    }
-
-	    if(python_tographitevec<3,double>(obj, result, mtype)) {
-		return result;
-	    }
-
-	    if(python_tographitevec<4,double>(obj, result, mtype)) {
-		return result;
-	    }
-
-	    if(python_tographitevec<2,Numeric::int32>(obj, result, mtype)) {
-		return result;
-	    }
-
-	    if(python_tographitevec<3,Numeric::int32>(obj, result, mtype)) {
-		return result;
-	    }
-
-	    if(python_tographitevec<4,Numeric::int32>(obj, result, mtype)) {
-		return result;
-	    }
-
-	    if(python_tographitemat<2,double>(obj, result, mtype)) {
-		return result;
-	    }
-
-	    if(python_tographitemat<3,double>(obj, result, mtype)) {
-		return result;
-	    }
-
-	    if(python_tographitemat<4,double>(obj, result, mtype)) {
-		return result;
-	    }
+	if(python_to_graphite_mat_vec(obj, result, mtype)) {
+	    return result;
 	}
-
 	if(python_to_nl_vector(obj, result, mtype)) {
 	    return result;
 	}
-
 	if(PyGraphite_Check(obj)) {
 	    result.set_value(((graphite_Object*)obj)->object);
 	} else if(obj == Py_True) {
