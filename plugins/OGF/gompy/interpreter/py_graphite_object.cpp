@@ -83,16 +83,16 @@ namespace OGF {
 	}
 
 	PyObject* graphite_Object_richcompare(
-	    PyObject* self_in, PyObject* rhs_in, int op
+	    PyObject* self, PyObject* rhs, int op
 	) {
-	    geo_debug_assert(PyGraphite_Check(self_in));
-	    Object* object = PyGraphite_GetObject(self_in);
+	    geo_debug_assert(PyGraphite_Check(self));
+	    Object* object = PyGraphite_GetObject(self);
 	    Object* other = nullptr;
 
-	    if(PyGraphite_Check(self_in)) {
-		other = PyGraphite_GetObject(rhs_in);
+	    if(PyGraphite_Check(rhs)) {
+		other = PyGraphite_GetObject(rhs);
 	    } else {
-		if(self_in != Py_None) {
+		if(rhs != Py_None) {
 		    Py_RETURN_NOTIMPLEMENTED;
 		}
 	    }
@@ -490,7 +490,7 @@ namespace OGF {
 	PyObject* graphite_get_array_struct(PyObject* self_in, void* closure) {
 	    geo_argused(closure);
 	    geo_debug_assert(PyGraphite_Check(self_in));
-	    graphite_Object* self = (graphite_Object*)self_in;
+	    graphite_Object* self = reinterpret_cast<graphite_Object*>(self_in);
 	    Py_XINCREF(self->array_struct);
 	    return self->array_struct;
 	}
@@ -649,6 +649,11 @@ namespace OGF {
 	    self->managed = managed;
 	    if(self->managed) {
 		Counted::ref(self->object);
+	    }
+
+	    if(type == &graphite_MetaClassType) {
+		self->head.tp_mro = PyList_New(0);
+		Py_INCREF(self->head.tp_mro);
 	    }
 
 	    // If object is a vector, create information for interop

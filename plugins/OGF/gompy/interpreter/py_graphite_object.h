@@ -84,7 +84,8 @@ namespace OGF {
 	 * \brief A Python wrapper for Graphite objects.
 	 */
 	struct graphite_Object {
-	    PyObject_HEAD
+	    // PyObject_HEAD
+	    PyTypeObject head;
 
 	    /** \brief Pointer to the implementation. */
 	    Object* object;
@@ -94,6 +95,8 @@ namespace OGF {
 
 	    /** \brief Pointer to array interface or nullptr. */
 	    PyObject* array_struct;
+
+	    PyObject* weakrefs;
 	};
 
 	void init_graphite_ObjectType();
@@ -101,13 +104,13 @@ namespace OGF {
 	extern PyTypeObject graphite_ObjectType;
 	extern PyGetSetDef graphite_Object_getsets[];
 
-	PyObject* graphite_get_doc(PyObject* self_in, void* closure);
+	PyObject* graphite_get_doc(PyObject* self, void* closure);
 	PyObject* graphite_Object_new(
 	    PyTypeObject *type, PyObject *args, PyObject *kwds
 	);
-	void graphite_Object_dealloc(PyObject* self_in);
+	void graphite_Object_dealloc(PyObject* self);
 	PyObject* graphite_call(
-	    PyObject* self_in, PyObject* args, PyObject* keywords
+	    PyObject* self, PyObject* args, PyObject* keywords
 	);
 
     }

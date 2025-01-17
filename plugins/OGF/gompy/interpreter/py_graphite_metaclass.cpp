@@ -61,19 +61,21 @@ namespace OGF {
 	 *  statements for testing Python version.
 	 */
 	void init_graphite_MetaClassType() {
-	    /*
-	     * Declaring graphite_call() in graphite_ObjectType
-	     * would have done the job, but it is cleaner like that. In
-	     * addition, having non-nullptr tp_call in graphite objects
-	     * made the autocompleter systematically add '(' to object
-	     * names.
-	     */
 	    graphite_MetaClassType.tp_call       = graphite_call;
 	    graphite_MetaClassType.tp_dealloc    = graphite_Object_dealloc;
-	    graphite_MetaClassType.tp_flags      = Py_TPFLAGS_DEFAULT;
+	    // graphite_MetaClassType.tp_flags      = Py_TPFLAGS_DEFAULT;
+	    graphite_MetaClassType.tp_flags      = Py_TPFLAGS_DEFAULT |
+		                                   Py_TPFLAGS_TYPE_SUBCLASS |
+		                                // Py_TPFLAGS_MANAGED_WEAKREF |
+		                                   Py_TPFLAGS_HEAPTYPE ;
 	    graphite_MetaClassType.tp_getset     = graphite_Object_getsets;
 	    graphite_MetaClassType.tp_base       = &graphite_ObjectType;
 	    graphite_MetaClassType.tp_new        = graphite_Object_new;
+
+	    graphite_MetaClassType.tp_weaklistoffset = offsetof(
+		graphite_Object, weakrefs
+	    );
+
 	}
     }
 }
