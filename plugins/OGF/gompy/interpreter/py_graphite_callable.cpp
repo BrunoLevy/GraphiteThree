@@ -65,8 +65,7 @@ namespace OGF {
 	    PyVarObject_HEAD_INIT(nullptr, 0)
 	    "graphite.Callable",      // tp_name
 	    sizeof(graphite_Object)   // tp_basicsize
-	    // The rest is left uninitialized, and is set to zero using
-	    // clear_PyTypeObject().
+	    // The rest is initialized by init_graphite_CallableType()
 	};
 
 	/**
@@ -78,13 +77,6 @@ namespace OGF {
 	 *  statements for testing Python version.
 	 */
 	void init_graphite_CallableType() {
-	    /*
-	     * Declaring graphite_call() in graphite_ObjectType
-	     * would have done the job, but it is cleaner like that. In
-	     * addition, having non-nullptr tp_call in graphite objects
-	     * made the autocompleter systematically add '(' to object
-	     * names.
-	     */
 	    graphite_CallableType.tp_dealloc    = graphite_Object_dealloc;
 	    graphite_CallableType.tp_call       = graphite_call;
 	    graphite_CallableType.tp_flags      = Py_TPFLAGS_DEFAULT;

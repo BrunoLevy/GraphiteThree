@@ -96,6 +96,8 @@ namespace OGF {
 	    /** \brief Pointer to array interface or nullptr. */
 	    PyObject* array_struct;
 
+	    /** \brief Needed for metaclass to be seen as a python type,
+		but I do not understand what it is. */
 	    PyObject* weakrefs;
 	};
 

@@ -48,30 +48,29 @@ namespace OGF {
 	    PyVarObject_HEAD_INIT(nullptr, 0)
 	    "graphite.MetaClass",     // tp_name
 	    sizeof(graphite_Object)   // tp_basicsize
-	    // The rest is left uninitialized, and is set to zero using
-	    // clear_PyTypeObject().
+	    // The rest is initialized by init_graphite_MetaClassType()
 	};
 
 	/**
 	 * \brief Function to initialize graphite_MetaClassType
-	 * \details I prefer to do that by clearing the structure
-	 *  then initializing each field explicitly, because Python
-	 *  keeps changing the definition of PyTypeObject. Initializing
-	 *  all the fields of PyTypeObject would require lots of #ifdef
-	 *  statements for testing Python version.
 	 */
 	void init_graphite_MetaClassType() {
 	    graphite_MetaClassType.tp_call       = graphite_call;
 	    graphite_MetaClassType.tp_dealloc    = graphite_Object_dealloc;
-	    // graphite_MetaClassType.tp_flags      = Py_TPFLAGS_DEFAULT;
+
+	    // TYPE_SUBCLASS so that Python knows it is a type, and
+	    // HEAPTYPE, so that Python knows it is not a static type
 	    graphite_MetaClassType.tp_flags      = Py_TPFLAGS_DEFAULT |
 		                                   Py_TPFLAGS_TYPE_SUBCLASS |
-		                                // Py_TPFLAGS_MANAGED_WEAKREF |
 		                                   Py_TPFLAGS_HEAPTYPE ;
+
 	    graphite_MetaClassType.tp_getset     = graphite_Object_getsets;
 	    graphite_MetaClassType.tp_base       = &graphite_ObjectType;
 	    graphite_MetaClassType.tp_new        = graphite_Object_new;
 
+	    // Note: not using Py_TPFLAGS_MANAGED_WEAKREF, but we
+	    // need tp_weaklistoffset to be set else it crashes
+	    // disclaimer: I do not understand what weakrefs are !!
 	    graphite_MetaClassType.tp_weaklistoffset = offsetof(
 		graphite_Object, weakrefs
 	    );

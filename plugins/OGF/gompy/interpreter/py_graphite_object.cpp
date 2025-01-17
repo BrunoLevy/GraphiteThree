@@ -577,26 +577,6 @@ namespace OGF {
 	    graphite_array_ass_index /* mp_ass_subscript */
 	};
 
-
-	/**
-	 * \brief Clears all the field of a Python type object except
-	 *  the header.
-	 * \details I prefer to do that rather than explictly initializing
-	 *  all the fields in the struct declaration, because the fields
-	 *  are different in different Python versions. Here we got a portable
-	 *  way of clearing all the fields (then setting only the fields that
-	 *  we use).
-	 * \param[in] obj a pointer to the Python type object to be
-	 *  cleared.
-	 */
-	void clear_PyTypeObject(PyTypeObject* obj) {
-	    void* start = &(obj->tp_itemsize);
-	    size_t len = sizeof(PyTypeObject) -
-		size_t(Memory::pointer(start)-Memory::pointer(obj));
-	    Memory::clear(start,len);
-	}
-
-
 	/**
 	 * \brief Class definition for Python wrapper
 	 *  around Graphite object.
@@ -605,20 +585,13 @@ namespace OGF {
 	    PyVarObject_HEAD_INIT(nullptr, 0)
 	    "graphite.Object",        // tp_name
 	    sizeof(graphite_Object)   // tp_basicsize
-	    // The rest is left uninitialized, and is set to zero using
-	    // clear_PyTypeObject().
+	    // The rest is initialized in init_graphite_ObjectType()
 	};
 
 	/**
 	 * \brief Function to initialize graphite_ObjectType
-	 * \details I prefer to do that by clearing the structure
-	 *  then initializing each field explicitly, because Python
-	 *  keeps changing the definition of PyTypeObject. Initializing
-	 *  all the fields of PyTypeObject would require lots of #ifdef
-	 *  statements for testing Python version.
 	 */
 	void init_graphite_ObjectType() {
-	    clear_PyTypeObject(&graphite_ObjectType);
 	    graphite_ObjectType.tp_dealloc     = graphite_Object_dealloc;
 	    graphite_ObjectType.tp_as_mapping  = &graphite_MappingMethods;
 	    graphite_ObjectType.tp_str         = graphite_str;
