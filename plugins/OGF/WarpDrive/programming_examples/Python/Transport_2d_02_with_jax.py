@@ -349,12 +349,12 @@ class Transport:
     @details Needed because GOM typing is not fully compliant with CPython.
        In addition pads data to reduce JAX recompiling.
     """
-    tmp = np.asarray(o)
-    dtype = tmp.dtype
-    if dtype == np.uint32: # change dtype, OOB indexing does not work with uint !
-        dtype = jnp.int32
-    tmp = jnp.asarray(tmp,dtype=dtype) # converted to JAX array
-    chunk_size = 128                   # padding (avoid recompiling too often)
+    # change dtype, OOB indexing does not work with uint !
+    dtype = np.float64
+    if o.element_meta_type == OGF.index_t:
+       dtype = np.int32
+    tmp = jnp.asarray(o, dtype = dtype)
+    chunk_size = 128 # padding (avoid recompiling too often)
     pad = chunk_size - (tmp.shape[0] % chunk_size)
     if tmp.ndim == 1:
       return jnp.pad(tmp,(0,pad),constant_values=-1)

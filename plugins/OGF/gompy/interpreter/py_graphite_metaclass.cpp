@@ -97,7 +97,7 @@ namespace OGF {
 	    /*
 	    return PyObject_IsInstance(
 		obj, (PyObject*)&graphite_MetaClassType
-	    ) != 0;
+	    ) != 0; // -> infinite recursion (TODO: understand why)
 	    */
 	}
 
