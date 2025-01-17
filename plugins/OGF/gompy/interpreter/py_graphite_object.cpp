@@ -601,38 +601,52 @@ namespace OGF {
 	/***************************************************************/
 
 	PyObject* PyGraphiteObject_New(Object* object, bool managed) {
-	    graphite_Object *self = nullptr;
+	    PyObject *self = nullptr;
 	    PyTypeObject* type = nullptr;
+	    bool is_meta_class = false;
+
 	    if(dynamic_cast<MetaClass*>(object) != nullptr) {
 		type = &graphite_MetaClassType;
+		is_meta_class = true;
 	    } else if(dynamic_cast<Callable*>(object) != nullptr) {
 		type = &graphite_CallableType;
 	    } else {
 		type = &graphite_ObjectType;
 	    }
-	    self = (graphite_Object *)type->tp_alloc(type, 0);
-	    self->object = object;
-	    self->managed = managed;
-	    if(self->managed) {
-		Counted::ref(self->object);
+	    self = type->tp_alloc(type, 0);
+
+	    if(is_meta_class) {
+		graphite_MetaClass* impl = reinterpret_cast<graphite_MetaClass*>(
+		    self
+		);
+		impl->object = object;
+		impl->head.tp_mro = PyList_New(0);
+		Py_INCREF(impl->head.tp_mro);
+		impl->magic = graphite_MetaClass_MAGIC;
+	    } else {
+		graphite_Object* impl = reinterpret_cast<graphite_Object*>(
+		    self
+		);
+		impl->object = object;
+		impl->managed = managed;
+		if(impl->managed) {
+		    Counted::ref(impl->object);
+		}
+
+		// If object is a vector, create information for interop
+		// with numpy.
+		NL::Vector* object_as_vector = dynamic_cast<NL::Vector*>(object);
+		if(object_as_vector != nullptr) {
+		    PyObject* array_interface =
+			create_array_interface(object_as_vector);
+		    Py_INCREF(array_interface);
+		    impl->array_struct = array_interface;
+		}
+
+		impl->magic = graphite_Object_MAGIC;
 	    }
 
-	    if(type == &graphite_MetaClassType) {
-		self->head.tp_mro = PyList_New(0);
-		Py_INCREF(self->head.tp_mro);
-	    }
-
-	    // If object is a vector, create information for interop
-	    // with numpy.
-	    NL::Vector* object_as_vector =  dynamic_cast<NL::Vector*>(object);
-	    if(object_as_vector != nullptr) {
-		PyObject* array_interface =
-		    create_array_interface(object_as_vector);
-		Py_INCREF(array_interface);
-		self->array_struct = array_interface;
-	    }
-
-	    return reinterpret_cast<PyObject*>(self);
+	    return self;
 	}
 
 	bool PyGraphite_Check(PyObject* obj) {
@@ -641,9 +655,25 @@ namespace OGF {
 	    ) != 0;
 	}
 
+	bool PyGraphiteObject_Check(PyObject* obj) {
+	    return PyGraphite_Check(obj) && !PyGraphiteMetaClass_Check(obj);
+	}
+
 	Object* PyGraphite_GetObject(PyObject* obj) {
 	    geo_debug_assert(PyGraphite_Check(obj));
-	    return reinterpret_cast<graphite_Object*>(obj)->object;
+	    Object* result = nullptr;
+	    if(PyGraphiteMetaClass_Check(obj)) {
+		graphite_MetaClass* impl =
+		    reinterpret_cast<graphite_MetaClass*>(obj);
+		geo_assert(impl->magic == graphite_MetaClass_MAGIC);
+		result = impl->object;
+	    } else {
+		graphite_Object* impl =
+		    reinterpret_cast<graphite_Object*>(obj);
+		geo_assert(impl->magic == graphite_Object_MAGIC);
+		result = impl->object;
+	    }
+	    return result;
 	}
 
 	/********************************************************************/

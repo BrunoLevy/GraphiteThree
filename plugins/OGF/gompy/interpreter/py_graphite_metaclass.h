@@ -39,10 +39,31 @@
 
 #include <OGF/gompy/common/common.h>
 #include <OGF/gompy/interpreter/python.h>
+#include <geogram/basic/numeric.h>
 
 namespace OGF {
 
+    class Object;
+
     namespace GOMPY {
+
+	/**
+	 * \brief A Python wrapper for Graphite MetaClasses.
+	 */
+	struct graphite_MetaClass {
+	    PyTypeObject head;
+
+	    /** \brief Pointer to the implementation. */
+	    Object* object;
+
+	    /** \brief Needed for metaclass to be seen as a python type,
+		but I do not understand what it is. */
+	    PyObject* weakrefs;
+
+	    Numeric::uint32 magic;
+	};
+
+	constexpr Numeric::uint32 graphite_MetaClass_MAGIC = 0xbeeff00d;
 
 	/**
 	 * \brief Function to initialize graphite_MetaClassType
@@ -54,6 +75,15 @@ namespace OGF {
 	 *  around Graphite MetaClass objects.
 	 */
 	extern PyTypeObject graphite_MetaClassType;
+
+	/**
+	 * \brief Tests whether a Python object is a Graphite MetaClass.
+	 * \param[in] obj a pointer to the object.
+	 * \retval true if the object is a Graphite MetaClass
+	 * \retval false otherwise.
+	 */
+	bool PyGraphiteMetaClass_Check(PyObject* obj);
+
     }
 
 }

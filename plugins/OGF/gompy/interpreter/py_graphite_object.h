@@ -39,6 +39,7 @@
 
 #include <OGF/gompy/common/common.h>
 #include <OGF/gompy/interpreter/python.h>
+#include <geogram/basic/numeric.h>
 
 /**
  * \file OGF/gom_python/interpreter/py_graphite_object.h
@@ -54,10 +55,21 @@ namespace OGF {
 	/**
 	 * \brief Tests whether a Python object is a Graphite object.
 	 * \param[in] obj a pointer to the object.
-	 * \retval true if the object is a Graphite object.
+	 * \retval true if the object is a Graphite object,
+	 *   callable or metaclass.
 	 * \retval false otherwise.
 	 */
 	bool PyGraphite_Check(PyObject* obj);
+
+	/**
+	 * \brief Tests whether a Python object is exactly a Graphite object.
+	 * \param[in] obj a pointer to the object.
+	 * \retval true if the object is a Graphite object or a callable
+	 *   (but not a metaclass).
+	 * \retval false otherwise.
+	 */
+	bool PyGraphiteObject_Check(PyObject* obj);
+
 
 	/**
 	 * \brief Gets the Graphite object stored in a Python object
@@ -84,8 +96,7 @@ namespace OGF {
 	 * \brief A Python wrapper for Graphite objects.
 	 */
 	struct graphite_Object {
-	    // PyObject_HEAD
-	    PyTypeObject head;
+	    PyObject_HEAD
 
 	    /** \brief Pointer to the implementation. */
 	    Object* object;
@@ -96,10 +107,10 @@ namespace OGF {
 	    /** \brief Pointer to array interface or nullptr. */
 	    PyObject* array_struct;
 
-	    /** \brief Needed for metaclass to be seen as a python type,
-		but I do not understand what it is. */
-	    PyObject* weakrefs;
+	    Numeric::uint32 magic;
 	};
+
+	constexpr Numeric::uint32 graphite_Object_MAGIC = 0xfeedbeef;
 
 	/**
 	 * \brief Function to initialize graphite_ObjectType
