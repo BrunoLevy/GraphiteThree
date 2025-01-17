@@ -57,10 +57,6 @@ namespace OGF {
 	    }
 	};
 
-	/**
-	 * \brief Class definition for Python wrapper
-	 *  around Graphite object.
-	 */
 	PyTypeObject graphite_CallableType = {
 	    PyVarObject_HEAD_INIT(nullptr, 0)
 	    "graphite.Callable",      // tp_name
@@ -68,14 +64,6 @@ namespace OGF {
 	    // The rest is initialized by init_graphite_CallableType()
 	};
 
-	/**
-	 * \brief Function to initialize graphite_CallableType
-	 * \details I prefer to do that by clearing the structure
-	 *  then initializing each field explicitly, because Python
-	 *  keeps changing the definition of PyTypeObject. Initializing
-	 *  all the fields of PyTypeObject would require lots of #ifdef
-	 *  statements for testing Python version.
-	 */
 	void init_graphite_CallableType() {
 	    graphite_CallableType.tp_dealloc    = graphite_Object_dealloc;
 	    graphite_CallableType.tp_call       = graphite_call;

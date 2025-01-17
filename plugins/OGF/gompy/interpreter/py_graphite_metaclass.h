@@ -43,7 +43,16 @@
 namespace OGF {
 
     namespace GOMPY {
+
+	/**
+	 * \brief Function to initialize graphite_MetaClassType
+	 */
 	void init_graphite_MetaClassType();
+
+	/**
+	 * \brief Class definition for Python wrapper
+	 *  around Graphite MetaClass objects.
+	 */
 	extern PyTypeObject graphite_MetaClassType;
     }
 

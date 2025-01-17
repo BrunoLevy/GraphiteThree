@@ -577,10 +577,6 @@ namespace OGF {
 	    graphite_array_ass_index /* mp_ass_subscript */
 	};
 
-	/**
-	 * \brief Class definition for Python wrapper
-	 *  around Graphite object.
-	 */
 	PyTypeObject graphite_ObjectType = {
 	    PyVarObject_HEAD_INIT(nullptr, 0)
 	    "graphite.Object",        // tp_name
@@ -588,9 +584,6 @@ namespace OGF {
 	    // The rest is initialized in init_graphite_ObjectType()
 	};
 
-	/**
-	 * \brief Function to initialize graphite_ObjectType
-	 */
 	void init_graphite_ObjectType() {
 	    graphite_ObjectType.tp_dealloc     = graphite_Object_dealloc;
 	    graphite_ObjectType.tp_as_mapping  = &graphite_MappingMethods;

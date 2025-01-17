@@ -45,6 +45,10 @@
  * \brief Python callables exported to Graphite.
  */
 
+// Python object forward declaration.
+// We cannot forward-declare PyObject, and we cannot include Python headers,
+// because the gom compiler won't parse them, so we forward-declare the internal
+// struct name for PyObject.
 struct _object;
 
 namespace OGF {

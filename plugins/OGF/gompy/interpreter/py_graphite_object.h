@@ -101,6 +101,9 @@ namespace OGF {
 	    PyObject* weakrefs;
 	};
 
+	/**
+	 * \brief Function to initialize graphite_ObjectType
+	 */
 	void init_graphite_ObjectType();
 
 	extern PyTypeObject graphite_ObjectType;

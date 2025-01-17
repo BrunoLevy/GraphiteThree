@@ -40,10 +40,6 @@
 namespace OGF {
     namespace GOMPY {
 
-	/**
-	 * \brief Class definition for Python wrapper
-	 *  around Graphite MetaClass objects.
-	 */
 	PyTypeObject graphite_MetaClassType = {
 	    PyVarObject_HEAD_INIT(nullptr, 0)
 	    "graphite.MetaClass",     // tp_name
@@ -51,9 +47,6 @@ namespace OGF {
 	    // The rest is initialized by init_graphite_MetaClassType()
 	};
 
-	/**
-	 * \brief Function to initialize graphite_MetaClassType
-	 */
 	void init_graphite_MetaClassType() {
 	    graphite_MetaClassType.tp_call       = graphite_call;
 	    graphite_MetaClassType.tp_dealloc    = graphite_Object_dealloc;

@@ -47,7 +47,16 @@
 
 namespace OGF {
     namespace GOMPY {
+
+	/**
+	 * \brief Function to initialize graphite_CallableType
+	 */
 	void init_graphite_CallableType();
+
+	/**
+	 * \brief Class definition for Python wrapper
+	 *  around Graphite object.
+	 */
 	extern PyTypeObject graphite_CallableType;
     }
 }
