@@ -107,6 +107,7 @@ namespace OGF {
 	    /** \brief Pointer to array interface or nullptr. */
 	    PyObject* array_struct;
 
+	    /** \brief For debugging / sanity checks */
 	    Numeric::uint32 magic;
 	};
 

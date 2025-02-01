@@ -238,7 +238,7 @@ namespace OGF {
 
     PythonInterpreter::~PythonInterpreter() {
 	if(use_embedded_interpreter_) {
-	    Py_Finalize();
+	    // Py_Finalize(); // <- crashes when jax is imported
 	}
 	main_module_ = nullptr;
     }

@@ -55,7 +55,7 @@ namespace OGF {
 
 	/**
 	 * \brief Converts a Python object to a NL Vector
-	 * \param[in] the Python object
+	 * \param[in] obj a pointer to the Python object
 	 * \param[out] result the NL vector stored in a Any
 	 * \param[in] mtype the expected meta-type:
 	 *    ogf_meta<::OGF::NL::Vector*>::type()

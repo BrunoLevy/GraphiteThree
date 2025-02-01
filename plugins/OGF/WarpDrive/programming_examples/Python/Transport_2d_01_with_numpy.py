@@ -230,10 +230,10 @@ class Transport:
       diag += self.regularization * self.nu_i
 
     if self.use_scipy: # Beware parenth---v (construct spmat from I,J,VAL)
-      H = scipy.sparse.csr_matrix( (VAL,(I,J)), shape=(self.N,self.N) )
+      H = scipy.sparse.csr_array( (VAL,(I,J)), shape=(self.N,self.N) )
       if self.direct: # if using direct solver, inject diag coeffs into mtx
         s = np.arange(self.N,dtype=np.int32)
-        H += scipy.sparse.csr_matrix( (diag,(s,s)), shape=(self.N,self.N) )
+        H += scipy.sparse.csr_array( (diag,(s,s)), shape=(self.N,self.N) )
       else:
         H.diag = diag # store diagonal separately if using iterative solver
     else: # Using OpenNL sparse matrices

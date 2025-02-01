@@ -256,10 +256,10 @@ class Transport:
       diag += self.regularization * self.nu_i
 
     # Beware parenthesis--------------v (construct sparse matrix from I,J,VAL)
-    H = scipy.sparse.csr_matrix( (VAL,(I,J)), shape=(self.N,self.N) )
+    H = scipy.sparse.csr_array( (VAL,(I,J)), shape=(self.N,self.N) )
     if self.direct: # if using direct solver, inject diag coeffs into mtx
       s = jnp.arange(self.N,dtype=jnp.int32)
-      H += scipy.sparse.csr_matrix( (diag,(s,s)), shape=(self.N,self.N) )
+      H += scipy.sparse.csr_array( (diag,(s,s)), shape=(self.N,self.N) )
     else:
       H.diag = diag # store diagonal separately if using iterative solver
 

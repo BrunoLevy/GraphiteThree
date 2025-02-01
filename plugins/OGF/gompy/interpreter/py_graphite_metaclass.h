@@ -60,6 +60,7 @@ namespace OGF {
 		but I do not understand what it is. */
 	    PyObject* weakrefs;
 
+	    /** \brief For debugging / sanity checks */
 	    Numeric::uint32 magic;
 	};
 

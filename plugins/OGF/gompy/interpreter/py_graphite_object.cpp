@@ -620,8 +620,13 @@ namespace OGF {
 		    self
 		);
 		impl->object = object;
-		impl->head.tp_mro = PyList_New(0);
+
+		// TODO: understand why PyType_ready() does not initialize
+		// mro (method resolution order). For now I set it as an
+		// empty tuple (and this avoids crashing)
+		impl->head.tp_mro = PyTuple_New(0);
 		Py_INCREF(impl->head.tp_mro);
+
 		impl->magic = graphite_MetaClass_MAGIC;
 	    } else {
 		graphite_Object* impl = reinterpret_cast<graphite_Object*>(
