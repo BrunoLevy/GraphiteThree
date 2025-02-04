@@ -1,0 +1,25 @@
+var classOGF_1_1SceneGraphShaderManager =
+[
+    [ "SceneGraphShaderManager", "classOGF_1_1SceneGraphShaderManager.html#a41f60efb0574545eb363c602cd8031b9", null ],
+    [ "~SceneGraphShaderManager", "classOGF_1_1SceneGraphShaderManager.html#a77bde991d533a1fc0ed9b7a318f81c65", null ],
+    [ "apply_to_scene_graph", "classOGF_1_1SceneGraphShaderManager.html#a93c242b9b39fb2093f1c5b607a184e01", null ],
+    [ "current", "classOGF_1_1SceneGraphShaderManager.html#a080258e105070974cf0ef54189497687", null ],
+    [ "current_effect", "classOGF_1_1SceneGraphShaderManager.html#ab7e325bd0fdd19277efa466d81bbfee5", null ],
+    [ "current_object", "classOGF_1_1SceneGraphShaderManager.html#a1434143c23f673b7696fbf60f937cbe7", null ],
+    [ "draw", "classOGF_1_1SceneGraphShaderManager.html#a61ccb07cbdc7b48387f8477a1ad8c643", null ],
+    [ "full_screen_effect", "classOGF_1_1SceneGraphShaderManager.html#a40a4d91d4b2b5e0fa2d89e1af67762a1", null ],
+    [ "get_auto_focus", "classOGF_1_1SceneGraphShaderManager.html#ac1b3b191cad73573f42497aef9bd3849", null ],
+    [ "get_draw_selected_only", "classOGF_1_1SceneGraphShaderManager.html#a2b1a9689d3a79f600650e61810ff2a4b", null ],
+    [ "get_effect", "classOGF_1_1SceneGraphShaderManager.html#a5fa8c8688ef7b93c1618b8ce556cd661", null ],
+    [ "get_focus_matrix", "classOGF_1_1SceneGraphShaderManager.html#a6b7d823937184161e3545bd845152eb3", null ],
+    [ "get_grob_shader", "classOGF_1_1SceneGraphShaderManager.html#a8dd282cd221fbfc6a9e927370c539129", null ],
+    [ "get_highlight_selected", "classOGF_1_1SceneGraphShaderManager.html#a1edb1261a1edd13a633328a1f115379d", null ],
+    [ "interpreter", "classOGF_1_1SceneGraphShaderManager.html#a375486d85178bebb873108bfb0c34581", null ],
+    [ "pick_object", "classOGF_1_1SceneGraphShaderManager.html#ada7bc015a2305e2fd1106efdf58fafc6", null ],
+    [ "resolve_shader_manager", "classOGF_1_1SceneGraphShaderManager.html#a9de5a7343ec07ca16ee38d5e4656051e", null ],
+    [ "set_draw_selected_only", "classOGF_1_1SceneGraphShaderManager.html#a29b93a8e5c473bd8dd03a6030413472a", null ],
+    [ "set_effect", "classOGF_1_1SceneGraphShaderManager.html#a61b12b1b0fcede38904f24b587f18732", null ],
+    [ "set_grob_shader", "classOGF_1_1SceneGraphShaderManager.html#a9c5323d50af1bf680531a82feb00f4ba", null ],
+    [ "set_highlight_selected", "classOGF_1_1SceneGraphShaderManager.html#a6564689320a8a23f70d8e769ac305bda", null ],
+    [ "shader", "classOGF_1_1SceneGraphShaderManager.html#a9f865882d7bd19356e756f6f67296da7", null ]
+];
