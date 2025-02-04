@@ -37,15 +37,16 @@
 #ifndef H_OGF_GOM_LUA_VEC_MAT_INTEROP_H
 #define H_OGF_GOM_LUA_VEC_MAT_INTEROP_H
 
-#include <OGF/gom/common/common.h>
-#include <OGF/gom/lua/lua_interpreter.h>
-#include <geogram/basic/geometry.h>
-
 /**
  * \file OGF/gom/lua/vec_mat_interop.h
  * \brief Functions to exchange vec2,vec3,vec4 and mat4 objects
  *  between Lua and Graphite
  */
+
+#include <OGF/gom/common/common.h>
+#include <geogram/basic/geometry.h>
+
+struct lua_State;
 
 namespace OGF {
 

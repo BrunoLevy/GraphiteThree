@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_GOM_LUA_INTERPRETER_H
@@ -53,42 +53,7 @@ namespace OGF {
     /*****************************************************************/
 
     /**
-     * \brief GOM wrapper around a LUA function.
-     */
-    gom_class GOM_API LuaCallable : public Callable {
-    public:
-        /**
-         * \brief LuaCallable constructor.
-         * \param[in] L a pointer to the Lua state.
-	 * \param[in] target_index the stack index where the target
-	 *  resides in the stack
-         */
-        LuaCallable(lua_State* L, int target_index);
-
-        /**
-         * \copydoc Callable::invoke()
-         */
-        bool invoke(const ArgList& args, Any& ret_val) override;
-
-	/**
-	 * \brief LuaCallable destructor.
-	 */
-	~LuaCallable() override;
-	
-    private:
-	index_t instance_id_;
-	lua_State* lua_state_;
-        Interpreter_var interpreter_; // Keeps refcount so that Lua interp
-                                      // is not destroyed before the last
-                                      // Callable
-	static index_t current_instance_id_;
-    };
-    
-    
-    /*****************************************************************/
-    
-    /**
-     * \brief The main class that interfaces the Python interpreter 
+     * \brief The main class that interfaces the Python interpreter
      *  with Graphite.
      */
     gom_class GOM_API LuaInterpreter : public Interpreter {
@@ -97,7 +62,7 @@ namespace OGF {
          * \brief LuaInterpreter constructor.
          */
         LuaInterpreter();
-        
+
         /**
          * \brief LuaInterpreter destructor.
          */
@@ -107,7 +72,7 @@ namespace OGF {
 	 * \copydoc Interpreter::reset()
 	 */
 	void reset() override;
-	
+
         /**
          * \copydoc Interpreter::execute()
          */
@@ -129,7 +94,7 @@ namespace OGF {
 	 * \copydoc Interpreter::bind()
 	 */
 	void bind(const std::string& id, const Any& value) override;
-	
+
 	/**
 	 * \copydoc Interpreter::eval()
 	 */
@@ -147,7 +112,7 @@ namespace OGF {
 
 	/**
 	 * \brief Displays a Lua error message.
-	 * \details Removes the repetition of the source-code between 
+	 * \details Removes the repetition of the source-code between
 	 *  square brackets which is of little use to tue user.
 	 * \param[in] msg the error message to display.
 	 */
@@ -155,22 +120,22 @@ namespace OGF {
 
 	/**
 	 * \brief Lists the variable names in this Scope.
-	 * \param[out] names a vector of strings with the names 
+	 * \param[out] names a vector of strings with the names
 	 *  of the variables.
 	 */
 	void list_names(std::vector<std::string>& names) const override;
-	
+
     protected:
 
 	/**
 	 * \brief Adjusts LUA state to recover from errors.
-	 * \details Base class implementation does nothing. It can 
+	 * \details Base class implementation does nothing. It can
 	 *  be overriden to recover from errors. For instance, it can
-	 *  call adjust_lua_glup_state() if GLUP bindings are 
+	 *  call adjust_lua_glup_state() if GLUP bindings are
 	 *  activated.
 	 */
 	virtual void adjust_lua_state();
-	
+
 	/**
 	 * \copydoc Interpreter::get_keys()
 	 */
@@ -185,11 +150,11 @@ namespace OGF {
 	     const std::string& args
 	 ) const override;
 
-	 
+
     private:
-	lua_State* lua_state_;	
-    }; 
+	lua_State* lua_state_;
+    };
 
-} 
+}
 
-#endif 
+#endif

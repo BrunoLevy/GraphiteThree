@@ -35,6 +35,8 @@
  */
 
 #include <OGF/gom/lua/lua_interpreter.h>
+#include <OGF/gom/lua/interop.h>
+#include <OGF/gom/lua/lua_graphite_object.h>
 #include <OGF/gom/lua/vec_mat_interop.h>
 #include <OGF/gom/types/connection.h>
 #include <OGF/gom/types/node.h>
@@ -43,7 +45,6 @@
 #include <OGF/basic/os/file_manager.h>
 #include <OGF/basic/modules/modmgr.h>
 #include <geogram/basic/process.h>
-#include <geogram/basic/geometry.h>
 #include <geogram/lua/lua_io.h>
 
 extern "C" {
@@ -53,113 +54,12 @@ extern "C" {
 
 #include <sstream>
 
-namespace {
-    using namespace OGF;
-
-    void lua_pushgraphiteval(lua_State* L, const Any& value);
-    void lua_tographiteval(
-	lua_State* L, int index, Any& result, MetaType* mtype = nullptr
-    );
-}
-
 /*************************************************************************/
 
-namespace OGF {
-
-    LuaCallable::LuaCallable(lua_State* L, int target_index) {
-	lua_state_ = L;
-
-	// Since we change the stack, we need to convert index relative
-	// to top into absolute index.
-	if(target_index < 0) {
-	    target_index = lua_gettop(lua_state_) + target_index + 1;
-	}
-	++current_instance_id_;
-	instance_id_ = current_instance_id_;
-	// Memorize a copy of the target in the "graphite_lua_targets"
-	// table (indexed by instance_id_)
-	lua_getfield(lua_state_,LUA_REGISTRYINDEX,"graphite_lua_targets");
-	lua_pushnil(lua_state_);
-	lua_copy(lua_state_, target_index, -1);
-	lua_seti(lua_state_, -2, lua_Integer(instance_id_));
-        lua_pop(lua_state_, 1); // Leave the Lua stack as we found it
-
-        // Keep a ref to the Lua interpreter so that the Lua interpreter
-        // is not destroyed before the last LuaCallable closes the door.
-        interpreter_ = Interpreter::instance_by_language("Lua");
-    }
-
-
-    static bool args_are_for_name_value_call(const ArgList& args) {
-        if(args.nb_args() == 0) {
-            return false;
-        }
-	if(args.nb_args() == 1 && args.ith_arg_name(0) == "value") {
-	    return false;
-	}
-        return !args.has_unnamed_args();
-    }
-
-    bool LuaCallable::invoke(const ArgList& args, Any& ret_val) {
-	ret_val.reset();
-	bool result = true;
-
-	// Get the memorized target from the "graphite_lua_targets"
-	// table (indexed by instance_id_)
-	lua_getfield(lua_state_,LUA_REGISTRYINDEX,"graphite_lua_targets");
-	lua_geti(lua_state_, -1, lua_Integer(instance_id_));
-
-	if(args_are_for_name_value_call(args)) {
-	    lua_newtable(lua_state_);
-	    for(index_t i=0; i<args.nb_args(); ++i) {
-		lua_pushgraphiteval(lua_state_, args.ith_arg_value(i));
-		lua_setfield(lua_state_, -2, args.ith_arg_name(i).c_str());
-	    }
-	    result = (lua_pcall(lua_state_, 1, 1, 0) == 0);
-	} else {
-	    for(index_t i=0; i<args.nb_args(); ++i) {
-		lua_pushgraphiteval(lua_state_, args.ith_arg_value(i));
-	    }
-	    result = (
-		lua_pcall(lua_state_, int(args.nb_args()), 1, 0) == 0
-	    );
-	}
-
-	if(result) {
-	    lua_tographiteval(lua_state_,-1,ret_val);
-	} else {
-	    std::string err = std::string(lua_tostring(lua_state_, -1));
-	    lua_pop(lua_state_,1);
-	    LuaInterpreter::display_error_message(err);
-	}
-	return result;
-    }
-
-    LuaCallable::~LuaCallable() {
-	// Remove the memorized target from the "graphite_lua_targets"
-	// table (indexed by instance_id_)
-	lua_getfield(lua_state_,LUA_REGISTRYINDEX,"graphite_lua_targets");
-	lua_pushnil(lua_state_);
-	lua_seti(lua_state_, -2, lua_Integer(instance_id_));
-    }
-
-    index_t LuaCallable::current_instance_id_ = 0;
-}
-
-
-/*****************************************************************************/
-
-
 namespace {
     using namespace OGF;
+    using namespace OGF::GOMLua;
 
-    /**
-     * \brief Tests whether a LUA object is a graphite object.
-     * \param[in] L a pointer to the LUA state.
-     * \param[in] index the stack index of the LUA object to be tested.
-     * \retval true if the LUA object at \p index is a graphite object.
-     * \retval false otherwise.
-     */
     bool lua_isgraphite(lua_State* L, int index) {
 	if(lua_islightuserdata(L,index)) {
 	    return false;
@@ -189,26 +89,13 @@ namespace {
 	Object* object;
 	bool managed;
     };
+}
 
-    /**
-     * \brief Pushes a graphite object onto the LUA stack.
-     * \details Graphite objects in LUA are seen as a
-     *  full user data that contains a pointer to the
-     *  object. We use full user data (rather than
-     *  light user data) because full user data can
-     *  have a metatable, that lets us redirect
-     *  member access to the GOM system.
-     * \param[in] L a pointer to the LUA state.
-     * \param[in] object a pointer to the graphite object
-     * \param[in] managed if true, manages reference count, else
-     *  only store a reference to the object without changing the reference
-     *  count. This is needed for the Interpreter itself, accessible through
-     *  the "gom" global variable. If it was reference-counted, then we would
-     *  have a circular reference, preventing the interpreter from being
-     *  deallocated on exit.
-     */
+namespace OGF {
+    namespace GOMLua {
+
     void lua_pushgraphite(
-	lua_State* L, Object* object, bool managed=true
+	lua_State* L, Object* object, bool managed
     ) {
 	if(object == nullptr) {
 	    lua_pushnil(L);
@@ -225,14 +112,6 @@ namespace {
 	lua_setmetatable(L,-2);
     }
 
-    /**
-     * \brief Gets a pointer to a graphite object from a
-     *  LUA object.
-     * \pre lua_isgraphite(L,index)
-     * \param[in] L a pointer to the LUA state.
-     * \param[in] index the stack index of the LUA object to be tested.
-     * \return a pointer to the graphite object.
-     */
     Object* lua_tographite(lua_State* L, int index) {
 	geo_debug_assert(lua_isgraphite(L,index));
 	return static_cast<GraphiteRef*>(
@@ -240,91 +119,26 @@ namespace {
 	)->object;
     }
 
-    /***************************************************/
 
-    /**
-     * \brief Converts a LUA value to a graphite value stored
-     *  in an Any.
-     * \param[in] L a pointer to the LUA state.
-     * \param[in] index the stack index of the LUA object to be converted.
-     * \param[out] result the result wrapped in an Any
-     * \param[in] mtype the optional desired metatype
-     */
-    void lua_tographiteval(
-	lua_State* L, int index, Any& result, MetaType* mtype
-    ) {
-
-	if(mtype != nullptr) {
-
-	    // Test arguments of type pointer to gom_class, and verify that it is
-	    // really an instance of a gom_class.
-	    if(Any::is_pointer_type(mtype)) {
-		mtype = Any::pointed_type(mtype);
-		if(dynamic_cast<MetaClass*>(mtype) != nullptr) {
-		    if(lua_isgraphite(L,index)) {
-			Object* object = lua_tographite(L,index);
-			result.set_value(object);
-			return;
-		    } else {
-			if(mtype == ogf_meta<OGF::Callable>::type()) {
-			    LuaCallable* lua_callable =
-				new LuaCallable(L, index);
-			    result.set_value(lua_callable);
-			    return;
-			} else {
-			    Logger::warn("GOMLua")
-				<< "Expected Object, got "
-				<< lua_tostring(L,index) << " instead"
-				<< std::endl;
-			    result.reset();
-			    return;
-			}
-		    }
-		}
-	    }
-	    if(GOMLua::lua_to_graphite_mat_vec(L, index, result, mtype)) {
-		return;
-	    }
+    bool lua_isgraphite(lua_State* L, int index) {
+	if(lua_islightuserdata(L,index)) {
+	    return false;
 	}
-
-	// Note: for boolean, number and string, we use
-	// lua_type(), because the lua_isxxx() functions
-	// test whether it can be converted into an xxx
-	// (instead of whether it is an xxx), misleading !
-
-	if(lua_isfunction(L,index)) {
-	    LuaCallable* lua_callable = new LuaCallable(L, index);
-	    result.set_value(lua_callable);
-	    return;
-	} else if(lua_islightuserdata(L,index)) {
-	    result.set_value(lua_touserdata(L,index));
-	    return;
-	} else if(lua_isgraphite(L,index)) {
-	    Object* object = lua_tographite(L,index);
-	    result.set_value(object);
-	    return;
-	} else if(lua_type(L,index) == LUA_TBOOLEAN) {
-	    result.set_value(lua_toboolean(L,index) != 0);
-	    return;
-	} else if(lua_type(L,index) == LUA_TNUMBER) {
-	    if(lua_isinteger(L,index)) {
-		// We convert to int because LUA integers are not
-		// registered to GOM.
-		result.set_value(int(lua_tointeger(L,index)));
-	    } else {
-		result.set_value(lua_tonumber(L,index));
-	    }
-	    return;
-	} else if(lua_type(L,index) == LUA_TSTRING) {
-	    result.set_value(std::string(lua_tostring(L,index)));
-	    return;
-	} else if(lua_isnil(L,index)) {
-	    result.reset();
-	    return;
+	if(!lua_isuserdata(L,index)) {
+	    return false;
 	}
-	result.reset();
+	lua_getmetatable(L,index);
+	lua_getfield(L,LUA_REGISTRYINDEX,"graphite_vtbl");
+	bool result = (lua_compare(L, -1, -2, LUA_OPEQ) != 0);
+	lua_pop(L,2);
+	return result;
     }
+    }
+}
 
+namespace {
+
+    /***************************************************/
 
     /**
      * \brief Tests whether an object in the Lua stack is a name-value table
@@ -425,121 +239,6 @@ namespace {
     }
 
     /**
-     * \brief Pushes a value on the LUA stack.
-     * \details The GOM meta type \p mtype is used to determine
-     *  the type of the LUA value pushed onto the stack.
-     * \param[in] L a pointer to the LUA state.
-     * \param[in] value the value represented by an Any
-     */
-    void lua_pushgraphiteval(lua_State* L, const Any& value) {
-
-	if(value.is_null()) {
-	    lua_pushnil(L);
-	    return;
-	}
-
-	MetaType* mtype = value.meta_type();
-
-        if(Any::is_pointer_type(mtype)) {
-            MetaType* mbasetype = Any::pointed_type(mtype);
-            if(dynamic_cast<MetaClass*>(mbasetype) != nullptr) {
-		Object* object = nullptr;
-		value.get_value(object);
-		lua_pushgraphite(L,object);
-		return;
-            } else {
-		void* ptr = nullptr;
-		value.get_value(ptr);
-		lua_pushlightuserdata(L,ptr);
-		return;
-	    }
-        }
-
-	if(mtype == ogf_meta<void>::type()) {
-	    lua_pushnil(L);
-	    return;
-	}
-
-	if(mtype == ogf_meta<bool>::type()) {
-	    bool val;
-	    value.get_value(val);
-	    lua_pushboolean(L, val ? 1 : 0);
-	    return;
-	}
-
-	if(mtype == ogf_meta<int>::type()) {
-	    int val;
-	    value.get_value(val);
-	    lua_pushinteger(L,lua_Integer(val));
-	    return;
-	}
-
-	if(mtype == ogf_meta<unsigned int>::type()) {
-	    unsigned int val;
-	    value.get_value(val);
-	    lua_pushinteger(L,lua_Integer(val));
-	    return;
-	}
-
-	if(mtype == ogf_meta<long>::type()) {
-	    long val;
-	    value.get_value(val);
-	    lua_pushinteger(L,lua_Integer(val));
-	    return;
-	}
-
-	if(mtype == ogf_meta<unsigned long>::type()) {
-	    unsigned long val;
-	    value.get_value(val);
-	    lua_pushinteger(L,lua_Integer(val));
-	    return;
-	}
-
-	if(mtype == ogf_meta<index_t>::type()) {
-	    index_t val;
-	    value.get_value(val);
-	    lua_pushinteger(L,lua_Integer(val));
-	    return;
-	}
-
-	if(mtype == ogf_meta<signed_index_t>::type()) {
-	    signed_index_t val;
-	    value.get_value(val);
-	    lua_pushinteger(L,lua_Integer(val));
-	    return;
-	}
-
-	if(mtype == ogf_meta<float>::type()) {
-	    float val;
-	    value.get_value(val);
-	    lua_pushnumber(L, lua_Number(val));
-	    return;
-	}
-
-	if(mtype == ogf_meta<double>::type()) {
-	    double val;
-	    value.get_value(val);
-	    lua_pushnumber(L, lua_Number(val));
-	    return;
-	}
-
-	if(mtype == ogf_meta<size_t>::type()) {
-	    size_t val;
-	    value.get_value(val);
-	    lua_pushnumber(L, lua_Number(val));
-	    return;
-	}
-
-	if(GOMLua::push_mat_vec(L, value)) {
-	    return;
-
-	}
-
-	std::string as_string = value.as_string();
-	lua_pushstring(L,as_string.c_str());
-    }
-
-    /**
      * \brief Implementation of __index() metamethod for graphite objects
      *  with array indexing.
      * \details Routes the call to get_element(index_t index) method of target
@@ -559,7 +258,7 @@ namespace {
 	    object->get_element(index,result);
 	} else {
 	    vec2i index;
-	    if(GOMLua::lua_to_graphite_vec2i(L,2,index)) {
+	    if(lua_to_graphite_vec2i(L,2,index)) {
 		object->get_element(
 		    index_t(index[0]), index_t(index[1]), result
 		);
@@ -584,7 +283,7 @@ namespace {
 	    vec2i index;
 	    if(
 		lua_type(L,2) == LUA_TNUMBER ||
-		GOMLua::lua_to_graphite_vec2i(L,2,index)
+		lua_to_graphite_vec2i(L,2,index)
 	    ) {
 		return graphite_array_index(L);
 	    } else {
@@ -678,7 +377,7 @@ namespace {
 	    object->set_element(index, value);
 	} else {
 	    vec2i index;
-	    if(GOMLua::lua_to_graphite_vec2i(L,2,index)) {
+	    if(lua_to_graphite_vec2i(L,2,index)) {
 		object->set_element(index_t(index[0]), index_t(index[1]), value);
 	    }
 	}
@@ -699,7 +398,7 @@ namespace {
 	    vec2i index;
 	    if(
 		lua_type(L,2) == LUA_TNUMBER ||
-		GOMLua::lua_to_graphite_vec2i(L,2,index)
+		lua_to_graphite_vec2i(L,2,index)
 	    ) {
 		return graphite_array_newindex(L);
 	    }
