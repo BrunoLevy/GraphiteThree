@@ -37,6 +37,8 @@
 #ifndef H_OGF_GOM_LUA_GRAPHITE_OBJECT_H
 #define H_OGF_GOM_LUA_GRAPHITE_OBJECT_H
 
+#include <OGF/gom/common/common.h>
+
 struct lua_State;
 
 namespace OGF {
@@ -44,6 +46,22 @@ namespace OGF {
     class Object;
 
     namespace GOMLua {
+
+	/**
+	 * \brief Representation of a pointer to a Graphite object
+	 *  in the LUA interpreter.
+	 * \details Contains a pointer to the Graphite object and a
+	 *  boolean that indicates whether reference counting should
+	 *  be done for the object. This is needed because the interpreter
+	 *  itself is a Graphite object, and is accessible through the "gom"
+	 *  global variable. If reference counting is enabled, then we got
+	 *  a circular reference that prevents the interpreter from being
+	 *  deallocated on exit.
+	 */
+	struct GraphiteRef {
+	    Object* object;
+	    bool managed;
+	};
 
 	/**
 	 * \brief Tests whether a LUA object is a graphite object.
