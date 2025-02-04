@@ -44,6 +44,7 @@ struct lua_State;
 namespace OGF {
 
     class Object;
+    class LuaInterpreter;
 
     namespace GOMLua {
 
@@ -102,6 +103,17 @@ namespace OGF {
 	void lua_pushgraphite(
 	    lua_State* L, Object* object, bool managed=true
 	);
+
+	/**
+	 * \brief Initializes the LUA state for graphite.
+	 * \details Registers GOM implementation functions,
+	 *  creates the metatables for graphite objects and
+	 *  graphite requests, and create the global table
+	 *  for LUA targets. The global tables are created in the
+	 *  registry.
+	 * \param[in] interpreter a pointer to the LuaInterpreter.
+	 */
+	void init_lua_graphite(LuaInterpreter* interpreter);
     }
 }
 
