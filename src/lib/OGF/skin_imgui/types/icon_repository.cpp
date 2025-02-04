@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 
 #include <OGF/skin_imgui/types/icon_repository.h>
 #include <OGF/basic/os/file_manager.h>
@@ -60,7 +60,7 @@ namespace {
 	    return false;
 	}
 	Memory::byte* p = image.pixel_base(index_t(x),index_t(y));
-	return (p[3] == 255); 
+	return (p[3] == 255);
     }
 
     /**
@@ -71,7 +71,7 @@ namespace {
 	if(has_color(image, int(x), int(y))) {
 	    return false;
 	}
-	for(int Y=int(y)-1; Y<int(y); ++Y) {	
+	for(int Y=int(y)-1; Y<int(y); ++Y) {
 	    for(int X=int(x)-1; X<int(x); ++X) {
 		if(has_color(image, X, Y)) {
 		    return true;
@@ -89,7 +89,7 @@ namespace {
 	FOR(y, image.height()) {
 	    FOR(x, image.width()) {
 		if(in_gutter(image, x, y)) {
-		    image.pixel_base(x,y)[3]=155;		    
+		    image.pixel_base(x,y)[3]=155;
 		}
 	    }
 	}
@@ -123,14 +123,14 @@ namespace OGF {
         const std::string& icon_name, GLuint gl_texture
     ) {
         if(icons_.find(icon_name) != icons_.end()) {
-            Logger::err("IconRepository") 
+            Logger::err("IconRepository")
                 << "Icon \'" << icon_name
                 << "\' is already bound"
                 << std::endl;
             return;
         }
 	Icon icon;
-	icon.im_texture_id = nullptr;
+	icon.im_texture_id = 0;
 	icon.gl_texture_id = gl_texture;
         icons_[icon_name] = icon;
     }
@@ -149,7 +149,7 @@ namespace OGF {
 	    image = ImageLibrary::instance()->load_image(icon_file_name);
 	    if(!image.is_null()) {
 		// Dammit, my png is flipped w.r.t. xpm (to be fixed)
-		image->flip_vertically(); 
+		image->flip_vertically();
 	    }
 	}
 	if(image.is_null()) {
@@ -160,33 +160,32 @@ namespace OGF {
 		image = ImageLibrary::instance()->load_image(icon_file_name);
 	    }
 	}
-	
+
         if(image.is_null()) {
 	    if(not_found_.find(icon_name) == not_found_.end()) {
-		Logger::err("IconRepository") 
+		Logger::err("IconRepository")
 		    << "Icon \'" << icon_file_name << "\' :"
 		    << "File not found"
 		    << std::endl;
 	    }
 	    not_found_.insert(icon_file_name);
             return resolve_icon("no_icon");
-	}	
+	}
 
 	process_background(*image);
-	
+
 	Texture texture;
 	texture.create_from_image(image, mipmap ? GL_LINEAR : GL_NEAREST);
-	
+
         IconRepository* non_const_this = const_cast<IconRepository*>(this);
         ogf_assert(non_const_this != nullptr );
         non_const_this->bind_icon(icon_name, texture.id());
 	// Ensure that texture's destructor will not deallocate OpenGL
 	// texture. Ownership is transferred to this IconRepository.
 	texture.reset_id();
-	
+
         it = icons_.find(icon_name);
         ogf_assert(it != icons_.end());
         return it->second.im_texture_id;
     }
 }
-
