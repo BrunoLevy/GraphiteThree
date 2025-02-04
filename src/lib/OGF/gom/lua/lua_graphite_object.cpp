@@ -59,7 +59,7 @@ namespace OGF {
 	 * \retval true if the object is a table and all keys are strings
 	 * \retval false otherwise
 	 */
-	bool is_namevaluetable(lua_State* L, int index) {
+	static bool is_namevaluetable(lua_State* L, int index) {
 	    if(!lua_istable(L,index)) {
 		return false;
 	    }
@@ -84,7 +84,7 @@ namespace OGF {
 	 *  that will be called. It is used to get argument names when using
 	 *  standard calls (without name-value pairs).
 	 */
-	void lua_tographiteargs(
+	static void lua_tographiteargs(
 	    lua_State* L, ArgList& args, int index, MetaMethod* method = nullptr
 	) {
 	    args.clear();
@@ -159,7 +159,7 @@ namespace OGF {
 	 * \param[in] L a pointer to the LUA state.
 	 * \return the number of LUA objects pushed onto the stack (here 1).
 	 */
-	int graphite_array_index(lua_State* L) {
+	static int graphite_array_index(lua_State* L) {
 	    geo_debug_assert(lua_isgraphite(L,1));
 	    Object* object = lua_tographite(L,1);
 	    if(object == nullptr) {
@@ -188,7 +188,7 @@ namespace OGF {
 	 * \param[in] L a pointer to the LUA state.
 	 * \return the number of LUA objects pushed onto the stack.
 	 */
-	int graphite_index(lua_State* L) {
+	static int graphite_index(lua_State* L) {
 	    geo_debug_assert(lua_isgraphite(L,1));
 
 	    if(lua_type(L,2) != LUA_TSTRING) {
@@ -273,7 +273,7 @@ namespace OGF {
 	 * \param[in] L a pointer to the LUA state.
 	 * \return the number of LUA objects pushed onto the stack (here 0).
 	 */
-	int graphite_array_newindex(lua_State* L) {
+	static int graphite_array_newindex(lua_State* L) {
 	    geo_debug_assert(lua_isgraphite(L,1));
 	    geo_debug_assert(lua_isinteger(L,2));
 	    Object* object = lua_tographite(L,1);
@@ -305,7 +305,7 @@ namespace OGF {
 	 * \param[in] L a pointer to the LUA state.
 	 * \return the number of LUA objects pushed onto the stack.
 	 */
-	int graphite_newindex(lua_State* L) {
+	static int graphite_newindex(lua_State* L) {
 	    geo_debug_assert(lua_isgraphite(L,1));
 
 	    {
@@ -347,7 +347,7 @@ namespace OGF {
 	 * \param[in] L a pointer to the LUA state.
 	 * \return the number of LUA objects pushed onto the stack (here 1).
 	 */
-	int graphite_array_len(lua_State* L) {
+	static int graphite_array_len(lua_State* L) {
 	    geo_debug_assert(lua_isgraphite(L,1));
 	    Object* object = lua_tographite(L,1);
 	    if(object == nullptr) {
@@ -362,7 +362,7 @@ namespace OGF {
 	 * \param[in] L a pointer to the LUA state.
 	 * \return the number of LUA objects pushed onto the stack.
 	 */
-	int graphite_gc(lua_State* L) {
+	static int graphite_gc(lua_State* L) {
 	    geo_debug_assert(lua_isgraphite(L,1));
 	    GraphiteRef* GR = static_cast<GraphiteRef*>(
 		lua_touserdata(L,1)
@@ -380,7 +380,7 @@ namespace OGF {
 	 * \param[in] L a pointer to the LUA state.
 	 * \return the number of LUA objects pushed onto the stack.
 	 */
-	int graphite_call(lua_State* L) {
+	static int graphite_call(lua_State* L) {
 	    if(!lua_isgraphite(L,1)) {
 		geo_assert_not_reached;
 	    }

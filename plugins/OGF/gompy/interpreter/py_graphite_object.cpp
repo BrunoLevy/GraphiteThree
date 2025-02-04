@@ -82,7 +82,7 @@ namespace OGF {
 	    self->array_struct = nullptr;
 	}
 
-	PyObject* graphite_Object_richcompare(
+	static PyObject* graphite_Object_richcompare(
 	    PyObject* self, PyObject* rhs, int op
 	) {
 	    geo_debug_assert(PyGraphite_Check(self));
@@ -123,13 +123,13 @@ namespace OGF {
 	    return pyresult;
 	}
 
-	Py_hash_t graphite_Object_hash(PyObject* self) {
+	static Py_hash_t graphite_Object_hash(PyObject* self) {
 	    geo_debug_assert(PyGraphite_Check(self));
 	    Object* object = PyGraphite_GetObject(self);
 	    return Py_hash_t(object);
 	}
 
-	PyObject* graphite_Object_getattro(
+	static PyObject* graphite_Object_getattro(
 	    PyObject* self, PyObject* name_in
 	) {
 	    geo_debug_assert(PyGraphite_Check(self));
@@ -199,7 +199,7 @@ namespace OGF {
 	}
 
 
-	int graphite_Object_setattro(
+	static int graphite_Object_setattro(
 	    PyObject* self, PyObject* name_in, PyObject* value
 	) {
 	    geo_debug_assert(PyGraphite_Check(self));
@@ -219,7 +219,7 @@ namespace OGF {
 	    return 0;
 	}
 
-	PyObject* graphite_str(PyObject* self) {
+	static PyObject* graphite_str(PyObject* self) {
 	    geo_debug_assert(PyGraphite_Check(self));
 	    Object* object = PyGraphite_GetObject(self);
 	    if(object == nullptr) {
@@ -309,7 +309,7 @@ namespace OGF {
 	    );
 	}
 
-	Py_ssize_t graphite_array_len(PyObject* self) {
+	static Py_ssize_t graphite_array_len(PyObject* self) {
 	    geo_debug_assert(PyGraphite_Check(self));
 	    Object* object = PyGraphite_GetObject(self);
 	    if(object == nullptr) {
@@ -320,7 +320,7 @@ namespace OGF {
 	    return Py_ssize_t(object->get_nb_elements());
 	}
 
-	PyObject* graphite_array_index(PyObject* self, PyObject* index) {
+	static PyObject* graphite_array_index(PyObject* self, PyObject* index) {
 	    geo_debug_assert(PyGraphite_Check(self));
 	    Object* object = PyGraphite_GetObject(self);
 	    Any result;
@@ -340,7 +340,7 @@ namespace OGF {
 	    return graphite_to_python(result);
 	}
 
-	int graphite_array_ass_index(
+	static int graphite_array_ass_index(
 	    PyObject* self, PyObject* index, PyObject* value_in
 	) {
 	    geo_debug_assert(PyGraphite_Check(self));
@@ -362,7 +362,7 @@ namespace OGF {
 	    return 0;
 	}
 
-	PyObject* graphite_dir_method(PyObject* self, PyObject* args_in) {
+	static PyObject* graphite_dir_method(PyObject* self, PyObject* args_in) {
 	    geo_argused(args_in);
 	    geo_debug_assert(PyGraphite_Check(self));
 	    Object* object = PyGraphite_GetObject(self);
@@ -431,7 +431,7 @@ namespace OGF {
 	/**
 	 * \brief Methods definition for Python wrapper around Graphite object.
 	 */
-	PyMethodDef graphite_Object_methods[] = {
+	static PyMethodDef graphite_Object_methods[] = {
 	    {
 		"__dir__",
 		graphite_dir_method,
@@ -447,7 +447,7 @@ namespace OGF {
 	};
 
 
-	PyObject* graphite_get_class(PyObject* self, void* closure) {
+	static PyObject* graphite_get_class(PyObject* self, void* closure) {
 	    geo_argused(closure);
 	    geo_debug_assert(PyGraphite_Check(self));
 	    Object* object = PyGraphite_GetObject(self);
@@ -456,7 +456,7 @@ namespace OGF {
 	    return result;
 	}
 
-	PyObject* graphite_get_bases(PyObject* self, void* closure) {
+	static PyObject* graphite_get_bases(PyObject* self, void* closure) {
 	    geo_argused(closure);
 	    geo_debug_assert(PyGraphite_Check(self));
 	    Object* object = PyGraphite_GetObject(self);
@@ -476,7 +476,7 @@ namespace OGF {
 	    return result;
 	}
 
-	PyObject* graphite_get_interfaces(PyObject* self, void* closure) {
+	static PyObject* graphite_get_interfaces(PyObject* self, void* closure) {
 	    geo_argused(closure);
 	    geo_debug_assert(PyGraphite_Check(self));
 	    Object* object = PyGraphite_GetObject(self);
@@ -487,7 +487,9 @@ namespace OGF {
 	    return result;
 	}
 
-	PyObject* graphite_get_array_struct(PyObject* self_in, void* closure) {
+	static PyObject* graphite_get_array_struct(
+	    PyObject* self_in, void* closure
+	) {
 	    geo_argused(closure);
 	    geo_debug_assert(PyGraphite_Check(self_in));
 	    graphite_Object* self = reinterpret_cast<graphite_Object*>(self_in);
@@ -571,7 +573,7 @@ namespace OGF {
 	 * \brief Methods definition for array access in
 	 *  Python wrapper around Graphite object.
 	 */
-	PyMappingMethods graphite_MappingMethods = {
+	static PyMappingMethods graphite_MappingMethods = {
 	    graphite_array_len,      /* mp_length */
 	    graphite_array_index,    /* mp_subscript */
 	    graphite_array_ass_index /* mp_ass_subscript */

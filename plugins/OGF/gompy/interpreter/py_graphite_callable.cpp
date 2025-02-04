@@ -40,7 +40,7 @@
 namespace OGF {
     namespace GOMPY {
 
-	PyGetSetDef graphite_Callable_getsets[] = {
+	static PyGetSetDef graphite_Callable_getsets[] = {
 	    {
 		const_cast<char*>("__doc__"),
 		graphite_get_doc,

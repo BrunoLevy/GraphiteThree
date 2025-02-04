@@ -41,7 +41,7 @@
 namespace OGF {
     namespace GOMPY {
 
-	PyObject* graphite_MetaClass_new(
+	static PyObject* graphite_MetaClass_new(
 	    PyTypeObject *type, PyObject *args, PyObject *kwds
 	) {
 	    geo_argused(args);
@@ -53,7 +53,7 @@ namespace OGF {
 	    return reinterpret_cast<PyObject*>(self);
 	}
 
-	void graphite_MetaClass_dealloc(PyObject* self_in) {
+	static void graphite_MetaClass_dealloc(PyObject* self_in) {
 	    geo_debug_assert(PyGraphiteMetaClass_Check(self_in));
 	    graphite_MetaClass* self =
 		reinterpret_cast<graphite_MetaClass*>(self_in);
