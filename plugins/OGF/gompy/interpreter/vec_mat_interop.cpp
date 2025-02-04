@@ -126,7 +126,7 @@ namespace {
     template<unsigned int N, class T> inline bool python_tographitevec(
 	PyObject* obj, Any& result, MetaType* mtype
     ) {
-	if(mtype != ogf_meta<::GEO::vecng<N,double> >::type()) {
+	if(mtype != ogf_meta<::GEO::vecng<N,T> >::type()) {
 	    return false;
 	}
 	::GEO::vecng<N,T> V;
