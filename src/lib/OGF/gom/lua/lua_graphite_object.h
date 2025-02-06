@@ -37,6 +37,11 @@
 #ifndef H_OGF_GOM_LUA_GRAPHITE_OBJECT_H
 #define H_OGF_GOM_LUA_GRAPHITE_OBJECT_H
 
+/**
+ * \file OGF/gom/lua/lua_graphite_object.h
+ * \brief Lua wrapper around a Graphite object.
+ */
+
 #include <OGF/gom/common/common.h>
 
 struct lua_State;

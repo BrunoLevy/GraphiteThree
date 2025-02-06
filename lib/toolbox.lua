@@ -74,11 +74,6 @@ function toolbox_gui.draw_window()
 	       autogui.tooltip(autogui.help(mclass))
 
 	       if mclass.nb_properties() > 7 then
-	          -- TODO: check whether mouse was clicked-down in render area
-		  -- (because for now, if we rotate 3D view and release over
-		  --  a tool, it activates the tool...)
-		  -- Note: but there is no problem because for now no tool has
-		  -- properties..
 		  if imgui.BeginPopupContextItem(tool_class_name.."##ops") then
 	             tools.tool(tool_class_name)
 		     autogui.properties_editor(tools.current())
