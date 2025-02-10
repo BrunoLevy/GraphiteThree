@@ -25,21 +25,21 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/scene_graph/types/geofile.h>
 
 namespace OGF {
-    
+
     /*************************************************************/
-    
+
     InputGraphiteFile::InputGraphiteFile(
         const std::string& filename
     ) : InputGeoFile(filename) {
@@ -50,7 +50,7 @@ namespace OGF {
         read_arg_list(args);
         check_chunk_size();
     }
-    
+
     void InputGraphiteFile::read_grob_header(ArgList& args) {
         geo_assert(current_chunk_class() == "GROB");
         read_arg_list(args);
@@ -69,17 +69,17 @@ namespace OGF {
         check_chunk_size();
     }
 
-    
+
     void InputGraphiteFile::read_arg_list(ArgList& args) {
         args.clear();
-        index_t nb_args = read_int();
+        index_t nb_args = read_index_t_32();
         for(index_t i=0; i<nb_args; ++i) {
             std::string arg_name = read_string();
             std::string arg_value = read_string();
             args.create_arg(arg_name, arg_value);
         }
     }
-    
+
     /*************************************************************/
 
     OutputGraphiteFile::OutputGraphiteFile(
@@ -101,7 +101,7 @@ namespace OGF {
         write_arg_list(args);
         check_chunk_size();
     }
-    
+
     void OutputGraphiteFile::write_grob_header(const ArgList& args) {
         write_chunk_header("GROB", arg_list_size(args));
         write_arg_list(args);
@@ -113,15 +113,15 @@ namespace OGF {
         write_arg_list(args);
         check_chunk_size();
     }
-    
+
     void OutputGraphiteFile::write_arg_list(const ArgList& args) {
-        write_int(args.nb_args(), "the number of name-value pairs");
+        write_index_t_32(args.nb_args(), "the number of name-value pairs");
         for(index_t i=0; i<args.nb_args(); ++i) {
             write_string(args.ith_arg_name(i));
             write_string(args.ith_arg_value(i).as_string());
         }
     }
-    
+
     size_t OutputGraphiteFile::arg_list_size(const ArgList& args) const {
         size_t result = sizeof(index_t);
         for(index_t i=0; i<args.nb_args(); ++i) {
@@ -131,7 +131,7 @@ namespace OGF {
         return result;
     }
 
-    
-    
-    /*************************************************************/    
+
+
+    /*************************************************************/
 }
