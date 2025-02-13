@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 #include <OGF/renderer/context/rendering_context.h>
 #include <OGF/basic/math/geometry.h>
 
@@ -49,7 +49,7 @@ namespace {
     using namespace OGF;
 
     /**
-     * \brief Converts a C string (returned by OpenGL) 
+     * \brief Converts a C string (returned by OpenGL)
      *  into a std::string.
      * \param[in] str the C null-terminated string.
      * \return a std::string with the same content as \p str.
@@ -67,7 +67,7 @@ namespace OGF {
     RenderingContext* RenderingContext::current_ = nullptr;
     index_t RenderingContext::nb_render_locks_ = 0;
     index_t RenderingContext::nb_picking_locks_ = 0;
-    
+
     RenderingContext::RenderingContext(GLUPcontext glup_context) {
         initialized_ = false;
         width_ = 0;
@@ -87,7 +87,7 @@ namespace OGF {
         clipping_mode_=GLUP_CLIP_STRADDLING_CELLS;
 
 	transparent_ = CmdLine::get_arg_bool("gfx:transparent");
-	
+
 	if(transparent_) {
 	    background_color_ = Color(0.0, 0.0, 0.0, 0.0);
 	    background_color_2_ = Color(0.0, 0.0, 0.0, 0.0);
@@ -95,7 +95,7 @@ namespace OGF {
 	    background_color_ = Color(0.0, 0.0, 0.0, 1.0);
 	    background_color_2_ = Color(0.0, 0.0, 0.0, 1.0);
 	}
-        
+
         perspective_ = true;
         stereo_ = false;
         stereo_odd_frame_ = false;
@@ -106,7 +106,7 @@ namespace OGF {
         picking_mode_ = false;
         picked_id_ = index_t(-1);
         picked_background_ = false;
-        
+
         get_view_parameters();
 
         frame_buffer_id_init_ = false;
@@ -128,7 +128,7 @@ namespace OGF {
             glup_context_ = nullptr;
         }
     }
-    
+
     bool RenderingContext::is_currently_rendering() {
         return (nb_render_locks_ > 0);
     }
@@ -136,11 +136,11 @@ namespace OGF {
     bool RenderingContext::is_currently_picking() {
         return (nb_picking_locks_ > 0);
     }
-    
+
     void RenderingContext::set_double_buffer(bool b) {
         double_buffer_ = b;
     }
-    
+
     const Color& RenderingContext::background_color() const {
         return background_color_;
     }
@@ -190,7 +190,7 @@ namespace OGF {
             ptr, color_encoding, component_encoding, width, height
         );
     }
-    
+
     void RenderingContext::make_current() {
         current_ = this;
         if(glup_context_ == nullptr) {
@@ -202,7 +202,7 @@ namespace OGF {
     void RenderingContext::done_current() {
         current_ = nullptr;
     }
-    
+
     void RenderingContext::swap_buffers() {
         // Base class implementation does nothing.
     }
@@ -212,33 +212,41 @@ namespace OGF {
         check_gl();
         return convert_string(str);
     }
-    
+
     std::string RenderingContext::gl_renderer() const {
         const GLubyte* str = glGetString(GL_RENDERER);
         check_gl();
         return convert_string(str);
     }
-    
+
     std::string RenderingContext::gl_version() const {
         const GLubyte* str = glGetString(GL_VERSION);
         check_gl();
         return convert_string(str);
     }
-    
+
     std::string RenderingContext::gl_extensions() const {
-        const GLubyte* str = glGetString(GL_EXTENSIONS);
-        check_gl();
-        return convert_string(str);
+	std::string result;
+	GLint n = 0;
+	glGetIntegerv(GL_NUM_EXTENSIONS, &n);
+	for(GLint i=0; i<n; ++i) {
+	    const char* extension = (const char*)glGetStringi(
+		GL_EXTENSIONS, GLuint(i)
+	    );
+	    result += extension;
+	    result += ";";
+	}
+	return result;
     }
 
     std::string RenderingContext::get_gpu_information() const {
         return gl_renderer() + ":" + gl_version() + ":" + gl_vendor();
     }
-    
+
     std::string RenderingContext::get_gpu_extensions() const {
-        return gl_extensions();        
+        return gl_extensions();
     }
-    
+
     void RenderingContext::set_full_screen_effect(FullScreenEffectImpl* fse) {
         full_screen_effect_ = fse;
     }
@@ -295,7 +303,7 @@ namespace OGF {
 
     mat4 RenderingContext::projection_matrix() const {
         static double d[16];
-        glupGetMatrixdv(GLUP_PROJECTION_MATRIX, d);            
+        glupGetMatrixdv(GLUP_PROJECTION_MATRIX, d);
         mat4 result;
         index_t k = 0;
         for(index_t i=0; i<4; i++) {
@@ -308,13 +316,13 @@ namespace OGF {
     }
 
     void RenderingContext::set_lighting_matrix(const mat4& m) {
-        lighting_matrix_ = m;        
+        lighting_matrix_ = m;
     }
 
     const mat4& RenderingContext::lighting_matrix() const {
-        return lighting_matrix_;        
+        return lighting_matrix_;
     }
-    
+
     bool RenderingContext::get_clipping() const {
         return clipping_;
     }
@@ -322,7 +330,7 @@ namespace OGF {
     void RenderingContext::set_clipping(bool x) {
         clipping_ = x;
     }
-    
+
     mat4 RenderingContext::clipping_matrix() const {
         return clipping_matrix_;
     }
@@ -370,17 +378,17 @@ namespace OGF {
         if(height == 0) {
             height = get_height();
         }
-        
+
         if(image->base_mem() == nullptr) {
             image->initialize(
                 Image::RGB, Image::BYTE, width, height
             );
         }
-        
+
         width  = std::min(image->width(),  get_width()-x0);
         height = std::min(image->height(), get_height()-y0);
 
-        glPixelStorei(GL_PACK_ALIGNMENT, 1); 
+        glPixelStorei(GL_PACK_ALIGNMENT, 1);
         glPixelStorei(GL_PACK_ROW_LENGTH, int(image->width()));
 
         if(image->component_encoding() != Image::BYTE) {
@@ -438,16 +446,16 @@ namespace OGF {
         );
     }
 
-    
+
     void RenderingContext::draw_background(){
-        glupDisable(GLUP_LIGHTING);            
-        
+        glupDisable(GLUP_LIGHTING);
+
         if(picking_mode_) {
             glClearColor(1.0, 1.0, 1.0, 1.0);
             glClear((GLbitfield)(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT));
             return;
         }
-        
+
         if(background_texture() == nullptr) {
             if(is_same_color(background_color(), background_color_2())) {
                 glClearColor(
@@ -475,9 +483,9 @@ namespace OGF {
                 glupVertex3f(  1.0f, 1.0f,z);
                 glupVertex3f( -1.0f, 1.0f,z);
                 glupEnd();
-                glupDisable(GLUP_VERTEX_COLORS);                    
+                glupDisable(GLUP_VERTEX_COLORS);
 
-                glEnable(GL_DEPTH_TEST); 
+                glEnable(GL_DEPTH_TEST);
                 // TODO: this triggers a FPE with some drivers,
                 // to be investigated. Maybe it's no longer the
                 // case with new management of ModelView and Project.
@@ -502,15 +510,15 @@ namespace OGF {
 
             float h = 1.0;
             float w = 1.0;
-           
+
             if(width_ > height_) {
                h = float(height_) / float(width_);
             } else {
                w = float(width_) / float(height_);
             }
 
-            glupTextureMode(GLUP_TEXTURE_REPLACE);            
-            background_texture()->bind();            
+            glupTextureMode(GLUP_TEXTURE_REPLACE);
+            background_texture()->bind();
             glupBegin(GLUP_QUADS);
             glupTexCoord2f(0.0f,0.0f);
             glupVertex3f(-w,-h,z);
@@ -521,7 +529,7 @@ namespace OGF {
             glupTexCoord2f(0.0f,1.0f);
             glupVertex3f( -w, h,z);
             glupEnd();
-            
+
             glEnable(GL_DEPTH_TEST);
             background_texture_->unbind();
         }
@@ -533,13 +541,13 @@ namespace OGF {
 	//   This may change the frame buffer, thus we will
 	// query it again next time it is needed.
 	frame_buffer_id_init_ = false;
-	
+
         int w_width = int(w);
         int w_height = int(h);
-        
+
         set_width(w);
         set_height(h);
-        
+
         if(w_width > w_height) {
             viewport_x_ = 0;
             viewport_y_ = -(w_width - w_height) / 2;
@@ -560,7 +568,7 @@ namespace OGF {
         double x_ndc =
             double(x -  viewport_x_) * 2.0 /
             double( viewport_width_) - 1.0;
-        
+
         double y_ndc =
             double(y -  viewport_y_) * 2.0 /
             double( viewport_height_) - 1.0;
@@ -578,13 +586,13 @@ namespace OGF {
         x_screen /= 2.0;
         x_screen += viewport_x_;
 
-        double y_screen = (y_ndc + 1.0) * double(viewport_height_); 
+        double y_screen = (y_ndc + 1.0) * double(viewport_height_);
         y_screen /= 2.0;
         y_screen += viewport_y_;
 
         ogf_clamp(x_screen, 0.0, double(get_width()-1));
-        ogf_clamp(y_screen, 0.0, double(get_height()-1));        
-        
+        ogf_clamp(y_screen, 0.0, double(get_height()-1));
+
         x = index_t(x_screen);
         y = index_t(y_screen);
     }
@@ -592,13 +600,13 @@ namespace OGF {
 
     void RenderingContext::begin_picking(const vec2& ndc) {
         geo_assert(!picking_mode_);
-        
+
         //   The first frame that is in picking mode increments
         // nb_picking_locks_.
         if(!last_frame_was_picking_) {
             ++nb_picking_locks_;
         }
-        
+
         picking_mode_ = true;
         picked_ndc_ = ndc;
         picked_id_ = index_t(-1);
@@ -620,7 +628,7 @@ namespace OGF {
         );
         glDisable(GL_SCISSOR_TEST);
     }
-    
+
     void RenderingContext::setup_projection_ortho(
         double zNear, double zFar
     ) {
@@ -629,7 +637,7 @@ namespace OGF {
         double x = 1.0;
         double y = 1.0;
         glupOrtho(-x, x, -y, y, zNear, zFar);
-        glupMatrixMode(GLUP_MODELVIEW_MATRIX);        
+        glupMatrixMode(GLUP_MODELVIEW_MATRIX);
         check_gl();
     }
 
@@ -638,32 +646,32 @@ namespace OGF {
     void RenderingContext::setup_projection_perspective(
         double zScreen, double zNear, double zFar, double eye_offset
     ) {
-        // field of view of the larger dimension in degrees        
-        double camera_aperture = 9.0;  
+        // field of view of the larger dimension in degrees
+        double camera_aperture = 9.0;
 
         glupMatrixMode(GLUP_PROJECTION_MATRIX);
         glupLoadIdentity();
 
         const double DTR=0.0174532925; // degrees to radians
-            
+
         // half the width of the screen from the central point of view
-        double view_half_max_size = zScreen * tan((camera_aperture/2) * DTR);  
-        
+        double view_half_max_size = zScreen * tan((camera_aperture/2) * DTR);
+
         double top =   view_half_max_size;
         double right = view_half_max_size;
-        
+
         // headtracking_ratio = view_half_max_size / (x_screen_size/2.0);
         headtracking_ratio = 3.5/900.0;
         // TODO why ? this value does not make sense, but it works well...
 
         double c_tilt = cos(head_tilt_);
         double s_tilt = sin(head_tilt_);
-        
+
         // shift of the view from the current point of view
         double eye_shift = eye_offset * zNear / zScreen;
         double x_eye_shift =  eye_shift*c_tilt;
         double y_eye_shift = -eye_shift*s_tilt;
-        
+
         // TODO the screen/viewport size and ratio
         // need to be taken into account when computing head shift
         double x_head_shift =
@@ -683,28 +691,28 @@ namespace OGF {
             float(-eye_offset*c_tilt), float(eye_offset*s_tilt), 0.0f
         );
         glupMatrixMode(GLUP_MODELVIEW_MATRIX);
-        check_gl(); 
+        check_gl();
     }
 
-    
+
     void RenderingContext::setup_modelview(double zScreen) {
 
         glupEnable(GLUP_LIGHTING);
         glupMatrixMode(GLUP_MODELVIEW_MATRIX);
         glupLoadIdentity();
-        
+
         GLfloat light_position[4];
         vec3 light = transform_vector(
             vec3(1.0, 1.0, 4.0), lighting_matrix_
         );
-        
+
         light_position[0] = float(light.x);
         light_position[1] = float(light.y);
         light_position[2] = float(light.z);
         light_position[3] = 0.0f;
-        
+
         glupLightVector3fv(light_position);
-        
+
         double x_translation = head_position_.x*headtracking_ratio;
         double y_translation = head_position_.y*headtracking_ratio;
         double z_translation = -zScreen;
@@ -713,10 +721,10 @@ namespace OGF {
             float(-y_translation),
             float(z_translation)
         );
-        
+
         // apply the rotation/pan/zoom matrix
         glupMultMatrixd(convert_matrix(viewing_matrix()));
-        
+
         check_gl();
     }
 
@@ -729,7 +737,7 @@ namespace OGF {
         glPolygonOffset (1.,1.);
         check_gl();
     }
-   
+
 
     void RenderingContext::begin_frame() {
         ++nb_render_locks_;
@@ -745,7 +753,7 @@ namespace OGF {
         }
 
         glClear((GLbitfield)(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-        
+
         if(
             !picking_mode_ &&
             !full_screen_effect_.is_null() &&
@@ -753,13 +761,13 @@ namespace OGF {
         ) {
             full_screen_effect_->pre_render(get_width(), get_height());
         }
-        
+
         // half of the distance between the eyes, if in stereo mode
         double eye_offset = stereo_eye_dist_;
 
         //TODO try to avoid very intense perspective effects when zooming
         double scaling = viewing_matrix()(3,3);
-        
+
         double zNear = 1.0;        // near clipping plane
         double zFar = 8.0;         // far clipping plane
         double zScreen = 3.5;      // screen projection plane
@@ -836,11 +844,11 @@ namespace OGF {
 
         return result;
     }
-    
+
     void RenderingContext::end_frame() {
 
         glupDisable(GLUP_CLIPPING);
-	
+
         {
             if(!picking_mode_) {
                 bool opaque = (
@@ -876,7 +884,7 @@ namespace OGF {
         }
 
         check_gl();
-	
+
         //   In picking mode, get the picked object by decoding
         // the color (R,G,B,A contain the bytes of a 32bit integer),
         // and transform the picked point into world space.
@@ -890,37 +898,37 @@ namespace OGF {
             last_frame_was_picking_ = false;
             --nb_picking_locks_;
         }
-        
+
         --nb_render_locks_;
     }
-    
+
 //___________________________________________________________________________
 
     void RenderingContext::get_picked_point() {
         index_t x,y;
         ndc_to_screen(picked_ndc_, x, y);
-        
+
         if(x >= get_width() || y >= get_height()) {
             picked_id_ = index_t(-1);
         }  else {
             // TODO: why do we need to change orientation here ?
-            y = get_height()-1-y; 
-            
+            y = get_height()-1-y;
+
             //   This flushes all the rendering commands before reading the
             // pixels. This is probably unneeded, since glReadPixels() is
             // supposed to do that, but it seems to be dependent on the
             // actual implementation of OpenGL. This could be done also
             // with glFLush(); glFinish();
             //   Since it is not harmful, I keep it there...
-            
+
             done_current();
 	    glFlush();
 	    glFinish();
-            make_current();                
-	    
+            make_current();
+
             // Read the color of the pixel under the mouse pointer
             Memory::byte pixel[4];
-            glPixelStorei(GL_PACK_ALIGNMENT, 1); 
+            glPixelStorei(GL_PACK_ALIGNMENT, 1);
             glPixelStorei(GL_PACK_ROW_LENGTH, 1);
             glReadPixels(
                 GLint(x),GLint(y),1,1,GL_RGBA,GL_UNSIGNED_BYTE,pixel
@@ -939,11 +947,11 @@ namespace OGF {
 
             // Transform the picked point into world space.
             picked_point_ = unproject(picked_ndc_, picked_depth_);
-            
+
             //  If depth buffer coordinate is 1, then we did hit the
             // background.
             picked_background_ = (picked_depth_ == 1.0);
-                
+
             // Decode the picked id from the pixel's color
             picked_id_ =
                 index_t(pixel[0])        |
@@ -952,9 +960,9 @@ namespace OGF {
                 (index_t(pixel[3]) << 24);
         }
     }
-    
+
 //___________________________________________________________________________
-    
+
     void RenderingContext::get_view_parameters() {
         perspective_ = false;
         stereo_ = false;
@@ -1028,7 +1036,7 @@ namespace OGF {
                 error_string = "code " + String::to_string(error_code);
                 break;
             }
-            
+
             Logger::err("RenderingContext")
                 << "There were OpenGL errors: "
                 << error_string
@@ -1048,7 +1056,7 @@ namespace OGF {
             }
         }
     }
-    
+
 /**************************************************************************/
-    
+
 }
