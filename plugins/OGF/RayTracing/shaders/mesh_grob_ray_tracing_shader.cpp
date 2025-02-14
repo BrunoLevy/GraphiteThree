@@ -86,10 +86,15 @@ namespace OGF {
 	 * \details Creates an attribute ith per-corner single-precision
 	 *  coordinates, used by TinyBVH internally.
 	 */
-	BVH(MeshGrob& M) : M_(M) {
-	    points_vec4_.create_vector_attribute(
-		M.facet_corners.attributes(), "point_vec4", 4
+	BVH(Mesh& M) : M_(M) {
+	    points_vec4_.bind_if_is_defined(
+		M.facet_corners.attributes(), "point_vec4"
 	    );
+	    if(!points_vec4_.is_bound()) {
+		points_vec4_.create_vector_attribute(
+		    M.facet_corners.attributes(), "point_vec4", 4
+		);
+	    }
 	    for(index_t c: M.facet_corners) {
 		index_t v = M.facet_corners.vertex(c);
 		vec3 p(M.vertices.point_ptr(v));
@@ -338,8 +343,8 @@ namespace OGF {
 		// Add tiny displacement because my ray-AABB test is
 		// broken for some degenerate configs (to be fixed).
 		// HERE
-		double x = double(X) + 1e-5;
-		double y = double(Y) + 1e-5;
+		double x = double(X) + 1e-2*Numeric::random_float64();
+		double y = double(Y) + 1e-2*Numeric::random_float64();
 		double z = double(
 		    *background_depth_->pixel_base_float32_ptr(X,Y)
 		);
@@ -380,6 +385,8 @@ namespace OGF {
 	}
 	background_mesh_.vertices.remove_isolated();
 	background_mesh_AABB_.initialize(background_mesh_);
+	delete background_mesh_bvh_;
+	background_mesh_bvh_ = new BVH(background_mesh_);
     }
 
     void RayTracingMeshGrobShader::do_save_background() {
@@ -778,7 +785,17 @@ namespace OGF {
 	r.origin -= 1e-6*r.direction;
 	vec3 result(0.0, 0.0, 0.0);
 	MeshFacetsAABB::Intersection I;
-	if(background_mesh_AABB_.ray_nearest_intersection(r, I)) {
+
+	bool has_intersection = false;
+	if(use_tinybvh_) {
+	    has_intersection =
+		background_mesh_bvh_->ray_nearest_intersection(r, I);
+	} else {
+	    has_intersection =
+		background_mesh_AABB_.ray_nearest_intersection(r, I);
+	}
+
+	if(has_intersection) {
 	    result.x =
 		(1.0 - I.u - I.v) * background_mesh_color_[3*I.i] +
 		I.u               * background_mesh_color_[3*I.j] +
