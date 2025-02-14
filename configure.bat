@@ -65,7 +65,18 @@ if not exist "build\Windows%buildNameSuffix%" (
 
 cd build\Windows%buildNameSuffix%
 
-"%ProgramFiles%\cmake\bin\cmake.exe" ..\.. ^
+REM ----------------------------------------------------------------
+REM If cmake.exe is in path, use it.
+REM Otherwise, use fallback location.
+REM ----------------------------------------------------------------
+WHERE cmake.exe >nul 2>nul
+IF %ERRORLEVEL% NEQ 0 (
+    set "cMakeCommand=%ProgramFiles%\cmake\bin\cmake.exe"
+) else (
+    set "cMakeCommand=cmake"
+)
+
+"%cmakeCommand%" ..\.. ^
  -DVORPALINE_PLATFORM:STRING=Win-vs-dynamic-generic ^
  -DWHERE_ARE_PYTHON_INCLUDES="%WHERE_ARE_PYTHON_INCLUDES%" ^
  -DWHERE_IS_PYTHON_LIB="%WHERE_IS_PYTHON_LIB%"
