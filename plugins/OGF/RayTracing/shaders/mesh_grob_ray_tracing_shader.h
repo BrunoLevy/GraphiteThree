@@ -231,6 +231,14 @@ namespace OGF {
 	    show_stats_ = x;
 	}
 
+	bool get_tinybvh() const {
+	    return use_tinybvh_;
+	}
+
+	void set_tinybvh(bool x) {
+	    use_tinybvh_ = x;
+	    update();
+	}
 
     gom_slots:
 	/**
@@ -418,6 +426,11 @@ namespace OGF {
 	bool save_background_queued_;
 
 	bool show_stats_;
+
+	class BVH;
+	bool use_tinybvh_;
+	BVH* bvh_;
+	BVH* background_mesh_bvh_;
     };
 }
 

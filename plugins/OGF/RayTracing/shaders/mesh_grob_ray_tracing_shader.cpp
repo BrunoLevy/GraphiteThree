@@ -40,12 +40,143 @@
 
 
 #include <OGF/RayTracing/shaders/mesh_grob_ray_tracing_shader.h>
+
 #include <OGF/renderer/context/rendering_context.h>
 #include <OGF/gom/interpreter/interpreter.h>
+
 #include <geogram/mesh/mesh_geometry.h>
 #include <geogram/mesh/mesh_io.h>
 #include <geogram/image/image_library.h>
 #include <geogram/basic/stopwatch.h>
+
+#define NO_DOUBLE_PRECISION_SUPPORT
+#define NO_INDEXED_GEOMETRY
+#define NO_CUSTOM_GEOMETRY
+
+#ifdef __GNUC__
+#ifndef __ICC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Wdouble-promotion"
+#pragma GCC diagnostic ignored "-Wconversion"
+#pragma GCC diagnostic ignored "-Wpedantic"
+#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
+#endif
+#endif
+
+#define TINYBVH_IMPLEMENTATION
+#include <OGF/RayTracing/third_party/tiny_bvh.h>
+
+#ifdef __GNUC__
+#ifndef __ICC
+#pragma GCC diagnostic pop
+#endif
+#endif
+
+namespace OGF {
+
+    /**
+     * \brief A wrapper around TinyBVH with an AABB-like interface
+     */
+    class RayTracingMeshGrobShader::BVH {
+    public:
+	/**
+	 * \brief BVH constructor
+	 * \param[in] M a surface mesh
+	 * \details Creates an attribute ith per-corner single-precision
+	 *  coordinates, used by TinyBVH internally.
+	 */
+	BVH(MeshGrob& M) : M_(M) {
+	    points_vec4_.create_vector_attribute(
+		M.facet_corners.attributes(), "point_vec4", 4
+	    );
+	    for(index_t c: M.facet_corners) {
+		index_t v = M.facet_corners.vertex(c);
+		vec3 p(M.vertices.point_ptr(v));
+		points_vec4_[4*c] = float(p.x);
+		points_vec4_[4*c+1] = float(p.y);
+		points_vec4_[4*c+2] = float(p.z);
+		points_vec4_[4*c+3] = 0.0f;
+	    }
+	    impl_.Build( // or BuildHQ
+		(tinybvh::bvhvec4*)(points_vec4_.data()),
+		M.facets.nb()
+	    );
+	    // impl_.optimize();
+	}
+
+	/**
+	 * \brief Computes the nearest intersection around a ray
+	 * \param[in] R a ray
+	 * \param[out] I the intersection if it exists
+	 * \retval true if there was an intersection
+	 * \retval false otherwise
+	 */
+	bool ray_nearest_intersection(
+	    const Ray& R, MeshFacetsAABB::Intersection& I
+	) const {
+	    vec3 o = R.origin;
+	    vec3 d = R.direction;
+	    tinybvh::Ray ray(
+		tinybvh::bvhvec3(float(o.x), float(o.y), float(o.z)),
+		tinybvh::bvhvec3(float(d.x), float(d.y), float(d.z)),
+		1e30f
+	    );
+	    impl_.Intersect(ray);
+	    if(ray.hit.t >= 10000.0f) {
+		return false;
+	    }
+	    I.t = double(ray.hit.t);
+	    I.f = ray.hit.prim;
+	    I.i = M_.facets.vertex(I.f, 0);
+	    I.j = M_.facets.vertex(I.f, 1);
+	    I.k = M_.facets.vertex(I.f, 2);
+	    I.u = double(ray.hit.u);
+	    I.v = double(ray.hit.v);
+	    double w = 1.0 - I.u - I.v;
+	    I.p = w * vec3(M_.vertices.point_ptr(I.i)) +
+		I.u * vec3(M_.vertices.point_ptr(I.j)) +
+		I.v * vec3(M_.vertices.point_ptr(I.k)) ;
+	    // Alternative: less precise, less recommended
+	    // I.p = R.origin + I.t * normalize(R.direction);
+	    return true;
+	}
+
+	/**
+	 * \brief Tests whether a ray is in the shadow
+	 * \param[in] R the ray to be tested
+	 * \retval true if there exists an intersection along the ray
+	 *   with t \in [0.0, 1.0]
+	 * \retval false otherwise
+	 */
+	bool ray_is_in_shadow(const Ray& R) const {
+	    vec3 o = R.origin;
+	    vec3 d = R.direction;
+	    tinybvh::Ray ray(
+		tinybvh::bvhvec3(float(o.x), float(o.y), float(o.z)),
+		tinybvh::bvhvec3(float(d.x), float(d.y), float(d.z)),
+		1e30f
+	    );
+	    return impl_.IsOccluded(ray);
+	}
+
+	/**
+	 * \brief Adds a small offset to the origin of a ray to avoid
+	 *  detecting an intersection with the surface it just left
+	 * \param[in] I the previous intersection
+	 * \param[in,out] R the ray to be modified
+	 */
+	void tweak_ray_origin(const MeshFacetsAABB::Intersection& I, Ray& R) {
+	    geo_argused(I);
+	    R.origin += 1e-4 * normalize(R.direction);
+	}
+
+    private:
+	Mesh& M_;
+	tinybvh::BVH4_CPU impl_;
+	Attribute<float> points_vec4_;
+    };
+}
 
 namespace OGF {
 
@@ -56,6 +187,10 @@ namespace OGF {
 	texture_(0),
 	AABB_(*grob)
     {
+	use_tinybvh_ = false;
+	bvh_ = nullptr;
+	background_mesh_bvh_ = nullptr;
+
 	// AABB changed facet order, need to notify
 	mesh_grob()->update();
 
@@ -128,6 +263,8 @@ namespace OGF {
 	show_stats_ = false;
 
 	core_color_ = Color(0.0, 0.0, 0.0, 1.0);
+
+	bvh_ = new BVH(*mesh_grob());
     }
 
     RayTracingMeshGrobShader::~RayTracingMeshGrobShader() {
@@ -135,6 +272,8 @@ namespace OGF {
 	    glDeleteTextures(1, &texture_);
 	    texture_ = 0;
 	}
+	delete bvh_;
+	delete background_mesh_bvh_;
     }
 
     void RayTracingMeshGrobShader::draw() {
@@ -417,24 +556,31 @@ namespace OGF {
 
     void RayTracingMeshGrobShader::raytrace() {
 	Stopwatch W("Raytracing", show_stats_);
-	parallel_for(0, image_->height(),
-	   [this](index_t Y) {
-		FOR(X, image_->width()) {
-		    if(supersampling_ <= 1) {
-			set_pixel(X, Y, raytrace_pixel(double(X), double(Y)));
-		    } else {
-			vec4 color(0.0, 0.0, 0.0, 0.0);
-			for(index_t i=0; i<supersampling_; ++i) {
-			    color += raytrace_pixel(
-				double(X) + (Numeric::random_float64() - 0.5),
-				double(Y) + (Numeric::random_float64() - 0.5)
-			    );
-			}
-			color /= double(supersampling_);
-			set_pixel(X, Y, color);
-		    }
-		}
-	    }
+	// Raytrace, parallel threads in image stripes,
+	// by blocs of 4x4 pixels (better for locality)
+
+	static constexpr index_t BLOC = 4;
+
+	parallel_for(0, image_->height()/BLOC,
+	   [this](index_t YY) {
+	       FOR(XX, image_->width()/BLOC) {
+	       for(index_t Y = YY*BLOC; Y < YY*BLOC+BLOC; ++Y)
+	       for(index_t X = XX*BLOC; X < XX*BLOC+BLOC; ++X)
+		   if(supersampling_ <= 1) {
+		       set_pixel(X, Y, raytrace_pixel(double(X), double(Y)));
+		   } else {
+		       vec4 color(0.0, 0.0, 0.0, 0.0);
+		       for(index_t i=0; i<supersampling_; ++i) {
+			   color += raytrace_pixel(
+			       double(X) + (Numeric::random_float64() - 0.5),
+			       double(Y) + (Numeric::random_float64() - 0.5)
+			   );
+		       }
+		       color /= double(supersampling_);
+		       set_pixel(X, Y, color);
+		   }
+	       }
+	   }
 	);
 	if(show_stats_) {
 	    index_t pixels = image_->width() * image_->height();
@@ -476,19 +622,37 @@ namespace OGF {
 	}
 
 	MeshFacetsAABB::Intersection I;
-	if(AABB_.ray_nearest_intersection(ray, I)) {
+	bool has_isect = false;
+	if(use_tinybvh_) {
+	    has_isect = bvh_->ray_nearest_intersection(ray, I);
+	} else {
+	    has_isect = AABB_.ray_nearest_intersection(ray, I);
+	}
+
+	if(has_isect) {
 	    color = vec4(0.0, 0.0, 0.0, 1.0 - transp_);
-	    bool in_shadow = shadows_ && AABB_.ray_intersection(
-		Ray(I.p,L_), Numeric::max_float64(), I.f
-	    );
+	    bool in_shadow = false;
+
+
+	    if(shadows_) {
+		if(use_tinybvh_) {
+		    Ray r(I.p, L_); // Ray(I.p + 1e-3*facet_normal_[I.f], L_)
+		    bvh_->tweak_ray_origin(I, r);
+		    in_shadow = bvh_->ray_is_in_shadow(r);
+		} else {
+		    in_shadow = AABB_.ray_intersection(
+			Ray(I.p,L_), Numeric::max_float64(), I.f
+		    );
+		}
+	    }
 
 	    vec3 Kr(0.0, 0.0, 0.0);
 	    vec3 Ks(0.0, 0.0, 0.0);
 	    double spec=0.0;
 
-	    compute_normal(I);
-
 	    if(!in_shadow) {
+		compute_normal(I);
+
 		double diff = std::max(0.0, dot(L_,I.N));
 		diff = std::min(diff, 1.0);
 
@@ -593,7 +757,15 @@ namespace OGF {
 	    if(i == (nb_layers_*2 - 1)) {
 		break;
 	    }
-	    if(!AABB_.ray_nearest_intersection(r, I)) {
+	    bool has_isect = false;
+	    if(use_tinybvh_) {
+		bvh_->tweak_ray_origin(I, r);
+		// r.origin -= 1e-3 * normalize(I.N);
+		has_isect = bvh_->ray_nearest_intersection(r, I);
+	    } else {
+		has_isect = AABB_.ray_nearest_intersection(r, I);
+	    }
+	    if(!has_isect) {
 		break;
 	    }
 	    compute_normal(I);
