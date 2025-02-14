@@ -53,6 +53,11 @@
 #define NO_INDEXED_GEOMETRY
 #define NO_CUSTOM_GEOMETRY
 
+// For now, deactivate SSE/AVX under Windows.
+#ifdef GEO_OS_WINDOWS
+#define TINYBVH_NO_SIMD
+#endif
+
 #ifdef __GNUC__
 #ifndef __ICC
 #pragma GCC diagnostic push
