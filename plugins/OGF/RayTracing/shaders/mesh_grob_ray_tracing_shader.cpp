@@ -70,7 +70,7 @@
 #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
 
 #ifdef __clang__
-#pragma GCC diagnostic ignored "-Wzero-as-null-pointer"
+#pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
 #pragma GCC diagnostic ignored "-Wcomma"
 #pragma GCC diagnostic ignored "-Wcast-qual"
 #endif
