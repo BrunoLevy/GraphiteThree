@@ -60,14 +60,24 @@
 
 #ifdef __GNUC__
 #ifndef __ICC
+
 #pragma GCC diagnostic push
+
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #pragma GCC diagnostic ignored "-Wdouble-promotion"
 #pragma GCC diagnostic ignored "-Wconversion"
 #pragma GCC diagnostic ignored "-Wpedantic"
 #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
+
+#ifdef __clang__
+#pragma GCC diagnostic ignored "-Wzero-as-null-pointer"
+#pragma GCC diagnostic ignored "-Wcomma"
+#pragma GCC diagnostic ignored "-Wcast-qual"
+#endif
+
 #endif
 #endif
+
 
 #define TINYBVH_IMPLEMENTATION
 #include <OGF/RayTracing/third_party/tiny_bvh.h>
@@ -321,6 +331,9 @@ namespace OGF {
 		Image::GRAY, Image::FLOAT32, w, h
 	    );
 	}
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT,1);
+	glPixelStorei(GL_PACK_ALIGNMENT,1);
 
 	glReadPixels(
 	    0, 0,
