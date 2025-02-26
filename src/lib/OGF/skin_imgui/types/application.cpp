@@ -106,7 +106,10 @@ namespace OGF {
 	 */
 	void set_style(const std::string& style_name) override {
 	    GEO::Application::set_style(style_name);
-	    if(style_name == "Light" || style_name == "LightGray") {
+	    if(
+		style_name == "Light" ||
+		style_name == "Polyscope"
+	    ) {
 		application_->get_render_area()->set_background_color_1(
 		    Color(1.0, 1.0, 1.0, 1.0)
 		);
