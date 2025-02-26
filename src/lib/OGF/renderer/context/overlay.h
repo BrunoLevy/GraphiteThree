@@ -151,6 +151,9 @@ namespace OGF {
             Numeric::uint32 color;
             bool filled;
         };
+
+	void add_primitive(Primitive& prim);
+
         vector<Primitive> primitives_;
     };
 

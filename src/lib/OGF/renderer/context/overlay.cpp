@@ -77,7 +77,7 @@ namespace OGF {
     }
 
     void Overlay::playback() {
-        ImDrawList* L = ImGui::GetBackgroundDrawList();
+        ImDrawList* L = ImGui::GetForegroundDrawList();
         for(Primitive& P : primitives_) {
             switch(P.type) {
             case OVL_SEGMENT: {
@@ -142,6 +142,16 @@ namespace OGF {
         }
     }
 
+    void Overlay::add_primitive(Primitive& P) {
+	float x0 = ImGui::GetMainViewport()->Pos.x;
+	float y0 = ImGui::GetMainViewport()->Pos.y;
+	P.x1 += x0;
+	P.y1 += y0;
+	P.x2 += x0;
+	P.y2 += y0;
+	primitives_.push_back(P);
+    }
+
     void Overlay::segment(vec2 p1, vec2 p2, Color color, double thickness) {
         Primitive P;
         P.type = OVL_SEGMENT;
@@ -151,7 +161,7 @@ namespace OGF {
         P.y2 = float(p2.y);
         P.color = color_to_uint32(color);
         P.thickness = float(thickness);
-        primitives_.push_back(P);
+        add_primitive(P);
     }
 
     void Overlay::rect(vec2 p1, vec2 p2, Color color, double thickness) {
@@ -164,7 +174,7 @@ namespace OGF {
         P.color = color_to_uint32(color);
         P.thickness = float(thickness);
         P.filled = false;
-        primitives_.push_back(P);
+        add_primitive(P);
     }
 
     void Overlay::fillrect(vec2 p1, vec2 p2, Color color) {
@@ -176,7 +186,7 @@ namespace OGF {
         P.y2 = float(p2.y);
         P.color = color_to_uint32(color);
         P.filled = true;
-        primitives_.push_back(P);
+        add_primitive(P);
     }
 
     void Overlay::circle(vec2 p1, double R, Color color, double thickness) {
@@ -188,7 +198,7 @@ namespace OGF {
         P.color = color_to_uint32(color);
         P.thickness = float(thickness);
         P.filled = false;
-        primitives_.push_back(P);
+        add_primitive(P);
     }
 
     void Overlay::fillcircle(vec2 p1, double R, Color color) {
@@ -199,7 +209,7 @@ namespace OGF {
         P.R = float(R);
         P.color  = color_to_uint32(color);
         P.filled = true;
-        primitives_.push_back(P);
+        add_primitive(P);
     }
 
     void Overlay::filltriangle(vec2 p1, vec2 p2, vec2 p3, Color color) {
@@ -213,7 +223,7 @@ namespace OGF {
         P.y3 = float(p3.y);
         P.color  = color_to_uint32(color);
         P.filled = true;
-        primitives_.push_back(P);
+        add_primitive(P);
     }
 
     void Overlay::fillquad(vec2 p1, vec2 p2, vec2 p3, vec2 p4, Color color) {
@@ -229,7 +239,7 @@ namespace OGF {
         P.y4 = float(p4.y);
         P.color  = color_to_uint32(color);
         P.filled = true;
-        primitives_.push_back(P);
+        add_primitive(P);
     }
 
 }
