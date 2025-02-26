@@ -157,7 +157,31 @@ function post_init()
    collectgarbage()
 end
 
--- Numerical library, helpers.
+-- Print tables (lua's default print function prints 'nil' for each value
+-- in tables, which is very misleading, let us fix that !)
+
+local default_tostring = tostring
+
+function tostring(x)
+   if type(x) == 'table' then
+      return table_tostring(x)
+   else
+      return default_tostring(x)
+   end
+end
+
+function table_tostring(x)
+    result = ''
+    for key, value in pairs(t) do
+        if result ~= '' then
+           result = result .. ', '
+        end
+        result = result .. key .. '=' .. tostring(value)
+    end
+    return '{' .. result ..'}'
+end
+
+-- Shortcut for OGF meta types and Numerical library helpers
 
 OGF = gom.meta_types.OGF
 NL = OGF.NL.Library.create()
