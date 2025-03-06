@@ -42,6 +42,8 @@
 #include <OGF/gom/interpreter/interpreter.h>
 #include <OGF/basic/modules/modmgr.h>
 
+#include <geogram_gfx/gui/application.h>
+
 namespace OGF {
 
     SceneGraphToolsManager* SceneGraphToolsManager::instance_;
@@ -226,9 +228,11 @@ namespace OGF {
 
 
     void SceneGraphToolsManager::grab(const RayPick& ev) {
+	Application::instance()->lock_updates();
         if(current_tools_manager_ != nullptr) {
             current_tools_manager_->grab(ev);
         }
+	Application::instance()->unlock_updates();
     }
 
     void SceneGraphToolsManager::drag(const RayPick& ev) {
@@ -238,8 +242,10 @@ namespace OGF {
     }
 
     void SceneGraphToolsManager::release(const RayPick& ev) {
+	Application::instance()->lock_updates();
         if(current_tools_manager_ != nullptr) {
             current_tools_manager_->release(ev);
         }
+	Application::instance()->unlock_updates();
     }
 }

@@ -111,6 +111,20 @@ namespace OGF {
          */
         void unselect_vertices_on_surface_border();
 
+
+        /**
+         * \brief Selects all the vertices on the edges in a mesh.
+         * \menu Vertices
+         */
+        void select_vertices_on_edges();
+
+        /**
+         * \brief Unselects all the vertices on the edges in a mesh.
+         * \menu Vertices
+         */
+        void unselect_vertices_on_edges();
+
+
 	/**
 	 * \brief Selects all the vertices that are duplicated in
 	 *  a mesh.

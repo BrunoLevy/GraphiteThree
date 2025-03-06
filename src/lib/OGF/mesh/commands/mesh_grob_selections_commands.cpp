@@ -353,6 +353,34 @@ namespace OGF {
         mesh_grob()->update();
     }
 
+    void MeshGrobSelectionsCommands::select_vertices_on_edges() {
+        Attribute<bool> v_selection(
+            mesh_grob()->vertices.attributes(), "selection"
+        );
+        for(index_t e: mesh_grob()->edges) {
+	    for(index_t lv=0; lv<2; ++lv) {
+		index_t v = mesh_grob()->edges.vertex(e,lv);
+		v_selection[v] = true;
+	    }
+        }
+        show_vertices_selection();
+        mesh_grob()->update();
+    }
+
+    void MeshGrobSelectionsCommands::unselect_vertices_on_edges() {
+        Attribute<bool> v_selection(
+            mesh_grob()->vertices.attributes(), "selection"
+        );
+        for(index_t e: mesh_grob()->edges) {
+	    for(index_t lv=0; lv<2; ++lv) {
+		index_t v = mesh_grob()->edges.vertex(e,lv);
+		v_selection[v] = false;
+	    }
+        }
+        show_vertices_selection();
+        mesh_grob()->update();
+    }
+
     void MeshGrobSelectionsCommands::select_duplicated_vertices(
 	double tolerance
     ) {
