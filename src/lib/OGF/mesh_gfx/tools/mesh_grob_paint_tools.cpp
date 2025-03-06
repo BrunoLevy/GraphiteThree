@@ -592,6 +592,10 @@ namespace OGF {
        xray_mode_ = false;
        pick_vertices_only_ = true;
        picked_element_ = index_t(-1);
+       MeshGrobProbe* probe_tool = new MeshGrobProbe(parent);
+       probe_tool->set_probed_as_paint(false);
+       probe_tool->set_display_probed_on_release(false);
+       probe_tool_ = probe_tool;
     }
 
     void MeshGrobPaintTool::reset() {
@@ -801,6 +805,30 @@ namespace OGF {
         }
     }
 
+    void MeshGrobPaintTool::grab(const RayPick& p_ndc) {
+	if(p_ndc.button == 2) {
+	    probe_tool_->grab(p_ndc);
+ 	} else {
+	    MeshGrobTool::grab(p_ndc);
+	}
+    }
+
+    void MeshGrobPaintTool::drag(const RayPick& p_ndc) {
+	if(p_ndc.button == 2) {
+	    probe_tool_->drag(p_ndc);
+	} else {
+	    MeshGrobTool::drag(p_ndc);
+	}
+    }
+
+    void MeshGrobPaintTool::release(const RayPick& p_ndc) {
+	if(p_ndc.button == 2) {
+	    probe_tool_->release(p_ndc);
+	} else {
+	    MeshGrobTool::release(p_ndc);
+	}
+    }
+
     /**********************************************************************/
 
     MeshGrobPaint::MeshGrobPaint(
@@ -811,6 +839,11 @@ namespace OGF {
     }
 
     void MeshGrobPaint::grab(const RayPick& raypick) {
+	if(raypick.button == 2) {
+	    // Button 2 is for probe, handled in baseclass
+	    MeshGrobPaintTool::grab(raypick);
+	    return;
+	}
         MeshGrobPaintTool::grab(raypick);
         latest_ndc_ = raypick.p_ndc;
         if(stroke_mode_) {
@@ -821,6 +854,11 @@ namespace OGF {
     }
 
     void MeshGrobPaint::drag(const RayPick& raypick) {
+	if(raypick.button == 2) {
+	    // Button 2 is for probe, handled in baseclass
+	    MeshGrobPaintTool::drag(raypick);
+	    return;
+	}
         if(length(raypick.p_ndc - latest_ndc_) <= 10.0/1024.0) {
             return ;
         }
@@ -850,6 +888,11 @@ namespace OGF {
     }
 
     void MeshGrobPaint::release(const RayPick& raypick) {
+	if(raypick.button == 2) {
+	    // Button 2 is for probe, handled in baseclass
+	    MeshGrobPaintTool::release(raypick);
+	    return;
+	}
 
         if(stroke_mode_ && stroke_.size() != 0) {
 
@@ -985,12 +1028,24 @@ namespace OGF {
     }
 
     void MeshGrobPaintRect::grab(const RayPick& p_ndc) {
+	if(p_ndc.button == 2) {
+	    // Button 2 is for probe, handled in baseclass
+	    MeshGrobPaintTool::grab(p_ndc);
+	    return;
+	}
+
         MeshGrobPaintTool::grab(p_ndc);
         p_ = ndc_to_dc(p_ndc.p_ndc);
         active_ = true;
     }
 
     void MeshGrobPaintRect::drag(const RayPick& p_ndc) {
+	if(p_ndc.button == 2) {
+	    // Button 2 is for probe, handled in baseclass
+	    MeshGrobPaintTool::drag(p_ndc);
+	    return;
+	}
+
         if(!active_) {
             return;
         }
@@ -1024,9 +1079,16 @@ namespace OGF {
     }
 
     void MeshGrobPaintRect::release(const RayPick& raypick) {
+	if(raypick.button == 2) {
+	    // Button 2 is for probe, handled in baseclass
+	    MeshGrobPaintTool::release(raypick);
+	    return;
+	}
+
         if(!active_) {
             return;
         }
+
         active_ = false;
         vec2 q = ndc_to_dc(raypick.p_ndc);
         index_t px = index_t(p_.x);
@@ -1214,12 +1276,24 @@ namespace OGF {
     }
 
     void MeshGrobPaintFreeform::grab(const RayPick& raypick) {
+	if(raypick.button == 2) {
+	    // Button 2 is for probe, handled in baseclass
+	    MeshGrobPaintTool::grab(raypick);
+	    return;
+	}
+
         MeshGrobPaintTool::grab(raypick);
         selection_.push_back(ndc_to_dc(raypick.p_ndc));
         active_ = true;
     }
 
     void MeshGrobPaintFreeform::drag(const RayPick& raypick) {
+	if(raypick.button == 2) {
+	    // Button 2 is for probe, handled in baseclass
+	    MeshGrobPaintTool::drag(raypick);
+	    return;
+	}
+
         if(!active_) {
             return;
         }
@@ -1238,6 +1312,12 @@ namespace OGF {
     }
 
     void MeshGrobPaintFreeform::release(const RayPick& raypick) {
+	if(raypick.button == 2) {
+	    // Button 2 is for probe, handled in baseclass
+	    MeshGrobPaintTool::release(raypick);
+	    return;
+	}
+
         if(!active_) {
             return;
         }
@@ -1319,6 +1399,12 @@ namespace OGF {
     }
 
     void MeshGrobPaintConnected::grab(const RayPick& raypick) {
+	if(raypick.button == 2) {
+	    // Button 2 is for probe, handled in baseclass
+	    MeshGrobPaintTool::grab(raypick);
+	    return;
+	}
+
         MeshGrobPaintTool::grab(raypick);
         PaintOp op = PAINT_SET;
         MeshElementsFlags where;
@@ -1451,6 +1537,8 @@ namespace OGF {
     ) : MeshGrobTool(parent) {
         picked_ = false;
         grabbed_ = false;
+	set_probed_as_paint_ = true;
+	display_probed_on_release_ = true;
     }
 
     void MeshGrobProbe::grab(const RayPick& p_ndc) {
@@ -1476,7 +1564,7 @@ namespace OGF {
         if(!grabbed_) {
             return;
         }
-        if(picked_) {
+        if(picked_ && set_probed_as_paint_) {
             vector<MeshGrobPaintTool*> tools;
             MeshGrobPaintTool::get_paint_tools(tools_manager(), tools);
             for(MeshGrobPaintTool* tool: tools) {
@@ -1485,12 +1573,14 @@ namespace OGF {
                 tool->set_autorange_for_this_tool(false);
             }
         }
-        std::vector<std::string> lines;
-        String::split_string(message_,"\\n",lines);
-        for(const std::string& line : lines) {
-            Logger::out("Probe") << line << std::endl;
-        }
-        Logger::out("") << std::endl;
+	if(display_probed_on_release_) {
+	    std::vector<std::string> lines;
+	    String::split_string(message_,"\\n",lines);
+	    for(const std::string& line : lines) {
+		Logger::out("Probe") << line << std::endl;
+	    }
+	    Logger::out("") << std::endl;
+	}
         grabbed_ = false;
     }
 

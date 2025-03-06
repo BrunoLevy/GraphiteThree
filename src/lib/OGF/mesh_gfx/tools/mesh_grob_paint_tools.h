@@ -169,6 +169,22 @@ namespace OGF {
         }
 
     public:
+        /**
+         * \copydoc Tool::grab()
+         */
+        void grab(const RayPick& p_ndc) override;
+
+        /**
+         * \copydoc Tool::drag()
+         */
+        void drag(const RayPick& p_ndc) override;
+
+        /**
+         * \copydoc Tool::release()
+         */
+        void release(const RayPick& p_ndc) override;
+
+    public:
          void set_value_for_this_tool(double value) {
              value_ = value;
          }
@@ -222,8 +238,8 @@ namespace OGF {
          bool autorange_;
          bool pick_vertices_only_;
          bool xray_mode_;
-
          index_t picked_element_;
+	 Tool_var probe_tool_; // For middle button
     };
 
     /**********************************************************/
@@ -483,6 +499,24 @@ namespace OGF {
          */
         void release(const RayPick& p_ndc) override;
 
+	/**
+	 * \brief Sets the interaction mode between probe tool and paint tool
+	 * \param[in] x if set (default), probed value is set as paint value
+	 */
+	void set_probed_as_paint(bool x) {
+	    set_probed_as_paint_ = x;
+	}
+
+
+	/**
+	 * \brief Sets the behavior when mouse button is release
+	 * \param[in] x if set (defaut), the probed value is displayed in the
+	 *  terminal when the mouse button is released
+	 */
+	void set_display_probed_on_release(bool x) {
+	    display_probed_on_release_ = x;
+	}
+
      protected:
         void probe(const RayPick& p_ndc);
 
@@ -492,6 +526,8 @@ namespace OGF {
         double value_;
         vec2 latest_ndc_;
         std::string message_;
+	bool set_probed_as_paint_;
+	bool display_probed_on_release_;
     };
 
     /********************************************************/
