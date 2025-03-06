@@ -101,14 +101,15 @@ namespace {
      * \param[in] component the component of a vector attribute
      *            (0 for a scalar attribute)
      * \param[in] op one of PAINT_SET, PAINT_RESET, PAINT_INC or PAINT_DEC
-     * \param[in] value the value to be painted
+     * \param[in] value the value to be painted if op is PAINT_SET
+     * \param[in] value2 the value to be painted if op is PAINT_RESET
      * \retval true if an attribute of the specified type was found
      * \retval false otherwise
      */
     template <class T> bool paint_attribute_generic(
         MeshGrob* mesh_grob, MeshElementsFlags where,
         const std::string& name, index_t component,
-        index_t element_id, PaintOp op, double value
+        index_t element_id, PaintOp op, double value, double value2
     ) {
         MeshSubElementsStore& elts = mesh_grob->get_subelements_by_type(where);
         if(!Attribute<T>::is_defined(elts.attributes(), name)) {
@@ -121,7 +122,7 @@ namespace {
             attr[element_id*attr.dimension()+component] = T(value);
             break;
         case PAINT_RESET:
-            attr[element_id*attr.dimension()+component] = T(0);
+            attr[element_id*attr.dimension()+component] = T(value2);
             break;
         case PAINT_INC:
             attr[element_id*attr.dimension()+component] =
@@ -148,29 +149,35 @@ namespace {
      * \param[in] component the component of a vector attribute
      *            (0 for a scalar attribute)
      * \param[in] op one of PAINT_SET, PAINT_RESET, PAINT_INC or PAINT_DEC
-     * \param[in] value the value to be painted
+     * \param[in] value the value to be painted if op is PAINT_SET
+     * \param[in] value2 the value to be painted if op is PAINT_RESET
      * \retval true if an attribute could be painted
      * \retval false otherwise
      */
     bool paint_attribute(
         MeshGrob* mesh_grob, MeshElementsFlags where,
         const std::string& name, index_t component,
-        index_t element_id, PaintOp op, double value
+        index_t element_id, PaintOp op, double value, double value2
     ) {
         return paint_attribute_generic<double>(
-                   mesh_grob, where, name, component, element_id, op, value
+                   mesh_grob, where, name, component, element_id,
+		   op, value, value2
                ) ||
                paint_attribute_generic<float>(
-                   mesh_grob, where, name, component, element_id, op, value
+                   mesh_grob, where, name, component, element_id,
+		   op, value, value2
                ) ||
                paint_attribute_generic<Numeric::uint32>(
-                   mesh_grob, where, name, component, element_id, op, value
+                   mesh_grob, where, name, component, element_id,
+		   op, value, value2
                ) ||
                paint_attribute_generic<Numeric::int32>(
-                   mesh_grob, where, name, component, element_id, op, value
+                   mesh_grob, where, name, component, element_id,
+		   op, value, value2
                ) ||
                paint_attribute_generic<bool>(
-                   mesh_grob, where, name, component, element_id, op, value
+                   mesh_grob, where, name, component, element_id,
+		   op, value, std::max(value2, 0.0) // value <= 0 is false
                );
     }
 
@@ -579,6 +586,7 @@ namespace OGF {
         ToolsManager* parent
     ) : MeshGrobTool(parent) {
        value_ = 1.0;
+       value2_ = 0.0;
        accumulate_ = false;
        autorange_ = true;
        xray_mode_ = false;
@@ -649,7 +657,7 @@ namespace OGF {
             paint_attribute(
                 mesh_grob(), where,
                 attribute_name, component,
-                picked_element, op, value_
+                picked_element, op, value_, value2_
             );
         } else if(where == MESH_VERTICES && !pick_vertices_only_) {
 
@@ -666,7 +674,7 @@ namespace OGF {
                     paint_attribute(
                         mesh_grob(), where,
                         attribute_name, component,
-                        v, op, value_
+                        v, op, value_, value2_
                     );
                 }
             } else {
@@ -680,7 +688,7 @@ namespace OGF {
                         paint_attribute(
                             mesh_grob(), where,
                             attribute_name, component,
-                            v, op, value_
+                            v, op, value_, value2_
                         );
                     }
                 }
@@ -704,6 +712,15 @@ namespace OGF {
         get_paint_tools(tools_manager(), tools);
         for(MeshGrobPaintTool* tool: tools) {
             tool->set_value_for_this_tool(value);
+        }
+    }
+
+    void MeshGrobPaintTool::set_value2(double value) {
+        // set property for all MeshGrobPaintTools.
+        vector<MeshGrobPaintTool*> tools;
+        get_paint_tools(tools_manager(), tools);
+        for(MeshGrobPaintTool* tool: tools) {
+            tool->set_value2_for_this_tool(value);
         }
     }
 
@@ -1076,7 +1093,7 @@ namespace OGF {
                         paint_attribute(
                             mesh_grob(), where,
                             attribute_name, component,
-                            v, op, value_
+                            v, op, value_, value2_
                         );
                     }
                 }
@@ -1090,7 +1107,7 @@ namespace OGF {
                         paint_attribute(
                             mesh_grob(), where,
                             attribute_name, component,
-                            f, op, value_
+                            f, op, value_, value2_
                         );
                     }
                 }
@@ -1104,7 +1121,7 @@ namespace OGF {
                         paint_attribute(
                             mesh_grob(), where,
                             attribute_name, component,
-                            c, op, value_
+                            c, op, value_, value2_
                         );
                     }
                 }
@@ -1138,7 +1155,7 @@ namespace OGF {
                     paint_attribute(
                         mesh_grob(), where,
                         attribute_name, component,
-                        picked_element, op, value_
+                        picked_element, op, value_, value2_
                     );
                 }
             );
@@ -1158,7 +1175,7 @@ namespace OGF {
                             paint_attribute(
                                 mesh_grob(), where,
                                 attribute_name, component,
-                                v, op, value_
+                                v, op, value_, value2_
                             );
                         }
                     }
@@ -1175,7 +1192,7 @@ namespace OGF {
                             paint_attribute(
                                 mesh_grob(), where,
                                 attribute_name, component,
-                                v, op, value_
+                                v, op, value_, value2_
                             );
                         }
                     }
@@ -1343,8 +1360,9 @@ namespace OGF {
                             return false;
                         }
                         paint_attribute(
-                            mesh_grob(),where,
-			    attribute_name,component,f,op,value_
+                            mesh_grob(), where,
+			    attribute_name, component, f,
+			    op, value_, value2_
                         );
                         return true;
                     }
@@ -1363,7 +1381,8 @@ namespace OGF {
                             return false;
                         }
                         paint_attribute(
-                          mesh_grob(),where,attribute_name,component,c,op,value_
+                          mesh_grob(), where, attribute_name, component, c,
+			  op, value_, value2_
                         );
                         return true;
                     }
@@ -1414,7 +1433,7 @@ namespace OGF {
             for(index_t v: vertices) {
                 paint_attribute(
                     mesh_grob(), MESH_VERTICES,
-                    attribute_name, component, v, op, value_
+                    attribute_name, component, v, op, value_, value2_
                 );
             }
         }

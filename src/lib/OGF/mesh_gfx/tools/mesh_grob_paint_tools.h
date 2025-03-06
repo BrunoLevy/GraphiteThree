@@ -109,12 +109,21 @@ namespace OGF {
 
     gom_properties:
          /**
-          * \brief The value to be painted.
+          * \brief The value to be painted (left button)
           */
          void set_value(double value);
 
          double get_value() const {
 	    return value_;
+	 }
+
+         /**
+          * \brief The value to be painted (right button)
+          */
+         void set_value2(double value);
+
+         double get_value2() const {
+	    return value2_;
 	 }
 
          /**
@@ -164,6 +173,10 @@ namespace OGF {
              value_ = value;
          }
 
+         void set_value2_for_this_tool(double value) {
+             value2_ = value;
+         }
+
          void set_accumulate_for_this_tool(bool value) {
 	    accumulate_ = value;
 	 }
@@ -204,6 +217,7 @@ namespace OGF {
 
     protected:
          double value_;
+	 double value2_;
          bool accumulate_;
          bool autorange_;
          bool pick_vertices_only_;
