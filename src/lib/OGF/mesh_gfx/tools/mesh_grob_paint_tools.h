@@ -251,7 +251,7 @@ namespace OGF {
     gom_attribute(category, "paint")
     gom_attribute(icon, "paint_rect")
     gom_attribute(help, "paint attributes in rectangle")
-    gom_attribute(message, "btn1: paint; btn3: erase")
+    gom_attribute(message, "btn1: paint; btn2: probe; btn3: erase")
 
     gom_class MESH_GFX_API MeshGrobPaintRect : public MeshGrobPaintTool {
     public:
@@ -307,7 +307,7 @@ namespace OGF {
     gom_attribute(category, "paint")
     gom_attribute(icon, "paint")
     gom_attribute(help, "paint attributes")
-    gom_attribute(message, "btn1: paint; btn3: erase")
+    gom_attribute(message, "btn1: paint; btn2: probe; btn3: erase")
 
     gom_class MESH_GFX_API MeshGrobPaint : public MeshGrobPaintRect {
     public:
@@ -375,7 +375,7 @@ namespace OGF {
     gom_attribute(category, "paint")
     gom_attribute(icon, "paint_freeform")
     gom_attribute(help, "paint attributes with free-form selection")
-    gom_attribute(message, "btn1: paint; btn3: erase")
+    gom_attribute(message, "btn1: paint; btn2: probe; btn3: erase")
 
     gom_class MESH_GFX_API MeshGrobPaintFreeform : public MeshGrobPaintRect {
     public:
@@ -413,7 +413,7 @@ namespace OGF {
     gom_attribute(category, "paint")
     gom_attribute(icon, "paint_connected")
     gom_attribute(help, "paint attributes on connected components")
-    gom_attribute(message, "btn1: paint; btn3: erase")
+    gom_attribute(message, "btn1: paint; btn2: probe; btn3: erase")
 
     gom_class MESH_GFX_API MeshGrobPaintConnected : public MeshGrobPaintTool {
     public:
