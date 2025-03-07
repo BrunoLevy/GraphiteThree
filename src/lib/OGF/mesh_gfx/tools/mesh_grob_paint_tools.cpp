@@ -1021,10 +1021,6 @@ namespace OGF {
     MeshGrobPaintRect::MeshGrobPaintRect(
         ToolsManager* parent
     ) : MeshGrobPaintTool(parent) {
-        // This active flag is needed, else sometimes when one
-        // picks a GUI item, this triggers a release() event
-        // and creates a selection.
-        active_ = false;
     }
 
     void MeshGrobPaintRect::grab(const RayPick& p_ndc) {
@@ -1036,7 +1032,6 @@ namespace OGF {
 
         MeshGrobPaintTool::grab(p_ndc);
         p_ = ndc_to_dc(p_ndc.p_ndc);
-        active_ = true;
     }
 
     void MeshGrobPaintRect::drag(const RayPick& p_ndc) {
@@ -1045,10 +1040,6 @@ namespace OGF {
 	    MeshGrobPaintTool::drag(p_ndc);
 	    return;
 	}
-
-        if(!active_) {
-            return;
-        }
 
         // Draw selection rectangle in overlay
         vec2 q = ndc_to_dc(p_ndc.p_ndc);
@@ -1085,11 +1076,6 @@ namespace OGF {
 	    return;
 	}
 
-        if(!active_) {
-            return;
-        }
-
-        active_ = false;
         vec2 q = ndc_to_dc(raypick.p_ndc);
         index_t px = index_t(p_.x);
         index_t py = index_t(p_.y);
@@ -1284,7 +1270,6 @@ namespace OGF {
 
         MeshGrobPaintTool::grab(raypick);
         selection_.push_back(ndc_to_dc(raypick.p_ndc));
-        active_ = true;
     }
 
     void MeshGrobPaintFreeform::drag(const RayPick& raypick) {
@@ -1294,9 +1279,6 @@ namespace OGF {
 	    return;
 	}
 
-        if(!active_) {
-            return;
-        }
         if(length(raypick.p_ndc - latest_ndc_) <= 10.0/1024.0) {
             return ;
         }
@@ -1317,11 +1299,6 @@ namespace OGF {
 	    MeshGrobPaintTool::release(raypick);
 	    return;
 	}
-
-        if(!active_) {
-            return;
-        }
-        active_ = false;
 
         index_t x0,y0,width,height;
         {

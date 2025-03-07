@@ -294,8 +294,6 @@ namespace OGF {
             index_t x0, index_t y0, index_t x1, index_t y1,
             Image* mask = nullptr
         );
-
-        bool active_;
         vec2 p_;
     };
 
