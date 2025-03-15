@@ -172,7 +172,7 @@ end
 
 function table_tostring(x)
     result = ''
-    for key, value in pairs(t) do
+    for key, value in pairs(x) do
         if result ~= '' then
            result = result .. ', '
         end
