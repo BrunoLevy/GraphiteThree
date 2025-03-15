@@ -179,7 +179,7 @@ function text_editor_gui.run()
        if grob == nil then
           grob = scene_graph.create_object('OGF::MeshGrob')
           grob.rename('GLSL_program')
-	  grob.query_interface('OGF::MeshGrobShapesCommands').create_square()
+	  grob.query_interface('OGF::MeshGrobShapesCommands').create_quad()
           scene_graph.current_object = 'GLSL_program'
        end
        if not string.starts_with(text_editor.text, '//stage') then
