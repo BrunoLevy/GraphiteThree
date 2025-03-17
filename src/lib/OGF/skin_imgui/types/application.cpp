@@ -139,11 +139,11 @@ namespace OGF {
 	/**
 	 * \copydoc GEO::Application::one_frame()
 	 */
-	void one_frame() override {
+	void one_frame(bool draw_GUI) override {
 	    if(application_->is_stopping()) {
 		return;
 	    }
-	    GEO::Application::one_frame();
+	    GEO::Application::one_frame(draw_GUI);
 	}
 
 	/**
