@@ -17,8 +17,8 @@ jobs:
         run: |
             sudo apt-get update
             sudo apt-get install \
-            doxygen 
- 
+            doxygen dos2unix
+
       - name: Generate release
         run: |
           tools/make_graphite_dist.sh -no-doc
