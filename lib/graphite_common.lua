@@ -172,19 +172,22 @@ end
 
 function table_tostring(x)
     result = ''
+
+    -- Test whether table is an array
     cur = 1
-    trivialK = true
+    is_array = true
     for key,_ in pairs(x) do
       if key ~= cur then
-         trivialK = false
+         is_array = false
       end
       cur = cur + 1
     end
+
     for key, value in pairs(x) do
         if result ~= '' then
            result = result .. ', '
         end
-        if not trivialK then
+        if not is_array then
            result = result .. key .. '='
         end
         result = result .. tostring(value)
