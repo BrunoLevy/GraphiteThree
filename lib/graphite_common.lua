@@ -172,11 +172,22 @@ end
 
 function table_tostring(x)
     result = ''
+    cur = 1
+    trivialK = true
+    for key,_ in pairs(x) do
+      if key ~= cur then
+         trivialK = false
+      end
+      cur = cur + 1
+    end
     for key, value in pairs(x) do
         if result ~= '' then
            result = result .. ', '
         end
-        result = result .. key .. '=' .. tostring(value)
+        if not trivialK then
+           result = result .. key .. '='
+        end
+        result = result .. tostring(value)
     end
     return '{' .. result ..'}'
 end
