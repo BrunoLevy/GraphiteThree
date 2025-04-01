@@ -89,7 +89,7 @@ namespace OGF {
 
         ogf_register_grob_tool<MeshGrob,MeshGrobSelectUnselectVertex>();
 
-        ogf_register_grob_tool<MeshGrob,MeshGrobCreateEdge>();
+        ogf_register_grob_tool<MeshGrob,MeshGrobEditEdge>();
 
         ogf_register_grob_tool<MeshGrob,MeshGrobPaint>();
         ogf_register_grob_tool<MeshGrob,MeshGrobPaintRect>();

@@ -54,9 +54,7 @@ namespace OGF {
     /**
      * \brief A tool that creates an edge between two vertices.
      */
-    gom_attribute(icon, "create_edge")
-    gom_attribute(help, "create edge")
-    gom_class MESH_GFX_API MeshGrobCreateEdge : public MeshGrobTool {
+    class MeshGrobCreateEdge : public MeshGrobTool {
     public:
 
         /**
@@ -84,6 +82,55 @@ namespace OGF {
         index_t v1_;
         index_t v2_;
     };
+
+    /****************************************************************/
+
+    /**
+     * \brief A tool that creates an edge between two vertices.
+     */
+    class MeshGrobDeleteEdge : public MeshGrobTool {
+    public:
+
+        /**
+         * \brief MeshGrobsCreateEdge constructor.
+         * \param[in] parent a pointer to the ToolsManager
+         */
+        MeshGrobDeleteEdge(
+            ToolsManager* parent
+        ) : MeshGrobTool(parent) {
+        }
+
+        /**
+         * \copydoc Tool::grab()
+         */
+	void grab(const RayPick& p_ndc) override;
+    };
+
+    /****************************************************************/
+
+    /**
+     * \brief A tool that create/deletes edges.
+     * \see MeshGrobCreateEdge, MeshObjDeleteEdge
+     */
+    gom_attribute(icon, "create_edge")
+    gom_attribute(help, "create edge / delete edge")
+    gom_attribute(message,
+       "btn1: create edge (select vertices); btn3: delete edge (select edge)"
+    )
+    gom_class MESH_GFX_API MeshGrobEditEdge : public MultiTool {
+    public:
+        /**
+         * \brief MeshGrobEditEdge constructor.
+         * \param[in] parent a pointer to the ToolsManager
+         */
+        MeshGrobEditEdge(ToolsManager* parent) : MultiTool(parent) {
+            set_tool(MOUSE_BUTTON_LEFT, new MeshGrobCreateEdge(parent));
+            set_tool(MOUSE_BUTTON_RIGHT, new MeshGrobDeleteEdge(parent));
+        }
+    };
+
+
+    /****************************************************************/
 }
 
 #endif

@@ -90,5 +90,20 @@ namespace OGF {
         Logger::out("Tool") << "Pick the first vertex" << std::endl;
     }
 
+    /***********************************************************/
+
+    void MeshGrobDeleteEdge::grab(const RayPick& p_ndc) {
+	MeshGrobTool::grab(p_ndc);
+	index_t e = pick_edge(p_ndc);
+	if(e != NO_INDEX) {
+	    vector<index_t> delete_edges(mesh_grob()->edges.nb(), 0);
+	    delete_edges[e] = 1;
+	    // do not remove isolated vertices ---------------v
+	    mesh_grob()->edges.delete_elements(delete_edges,false);
+	    mesh_grob()->update();
+	}
+    }
+
+    /***********************************************************/
 
 }
