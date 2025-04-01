@@ -203,7 +203,7 @@ namespace {
             S.pop();
             for(index_t le=0; le<mesh_grob->facets.nb_vertices(f); ++le) {
                 index_t g = mesh_grob->facets.adjacent(f,le);
-                if(g != index_t(-1) && !visited[g]) {
+                if(g != NO_INDEX && !visited[g]) {
                     if(doit(g)) {
                         S.push(g);
                     }
@@ -236,7 +236,7 @@ namespace {
             S.pop();
             for(index_t lf=0; lf<mesh_grob->cells.nb_facets(c); ++lf) {
                 index_t d = mesh_grob->cells.adjacent(c,lf);
-                if(d != index_t(-1) && !visited[d]) {
+                if(d != NO_INDEX && !visited[d]) {
                     if(doit(d)) {
                         S.push(d);
                     }
@@ -591,7 +591,7 @@ namespace OGF {
        autorange_ = true;
        xray_mode_ = false;
        pick_vertices_only_ = true;
-       picked_element_ = index_t(-1);
+       picked_element_ = NO_INDEX;
        MeshGrobProbe* probe_tool = new MeshGrobProbe(parent);
        probe_tool->set_probed_as_paint(false);
        probe_tool->set_display_probed_on_release(false);
@@ -657,7 +657,7 @@ namespace OGF {
 
         // Paint the picked element
 
-        if(picked_element != index_t(-1)) {
+        if(picked_element != NO_INDEX) {
             paint_attribute(
                 mesh_grob(), where,
                 attribute_name, component,
@@ -669,7 +669,7 @@ namespace OGF {
             // pick a facet or a cell, and paint its vertices.
 
             index_t f = pick_facet(raypick);
-            if(f != index_t(-1)) {
+            if(f != NO_INDEX) {
                 picked_element_ = f;
                 for(index_t lv = 0;
                     lv<mesh_grob()->facets.nb_vertices(f); ++lv
@@ -684,7 +684,7 @@ namespace OGF {
             } else {
                 index_t c = pick_cell(raypick);
                 picked_element_ = c;
-                if(c != index_t(-1)) {
+                if(c != NO_INDEX) {
                     for(index_t lv = 0;
                         lv<mesh_grob()->cells.nb_vertices(c); ++lv
                     ) {
@@ -1393,7 +1393,7 @@ namespace OGF {
         }
 
         index_t picked_element = pick(raypick, where);
-        if(picked_element == index_t(-1)) {
+        if(picked_element == NO_INDEX) {
             return;
         }
 
@@ -1408,7 +1408,7 @@ namespace OGF {
             return;
         }
 
-        if(where != MESH_VERTICES && picked_element != index_t(-1)) {
+        if(where != MESH_VERTICES && picked_element != NO_INDEX) {
             switch(where) {
             case MESH_FACETS: {
                 for_each_connected_facet(
@@ -1464,7 +1464,7 @@ namespace OGF {
         } else if(where == MESH_VERTICES) {
             vector<index_t> vertices;
             picked_element = pick_facet(raypick);
-            if(picked_element != index_t(-1)) {
+            if(picked_element != NO_INDEX) {
                 get_connected_facet_vertices(
                     mesh_grob(), picked_element, vertices
                 );
@@ -1487,7 +1487,7 @@ namespace OGF {
                 }
             }
             picked_element = pick_cell(raypick);
-            if(picked_element != index_t(-1)) {
+            if(picked_element != NO_INDEX) {
                 get_connected_cell_vertices(
                     mesh_grob(), picked_element, vertices
                 );
@@ -1573,18 +1573,18 @@ namespace OGF {
 
         double value = 0.0;
         bool with_value = false;
-        index_t element_id = index_t(-1);
+        index_t element_id = NO_INDEX;
         MeshElementsFlags element_type = MESH_NONE;
         vec3 p;
 
-        static MeshElementsFlags element_types[3] = {
-            MESH_VERTICES, MESH_FACETS, MESH_CELLS
+        static MeshElementsFlags element_types[4] = {
+            MESH_VERTICES, MESH_EDGES, MESH_FACETS, MESH_CELLS
         };
 
-        for(index_t i=0; i<3; ++i) {
-            if(element_id == index_t(-1)) {
+        for(index_t i=0; i<4; ++i) {
+            if(element_id == NO_INDEX) {
                 element_id = pick(p_ndc, element_types[i]);
-                if(element_id != index_t(-1)) {
+                if(element_id != NO_INDEX) {
                     p = picked_point();
                     element_type = element_types[i];
                     if(with_attributes &&
@@ -1604,7 +1604,7 @@ namespace OGF {
             with_attributes &&
             !with_value     &&
             attribute_element_type == MESH_VERTICES &&
-            element_id != index_t(-1)
+            element_id != NO_INDEX
         ) {
             if(element_type == MESH_FACETS) {
                 value = probe_vertex_attribute_in_facet(
@@ -1642,7 +1642,7 @@ namespace OGF {
 
         message_ = "<nothing>";
 
-        if(element_id != index_t(-1) && element_type != MESH_NONE) {
+        if(element_id != NO_INDEX && element_type != MESH_NONE) {
             message_ =
                    "x=" + String::to_string(p.x) +
                 "\\ny=" + String::to_string(p.y) +
@@ -1734,7 +1734,7 @@ namespace OGF {
             MESH_VERTICES, MESH_EDGES, MESH_FACETS, MESH_CELLS
         };
         for(index_t i=0; i<4; ++i) {
-            picked = (MeshGrobTool::pick(p_ndc, where[i]) != index_t(-1));
+            picked = (MeshGrobTool::pick(p_ndc, where[i]) != NO_INDEX);
             if(picked) {
                 p = picked_point();
                 return true;
