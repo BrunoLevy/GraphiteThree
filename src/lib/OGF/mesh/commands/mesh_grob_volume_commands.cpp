@@ -152,9 +152,9 @@ namespace {
                 index_t vi = M.cells.facet_vertex(c,lf,i);
                 index_t vj = M.cells.facet_vertex(c,lf,j);
                 index_t vk = M.cells.facet_vertex(c,lf,k);
-                const vec3& pi = GEO::Geom::mesh_vertex(M,vi);
-                const vec3& pj = GEO::Geom::mesh_vertex(M,vj);
-                const vec3& pk = GEO::Geom::mesh_vertex(M,vk);
+                const vec3& pi = M.vertices.point(vi);
+                const vec3& pj = M.vertices.point(vj);
+                const vec3& pk = M.vertices.point(vk);
                 double alpha = GEO::Geom::angle(pi-pj, pk-pj) * 180.0 / M_PI;
                 switch(n) {
                 case 3: {

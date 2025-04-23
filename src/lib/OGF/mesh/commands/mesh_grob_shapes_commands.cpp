@@ -63,10 +63,10 @@ namespace OGF {
         index_t v1 = v0+1;
         index_t v2 = v0+2;
         index_t v3 = v0+3;
-        Geom::mesh_vertex_ref(M,v0) = p1;
-        Geom::mesh_vertex_ref(M,v1) = p2;
-        Geom::mesh_vertex_ref(M,v2) = p3;
-        Geom::mesh_vertex_ref(M,v3) = p4;
+        M.vertices.point(v0) = p1;
+        M.vertices.point(v1) = p2;
+        M.vertices.point(v2) = p3;
+        M.vertices.point(v3) = p4;
 
         index_t f = M.facets.create_polygon(4);
         M.facets.set_vertex(f,0,v0);
@@ -138,9 +138,9 @@ namespace OGF {
             double alpha = double(i) * 2.0 * M_PI / double(precision);
             double s = ::sin(alpha);
             double c = ::cos(alpha);
-            Geom::mesh_vertex_ref(M,first_v+2*i) =
+            M.vertices.point(first_v+2*i) =
                 (center + c * X_axis + s * Y_axis - Z_axis);
-            Geom::mesh_vertex_ref(M,first_v+2*i+1) =
+            M.vertices.point(first_v+2*i+1) =
                 (center + c * X_axis + s * Y_axis + Z_axis);
         }
 
@@ -232,7 +232,7 @@ namespace OGF {
 
         index_t first_v = M.vertices.create_vertices(12);
         for(index_t v=0; v<12; ++v) {
-            Geom::mesh_vertex_ref(M,first_v+v) =
+            M.vertices.point(first_v+v) =
                 center +
 		radius * normalize(
 		    vec3(points[3*v], points[3*v+1], points[3*v+2])
@@ -268,7 +268,7 @@ namespace OGF {
 	    facets_end = mesh_grob()->facets.nb();
 	}
 	for(index_t v = v_begin; v < mesh_grob()->vertices.nb(); ++v) {
-	    vec3& p = Geom::mesh_vertex_ref(*mesh_grob(), v);
+	    vec3& p = mesh_grob()->vertices.point(v);
 	    p = center + radius * normalize(p);
 	}
 	mesh_grob()->update();

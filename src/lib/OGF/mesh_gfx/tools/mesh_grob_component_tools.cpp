@@ -408,7 +408,7 @@ namespace OGF {
 
     void MeshGrobCopyComponent::transform_subset(const mat4& M) {
         for(index_t v=first_new_vertex_; v<mesh_grob()->vertices.nb(); ++v) {
-            vec3& p = Geom::mesh_vertex_ref(*mesh_grob(), v);
+            vec3& p = mesh_grob()->vertices.point(v);
             p = transform_point(p,M);
         }
     }
@@ -430,7 +430,7 @@ namespace OGF {
         center_ = vec3(0.0, 0.0, 0.0);
         for(index_t v: mesh_grob()->vertices) {
             if(v_is_picked_[v]) {
-                const vec3& p = Geom::mesh_vertex(*mesh_grob(), v);
+                const vec3& p = mesh_grob()->vertices.point(v);
                 center_ += p;
                 ++count;
             }
@@ -446,7 +446,7 @@ namespace OGF {
         }
         for(index_t v: mesh_grob()->vertices) {
             if(v_is_picked_[v]) {
-                vec3& p = Geom::mesh_vertex_ref(*mesh_grob(), v);
+                vec3& p = mesh_grob()->vertices.point(v);
                 p = transform_point(p,M);
             }
         }
