@@ -240,8 +240,7 @@ namespace OGF {
 
     void MeshGrobCreateCenterVertex::drag(const RayPick& p_ndc) {
         if(new_vertex_ != NO_VERTEX && mesh_grob()->vertices.dimension() >= 3) {
-            Geom::mesh_vertex_ref(*mesh_grob(), new_vertex_)
-                = drag_point(p_ndc);
+            mesh_grob()->vertices.point(new_vertex_) = drag_point(p_ndc);
             mesh_grob()->update();
         }
     }
@@ -482,7 +481,7 @@ namespace OGF {
                 lv<mesh_grob()->facets.nb_vertices(picked_facet_); ++lv
             ) {
                 index_t v = mesh_grob()->facets.vertex(picked_facet_,lv);
-                vec3& p = Geom::mesh_vertex_ref(*mesh_grob(), v);
+                vec3& p = mesh_grob()->vertices.point(v);
                 p = transform_point(p,M);
             }
         }

@@ -666,7 +666,7 @@ namespace OGF {
         double howmuch
     ) {
         for(index_t v=0; v<mesh_grob()->vertices.nb(); ++v) {
-            Geom::mesh_vertex_ref(*mesh_grob(),v) += 2.0*howmuch *
+            mesh_grob()->vertices.point(v) += 2.0*howmuch *
                 vec3(
                     Numeric::random_float64() - 0.5,
                     Numeric::random_float64() - 0.5,
@@ -710,7 +710,9 @@ namespace OGF {
 		air_particles_stride = air_particles_mesh->vertices.dimension();
 	    }
 
-	    MeshGrob* fluid_omega0 = MeshGrob::find(scene_graph(), fluid_omega0_name);
+	    MeshGrob* fluid_omega0 = MeshGrob::find(
+		scene_graph(), fluid_omega0_name
+	    );
 	    if(fluid_omega0 == nullptr) {
 		Logger::err("OTM") << fluid_omega0_name << ": no such MeshGrob"
 				   << std::endl;
@@ -2271,15 +2273,17 @@ namespace OGF {
 	    if(physical) {
 		for(index_t v=0; v<nb_pts; ++v) {
 		    V[v] += tau*(
-			(inveps2 / m[v]) * (centroids[v] - Geom::mesh_vertex(*mesh_grob(),v)) +
-			vec3(0.0, 0.0, -g)
+			(inveps2 / m[v]) * (
+			    centroids[v] - mesh_grob()->vertices.point(v)
+			) + vec3(0.0, 0.0, -g)
 		    );
 		}
 	    } else {
 		for(index_t v=0; v<nb_pts; ++v) {
 		    V[v] += tau*(
-			inveps2*(centroids[v] - Geom::mesh_vertex(*mesh_grob(),v)) +
-			m[v] * vec3(0.0, 0.0, -g)
+			inveps2 * (
+			    centroids[v] - mesh_grob()->vertices.point(v)
+			) + m[v] * vec3(0.0, 0.0, -g)
 		    );
 		}
 	    }
@@ -2296,7 +2300,7 @@ namespace OGF {
 	    }
 
             for(index_t v=0; v<nb_pts; ++v) {
-                Geom::mesh_vertex_ref(*mesh_grob(),v) += tau*V[v];
+                mesh_grob()->vertices.point(v) += tau*V[v];
             }
 
 
@@ -2388,7 +2392,7 @@ namespace OGF {
 		for(index_t v=0; v<nb_pts; ++v) {
 		    V[v] += tau*(
 			(inveps2 / m[v]) *
-			(centroids[v] - Geom::mesh_vertex(*mesh_grob(),v)) +
+			(centroids[v] - mesh_grob()->vertices.point(v)) +
 			vec3(0.0, 0.0, -g)
 		    );
 		}
@@ -2396,7 +2400,7 @@ namespace OGF {
 		for(index_t v=0; v<nb_pts; ++v) {
 		    V[v] += tau*(
 			inveps2*(
-			    centroids[v] - Geom::mesh_vertex(*mesh_grob(),v)
+			    centroids[v] - mesh_grob()->vertices.point(v)
 			) + m[v] * vec3(0.0, 0.0, -g)
 		    );
 		}
@@ -2415,7 +2419,7 @@ namespace OGF {
 
 
             for(index_t v=0; v<nb_pts; ++v) {
-                Geom::mesh_vertex_ref(*mesh_grob(),v) += tau*V[v];
+                mesh_grob()->vertices.point(v) += tau*V[v];
             }
 
             omega->update();
@@ -2561,7 +2565,9 @@ namespace OGF {
 		return;
 	    }
 	}
-	vector<vec3> vertex_normal(mesh_grob()->vertices.nb(), vec3(0.0, 0.0, 0.0));
+	vector<vec3> vertex_normal(
+	    mesh_grob()->vertices.nb(), vec3(0.0, 0.0, 0.0)
+	);
 	FOR(f, mesh_grob()->facets.nb()) {
 	    vec3 N = Geom::mesh_facet_normal(*mesh_grob(), f);
 	    FOR(lv, mesh_grob()->facets.nb_vertices(f)) {

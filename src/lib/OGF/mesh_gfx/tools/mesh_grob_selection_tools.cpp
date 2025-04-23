@@ -60,8 +60,7 @@ namespace OGF {
 	    vertex_ < mesh_grob()->vertices.nb() &&
 	    mesh_grob()->vertices.dimension() >= 3
 	) {
-            Geom::mesh_vertex_ref(*mesh_grob(), vertex_)
-                = drag_point(p_ndc);
+            mesh_grob()->vertices.point(vertex_) = drag_point(p_ndc);
             mesh_grob()->update();
 	}
     }
