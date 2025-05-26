@@ -73,7 +73,7 @@ function toolbox_gui.draw_window()
 	       end
 	       autogui.tooltip(autogui.help(mclass))
 
-	       if mclass.nb_properties() > 7 then
+	       if mclass.nb_properties() > OGF.Object.nb_properties() then
 		  if imgui.BeginPopupContextItem(tool_class_name.."##ops") then
 	             tools.tool(tool_class_name)
 		     autogui.properties_editor(tools.current())
