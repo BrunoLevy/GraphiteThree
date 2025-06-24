@@ -478,7 +478,8 @@ namespace OGF {
                         index_t k = mesh_grob()->facets.vertex(f,lk);
                         vec3 p3(mesh_grob()->vertices.point_ptr(k));
                         degenerate = degenerate && PCK::aligned_3d(p1,p2,p3);
-                        has_degenerate_facets = has_degenerate_facets || degenerate;
+                        has_degenerate_facets =
+			    has_degenerate_facets || degenerate;
                     }
                 }
             }

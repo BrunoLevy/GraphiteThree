@@ -359,6 +359,7 @@ namespace OGF {
         double tri_size_adaptation,
 	bool adjust,
 	double adjust_max_edge_distance,
+	double adjust_border_importance,
         unsigned int nb_normal_iter,
         unsigned int nb_Lloyd_iter,
         unsigned int nb_Newton_iter,
@@ -432,7 +433,7 @@ namespace OGF {
             *mesh_grob(), *remesh,
             nb_points, 0,
             nb_Lloyd_iter, nb_Newton_iter, Newton_m,
-	    adjust, adjust_max_edge_distance
+	    adjust, adjust_max_edge_distance, adjust_border_importance
         );
 
 	show_mesh(remesh);

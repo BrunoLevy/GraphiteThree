@@ -166,6 +166,8 @@ namespace OGF {
 	 *  the remesh to better approximate the input mesh
 	 * \param[in] adjust_max_edge_distance maximum adjustment,
 	 *  relative to local average edge length
+	 * \param[in] adjust_border_importance importance of preserving
+	 *  borders
          * \advanced
          * \param[in] normal_iter number of normal
          *  smoothing iterations (if anisotropy is non-zero).
@@ -182,6 +184,7 @@ namespace OGF {
             double tri_size_adapt = 0.0,
 	    bool adjust = true,
 	    double adjust_max_edge_distance = 0.5,
+	    double adjust_border_importance = 2.0,
             unsigned int normal_iter = 3,
             unsigned int Lloyd_iter = 5,
             unsigned int Newton_iter = 30,

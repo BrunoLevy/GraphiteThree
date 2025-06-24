@@ -78,13 +78,15 @@ namespace OGF {
 
         // Graphite major version number is 3.
         // Graphite minor and release is geogram version.
-        std::string geogram_version = Environment::instance()->get_value("version");
+        std::string geogram_version =
+	    Environment::instance()->get_value("version");
         Environment::instance()->set_value("version", "3-" + geogram_version);
         Environment::instance()->set_value(
             "nb_cores", String::to_string(Process::number_of_cores())
         );
 
-        std::string geogram_SVN_revision=Environment::instance()->get_value("SVN revision");
+        std::string geogram_SVN_revision=
+	    Environment::instance()->get_value("SVN revision");
 
         //_____________________________________________________________
 
