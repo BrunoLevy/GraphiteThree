@@ -189,10 +189,14 @@ namespace OGF {
 
     void MeshGrobSurfaceCommands::fix_facets_orientation() {
         Attribute<double> attribute;
-        attribute.bind_if_is_defined(mesh_grob()->facets.attributes(), "visibility");
+        attribute.bind_if_is_defined(
+	    mesh_grob()->facets.attributes(), "visibility"
+	);
         if(!attribute.is_bound()) {
-            Logger::err("Attributes") << "visibility" << ": no such facet attribute of type double"
-                                      << std::endl;
+            Logger::err("Attributes")
+		<< "visibility"
+		<< ": no such facet attribute of type double"
+		<< std::endl;
             Logger::err("Attributes")
                 << "use Attributes->Facets->compute facets visibility"
                 << std::endl;
