@@ -23,15 +23,15 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the following 
+ * As an exception to the GPL, Graphite can be linked with the following
  *  (non-GPL) libraries:  Qt, SuperLU, WildMagic and CGAL
  */
 
@@ -48,7 +48,7 @@ namespace OGF {
 
     VoxelGrobAttributesCommands::~VoxelGrobAttributesCommands() {
     }
-    
+
     void VoxelGrobAttributesCommands::init_box_from_object(
         const GrobName& object_name,
         index_t nu,
@@ -81,11 +81,11 @@ namespace OGF {
 
         voxel_grob()->set_box(origin, U, V, W);
         voxel_grob()->resize(nu, nv, nw);
-        
+
         voxel_grob()->update();
     }
 
-    
+
     void VoxelGrobAttributesCommands::delete_attribute(
         const std::string& attribute_name
     ) {
@@ -113,12 +113,12 @@ namespace OGF {
                 << std::endl;
             return;
         }
-        float min_v = Numeric::max_float32();        
+        float min_v = Numeric::max_float32();
         float max_v = Numeric::min_float32();
         index_t nuvw = voxel_grob()->nu()*voxel_grob()->nv()*voxel_grob()->nw();
         for(index_t i=0; i<nuvw; ++i) {
             min_v = std::min(min_v, attribute[i]);
-            max_v = std::max(max_v, attribute[i]);            
+            max_v = std::max(max_v, attribute[i]);
         }
         if(min_v != max_v) {
             for(index_t i=0; i<nuvw; ++i) {
@@ -134,7 +134,7 @@ namespace OGF {
         voxel_grob()->update();
     }
 
-    
+
     void VoxelGrobAttributesCommands::compute_distance_to_surface(
         const MeshGrobName& surface_name, const std::string& attribute_name,
         bool signed_dist
@@ -146,24 +146,18 @@ namespace OGF {
             return;
         }
 
-        if(signed_dist && (surface->cells.nb() == 0)) {
-            Logger::err("VoxelGrob")
-                << "Signed distance needs input shape to be tetrahedralized"
-                << std::endl;
-            return;
-        }
-        
+
         Attribute<float> distance(voxel_grob()->attributes(), attribute_name);
 
-            double su = 1.0 / double(voxel_grob()->nu());
-            double sv = 1.0 / double(voxel_grob()->nv());
-            double sw = 1.0 / double(voxel_grob()->nw());        
-        
+	double su = 1.0 / double(voxel_grob()->nu());
+	double sv = 1.0 / double(voxel_grob()->nv());
+	double sw = 1.0 / double(voxel_grob()->nw());
+        MeshFacetsAABB AABB(*surface);
+
         {
-            MeshFacetsAABB AABB(*surface);
-#if defined(_OPENMP) 	    
+#if defined(_OPENMP)
    #pragma omp parallel for
-#endif	    
+#endif
             for(index_t w=0; w<voxel_grob()->nw(); ++w) {
                 for(index_t v=0; v<voxel_grob()->nv(); ++v) {
                     for(index_t u=0; u<voxel_grob()->nu(); ++u) {
@@ -182,31 +176,58 @@ namespace OGF {
             }
         }
 
-        if(signed_dist) {
-            MeshCellsAABB AABB(*surface);
-#ifdef _OPENMP            
+	// If the mesh has no cell, use MeshFacetsAABB::contain()
+	// to determine whether voxel is inside or outside surface.
+	{
+        if(signed_dist && surface->cells.nb() == 0) {
+#ifdef _OPENMP
 #pragma omp parallel for
-#endif            
-            for(index_t w=0; w<voxel_grob()->nw(); ++w) {
-                for(index_t v=0; v<voxel_grob()->nv(); ++v) {
-                    for(index_t u=0; u<voxel_grob()->nu(); ++u) {
-                        double uf = su*(double(u) + 0.5);
-                        double vf = sv*(double(v) + 0.5);
-                        double wf = sw*(double(w) + 0.5);
-                        vec3 p = voxel_grob()->origin() +
-                            uf * voxel_grob()->U() +
-                            vf * voxel_grob()->V() +
-                            wf * voxel_grob()->W() ;
-                        index_t tet = AABB.containing_tet(p);
-                        if(tet != MeshCellsAABB::NO_TET) {
-                            distance[voxel_grob()->linear_index(u,v,w)]*=-1.0f;
-                        }
-                    }
-                }
-            }
-        }
-        
-        voxel_grob()->update();
+#endif
+	    for(index_t w=0; w<voxel_grob()->nw(); ++w) {
+		for(index_t v=0; v<voxel_grob()->nv(); ++v) {
+		    for(index_t u=0; u<voxel_grob()->nu(); ++u) {
+			double uf = su*(double(u) + 0.5);
+			double vf = sv*(double(v) + 0.5);
+			double wf = sw*(double(w) + 0.5);
+			vec3 p = voxel_grob()->origin() +
+			    uf * voxel_grob()->U() +
+			    vf * voxel_grob()->V() +
+			    wf * voxel_grob()->W() ;
+			if(AABB.contains(p)) {
+			    distance[voxel_grob()->linear_index(u,v,w)]
+				*= -1.0f;
+			}
+		    }
+		}
+	    }
+	    voxel_grob()->update();
+	    return;
+	}
+    }
+
+    // Using cells is probably faster (to be tested)
+    MeshCellsAABB cAABB(*surface);
+#ifdef _OPENMP
+#pragma omp parallel for
+#endif
+    for(index_t w=0; w<voxel_grob()->nw(); ++w) {
+	for(index_t v=0; v<voxel_grob()->nv(); ++v) {
+	    for(index_t u=0; u<voxel_grob()->nu(); ++u) {
+		double uf = su*(double(u) + 0.5);
+		double vf = sv*(double(v) + 0.5);
+		double wf = sw*(double(w) + 0.5);
+		vec3 p = voxel_grob()->origin() +
+		    uf * voxel_grob()->U() +
+		    vf * voxel_grob()->V() +
+		    wf * voxel_grob()->W() ;
+		index_t tet = cAABB.containing_tet(p);
+		if(tet != MeshCellsAABB::NO_TET) {
+		    distance[voxel_grob()->linear_index(u,v,w)]*=-1.0f;
+		}
+	    }
+	}
+    }
+    voxel_grob()->update();
     }
 
     void VoxelGrobAttributesCommands::Poisson_reconstruction(
@@ -222,12 +243,12 @@ namespace OGF {
                                        << std::endl;
                 return;
             }
-            
+
             Attribute<double> normal;
             normal.bind_if_is_defined(
                 points->vertices.attributes(), "normal"
             );
-            
+
             if(!normal.is_bound()) {
                 Logger::err("Poisson") << "Missing \'normal\' vertex attribute"
                                        << std::endl;
@@ -244,9 +265,9 @@ namespace OGF {
             }
         }
 
-        MeshGrob* reconstruction = 
+        MeshGrob* reconstruction =
             MeshGrob::find_or_create(scene_graph(), reconstruction_name);
-        
+
         reconstruction->clear();
 
         PoissonReconstruction poisson;
@@ -260,11 +281,11 @@ namespace OGF {
         vec3 V(0.0, len, 0.0);
         vec3 W(0.0, 0.0, len);
         voxel_grob()->set_box(origin, U, V, W);
-        
+
         index_t res = poisson.voxel_resolution();
         voxel_grob()->resize(res,res,res);
 
-        
+
         Attribute<float> attribute(voxel_grob()->attributes(),attribute_name);
         Memory::copy(
             &attribute[0], poisson.voxel_values(), res*res*res*sizeof(float)
@@ -292,8 +313,8 @@ namespace OGF {
 				     << std::endl;
 	}
 	fclose(f);
-        voxel_grob()->update();	
+        voxel_grob()->update();
     }
-    
-    
+
+
 }
