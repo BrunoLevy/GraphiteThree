@@ -259,6 +259,10 @@ function scene_graph_gui.grob_ops(grob, main_menu)
          scene_graph.move_current_down()
       end
 
+      if imgui.MenuItem(imgui.font_icon('eye')..' show/hide') then
+         grob.visible = not grob.visible
+      end
+
       imgui.Separator()
 
       if imgui.BeginMenu(imgui.font_icon('file')..'  File...') then
