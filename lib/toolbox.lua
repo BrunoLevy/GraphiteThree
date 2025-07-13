@@ -108,6 +108,17 @@ gom.connect(
    main.render_area.mouse_down, ray_pick.grab
 ).if_arg('control', 'false').if_arg('shift', 'false')
 
+
+-- When grob selection tool is active, and when using
+-- <ctrl> to move the camera, ensure that when releasing
+-- right mouse one does not get the pulldown context menu
+gom.connect(
+   main.render_area.mouse_down,
+   function()
+      main.picked_grob = nil
+   end
+).if_arg('control', 'true')
+
 gom.connect(
    main.render_area.mouse_move, ray_pick.drag
 ).if_arg('control', 'false').if_arg('shift', 'false')

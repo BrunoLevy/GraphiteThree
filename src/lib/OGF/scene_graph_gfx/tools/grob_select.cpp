@@ -88,8 +88,9 @@ namespace OGF {
 	    }
 
 	    Object* main = scene_graph()->get_application();
-	    if(main != nullptr &&
-	       main->meta_class()->find_property("picked_grob") != nullptr
+	    if(
+		main != nullptr &&
+		main->meta_class()->find_property("picked_grob") != nullptr
 	    ) {
 		// For context menu.
 		Any value;

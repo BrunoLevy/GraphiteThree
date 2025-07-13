@@ -117,7 +117,7 @@ function scene_graph_gui.menu_map.get(grob)
 	    local menu_name = default_menu_name
 	    if mslot.has_custom_attribute('menu') then
    	       local submenu_name = mslot.custom_attribute_value('menu')
-	       -- Remove trailing '/' if present	
+	       -- Remove trailing '/' if present
 	       if submenu_name:sub(-1) == '/' then
 		   submenu_name = submenu_name:sub(1,-2)
 	       end
@@ -131,13 +131,13 @@ function scene_graph_gui.menu_map.get(grob)
                    if(grob.meta_class.name == 'OGF::SceneGraph') then
                       menu_name = 'menubar/'..menu_name
                    end
-	       else 
+	       else
 	          menu_name = menu_name .. '/' .. submenu_name
 	       end
 	    end
             if autogui.member_is_visible(nil, mslot) then
 	       scene_graph_gui.menu_map.insert(menus, menu_name, mslot)
-	    end   
+	    end
          end
       end
    end
@@ -165,8 +165,8 @@ function scene_graph_gui.menu_map.draw(grob, node)
 
          object_as_string = object_as_string ..
             '.query_interface(\''..command_class_name..'\')'
-	    
-         autogui.command_menu_item(grob, v, object_as_string)	    
+
+         autogui.command_menu_item(grob, v, object_as_string)
       else
          if v.name ~= 'menubar' then
             if imgui.BeginMenu(v.name) then
@@ -238,7 +238,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
          autogui.rename_new = dup.name
          scene_graph.current_object = dup.name
       end
-      
+
       if imgui.MenuItem(imgui.font_icon('window-close')..'  delete') then
          main.save_state()
          main.picked_grob = nil
@@ -267,7 +267,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
         end
         imgui.EndMenu()
      end
-   end  
+   end
    return grob
 end
 
@@ -278,7 +278,7 @@ function scene_graph_gui.about_window()
    _,scene_graph_gui.about_visible = imgui.Begin(
         imgui.font_icon('info')..'  About Graphite...',
 	scene_graph_gui.about_visible,
-	 ImGuiWindowFlags_NoDocking	
+	 ImGuiWindowFlags_NoDocking
    )
    if scene_graph_gui.about_visible then
       imgui.Image(
@@ -293,7 +293,7 @@ function scene_graph_gui.about_window()
       )
       imgui.Separator()
       imgui.Text('Websites: ');
-      imgui.Text('   https://github.com/BrunoLevy/GraphiteThree/');      
+      imgui.Text('   https://github.com/BrunoLevy/GraphiteThree/');
       imgui.Text('   https://github.com/BrunoLevy/geogram');
       imgui.Separator()
       imgui.Text('\n')
@@ -301,7 +301,7 @@ function scene_graph_gui.about_window()
       imgui.SameLine()
       local iconname = 'logos/small-erc-logo-dark'
       if gom.get_environment_value('gfx:style') == 'Light' then
-         iconname = 'logos/small-erc-logo'	  
+         iconname = 'logos/small-erc-logo'
       end
       imgui.Image(
          main.resolve_icon(iconname,true),
@@ -340,7 +340,7 @@ end
 
 function scene_graph_gui.file_menu()
        if imgui.BeginMenu('File...') then
-       
+
           if imgui.MenuItem(
 	      imgui.font_icon('folder-open')..'  Load...##scene_graph'
 	  ) then
@@ -363,9 +363,9 @@ function scene_graph_gui.file_menu()
 	        gom.err(
 		   {tag='SceneGraph',message='There is no selected object.'}
 		)
-	     else 
+	     else
 	        scene_graph_gui.save_grob_as(scene_graph.current())
-             end		
+             end
           end
 
           if imgui.MenuItem(
@@ -463,13 +463,13 @@ function scene_graph_gui.scene_graph_ops()
   imgui.Selectable(name,false)
 
   if imgui.BeginPopupContextItem(name..'##ops') then
-       scene_graph_gui.scene_graph_menu(true)       
+       scene_graph_gui.scene_graph_menu(true)
        imgui.EndPopup()
   end
 
   local filename=''
   local sel
-  
+
   sel,filename = imgui.FileDialog('##scene_graph##load_dlg',filename)
   if sel then
      scene_graph.load_object({value=filename,invoked_from_gui=true})
@@ -489,7 +489,7 @@ end
 
 
 -- \brief Draws the scene-graph and object list
--- \details Handles context-menus 
+-- \details Handles context-menus
 
 function scene_graph_gui.draw()
    local current_name=scene_graph.current_object
@@ -497,7 +497,7 @@ function scene_graph_gui.draw()
 
    imgui.Indent()
    for i=0,scene_graph.nb_children-1 do
-       -- Need to verify in case an object was not deleted 
+       -- Need to verify in case an object was not deleted
        -- during iteration.
        if i < scene_graph.nb_children then
           local grob = scene_graph.ith_child(i)
@@ -530,7 +530,7 @@ function scene_graph_gui.draw()
 		  ImGuiInputTextFlags_AutoSelectAll
              )
 	     if sel then
-                main.save_state()             
+                main.save_state()
 		scene_graph.current_object = name
 		local o = scene_graph.current()
 		o.rename(autogui.rename_new)
@@ -554,11 +554,11 @@ function scene_graph_gui.draw()
           if i < scene_graph.nb_children then
 	     grob = scene_graph.ith_child(i)
 	     name = grob.name
-             if imgui.BeginPopupContextItem(name..'##ops') then	  
+             if imgui.BeginPopupContextItem(name..'##ops') then
                  grob = scene_graph_gui.grob_ops(grob)
-	         imgui.EndPopup()	      
+	         imgui.EndPopup()
 	     end
-	  end   
+	  end
 	  if grob == nil then
 	     i = scene_graph.nb_children
 	  end
