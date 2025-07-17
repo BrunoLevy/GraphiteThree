@@ -36,6 +36,7 @@
 
 #include <OGF/gompy/interpreter/py_graphite_metaclass.h>
 #include <OGF/gompy/interpreter/py_graphite_object.h>
+#include <OGF/gompy/interpreter/interop.h>
 #include <OGF/gom/reflection/meta_class.h>
 
 namespace OGF {
@@ -62,6 +63,41 @@ namespace OGF {
 	    Py_TYPE(self)->tp_free(self_in);
 	}
 
+	PyObject* graphite_metaclass_get_name(PyObject* self, void* closure) {
+	    geo_argused(closure);
+	    geo_debug_assert(PyGraphite_Check(self));
+	    Object* object = PyGraphite_GetObject(self);
+	    MetaClass* mclass = dynamic_cast<MetaClass*>(object);
+	    std::string result_string;
+	    if(mclass == nullptr) {
+		result_string = "null";
+	    } else {
+		result_string = mclass->name();
+	    }
+	    PyObject* result = string_to_python(result_string);
+	    Py_INCREF(result);
+	    return result;
+	}
+
+
+	PyGetSetDef graphite_MetaClass_getsets[] = {
+	    {
+		const_cast<char*>("__name__"),
+		graphite_metaclass_get_name,
+		nullptr,
+		nullptr,
+		nullptr
+	    },
+	    {
+		nullptr, /* name */
+		nullptr, /* getter */
+		nullptr, /* setter */
+		nullptr, /* doc */
+		nullptr  /* closure */
+	    }
+	};
+
+
 	PyTypeObject graphite_MetaClassType = {
 	    PyVarObject_HEAD_INIT(nullptr, 0)
 	    "graphite.MetaClass",      // tp_name
@@ -81,7 +117,7 @@ namespace OGF {
 		                                   Py_TPFLAGS_TYPE_SUBCLASS
                                                 /* | Py_TPFLAGS_HEAPTYPE */ ;
 
-	    graphite_MetaClassType.tp_getset     = graphite_Object_getsets;
+	    graphite_MetaClassType.tp_getset     = graphite_MetaClass_getsets;
 	    graphite_MetaClassType.tp_base       = &graphite_ObjectType;
 	    graphite_MetaClassType.tp_new        = graphite_MetaClass_new;
 

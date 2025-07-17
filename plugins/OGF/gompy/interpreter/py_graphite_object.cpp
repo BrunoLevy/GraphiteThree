@@ -143,12 +143,6 @@ namespace OGF {
 	    }
 	    std::string name = python_to_string(name_in);
 
-	    // Make PyCharm happy with Graphite Metaclass Objects
-	    // (TODO: in graphite_MetaClassType.tp_getset instead)
-	    if(name == "__name__") {
-		name = "name";
-	    }
-
 	    // Case 1: regular property
 	    MetaProperty* mprop = object->meta_class()->find_property(name);
 	    if(mprop != nullptr) {
