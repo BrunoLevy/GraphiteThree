@@ -42,26 +42,9 @@
 #include <OGF/scene_graph/types/scene_graph.h>
 #include <OGF/scene_graph/types/properties.h>
 
-/*
-#include <OGF/scene_graph/shaders/shader.h>
-#include <OGF/scene_graph/shaders/shader_manager.h>
-*/
-
 #include <OGF/scene_graph/types/properties.h>
 #include <OGF/scene_graph/commands/commands.h>
 #include <OGF/scene_graph/commands/scene_graph_commands.h>
-
-/*
-#include <OGF/scene_graph/types/scene_graph_shader_manager.h>
-#include <OGF/scene_graph/types/scene_graph_tools_manager.h>
-#include <OGF/scene_graph/tools/tool.h>
-#include <OGF/scene_graph/tools/tools_manager.h>
-#include <OGF/scene_graph/tools/grob_pan.h>
-#include <OGF/scene_graph/tools/grob_select.h>
-#include <OGF/scene_graph/tools/grob_light.h>
-#include <OGF/scene_graph/full_screen_effects/ambient_occlusion.h>
-#include <OGF/scene_graph/full_screen_effects/unsharp_masking.h>
-*/
 
 #include <OGF/basic/modules/module.h>
 
@@ -73,6 +56,7 @@ namespace OGF {
 
     void scene_graph_libinit::initialize() {
         Logger::out("Init") << "<scene_graph>" << std::endl;
+
         //_____________________________________________________________
 
 
@@ -80,12 +64,6 @@ namespace OGF {
         SceneGraphLibrary::initialize();
 
 	ogf_register_abstract_grob_type<Grob>();
-	/*
-	ogf_register_grob_tool<Grob, GrobPan>();
-	ogf_register_grob_tool<Grob, GrobSelect>();
-	ogf_register_grob_tool<Grob, GrobLight>();
-	*/
-
 	ogf_register_abstract_grob_type<CompositeGrob>();
 
 	// SceneGraph is not an abstract class, but I do not want
@@ -97,12 +75,6 @@ namespace OGF {
         ogf_register_grob_read_file_extension<SceneGraph>("aln");
         ogf_register_grob_write_file_extension<SceneGraph>("graphite");
         ogf_register_grob_write_file_extension<SceneGraph>("graphite_ascii");
-
-	/*
-        ogf_register_full_screen_effect<PlainFullScreenEffect>("Plain");
-        ogf_register_full_screen_effect<AmbientOcclusion>("SSAO");
-        ogf_register_full_screen_effect<UnsharpMasking>();
-	*/
 
         //_____________________________________________________________
 
