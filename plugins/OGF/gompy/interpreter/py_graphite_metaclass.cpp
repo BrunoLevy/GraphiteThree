@@ -75,9 +75,11 @@ namespace OGF {
 
 	    // TYPE_SUBCLASS so that Python knows it is a type, and
 	    // HEAPTYPE, so that Python knows it is not a static type
+	    //   \__> this one causes problems, graphite_MetaClassType then
+	    // needs to be a PyHeapTypeObject, to be investigated.
 	    graphite_MetaClassType.tp_flags      = Py_TPFLAGS_DEFAULT |
-		                                   Py_TPFLAGS_TYPE_SUBCLASS |
-		                                   Py_TPFLAGS_HEAPTYPE ;
+		                                   Py_TPFLAGS_TYPE_SUBCLASS
+                                                /* | Py_TPFLAGS_HEAPTYPE */ ;
 
 	    graphite_MetaClassType.tp_getset     = graphite_Object_getsets;
 	    graphite_MetaClassType.tp_base       = &graphite_ObjectType;
