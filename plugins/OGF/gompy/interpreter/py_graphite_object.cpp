@@ -37,6 +37,7 @@
 #include <OGF/gompy/interpreter/py_graphite_object.h>
 #include <OGF/gompy/interpreter/py_graphite_metaclass.h>
 #include <OGF/gompy/interpreter/py_graphite_callable.h>
+#include <OGF/gompy/interpreter/py_graphite_iterator.h>
 #include <OGF/gompy/interpreter/interop.h>
 #include <OGF/gompy/interpreter/nl_vector_interop.h>
 #include <OGF/gompy/interpreter/python_interpreter.h>
@@ -428,6 +429,12 @@ namespace OGF {
 	    return result;
 	}
 
+	static PyObject* graphite_Object_iter(PyObject* self) {
+	    geo_debug_assert(PyGraphite_Check(self));
+	    Object* object = PyGraphite_GetObject(self);
+	    return PyGraphiteIterator_New(object);
+	}
+
 	/**
 	 * \brief Methods definition for Python wrapper around Graphite object.
 	 */
@@ -598,6 +605,7 @@ namespace OGF {
 	    graphite_ObjectType.tp_new         = graphite_Object_new;
 	    graphite_ObjectType.tp_richcompare = graphite_Object_richcompare;
 	    graphite_ObjectType.tp_hash        = graphite_Object_hash;
+	    graphite_ObjectType.tp_iter        = graphite_Object_iter;
 	}
 
 	/***************************************************************/

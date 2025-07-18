@@ -38,6 +38,7 @@
 #include <OGF/gompy/interpreter/python_interpreter.h>
 #include <OGF/gompy/interpreter/python.h>
 #include <OGF/gompy/interpreter/py_graphite_object.h>
+#include <OGF/gompy/interpreter/py_graphite_iterator.h>
 #include <OGF/gompy/interpreter/py_graphite_metaclass.h>
 #include <OGF/gompy/interpreter/py_graphite_callable.h>
 #include <OGF/gompy/interpreter/gom_python_callable.h>
@@ -104,6 +105,7 @@ namespace {
     PyMODINIT_FUNC PyInit_gom(void);
     PyMODINIT_FUNC PyInit_gom() {
 	init_graphite_ObjectType();
+	init_graphite_IteratorType();
 	init_graphite_CallableType();
 	init_graphite_MetaClassType();
         PyObject* m = PyModule_Create(&graphite_moduledef);
@@ -112,6 +114,10 @@ namespace {
             return Py_None;
         }
         if (PyType_Ready(&graphite_ObjectType) < 0) {
+	    Py_INCREF(Py_None);
+            return Py_None;
+        }
+        if (PyType_Ready(&graphite_IteratorType) < 0) {
 	    Py_INCREF(Py_None);
             return Py_None;
         }

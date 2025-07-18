@@ -643,6 +643,22 @@ namespace OGF {
         }
     }
 
+
+    index_t Scope::get_nb_elements() const {
+	std::vector<std::string> names;
+	list_names(names);
+	return index_t(names.size());
+    }
+
+    void Scope::get_element(index_t i, Any& value) const {
+	std::vector<std::string> names;
+	list_names(names);
+	if(i >= names.size()) {
+	    return;
+	}
+	value = const_cast<Scope*>(this)->resolve(names[i]);
+    }
+
     /********************************************************/
 
     GlobalScope::GlobalScope(Interpreter* interpreter)

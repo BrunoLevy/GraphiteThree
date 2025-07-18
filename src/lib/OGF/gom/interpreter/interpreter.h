@@ -101,6 +101,11 @@ namespace OGF {
             const std::string& needle, const std::string& path=""
         ) override;
 
+	virtual index_t get_nb_elements() const override;
+
+	virtual void get_element(index_t i, Any& value) const override;
+
+
       protected:
 	Object* object_;
     };
