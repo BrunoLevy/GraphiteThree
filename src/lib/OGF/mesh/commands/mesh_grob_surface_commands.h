@@ -460,8 +460,9 @@ namespace OGF {
 	/**
 	 * \menu Atlas/Segmentation
 	 * \brief Unglues facet edges adjacent to two different charts
+	 * \param[in] attrib_name name of the attribute that stores chart ids
 	 */
-	void unglue_charts();
+	void unglue_charts(const std::string& attrib_name = "chart");
 
 	/**
 	 * \menu Atlas/Parameterization

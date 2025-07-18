@@ -1193,11 +1193,11 @@ namespace OGF {
 	mesh_grob()->update();
     }
 
-    void MeshGrobSurfaceCommands::unglue_charts() {
+    void MeshGrobSurfaceCommands::unglue_charts(const std::string& attrib_name) {
 	Attribute<index_t> chart;
-	chart.bind_if_is_defined(mesh_grob()->facets.attributes(), "chart");
+	chart.bind_if_is_defined(mesh_grob()->facets.attributes(), attrib_name);
 	if(!chart.is_bound()) {
-	    Logger::err("Unglue") << "chart: no such facet attribute"
+	    Logger::err("Unglue") << attrib_name << ": no such facet attribute"
 				  << std::endl;
 	    return;
 	}

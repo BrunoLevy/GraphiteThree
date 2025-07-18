@@ -25,16 +25,16 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
- 
+
+
 #include <OGF/scene_graph/commands/commands.h>
 #include <OGF/scene_graph/grob/grob.h>
 #include <OGF/scene_graph/types/scene_graph.h>
@@ -55,8 +55,8 @@ namespace OGF {
     Interface::~Interface() {
     }
 
-    void Interface::set_grob(Grob* grob) { 
-        grob_ = grob ; 
+    void Interface::set_grob(Grob* grob) {
+        grob_ = grob ;
     }
 
     SceneGraph* Interface::scene_graph() const {
@@ -67,7 +67,7 @@ namespace OGF {
 /**************************************************/
 
     bool Commands::command_is_running_ = false;
-    
+
     Commands::Commands() : chrono_(true) {
     }
 
@@ -79,8 +79,8 @@ namespace OGF {
         const ArgList& args_in, Any& ret_val
     ) {
 
-        if(command_is_running_) {
-            Logger::warn("Commands") 
+        if(!args_in.has_arg("override_lock") && command_is_running_) {
+            Logger::warn("Commands")
                 << "Tryed to invoke command from locked Commands class"
                 << std::endl ;
             return false ;
@@ -95,7 +95,7 @@ namespace OGF {
 
 
         bool invoked_from_gui = false;
-        
+
         // Copy argument list, ignore arguments that start with '_'
         ArgList args;
         for(index_t i=0; i<args_in.nb_args(); ++i) {
@@ -106,29 +106,29 @@ namespace OGF {
                     invoked_from_gui = true;
                 }
                 continue;
-            } 
+            }
             args.create_arg(name, value);
         }
 
-        
+
         if(interpreter() != nullptr) {
 
             if(invoked_from_gui) {
                 Object* main = interpreter()->resolve_object("main");
                 main->invoke_method("save_state");
             }
-            
+
 	    bool interp_is_lua = (CmdLine::get_arg("gel") == "Lua");
 	    std::ostringstream out ;
 
             // TODO: use new .I.xxx. instead of query_interface()
 	    if(get_grob()->meta_class()->name() == "OGF::SceneGraph") {
-		out << "scene_graph.query_interface(\"" 
-		    << meta_class()->name() 
+		out << "scene_graph.query_interface(\""
+		    << meta_class()->name()
 		    << "\")" ;
 	    } else {
-		out << "scene_graph.current().query_interface(\"" 
-		    << meta_class()->name() 
+		out << "scene_graph.current().query_interface(\""
+		    << meta_class()->name()
 		    << "\")" ;
 	    }
 	    out << "." << method_name;
@@ -142,13 +142,13 @@ namespace OGF {
 	    // TODO: do not add quotes around integers, floating point
 	    // numbers and truth values.
 	    for(unsigned int i=0; i<args.nb_args(); i++) {
-		out << args.ith_arg_name(i) << "=" 
+		out << args.ith_arg_name(i) << "="
 		    << "\"" << args.ith_arg_value(i).as_string() << "\"" ;
 		if(i != args.nb_args() - 1) {
 		    out << ", " ;
 		}
 	    }
-            
+
 	    if(interp_is_lua) {
 		// name-value pairs call: '}' = create LUA table.
 		out << "})" << std::endl ;
@@ -161,7 +161,7 @@ namespace OGF {
         // Do not display timings for methods with continuous updates
         // (e.g. set_multiresolution_level)
         MetaMethod* mmethod = meta_class()->find_method(method_name) ;
-        bool do_timings = chrono_ && mmethod != nullptr && 
+        bool do_timings = chrono_ && mmethod != nullptr &&
             !mmethod->has_custom_attribute("continuous_update") ;
 
         if(get_grob() != nullptr) {
@@ -179,14 +179,14 @@ namespace OGF {
                     method_name, args, ret_val
                 ) ;
                 Logger::out("timings")
-                    << "(" << full_name << ") Elapsed time: " 
+                    << "(" << full_name << ") Elapsed time: "
                     << timer.elapsed_time() << std::endl ;
 
 		// TODO: re-enable changing current object here.
 
 		//   If the user clicked on the object list attempting
 		// to change current object, restore selected item.
-		
+
 		// TODO: take into account user changed object here
 
 		command_is_running_ = false ;
@@ -207,5 +207,5 @@ namespace OGF {
 	}
 	return get_grob()->interpreter();
     }
-    
+
 }
