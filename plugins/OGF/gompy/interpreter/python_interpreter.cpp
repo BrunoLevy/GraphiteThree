@@ -55,11 +55,6 @@
 
 /*************************************************************************/
 
-// TODO:
-//  - isubclass(), isinstance() for NL Vectors (jax complains)
-
-/*************************************************************************/
-
 namespace {
     using namespace OGF;
     using namespace OGF::GOMPY;
@@ -92,7 +87,7 @@ namespace {
 
     static struct PyModuleDef graphite_moduledef = {
         PyModuleDef_HEAD_INIT,
-        "GOM",                   /* m_name */
+        "gompy",                   /* m_name */
         "Graphite Object Model", /* m_doc */
         -1,                      /* m_size */
         graphite_module_methods, /* m_methods */
@@ -143,102 +138,98 @@ namespace OGF {
     PythonInterpreter::PythonInterpreter() : main_module_(nullptr) {
 	use_embedded_interpreter_ = (Py_IsInitialized() == 0);
 
+	if(!use_embedded_interpreter_) {
+	    return;
+	}
+
+	// All the rest is for when we are in Graphite
+
 	bool FPE_bkp = Process::FPE_enabled();
 	Process::enable_FPE(false);
 
-	if(use_embedded_interpreter_) {
-	    PyConfig config;
-	    PyConfig_InitPythonConfig(&config);
+	PyConfig config;
+	PyConfig_InitPythonConfig(&config);
 
 
-	    // If there are Python subdirectories in OGF_PATH, add them
-	    // to Python path.
-	    const std::vector<std::string>& ogf_path =
-		FileManager::instance()->ogf_path();
-	    if(
-		ogf_path.size() > 0 &&
-		FileSystem::is_directory(ogf_path[0] + "/lib/Python")
-	    ) {
-		Logger::out("GOMpy")
-		    << "Found local python lib. directory in Graphite: "
-		    << ogf_path[0] + "/lib/Python"
-		    << std::endl;
-		Logger::out("GOMpy")
-		    << " -> Setting python path there." << std::endl;
-		std::string python_path;
-		for(index_t i=0; i<ogf_path.size(); ++i) {
-		    if(python_path.length() != 0) {
+	// If there are Python subdirectories in OGF_PATH, add them
+	// to Python path.
+	const std::vector<std::string>& ogf_path =
+	    FileManager::instance()->ogf_path();
+	if(
+	    ogf_path.size() > 0 &&
+	    FileSystem::is_directory(ogf_path[0] + "/lib/Python")
+	) {
+	    Logger::out("GOMpy")
+		<< "Found local python lib. directory in Graphite: "
+		<< ogf_path[0] + "/lib/Python"
+		<< std::endl;
+	    Logger::out("GOMpy")
+		<< " -> Setting python path there." << std::endl;
+	    std::string python_path;
+	    for(index_t i=0; i<ogf_path.size(); ++i) {
+		if(python_path.length() != 0) {
 #ifdef GEO_OS_WINDOWS
-			python_path += ';';
+		    python_path += ';';
 #else
-			python_path += ':';
+		    python_path += ':';
 #endif
-		    }
-		    python_path += (ogf_path[i] + "/lib/Python");
 		}
-		config.pythonpath_env =
-		    Py_DecodeLocale(python_path.c_str(), nullptr);
+		python_path += (ogf_path[i] + "/lib/Python");
 	    }
-
-
-	    // Needed since our module is not in a separate shared object.
-	    PyImport_AppendInittab("GOM", PyInit_gom);
-	    Py_InitializeFromConfig(&config);
-
-	    // PyMem_RawFree(config.pythonpath_env);
-               // TODO: do we need to do that ?
-
-	    // What follows is the low-level equivalent to:
-	    //PyRun_SimpleString("import GOM");
-
-	    PyObject* gom_module = PyImport_ImportModule("GOM");
-	    main_module_ = PyImport_AddModule("__main__");
-	    PyObject_SetAttrString(main_module_, "GOM", gom_module);
-	    Py_XDECREF(gom_module);
-
-	    PyObject* gom = PyGraphiteObject_New(this, false);
-	    Py_INCREF(gom);
-	    PyObject_SetAttrString(main_module_, "gom", gom);
-	} else {
-	    main_module_ = PyImport_AddModule("__main__");
-	    PyObject* gom = PyGraphiteObject_New(this, false);
-	    Py_INCREF(gom);
-	    PyObject_SetAttrString(main_module_, "gom", gom);
+	    config.pythonpath_env =
+		Py_DecodeLocale(python_path.c_str(), nullptr);
 	}
+
+
+	// Needed since our module is not in a separate shared object.
+	PyImport_AppendInittab("gompy", PyInit_gom);
+	Py_InitializeFromConfig(&config);
+
+	// PyMem_RawFree(config.pythonpath_env);
+	// TODO: do we need to do that ?
+
+	// What follows is the low-level equivalent to:
+	//PyRun_SimpleString("import gompy");
+	PyObject* gom_module = PyImport_ImportModule("gompy");
+	main_module_ = PyImport_AddModule("__main__");
+	PyObject_SetAttrString(main_module_, "gompy", gom_module);
+	Py_XDECREF(gom_module);
+	PyObject* gom = PyGraphiteObject_New(this, false);
+	Py_INCREF(gom);
+	PyObject_SetAttrString(main_module_, "gom", gom);
 
 	//   If Python interpreter is embedded in Graphite,
 	// redirect output and error to Graphite console.
-	if(use_embedded_interpreter_) {
-	    PyRun_SimpleString(
-		"class OutGraphiteStream:                   \n"
-		"  def __init__(self):                      \n"
-		"     pass                                  \n"
-		"  def write(self, string):                 \n"
-		"     if string != \'\\n\':                 \n"
-		"        gom.out(string)                    \n"
-		"  def flush(self):                         \n"
-		"     pass                                  \n"
-		"class ErrGraphiteStream:                   \n"
-		"  def __init__(self):                      \n"
-		"     self.buffer = str()                   \n"
-		"  def write(self, string):                 \n"
-		"     for c in string:                      \n"
-		"        self.putc(c)                       \n"
-		"  def putc(self,c):                        \n"
-		"     if c == '\\\n':                       \n"
-		"        self.flush()                       \n"
-		"     else:                                 \n"
-		"        self.buffer += c                   \n"
-		"  def flush(self):                         \n"
-		"     gom.err(self.buffer)                  \n"
-		"     self.buffer = str()                   \n"
-		"                                           \n"
-		"import sys                                 \n"
-		"sys.stdout = OutGraphiteStream()           \n"
-		"sys.stderr = ErrGraphiteStream()           \n"
-		"sys.displayhook = gom.out                  \n"
-	    );
-	}
+	PyRun_SimpleString(
+	    "class OutGraphiteStream:                   \n"
+	    "  def __init__(self):                      \n"
+	    "     pass                                  \n"
+	    "  def write(self, string):                 \n"
+	    "     if string != \'\\n\':                 \n"
+	    "        gom.out(string)                    \n"
+	    "  def flush(self):                         \n"
+	    "     pass                                  \n"
+	    "class ErrGraphiteStream:                   \n"
+	    "  def __init__(self):                      \n"
+	    "     self.buffer = str()                   \n"
+	    "  def write(self, string):                 \n"
+	    "     for c in string:                      \n"
+	    "        self.putc(c)                       \n"
+	    "  def putc(self,c):                        \n"
+	    "     if c == '\\\n':                       \n"
+	    "        self.flush()                       \n"
+	    "     else:                                 \n"
+	    "        self.buffer += c                   \n"
+	    "  def flush(self):                         \n"
+	    "     gom.err(self.buffer)                  \n"
+	    "     self.buffer = str()                   \n"
+	    "                                           \n"
+	    "import sys                                 \n"
+	    "sys.stdout = OutGraphiteStream()           \n"
+	    "sys.stderr = ErrGraphiteStream()           \n"
+	    "sys.displayhook = gom.out                  \n"
+	);
+
 	Process::enable_FPE(FPE_bkp);
     }
 
@@ -346,9 +337,7 @@ namespace OGF {
         PyObject_SetAttrString(main_module_, id.c_str(), obj);
     }
 
-    Any PythonInterpreter::resolve(
-	const std::string& id, bool quiet
-    ) const {
+    Any PythonInterpreter::resolve(const std::string& id, bool quiet) const {
 	Any any_result;
 	PyObject* result =
 	    PyObject_GetAttrString(main_module_, id.c_str());
