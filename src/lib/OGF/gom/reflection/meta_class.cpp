@@ -402,6 +402,10 @@ namespace OGF {
         return false;
     }
 
+    Object* MetaClass::get_instance() const {
+	return instance_;
+    }
+
     bool MetaClass::is_subtype_of(const MetaType* other) const {
         const MetaClass* other_as_mclass = dynamic_cast<const MetaClass*>(other);
         if(other_as_mclass == nullptr) {

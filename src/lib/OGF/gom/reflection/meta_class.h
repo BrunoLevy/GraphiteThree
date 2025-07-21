@@ -304,9 +304,7 @@ namespace OGF {
 	 * \brief For singletons, returns instance
 	 * \return the unique instance or nullptr if not already created
 	 */
-	Object* get_instance() const {
-	    return instance_;
-	}
+	Object* get_instance() const;
 
     public:
 
