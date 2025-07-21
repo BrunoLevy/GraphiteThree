@@ -75,12 +75,27 @@ namespace {
 	// - We need this getattro override that returns something
 	// when "__path__" is looked up, else Python runtime does not
 	// see our module as a package (from which gompy.xxx can be imported).
-	// - import gompy.xxx as yyy does not invoke get_attro(), it uses instead
-	// the system-wide module dictionary, populated with what we want to be
-	// able to import in PythonInterpreter::PythonInterpreter().
+	// - import gompy.xxx as yyy does not invoke get_attro(), it uses
+	// instead the system-wide module dictionary, populated with what we
+	// want to be able to import in PythonInterpreter::PythonInterpreter().
+	// (but it needs to be also handled here)
 	std::string name = python_to_string(name_in);
 	if(name == "__path__") {
 	    return string_to_python("");
+	}
+	if(name == "gom") {
+	    PyObject* py_gom = PyGraphiteObject_New(
+		Interpreter::instance_by_language("Python")
+	    );
+	    Py_INCREF(py_gom);
+	    return py_gom;
+	}
+	if(name == "types") {
+	    PyObject* py_meta_types = PyGraphiteObject_New(
+		Interpreter::instance_by_language("Python")->get_meta_types()
+	    );
+	    Py_INCREF(py_meta_types);
+	    return py_meta_types;
 	}
 	// Positioning this exception indicates that attribute lookup fallsback
 	// to default behavior.
@@ -165,8 +180,10 @@ namespace OGF {
 
 	if(!use_embedded_interpreter_) {
 	    // Shortcuts that one can import ... as ...
+	    // gompy.interpreter()                -> gompy.gom
 	    // gompy.interpreter().meta_types     -> gompy.types
 	    // gompy.interpreter().meta_types.OGF -> gompy.types.OGF
+	    // (they need also to be handled by module's __getattr__)
 
 	    PyObject *sys_modules = PySys_GetObject("modules");
 	    Scope* meta_types = get_meta_types();
@@ -174,10 +191,12 @@ namespace OGF {
 	    meta_types->resolve("OGF").get_value(OGF);
 	    geo_assert(OGF != nullptr);
 
+	    PyObject* py_gom = PyGraphiteObject_New(this);
 	    PyObject* py_meta_types = PyGraphiteObject_New(meta_types);
 	    PyObject* py_OGF = PyGraphiteObject_New(OGF);
 
-	    // Note: PyDict_SetItemString() increases refconut
+	    // Note: PyDict_SetItemString() increases refcount
+	    PyDict_SetItemString(sys_modules, "gompy.gom", py_gom);
 	    PyDict_SetItemString(sys_modules, "gompy.types", py_meta_types);
 	    PyDict_SetItemString(sys_modules, "gompy.types.OGF", py_OGF);
 	    return;
