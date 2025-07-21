@@ -130,6 +130,9 @@ namespace OGF {
 	    PyObject* self, PyObject* args, PyObject* keywords
 	);
 
+	PyObject* graphite_Object_getattro(
+	    PyObject* self, PyObject* name_in
+	);
     }
 }
 

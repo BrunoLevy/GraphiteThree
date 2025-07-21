@@ -1,7 +1,6 @@
 # To be run outside Graphite (after gompy is installed)
 
-import gompy
-OGF = gompy.interpreter().meta_types.OGF
+import gompy.types.OGF as OGF
 
 S = OGF.MeshGrob()
 S.I.Shapes.create_sphere()

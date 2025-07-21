@@ -130,7 +130,7 @@ namespace OGF {
 	    return Py_hash_t(object);
 	}
 
-	static PyObject* graphite_Object_getattro(
+	PyObject* graphite_Object_getattro(
 	    PyObject* self, PyObject* name_in
 	) {
 	    geo_debug_assert(PyGraphite_Check(self));

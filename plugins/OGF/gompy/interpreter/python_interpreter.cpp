@@ -70,12 +70,36 @@ namespace {
 	return result;
     }
 
+    PyObject* graphite_module_get_attro(PyObject* self, PyObject* name_in) {
+	geo_argused(self);
+	// - We need this getattro override that returns something
+	// when "__path__" is looked up, else Python runtime does not
+	// see our module as a package (from which gompy.xxx can be imported).
+	// - import gompy.xxx as yyy does not invoke get_attro(), it uses instead
+	// the system-wide module dictionary, populated with what we want to be
+	// able to import in PythonInterpreter::PythonInterpreter().
+	std::string name = python_to_string(name_in);
+	if(name == "__path__") {
+	    return string_to_python("");
+	}
+	// Positioning this exception indicates that attribute lookup fallsback
+	// to default behavior.
+	PyErr_SetObject(PyExc_AttributeError, name_in);
+	return nullptr;
+    }
+
     PyMethodDef graphite_module_methods[] = {
 	{
 	    "interpreter",
 	    graphite_interpreter,
 	    METH_NOARGS,
 	    "gets the interpreter"
+	},
+	{
+	    "__getattr__",
+	    graphite_module_get_attro,
+	    METH_O,
+	    "gets an attribute from the interpreter"
 	},
         {
             nullptr, /* ml_name */
@@ -87,7 +111,7 @@ namespace {
 
     static struct PyModuleDef graphite_moduledef = {
         PyModuleDef_HEAD_INIT,
-        "gompy",                   /* m_name */
+        "gompy",                 /* m_name */
         "Graphite Object Model", /* m_doc */
         -1,                      /* m_size */
         graphite_module_methods, /* m_methods */
@@ -136,9 +160,26 @@ namespace {
 namespace OGF {
 
     PythonInterpreter::PythonInterpreter() : main_module_(nullptr) {
+	// Tests whether Python is running in Graphite (true) or not (false)
 	use_embedded_interpreter_ = (Py_IsInitialized() == 0);
 
 	if(!use_embedded_interpreter_) {
+	    // Shortcuts that one can import ... as ...
+	    // gompy.interpreter().meta_types     -> gompy.types
+	    // gompy.interpreter().meta_types.OGF -> gompy.types.OGF
+
+	    PyObject *sys_modules = PySys_GetObject("modules");
+	    Scope* meta_types = get_meta_types();
+	    Scope* OGF = nullptr;
+	    meta_types->resolve("OGF").get_value(OGF);
+	    geo_assert(OGF != nullptr);
+
+	    PyObject* py_meta_types = PyGraphiteObject_New(meta_types);
+	    PyObject* py_OGF = PyGraphiteObject_New(OGF);
+
+	    // Note: PyDict_SetItemString() increases refconut
+	    PyDict_SetItemString(sys_modules, "gompy.types", py_meta_types);
+	    PyDict_SetItemString(sys_modules, "gompy.types.OGF", py_OGF);
 	    return;
 	}
 

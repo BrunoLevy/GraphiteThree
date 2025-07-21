@@ -1116,13 +1116,16 @@ namespace OGF {
 	return args;
     }
 
-    void Interpreter::search(const std::string& needle_in, const std::string& path_in) {
+    void Interpreter::search(
+	const std::string& needle_in, const std::string& path_in
+    ) {
         std::string needle = needle_in;
         if(needle == "") {
             Logger::err("GOM") << "Search: empty string specified" << std::endl;
         }
 
-        // "*" to display all meta-information available in the system (takes a while !!)
+        // "*" to display all meta-information available in the system
+	// (takes a while !!)
         if(needle == "*") {
             needle = "";
         }
