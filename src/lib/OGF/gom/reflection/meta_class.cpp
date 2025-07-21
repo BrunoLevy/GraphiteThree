@@ -107,6 +107,7 @@ namespace OGF {
         if(!abstract) {
             set_factory(new FactoryMetaClass(this));
         }
+	instance_ = nullptr;
     }
 
     MetaClass::MetaClass(

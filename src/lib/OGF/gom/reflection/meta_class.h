@@ -299,6 +299,15 @@ namespace OGF {
          */
         virtual bool is_subclass_of(const MetaClass* other) const;
 
+    gom_properties:
+	/**
+	 * \brief For singletons, returns instance
+	 * \return the unique instance or nullptr if not already created
+	 */
+	Object* get_instance() const {
+	    return instance_;
+	}
+
     public:
 
         /**
@@ -455,6 +464,13 @@ namespace OGF {
          */
         std::string get_doc() const override;
 
+	/**
+	 * \brief For singletons, sets instance
+	 * \param[in] object the unique instance or nullptr
+	 */
+	void set_instance(Object* object) {
+	    instance_ = object;
+	}
 
     protected:
 
@@ -525,6 +541,7 @@ namespace OGF {
         bool abstract_;
         Factory_var factory_;
         friend class ::OGF::MetaConstructor;
+	Object* instance_; // For singletons
     };
 
     /**

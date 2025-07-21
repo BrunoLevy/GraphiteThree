@@ -199,6 +199,7 @@ namespace OGF {
 	    PyDict_SetItemString(sys_modules, "gompy.gom", py_gom);
 	    PyDict_SetItemString(sys_modules, "gompy.types", py_meta_types);
 	    PyDict_SetItemString(sys_modules, "gompy.types.OGF", py_OGF);
+
 	    return;
 	}
 

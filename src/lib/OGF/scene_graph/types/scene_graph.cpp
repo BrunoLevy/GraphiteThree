@@ -69,9 +69,13 @@ namespace OGF {
 	application_(nullptr) {
         Grob::scene_graph_ = this;
         SceneGraphLibrary::instance()->set_scene_graph(this, transfer_ownership);
+	Any value;
+	value.set_value(this);
+	meta_class()->set_instance(this);
     }
 
     SceneGraph::~SceneGraph() {
+	meta_class()->set_instance(nullptr);
     }
 
     void SceneGraph::set_scene_graph_shader_manager(
