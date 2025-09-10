@@ -38,10 +38,10 @@
 #define H_OGF_META_TYPES_META_TYPE_H
 
 #include <OGF/gom/common/common.h>
-#include <OGF/gom/services/life_cycle.h>
 #include <OGF/gom/services/serializer.h>
 #include <OGF/gom/types/arg_list.h>
 #include <OGF/gom/types/object.h>
+#include <geogram/basic/life_cycle.h>
 #include <string>
 
 /**

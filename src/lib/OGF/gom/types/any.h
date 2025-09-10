@@ -38,7 +38,7 @@
 #define H_OGF_BASIC_TYPES_ANY_H
 
 #include <OGF/gom/common/common.h>
-#include <OGF/gom/services/life_cycle.h>
+#include <geogram/basic/life_cycle.h>
 #include <typeinfo>
 
 /**
