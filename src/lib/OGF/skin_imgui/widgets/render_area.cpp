@@ -41,6 +41,7 @@
 #include <OGF/basic/math/geometry.h>
 
 #include <geogram/image/image_library.h>
+#include <geogram/basic/command_line.h>
 
 // Too many documentation warnings in glfw
 // (glfw uses tags that clang does not understand).
@@ -269,6 +270,11 @@ namespace OGF {
 	//     object IDs rather than colors).
 	if(dirty_ || rendering_context_->contains_picking_image()) {
 	    dirty_ = false;
+	    if(CmdLine::get_arg_bool("gfx:polygon_offset")) {
+		glEnable(GL_POLYGON_OFFSET_FILL);
+	    } else {
+		glDisable(GL_POLYGON_OFFSET_FILL);
+	    }
 	    update_memorized_frame();
 	}
 	draw_memorized_frame();

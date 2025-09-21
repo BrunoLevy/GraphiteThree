@@ -420,6 +420,9 @@ function preferences_window.draw_Advanced()
       gom.set_environment_value('gfx:adapter', gfx_adapter)
    end
 
+   preferences_window.edit_preference_boolean(
+       'polygon offset', 'gfx:polygon_offset'
+   )
 
 end
 

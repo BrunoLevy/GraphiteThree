@@ -789,7 +789,6 @@ namespace OGF {
         vec3 head_position_;
         double head_tilt_;
 
-
         bool picking_mode_;
         vec2 picked_ndc_;
         double picked_depth_;
