@@ -521,7 +521,16 @@ namespace OGF {
             return result;
 	}
 
-	return get_facet_vertices();
+        // return pointers to internal storage
+	return new NL::Vector(
+	    mesh_grob(),
+	    mesh_grob()->facet_corners.vertex_index_ptr(0),
+	    mesh_grob()->facets.nb(),
+	    3,
+	    ogf_meta<index_t>::type(),
+	    true
+	);
+
     }
 
     NL::Vector* MeshGrobEditor::get_triangle_adjacents() const {
