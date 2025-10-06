@@ -453,7 +453,7 @@ namespace OGF {
     NL::Vector* MeshGrobEditor::get_facet_pointers() const {
 	// if facets are triangles, then facet pointers are implicit,
 	// so we need to explicitize them
-	if(mesh_grob()->cells.are_simplices()) {
+	if(mesh_grob()->facets.are_simplices()) {
             NL::Vector* result = new NL::Vector(
                 mesh_grob()->facets.nb()+1, 1, ogf_meta<index_t>::type()
             );
@@ -479,7 +479,7 @@ namespace OGF {
 	return new NL::Vector(
 	    mesh_grob(),
 	    mesh_grob()->facet_corners.vertex_index_ptr(0),
-	    mesh_grob()->facets.nb(),
+	    mesh_grob()->facet_corners.nb(),
 	    1,
 	    ogf_meta<index_t>::type(),
 	    true
