@@ -102,6 +102,20 @@ namespace OGF {
 	return mesh_grob()->cells.nb();
     }
 
+    bool MeshGrobEditor::get_facets_are_simplices() const {
+	if(!check_mesh_grob()) {
+	    return false;
+	}
+	return mesh_grob()->facets.are_simplices();
+    }
+
+    bool MeshGrobEditor::get_cells_are_simplices() const {
+	if(!check_mesh_grob()) {
+	    return false;
+	}
+	return mesh_grob()->cells.are_simplices();
+    }
+
 
     index_t MeshGrobEditor::create_vertex(const vec3& V) {
 	if(!check_mesh_grob()) {
@@ -435,6 +449,43 @@ namespace OGF {
 	return attrmgr.is_defined(attribute_name);
     }
 
+
+    NL::Vector* MeshGrobEditor::get_facet_pointers() const {
+	// if facets are triangles, then facet pointers are implicit,
+	// so we need to explicitize them
+	if(mesh_grob()->cells.are_simplices()) {
+            NL::Vector* result = new NL::Vector(
+                mesh_grob()->facets.nb()+1, 1, ogf_meta<index_t>::type()
+            );
+	    for(index_t f=0; f<mesh_grob()->facets.nb()+1; ++f) {
+		result->data_index_t()[f] = 3*f;
+	    }
+	    return result;
+	}
+
+        // return pointers to internal storage
+	return new NL::Vector(
+	    mesh_grob(),
+	    mesh_grob()->facets.corners_begin_ptr(0),
+	    mesh_grob()->facets.nb()+1,
+	    1,
+	    ogf_meta<index_t>::type(),
+	    true
+	);
+    }
+
+    NL::Vector* MeshGrobEditor::get_facet_vertices() const {
+        // return pointers to internal storage
+	return new NL::Vector(
+	    mesh_grob(),
+	    mesh_grob()->facet_corners.vertex_index_ptr(0),
+	    mesh_grob()->facets.nb(),
+	    1,
+	    ogf_meta<index_t>::type(),
+	    true
+	);
+    }
+
     NL::Vector* MeshGrobEditor::get_triangles() const {
 
         // triangulate on-the-fly
@@ -470,15 +521,7 @@ namespace OGF {
             return result;
 	}
 
-        // return pointers to internal storage
-	return new NL::Vector(
-	    mesh_grob(),
-	    mesh_grob()->facet_corners.vertex_index_ptr(0),
-	    mesh_grob()->facets.nb(),
-	    3,
-	    ogf_meta<index_t>::type(),
-	    true
-	);
+	return get_facet_vertices();
     }
 
     NL::Vector* MeshGrobEditor::get_triangle_adjacents() const {
@@ -530,6 +573,53 @@ namespace OGF {
 	    ogf_meta<index_t>::type(),
 	    true
 	);
+    }
+
+
+    NL::Vector* MeshGrobEditor::get_cell_vertices() const {
+        // return pointers to internal storage
+	return new NL::Vector(
+	    mesh_grob(),
+	    mesh_grob()->cell_corners.vertex_index_ptr(0),
+	    mesh_grob()->cell_corners.nb(),
+	    1,
+	    ogf_meta<index_t>::type(),
+	    true
+	);
+    }
+
+    NL::Vector* MeshGrobEditor::get_cell_pointers() const {
+	// if cells are tetrahedra, then cell pointers are implicit,
+	// so we need to explicitize them
+	if(mesh_grob()->cells.are_simplices()) {
+            NL::Vector* result = new NL::Vector(
+                mesh_grob()->cells.nb()+1, 1, ogf_meta<index_t>::type()
+            );
+	    for(index_t c=0; c<mesh_grob()->cells.nb()+1; ++c) {
+		result->data_index_t()[c] = 4*c;
+	    }
+	    return result;
+	}
+
+        // return pointers to internal storage
+	return new NL::Vector(
+	    mesh_grob(),
+	    mesh_grob()->cells.cell_ptr_ptr(0),
+	    mesh_grob()->cells.nb()+1,
+	    1,
+	    ogf_meta<index_t>::type(),
+	    true
+	);
+    }
+
+    NL::Vector* MeshGrobEditor::get_cell_types() const {
+	NL::Vector* result = new NL::Vector(
+	    mesh_grob()->cells.nb(), 1, ogf_meta<index_t>::type()
+	);
+	for(index_t c=0; c<mesh_grob()->cells.nb()+1; ++c) {
+	    result->data_index_t()[c] = index_t(mesh_grob()->cells.type(c));
+	}
+	return result;
     }
 
     void MeshGrobEditor::delete_vertices(NL::Vector* to_delete) {

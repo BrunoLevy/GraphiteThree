@@ -149,7 +149,7 @@ namespace OGF {
     gom_slots:
         /**
          * \brief Gets the list of attributes
-         * \param[in] localisations  ';'-separated list of dimensions
+         * \param[in] localisations  ';'-separated list of localisations
          * \param[in] types optional ';'-separated list of types
          * \param[in] dims  optional ';'-separated list of dimensions
          * \return ';'-separated list of attributes

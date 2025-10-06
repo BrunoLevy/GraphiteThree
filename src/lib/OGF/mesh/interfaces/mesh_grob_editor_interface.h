@@ -111,6 +111,20 @@ namespace OGF {
 	 */
 	index_t get_nb_cells() const;
 
+	/**
+	 * \brief Tests whether mesh facets are triangles
+	 * \retval true if mesh facets are triangles
+	 * \retval false otherwise
+	 */
+	bool get_facets_are_simplices() const;
+
+	/**
+	 * \brief Tests whether mesh cells are tetrahedra
+	 * \retval true if mesh facets are tetrahedra
+	 * \retval false otherwise
+	 */
+	bool get_cells_are_simplices() const;
+
       gom_slots:
 
 	/**
@@ -173,12 +187,28 @@ namespace OGF {
             return find_attribute("vertices.point");
         }
 
+
+	/**
+	 * \brief gets the array of facet vertices indices
+	 * \return a pointer to a new NL::Vector referring to
+	 *  the array of vertices.
+	 */
+	NL::Vector* get_facet_vertices() const;
+
+	/**
+	 * \brief Gets the facet pointers array
+	 * \return a pointer to a new NL::Vector with for each facet the index
+	 *  of its first vertex in the facet vertices array
+	 */
+	NL::Vector* get_facet_pointers() const;
+
 	/**
 	 * \brief If the surface mesh is triangulated,
 	 *   gets the array of triangles.
 	 * \return a pointer to a new NL::Vector referring to
-	 *  the array of triangles or nullptr if the surface is
-	 *  not triangulated.
+	 *  the array of triangles if the surface is triangulated,
+	 *  or to a dynamically array of triangles if it is not
+	 *  the case.
 	 */
 	NL::Vector* get_triangles() const;
 
@@ -208,6 +238,33 @@ namespace OGF {
 	 *  not tetrahedralized.
 	 */
 	NL::Vector* get_tetrahedra_adjacents() const;
+
+	/**
+	 * \brief Gets the cell vertices array
+	 * \return a pointer to a new NL::Vector with all the indices of all
+	 *  the corners of the cells
+	 */
+	NL::Vector* get_cell_vertices() const;
+
+	/**
+	 * \brief Gets the cell pointers array
+	 * \return a pointer to a new NL::Vector with for each cell the index
+	 *  of its first vertex in the cell vertices array
+	 */
+	NL::Vector* get_cell_pointers() const;
+
+	/**
+	 * \brief Gets the cell pointers array
+	 * \return a pointer to a new NL::Vector with for each cell an integer
+	 *  that indicates the cell type.
+	 * \detail Cell types are encoded by the MeshCellType enum:
+	 *   - MESH_TET = 0
+	 *   - MESH_HEX = 1
+	 *   - MESH_PRISM = 2
+	 *   - MESH_PYRAMID = 3
+	 *   - MESH_CONNECTOR = 4
+	 */
+	NL::Vector* get_cell_types() const;
 
 	/**
 	 * \brief clears this mesh.
