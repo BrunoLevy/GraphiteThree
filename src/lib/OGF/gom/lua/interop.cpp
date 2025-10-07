@@ -175,10 +175,13 @@ namespace OGF {
 				result.set_value(lua_callable);
 				return;
 			    } else {
-				Logger::warn("GOMLua")
-				    << "Expected Object, got "
-				    << lua_tostring(L,index) << " instead"
-				    << std::endl;
+				const char* s = lua_tostring(L,index);
+				if(s != nullptr) {
+				    Logger::warn("GOMLua")
+					<< "Expected Object, got "
+					<< (s ? s : "NULL") << " instead"
+					<< std::endl;
+				}
 				result.reset();
 				return;
 			    }
