@@ -414,9 +414,7 @@ namespace OGF {
 	}
     }
 
-    void RenderArea::cursor_pos_callback(
-	double xf, double yf
-    ) {
+    void RenderArea::cursor_pos_callback(double xf, double yf) {
 	// For retina displays: x and y are in 'window pixels',
 	// and GLUP project / unproject expect 'framebuffer pixels'.
 	double sx = double(get_frame_buffer_width()) / double(get_width());
@@ -460,8 +458,8 @@ namespace OGF {
 
 
 	// Take into account retina display scaling
+	double sx = double(get_frame_buffer_width()) / double(get_width());
 	double sy = double(get_frame_buffer_height()) / double(get_height());
-	yoffset /= sy;
 
 	// Synthetize move/press/release mouse events
 	// with center button pressed.
@@ -473,17 +471,19 @@ namespace OGF {
 
         // Note: this is a GLFW button code (not RenderArea::Button that uses
         // a different mapping).
-        const int button = 3; // (yoffset > 0) ? 3 : 4;
+        const int button = (yoffset > 0) ? 3 : 4;
 
 	int mods = (ctrl  ? GLFW_MOD_CONTROL : 0) |
 	           (shift ? GLFW_MOD_SHIFT   : 0) ;
 
         // Wheel emulates move/press/move/release event
-	cursor_pos_callback(last_point_dc_.x, last_point_dc_.y);
+	cursor_pos_callback(last_point_dc_.x / sx, last_point_dc_.y / sy);
 	mouse_button_callback(button, GLFW_PRESS, mods);
-	cursor_pos_callback(last_point_dc_.x,last_point_dc_.y-double(yoffset));
+	cursor_pos_callback(
+	    last_point_dc_.x / sx, (last_point_dc_.y-double(yoffset)) / sy
+	);
 	mouse_button_callback(button, GLFW_RELEASE, mods);
-	cursor_pos_callback(last_point_dc_bak.x, last_point_dc_bak.y);
+	cursor_pos_callback(last_point_dc_bak.x / sx, last_point_dc_bak.y / sy);
     }
 
     void RenderArea::drop_callback(int nb, const char** p) {
