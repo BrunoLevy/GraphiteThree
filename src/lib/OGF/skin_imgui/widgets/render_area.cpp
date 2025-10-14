@@ -451,9 +451,7 @@ namespace OGF {
 	}
     }
 
-    void RenderArea::scroll_callback(
-	 double xoffset, double yoffset
-    ) {
+    void RenderArea::scroll_callback(double xoffset, double yoffset) {
 	geo_argused(xoffset);
 
 
@@ -464,7 +462,7 @@ namespace OGF {
 	// Synthetize move/press/release mouse events
 	// with center button pressed.
 
-	vec2 last_point_dc_bak = last_point_dc_;
+	//vec2 last_point_dc_bak = last_point_dc_;
 	GLFWwindow* w = (GLFWwindow*)Application::instance()->impl_window();
 	bool ctrl = (glfwGetKey(w, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS);
 	bool shift = (glfwGetKey(w, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS);
@@ -477,13 +475,13 @@ namespace OGF {
 	           (shift ? GLFW_MOD_SHIFT   : 0) ;
 
         // Wheel emulates move/press/move/release event
-	cursor_pos_callback(last_point_dc_.x / sx, last_point_dc_.y / sy);
+	double x0 = last_point_dc_.x;
+	double y0 = last_point_dc_.y;
+	cursor_pos_callback(x0 / sx, y0 / sy);
 	mouse_button_callback(button, GLFW_PRESS, mods);
-	cursor_pos_callback(
-	    last_point_dc_.x / sx, (last_point_dc_.y-double(yoffset)) / sy
-	);
+	cursor_pos_callback(x0 / sx, (y0-yoffset) / sy);
 	mouse_button_callback(button, GLFW_RELEASE, mods);
-	cursor_pos_callback(last_point_dc_bak.x / sx, last_point_dc_bak.y / sy);
+	cursor_pos_callback(x0 / sx, y0 / sy);
     }
 
     void RenderArea::drop_callback(int nb, const char** p) {
