@@ -26,7 +26,7 @@ copy_graphite_dist() {
 # and cleans-up dummy files.
 
 configure_geogram() {
-     cp $DIST_DIR/GraphiteThree/geogram/CMakeOptions.txt.graphite $DIST_DIR/GraphiteThree/geogram/CMakeOptions.txt
+     cp $DIST_DIR/GraphiteThree/geogram/cmake/options/CMakeOptions.txt.graphite $DIST_DIR/GraphiteThree/geogram/CMakeOptions.txt
 }
 
 # create_archives()

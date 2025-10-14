@@ -381,6 +381,25 @@ namespace OGF {
         mesh_grob()->update();
     }
 
+    void MeshGrobSelectionsCommands::select_vertices_on_poly_lines_extremities(
+    ) {
+        Attribute<bool> v_selection(
+            mesh_grob()->vertices.attributes(), "selection"
+        );
+	vector<index_t> degree(mesh_grob()->vertices.nb(), 0);
+        for(index_t e: mesh_grob()->edges) {
+	    for(index_t lv=0; lv<2; ++lv) {
+		index_t v = mesh_grob()->edges.vertex(e,lv);
+		++degree[v];
+	    }
+        }
+	for(index_t v: mesh_grob()->vertices) {
+	    v_selection[v] = (degree[v] == 1);
+	}
+        show_vertices_selection();
+        mesh_grob()->update();
+    }
+
     void MeshGrobSelectionsCommands::select_duplicated_vertices(
 	double tolerance
     ) {

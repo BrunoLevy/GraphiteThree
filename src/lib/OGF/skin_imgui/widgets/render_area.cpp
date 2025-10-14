@@ -458,11 +458,10 @@ namespace OGF {
     ) {
 	geo_argused(xoffset);
 
-	// Mouse wheel is inversed on Apple as compared to
-	// other OSes.
-#ifdef GEO_OS_APPLE
-	yoffset = -yoffset;
-#endif
+
+	// Take into account retina display scaling
+	double sy = double(get_frame_buffer_height()) / double(get_height());
+	yoffset /= sy;
 
 	// Synthetize move/press/release mouse events
 	// with center button pressed.

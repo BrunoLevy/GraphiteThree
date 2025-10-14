@@ -124,6 +124,11 @@ namespace OGF {
          */
         void unselect_vertices_on_edges();
 
+        /**
+         * \brief Selects all the vertices on the polygonal lines extremities.
+         * \menu Vertices
+         */
+        void select_vertices_on_poly_lines_extremities();
 
 	/**
 	 * \brief Selects all the vertices that are duplicated in
