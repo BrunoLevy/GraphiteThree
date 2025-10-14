@@ -473,7 +473,7 @@ namespace OGF {
 
         // Note: this is a GLFW button code (not RenderArea::Button that uses
         // a different mapping).
-        const int button = (yoffset > 0) ? 3 : 4;
+        const int button = 3; // (yoffset > 0) ? 3 : 4;
 
 	int mods = (ctrl  ? GLFW_MOD_CONTROL : 0) |
 	           (shift ? GLFW_MOD_SHIFT   : 0) ;
