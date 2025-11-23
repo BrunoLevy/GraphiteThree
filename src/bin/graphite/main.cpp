@@ -236,14 +236,6 @@ namespace {
             command_line += argv[i];
         }
         Environment::instance()->set_value("command_line", command_line);
-
-#ifdef GEO_OS_UNIX
-	std::string adapter = CmdLine::get_arg("gfx:adapter");
-	if(adapter != "default") {
-	    ::setenv("__NV_PRIME_RENDER_OFFLOAD", "1", 1);
-	    ::setenv("__GLX_VENDOR_LIBRARY_NAME", adapter.c_str(), 1);
-	}
-#endif
     }
 
     void declare_preference_variables() {
@@ -289,10 +281,7 @@ namespace {
         Preferences::declare_preference_variable("gfx:GL_debug");
         Preferences::declare_preference_variable("gfx:GL_profile");
         Preferences::declare_preference_variable("gfx:GLUP_profile");
-	Preferences::declare_preference_variable(
-	    "gfx:adapter", "default",
-	    "one of default, intel, nvidia (for optimus-prime systems)"
-	);
+	Preferences::declare_preference_variable("gfx:adapter");
 	Preferences::declare_preference_variable(
 	    "gfx:polygon_offset", true,
 	    "avoid Z fighting by slightly shifting lines"
