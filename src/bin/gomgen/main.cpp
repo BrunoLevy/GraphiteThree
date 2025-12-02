@@ -249,7 +249,7 @@ namespace {
 
 		std::vector<std::string> files_in_directory;
 		OGF::FileSystem::get_directory_entries(
-		    current_directory, files_in_directory, false
+		    current_directory, files_in_directory
 		);
 		for(GEO::index_t i=0; i<files_in_directory.size(); ++i) {
 		    if(is_gom_header(files_in_directory[i])) {
