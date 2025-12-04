@@ -3,10 +3,9 @@
 # Naive version, with for loops (see Transport_0n_with_xxx for more
 # efficient versions)
 
-import gompy
+import gompy.types.OGF as OGF
 import math, numpy as np
 
-OGF=gom.meta_types.OGF # shortcut to OGF.MeshGrob for instance
 NL=OGF.NL.Library.create()
 
 scene_graph = OGF.SceneGraph()
@@ -283,5 +282,6 @@ transport = Transport(N,True)
 transport.verbose = True # uncomment to display Newton convergence
 transport.compute()
 
-scene_graph.save("tmp.graphite")
+transport.RVD.I.Surface.unglue_charts()
+scene_graph.save("result.graphite") 
 

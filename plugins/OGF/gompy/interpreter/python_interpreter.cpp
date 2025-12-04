@@ -393,6 +393,9 @@ namespace OGF {
     }
 
     void PythonInterpreter::bind(const std::string& id, const Any& value) {
+        if(main_module_ == nullptr) {
+           return;
+        }
 	PyObject* obj = graphite_to_python(value);
 	Py_INCREF(obj);
         PyObject_SetAttrString(main_module_, id.c_str(), obj);
@@ -400,6 +403,9 @@ namespace OGF {
 
     Any PythonInterpreter::resolve(const std::string& id, bool quiet) const {
 	Any any_result;
+        if(main_module_ == nullptr) {
+           return any_result;
+        }
 	PyObject* result =
 	    PyObject_GetAttrString(main_module_, id.c_str());
 	PyErr_Clear();
@@ -417,8 +423,14 @@ namespace OGF {
     Any PythonInterpreter::eval(
 	const std::string& expression, bool quiet
     ) const {
-	// return resolve(expression, quiet);
 	Any any_result;
+        if(main_module_ == nullptr) {
+	   if(!quiet) {
+		Logger::err("GOMpy") << expression << ":could not interpret (missing main_module_)"
+				     << std::endl;
+	   }
+	   return any_result;
+	}
 	PyCodeObject* code = (PyCodeObject*) Py_CompileString(
 	    expression.c_str(), "immediate", Py_eval_input
 	);
@@ -455,6 +467,9 @@ namespace OGF {
     }
 
     void PythonInterpreter::list_names(std::vector<std::string>& names) const {
+        if(main_module_ == nullptr) {
+           return;
+        }
 	names.clear();
 	PyObject* globals = PyModule_GetDict(main_module_);
 	Py_ssize_t nb = PyDict_Size(globals);
