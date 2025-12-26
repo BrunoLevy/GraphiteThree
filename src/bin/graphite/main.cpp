@@ -58,6 +58,9 @@
 OGF_EXPORT extern int graphite_main;
 OGF_EXPORT int graphite_main = 0;
 
+// Needed for gui:adapter to be taken into acount under Windows
+GEO_APPLICATION_GLOBALS;
+
 #if defined(GEO_OS_WINDOWS)
 
 // NVidia/Optimus GPU selection under windows:
