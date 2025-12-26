@@ -192,12 +192,12 @@ namespace OGF {
             mesh_grob()->facets.attributes(), attribute
         );
         for(index_t f: mesh_grob()->facets) {
-            chart[f] = index_t(-1);
+            chart[f] = NO_INDEX;
         }
         std::stack<index_t> S;
         index_t cur_chart = 0;
         for(index_t f: mesh_grob()->facets) {
-            if(chart[f] == index_t(-1)) {
+            if(chart[f] == NO_INDEX) {
                 chart[f] = cur_chart;
                 S.push(f);
                 while(!S.empty()) {
@@ -208,7 +208,7 @@ namespace OGF {
                         le<mesh_grob()->facets.nb_vertices(g); ++le
                     ) {
                         index_t h = mesh_grob()->facets.adjacent(g,le);
-                        if(h != index_t(-1) && chart[h] == index_t(-1)) {
+                        if(h != NO_INDEX && chart[h] == NO_INDEX) {
                             chart[h] = cur_chart;
                             S.push(h);
                         }
@@ -294,9 +294,11 @@ namespace OGF {
 
 
     namespace {
+
 	vec2 interpolate_tex_coord(
 	    Mesh& M, index_t f, const vec3& p,
-	    Attribute<double>& tex_coord
+	    Attribute<double>& tex_coord,
+	    MeshElementsFlags tex_coord_localisation
 	) {
 	    geo_assert(M.facets.nb_vertices(f) == 3);
 
@@ -315,14 +317,21 @@ namespace OGF {
 	    double l0 = Geom::triangle_area(p,  p1, p2)/A;
 	    double l1 = Geom::triangle_area(p0, p,  p2)/A;
 	    double l2 = Geom::triangle_area(p0, p1, p )/A;
-	    return vec2(
-		l0 * tex_coord[2*c0  ] +
-		l1 * tex_coord[2*c1  ] +
-		l2 * tex_coord[2*c2  ] ,
-		l0 * tex_coord[2*c0+1] +
-		l1 * tex_coord[2*c1+1] +
-		l2 * tex_coord[2*c2+1]
-	    );
+	    vec2 uv0;
+	    vec2 uv1;
+	    vec2 uv2;
+	    if(tex_coord_localisation == MESH_VERTICES) {
+		uv0 = vec2(tex_coord[2*v0], tex_coord[2*v0+1]);
+		uv1 = vec2(tex_coord[2*v1], tex_coord[2*v1+1]);
+		uv2 = vec2(tex_coord[2*v2], tex_coord[2*v2+1]);
+	    } else if(tex_coord_localisation == MESH_FACET_CORNERS) {
+		uv0 = vec2(tex_coord[2*c0], tex_coord[2*c0+1]);
+		uv1 = vec2(tex_coord[2*c1], tex_coord[2*c1+1]);
+		uv2 = vec2(tex_coord[2*c2], tex_coord[2*c2+1]);
+	    } else {
+		geo_assert_not_reached;
+	    }
+	    return l0*uv0 + l1*uv1 + l2*uv2;
 	}
     }
 
@@ -347,11 +356,18 @@ namespace OGF {
 				<< std::endl;
 	    return;
 	}
-	Attribute<double> tex_coord;
-	tex_coord.bind_if_is_defined(
+
+	Attribute<double> from_tex_coord_v;
+	from_tex_coord_v.bind_if_is_defined(
+	    surface->vertices.attributes(), "tex_coord"
+	);
+
+	Attribute<double> from_tex_coord_c;
+	from_tex_coord_c.bind_if_is_defined(
 	    surface->facet_corners.attributes(), "tex_coord"
 	);
-	if(!tex_coord.is_bound()) {
+
+	if(!from_tex_coord_c.is_bound() && !from_tex_coord_v.is_bound()) {
 	    Logger::err("Mesh") << "Mesh does not have texture coordinates"
 				<< std::endl;
 	    return;
@@ -377,19 +393,9 @@ namespace OGF {
 	    }
 	}
 
-	MeshFacetsAABB AABB(*surface);
-
-	parallel_for(
-	    0, mesh_grob()->vertices.nb(),
-	    [
-		surface, &AABB, &color, &tex_coord, &texture, &to_tex_coord,
-		this
-	    ](index_t v) {
-		vec3 p(mesh_grob()->vertices.point_ptr(v));
-		vec3 q;
-		double sqdist;
-		index_t f = AABB.nearest_facet(p,q,sqdist);
-		vec2 uv = interpolate_tex_coord(*surface,f,q,tex_coord);
+	if(surface == mesh_grob() && from_tex_coord_v.is_bound()) {
+	    for(index_t v: mesh_grob()->vertices) {
+		vec2 uv(from_tex_coord_v[2*v], from_tex_coord_v[2*v+1]);
 		geo_clamp(uv.x, 0.0, 1.0);
 		geo_clamp(uv.y, 0.0, 1.0);
 		Memory::byte* rgb =
@@ -405,11 +411,99 @@ namespace OGF {
 		color[3*v+1] = double(rgb[1]/255.0);
 		color[3*v+2] = double(rgb[2]/255.0);
 	    }
-	);
 
-	surface->update();
-	show_colors();
-	mesh_grob()->update();
+	    surface->update();
+	    show_colors();
+	    mesh_grob()->update();
+
+	    return;
+	}
+
+	if(surface->facets.nb() != 0) {
+	    MeshFacetsAABB AABB(*surface);
+
+	    parallel_for(
+		0, mesh_grob()->vertices.nb(),
+		[&](index_t v) {
+		    vec3 p(mesh_grob()->vertices.point_ptr(v));
+		    vec3 q;
+		    double sqdist;
+		    index_t f = AABB.nearest_facet(p,q,sqdist);
+		    vec2 uv;
+		    if(from_tex_coord_v.is_bound()) {
+			uv = interpolate_tex_coord(
+			    *surface,f,q,from_tex_coord_v, MESH_VERTICES
+			);
+		    } else if(from_tex_coord_c.is_bound()) {
+			uv = interpolate_tex_coord(
+			    *surface,f,q,from_tex_coord_c, MESH_FACET_CORNERS
+			);
+		    } else {
+			geo_assert_not_reached;
+		    }
+		    geo_clamp(uv.x, 0.0, 1.0);
+		    geo_clamp(uv.y, 0.0, 1.0);
+		    Memory::byte* rgb =
+			texture->pixel_base(
+			    index_t(uv.x * double(texture->width()-1)),
+			    index_t(uv.y * double(texture->height()-1))
+			);
+		    if(to_tex_coord.is_bound()) {
+			to_tex_coord[2*v]   = uv.x;
+			to_tex_coord[2*v+1] = uv.y;
+		    }
+		    color[3*v  ] = double(rgb[0]/255.0);
+		    color[3*v+1] = double(rgb[1]/255.0);
+		    color[3*v+2] = double(rgb[2]/255.0);
+		}
+	    );
+
+	    surface->update();
+	    show_colors();
+	    mesh_grob()->update();
+
+	    return;
+	}
+
+	if(from_tex_coord_v.is_bound()) {
+	    NearestNeighborSearch_var NN = NearestNeighborSearch::create(3);
+	    NN->set_points(
+		surface->vertices.nb(), surface->vertices.point_ptr(0)
+	    );
+
+	    parallel_for(
+		0, mesh_grob()->vertices.nb(),
+		[&](index_t v) {
+		    vec3 p(mesh_grob()->vertices.point_ptr(v));
+		    index_t j;
+		    double sqdist;
+		    NN->get_nearest_neighbors(1, p.data(), &j, &sqdist);
+		    vec2 uv(from_tex_coord_v[2*j], from_tex_coord_v[2*j+1]);
+		    geo_clamp(uv.x, 0.0, 1.0);
+		    geo_clamp(uv.y, 0.0, 1.0);
+		    Memory::byte* rgb =
+			texture->pixel_base(
+			    index_t(uv.x * double(texture->width()-1)),
+			    index_t(uv.y * double(texture->height()-1))
+			);
+		    if(to_tex_coord.is_bound()) {
+			to_tex_coord[2*v]   = uv.x;
+			to_tex_coord[2*v+1] = uv.y;
+		    }
+		    color[3*v  ] = double(rgb[0]/255.0);
+		    color[3*v+1] = double(rgb[1]/255.0);
+		    color[3*v+2] = double(rgb[2]/255.0);
+		}
+	    );
+
+	    surface->update();
+	    show_colors();
+	    mesh_grob()->update();
+	    return;
+	}
+
+	Logger::err("Attributes") << "Could not copy texture colors"
+				  << std::endl;
     }
 
 /************************************************************************/

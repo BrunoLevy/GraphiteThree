@@ -783,6 +783,13 @@ namespace OGF {
             index_t max_timestep = 1000,
             index_t skip = 0
         );
+
+	/**
+	 * \menu Post-processing
+	 * \brief Removes internal closed surfaces
+	 */
+	void remove_bubbles();
+
     };
 }
 

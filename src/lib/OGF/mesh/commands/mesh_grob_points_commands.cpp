@@ -42,6 +42,7 @@
 #include <geogram/mesh/mesh_geometry.h>
 #include <geogram/mesh/mesh_repair.h>
 #include <geogram/mesh/mesh_AABB.h>
+#include <geogram/mesh/mesh_fill_holes.h>
 #include <geogram/mesh/mesh_tetrahedralize.h>
 #include <geogram/third_party/PoissonRecon/poisson_geogram.h>
 #include <geogram/voronoi/CVT.h>
@@ -206,9 +207,12 @@ namespace OGF {
 	    return nullptr;
 	}
 	if(!mesh_grob()->facets.are_simplices()) {
-	    Logger::err("Sample") << "Mesh facets are not simplices"
+	    Logger::warn("Sample") << "Mesh facets are not simplices"
 				  << std::endl;
-	    return nullptr;
+	    Logger::warn("Sample") << "(triangulating the surface)"
+				  << std::endl;
+	    GEO::tessellate_facets(*mesh_grob(),3);
+	    mesh_grob()->update();
 	}
 
         mesh_grob()->vertices.set_dimension(3);

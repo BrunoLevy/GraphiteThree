@@ -60,6 +60,7 @@
 #include <geogram/mesh/mesh_tetrahedralize.h>
 #include <geogram/mesh/mesh_repair.h>
 #include <geogram/mesh/mesh_geometry.h>
+#include <geogram/mesh/mesh_topology.h>
 #include <geogram/mesh/mesh_reorder.h>
 #include <geogram/mesh/mesh_sampling.h>
 #include <geogram/mesh/mesh_subdivision.h>
@@ -4053,4 +4054,56 @@ namespace OGF {
 
         mesh_grob()->update();
     }
+
+    void MeshGrobTransportCommands::remove_bubbles() {
+	MeshFacetsAABB AABB(*mesh_grob());
+        Attribute<index_t> chart(
+	    mesh_grob()->facets.attributes(), "chart"
+        );
+	index_t nb_charts = get_connected_components(*mesh_grob(), chart);
+	vector<index_t> chart_f(nb_charts);
+	for(index_t f: mesh_grob()->facets) {
+	    index_t c = chart[f];
+	    chart_f[c] = f;
+	}
+	vector<index_t> delete_chart(nb_charts, 0);
+
+	for(index_t c=0; c<nb_charts; ++c) {
+	    index_t nb_is_bubble = 0;
+	    index_t nb_is_not_bubble = 0;
+	    vec3 p = Geom::mesh_facet_center(*mesh_grob(), chart_f[c]);
+	    for(index_t k=0; k<5; ++k) {
+		vec3 V = vec3(
+		    Numeric::random_float64(),
+		    Numeric::random_float64(),
+		    Numeric::random_float64()
+		);
+		index_t count = 0;
+		AABB.ray_all_intersections(
+		    Ray(p,V), [&](const MeshFacetsAABB::Intersection& I) {
+			if(I.f != NO_INDEX && chart[I.f] != c) {
+			    ++count;
+			}
+		    }
+		);
+		if((count & 1) != 0) {
+		    ++nb_is_bubble;
+		} else {
+		    ++nb_is_not_bubble;
+		}
+	    }
+	    delete_chart[c] = (nb_is_bubble > nb_is_not_bubble);
+	}
+
+	vector<index_t> delete_f(mesh_grob()->facets.nb());
+	for(index_t f: mesh_grob()->facets) {
+	    delete_f[f] = delete_chart[chart[f]];
+	}
+
+	mesh_grob()->facets.delete_elements(delete_f);
+	chart.destroy();
+
+	mesh_grob()->update();
+    }
+
 }
