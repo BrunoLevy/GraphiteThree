@@ -1,6 +1,7 @@
 # To be run outside Graphite (after gompy is installed)
 
 import gompy.types.OGF as OGF
+import sys
 
 try:
     S = OGF.MeshGrob()
@@ -10,3 +11,5 @@ try:
     R.save('remesh.obj')
 except Exception as e:
     print(e)
+
+sys.exit(0)
