@@ -58,10 +58,17 @@
 OGF_EXPORT extern int graphite_main;
 OGF_EXPORT int graphite_main = 0;
 
-// Needed for gui:adapter to be taken into acount under Windows
-GEO_APPLICATION_GLOBALS;
 
 #if defined(GEO_OS_WINDOWS)
+
+// NVidia/Optimus GPU selection under windows:
+// GPU selection is enabled  when this symbol is exported by the main program
+// (or by a library *statically* linked to it). Then the NVidia GPU is selected
+// if this value is non-zero when the OpenGL context is created.
+// (cannot use GEO_APPLICATION_GLOBALS since geogram_gfx is not visible here)
+extern "C" {
+    __declspec(dllexport) DWORD NvOptimusEnablement = 0x00000000;
+}
 
 int main(int argc, char** argv) ;
 
