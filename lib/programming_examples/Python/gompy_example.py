@@ -10,3 +10,5 @@ try:
     R.save('remesh.obj')
 except Exception as e:
     print(e)
+
+print('exiting...')
