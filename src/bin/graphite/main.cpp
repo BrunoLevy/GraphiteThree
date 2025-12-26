@@ -63,14 +63,6 @@ GEO_APPLICATION_GLOBALS;
 
 #if defined(GEO_OS_WINDOWS)
 
-// NVidia/Optimus GPU selection under windows:
-// GPU selection is enabled  when this symbol is exported by the main program
-// (or by a library *statically* linked to it). Then the NVidia GPU is selected
-// if this value is non-zero when the OpenGL context is created.
-extern "C" {
-    __declspec(dllexport) DWORD NvOptimusEnablement = 0x00000000;
-}
-
 int main(int argc, char** argv) ;
 
 /**
@@ -235,12 +227,6 @@ namespace {
         if(!CmdLine::parse(argc,argv,filenames,"<inputfile>*")) {
             exit(-1);
         }
-
-// Dynamic selection of NVidia adapter under Windows,
-// See comments near NvOptimusEnablement declaration (beginning of this file)
-#ifdef GEO_OS_WINDOWS
-        NvOptimusEnablement = (CmdLine::get_arg("gfx:adapter") == "nvidia");
-#endif
 
         // Copy command line in Graphite environment variable
         // (used by graphite.lua post_init callback to load objects after
