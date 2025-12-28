@@ -1,7 +1,7 @@
 @ECHO OFF
 SETLOCAL ENABLEDELAYEDEXPANSION
 
-REM ---------------------------------------------------------------- 
+REM ----------------------------------------------------------------
 REM Check for options: [ --build_name_suffix suffix ]
 REM ----------------------------------------------------------------
 set buildNameSuffix=""
@@ -88,7 +88,7 @@ REM -----------------------------------------------------------------
 
 ECHO ----------------------------------------------------------------
 
-if exist "Graphite.sln" (
+if exist "Graphite.sln*" (
    ECHO Graphite build is configured
    ECHO Visual Studio solution is in GraphiteThree\build\Windows%buildNameSuffix%\Graphite.sln
 ) else (
@@ -100,4 +100,3 @@ if exist "Graphite.sln" (
 ECHO ----------------------------------------------------------------
 
 REM set /p DUMMY=Hit ENTER to continue...
-
