@@ -376,7 +376,7 @@ namespace OGF {
 		    2.0*(z-0.5),
 		    1.0
 		);
-		p = mult(inv_project_modelview_,p);
+		p = inv_project_modelview_ * p;
 		index_t v = background_mesh_.vertices.create_vertex(
 		    vec3(p.x/p.w, p.y/p.w, p.z/p.w).data()
 	        );
@@ -496,7 +496,7 @@ namespace OGF {
 	glupGetLightVector3fv(Lf);
 
 	L_ = vec3(double(Lf[0]), double(Lf[1]), double(Lf[2]));
-	L_ = normalize(mult(normalmatrix,L_));
+	L_ = normalize(normalmatrix*L_);
     }
 
     Ray RayTracingMeshGrobShader::primary_ray(double x, double y) {
@@ -508,8 +508,8 @@ namespace OGF {
 	);
 	vec4 ffar = nearv;
 	ffar.z = 1.0;
-	nearv = mult(inv_project_modelview_,nearv);
-	ffar = mult(inv_project_modelview_,ffar);
+	nearv = inv_project_modelview_ * nearv;
+	ffar = inv_project_modelview_ * ffar;
 
 
 	vec3 nearp = (1.0/nearv.w)*vec3(nearv.x, nearv.y, nearv.z);
