@@ -126,23 +126,19 @@ namespace OGF {
         if( M.is_identity() ) {
             return lb;
         }
-        vec3 p = vec3(lb.xyz_min);
-        vec3 d = vec3(lb.xyz_max);
-        result.add_point(transform_point(p, M));
-        p.x += d.x;
-        result.add_point(transform_point(p, M));
-        p.x -= d.x; p.y += d.y;
-        result.add_point(transform_point(p, M));
-        p.x += d.x;
-        result.add_point(transform_point(p, M));
-        p.x -= d.x; p.y -= d.y; p.z += d.z;
-        result.add_point(transform_point(p, M));
-        p.x += d.x;
-        result.add_point(transform_point(p, M));
-        p.x -= d.x; p.y += d.y;
-        result.add_point(transform_point(p, M));
-        p.x += d.x;
-        result.add_point(transform_point(p, M));
+	vec3 bounds[2] = {
+	    vec3(lb.xyz_min),
+	    vec3(lb.xyz_max)
+	};
+	// Add the transformed eight vertices of the bbox to the world bbox
+	for(int Z=0; Z<2; ++Z) {
+	    for(int Y=0; Y<2; ++Y) {
+		for(int X=0; X<2; ++X) {
+		    vec4 q = vec4(bounds[X].x, bounds[Y].y, bounds[Z].z, 1.0)*M;
+		    result.add_point((1.0/q.w)*vec3(q));
+		}
+	    }
+	}
         return result;
     }
 

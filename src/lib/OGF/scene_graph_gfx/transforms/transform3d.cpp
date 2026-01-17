@@ -170,9 +170,9 @@ namespace OGF {
 
     void Transform3d::rotate(const mat4& value) {
         // TODO: m = m * value ; extract u_, v_, w_ ; update matrix
-        u_ = transform_vector(u_, value);
-        v_ = transform_vector(v_, value);
-        w_ = transform_vector(w_, value);
+        u_ = vec3(vec4(u_,0)*value);
+	v_ = vec3(vec4(v_,0)*value);
+        w_ = vec3(vec4(w_,0)*value);
         update_matrix() ;
     }
 
@@ -266,9 +266,9 @@ namespace OGF {
 
     void Transform3d::set_rotation_matrix(const mat4& m) {
         mat4 m_inv = m.inverse() ;
-        u_ = transform_vector(vec3(1,0,0), m_inv) ;
-        v_ = transform_vector(vec3(0,1,0), m_inv) ;
-        w_ = transform_vector(vec3(0,0,1), m_inv) ;
+        u_ = vec3(vec4(1,0,0,0) * m_inv) ;
+        v_ = vec3(vec4(0,1,0,0) * m_inv) ;
+        w_ = vec3(vec4(0,0,1,0) * m_inv) ;
         update_matrix() ;
     }
 

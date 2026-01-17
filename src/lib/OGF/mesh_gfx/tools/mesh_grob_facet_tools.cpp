@@ -482,7 +482,8 @@ namespace OGF {
             ) {
                 index_t v = mesh_grob()->facets.vertex(picked_facet_,lv);
                 vec3& p = mesh_grob()->vertices.point(v);
-                p = transform_point(p,M);
+		vec4 q = vec4(p,1.0)*M;
+                p = (1.0/q.w)*vec3(q);
             }
         }
     }

@@ -702,9 +702,7 @@ namespace OGF {
         glupLoadIdentity();
 
         GLfloat light_position[4];
-        vec3 light = transform_vector(
-            vec3(1.0, 1.0, 4.0), lighting_matrix_
-        );
+        vec3 light(vec4(1.0, 1.0, 4.0,0.0) * lighting_matrix_);
 
         light_position[0] = float(light.x);
         light_position[1] = float(light.y);
