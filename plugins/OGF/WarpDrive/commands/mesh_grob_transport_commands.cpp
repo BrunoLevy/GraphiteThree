@@ -1060,7 +1060,8 @@ namespace OGF {
 
 	    bool centroids_existed = false;
 	    if(show_centroids) {
-		centroids_existed = (MeshGrob::find(scene_graph(),"centroids") != nullptr);
+		centroids_existed =
+		    (MeshGrob::find(scene_graph(),"centroids") != nullptr);
 	    }
 
             compute_Laguerre_centroids_2d(
@@ -1113,9 +1114,15 @@ namespace OGF {
 		}
 		if(!centroids_existed) {
 		    mesh_grob()->set_visible(false);
-		    mcentroids->get_shader()->set_property("vertices_style","true; 0 1 0 1; 2");
-		    mcentroids->get_shader()->set_property("painting","ATTRIBUTE");
-		    mcentroids->get_shader()->set_property("attribute","vertices.mass");
+		    mcentroids->get_shader()->set_property(
+			"vertices_style","true; 0 1 0 1; 2"
+		    );
+		    mcentroids->get_shader()->set_property(
+			"painting","ATTRIBUTE"
+		    );
+		    mcentroids->get_shader()->set_property(
+			"attribute","vertices.mass"
+		    );
 		    mcentroids->get_shader()->set_property(
 			"colormap","blue_red;true;0;false;false"
 		    );
@@ -1143,7 +1150,8 @@ namespace OGF {
 		for(index_t v=0; v<nb_pts; ++v) {
 		    V[v] += tau*(
 			1.0 / m[v] * inveps2 * (
-			    centroids[v] - vec2(mesh_grob()->vertices.point_ptr(v))
+			    centroids[v] -
+			    vec2(mesh_grob()->vertices.point_ptr(v))
 			) +
 			vec2(0.0, -g)
 		    );
@@ -1152,7 +1160,8 @@ namespace OGF {
 		for(index_t v=0; v<nb_pts; ++v) {
 		    V[v] += tau*(
 			inveps2*(
-			    centroids[v] - vec2(mesh_grob()->vertices.point_ptr(v))
+			    centroids[v] -
+			    vec2(mesh_grob()->vertices.point_ptr(v))
 			) +
 			m[v] * vec2(0.0, -g)
 		    );
