@@ -57,7 +57,49 @@ namespace OGF {
     }
 
     index_t MeshGrobTool::pick_vertex(const RayPick& rp) {
-        return pick(rp, MESH_VERTICES);
+        index_t result = pick(rp, MESH_VERTICES);
+
+	// Snap picked coordinates to the vertex, instead of using pixel
+	// and depth coordinates, that may be wrong due to glyph rendering
+	// that changes depth value and to point size.
+	if(result == NO_INDEX) {
+	    return result;
+	}
+
+	if(mesh_grob()->vertices.dimension() < 3) {
+	    return result;
+	}
+
+	Shader* shd = dynamic_cast<Shader*>(object()->get_shader());
+	if(shd == nullptr) {
+	    return result;
+	}
+
+	GLdouble* modelview = shd->latest_modelview();
+	GLdouble* project = shd->latest_project();
+	GLint* viewport = shd->latest_viewport();
+	if(modelview == nullptr || project == nullptr || viewport == nullptr) {
+	    return result;
+	}
+
+	// picked point (world coordinates) is picked vertex
+	picked_point_ = mesh_grob()->vertices.point(result);
+
+	// re-compute picked depth by transforming picked point
+	double x_screen,y_screen;
+	glupProject(
+	    picked_point_.x, picked_point_.y, picked_point_.z,
+	    modelview, project, viewport,
+	    &x_screen, &y_screen, &picked_depth_
+	);
+
+	// re-compute picked NDC coordinates by transforming picked point
+	picked_ndc_ = rendering_context()->screen_to_ndc(
+	    index_t(x_screen), index_t(y_screen)
+	);
+	picked_ndc_.y = -picked_ndc_.y;
+
+	return result;
     }
 
     index_t MeshGrobTool::pick_edge(const RayPick& rp) {

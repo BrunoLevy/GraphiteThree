@@ -269,6 +269,25 @@ namespace OGF {
         mesh_grob()->update();
     }
 
+
+    void MeshGrobTransportCommands::compute_air_fraction(
+	const MeshGrobName& fluid_domain_name
+    ) {
+	MeshGrob* fluid_domain = MeshGrob::find(
+	    scene_graph(),fluid_domain_name
+	);
+	if(fluid_domain == nullptr) {
+	    Logger::err("OT") << fluid_domain_name << ": no such MeshGrob"
+			      << std::endl;
+	    return;
+	}
+
+	double omega_volume = Geom::mesh_enclosed_volume(*mesh_grob());
+	double fluid_volume = Geom::mesh_enclosed_volume(*fluid_domain);
+	double air_fraction = 1.0 - fluid_volume / omega_volume;
+	Logger::out("OT") << "air fraction=" << air_fraction << std::endl;
+    }
+
     void MeshGrobTransportCommands::transport_3d(
         const MeshGrobName& target_name,
         index_t nb_points,

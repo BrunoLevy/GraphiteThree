@@ -103,6 +103,13 @@ namespace OGF {
         );
 
         /**
+	 * \menu Pre-processing
+         * \brief Computes air fraction
+         * \param[in] fluid_domain the mesh that represents the initial fluid
+         */
+        void compute_air_fraction(const MeshGrobName& fluid_domain);
+
+        /**
 	 * \menu Compute
          * \brief Computes the optimal transport between this volumetric mesh
          *  and another one.
