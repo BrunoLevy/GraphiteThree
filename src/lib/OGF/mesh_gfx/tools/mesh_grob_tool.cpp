@@ -59,9 +59,11 @@ namespace OGF {
     index_t MeshGrobTool::pick_vertex(const RayPick& rp) {
         index_t result = pick(rp, MESH_VERTICES);
 
+	// The rest of this function:
 	// Snap picked coordinates to the vertex, instead of using pixel
 	// and depth coordinates, that may be wrong due to glyph rendering
 	// that changes depth value and to point size.
+
 	if(result == NO_INDEX) {
 	    return result;
 	}
@@ -97,7 +99,7 @@ namespace OGF {
 	picked_ndc_ = rendering_context()->screen_to_ndc(
 	    index_t(x_screen), index_t(y_screen)
 	);
-	picked_ndc_.y = -picked_ndc_.y;
+	picked_ndc_.y = -picked_ndc_.y; // I must confess I don't know why !
 
 	return result;
     }
@@ -117,8 +119,8 @@ namespace OGF {
     bool MeshGrobTool::pick_facet_edge(
         const RayPick& rp, index_t& facet, index_t& corner
     ) {
-        facet = index_t(-1);
-        corner = index_t(-1);
+        facet = NO_INDEX;
+        corner = NO_INDEX;
         if(mesh_grob()->vertices.dimension() < 3) {
             return false;
         }
@@ -126,7 +128,7 @@ namespace OGF {
         //   Step 1: pick a facet.
 
         facet = pick_facet(rp);
-        if(facet == index_t(-1) || facet > mesh_grob()->facets.nb()) {
+        if(facet == NO_INDEX || facet > mesh_grob()->facets.nb()) {
             return false;
         }
 
@@ -157,14 +159,14 @@ namespace OGF {
         index_t x0, index_t y0, index_t width, index_t height
     ) {
         if(mesh_grob() == nullptr || mesh_grob()->vertices.dimension() < 3) {
-            return index_t(-1);
+            return NO_INDEX;
         }
 
         MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
             mesh_grob()->get_shader()
         );
         if(shd == nullptr) {
-            return index_t(-1);
+            return NO_INDEX;
         }
 
         rendering_context()->begin_picking(rp.p_ndc);
