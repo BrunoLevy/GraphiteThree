@@ -1,10 +1,6 @@
 --  GUI for the scene-graph, for use with Skin_imgui
 ----------------------------------------------------
 
--- Needed to enable navigation in object list with
--- arrow keys (declared in imgui_internal.h)
-ImGuiSelectableFlags_SelectOnNav = (1 << 21)
-
 -- All types and functions related with the scene graph.
 scene_graph_gui = {}
 scene_graph_gui.name = 'Scene'
