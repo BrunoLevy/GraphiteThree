@@ -122,13 +122,16 @@ function graphite_gui.draw()
     autogui.property_editors()
     preferences_window.draw()
 
-    --ImOGizmo.SetRect(200.0, 20.0, 150.0)
-    --ImOGizmo.BeginFrame(false)
-    --ImOGizmo.DrawGizmo(
-    --   main.render_area.viewing_matrix,
-    --   main.render_area.projection_matrix,
-    --   1.0
-    --)
+    ImOGuizmo.SetRect(220.0, 20.0, 150.0)
+    ImOGuizmo.BeginFrame(false)
+    changed,new_viewing_matrix = ImOGuizmo.DrawGizmo(
+       main.render_area.viewing_matrix,
+       main.render_area.projection_matrix,
+       1.0
+    )
+    if changed then
+       xform.rotation_matrix = new_viewing_matrix
+    end
 
     graphite_gui.frame = graphite_gui.frame+1
     if graphite_gui.frame % 50 == 0 then
