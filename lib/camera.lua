@@ -190,10 +190,6 @@ function camera_gui.draw_menu()
      end
      imgui.EndMenu()
   end
-  imgui.Separator()
-  imgui.NewLine()
-  camera_gui.projection_dialog()
-  imgui.NewLine()
 end
 
 function camera_gui.draw_extra()
@@ -285,75 +281,6 @@ end
 function camera_gui.home()
     scene_graph.scene_graph_shader_manager.update_focus()
     xform.reset()
-end
-
-function camera_gui.projection(axis)
-    camera_gui.home()
-    if(    axis == '+X') then
-       xform.rotation_matrix = ' 0 0  1 0   0 1  0 0  -1  0  0 0   0 0 0 1'
-    elseif(axis == '-X') then
-       xform.rotation_matrix = ' 0 0 -1 0   0 1  0 0   1  0  0 0   0 0 0 1'
-    elseif(axis == '+Y') then
-       xform.rotation_matrix = ' 1 0  0 0   0 1  0 0   0  0  1 0   0 0 0 1'
-    elseif(axis == '-Y') then
-       xform.rotation_matrix = '-1 0  0 0   0 1  0 0   0  0 -1 0   0 0 0 1'
-    elseif(axis == '+Z') then
-       xform.rotation_matrix = ' 1 0  0 0   0 0  1 0   0 -1  0 0   0 0 0 1'
-    elseif(axis == '-Z') then
-       xform.rotation_matrix = ' 1 0  0 0   0 0 -1 0   0  1  0 0   0 0 0 1'
-    end
-end
-
-function camera_gui.projection_dialog()
-    local r,g,b
-
-    if gom.get_environment_value('gui:style') == 'Dark' then
-       r = 0xFF8080FF
-       g = 0xFF80FF80
-       b = 0xFFFF8080
-    else
-       r = 0xFF0000FF
-       g = 0xFF00FF00
-       b = 0xFFFF0000
-    end
-
-    local ImGuiStyleVar_FrameRounding = 12
-    imgui.PushStyleVar(ImGuiStyleVar_FrameRounding,0)
-
-    function axis_button(axis,color)
-       imgui.PushStyleColor(ImGuiCol_Text,color)
-       if imgui.Button(axis,30,0) then
-          camera_gui.projection(axis)
-       end
-       imgui.PopStyleColor()
-    end
-
-    local offset = 45
-        if(imgui.GetWindowWidth() > 20) then
-       offset = offset + (imgui.GetWindowWidth() - 120)/2
-    end
-
-    imgui.Text(' ')
-    imgui.SameLine(offset)
-    axis_button('+Z',b)
-    imgui.NewLine()
-
-    imgui.SameLine(offset-37)
-    axis_button('-X',r)
-    imgui.SameLine(offset)
-    axis_button('+Y',g)
-    imgui.SameLine(offset+37)
-    axis_button('+X',r)
-
-    imgui.Text(' ')
-    imgui.SameLine(offset)
-    axis_button('-Z',b)
-
-    imgui.Text(' ')
-    imgui.SameLine(offset)
-    axis_button('-Y',g)
-
-    imgui.PopStyleVar()
 end
 
 graphite_main_window.add_module(camera_gui)

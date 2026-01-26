@@ -63,7 +63,7 @@ function graphite_main_window.remove_module(name)
       print(name .. ": no such graphite module")
       return
    end
-   graphite_main_window.modules_by_name[name] = nil   
+   graphite_main_window.modules_by_name[name] = nil
    for i,module2 in ipairs(graphite_main_window.modules_by_index) do
       if module2 == module then
          table.remove(graphite_main_window.modules_by_index,i)
@@ -91,12 +91,12 @@ function graphite_main_window.draw_module(module)
          imgui.SameLine()
          if module.icon:starts_with('@') then
 	   imgui.Text(imgui.font_icon(module.icon:sub(2)))
-         else	 
+         else
            imgui.Image(
              main.resolve_icon(module.icon,true),
              autogui.icon_size(), autogui.icon_size()
            )
-         end	   
+         end
       end
       imgui.SameLine()
       imgui.Selectable(module.name,false)
@@ -124,14 +124,14 @@ function graphite_main_window.draw_module(module)
 	 local winname = module.name..'##module'
 	 if module.icon ~= nil and module.icon:starts_with('@') then
 	    winname = imgui.font_icon(module.icon:sub(2))..'  '..winname
-	 end 
+	 end
 	 _,module.visible = imgui.Begin(winname, module.visible, flags)
 	 if module.visible then
 	    if with_menubar then
 	       if imgui.BeginMenuBar() then
 	          module.draw_menu()
 	          imgui.EndMenuBar()
-	       end	  
+	       end
 	    end
             module.draw_window()
 	 end
@@ -152,10 +152,6 @@ function graphite_main_window.draw_contents()
   end
   if imgui.Button(imgui.font_icon('home')..' Home',-1,0) then
      camera_gui.home()
-  end
-  if imgui.BeginPopupContextItem() then
-     camera_gui.projection_dialog()
-     imgui.EndPopup()
   end
   if gom.get_environment_value('gui:undo') == 'true' then
      imgui.Separator()
@@ -179,7 +175,7 @@ function graphite_main_window.draw_contents()
      if(not main.can_redo) then
         imgui.PopStyleVar()
      end
-  end  
+  end
   imgui.Separator()
   for index,module in ipairs(graphite_main_window.modules_by_index) do
      graphite_main_window.draw_module(module)
@@ -203,6 +199,5 @@ function graphite_main_window.draw()
   end
   imgui.Begin('Graphite',true,flags)
   graphite_main_window.draw_contents()
-  imgui.End()  
+  imgui.End()
 end
-
