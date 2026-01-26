@@ -172,7 +172,9 @@ namespace OGF {
          * \param[in] new_name new name of the argument
          * \return a pointer to this Connection.
          */
-        Connection* rename_arg(const std::string& name, const std::string& new_name) {
+        Connection* rename_arg(
+	    const std::string& name, const std::string& new_name
+	) {
             if(rename_args_.has_arg(name)) {
 		Logger::err("GOM")
 		    << "rename_arg(): duplicate rename for " << name

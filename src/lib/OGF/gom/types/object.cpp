@@ -246,7 +246,7 @@ namespace OGF {
     ) const {
 	Any prop_value_any;
 	bool ok = get_property(prop_name, prop_value_any);
-	ok = ok & prop_value_any.get_value(prop_value);
+	ok = ok && prop_value_any.get_value(prop_value);
 	return ok;
     }
 

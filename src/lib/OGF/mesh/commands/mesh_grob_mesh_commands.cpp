@@ -89,7 +89,7 @@ namespace OGF {
         if(mesh_grob()->cells.nb() != 0) {
             Logger::out("Mesh")
                 << "cells volume = "
-                << Geom::mesh_enclosed_volume(*mesh_grob())
+                << mesh_cells_volume(*mesh_grob())
                 << std::endl;
         }
 

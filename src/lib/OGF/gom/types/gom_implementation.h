@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_GOM_TYPES_GOM_IMPL_H
@@ -49,7 +49,7 @@
 /**
  * \file OGF/gom/types/gom_implementation.h
  * \brief Functions to declare GOM meta-types.
- * \details Used by the C++ code created by GOMGEN. 
+ * \details Used by the C++ code created by GOMGEN.
  *  Client code should not use these functions.
  */
 
@@ -64,7 +64,7 @@ namespace OGF {
      * \code
      *    MetaBuiltinType* mtype = ogf_declare_builtin_type<Color>("color");
      * \endcode
-     * \note Used by the C++ code created by GOMGEN. 
+     * \note Used by the C++ code created by GOMGEN.
      *  Client code should not use these functions.
      */
     template <class T> class ogf_declare_builtin_type {
@@ -84,7 +84,7 @@ namespace OGF {
             // with the same name, it will use this one).
             MetaBuiltinType_var meta_type = new MetaBuiltinType(type_name);
             meta_type->set_serializer(new GenericSerializer<T>);
-            meta_type->set_life_cycle(new GenericLifeCycle<T>);	    
+            meta_type->set_life_cycle(new GenericLifeCycle<T>);
             Meta::instance()->bind_meta_type(
                 meta_type, typeid(T).name()
             );
@@ -105,7 +105,7 @@ namespace OGF {
 
    /**
     * \brief ogf_declare_builtin_type specialization for bool.
-    * \note Used by the C++ code created by GOMGEN. 
+    * \note Used by the C++ code created by GOMGEN.
     *  Client code should not use these functions.
     */
     template<> class ogf_declare_builtin_type<bool> {
@@ -123,7 +123,8 @@ namespace OGF {
             // with the same name, it will use this one).
             MetaBuiltinType_var meta_type = new MetaBuiltinType(type_name);
             meta_type->set_serializer(new BoolSerializer);
-            meta_type->set_life_cycle(new GenericLifeCycle<bool>);	    	    
+            meta_type->set_life_cycle(new GenericLifeCycle<bool>);
+
             Meta::instance()->bind_meta_type(
                 meta_type, typeid(bool).name()
             );
@@ -143,7 +144,7 @@ namespace OGF {
 
    /**
     * \brief ogf_declare_builtin_type specialization for void.
-    * \note Used by the C++ code created by GOMGEN. 
+    * \note Used by the C++ code created by GOMGEN.
     *  Client code should not use these functions.
     */
     template<> class ogf_declare_builtin_type<void> {
@@ -179,7 +180,7 @@ namespace OGF {
 
    /**
     * \brief ogf_declare_builtin_type specialization for std::string.
-    * \note Used by the C++ code created by GOMGEN. 
+    * \note Used by the C++ code created by GOMGEN.
     *  Client code should not use these functions.
     */
     template<> class ogf_declare_builtin_type<std::string> {
@@ -197,7 +198,7 @@ namespace OGF {
             // with the same name, it will use this one).
             MetaBuiltinType_var meta_type = new MetaBuiltinType(type_name);
             meta_type->set_serializer(new StringSerializer);
-            meta_type->set_life_cycle(new GenericLifeCycle<std::string>);	    	    
+            meta_type->set_life_cycle(new GenericLifeCycle<std::string>);
             Meta::instance()->bind_meta_type(
                 meta_type, typeid(std::string).name()
             );
@@ -216,7 +217,7 @@ namespace OGF {
     };
 
    /**
-    * \brief a version of ogf_declare_builtin_type specialization 
+    * \brief a version of ogf_declare_builtin_type specialization
     *  for pointers.
     * \details We did not use a specialization as in the code below,
     *  because MSVC 6 does not seem to support it.
@@ -226,7 +227,7 @@ namespace OGF {
     *   };
     * \endcode
     * \TODO test whether it works with more modern versions of MSVC.
-    * \note Used by the C++ code created by GOMGEN. 
+    * \note Used by the C++ code created by GOMGEN.
     *  Client code should not use these functions.
     */
     template <class T> class ogf_declare_pointer_type {
@@ -246,7 +247,7 @@ namespace OGF {
             // with the same name, it will use this one).
             MetaBuiltinType_var meta_type = new MetaBuiltinType(type_name);
             meta_type->set_serializer(new PointerSerializer);
-            meta_type->set_life_cycle(new GenericLifeCycle<T>);	    	    
+            meta_type->set_life_cycle(new GenericLifeCycle<T>);
             Meta::instance()->bind_meta_type(
                 meta_type, typeid(T).name()
             );
@@ -275,7 +276,7 @@ namespace OGF {
      *    mtype->add_value("ZERO",0);
      *    mtype->add_value("POSITIVE",1);
      * \endcode
-     * \note Used by the C++ code created by GOMGEN. 
+     * \note Used by the C++ code created by GOMGEN.
      *  Client code should not use these functions.
      */
     template <class T> class ogf_declare_enum {
@@ -290,10 +291,10 @@ namespace OGF {
             Meta::instance()->bind_meta_type(
                 meta_type, typeid(T).name()
             );
-	    meta_type->set_life_cycle(new GenericLifeCycle<T>);	    	    
+	    meta_type->set_life_cycle(new GenericLifeCycle<T>);
             result_ = meta_type;
         }
-        
+
         /**
          * \brief Gets the created MetaEnum object.
          * \return a pointer to the created MetaEnum object
@@ -314,7 +315,7 @@ namespace OGF {
      *     "OGF::ComboBox","OGF::Widget"
      *    );
      * \endcode
-     * \note Used by the C++ code created by GOMGEN. 
+     * \note Used by the C++ code created by GOMGEN.
      *  Client code should not use these functions.
      */
     template <class T> class ogf_declare_class {
@@ -335,7 +336,7 @@ namespace OGF {
             );
             result_ = meta_type;
         }
-        
+
         /**
          * \brief Declares a new class type.
          * \param[in] class_name the C++ type name of the class
@@ -352,7 +353,7 @@ namespace OGF {
             );
             result_ = meta_type;
         }
-        
+
         /**
          * \brief Declares a new class type.
          * \param[in] class_name the C++ type name of the class
@@ -387,12 +388,12 @@ namespace OGF {
      *     "OGF::Widget","OGF::Object"
      *    );
      * \endcode
-     * \note Used by the C++ code created by GOMGEN. 
+     * \note Used by the C++ code created by GOMGEN.
      *  Client code should not use these functions.
      */
     template <class T> class ogf_declare_abstract_class {
     public:
-        
+
         /**
          * \brief Declares a new abstract class type.
          * \param[in] class_name the C++ type name of the class
@@ -453,9 +454,9 @@ namespace OGF {
     private:
         MetaClass* result_;
     };
-    
+
 //_________________________________________________________________________
-    
+
 }
 
 #endif
