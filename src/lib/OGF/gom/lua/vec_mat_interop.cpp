@@ -36,90 +36,17 @@
 
 #include <OGF/gom/lua/vec_mat_interop.h>
 #include <OGF/gom/reflection/meta.h>
+#include <geogram/lua/lua_vec_mat.h>
 
-
-
+/*
 extern "C" {
 #include <geogram/third_party/lua/lauxlib.h>
 #include <geogram/third_party/lua/lualib.h>
 }
+*/
 
 namespace OGF {
     namespace GOMLua {
-
-	/**
-	 * \brief Converts a lua object into a value
-	 * \tparam T type of the value
-	 * \param[in] L a pointer to the Lua state
-	 * \param[in] index the index of the object in thestack
-	 * \param[out] result a reference to the read value
-	 * \retval true if the conversion was successful
-	 * \retval false otherwise (LUA type did not match)
-	 */
-	template <class T> inline bool lua_tographiteveccomp(
-	    lua_State* L, int index, T& result
-	) {
-	    geo_argused(L);
-	    geo_argused(index);
-	    geo_argused(result);
-	    geo_assert_not_reached;
-	}
-
-	template<> inline bool lua_tographiteveccomp<double>(
-	    lua_State* L, int index, double& result
-	) {
-	    if(lua_type(L,index) == LUA_TNUMBER) {
-		result = lua_tonumber(L,index);
-		return true;
-	    }
-	    return false;
-	}
-
-	template<> inline bool lua_tographiteveccomp<Numeric::int32>(
-	    lua_State* L, int index, Numeric::int32& result
-	) {
-	    if(lua_type(L,index) == LUA_TNUMBER && lua_isinteger(L,index)) {
-		result = GEO::Numeric::int32(lua_tointeger(L,index));
-		return true;
-	    }
-	    return false;
-	}
-
-
-	/**
-	 * \brief Converts a lua object into a Graphite vec2,vec3 or vec4
-	 * \tparam N dimension of the vector
-	 * \tparam T type of the components
-	 * \param[in] L a pointer to the Lua state
-	 * \param[in] index the index of the object in thestack
-	 * \param[out] result a reference to the converted vector
-	 * \retval true if the conversion was successful
-	 * \retval false otherwise (mtype does not match, or object on
-	 *  the stack is not an integer-indexed table of numbers of the
-	 *  correct size).
-	 */
-	template<unsigned int N, class T> inline bool lua_tographitevec(
-	    lua_State* L, int index, ::GEO::vecng<N,T>& result
-	) {
-	    if(!lua_istable(L,index)) {
-		return false;
-	    }
-
-	    index_t cur = 0;
-	    bool ok = true;
-
-	    for(lua_Integer i=1; lua_geti(L,index,i) != LUA_TNIL; ++i) {
-		if(cur < N) {
-		    ok = ok && lua_tographiteveccomp(L,-1,result[cur]);
-		}
-		++cur;
-		lua_pop(L,1);
-	    }
-	    lua_pop(L,1); // lua_geti() pushes smthg on the stack
-	    // even for the last round of the loop !
-
-	    return(ok && cur == index_t(N));
-	}
 
 	/**
 	 * \brief Converts a lua object into a Graphite vec2,vec3 or vec4
@@ -141,7 +68,7 @@ namespace OGF {
 		return false;
 	    }
 	    GEO::vecng<N,T> V;
-	    if(!lua_tographitevec(L, index, V)) {
+	    if(!lua_tovec(L, index, V)) {
 		return false;
 	    }
 	    result.set_value(V);
@@ -151,52 +78,7 @@ namespace OGF {
 	/***************************************************/
 
 	/**
-	 * \brief Converts a python object into a Graphite mat2, mat3 or mat4
-	 * \tparam N dimension of the vector
-	 * \tparam T type of the coefficients
-	 * \param[in] L a pointer to the Lua state
-	 * \param[in] index the index of the object in thestack
-	 * \param[out] result a reference to the converted matrix
-	 * \retval true if the conversion was successful
-	 * \retval false otherwise (mtype does not match, or object
-	 *  is not a table of the correct size).
-	 */
-	template<unsigned int N, class T> inline bool lua_tographitemat(
-	    lua_State* L, int index, ::GEO::Matrix<N,T>& result
-	) {
-
-	    if(!lua_istable(L,index)) {
-		return false;
-	    }
-
-	    index_t cur = 0;
-	    bool ok = true;
-
-	    for(lua_Integer i=1; lua_geti(L,index,i) != LUA_TNIL; ++i) {
-		::GEO::vecng<N,T> row;
-		if(cur < N) {
-		    if(lua_tographitevec(L,-1,row)) {
-			for(index_t j=0; j<index_t(N); ++j) {
-			    result(cur,j) = row[j];
-			}
-		    } else {
-			ok = false;
-		    }
-		}
-		++cur;
-		lua_pop(L,1);
-	    }
-	    lua_pop(L,1); // lua_geti() pushes smthg on the stack
-	    // even for the last round of the loop !
-
-	    return(ok && cur == index_t(N));
-	}
-
-
-	/***************************************************/
-
-	/**
-	 * \brief Converts a python object into a Graphite mat2, mat3 or mat4
+	 * \brief Converts a Lua object into a Graphite mat2, mat3 or mat4
 	 * \tparam N dimension of the vector
 	 * \tparam T type of the coefficients
 	 * \param[in] L a pointer to the Lua state
@@ -213,7 +95,7 @@ namespace OGF {
 		return false;
 	    }
 	    ::GEO::Matrix<N,T> M;
-	    if(!lua_tographitemat(L,index,M)) {
+	    if(!lua_tomat(L,index,M)) {
 		return false;
 	    }
 	    result.set_value(M);
@@ -265,36 +147,10 @@ namespace OGF {
 	}
 
 	bool lua_to_graphite_vec2i(lua_State* L, int index, vec2i& result) {
-	    return lua_tographitevec(L, index, result);
+	    return lua_tovec(L, index, result);
 	}
 
 	/********************************************************************/
-
-	template <class T> inline void lua_pushveccomp(lua_State* L, T val) {
-	    geo_argused(L);
-	    geo_argused(val);
-	    geo_assert_not_reached;
-	}
-
-	template<> inline void lua_pushveccomp(lua_State* L, double val) {
-	    lua_pushnumber(L, val);
-	}
-
-	template<> inline void lua_pushveccomp(
-	    lua_State* L, Numeric::int32 val
-	) {
-	    lua_pushinteger(L, lua_Integer(val));
-	}
-
-	template <unsigned int N, class T> inline void lua_pushvec(
-	    lua_State* L, const ::GEO::vecng<N,T>& V
-	) {
-	    lua_createtable(L, int(N), 0);
-	    for(index_t i=0; i<index_t(N); ++i) {
-		lua_pushveccomp(L,V[i]);
-		lua_seti(L,-2,lua_Integer(i+1)); // indices start from 1 in Lua
-	    }
-	}
 
 	template <unsigned int N, class T> inline bool lua_pushvec(
 	    lua_State* L, const Any& val
@@ -306,20 +162,6 @@ namespace OGF {
 	    val.get_value(V);
 	    lua_pushvec(L,V);
 	    return true;
-	}
-
-	template <unsigned int N, class T> inline void lua_pushmat(
-	    lua_State* L, const ::GEO::Matrix<N,T>& M
-	) {
-	    lua_createtable(L, int(N), 0);
-	    for(index_t i=0; i<index_t(N); ++i) {
-		lua_createtable(L, int(N), 0);
-		for(index_t j=0; j<index_t(N); ++j) {
-		    lua_pushveccomp(L,M(i,j));
-		    lua_seti(L,-2,lua_Integer(j+1)); // Idces start from 1 in Lua
-		}
-		lua_seti(L,-2,lua_Integer(i+1)); // Idem...
-	    }
 	}
 
 	template <unsigned int N, class T> inline bool lua_pushmat(
