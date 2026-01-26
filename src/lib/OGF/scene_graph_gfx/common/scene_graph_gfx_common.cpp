@@ -54,6 +54,7 @@
 #include <OGF/scene_graph_gfx/tools/grob_pan.h>
 #include <OGF/scene_graph_gfx/tools/grob_select.h>
 #include <OGF/scene_graph_gfx/tools/grob_light.h>
+#include <OGF/scene_graph_gfx/tools/grob_focus.h>
 
 #include <OGF/scene_graph_gfx/full_screen_effects/ambient_occlusion.h>
 #include <OGF/scene_graph_gfx/full_screen_effects/unsharp_masking.h>
@@ -71,6 +72,7 @@ namespace OGF {
 	ogf_register_grob_tool<Grob, GrobPan>();
 	ogf_register_grob_tool<Grob, GrobSelect>();
 	ogf_register_grob_tool<Grob, GrobLight>();
+	ogf_register_grob_tool<Grob, GrobFocus>();
 
         ogf_register_full_screen_effect<PlainFullScreenEffect>("Plain");
         ogf_register_full_screen_effect<AmbientOcclusion>("SSAO");
