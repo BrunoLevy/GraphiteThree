@@ -160,7 +160,7 @@ namespace OGF {
 	    }
 	    ::GEO::vecng<N,T> V;
 	    val.get_value(V);
-	    lua_pushvec(L,V);
+	    lua_push(L,V);
 	    return true;
 	}
 
@@ -172,7 +172,7 @@ namespace OGF {
 	    }
 	    ::GEO::Matrix<N,T> M;
 	    val.get_value(M);
-	    lua_pushmat(L,M);
+	    lua_push(L,M);
 	    return true;
 	}
 
