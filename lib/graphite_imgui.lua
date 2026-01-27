@@ -91,13 +91,13 @@ end
 function graphite_gui.draw_gizmo()
     ImOGuizmo.SetRect(220.0, 20.0, 150.0)
     ImOGuizmo.BeginFrame(false)
-    changed,new_viewing_matrix = ImOGuizmo.DrawGizmo(
+    changed,new_rotation_matrix = ImOGuizmo.DrawGizmo(
        main.render_area.viewing_matrix,
        main.render_area.projection_matrix,
        1.0
     )
     if changed then
-       xform.rotation_matrix = new_viewing_matrix
+       xform.rotation_matrix = new_rotation_matrix
     end
 end
 

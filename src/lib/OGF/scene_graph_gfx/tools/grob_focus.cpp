@@ -77,6 +77,10 @@ namespace OGF {
         rendering_context()->end_frame();
         rendering_context()->end_picking();
 
+	if(rendering_context()->picked_id() == NO_INDEX) {
+	    return;
+	}
+
 	vec3 p = rendering_context()->picked_point();
 
 	Any xform_any = Interpreter::default_interpreter()->resolve("xform");

@@ -82,7 +82,7 @@ namespace OGF {
 	{
 
 	    Object* obj = nullptr;
-	    if(id != index_t(-1) && id < sg->get_nb_children()) {
+	    if(id != NO_INDEX && id < sg->get_nb_children()) {
 		obj = sg->ith_child(id);
 		sg->set_current_object(sg->ith_child(id)->name());
 	    }
