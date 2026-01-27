@@ -51,13 +51,33 @@ namespace OGF {
 
     //_________________________________________________________________________
 
-
     void GrobFocus::grab(const RayPick& rp) {
-
-	if(rp.button != 1) {
+	if(rp.button == 1) {
+	    focus(rp);
 	    return;
 	}
+	if(rp.button >= 2 && rp.button <= 5) {
+	    GrobPan::grab(rp);
+	}
+    }
 
+    void GrobFocus::drag(const RayPick& rp) {
+	if(rp.button >= 2 && rp.button <= 5) {
+	    GrobPan::drag(rp);
+	}
+    }
+
+    void GrobFocus::release(const RayPick& rp) {
+	if(rp.button >= 2 && rp.button <= 5) {
+	    GrobPan::release(rp);
+	}
+    }
+
+    void GrobFocus::reset() {
+        status("Left: focus;  Middle: zoom;  Right: rotate");
+    }
+
+    void GrobFocus::focus(const RayPick& rp) {
         // Do not call Tool::grab(), no need to
 	// save state to undo/redo buffers.
 

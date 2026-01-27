@@ -39,6 +39,7 @@
 
 #include <OGF/scene_graph_gfx/common/common.h>
 #include <OGF/scene_graph_gfx/tools/tool.h>
+#include <OGF/scene_graph_gfx/tools/grob_pan.h>
 
 /**
  * \file OGF/scene_graph_gfx/tools/grob_focus.h
@@ -53,20 +54,38 @@ namespace OGF {
     gom_attribute(category,"viewer")
     gom_attribute(icon,"focus")
     gom_attribute(help, "Camera focus tool")
-    gom_attribute(message, "btn1: focus")
-    gom_class SCENE_GRAPH_GFX_API GrobFocus : public Tool {
+    gom_attribute(message, "btn1: focus; btn2: zoom; btn3: rotate")
+    gom_class SCENE_GRAPH_GFX_API GrobFocus : public GrobPan {
     public:
         /**
          * \brief GrobPan constructor.
          * \param[in] parent a pointer to the ToolsManager
          */
-        GrobFocus(ToolsManager* parent) : Tool(parent) {
+        GrobFocus(ToolsManager* parent) : GrobPan(parent) {
         }
 
         /**
          * \copydoc Tool::grab()
          */
          void grab(const RayPick& value) override;
+
+        /**
+         * \copydoc Tool::grab()
+         */
+         void drag(const RayPick& value) override;
+
+        /**
+         * \copydoc Tool::release()
+         */
+	 void release(const RayPick& value) override;
+
+        /**
+         * \copydoc Tool::reset()
+         */
+	 void reset() override;
+
+    protected:
+	 void focus(const RayPick& value);
     };
 
 }

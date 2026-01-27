@@ -70,9 +70,9 @@ namespace OGF {
         gom_package_initialize(scene_graph_gfx) ;
 
 	ogf_register_grob_tool<Grob, GrobPan>();
+	ogf_register_grob_tool<Grob, GrobFocus>();
 	ogf_register_grob_tool<Grob, GrobSelect>();
 	ogf_register_grob_tool<Grob, GrobLight>();
-	ogf_register_grob_tool<Grob, GrobFocus>();
 
         ogf_register_full_screen_effect<PlainFullScreenEffect>("Plain");
         ogf_register_full_screen_effect<AmbientOcclusion>("SSAO");
