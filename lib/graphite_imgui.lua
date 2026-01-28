@@ -89,7 +89,9 @@ function graphite_gui.draw_menu_bar()
 end
 
 function graphite_gui.draw_gizmo()
-    ImOGuizmo.SetRect(220.0, 20.0, 150.0)
+    ImOGuizmo.SetRect(
+       main.width - graphite_gui.right_pane_width - 150.0, 20.0, 150.0
+    )
     ImOGuizmo.BeginFrame(false)
     changed,new_rotation_matrix = ImOGuizmo.DrawGizmo(
        main.render_area.viewing_matrix,

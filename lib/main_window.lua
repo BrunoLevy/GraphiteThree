@@ -199,5 +199,6 @@ function graphite_main_window.draw()
   end
   imgui.Begin('Graphite',true,flags)
   graphite_main_window.draw_contents()
+  graphite_gui.left_pane_width = imgui.GetWindowWidth()
   imgui.End()
 end
