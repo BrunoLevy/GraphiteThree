@@ -203,6 +203,17 @@ function camera_gui.draw_extra()
 end
 
 function camera_gui.draw_window()
+   graphite_gui.right_pane_width = math.max(
+       graphite_gui.right_pane_width,
+       imgui.GetWindowWidth()
+   )
+
+   -- second arg = false: called_from_inspect
+   --  third arg =  true: no_windowify
+   autogui.properties_editor(main.camera(),false,true)
+end
+
+function camera_gui.draw_properties()
    -- second arg = false: called_from_inspect
    --  third arg =  true: no_windowify
    autogui.properties_editor(main.camera(),false,true)

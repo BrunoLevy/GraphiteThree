@@ -448,8 +448,8 @@ end
 
 -- \brief Handles the scene-graph operations menu
 function scene_graph_gui.scene_graph_ops()
-
   local name='Scene'
+  --[[
   local sel,visible = imgui.Checkbox(
        '##box##'..name,
        scene_graph.visible
@@ -461,7 +461,7 @@ function scene_graph_gui.scene_graph_ops()
   imgui.Text(imgui.font_icon('cubes'))
   imgui.SameLine()
   imgui.Selectable(name,false)
-
+  --]]
   if imgui.BeginPopupContextItem(name..'##ops') then
        scene_graph_gui.scene_graph_menu(true)
        imgui.EndPopup()
@@ -491,11 +491,10 @@ end
 -- \brief Draws the scene-graph and object list
 -- \details Handles context-menus
 
-function scene_graph_gui.draw()
+function scene_graph_gui.draw_object_list()
    local current_name=scene_graph.current_object
-   scene_graph_gui.scene_graph_ops()
-
-   imgui.Indent()
+-- scene_graph_gui.scene_graph_ops()
+-- imgui.Indent()
    for i=0,scene_graph.nb_children-1 do
        -- Need to verify in case an object was not deleted
        -- during iteration.
@@ -540,7 +539,8 @@ function scene_graph_gui.draw()
 	     end
 	  elseif imgui.Selectable(
 	       name, name == current_name,
-	       ImGuiSelectableFlags_AllowDoubleClick | ImGuiSelectableFlags_SelectOnNav
+	       ImGuiSelectableFlags_AllowDoubleClick |
+               ImGuiSelectableFlags_SelectOnNav
 	  ) then
 	      if imgui.IsMouseDoubleClicked(0) then
                   for i = 0,scene_graph.nb_children-1 do
@@ -574,7 +574,7 @@ function scene_graph_gui.draw()
   end
 
   -- The context menu when clicking on a 3D object
-  imgui.Unindent()
+  -- imgui.Unindent()
   if main.picked_grob ~= nil then
     if imgui.BeginPopupContextVoid() then
        scene_graph_gui.grob_ops(main.picked_grob)
@@ -586,4 +586,4 @@ function scene_graph_gui.draw()
 
 end
 
-graphite_main_window.add_module(scene_graph_gui)
+-- graphite_main_window.add_module(scene_graph_gui)

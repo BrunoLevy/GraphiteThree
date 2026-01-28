@@ -72,41 +72,60 @@ function graphite_main_window.remove_module(name)
    end
 end
 
+
+-- \brief Handles the GUI for a module toggle
+-- \param[in] module the module
+
+function graphite_main_window.draw_module_name_and_toggle(module)
+
+   local draw_props = false
+
+   if module.draw_properties ~= nil then
+      draw_props = imgui.TreeNodeEx(
+         '##'..module.name..'##props',ImGuiTreeNodeFlags_DrawLinesFull
+      )
+      imgui.SameLine()
+   end
+   _,module.visible = imgui.Checkbox(
+      "##module_box##"..module.name,
+      module.visible
+   )
+   gom.set_environment_value(
+      'gui:module_'..module.name..'_visible',
+      tostring(module.visible)
+   )
+   if module.icon ~= nil then
+      imgui.SameLine()
+      if module.icon:starts_with('@') then
+         imgui.Text(imgui.font_icon(module.icon:sub(2)))
+      else
+         imgui.Image(
+          main.resolve_icon(module.icon,true),
+          autogui.icon_size(), autogui.icon_size()
+         )
+      end
+   end
+   imgui.SameLine()
+   imgui.Selectable(module.name,false)
+
+   if module.draw_menu ~= nil then
+      if imgui.BeginPopupContextItem(module.name..'##ops') then
+          module.draw_menu()
+          imgui.EndPopup()
+      end
+   end
+
+   if draw_props then
+      module.draw_properties()
+      imgui.TreePop()
+   end
+end
+
 -- \brief Handles the GUI for a module
 -- \param[in] module the module
 
 function graphite_main_window.draw_module(module)
-   if module.draw ~= nil then
-      module.draw()
-   else
-      _,module.visible = imgui.Checkbox(
-          "##module_box##"..module.name,
-          module.visible
-      )
-      gom.set_environment_value(
-          'gui:module_'..module.name..'_visible',
-	  tostring(module.visible)
-      )
-      if module.icon ~= nil then
-         imgui.SameLine()
-         if module.icon:starts_with('@') then
-	   imgui.Text(imgui.font_icon(module.icon:sub(2)))
-         else
-           imgui.Image(
-             main.resolve_icon(module.icon,true),
-             autogui.icon_size(), autogui.icon_size()
-           )
-         end
-      end
-      imgui.SameLine()
-      imgui.Selectable(module.name,false)
-      if module.draw_menu ~= nil then
-        if imgui.BeginPopupContextItem(module.name..'##ops') then
-	   module.draw_menu()
-           imgui.EndPopup()
-	end
-      end
-      if module.visible and module.draw_window ~= nil then
+     if module.visible and module.draw_window ~= nil then
          if module.x ~= nil and module.y ~= nil then
 	    imgui.SetNextWindowPos(module.x, module.y, ImGuiCond_FirstUseEver)
 	 end
@@ -120,7 +139,7 @@ function graphite_main_window.draw_module(module)
 	 local with_menubar = (flags ~= 0)
 	 if module.window_flags ~= nil then
 	    flags = flags | module.window_flags
-	 end
+ 	 end
 	 local winname = module.name..'##module'
 	 if module.icon ~= nil and module.icon:starts_with('@') then
 	    winname = imgui.font_icon(module.icon:sub(2))..'  '..winname
@@ -140,7 +159,6 @@ function graphite_main_window.draw_module(module)
      if module.draw_extra ~= nil then
         module.draw_extra()
      end
-   end
 end
 
 function graphite_main_window.draw_contents()
@@ -149,9 +167,6 @@ function graphite_main_window.draw_contents()
         scene_graph_gui.file_menu()
         imgui.EndMenuBar()
      end
-  end
-  if imgui.Button(imgui.font_icon('home')..' Home',-1,0) then
-     camera_gui.home()
   end
   if gom.get_environment_value('gui:undo') == 'true' then
      imgui.Separator()
@@ -177,6 +192,24 @@ function graphite_main_window.draw_contents()
      end
   end
   imgui.Separator()
+  if imgui.TreeNodeEx(
+        imgui.font_icon('cog')..'Modules',
+        ImGuiTreeNodeFlags_DrawLinesFull
+  ) then
+     for index,module in ipairs(graphite_main_window.modules_by_index) do
+        graphite_main_window.draw_module_name_and_toggle(module)
+     end
+     imgui.TreePop()
+  end
+  local sg_open = imgui.TreeNodeEx(
+         imgui.font_icon('cubes')..'SceneGraph',
+       ImGuiTreeNodeFlags_DrawLinesFull | ImGuiTreeNodeFlags_DefaultOpen
+  )
+  scene_graph_gui.scene_graph_ops()
+  if sg_open then
+     scene_graph_gui.draw_object_list()
+     imgui.TreePop()
+  end
   for index,module in ipairs(graphite_main_window.modules_by_index) do
      graphite_main_window.draw_module(module)
   end
@@ -185,6 +218,7 @@ end
 -- \brief Draws the main window of Graphite, with all the modules in it.
 
 function graphite_main_window.draw()
+  graphite_gui.right_pane_width = 0
   imgui.SetNextWindowPos(
       3*main.margin(), main.margin(), ImGuiCond_FirstUseEver
   )

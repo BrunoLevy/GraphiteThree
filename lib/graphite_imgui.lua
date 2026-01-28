@@ -89,16 +89,21 @@ function graphite_gui.draw_menu_bar()
 end
 
 function graphite_gui.draw_gizmo()
-    ImOGuizmo.SetRect(
-       main.width - graphite_gui.right_pane_width - 150.0, 20.0, 150.0
-    )
+    x0 = main.width - graphite_gui.right_pane_width - 150.0
+    y0 = 20.0
+    L =  150.0
+    ImOGuizmo.SetRect(x0,y0,L)
     ImOGuizmo.BeginFrame(false)
     changed,new_rotation_matrix = ImOGuizmo.DrawGizmo(
        main.render_area.viewing_matrix,
        main.render_area.projection_matrix,
        1.0
     )
-    if changed then
+    x,y = imgui.GetMousePos()
+    if x >= x0 and y >= y0 and x <= x0+L and y <= y0+L and
+       imgui.IsMouseDoubleClicked(0) then
+       camera_gui.home()
+    elseif changed then
        xform.rotation_matrix = new_rotation_matrix
     end
 end
@@ -115,6 +120,9 @@ function graphite_gui.draw()
        return
     end
     graphite_gui.lock = true
+
+    -- Graphite's GUI has many items, make it denser so that it fits on screen
+    imgui.PushStyleVar_2(ImGuiStyleVar_FramePadding, 0.0, 0.5)
 
     if not graphite_gui.presentation_mode() then
        graphite_gui.draw_menu_bar()
@@ -140,6 +148,9 @@ function graphite_gui.draw()
     if graphite_gui.frame % 50 == 0 then
          collectgarbage()
     end
+
+    imgui.PopStyleVar()
+
     graphite_gui.lock = false
 end
 

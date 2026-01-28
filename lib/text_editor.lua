@@ -481,25 +481,6 @@ function text_editor_gui.draw_menu()
       end
       imgui.EndMenu()
    end
-   local w = imgui.GetContentRegionAvail()-20*main.scaling()
-   if w > 0 then
-      imgui.Dummy(w,1.0)
-      if object_properties_gui.visible then
-         if imgui.SimpleButton(imgui.font_icon('angle-double-right')) then
-             camera_gui.visible=false
-             object_properties_gui.visible=false
-             toolbox_gui.visible=false
-         end
-	 autogui.tooltip('hide right pane')
-      else
-         if imgui.SimpleButton(imgui.font_icon('angle-double-left')) then
-             camera_gui.visible=true
-             object_properties_gui.visible=true
-             toolbox_gui.visible=true
-         end
-	 autogui.tooltip('show right pane')
-      end
-   end
 end
 
 function text_editor_gui.find_next()

@@ -8,8 +8,8 @@ console_gui.x = main.margin()
 console_gui.y = 2*main.height/3 + main.margin() - main.status_bar_height()
 console_gui.w = main.width - 2*main.margin()
 console_gui.h = main.height/3 - 3*main.margin()
-console_gui.window_flags = ImGuiWindowFlags_NoScrollbar 
-console_gui.menubar = true
+console_gui.window_flags = ImGuiWindowFlags_NoScrollbar
+console_gui.menubar = false
 console_gui.icon = '@terminal'
 console_gui.resizable = true
 
@@ -27,6 +27,9 @@ function console_gui.draw_menu()
 	    ImGuiExtFileDialogFlags_Load
 	)
      end
+     imgui.EndMenu()
+  end
+  if imgui.BeginMenu('History...') then
      if imgui.MenuItem('Save history...') then
     	imgui.OpenFileDialog(
 	    '##console##save_dlg',
@@ -39,7 +42,7 @@ function console_gui.draw_menu()
         gom.clear_history()
      end
      imgui.EndMenu()
-  end   
+  end
 end
 
 function console_gui.draw_window()
@@ -59,7 +62,7 @@ function console_gui.draw_extra()
       print('save '..filename)
       gom.save_history(filename)
    end
-end    
+end
 
 graphite_main_window.add_module(console_gui)
 

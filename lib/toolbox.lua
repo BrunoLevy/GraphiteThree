@@ -12,7 +12,15 @@ toolbox_gui.h = 180*main.scaling()
 toolbox_gui.resizable = true
 
 function toolbox_gui.draw_window()
-      graphite_gui.right_pane_width = imgui.GetWindowWidth()
+
+      graphite_gui.right_pane_width = math.max(
+           graphite_gui.right_pane_width,
+           imgui.GetWindowWidth()
+      )
+
+      -- Make buttons not too much packed
+      imgui.PushStyleVar_2(ImGuiStyleVar_FramePadding, 4.0, 3.0)
+
       if scene_graph.current() ~= nil then
 
             -- Lighten background of buttons for tools selection else
@@ -94,6 +102,7 @@ function toolbox_gui.draw_window()
 	    end
 
 	 end
+         imgui.PopStyleVar()
 end
 
 graphite_main_window.add_module(toolbox_gui)
