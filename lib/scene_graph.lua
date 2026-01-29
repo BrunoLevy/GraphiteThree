@@ -5,7 +5,7 @@
 scene_graph_gui = {}
 scene_graph_gui.name = 'Scene'
 scene_graph_gui.icon = '@cubes'
-scene_graph_gui.edit = false
+scene_graph_gui.edit_list = false
 
 scene_graph_gui.grob_icon = {}
 scene_graph_gui.grob_icon['OGF::SceneGraph']  = 'cubes'
@@ -503,12 +503,44 @@ function scene_graph_gui.draw_object_list()
           draw_props = imgui.TreeNodeEx(
              '##'..name..'##props', ImGuiTreeNodeFlags_DrawLinesFull
           )
+
+          imgui.PushStyleVar_2(ImGuiStyleVar_ItemSpacing, 0.0, 4.0)
+
+          if scene_graph_gui.edit_list then
+             op = none
+             imgui.SameLine()
+             if imgui.SimpleButton(
+                 imgui.font_icon('window-close')..'##sglist##'..tostring(i)
+             ) then
+                op = 'delete'
+             end
+             autogui.tooltip('delete')
+             imgui.SameLine()
+             if imgui.SimpleButton(
+                 imgui.font_icon('arrow-up')..'##sglist##'..tostring(i)
+             ) then
+                op = 'moveup'
+             end
+             autogui.tooltip('move up')
+             imgui.SameLine()
+             if imgui.SimpleButton(
+                 imgui.font_icon('arrow-down')..'##sglist##'..tostring(i)
+             ) then
+                op = 'movedown'
+             end
+             autogui.tooltip('move down')
+             if op == 'delete' then
+             elseif op == 'moveup' then
+             elseif op == 'movedown' then
+             end
+          end
+
           imgui.SameLine()
           local sel = false
           local val = grob.visible
           if grob.visible then
               if imgui.SimpleButton(
-                 imgui.font_icon('eye')..'##box##'..tostring(i)
+                 imgui.font_icon('eye')..'##sglist##'..tostring(i)
               ) then
                  sel = true
                  val = false
@@ -521,6 +553,10 @@ function scene_graph_gui.draw_object_list()
                  val = true
               end
           end
+          autogui.tooltip('show/hide')
+
+          imgui.PopStyleVar()
+
           if sel then
 	     grob.visible=val
              scene_graph.current_object = grob.name

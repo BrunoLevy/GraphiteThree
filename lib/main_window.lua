@@ -211,14 +211,14 @@ function graphite_main_window.draw_contents()
   )
   scene_graph_gui.scene_graph_ops()
   imgui.SameLine()
-  if scene_graph_gui.edit then
+  if scene_graph_gui.edit_list then
     if imgui.SimpleButton(imgui.font_icon('check')) then
-       scene_graph_gui.edit = false
+       scene_graph_gui.edit_list = false
     end
     autogui.tooltip('done editing')
   else
     if imgui.SimpleButton(imgui.font_icon('ellipsis-h')) then
-       scene_graph_gui.edit = true
+       scene_graph_gui.edit_list = true
     end
     autogui.tooltip('edit object list')
   end
