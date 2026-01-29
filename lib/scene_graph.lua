@@ -241,7 +241,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
          main.picked_grob = nil
          scene_graph.current_object = name
          scene_graph.delete_current_object()
-         return nil
+         return
       end
 
       if imgui.MenuItem(imgui.font_icon('arrow-up')..' move up') then
@@ -457,6 +457,9 @@ function scene_graph_gui.scene_graph_menu(with_file_menu)
        commands_meta_class.find_method('delete_all'),
        commands_as_string
     )
+    if imgui.MenuItem('delete selected') then
+       scene_graph_gui.delete_selected()
+    end
     imgui.Separator()
     scene_graph_gui.menu_map.draw(scene_graph, nil)
     if with_file_menu then
@@ -713,4 +716,25 @@ function scene_graph_gui.clear_selection()
    for i=0,scene_graph.nb_children-1 do
       scene_graph.ith_child(i).selected = false
    end
+end
+
+-- \brief Deletes all the selected objects of the SceneGraph
+function scene_graph_gui.delete_selected()
+  main.save_state()
+  main.picked_grob = nil
+  local changed = true
+  while changed do
+     changed = false
+     for i=0,scene_graph.nb_children-1 do
+        grob = scene_graph.ith_child(i)
+        if grob.selected then
+            main.save_state()
+            main.picked_grob = nil
+            scene_graph.current_object = grob.name
+            scene_graph.delete_current_object()
+            changed = true
+            break
+        end
+     end
+  end
 end
