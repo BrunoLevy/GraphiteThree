@@ -500,8 +500,12 @@ function scene_graph_gui.draw_object_list()
        if i < scene_graph.nb_children then
           local grob = scene_graph.ith_child(i)
           local name = grob.name
+          local flags = ImGuiTreeNodeFlags_DrawLinesFull
+          if grob.selected then
+             flags = flags | ImGuiTreeNodeFlags_Selected
+          end
           draw_props = imgui.TreeNodeEx(
-             '##'..name..'##props', ImGuiTreeNodeFlags_DrawLinesFull
+             '##'..name..'##props', flags
           )
 
           imgui.PushStyleVar_2(ImGuiStyleVar_ItemSpacing, 0.0, 4.0)
