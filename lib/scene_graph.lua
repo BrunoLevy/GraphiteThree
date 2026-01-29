@@ -530,8 +530,14 @@ function scene_graph_gui.draw_object_list()
              end
              autogui.tooltip('move down')
              if op == 'delete' then
+                scene_graph.current_object = grob.name
+                scene_graph.delete_current_object()
              elseif op == 'moveup' then
+                scene_graph.current_object = grob.name
+                scene_graph.move_current_up()
              elseif op == 'movedown' then
+                scene_graph.current_object = grob.name
+                scene_graph.move_current_down()
              end
           end
 
