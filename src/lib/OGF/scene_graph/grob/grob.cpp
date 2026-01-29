@@ -60,6 +60,7 @@ namespace OGF {
         }
         filename_ = "";
         visible_ = true;
+	selected_ = false;
         obj_to_world_.load_identity();
         dirty_ = false;
         nb_graphics_locks_ = 0;

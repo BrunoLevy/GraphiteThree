@@ -469,6 +469,27 @@ namespace OGF {
         void set_visible(bool value);
 
         /**
+         * \brief Tests whether this Grob is selected
+         * \details In the GUI, this corresponds to highlighted objects
+         *  in the object list.
+         * \retval true if this Grob is selected
+         * \retval false otherwise
+         */
+        bool get_selected() const {
+	    return selected_;
+	}
+
+        /**
+         * \brief Sets the selection flag of this Grob
+         * \details In the GUI, this corresponds to highlighted objects
+         *  in the object list.
+         * \param[in] value the new value of the visibility flag
+         */
+        void set_selected(bool value) {
+	    selected_ = value;
+	}
+
+        /**
          * \brief Gets the shader associated with this Grob.
          * \return a pointer to the Shader
          */
@@ -530,6 +551,7 @@ namespace OGF {
         std::string name_;
         std::string filename_;
         bool visible_;
+	bool selected_;
         SceneGraph* scene_graph_;
         mat4 obj_to_world_;
         Object_var shader_manager_;
