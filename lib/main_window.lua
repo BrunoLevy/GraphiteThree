@@ -171,7 +171,6 @@ function graphite_main_window.draw_contents()
      end
   end
   if gom.get_environment_value('gui:undo') == 'true' then
-     imgui.Separator()
      local ImGuiStyleVar_Alpha = 0
      if(not main.can_undo) then
         imgui.PushStyleVar(ImGuiStyleVar_Alpha, 0.3);
@@ -192,8 +191,8 @@ function graphite_main_window.draw_contents()
      if(not main.can_redo) then
         imgui.PopStyleVar()
      end
+     imgui.Separator()
   end
-  imgui.Separator()
   if imgui.TreeNodeEx(
         imgui.font_icon('cog')..'Modules',
         ImGuiTreeNodeFlags_DrawLinesFull

@@ -28,6 +28,7 @@ gom.execute_file("preferences.lua")
 gom.execute_file("main_window.lua")
 gom.execute_file("scene_graph.lua")
 gom.execute_file("camera.lua")
+gom.execute_file("gizmo.lua")
 -- gom.execute_file("object_properties.lua")
 gom.execute_file("toolbox.lua")
 gom.execute_file("text_editor.lua")
@@ -79,33 +80,17 @@ function graphite_gui.draw_menu_bar()
          )
       end
 
+      -- commented out (commands attached to current object)
+      --[[
       if scene_graph.current() ~= nil then
           scene_graph_gui.grob_ops(
 	     scene_graph.current(), true
 	  )
       end
+      --]]
+
       imgui.EndMainMenuBar()
    end
-end
-
-function graphite_gui.draw_gizmo()
-    x0 = graphite_gui.left_pane_width
-    y0 = 20.0
-    L =  150.0
-    ImOGuizmo.SetRect(x0,y0,L)
-    ImOGuizmo.BeginFrame(false)
-    changed,new_rotation_matrix = ImOGuizmo.DrawGizmo(
-       main.render_area.viewing_matrix,
-       main.render_area.projection_matrix,
-       1.0
-    )
-    x,y = imgui.GetMousePos()
-    if x >= x0 and y >= y0 and x <= x0+L and y <= y0+L and
-       imgui.IsMouseDoubleClicked(0) then
-       camera_gui.home()
-    elseif changed then
-       xform.rotation_matrix = new_rotation_matrix
-    end
 end
 
 -- =============================================================================
@@ -142,7 +127,7 @@ function graphite_gui.draw()
     graphite_gui.draw_status_bar()
     autogui.property_editors()
     preferences_window.draw()
-    graphite_gui.draw_gizmo()
+    gizmo_gui.draw_gizmo()
 
     graphite_gui.frame = graphite_gui.frame+1
     if graphite_gui.frame % 50 == 0 then
