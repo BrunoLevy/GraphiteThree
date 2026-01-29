@@ -203,7 +203,7 @@ function graphite_main_window.draw_contents()
      imgui.TreePop()
   end
   local sg_open = imgui.TreeNodeEx(
-       imgui.font_icon('cubes')..'Scene',
+       imgui.font_icon('cubes')..'Scene ',
           ImGuiTreeNodeFlags_DrawLinesFull |
           ImGuiTreeNodeFlags_DefaultOpen |
           ImGuiTreeNodeFlags_AllowOverlap

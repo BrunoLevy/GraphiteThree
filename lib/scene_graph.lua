@@ -450,19 +450,6 @@ end
 -- \brief Handles the scene-graph operations menu
 function scene_graph_gui.scene_graph_ops()
   local name='Scene'
-  --[[
-  local sel,visible = imgui.Checkbox(
-       '##box##'..name,
-       scene_graph.visible
-  )
-  if(sel) then
-     scene_graph.visible = visible
-  end
-  imgui.SameLine()
-  imgui.Text(imgui.font_icon('cubes'))
-  imgui.SameLine()
-  imgui.Selectable(name,false)
-  --]]
   if imgui.BeginPopupContextItem(name..'##ops') then
        scene_graph_gui.scene_graph_menu(true)
        imgui.EndPopup()
@@ -485,7 +472,6 @@ function scene_graph_gui.scene_graph_ops()
   if sel then
      scene_graph.save_viewer_properties(filename)
   end
-
 end
 
 
@@ -494,6 +480,7 @@ end
 
 function scene_graph_gui.draw_object_list()
    local current_name=scene_graph.current_object
+   local selection_changed=false
    for i=0,scene_graph.nb_children-1 do
        -- Need to verify in case an object was not deleted
        -- during iteration.
@@ -548,17 +535,22 @@ function scene_graph_gui.draw_object_list()
           imgui.SameLine()
           local sel = false
           local val = grob.visible
-          if grob.visible then
+          local selected_only = main.camera().draw_selected_only
+          local visible = grob.visible
+          if selected_only then
+             visible = (grob.name == scene_graph.current_object)
+          end
+          if visible then
               if imgui.SimpleButton(
                  imgui.font_icon('eye')..'##sglist##'..tostring(i)
-              ) then
+              ) and not selected_only then
                  sel = true
                  val = false
               end
           else
               if imgui.SimpleButton(
                  imgui.font_icon('eye-slash')..'##box##'..tostring(i)
-              ) then
+              ) and not selected_only then
                  sel = true
                  val = true
               end
@@ -571,6 +563,7 @@ function scene_graph_gui.draw_object_list()
 	     grob.visible=val
              scene_graph.current_object = grob.name
           end
+
 	  imgui.SameLine()
           -- commented-out: display GrobClass as icon (takes too much space)
 	  -- local icon = scene_graph_gui.grob_icon[grob.meta_class.name]
@@ -615,10 +608,20 @@ function scene_graph_gui.draw_object_list()
 	      end
 	      scene_graph.current_object = grob.name
           end
+          if imgui.IsItemClicked() and not imgui.IsItemToggledOpen() then
+              selection_changed = imgui.IO_KeyCtrl_pressed()
+              if not selection_changed then
+                 scene_graph_gui.clear_selection()
+              end
+          end
 	  grob = nil
           if i < scene_graph.nb_children then
 	     grob = scene_graph.ith_child(i)
 	     name = grob.name
+             if selection_changed then
+                grob.selected = not grob.selected
+                selection_changed = false
+             end
              if imgui.BeginPopupContextItem(name..'##ops') then
                  grob = scene_graph_gui.grob_ops(grob)
 	         imgui.EndPopup()
@@ -645,7 +648,6 @@ function scene_graph_gui.draw_object_list()
   end
 
   -- The context menu when clicking on a 3D object
-  -- imgui.Unindent()
   if main.picked_grob ~= nil then
     if imgui.BeginPopupContextVoid() then
        scene_graph_gui.grob_ops(main.picked_grob)
@@ -654,7 +656,12 @@ function scene_graph_gui.draw_object_list()
   end
 
   scene_graph_gui.about_window()
+end
 
+function scene_graph_gui.clear_selection()
+   for i=0,scene_graph.nb_children-1 do
+      scene_graph.ith_child(i).selected = false
+   end
 end
 
 -- scene_graph_gui is no longer managed as a module
