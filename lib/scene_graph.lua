@@ -480,7 +480,7 @@ end
 
 function scene_graph_gui.draw_object_list()
    local current_name=scene_graph.current_object
-   local selection_changed=false
+   local selection_op=none
    for i=0,scene_graph.nb_children-1 do
        -- Need to verify in case an object was not deleted
        -- during iteration.
@@ -609,8 +609,11 @@ function scene_graph_gui.draw_object_list()
 	      scene_graph.current_object = grob.name
           end
           if imgui.IsItemClicked() and not imgui.IsItemToggledOpen() then
-              selection_changed = imgui.IO_KeyCtrl_pressed()
-              if not selection_changed then
+              if imgui.IO_KeyCtrl_pressed() then
+                 selection_op = scene_graph_gui.toggle_selection
+              elseif imgui.IO_KeyShift_pressed() then
+                 selection_op = scene_graph_gui.expand_selection
+              else
                  scene_graph_gui.clear_selection()
               end
           end
@@ -618,9 +621,9 @@ function scene_graph_gui.draw_object_list()
           if i < scene_graph.nb_children then
 	     grob = scene_graph.ith_child(i)
 	     name = grob.name
-             if selection_changed then
-                grob.selected = not grob.selected
-                selection_changed = false
+             if selection_op ~= none then
+                selection_op(grob)
+                selection_op = none
              end
              if imgui.BeginPopupContextItem(name..'##ops') then
                  grob = scene_graph_gui.grob_ops(grob)
@@ -658,11 +661,38 @@ function scene_graph_gui.draw_object_list()
   scene_graph_gui.about_window()
 end
 
+-- \brief toggles the selection flag for a given object
+-- \param grob the object
+function scene_graph_gui.toggle_selection(grob)
+   grob.selected = not grob.selected
+end
+
+-- \brief expand selection from current object to a given object
+-- \param grob the object towards which the selection should be expanded
+-- \details on exit, all objects between the current one and \p grob are
+--   selected. The selection flags of the other objects are left unchanged.
+function scene_graph_gui.expand_selection(grob)
+   cur_index = -1
+   grob_index = -1
+   for i=0,scene_graph.nb_children-1 do
+       cur_name = scene_graph.ith_child(i).name
+       if cur_name == scene_graph.current_object then
+          cur_index = i
+       end
+       if cur_name == grob.name then
+          grob_index = i
+       end
+   end
+   if cur_index ~= -1 and grob_index ~= -1 then
+      for i = math.min(cur_index,grob_index),math.max(cur_index,grob_index) do
+         scene_graph.ith_child(i).selected = true
+      end
+   end
+end
+
+-- \brief Resets the selection flag for all object of the SceneGraph
 function scene_graph_gui.clear_selection()
    for i=0,scene_graph.nb_children-1 do
       scene_graph.ith_child(i).selected = false
    end
 end
-
--- scene_graph_gui is no longer managed as a module
--- graphite_main_window.add_module(scene_graph_gui)
