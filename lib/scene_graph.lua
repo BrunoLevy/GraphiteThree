@@ -428,6 +428,24 @@ function scene_graph_gui.scene_graph_menu(with_file_menu)
           scene_graph.ith_child(i).visible = false
        end
     end
+    if imgui.MenuItem('show selected') then
+       for i=0,scene_graph.nb_children-1 do
+          grob = scene_graph.ith_child(i)
+          if grob.selected then
+              grob.visible = true
+          end
+       end
+       scene_graph_gui.clear_selection()
+    end
+    if imgui.MenuItem('hide selected') then
+       for i=0,scene_graph.nb_children-1 do
+          grob = scene_graph.ith_child(i)
+          if grob.selected then
+              grob.visible = false
+          end
+       end
+       scene_graph_gui.clear_selection()
+    end
     imgui.Separator()
     autogui.command_menu_item(
        scene_graph,
