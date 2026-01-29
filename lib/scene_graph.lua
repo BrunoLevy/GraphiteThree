@@ -5,6 +5,7 @@
 scene_graph_gui = {}
 scene_graph_gui.name = 'Scene'
 scene_graph_gui.icon = '@cubes'
+scene_graph_gui.edit = false
 
 scene_graph_gui.grob_icon = {}
 scene_graph_gui.grob_icon['OGF::SceneGraph']  = 'cubes'
@@ -500,25 +501,39 @@ function scene_graph_gui.draw_object_list()
           local grob = scene_graph.ith_child(i)
           local name = grob.name
           draw_props = imgui.TreeNodeEx(
-             '##'..name..'##props',ImGuiTreeNodeFlags_DrawLinesFull
+             '##'..name..'##props', ImGuiTreeNodeFlags_DrawLinesFull
           )
           imgui.SameLine()
-	  local sel,val = imgui.Checkbox(
-	       '##box##'..tostring(i),
-	       grob.visible
-	  )
-	  if sel then
+          local sel = false
+          local val = grob.visible
+          if grob.visible then
+              if imgui.SimpleButton(
+                 imgui.font_icon('eye')..'##box##'..tostring(i)
+              ) then
+                 sel = true
+                 val = false
+              end
+          else
+              if imgui.SimpleButton(
+                 imgui.font_icon('eye-slash')..'##box##'..tostring(i)
+              ) then
+                 sel = true
+                 val = true
+              end
+          end
+          if sel then
 	     grob.visible=val
              scene_graph.current_object = grob.name
-	  end
+          end
 	  imgui.SameLine()
-	  local icon = scene_graph_gui.grob_icon[grob.meta_class.name]
-	  if icon == nil then
-	     icon = 'cube'
-	  end
-          imgui.Text(imgui.font_icon(icon))
-	  autogui.tooltip(grob.meta_class.name)
-	  imgui.SameLine()
+          -- commented-out: display GrobClass as icon (takes too much space)
+	  -- local icon = scene_graph_gui.grob_icon[grob.meta_class.name]
+	  -- if icon == nil then
+	  --    icon = 'cube'
+	  -- end
+          -- imgui.Text(imgui.font_icon(icon))
+	  -- autogui.tooltip(grob.meta_class.name)
+	  -- imgui.SameLine()
 	  if name == autogui.rename_old then
 	     if autogui.rename_old == autogui.rename_new then
 	        imgui.SetKeyboardFocusHere()
@@ -596,4 +611,5 @@ function scene_graph_gui.draw_object_list()
 
 end
 
+-- scene_graph_gui is no longer managed as a module
 -- graphite_main_window.add_module(scene_graph_gui)

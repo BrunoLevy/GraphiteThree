@@ -86,10 +86,12 @@ function graphite_main_window.draw_module_name_and_toggle(module)
       )
       imgui.SameLine()
    end
-   _,module.visible = imgui.Checkbox(
-      "##module_box##"..module.name,
-      module.visible
-   )
+   if module.no_toggle == nil then
+      _,module.visible = imgui.Checkbox(
+         "##module_box##"..module.name,
+         module.visible
+      )
+   end
    gom.set_environment_value(
       'gui:module_'..module.name..'_visible',
       tostring(module.visible)
@@ -202,10 +204,25 @@ function graphite_main_window.draw_contents()
      imgui.TreePop()
   end
   local sg_open = imgui.TreeNodeEx(
-         imgui.font_icon('cubes')..'SceneGraph',
-       ImGuiTreeNodeFlags_DrawLinesFull | ImGuiTreeNodeFlags_DefaultOpen
+       imgui.font_icon('cubes')..'Scene',
+          ImGuiTreeNodeFlags_DrawLinesFull |
+          ImGuiTreeNodeFlags_DefaultOpen |
+          ImGuiTreeNodeFlags_AllowOverlap
   )
   scene_graph_gui.scene_graph_ops()
+  imgui.SameLine()
+  if scene_graph_gui.edit then
+    if imgui.SimpleButton(imgui.font_icon('check')) then
+       scene_graph_gui.edit = false
+    end
+    autogui.tooltip('done editing')
+  else
+    if imgui.SimpleButton(imgui.font_icon('ellipsis-h')) then
+       scene_graph_gui.edit = true
+    end
+    autogui.tooltip('edit object list')
+  end
+
   if sg_open then
      scene_graph_gui.draw_object_list()
      imgui.TreePop()
