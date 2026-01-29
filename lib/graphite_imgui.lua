@@ -89,7 +89,7 @@ function graphite_gui.draw_menu_bar()
 end
 
 function graphite_gui.draw_gizmo()
-    x0 = main.width - graphite_gui.right_pane_width - 150.0
+    x0 = graphite_gui.left_pane_width
     y0 = 20.0
     L =  150.0
     ImOGuizmo.SetRect(x0,y0,L)

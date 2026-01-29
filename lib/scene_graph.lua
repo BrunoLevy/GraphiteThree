@@ -493,14 +493,16 @@ end
 
 function scene_graph_gui.draw_object_list()
    local current_name=scene_graph.current_object
--- scene_graph_gui.scene_graph_ops()
--- imgui.Indent()
    for i=0,scene_graph.nb_children-1 do
        -- Need to verify in case an object was not deleted
        -- during iteration.
        if i < scene_graph.nb_children then
           local grob = scene_graph.ith_child(i)
           local name = grob.name
+          draw_props = imgui.TreeNodeEx(
+             '##'..name..'##props',ImGuiTreeNodeFlags_DrawLinesFull
+          )
+          imgui.SameLine()
 	  local sel,val = imgui.Checkbox(
 	       '##box##'..tostring(i),
 	       grob.visible
@@ -522,12 +524,14 @@ function scene_graph_gui.draw_object_list()
 	        imgui.SetKeyboardFocusHere()
 	     end
              local sel
+             imgui.PushItemWidth(-1)
 	     sel,autogui.rename_new = imgui.TextInput(
 	          '##renames##'..name,
 	          autogui.rename_new,
                   ImGuiInputTextFlags_EnterReturnsTrue |
 		  ImGuiInputTextFlags_AutoSelectAll
              )
+             imgui.PopItemWidth()
 	     if sel then
                 main.save_state()
 		scene_graph.current_object = name
@@ -562,6 +566,12 @@ function scene_graph_gui.draw_object_list()
 	  if grob == nil then
 	     i = scene_graph.nb_children
 	  end
+          if draw_props then
+             autogui.in_popup = true
+             autogui.properties_editor(grob.shader)
+	     autogui.in_popup = false
+             imgui.TreePop()
+          end
       end
    end
 
