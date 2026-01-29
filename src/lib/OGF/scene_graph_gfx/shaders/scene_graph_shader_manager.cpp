@@ -348,31 +348,25 @@ namespace OGF {
             return;
         }
 
-        // If we draw the selected object only, then we cannot pick
-        //   another object !
-        if(draw_selected_only_) {
-            return;
-        }
-
         glupMatrixMode(GLUP_MODELVIEW_MATRIX);
         glupPushMatrix();
         glupMultMatrix(focus_);
 
-        for(index_t i=0; i<scene_graph_->get_nb_children(); i++) {
-            Grob* cur = scene_graph_->ith_child(i);
-            if(cur != nullptr && cur->get_visible()) {
-
-                glupPushMatrix();
-                glupMultMatrix(cur->get_obj_to_world_transform());
-
-                Shader* shader =  dynamic_cast<Shader*>(cur->get_shader());
-                if(shader != nullptr) {
-                    shader->pick_object(i);
-                }
-
-                glupPopMatrix();
-            }
-        }
+	for(index_t i=0; i<scene_graph_->get_nb_children(); i++) {
+	    Grob* cur = scene_graph_->ith_child(i);
+	    if(draw_selected_only_ && cur != scene_graph_->current()) {
+		continue;
+	    }
+	    if(cur != nullptr && cur->get_visible()) {
+		glupPushMatrix();
+		glupMultMatrix(cur->get_obj_to_world_transform());
+		Shader* shader =  dynamic_cast<Shader*>(cur->get_shader());
+		if(shader != nullptr) {
+		    shader->pick_object(i);
+		}
+		glupPopMatrix();
+	    }
+	}
 
         glupPopMatrix();
     }

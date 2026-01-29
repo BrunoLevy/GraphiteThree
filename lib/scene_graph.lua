@@ -5,13 +5,7 @@
 scene_graph_gui = {}
 scene_graph_gui.name = 'Scene'
 scene_graph_gui.icon = '@cubes'
-scene_graph_gui.edit_list = false
-
-scene_graph_gui.grob_icon = {}
-scene_graph_gui.grob_icon['OGF::SceneGraph']  = 'cubes'
-scene_graph_gui.grob_icon['OGF::MeshGrob']    = 'cube'
-scene_graph_gui.grob_icon['OGF::LuaGrob']     = 'code'
-scene_graph_gui.grob_icon['OGF::VoxelGrob']   = 'th'
+scene_graph_gui.edit_list = false -- true when up/down/delete btn are visible
 
 -- \brief MenuMap Handles object commands menus
 -- \details With the 'menu' gom_attribute, the user
@@ -586,14 +580,6 @@ function scene_graph_gui.draw_object_list()
           end
 
 	  imgui.SameLine()
-          -- commented-out: display GrobClass as icon (takes too much space)
-	  -- local icon = scene_graph_gui.grob_icon[grob.meta_class.name]
-	  -- if icon == nil then
-	  --    icon = 'cube'
-	  -- end
-          -- imgui.Text(imgui.font_icon(icon))
-	  -- autogui.tooltip(grob.meta_class.name)
-	  -- imgui.SameLine()
 	  if name == autogui.rename_old then
 	     if autogui.rename_old == autogui.rename_new then
 	        imgui.SetKeyboardFocusHere()
