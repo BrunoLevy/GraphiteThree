@@ -348,6 +348,10 @@ namespace OGF {
             return;
         }
 
+	if(scene_graph_->current() == nullptr) {
+	    std::cerr << "NO CURRENT" << std::endl;
+	}
+
         glupMatrixMode(GLUP_MODELVIEW_MATRIX);
         glupPushMatrix();
         glupMultMatrix(focus_);

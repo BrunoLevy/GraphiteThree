@@ -40,6 +40,10 @@ end
 -- \brief Wrapper arround imgui.Text() that removes the underscores
 
 function autogui.Text(name)
+   -- special case for mesh_style, surface_style etc... (remove '_style')
+   if autogui.in_tree and name:ends_with('_style') then
+      name = name:strip_suffix('_style')
+   end
    imgui.Text(autogui.remove_underscores(name))
    if autogui.in_tree then
       imgui.SameLine()
