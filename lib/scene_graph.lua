@@ -493,7 +493,6 @@ end
 -- \brief Draws the scene-graph and object list
 -- \details Handles context-menus
 function scene_graph_gui.draw_object_list()
-   local current_name=scene_graph.current_object
    local selection_op=none
    local edit_op=none
 
@@ -635,7 +634,7 @@ function scene_graph_gui.draw_grob_name(grob)
           label = label..'...'
       end
       if imgui.Selectable(
-	 label, grob.name == current_name,
+	 label, grob.name == scene_graph.current_object,
 	 ImGuiSelectableFlags_AllowDoubleClick |
          ImGuiSelectableFlags_SelectOnNav
       ) then
