@@ -118,7 +118,9 @@ function graphite_main_window.draw_module_name_and_toggle(module)
    end
 
    if draw_props then
+      autogui.in_tree = true
       module.draw_properties()
+      autogui.in_tree = false
       imgui.TreePop()
    end
 end
@@ -164,6 +166,7 @@ function graphite_main_window.draw_module(module)
 end
 
 function graphite_main_window.draw_contents()
+  local btn_width  = 25 * main.scaling()
   if scene_graph_gui ~= nil and graphite_gui.presentation_mode() then
      if imgui.BeginMenuBar() then
         scene_graph_gui.file_menu()
@@ -203,13 +206,17 @@ function graphite_main_window.draw_contents()
      imgui.TreePop()
   end
 
+  imgui.PushItemWidth(-100)
   local sg_open = imgui.TreeNodeEx(
        imgui.font_icon('cubes')..'Scene ',
           ImGuiTreeNodeFlags_DrawLinesFull |
-          ImGuiTreeNodeFlags_DefaultOpen |
+          ImGuiTreeNodeFlags_DefaultOpen  |
           ImGuiTreeNodeFlags_AllowOverlap
   )
+  imgui.PopItemWidth()
   scene_graph_gui.scene_graph_ops()
+  imgui.SameLine()
+  imgui.Dummy(imgui.GetContentRegionAvail()-btn_width,2)
   imgui.SameLine()
   if scene_graph_gui.edit_list then
     if imgui.SimpleButton(imgui.font_icon('check')) then

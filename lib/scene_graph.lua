@@ -494,6 +494,7 @@ end
 -- \details Handles context-menus
 
 function scene_graph_gui.draw_object_list()
+   local btn_width  = 25 * main.scaling()
    local current_name=scene_graph.current_object
    local selection_op=none
    for i=0,scene_graph.nb_children-1 do
@@ -502,7 +503,9 @@ function scene_graph_gui.draw_object_list()
        if i < scene_graph.nb_children then
           local grob = scene_graph.ith_child(i)
           local name = grob.name
-          local flags = ImGuiTreeNodeFlags_DrawLinesFull
+          local flags = ImGuiTreeNodeFlags_DrawLinesFull |
+                        ImGuiTreeNodeFlags_AllowOverlap
+
           if grob.selected then
              flags = flags | ImGuiTreeNodeFlags_Selected
           end
@@ -510,8 +513,8 @@ function scene_graph_gui.draw_object_list()
              '##'..name..'##props', flags
           )
 
+          -- Optional buttons in 'edit list' mode: delete, move up, move down
           imgui.PushStyleVar_2(ImGuiStyleVar_ItemSpacing, 0.0, 4.0)
-
           if scene_graph_gui.edit_list then
              op = none
              imgui.SameLine()
@@ -546,54 +549,24 @@ function scene_graph_gui.draw_object_list()
                 scene_graph.move_current_down()
              end
           end
-
-          imgui.SameLine()
-          local sel = false
-          local val = grob.visible
-          local selected_only = main.camera().draw_selected_only
-          local visible = grob.visible
-          if selected_only then
-             visible = (grob.name == scene_graph.current_object)
-          end
-          if visible then
-              if imgui.SimpleButton(
-                 imgui.font_icon('eye')..'##sglist##'..tostring(i)
-              ) and not selected_only then
-                 sel = true
-                 val = false
-              end
-          else
-              if imgui.SimpleButton(
-                 imgui.font_icon('eye-slash')..'##box##'..tostring(i)
-              ) and not selected_only then
-                 sel = true
-                 val = true
-              end
-          end
-          autogui.tooltip('show/hide')
-
           imgui.PopStyleVar()
 
-          if sel then
-	     grob.visible=val
-             scene_graph.current_object = grob.name
-          end
-
+          -- Object name or input box for renaming
 	  imgui.SameLine()
 	  if name == autogui.rename_old then
 	     if autogui.rename_old == autogui.rename_new then
 	        imgui.SetKeyboardFocusHere()
 	     end
-             local sel
+             local rename_sel
              imgui.PushItemWidth(-1)
-	     sel,autogui.rename_new = imgui.TextInput(
+	     rename_sel,autogui.rename_new = imgui.TextInput(
 	          '##renames##'..name,
 	          autogui.rename_new,
                   ImGuiInputTextFlags_EnterReturnsTrue |
 		  ImGuiInputTextFlags_AutoSelectAll
              )
              imgui.PopItemWidth()
-	     if sel then
+	     if rename_sel then
                 main.save_state()
 		scene_graph.current_object = name
 		local o = scene_graph.current()
@@ -602,11 +575,13 @@ function scene_graph_gui.draw_object_list()
 	        autogui.rename_old = nil
 		autogui.rename_new = nil
 	     end
-	  elseif imgui.Selectable(
+	  else
+            imgui.SetNextItemAllowOverlap()
+            if imgui.Selectable(
 	       name, name == current_name,
 	       ImGuiSelectableFlags_AllowDoubleClick |
                ImGuiSelectableFlags_SelectOnNav
-	  ) then
+	    ) then
 	      if imgui.IsMouseDoubleClicked(0) then
                   for i = 0,scene_graph.nb_children-1 do
 		     scene_graph.ith_child(i).visible = false
@@ -614,6 +589,7 @@ function scene_graph_gui.draw_object_list()
 		  grob.visible=true
 	      end
 	      scene_graph.current_object = grob.name
+            end
           end
           if imgui.IsItemClicked() and not imgui.IsItemToggledOpen() then
               if imgui.IO_KeyCtrl_pressed() then
@@ -625,25 +601,69 @@ function scene_graph_gui.draw_object_list()
               end
           end
 	  grob = nil
-          if i < scene_graph.nb_children then
+          if i < scene_graph.nb_children then -- this test is maybe paranoid
+	     grob = scene_graph.ith_child(i)
+	     name = grob.name
+             if imgui.BeginPopupContextItem(name..'##ops') then
+                 grob = scene_graph_gui.grob_ops(grob)
+	         imgui.EndPopup()
+	     end
+	  end
+
+          -- Eye button on the right
+          local selected_only = main.camera().draw_selected_only
+          local visible = grob.visible
+          if selected_only then
+             visible = (grob.name == scene_graph.current_object)
+          end
+          local visible_changed = false
+          imgui.SameLine()
+          imgui.Dummy(imgui.GetContentRegionAvail()-btn_width,2)
+          imgui.SameLine()
+          imgui.PushStyleVar_2(ImGuiStyleVar_ItemSpacing, 0.0, 4.0)
+          if visible then
+              if imgui.SimpleButton(
+                 imgui.font_icon('eye')..'##sglist##'..tostring(i)
+              ) and not selected_only then
+                 visible_changed = true
+                 visible = false
+              end
+          else
+              if imgui.SimpleButton(
+                 imgui.font_icon('eye-slash')..'##box##'..tostring(i)
+              ) and not selected_only then
+                 visible_changed = true
+                 visible = true
+              end
+          end
+          autogui.tooltip('show/hide')
+          imgui.PopStyleVar()
+
+          if visible_changed then
+	     grob.visible=visible
+             scene_graph.current_object = grob.name
+          end
+
+	  grob = nil
+          if i < scene_graph.nb_children then -- this test is maybe paranoid
 	     grob = scene_graph.ith_child(i)
 	     name = grob.name
              if selection_op ~= none then
                 selection_op(grob)
                 selection_op = none
              end
-             if imgui.BeginPopupContextItem(name..'##ops') then
-                 grob = scene_graph_gui.grob_ops(grob)
-	         imgui.EndPopup()
-	     end
 	  end
 	  if grob == nil then
 	     i = scene_graph.nb_children
 	  end
           if draw_props then
              autogui.in_popup = true
-             autogui.properties_editor(grob.shader)
+             autogui.in_tree = true
+             autogui.properties_editor(
+                grob.shader, false, true
+             )
 	     autogui.in_popup = false
+             autogui.in_tree = false
              imgui.TreePop()
           end
       end

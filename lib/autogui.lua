@@ -41,6 +41,9 @@ end
 
 function autogui.Text(name)
    imgui.Text(autogui.remove_underscores(name))
+   if autogui.in_tree then
+      imgui.SameLine()
+   end
 end
 
 -- \brief Displays an optional tooltip attached to the latest widget
@@ -732,6 +735,10 @@ end
 -- it is required to avoid creating FileDialogs from popups (which
 -- closes the dialog unexpectingly). TODO: find a better fix.
 autogui.in_popup = false
+
+-- true when the current dialog created by autogui is in a tree
+-- used to toggle a more compact packing of GUI elements
+autogui.in_tree = false
 
 -- \brief Handler for file names
 -- \param[in] object, property_name, menum, tooltip handler parameters
