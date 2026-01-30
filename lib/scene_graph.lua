@@ -235,7 +235,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
          main.picked_grob = nil
          scene_graph.current_object = name
          scene_graph.delete_current_object()
-         return
+         return none
       end
 
       if imgui.MenuItem(imgui.font_icon('arrow-up')..' move up') then
@@ -493,15 +493,15 @@ end
 -- \brief Draws the scene-graph and object list
 -- \details Handles context-menus
 function scene_graph_gui.draw_object_list()
-   local btn_width  = 25 * main.scaling()
    local current_name=scene_graph.current_object
    local selection_op=none
+
    for i=0,scene_graph.nb_children-1 do
-       -- Need to verify in case an object was not deleted
-       -- during iteration.
+
        if i >= scene_graph.nb_children then
-          break
+          break -- exit loop when deleting an object
        end
+
        local grob = scene_graph.ith_child(i)
        local flags = ImGuiTreeNodeFlags_DrawLinesFull |
                      ImGuiTreeNodeFlags_AllowOverlap
@@ -511,93 +511,46 @@ function scene_graph_gui.draw_object_list()
        draw_props = imgui.TreeNodeEx('##'..grob.name..'##props', flags)
        scene_graph_gui.draw_grob_edit_list_buttons(grob)
        local selection_op = scene_graph_gui.draw_grob_name(grob)
-
-       if i < scene_graph.nb_children then -- this test is maybe paranoid
-	  grob = scene_graph.ith_child(i)
-          if imgui.BeginPopupContextItem(grob.name..'##ops') then
-              grob = scene_graph_gui.grob_ops(grob)
-	      imgui.EndPopup()
-	  end
+       -- grob = scene_graph.ith_child(i) -- needed ???
+       if imgui.BeginPopupContextItem(grob.name..'##ops') then
+          grob = scene_graph_gui.grob_ops(grob)
+	  imgui.EndPopup()
        end
-
-          -- Eye button on the right
-          local selected_only = main.camera().draw_selected_only
-          local visible = false
-          if grob ~= none then
-             visible = grob.visible
-             if selected_only then
-                visible = (grob.name == scene_graph.current_object)
-             end
-          end
-          local visible_changed = false
-          imgui.SameLine()
-          imgui.Dummy(imgui.GetContentRegionAvail()-btn_width,2)
-          imgui.SameLine()
-          imgui.PushStyleVar_2(ImGuiStyleVar_ItemSpacing, 0.0, 4.0)
-          if visible then
-              if imgui.SimpleButton(
-                 imgui.font_icon('eye')..'##sglist##'..tostring(i)
-              ) and not selected_only then
-                 visible_changed = true
-                 visible = false
-              end
-          else
-              if imgui.SimpleButton(
-                 imgui.font_icon('eye-slash')..'##box##'..tostring(i)
-              ) and not selected_only then
-                 visible_changed = true
-                 visible = true
-              end
-          end
-          autogui.tooltip('show/hide')
-          imgui.PopStyleVar()
-
-          if visible_changed and grob ~= none then
-	     grob.visible=visible
-             scene_graph.current_object = grob.name
-          end
-
-	  grob = nil
-          if i < scene_graph.nb_children then -- this test is maybe paranoid
-	     grob = scene_graph.ith_child(i)
-	     name = grob.name
-             if selection_op ~= none then
-                selection_op(grob)
-                selection_op = none
-             end
-	  end
-	  if grob == nil then
-	     i = scene_graph.nb_children
-	  end
-          if draw_props then
-             autogui.in_popup = true
-             autogui.in_tree = true
-             autogui.properties_editor(
-                grob.shader, false, true
-             )
-	     autogui.in_popup = false
-             autogui.in_tree = false
-             imgui.TreePop()
-          end
+       if grob == none then
+          break
+       end
+       scene_graph_gui.draw_grob_eye(grob)
+       if selection_op ~= none then
+          selection_op(grob)
+          selection_op = none
+       end
+       if draw_props then
+          autogui.in_popup = true
+          autogui.in_tree = true
+          autogui.properties_editor(grob.shader, false, true)
+	  autogui.in_popup = false
+          autogui.in_tree = false
+          imgui.TreePop()
+       end
    end
 
-  local filename=''
-  local sel
-  sel,filename = imgui.FileDialog('##object##save_dlg',filename)
-  if sel then
-     save_grob.save(filename)
-     save_grob = nil
-  end
+   local filename=''
+   local sel
+   sel,filename = imgui.FileDialog('##object##save_dlg',filename)
+   if sel then
+      save_grob.save(filename)
+      save_grob = nil
+   end
 
-  -- The context menu when clicking on a 3D object
-  if main.picked_grob ~= nil then
-    if imgui.BeginPopupContextVoid() then
-       scene_graph_gui.grob_ops(main.picked_grob)
-       imgui.EndPopup()
-    end
-  end
+   -- The context menu when clicking on a 3D object
+   if main.picked_grob ~= nil then
+     if imgui.BeginPopupContextVoid() then
+        scene_graph_gui.grob_ops(main.picked_grob)
+        imgui.EndPopup()
+     end
+   end
 
-  scene_graph_gui.about_window()
+   scene_graph_gui.about_window()
 end
 
 -- ----------------------------------------------------------------------------
@@ -690,6 +643,46 @@ function scene_graph_gui.draw_grob_name(grob)
        end
    end
    return selection_op
+end
+
+-- \brief Draws the visibility toggle button on the right
+-- \param[in] grob one of the objects in the list
+function scene_graph_gui.draw_grob_eye(grob)
+   local btn_width  = 25 * main.scaling()
+   local selected_only = main.camera().draw_selected_only
+   local visible = false
+   if grob ~= none then
+      visible = grob.visible
+      if selected_only then
+          visible = (grob.name == scene_graph.current_object)
+      end
+   end
+   local visible_changed = false
+   imgui.SameLine()
+   imgui.Dummy(imgui.GetContentRegionAvail()-btn_width,2)
+   imgui.SameLine()
+   imgui.PushStyleVar_2(ImGuiStyleVar_ItemSpacing, 0.0, 4.0)
+   if visible then
+       if imgui.SimpleButton(
+           imgui.font_icon('eye')..'##'..grob.name
+       ) and not selected_only then
+           visible_changed = true
+           visible = false
+       end
+   else
+       if imgui.SimpleButton(
+           imgui.font_icon('eye-slash')..'##'..grob.name
+       ) and not selected_only then
+           visible_changed = true
+           visible = true
+       end
+   end
+   autogui.tooltip('show/hide')
+   imgui.PopStyleVar()
+   if visible_changed and grob ~= none then
+      grob.visible=visible
+      scene_graph.current_object = grob.name
+   end
 end
 
 -- \brief toggles the selection flag for a given object
