@@ -80,14 +80,17 @@ function graphite_gui.draw_menu_bar()
          )
       end
 
-      -- commented out (commands attached to current object)
-      --[[
-      if scene_graph.current() ~= nil then
-          scene_graph_gui.grob_ops(
-	     scene_graph.current(), true
-	  )
+      -- Commands attached to current object
+      if imgui.BeginMenu('Current object') then
+         if scene_graph.current() ~= nil then
+             scene_graph_gui.grob_ops(
+  	       scene_graph.current(), true
+	     )
+         else
+            imgui.Text('<no object>')
+         end
+         imgui.EndMenu()
       end
-      --]]
 
       imgui.EndMainMenuBar()
    end
@@ -107,7 +110,7 @@ function graphite_gui.draw()
     graphite_gui.lock = true
 
     -- Graphite's GUI has many items, make it denser so that it fits on screen
-    imgui.PushStyleVar_2(ImGuiStyleVar_FramePadding, 0.0, 0.5)
+    imgui.PushStyleVar_2(ImGuiStyleVar_FramePadding, 1.5, 1.0)
 
     if not graphite_gui.presentation_mode() then
        graphite_gui.draw_menu_bar()
