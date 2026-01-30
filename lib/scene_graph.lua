@@ -489,7 +489,6 @@ function scene_graph_gui.scene_graph_ops()
   end
 end
 
-
 -- \brief Draws the scene-graph and object list
 -- \details Handles context-menus
 
@@ -612,9 +611,12 @@ function scene_graph_gui.draw_object_list()
 
           -- Eye button on the right
           local selected_only = main.camera().draw_selected_only
-          local visible = grob.visible
-          if selected_only then
-             visible = (grob.name == scene_graph.current_object)
+          local visible = false
+          if grob ~= none then
+             visible = grob.visible
+             if selected_only then
+                visible = (grob.name == scene_graph.current_object)
+             end
           end
           local visible_changed = false
           imgui.SameLine()
@@ -639,7 +641,7 @@ function scene_graph_gui.draw_object_list()
           autogui.tooltip('show/hide')
           imgui.PopStyleVar()
 
-          if visible_changed then
+          if visible_changed and grob ~= none then
 	     grob.visible=visible
              scene_graph.current_object = grob.name
           end
