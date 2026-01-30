@@ -495,6 +495,7 @@ end
 function scene_graph_gui.draw_object_list()
    local current_name=scene_graph.current_object
    local selection_op=none
+   local edit_op=none
 
    for i=0,scene_graph.nb_children-1 do
 
@@ -509,9 +510,8 @@ function scene_graph_gui.draw_object_list()
           flags = flags | ImGuiTreeNodeFlags_Selected
        end
        draw_props = imgui.TreeNodeEx('##'..grob.name..'##props', flags)
-       scene_graph_gui.draw_grob_edit_list_buttons(grob)
+       edit_op = scene_graph_gui.draw_grob_edit_list_buttons(grob)
        local selection_op = scene_graph_gui.draw_grob_name(grob)
-       -- grob = scene_graph.ith_child(i) -- needed ???
        if imgui.BeginPopupContextItem(grob.name..'##ops') then
           grob = scene_graph_gui.grob_ops(grob)
 	  imgui.EndPopup()
@@ -523,6 +523,13 @@ function scene_graph_gui.draw_object_list()
        if selection_op ~= none then
           selection_op(grob)
           selection_op = none
+       end
+       if edit_op ~= none then
+          edit_op(grob)
+          edit_op = none
+       end
+       if grob == none then
+          break
        end
        if draw_props then
           autogui.in_popup = true
@@ -557,42 +564,35 @@ end
 
 -- \brief Draws the optional buttons to edit the list (move up/down and delete)
 -- \param[in] grob one of the objects in the list
+-- \return edit_op, the function to be applied on grob or none
 function scene_graph_gui.draw_grob_edit_list_buttons(grob)
+   local edit_op = none
    if not scene_graph_gui.edit_list then
-      return
+      return edit_op
    end
    imgui.PushStyleVar_2(ImGuiStyleVar_ItemSpacing, 0.0, 4.0)
-   op = none
    imgui.SameLine()
    if imgui.SimpleButton(imgui.font_icon('window-close')..'##'..grob.name) then
-       op = 'delete'
+       edit_op = scene_graph_gui.delete_grob
    end
    autogui.tooltip('delete')
    imgui.SameLine()
    if imgui.SimpleButton(imgui.font_icon('arrow-up')..'##'..grob.name) then
-       op = 'moveup'
+       edit_op = scene_graph_gui.move_grob_up
    end
    autogui.tooltip('move up')
    imgui.SameLine()
    if imgui.SimpleButton(imgui.font_icon('arrow-down')..'##'..grob.name) then
-       op = 'movedown'
+       edit_op = scene_graph_gui.move_grob_down
    end
    autogui.tooltip('move down')
-   if op == 'delete' then
-        scene_graph.current_object = grob.name
-        scene_graph.delete_current_object()
-   elseif op == 'moveup' then
-        scene_graph.current_object = grob.name
-        scene_graph.move_current_up()
-   elseif op == 'movedown' then
-        scene_graph.current_object = grob.name
-        scene_graph.move_current_down()
-   end
    imgui.PopStyleVar()
+   return edit_op
 end
 
 -- \brief Draws the name of a grob, handles the rename command
 -- \param[in] grob one of the objects in the list
+-- \return selection_op to be performed on grob or none
 function scene_graph_gui.draw_grob_name(grob)
    local selection_op = none
    imgui.SameLine()
@@ -610,9 +610,11 @@ function scene_graph_gui.draw_grob_name(grob)
       )
       imgui.PopItemWidth()
       if renamed then
-         main.save_state()
-         scene_graph.current_object = grob.name
-         grob.rename(scene_graph_gui.rename_new)
+         if scene_graph_gui.rename_new ~= '' then
+            main.save_state()
+            scene_graph.current_object = grob.name
+            grob.rename(scene_graph_gui.rename_new)
+         end
 	 scene_graph.current_object = grob.name
          scene_graph_gui.rename_old = nil
 	 scene_graph_gui.rename_new = nil
@@ -685,10 +687,37 @@ function scene_graph_gui.draw_grob_eye(grob)
    end
 end
 
+-- -----------------------------------------------------------------------
+
+function scene_graph_gui.delete_grob(grob)
+   if grob ~= none then
+      scene_graph.current_object = grob.name
+      scene_graph.delete_current_object()
+   end
+end
+
+function scene_graph_gui.move_grob_up(grob)
+   if grob ~= none then
+      scene_graph.current_object = grob.name
+      scene_graph.move_current_up()
+   end
+end
+
+function scene_graph_gui.move_grob_down(grob)
+   if grob ~= none then
+      scene_graph.current_object = grob.name
+      scene_graph.move_current_down()
+   end
+end
+
+-- -----------------------------------------------------------------------
+
 -- \brief toggles the selection flag for a given object
 -- \param grob the object
 function scene_graph_gui.toggle_selection(grob)
-   grob.selected = not grob.selected
+   if grob ~= none then
+      grob.selected = not grob.selected
+   end
 end
 
 -- \brief expand selection from current object to a given object
@@ -696,6 +725,9 @@ end
 -- \details on exit, all objects between the current one and \p grob are
 --   selected. The selection flags of the other objects are left unchanged.
 function scene_graph_gui.expand_selection(grob)
+   if grob == none then
+      return
+   end
    cur_index = -1
    grob_index = -1
    for i=0,scene_graph.nb_children-1 do
