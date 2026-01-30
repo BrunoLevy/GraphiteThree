@@ -217,16 +217,16 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       imgui.Separator()
 
       if imgui.MenuItem(imgui.font_icon('edit')..'  rename') then
-         autogui.rename_old = name
-         autogui.rename_new = name
+         scene_graph_gui.rename_old = name
+         scene_graph_gui.rename_new = name
       end
 
       if imgui.MenuItem(imgui.font_icon('clone')..'  duplicate') then
          main.save_state()
          scene_graph.current_object = name
          local dup = scene_graph.duplicate_current()
-         autogui.rename_old = dup.name
-         autogui.rename_new = dup.name
+         scene_graph_gui.rename_old = dup.name
+         scene_graph_gui.rename_new = dup.name
          scene_graph.current_object = dup.name
       end
 
@@ -489,9 +489,9 @@ function scene_graph_gui.scene_graph_ops()
   end
 end
 
+
 -- \brief Draws the scene-graph and object list
 -- \details Handles context-menus
-
 function scene_graph_gui.draw_object_list()
    local btn_width  = 25 * main.scaling()
    local current_name=scene_graph.current_object
@@ -511,56 +511,19 @@ function scene_graph_gui.draw_object_list()
           draw_props = imgui.TreeNodeEx(
              '##'..name..'##props', flags
           )
-
-          -- Optional buttons in 'edit list' mode: delete, move up, move down
-          imgui.PushStyleVar_2(ImGuiStyleVar_ItemSpacing, 0.0, 4.0)
-          if scene_graph_gui.edit_list then
-             op = none
-             imgui.SameLine()
-             if imgui.SimpleButton(
-                 imgui.font_icon('window-close')..'##sglist##'..tostring(i)
-             ) then
-                op = 'delete'
-             end
-             autogui.tooltip('delete')
-             imgui.SameLine()
-             if imgui.SimpleButton(
-                 imgui.font_icon('arrow-up')..'##sglist##'..tostring(i)
-             ) then
-                op = 'moveup'
-             end
-             autogui.tooltip('move up')
-             imgui.SameLine()
-             if imgui.SimpleButton(
-                 imgui.font_icon('arrow-down')..'##sglist##'..tostring(i)
-             ) then
-                op = 'movedown'
-             end
-             autogui.tooltip('move down')
-             if op == 'delete' then
-                scene_graph.current_object = grob.name
-                scene_graph.delete_current_object()
-             elseif op == 'moveup' then
-                scene_graph.current_object = grob.name
-                scene_graph.move_current_up()
-             elseif op == 'movedown' then
-                scene_graph.current_object = grob.name
-                scene_graph.move_current_down()
-             end
-          end
-          imgui.PopStyleVar()
+          scene_graph_gui.draw_edit_list_buttons(grob)
 
           -- Object name or input box for renaming
 	  imgui.SameLine()
-	  if name == autogui.rename_old then
-	     if autogui.rename_old == autogui.rename_new then
+	  if name == scene_graph_gui.rename_old then
+	     if scene_graph_gui.rename_old == scene_graph_gui.rename_new then
 	        imgui.SetKeyboardFocusHere()
 	     end
              local rename_sel
              imgui.PushItemWidth(-1)
-	     rename_sel,autogui.rename_new = imgui.TextInput(
+	     rename_sel,scene_graph_gui.rename_new = imgui.TextInput(
 	          '##renames##'..name,
-	          autogui.rename_new,
+	          scene_graph_gui.rename_new,
                   ImGuiInputTextFlags_EnterReturnsTrue |
 		  ImGuiInputTextFlags_AutoSelectAll
              )
@@ -569,10 +532,10 @@ function scene_graph_gui.draw_object_list()
                 main.save_state()
 		scene_graph.current_object = name
 		local o = scene_graph.current()
-		o.rename(autogui.rename_new)
+		o.rename(scene_graph_gui.rename_new)
 		scene_graph.current_object = o.name
-	        autogui.rename_old = nil
-		autogui.rename_new = nil
+	        scene_graph_gui.rename_old = nil
+		scene_graph_gui.rename_new = nil
 	     end
 	  else
             imgui.SetNextItemAllowOverlap()
@@ -688,6 +651,44 @@ function scene_graph_gui.draw_object_list()
   end
 
   scene_graph_gui.about_window()
+end
+
+-- ----------------------------------------------------------------------------
+
+-- \brief Draws the optional buttons to edit the list (move up/down and delete)
+-- \param[in] grob one of the objects in the list
+function scene_graph_gui.draw_edit_list_buttons(grob)
+   if not scene_graph_gui.edit_list then
+      return
+   end
+   imgui.PushStyleVar_2(ImGuiStyleVar_ItemSpacing, 0.0, 4.0)
+   op = none
+   imgui.SameLine()
+   if imgui.SimpleButton(imgui.font_icon('window-close')..'##'..grob.name) then
+       op = 'delete'
+   end
+   autogui.tooltip('delete')
+   imgui.SameLine()
+   if imgui.SimpleButton(imgui.font_icon('arrow-up')..'##'..grob.name) then
+       op = 'moveup'
+   end
+   autogui.tooltip('move up')
+   imgui.SameLine()
+   if imgui.SimpleButton(imgui.font_icon('arrow-down')..'##'..grob.name) then
+       op = 'movedown'
+   end
+   autogui.tooltip('move down')
+   if op == 'delete' then
+        scene_graph.current_object = grob.name
+        scene_graph.delete_current_object()
+   elseif op == 'moveup' then
+        scene_graph.current_object = grob.name
+        scene_graph.move_current_up()
+   elseif op == 'movedown' then
+        scene_graph.current_object = grob.name
+        scene_graph.move_current_down()
+   end
+   imgui.PopStyleVar()
 end
 
 -- \brief toggles the selection flag for a given object
