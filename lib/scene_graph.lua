@@ -499,78 +499,26 @@ function scene_graph_gui.draw_object_list()
    for i=0,scene_graph.nb_children-1 do
        -- Need to verify in case an object was not deleted
        -- during iteration.
-       if i < scene_graph.nb_children then
-          local grob = scene_graph.ith_child(i)
-          local name = grob.name
-          local flags = ImGuiTreeNodeFlags_DrawLinesFull |
-                        ImGuiTreeNodeFlags_AllowOverlap
+       if i >= scene_graph.nb_children then
+          break
+       end
+       local grob = scene_graph.ith_child(i)
+       local flags = ImGuiTreeNodeFlags_DrawLinesFull |
+                     ImGuiTreeNodeFlags_AllowOverlap
+       if grob.selected then
+          flags = flags | ImGuiTreeNodeFlags_Selected
+       end
+       draw_props = imgui.TreeNodeEx('##'..grob.name..'##props', flags)
+       scene_graph_gui.draw_grob_edit_list_buttons(grob)
+       local selection_op = scene_graph_gui.draw_grob_name(grob)
 
-          if grob.selected then
-             flags = flags | ImGuiTreeNodeFlags_Selected
-          end
-          draw_props = imgui.TreeNodeEx(
-             '##'..name..'##props', flags
-          )
-          scene_graph_gui.draw_edit_list_buttons(grob)
-
-          -- Object name or input box for renaming
-	  imgui.SameLine()
-	  if name == scene_graph_gui.rename_old then
-	     if scene_graph_gui.rename_old == scene_graph_gui.rename_new then
-	        imgui.SetKeyboardFocusHere()
-	     end
-             local rename_sel
-             imgui.PushItemWidth(-1)
-	     rename_sel,scene_graph_gui.rename_new = imgui.TextInput(
-	          '##renames##'..name,
-	          scene_graph_gui.rename_new,
-                  ImGuiInputTextFlags_EnterReturnsTrue |
-		  ImGuiInputTextFlags_AutoSelectAll
-             )
-             imgui.PopItemWidth()
-	     if rename_sel then
-                main.save_state()
-		scene_graph.current_object = name
-		local o = scene_graph.current()
-		o.rename(scene_graph_gui.rename_new)
-		scene_graph.current_object = o.name
-	        scene_graph_gui.rename_old = nil
-		scene_graph_gui.rename_new = nil
-	     end
-	  else
-            imgui.SetNextItemAllowOverlap()
-            if imgui.Selectable(
-	       name, name == current_name,
-	       ImGuiSelectableFlags_AllowDoubleClick |
-               ImGuiSelectableFlags_SelectOnNav
-	    ) then
-	      if imgui.IsMouseDoubleClicked(0) then
-                  for i = 0,scene_graph.nb_children-1 do
-		     scene_graph.ith_child(i).visible = false
-		  end
-		  grob.visible=true
-	      end
-	      scene_graph.current_object = grob.name
-            end
-          end
-          if imgui.IsItemClicked() and not imgui.IsItemToggledOpen() then
-              if imgui.IO_KeyCtrl_pressed() then
-                 selection_op = scene_graph_gui.toggle_selection
-              elseif imgui.IO_KeyShift_pressed() then
-                 selection_op = scene_graph_gui.expand_selection
-              else
-                 scene_graph_gui.clear_selection()
-              end
-          end
-	  grob = nil
-          if i < scene_graph.nb_children then -- this test is maybe paranoid
-	     grob = scene_graph.ith_child(i)
-	     name = grob.name
-             if imgui.BeginPopupContextItem(name..'##ops') then
-                 grob = scene_graph_gui.grob_ops(grob)
-	         imgui.EndPopup()
-	     end
+       if i < scene_graph.nb_children then -- this test is maybe paranoid
+	  grob = scene_graph.ith_child(i)
+          if imgui.BeginPopupContextItem(grob.name..'##ops') then
+              grob = scene_graph_gui.grob_ops(grob)
+	      imgui.EndPopup()
 	  end
+       end
 
           -- Eye button on the right
           local selected_only = main.camera().draw_selected_only
@@ -631,7 +579,6 @@ function scene_graph_gui.draw_object_list()
              autogui.in_tree = false
              imgui.TreePop()
           end
-      end
    end
 
   local filename=''
@@ -657,7 +604,7 @@ end
 
 -- \brief Draws the optional buttons to edit the list (move up/down and delete)
 -- \param[in] grob one of the objects in the list
-function scene_graph_gui.draw_edit_list_buttons(grob)
+function scene_graph_gui.draw_grob_edit_list_buttons(grob)
    if not scene_graph_gui.edit_list then
       return
    end
@@ -689,6 +636,60 @@ function scene_graph_gui.draw_edit_list_buttons(grob)
         scene_graph.move_current_down()
    end
    imgui.PopStyleVar()
+end
+
+-- \brief Draws the name of a grob, handles the rename command
+-- \param[in] grob one of the objects in the list
+function scene_graph_gui.draw_grob_name(grob)
+   local selection_op = none
+   imgui.SameLine()
+   if grob.name == scene_graph_gui.rename_old then
+      if scene_graph_gui.rename_old == scene_graph_gui.rename_new then
+         imgui.SetKeyboardFocusHere()
+      end
+      local renamed
+      imgui.PushItemWidth(-1)
+      renamed,scene_graph_gui.rename_new = imgui.TextInput(
+	 '##renames##'..grob.name,
+	 scene_graph_gui.rename_new,
+         ImGuiInputTextFlags_EnterReturnsTrue |
+         ImGuiInputTextFlags_AutoSelectAll
+      )
+      imgui.PopItemWidth()
+      if renamed then
+         main.save_state()
+         scene_graph.current_object = grob.name
+         grob.rename(scene_graph_gui.rename_new)
+	 scene_graph.current_object = grob.name
+         scene_graph_gui.rename_old = nil
+	 scene_graph_gui.rename_new = nil
+      end
+   else
+      imgui.SetNextItemAllowOverlap()
+      if imgui.Selectable(
+	 grob.name, grob.name == current_name,
+	 ImGuiSelectableFlags_AllowDoubleClick |
+         ImGuiSelectableFlags_SelectOnNav
+      ) then
+	 if imgui.IsMouseDoubleClicked(0) then
+              for i = 0,scene_graph.nb_children-1 do
+	         scene_graph.ith_child(i).visible = false
+	      end
+	      grob.visible=true
+	 end
+	 scene_graph.current_object = grob.name
+      end
+   end
+   if imgui.IsItemClicked() and not imgui.IsItemToggledOpen() then
+       if imgui.IO_KeyCtrl_pressed() then
+         selection_op = scene_graph_gui.toggle_selection
+       elseif imgui.IO_KeyShift_pressed() then
+         selection_op = scene_graph_gui.expand_selection
+       else
+         scene_graph_gui.clear_selection()
+       end
+   end
+   return selection_op
 end
 
 -- \brief toggles the selection flag for a given object
