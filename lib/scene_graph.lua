@@ -594,6 +594,7 @@ end
 -- \param[in] grob one of the objects in the list
 -- \return selection_op to be performed on grob or none
 function scene_graph_gui.draw_grob_name(grob)
+   local btn_width  = 25 * main.scaling()
    local selection_op = none
    imgui.SameLine()
    if grob.name == scene_graph_gui.rename_old then
@@ -621,8 +622,20 @@ function scene_graph_gui.draw_grob_name(grob)
       end
    else
       imgui.SetNextItemAllowOverlap()
+      label = grob.name
+      cropped = false
+      szx,szy = imgui.CalcTextSize(label)
+      availx = imgui.GetContentRegionAvail()
+      while szx + 1.3*btn_width > availx  do
+          label = label:sub(1,#label-1)
+          cropped=true
+          szx,szy = imgui.CalcTextSize(label)
+      end
+      if cropped then
+          label = label..'...'
+      end
       if imgui.Selectable(
-	 grob.name, grob.name == current_name,
+	 label, grob.name == current_name,
 	 ImGuiSelectableFlags_AllowDoubleClick |
          ImGuiSelectableFlags_SelectOnNav
       ) then
@@ -641,7 +654,7 @@ function scene_graph_gui.draw_grob_name(grob)
        elseif imgui.IO_KeyShift_pressed() then
          selection_op = scene_graph_gui.expand_selection
        else
-         scene_graph_gui.clear_selection()
+         selection_op = scene_graph_gui.clear_selection
        end
    end
    return selection_op
@@ -650,6 +663,9 @@ end
 -- \brief Draws the visibility toggle button on the right
 -- \param[in] grob one of the objects in the list
 function scene_graph_gui.draw_grob_eye(grob)
+   if grob.name == scene_graph_gui.rename_old then
+      return
+   end
    local btn_width  = 25 * main.scaling()
    local selected_only = main.camera().draw_selected_only
    local visible = false
