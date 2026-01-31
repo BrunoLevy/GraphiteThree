@@ -15,6 +15,9 @@ function toolbox_gui.draw_window()
     toolbox_gui.draw_tools(false)
 end
 
+-- \brief draws the toolbox
+-- \param[in] viewer_tools if set, then draws the active tool indicator and
+--  draws only the viewer tools (pan, focus, select, light)
 function toolbox_gui.draw_tools(viewer_tools)
       local size = 23 * main.scaling()
 
