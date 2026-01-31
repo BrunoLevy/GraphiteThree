@@ -625,7 +625,7 @@ function scene_graph_gui.draw_grob_name(grob)
       cropped = false
       szx,szy = imgui.CalcTextSize(label)
       availx = imgui.GetContentRegionAvail()
-      while szx + 1.3*btn_width > availx  do
+      while szx + 1.3*btn_width > availx and label ~= '' do
           label = label:sub(1,#label-1)
           cropped=true
           szx,szy = imgui.CalcTextSize(label)
@@ -645,6 +645,9 @@ function scene_graph_gui.draw_grob_name(grob)
 	      grob.visible=true
 	 end
 	 scene_graph.current_object = grob.name
+      end
+      if cropped then
+         autogui.tooltip(grob.name)
       end
    end
    if imgui.IsItemClicked() and not imgui.IsItemToggledOpen() then
