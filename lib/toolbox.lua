@@ -31,9 +31,14 @@ function toolbox_gui.draw_tools(viewer_tools)
 	       pushed_color = true
 	    end
 
+            -- Display currently selected tool
             if viewer_tools then
-	       -- imgui.Text('current:')
-	       -- imgui.SameLine()
+               -- Change color a bit as compared to tool buttons
+               if gom.get_environment_value('gui:style') == 'Dark' then
+   	          imgui.PushStyleColor_2(ImGuiCol_Button, 0.25, 0.25, 0.30, 1.0)
+               else
+   	          imgui.PushStyleColor_2(ImGuiCol_Button, 0.9, 0.9, 0.9, 1.0)
+               end
 	       local mclass = tools.current().meta_class
 	       local icon_name = 'tool'
 	       if mclass.has_custom_attribute('icon') then
@@ -43,13 +48,15 @@ function toolbox_gui.draw_tools(viewer_tools)
                imgui.SameLine()
                imgui.Dummy(size/3.0,size)
                imgui.SameLine()
+               imgui.PopStyleColor()
             end
-
 
 	    local grob_class_name = scene_graph.current().meta_class.name
 	    local tool_class_names = gom.get_environment_value(
 	       grob_class_name .. "_tools"
 	    )
+
+            -- toolbox_gui.tool_button('test','@home')
 
             for tool_class_name in string.split(tool_class_names,";") do
                local mclass = gom.resolve_meta_type(tool_class_name)
@@ -87,10 +94,8 @@ function toolbox_gui.draw_tools(viewer_tools)
 	                imgui.EndPopup()
 	             end
 	          end
+   	          imgui.SameLine()
                end
-
- 	       imgui.SameLine()
-
 	    end
 
 	    if pushed_color then
