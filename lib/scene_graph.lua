@@ -235,7 +235,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
          main.picked_grob = nil
          scene_graph.current_object = name
          scene_graph.delete_current_object()
-         return none
+         return nil
       end
 
       if imgui.MenuItem(imgui.font_icon('arrow-up')..' move up') then
@@ -493,8 +493,8 @@ end
 -- \brief Draws the scene-graph and object list
 -- \details Handles context-menus
 function scene_graph_gui.draw_object_list()
-   local selection_op=none
-   local edit_op=none
+   local selection_op=nil
+   local edit_op=nil
 
    for i=0,scene_graph.nb_children-1 do
 
@@ -515,19 +515,19 @@ function scene_graph_gui.draw_object_list()
           grob = scene_graph_gui.grob_ops(grob)
 	  imgui.EndPopup()
        end
-       if grob == none then
+       if grob == nil then
           break
        end
        scene_graph_gui.draw_grob_eye(grob)
-       if selection_op ~= none then
+       if selection_op ~= nil then
           selection_op(grob)
-          selection_op = none
+          selection_op = nil
        end
-       if edit_op ~= none then
+       if edit_op ~= nil then
           edit_op(grob)
-          edit_op = none
+          edit_op = nil
        end
-       if grob == none then
+       if grob == nil then
           break
        end
        if draw_props then
@@ -563,9 +563,9 @@ end
 
 -- \brief Draws the optional buttons to edit the list (move up/down and delete)
 -- \param[in] grob one of the objects in the list
--- \return edit_op, the function to be applied on grob or none
+-- \return edit_op, the function to be applied on grob or nil
 function scene_graph_gui.draw_grob_edit_list_buttons(grob)
-   local edit_op = none
+   local edit_op = nil
    if not scene_graph_gui.edit_list then
       return edit_op
    end
@@ -591,10 +591,10 @@ end
 
 -- \brief Draws the name of a grob, handles the rename command
 -- \param[in] grob one of the objects in the list
--- \return selection_op to be performed on grob or none
+-- \return selection_op to be performed on grob or nil
 function scene_graph_gui.draw_grob_name(grob)
    local btn_width  = 25 * main.scaling()
-   local selection_op = none
+   local selection_op = nil
    imgui.SameLine()
    if grob.name == scene_graph_gui.rename_old then
       if scene_graph_gui.rename_old == scene_graph_gui.rename_new then
@@ -671,7 +671,7 @@ function scene_graph_gui.draw_grob_eye(grob)
    local btn_width  = 25 * main.scaling()
    local selected_only = main.camera().draw_selected_only
    local visible = false
-   if grob ~= none then
+   if grob ~= nil then
       visible = grob.visible
       if selected_only then
           visible = (grob.name == scene_graph.current_object)
@@ -699,7 +699,7 @@ function scene_graph_gui.draw_grob_eye(grob)
    end
    autogui.tooltip('show/hide')
    imgui.PopStyleVar()
-   if visible_changed and grob ~= none then
+   if visible_changed and grob ~= nil then
       grob.visible=visible
       scene_graph.current_object = grob.name
    end
@@ -708,21 +708,21 @@ end
 -- -----------------------------------------------------------------------
 
 function scene_graph_gui.delete_grob(grob)
-   if grob ~= none then
+   if grob ~= nil then
       scene_graph.current_object = grob.name
       scene_graph.delete_current_object()
    end
 end
 
 function scene_graph_gui.move_grob_up(grob)
-   if grob ~= none then
+   if grob ~= nil then
       scene_graph.current_object = grob.name
       scene_graph.move_current_up()
    end
 end
 
 function scene_graph_gui.move_grob_down(grob)
-   if grob ~= none then
+   if grob ~= nil then
       scene_graph.current_object = grob.name
       scene_graph.move_current_down()
    end
@@ -733,7 +733,7 @@ end
 -- \brief toggles the selection flag for a given object
 -- \param grob the object
 function scene_graph_gui.toggle_selection(grob)
-   if grob ~= none then
+   if grob ~= nil then
       grob.selected = not grob.selected
    end
 end
@@ -743,7 +743,7 @@ end
 -- \details on exit, all objects between the current one and \p grob are
 --   selected. The selection flags of the other objects are left unchanged.
 function scene_graph_gui.expand_selection(grob)
-   if grob == none then
+   if grob == nil then
       return
    end
    cur_index = -1

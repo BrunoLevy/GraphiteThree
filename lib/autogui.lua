@@ -1312,7 +1312,21 @@ function autogui.properties_editor_properties(object)
       -- call).
       if mproperty.has_custom_attribute('aggregate_properties') and
          object[mproperty.name] ~= nil then
-         autogui.properties_editor_properties(object[mproperty.name])
+         subobject = object[mproperty.name]
+         if autogui.in_tree then
+            if subobject.meta_class.nb_properties() >
+               gom.meta_types.OGF.Object.nb_properties() then
+               if imgui.TreeNodeEx(
+                   '...'..'##'..subobject.string_id,
+                   ImGuiTreeNodeFlags_DrawLinesFull
+               ) then
+                   autogui.properties_editor_properties(subobject)
+                   imgui.TreePop()
+               end
+            end
+         else
+            autogui.properties_editor_properties(subobject)
+         end
       elseif autogui.member_is_visible(object, mproperty) then
          autogui.property(object,mproperty)
       end
