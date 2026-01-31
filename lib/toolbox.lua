@@ -12,11 +12,11 @@ toolbox_gui.h = 180*main.scaling()
 toolbox_gui.resizable = true
 
 function toolbox_gui.draw_window()
+    toolbox_gui.draw_tools(false)
+end
 
-      graphite_gui.right_pane_width = math.max(
-           graphite_gui.right_pane_width,
-           imgui.GetWindowWidth()
-      )
+function toolbox_gui.draw_tools(viewer_tools)
+      local size = 23 * main.scaling()
 
       -- Make buttons not too much packed
       imgui.PushStyleVar_2(ImGuiStyleVar_FramePadding, 4.0, 3.0)
@@ -31,20 +31,20 @@ function toolbox_gui.draw_window()
 	       pushed_color = true
 	    end
 
-	    local size = 23 * main.scaling()
-	    imgui.Text('current:')
-	    imgui.SameLine()
-	    local mclass = tools.current().meta_class
-	    local icon_name = 'tool'
-	    if mclass.has_custom_attribute('icon') then
-  	       icon_name = mclass.custom_attribute_value('icon')
+            if viewer_tools then
+	       -- imgui.Text('current:')
+	       -- imgui.SameLine()
+	       local mclass = tools.current().meta_class
+	       local icon_name = 'tool'
+	       if mclass.has_custom_attribute('icon') then
+  	          icon_name = mclass.custom_attribute_value('icon')
+               end
+               toolbox_gui.tool_button('toolbox_showtool', icon_name)
+               imgui.SameLine()
+               imgui.Dummy(size/3.0,size)
+               imgui.SameLine()
             end
 
-            toolbox_gui.tool_button('toolbox_showtool', icon_name)
-
-	    imgui.Spacing()
-	    imgui.Separator()
-	    imgui.Spacing()
 
 	    local grob_class_name = scene_graph.current().meta_class.name
 	    local tool_class_names = gom.get_environment_value(
@@ -59,24 +59,37 @@ function toolbox_gui.draw_window()
 	          icon_name = mclass.custom_attribute_value('icon')
                end
 
-               if toolbox_gui.tool_button('toolbox_'..icon_name, icon_name) then
-                  tools.tool(tool_class_name)
+               local category = ''
+               if mclass.has_custom_attribute('category') then
+                  category = mclass.custom_attribute_value('category')
                end
-	       autogui.tooltip(autogui.help(mclass))
 
-	       if mclass.nb_properties() > OGF.Object.nb_properties() then
-		  if imgui.BeginPopupContextItem(tool_class_name.."##ops") then
-	             tools.tool(tool_class_name)
-		     autogui.properties_editor(tools.current())
-	             imgui.EndPopup()
+               if (viewer_tools and category == 'viewer') or
+                  (not viewer_tools and category ~= 'viewer') then
+
+	          if imgui.GetContentRegionAvail() < size then
+	             imgui.NewLine()
+		     imgui.Spacing()
 	          end
-	       end
 
-	       imgui.SameLine()
-	       if imgui.GetContentRegionAvail() < size then
-	          imgui.NewLine()
-		  imgui.Spacing()
-	       end
+                  if toolbox_gui.tool_button(
+                         'toolbox_'..icon_name, icon_name
+                  ) then
+                     tools.tool(tool_class_name)
+                  end
+	          autogui.tooltip(autogui.help(mclass))
+
+	          if mclass.nb_properties() > OGF.Tool.nb_properties() then
+		     if imgui.BeginPopupContextItem(
+                        tool_class_name.."##ops") then
+	                tools.tool(tool_class_name)
+		        autogui.properties_editor(tools.current())
+	                imgui.EndPopup()
+	             end
+	          end
+               end
+
+ 	       imgui.SameLine()
 
 	    end
 
@@ -90,9 +103,16 @@ end
 
 function toolbox_gui.tool_button(id, icon)
     local size = 23 * main.scaling()
-    return imgui.ImageButton(
-       id, main.resolve_icon('tools/'..icon,true), size, size
-    )
+    if icon:starts_with('@') then
+       return imgui.Button(
+          imgui.font_icon(icon:sub(2))..'##'..id,
+          size+7, size+3
+       )
+    else
+       return imgui.ImageButton(
+          id, main.resolve_icon('tools/'..icon,true), size, size
+       )
+    end
 end
 
 graphite_main_window.add_module(toolbox_gui)

@@ -51,7 +51,7 @@ namespace OGF {
      * \brief The camera panning tool.
      */
     gom_attribute(category,"viewer")
-    gom_attribute(icon,"pan")
+    gom_attribute(icon,"@hand-pointer")
     gom_attribute(help, "Camera pan tool")
     gom_attribute(message, "btn1: pan; btn2: zoom; btn3: rotate")
     gom_class SCENE_GRAPH_GFX_API GrobPan : public Tool {

@@ -51,7 +51,7 @@ namespace OGF {
      * \brief The object selection tool.
      */
     gom_attribute(category, "viewer")
-    gom_attribute(icon, "arrow")
+    gom_attribute(icon, "@mouse-pointer")
     gom_attribute(help, "Object selection tool")
     gom_attribute(message, "Click to select object")
     gom_class SCENE_GRAPH_GFX_API GrobSelect : public Tool {

@@ -52,7 +52,7 @@ namespace OGF {
      * \brief The camera focus tool.
      */
     gom_attribute(category,"viewer")
-    gom_attribute(icon,"focus")
+    gom_attribute(icon,"@crosshairs")
     gom_attribute(help, "Camera focus tool")
     gom_attribute(message, "btn1: focus; btn2: zoom; btn3: rotate")
     gom_class SCENE_GRAPH_GFX_API GrobFocus : public GrobPan {

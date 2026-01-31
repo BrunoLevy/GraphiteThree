@@ -52,7 +52,7 @@ namespace OGF {
      * \brief The camera panning tool.
      */
     gom_attribute(category,"viewer")
-    gom_attribute(icon,"light")
+    gom_attribute(icon,"@lightbulb")
     gom_attribute(help, "Edit light direction")
     gom_attribute(message, "btn1: edit light direction")
     gom_class SCENE_GRAPH_GFX_API GrobLight : public Tool {
