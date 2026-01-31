@@ -75,23 +75,30 @@ end
 
 -- \brief Handles the GUI for a module toggle
 -- \param[in] module the module
+-- \param[in] in_menu true if drawing toggles in menu
 
-function graphite_main_window.draw_module_name_and_toggle(module)
+function graphite_main_window.draw_module_name_and_toggle(module, in_menu)
 
    local draw_props = false
 
-   if module.draw_properties ~= nil then
+   if not in_menu and module.draw_properties ~= nil then
       draw_props = imgui.TreeNodeEx(
          '##'..module.name..'##props',ImGuiTreeNodeFlags_DrawLinesFull
       )
       imgui.SameLine()
    end
+
    if module.no_toggle == nil then
       _,module.visible = imgui.Checkbox(
          "##module_box##"..module.name,
          module.visible
       )
+   else
+      if in_menu then
+         return
+      end
    end
+
    gom.set_environment_value(
       'gui:module_'..module.name..'_visible',
       tostring(module.visible)
@@ -109,6 +116,10 @@ function graphite_main_window.draw_module_name_and_toggle(module)
    end
    imgui.SameLine()
    imgui.Selectable(module.name,false)
+
+   if in_menu then
+      return
+   end
 
    if module.draw_menu ~= nil then
       if imgui.BeginPopupContextItem(module.name..'##ops') then
@@ -165,6 +176,12 @@ function graphite_main_window.draw_module(module)
      end
 end
 
+function graphite_main_window.draw_modules_menu()
+   for index,module in ipairs(graphite_main_window.modules_by_index) do
+      graphite_main_window.draw_module_name_and_toggle(module,true)
+   end
+end
+
 function graphite_main_window.draw_contents()
   local btn_width  = 25 * main.scaling()
   if scene_graph_gui ~= nil and graphite_gui.presentation_mode() then
@@ -204,6 +221,10 @@ function graphite_main_window.draw_contents()
         graphite_main_window.draw_module_name_and_toggle(module)
      end
      imgui.TreePop()
+  end
+  if imgui.BeginPopupContextItem('Modules##ShowHide') then
+      graphite_main_window.draw_modules_menu()
+      imgui.EndPopup()
   end
 
   imgui.PushItemWidth(-100)

@@ -37,14 +37,26 @@ function autogui.remove_underscores(name)
   return name:gsub('_',' ')
 end
 
--- \brief Wrapper arround imgui.Text() that removes the underscores
 
-function autogui.Text(name)
+-- \brief Transorms a string into a string suitable to be displayed to user
+-- \param[in] name the string
+-- \return the string suitable to be displayed to user
+
+function autogui.to_display_string(name)
    -- special case for mesh_style, surface_style etc... (remove '_style')
    if autogui.in_tree and name:ends_with('_style') then
       name = name:strip_suffix('_style')
    end
-   imgui.Text(autogui.remove_underscores(name))
+  if name:ends_with('_object') then
+      name = name:strip_suffix('_object')
+  end
+  return autogui.remove_underscores(name)
+end
+
+-- \brief Wrapper arround imgui.Text() that removes the underscores
+
+function autogui.Text(name)
+   imgui.Text(autogui.to_display_string(name))
    if autogui.in_tree then
       imgui.SameLine()
    end
@@ -1317,7 +1329,9 @@ function autogui.properties_editor_properties(object)
             if subobject.meta_class.nb_properties() >
                gom.meta_types.OGF.Object.nb_properties() then
                if imgui.TreeNodeEx(
-                   '...'..'##'..subobject.string_id,
+                   autogui.to_display_string(mproperty.name)..
+                     ' properties'..
+                     '##'..subobject.string_id,
                    ImGuiTreeNodeFlags_DrawLinesFull
                ) then
                    autogui.properties_editor_properties(subobject)

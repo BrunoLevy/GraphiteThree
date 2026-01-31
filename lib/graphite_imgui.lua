@@ -80,12 +80,16 @@ function graphite_gui.draw_menu_bar()
          )
       end
 
+      -- Modules
+      if imgui.BeginMenu('Modules') then
+         graphite_main_window.draw_modules_menu()
+         imgui.EndMenu()
+      end
+
       -- Commands attached to current object
       if imgui.BeginMenu('Current object') then
          if scene_graph.current() ~= nil then
-             scene_graph_gui.grob_ops(
-  	       scene_graph.current(), true
-	     )
+             scene_graph_gui.grob_ops(scene_graph.current())
          else
             imgui.Text('<no object>')
          end
