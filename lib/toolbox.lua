@@ -40,20 +40,7 @@ function toolbox_gui.draw_window()
   	       icon_name = mclass.custom_attribute_value('icon')
             end
 
-            -- Tool display needs a light background. If the dark
-	    -- style is used, use a button instead of an image.
-	    if gom.get_environment_value('gui:style') == 'Dark' then
-	       imgui.ImageButton(
-	          'toolbox_showtool',
-	          main.resolve_icon('tools/'..icon_name,true),
-	          size,size
-	       )
-	    else
-	       imgui.Image(
-	          main.resolve_icon('tools/'..icon_name,true),
-	          size,size
-	       )
-	    end
+            toolbox_gui.tool_button('toolbox_showtool', icon_name)
 
 	    imgui.Spacing()
 	    imgui.Separator()
@@ -72,13 +59,9 @@ function toolbox_gui.draw_window()
 	          icon_name = mclass.custom_attribute_value('icon')
                end
 
-	       if imgui.ImageButton(
-	          'toolbox_'..icon_name,
-	          main.resolve_icon('tools/'..icon_name, true),
-		  size,size
-	       ) then
-	          tools.tool(tool_class_name)
-	       end
+               if toolbox_gui.tool_button('toolbox_'..icon_name, icon_name) then
+                  tools.tool(tool_class_name)
+               end
 	       autogui.tooltip(autogui.help(mclass))
 
 	       if mclass.nb_properties() > OGF.Object.nb_properties() then
@@ -103,6 +86,13 @@ function toolbox_gui.draw_window()
 
 	 end
          imgui.PopStyleVar()
+end
+
+function toolbox_gui.tool_button(id, icon)
+    local size = 23 * main.scaling()
+    return imgui.ImageButton(
+       id, main.resolve_icon('tools/'..icon,true), size, size
+    )
 end
 
 graphite_main_window.add_module(toolbox_gui)
