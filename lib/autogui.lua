@@ -45,10 +45,10 @@ end
 function autogui.to_display_string(name)
    -- special case for mesh_style, surface_style etc... (remove '_style')
    if autogui.in_tree and name:ends_with('_style') then
-      name = name:strip_suffix('_style')
+      name = name:remove_suffix('_style')
    end
   if name:ends_with('_object') then
-      name = name:strip_suffix('_object')
+      name = name:remove_suffix('_object')
   end
   return autogui.remove_underscores(name)
 end
@@ -1377,7 +1377,7 @@ end
 
 function shader_user_to_internal(grob_classname, user_shader_name)
    return 'OGF::'..user_shader_name..string.
-      strip_prefix(grob_classname,'OGF::')..'Shader'
+      remove_prefix(grob_classname,'OGF::')..'Shader'
 end
 
 -- \brief Translates a shader classname to a user shader name
@@ -1387,11 +1387,11 @@ end
 -- \return the user name of the shader
 
 function shader_internal_to_user(grob_classname, shader_classname)
-   local result = string.strip_suffix(
+   local result = string.remove_suffix(
       shader_classname,
-      string.strip_prefix(grob_classname, 'OGF::')..'Shader'
+      string.remove_prefix(grob_classname, 'OGF::')..'Shader'
    )
-   result = string.strip_prefix(result,'OGF::')
+   result = string.remove_prefix(result,'OGF::')
    return result
 end
 
@@ -1439,7 +1439,7 @@ autogui.property_editor_state  = {}
 --  mode.
 
 function autogui.properties_editor(object,called_from_inspect,no_windowify)
-   local name = string.strip_prefix(object.meta_class.name,'OGF::')
+   local name = string.remove_prefix(object.meta_class.name,'OGF::')
    local is_shader = not called_from_inspect and
                      object.is_a(gom.meta_types.OGF.Shader)
    local k = object.string_id

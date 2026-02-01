@@ -143,14 +143,42 @@ namespace OGF {
     Interpreter::~Interpreter() {
     }
 
-    void Interpreter::add_to_history(const std::string& command) {
+    void Interpreter::add_to_history(const std::string& command_in) {
+	std::string command = command_in;
         if(command != "") {
             if(*command.rbegin() == '\n') {
-                history_.push_back(command.substr(0,command.length()-1));
-            } else {
-                history_.push_back(command);
-            }
+                command = command.substr(0,command.length()-1);
+	    }
+	    history_.push_back(command);
+	    Logger::out("History") << command << std::endl;
         }
+    }
+
+    void Interpreter::record_invoke_in_history(
+	Object* target, const std::string& slot_name, const ArgList& args
+    ) {
+	geo_argused(target);
+	geo_argused(slot_name);
+	geo_argused(args);
+    }
+
+    void Interpreter::record_set_property_in_history(
+	Object* target, const std::string& prop_name, const Any& value
+    ) {
+	geo_argused(target);
+	geo_argused(prop_name);
+	geo_argused(value);
+    }
+
+    std::string Interpreter::back_resolve(Object* object) const {
+	geo_argused(object);
+	return "";
+    }
+
+    std::string Interpreter::back_parse(const Any& value) const {
+	std::string result;
+	value.get_value(result);
+	return String::quote(result);
     }
 
 /*******************************************************************/

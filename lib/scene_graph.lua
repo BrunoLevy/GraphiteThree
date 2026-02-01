@@ -97,11 +97,11 @@ function scene_graph_gui.menu_map.get(grob)
 	 -- Command may be associated with a base class, so we find
 	 -- the name of this base class in the 'grob_class_name' attribute
 	 -- of the Command and strip it to generate the menu name.
-         default_menu_name = string.strip_prefix(
+         default_menu_name = string.remove_prefix(
 	    default_menu_name,
 	    command_mclass.custom_attribute_value('grob_class_name')
 	 )
-         default_menu_name = string.strip_suffix(default_menu_name,'Commands')
+         default_menu_name = string.remove_suffix(default_menu_name,'Commands')
          local mclass = gom.resolve_meta_type(command_class_name)
          for i=0,mclass.nb_slots()-1 do
             local mslot = mclass.ith_slot(i)

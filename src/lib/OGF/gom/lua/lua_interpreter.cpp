@@ -166,6 +166,145 @@ namespace OGF {
 	}
     }
 
+    void LuaInterpreter::record_invoke_in_history(
+	Object* target, const std::string& slot_name, const ArgList& args
+    ) {
+
+	MetaSlot* mslot = target->meta_class()->find_slot(slot_name);
+
+	std::string cmd_funccall = back_resolve(target) + "." + slot_name;
+	std::string cmd_args;
+
+	for(index_t i=0; i<args.nb_args(); ++i) {
+	    std::string arg_name = args.ith_arg_name(i);
+	    std::string arg_val = back_parse(args.ith_arg_value(i));
+	    const MetaArg* marg = mslot->find_arg(arg_name);
+	    std::string arg_default_val;
+	    if(marg != nullptr) {
+		arg_default_val = back_parse(marg->default_value());
+	    }
+
+	    if(arg_default_val == arg_val) {
+		continue;
+	    }
+
+	    if(cmd_args.length() > 0) {
+		cmd_args += ", ";
+	    }
+
+	    cmd_args += args.ith_arg_name(i);
+	    cmd_args += "=";
+	    cmd_args += arg_val;
+	}
+
+	std::string command = cmd_funccall;
+	if(cmd_args.length() > 0) {
+	    command += "({";
+	    command += cmd_args;
+	    command += "})";
+	} else {
+	    command += "()";
+	}
+	add_to_history(command);
+    }
+
+    void LuaInterpreter::record_set_property_in_history(
+	Object* target, const std::string& prop_name, const Any& value
+    ) {
+	geo_argused(value);
+	std::cerr << "SET PROP "
+		  << back_resolve(target) << "."
+		  << prop_name
+		  << std::endl;
+    }
+
+    std::string LuaInterpreter::back_resolve(Object* object) const {
+	MetaType* mcommand =
+	    Meta::instance()->resolve_meta_type("OGF::Commands");
+	MetaType* mscenegraph =
+	    Meta::instance()->resolve_meta_type("OGF::SceneGraph");
+	MetaType* mgrob = Meta::instance()->resolve_meta_type("OGF::Grob");
+	MetaType* mshader = Meta::instance()->resolve_meta_type("OGF::Shader");
+
+	// Command
+	if(mcommand != nullptr && object->is_a(mcommand)) {
+	    Any grob_any;
+	    Object* grob;
+	    std::string grob_name;
+	    if(
+		object->get_property("grob",grob_any) &&
+		grob_any.get_value(grob) &&
+		grob != nullptr &&
+		grob->get_property("name",grob_name)
+	    ) {
+		std::string interface_name = object->meta_class()->name();
+		interface_name = String::remove_prefix(
+		    interface_name,grob->meta_class()->name()
+		);
+		interface_name = String::remove_suffix(
+		    interface_name, "Commands"
+		);
+		return
+		    "scene_graph.objects." + grob_name + ".I." + interface_name;
+	    }
+	    return "";
+	}
+
+	// SceneGraph
+	if(mgrob != nullptr && object->is_a(mscenegraph)) {
+	    return "scene_graph";
+	}
+
+	// Grob
+	if(mgrob != nullptr && object->is_a(mgrob)) {
+	    std::string grob_name;
+	    if(object->get_property("name",grob_name)) {
+		return "scene_graph.objects." + grob_name;
+	    }
+	    return "";
+	}
+
+	// Shader
+	if(mshader != nullptr && object->is_a(mshader)) {
+	    Any grob_any;
+	    Object* grob;
+	    std::string grob_name;
+	    if(
+		object->get_property("grob",grob_any) &&
+		grob_any.get_value(grob) &&
+		grob != nullptr &&
+		grob->get_property("name",grob_name)
+	    ) {
+		return "scene_graph.objects." + grob_name + ".shader";
+	    }
+	    return "";
+	}
+
+	return "";
+    }
+
+    std::string LuaInterpreter::back_parse(const Any& value) const {
+
+	if(value.meta_type() == nullptr) {
+	    return "nil";
+	}
+
+	std::string result;
+	value.get_value(result);
+
+	if(
+	    value.meta_type()->name() == "int" ||
+	    value.meta_type()->name() == "bool" ||
+	    value.meta_type()->name() == "float" ||
+	    value.meta_type()->name() == "double"
+	) {
+	    return result;
+	}
+
+	result = String::quote(result);
+	return result;
+    }
+
     void LuaInterpreter::adjust_lua_state() {
     }
 

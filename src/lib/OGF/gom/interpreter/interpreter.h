@@ -669,6 +669,26 @@ namespace OGF {
          */
         void add_to_history(const std::string& command);
 
+	/**
+	 * \brief Record an object invokation to history
+	 * \param[in] the target object
+	 * \param[in] slot_name the invoked slot
+	 * \param[in] args the arguments of the slot
+	 */
+	virtual void record_invoke_in_history(
+	    Object* target, const std::string& slot_name, const ArgList& args
+	);
+
+	/**
+	 * \brief Records a property modification
+	 * \param[in] target the target object
+	 * \param[in] prop_name the name of the property
+	 * \param[in] value the new property value, as an Any
+	 */
+	virtual void record_set_property_in_history(
+	    Object* target, const std::string& prop_name, const Any& value
+	);
+
         /**
          * \brief Gets the size of the history.
          * \return the number of command lines in the history.
@@ -685,6 +705,22 @@ namespace OGF {
         std::string history_line(unsigned int l) const {
             return l < history_size() ? history_[l] : std::string("");
         }
+
+	/**
+	 * \brief finds how to refer to an object in the history
+	 * \param[in] object a pointer to an object
+	 * \return a string with the way to refer to the object in
+	 *  the interpreter or the empty string if not found.
+	 */
+	virtual std::string back_resolve(Object* object) const;
+
+
+	/**
+	 * \brief finds a scriptable representation of a value
+	 * \param[in] value the value stored in an Any
+	 * \return a string with a parsable representation of the value
+	 */
+	virtual std::string back_parse(const Any& any) const;
 
       protected:
 	/**

@@ -125,6 +125,30 @@ namespace OGF {
 	 */
 	void list_names(std::vector<std::string>& names) const override;
 
+	/**
+	 * \copydoc Interpreter::record_invoke_in_history()
+	 */
+	void record_invoke_in_history(
+	    Object* target, const std::string& slot_name, const ArgList& args
+	) override;
+
+	/**
+	 * \copydoc Interpreter::record_set_property_in_history()
+	 */
+	void record_set_property_in_history(
+	    Object* target, const std::string& prop_name, const Any& value
+	) override;
+
+	/**
+	 * \copydoc Interpreter::back_resolve()
+	 */
+	std::string back_resolve(Object* object) const override;
+
+	/**
+	 * \copydoc Interpreter::back_resolve()
+	 */
+	std::string back_parse(const Any& value) const override;
+
     protected:
 
 	/**

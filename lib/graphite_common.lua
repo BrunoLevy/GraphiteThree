@@ -36,7 +36,7 @@ end
 -- \param[in] prefix the prefix to remove
 -- \return str with prefix removed if it matched
 
-function string.strip_prefix(str,prefix)
+function string.remove_prefix(str,prefix)
    local result = str
    if string.starts_with(str,prefix) then
       str = str:sub(prefix:len()-str:len())
@@ -49,7 +49,7 @@ end
 -- \param[in] suffix the suffix to remove
 -- \return str with suffix removed if it matched
 
-function string.strip_suffix(str,suffix)
+function string.remove_suffix(str,suffix)
    local result = str
    if string.ends_with(str,suffix) then
       str = str:sub(1,str:len()-suffix:len())

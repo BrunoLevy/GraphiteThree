@@ -155,7 +155,9 @@ namespace OGF {
 	    } else {
 		out << ")" << std::endl ;
 	    }
-	    interpreter()->add_to_history(out.str()) ;
+	    // interpreter()->add_to_history(out.str()) ;
+
+	    interpreter()->record_invoke_in_history(this, method_name, args);
         }
 
         // Do not display timings for methods with continuous updates
