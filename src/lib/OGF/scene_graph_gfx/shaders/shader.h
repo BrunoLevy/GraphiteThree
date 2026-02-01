@@ -163,7 +163,15 @@ namespace OGF {
          */
         bool dark_mode() const;
 
+	/**
+	 * \copydoc Object::set_property
+	 */
+        bool set_property(
+            const std::string& name, const Any& value
+        ) override;
+
     protected:
+
 
         /**
          * \brief Creates a texture from an image file.

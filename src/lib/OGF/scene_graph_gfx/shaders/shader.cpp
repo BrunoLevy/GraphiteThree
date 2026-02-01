@@ -95,6 +95,19 @@ namespace OGF {
         return gui_mode == "Dark";
     }
 
+    bool Shader::set_property(const std::string& name, const Any& value) {
+	bool result = Node::set_property(name, value);
+	Interpreter* interpreter =
+	    (grob_ == nullptr) ? nullptr : grob_->interpreter();
+	if(interpreter != nullptr) {
+	    interpreter->record_set_property_in_history(
+		this, name, value
+	    );
+	}
+	return result;
+    }
+
+
     Texture* Shader::create_texture_from_file(
         const std::string& file_name, GLint filtering, GLint wrapping
     ) {

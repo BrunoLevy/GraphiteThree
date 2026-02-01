@@ -170,9 +170,16 @@ namespace OGF {
 	Object* target, const std::string& slot_name, const ArgList& args
     ) {
 
+	std::string cmd_funccall = back_resolve(target);
+
+	if(cmd_funccall == "") {
+	    return; // could not find object
+	}
+
 	MetaSlot* mslot = target->meta_class()->find_slot(slot_name);
 
-	std::string cmd_funccall = back_resolve(target) + "." + slot_name;
+	cmd_funccall += ".";
+	cmd_funccall += slot_name;
 	std::string cmd_args;
 
 	for(index_t i=0; i<args.nb_args(); ++i) {
@@ -184,6 +191,7 @@ namespace OGF {
 		arg_default_val = back_parse(marg->default_value());
 	    }
 
+	    // Do not display parameter if equal to default value.
 	    if(arg_default_val == arg_val) {
 		continue;
 	    }
@@ -211,11 +219,15 @@ namespace OGF {
     void LuaInterpreter::record_set_property_in_history(
 	Object* target, const std::string& prop_name, const Any& value
     ) {
-	geo_argused(value);
-	std::cerr << "SET PROP "
-		  << back_resolve(target) << "."
-		  << prop_name
-		  << std::endl;
+	std::string command = back_resolve(target);
+	if(command == "") {
+	    return; // Could not find target
+	}
+	command += ".";
+	command += prop_name;
+	command += "=";
+	command += back_parse(value);
+	add_to_history(command);
     }
 
     std::string LuaInterpreter::back_resolve(Object* object) const {
@@ -244,6 +256,9 @@ namespace OGF {
 		interface_name = String::remove_suffix(
 		    interface_name, "Commands"
 		);
+		if(grob->is_a(mscenegraph)) {
+		    return "scene_graph.I." + interface_name;
+		}
 		return
 		    "scene_graph.objects." + grob_name + ".I." + interface_name;
 	    }
