@@ -568,6 +568,25 @@ namespace OGF {
             return meta_types_;
         }
 
+	/**
+	 * \brief Gets property change recording mode
+	 * \return true if property change are recorded in history,
+	 *  false otherwise
+	 */
+	bool get_record_set_property() const {
+	    return record_set_property_;
+	}
+
+
+	/**
+	 * \brief Sets property change recording mode
+	 * \param[in] x true if property change are recorded in history,
+	 *  false otherwise
+	 */
+	void set_record_set_property(bool x) {
+	    record_set_property_ = x;
+	}
+
       public:
 
         /**
@@ -830,6 +849,8 @@ namespace OGF {
         std::vector<std::string> history_;
 	std::string language_;
 	std::string extension_;
+        // If not set, reocrd_set_property_in_history()) is ignored.
+	bool record_set_property_;
 
     private:
         static std::map<

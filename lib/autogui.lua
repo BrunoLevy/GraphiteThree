@@ -861,6 +861,7 @@ end
 function autogui.property(object, mproperty)
    local bkp = autogui.input_text_flags
    autogui.input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue
+   gom.record_set_property = true
 
    local tooltip = autogui.help(mproperty)
    if mproperty.type().meta_class.name == 'OGF::MetaEnum' then
@@ -886,6 +887,7 @@ function autogui.property(object, mproperty)
         handler(object,mproperty.name,mproperty.type(),tooltip)
    end
 
+   gom.record_set_property = false
    autogui.input_text_flags = bkp
 end
 

@@ -65,6 +65,7 @@ namespace OGF {
         if(default_interpreter_ == nullptr) {
             default_interpreter_ = this;
         }
+	record_set_property_ = false;
     }
 
     void Interpreter::initialize(

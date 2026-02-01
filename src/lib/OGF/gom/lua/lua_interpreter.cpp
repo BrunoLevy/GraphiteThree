@@ -56,6 +56,64 @@ extern "C" {
 
 /*************************************************************************/
 
+namespace {
+    using namespace OGF;
+
+    /**
+     * \brief Tests whether objects of a given type need quotes in Lua
+     * \param[in] mtype a pointer to the meta type
+     * \retval true if values need quotes, false otherwise
+     */
+    bool needs_quotes(const MetaType* mtype) {
+	if(mtype == nullptr) {
+	    return true;
+	}
+	const std::string& name = mtype->name();
+	if(
+	    name == "int" ||
+	    name == "bool" ||
+	    name == "float" ||
+	    name == "double" ||
+	    name == "Numeric::index_t" ||
+	    name == "Numeric::int32" ||
+	    name == "Numeric::uint32" ||
+	    name == "Numeric::int64" ||
+	    name == "Numeric::uint64" ||
+	    name == "Numeric::float32" ||
+	    name == "Numeric::float64" ||
+	    name == "unsigned int"
+	) {
+	    return false;
+	}
+	return true;
+    }
+
+    /**
+     * \brief Tests whether a string has quotes
+     * \param[in] s the string
+     * \return true if \p s has quotes, false otherwise
+     */
+    bool is_quoted(const std::string& s) {
+	if(s.length() < 2) {
+	    return false;
+	}
+	return
+	    (*s.begin() == '\'' && *s.rbegin() == '\'') ||
+	    (*s.begin() == '\"' && *s.rbegin() == '\"') ;
+    }
+
+    /**
+     * \brief Removes the quotes from a string
+     * \pre has_quotes(s)
+     * \param[in] s the string
+     * \return the same string as \p s but without the quotes
+     */
+    std::string unquote(const std::string& s) {
+	geo_debug_assert(is_quoted(s));
+	return s.substr(1,s.length()-2);
+    }
+}
+
 namespace OGF {
     using namespace OGF::GOMLua;
 
@@ -219,15 +277,30 @@ namespace OGF {
     void LuaInterpreter::record_set_property_in_history(
 	Object* target, const std::string& prop_name, const Any& value
     ) {
-	std::string command = back_resolve(target);
-	if(command == "") {
+	if(!record_set_property_) {
+	    return;
+	}
+
+	std::string target_name = back_resolve(target);
+	if(target_name == "") {
 	    return; // Could not find target
 	}
-	command += ".";
-	command += prop_name;
-	command += "=";
-	command += back_parse(value);
-	add_to_history(command);
+
+	std::string val = back_parse(value);
+	MetaProperty* mprop = target->meta_class()->find_property(prop_name);
+	if(mprop != nullptr) {
+	    if(needs_quotes(mprop->type())) {
+		if(!is_quoted(val)) {
+		    val = String::quote(val);
+		}
+	    } else {
+		if(is_quoted(val)) {
+		    val = unquote(val);
+		}
+	    }
+	}
+
+	add_to_history(target_name + "." + prop_name + "=" + val);
     }
 
     std::string LuaInterpreter::back_resolve(Object* object) const {
@@ -299,24 +372,14 @@ namespace OGF {
     }
 
     std::string LuaInterpreter::back_parse(const Any& value) const {
-
 	if(value.meta_type() == nullptr) {
 	    return "nil";
 	}
-
 	std::string result;
 	value.get_value(result);
-
-	if(
-	    value.meta_type()->name() == "int" ||
-	    value.meta_type()->name() == "bool" ||
-	    value.meta_type()->name() == "float" ||
-	    value.meta_type()->name() == "double"
-	) {
-	    return result;
+	if(needs_quotes(value.meta_type())) {
+	    result = String::quote(result);
 	}
-
-	result = String::quote(result);
 	return result;
     }
 
