@@ -58,7 +58,7 @@ namespace OGF {
         // assertion mechanism because it tries to display messages in
         // Graphite's terminal window.
         if(mtype == nullptr) {
-            return;
+            return false;
         }
 #endif
         geo_assert(mtype != nullptr);
@@ -81,7 +81,7 @@ namespace OGF {
         // assertion mechanism because it tries to display messages in
         // Graphite's terminal window.
         if(mtype == nullptr) {
-            return;
+            return false;
         }
 #endif
         geo_assert(mtype != nullptr);
