@@ -50,9 +50,8 @@ namespace OGF {
 	return meta_type_->life_cycle();
     }
 
-    void Any::convert_from_string(
-        MetaType* mtype,
-        const std::string& string, Memory::pointer value
+    bool Any::convert_from_string(
+        MetaType* mtype, const std::string& string, Memory::pointer value
     ) {
 #ifdef GEO_OS_WINDOWS
         // If we do not do that, there is an infinite recursion in the
@@ -67,12 +66,15 @@ namespace OGF {
         geo_assert(serializer != nullptr);
         std::istringstream stream(string);
         bool conversion_ok = serializer->serialize_read(stream, value);
-        geo_assert(conversion_ok);
+	if(!conversion_ok) {
+	    Logger::err("GOM") << "Invalid value \'" << string << "\' for "
+			       << mtype->name() << std::endl;
+	}
+	return conversion_ok;
     }
 
-    void Any::convert_to_string(
-	MetaType* mtype,
-        std::string& string, Memory::pointer value
+    bool Any::convert_to_string(
+	MetaType* mtype, std::string& string, Memory::pointer value
     ) {
 #ifdef GEO_OS_WINDOWS
         // If we do not do that, there is an infinite recursion in the
@@ -87,8 +89,12 @@ namespace OGF {
         geo_assert(serializer != nullptr);
         std::ostringstream stream ;
         bool conversion_ok = serializer->serialize_write(stream, value);
-        geo_assert(conversion_ok);
+	if(!conversion_ok) {
+	    Logger::err("GOM") << "Could not convert " << mtype->name()
+			       << " to string" << std::endl;
+	}
         string = stream.str();
+	return conversion_ok;
     }
 
     bool Any::is_smart_pointer_type(const MetaType* mtype) {

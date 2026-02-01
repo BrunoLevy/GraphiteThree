@@ -503,13 +503,14 @@ namespace OGF {
          *  namely it uses the Serializer registered in the Meta repository.
          *  We cannot use ogf_convert_to_string() since it would introduce
          *  a circular dependency in Meta, that uses ArgList.
+	 *  If conversion was not successful, an error message is displayed.
          * \param[in] meta_type a pointer to the MetaType
          * \param[out] string the string representation of the object
          * \param[in] value a pointer to the object
+	 * \retval true if conversion was successful, false otherwise
          */
-        static void convert_to_string(
-            MetaType* meta_type,
-            std::string& string, Memory::pointer value
+        static bool convert_to_string(
+            MetaType* meta_type, std::string& string, Memory::pointer value
         );
 
         /**
@@ -518,11 +519,13 @@ namespace OGF {
          *  namely it uses the Serializer registered in the Meta repository.
          *  We cannot use ogf_convert_from_string() since it would introduce
          *  a circular dependency in Meta, that uses ArgList.
+	 *  If conversion was not successful, an error message is displayed.
          * \param[in] meta_type a pointer to the MetaType
          * \param[in] string a const reference to the string
          * \param[out] value a pointer to the converted value
+	 * \retval true if conversion was successful, false otherwise
          */
-        static void convert_from_string(
+        static bool convert_from_string(
 	    MetaType* meta_type,
             const std::string& string, Memory::pointer value
         );

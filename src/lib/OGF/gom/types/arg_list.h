@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_BASIC_TYPES_ARG_LIST_H
@@ -58,12 +58,12 @@ namespace OGF {
      */
     class NameBase {
     };
-    
+
     /**
      * \brief Represents a list of name-value pairs.
      */
     class GOM_API ArgList {
-        
+
     public:
 
         /**
@@ -116,7 +116,7 @@ namespace OGF {
             }
             return true;
         }
-        
+
         /**
          * \brief Tests whether an argument of a given name
          *  exists in this ArgList.
@@ -127,14 +127,14 @@ namespace OGF {
          * \retval false otherwise
          */
         bool has_arg(const std::string& name) const {
-            return (find_arg_index(name) != index_t(-1));
+            return (find_arg_index(name) != NO_INDEX);
         }
 
         /**
          * \brief Finds argument index by name
          * \param[in] name a const reference to the name
          * \return the index of the argument with name \p name
-         *  if it exists or index_t(-1) if there is no such 
+         *  if it exists or NO_INDEX if there is no such
          *  argument
          */
         index_t find_arg_index(const std::string& name) const;
@@ -165,7 +165,7 @@ namespace OGF {
         /**
          * \brief Gets argument value by index.
          * \details If the stored argument is of type \p T, then it
-         *  is retreived directly, else it is converted using a 
+         *  is retreived directly, else it is converted using a
          *  temporary string representation.
          * \param[in] i the index of the argument
          * \return the value of argument at
@@ -186,10 +186,10 @@ namespace OGF {
         }
 
         /**
-         * \brief Gets argument value by index, 
+         * \brief Gets argument value by index,
 	 *  stored as an Any.
          * \param[in] i the index of the argument
-         * \return a const reference to the argument 
+         * \return a const reference to the argument
 	 *   value at index \p i, wrapped in an Any.
          * \pre \p i < nb_args()
          */
@@ -199,10 +199,10 @@ namespace OGF {
 	}
 
         /**
-         * \brief Gets argument value by index, 
+         * \brief Gets argument value by index,
 	 *  stored as an Any.
          * \param[in] i the index of the argument
-         * \return a modifiable reference to the argument 
+         * \return a modifiable reference to the argument
 	 *  value at index \p i, wrapped in an Any.
          * \pre \p i < nb_args()
          */
@@ -210,35 +210,35 @@ namespace OGF {
             geo_debug_assert(i < nb_args());
 	    return argval_[i];
 	}
-	
+
         /**
-         * \brief Gets argument value by name, 
+         * \brief Gets argument value by name,
 	 *  stored as an Any.
          * \param[in] name the name of the argument
-         * \return a const reference to the argument 
+         * \return a const reference to the argument
 	 *  value at index \p i, wrapped in an Any.
          * \pre has_arg(name)
          */
 	const Any& arg_value(const std::string& name) const {
 	    index_t i = find_arg_index(name);
-	    geo_debug_assert(i != index_t(-1));
+	    geo_debug_assert(i != NO_INDEX);
 	    return argval_[i];
 	}
 
         /**
-         * \brief Gets argument value by name, 
+         * \brief Gets argument value by name,
 	 *  stored as an Any.
          * \param[in] name the name of the argument
-         * \return a modifiable reference to the argument 
+         * \return a modifiable reference to the argument
 	 *  value at index \p i, wrapped in an Any.
          */
 	 Any& arg_value(const std::string& name) {
 	    index_t i = find_arg_index(name);
-	    geo_debug_assert(i != index_t(-1));
+	    geo_debug_assert(i != NO_INDEX);
 	    return argval_[i];
 	}
 
-	
+
         /**
          * \brief Gets the type of an argument by index.
          * \param[in] i the index of the argument
@@ -272,7 +272,7 @@ namespace OGF {
             geo_debug_assert(nb_args() == 0 || has_unnamed_args());
             return create_arg("arg#" + String::to_string(nb_args()));
         }
-	
+
         /**
          * \brief Creates an argument.
          * \param[in] name a const reference to the name of the argument
@@ -292,7 +292,7 @@ namespace OGF {
         /**
          * \brief Creates an argument from a string litteral.
          * \param[in] name a const reference to the name of the argument
-         * \param[in] value a const pointer to a string 
+         * \param[in] value a const pointer to a string
          * \pre !has_arg(name)
          */
         void create_arg(
@@ -314,7 +314,7 @@ namespace OGF {
             argval_.push_back(value);
 	    argname_.push_back(name);
         }
-	
+
         /**
          * \brief Sets an argument.
          * \details If the argument already exists, then its value
@@ -328,7 +328,7 @@ namespace OGF {
             const std::string& name, const T& value
         ) {
 	    index_t i = find_arg_index(name);
-	    if(i == index_t(-1)) {
+	    if(i == NO_INDEX) {
 		create_arg(name, value);
 	    } else {
 		argval_[i].set_value(value);
@@ -341,7 +341,7 @@ namespace OGF {
          *  is replaced with the new value, else a new argument
          *  is created.
          * \param[in] name a const reference to the name of the argument
-         * \param[in] value a const pointer to a string 
+         * \param[in] value a const pointer to a string
          */
         void set_arg(const std::string& name, const char* value) {
             set_arg<std::string>(name, value);
@@ -358,13 +358,13 @@ namespace OGF {
          */
         void set_arg(const std::string& name, const Any& value) {
 	    index_t i = find_arg_index(name);
-	    if(i == index_t(-1)) {
+	    if(i == NO_INDEX) {
 		create_arg(name, value);
 	    } else {
 		argval_[i] = value;
 	    }
         }
-	
+
         /**
          * \brief Sets an argument by index.
          * \details The name of the argument is kept.
@@ -386,7 +386,7 @@ namespace OGF {
         void set_ith_arg(index_t i, const char* value) {
             set_ith_arg<std::string>(i, value);
         }
-        
+
         /**
          * \brief Gets a string representation of an argument.
          * \param[in] name the name of the argument
@@ -395,7 +395,7 @@ namespace OGF {
          */
         std::string get_arg(const std::string& name) const {
 	    index_t i = find_arg_index(name);
-	    geo_debug_assert(i != index_t(-1));
+	    geo_debug_assert(i != NO_INDEX);
 	    return argval_[i].as_string();
         }
 
@@ -411,7 +411,7 @@ namespace OGF {
          */
         template <class T> T get_arg(const std::string& name) const {
 	    index_t i = find_arg_index(name);
-	    geo_debug_assert(i != index_t(-1));
+	    geo_debug_assert(i != NO_INDEX);
 	    T result;
 	    if(
                 !argval_[i].get_value(result) &&
@@ -430,10 +430,10 @@ namespace OGF {
          */
         MetaType* get_arg_type(const std::string& name) const {
 	    index_t i = find_arg_index(name);
-	    geo_debug_assert(i != index_t(-1));
+	    geo_debug_assert(i != NO_INDEX);
 	    return argval_[i].meta_type();
 	}
-        
+
         /**
          * \brief Removes all the arguments from this ArgList.
          */
@@ -483,7 +483,7 @@ namespace OGF {
          *  attribute if target type is a xxxName
          * \details Used by the mechanism that lets one pass Object* to functions
          *  that take ObjectNames
-         * \param[in] argval the stored value 
+         * \param[in] argval the stored value
          * \param[out] name the name to be read
          * \retval true if \p argval is a pointer to Object that has
          *  a name attribute and \p name's type is a xxxName
@@ -512,7 +512,7 @@ namespace OGF {
          */
         static bool get_object_name(const Any& object, Any& name);
 
-        
+
     private:
         vector<Any> argval_;
 	vector<std::string> argname_;
