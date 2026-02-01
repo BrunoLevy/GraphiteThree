@@ -154,6 +154,9 @@ function post_init()
 	 end
       end
    end
+
+   gom.show_add_to_history = true
+
    collectgarbage()
 end
 

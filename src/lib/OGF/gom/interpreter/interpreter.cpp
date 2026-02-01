@@ -66,6 +66,7 @@ namespace OGF {
             default_interpreter_ = this;
         }
 	record_set_property_ = false;
+	show_add_to_history_ = false;
     }
 
     void Interpreter::initialize(
@@ -151,7 +152,9 @@ namespace OGF {
                 command = command.substr(0,command.length()-1);
 	    }
 	    history_.push_back(command);
-	    Logger::out("History") << command << std::endl;
+	    if(show_add_to_history_) {
+		Logger::out("History") << command << std::endl;
+	    }
         }
     }
 

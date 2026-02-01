@@ -605,6 +605,24 @@ namespace OGF {
 	    record_set_property_ = x;
 	}
 
+	/**
+	 * \brief Gets history verbosity
+	 * \return if true, each time a command is added to the history
+	 *  it is echoed in the terminal
+	 */
+	bool get_show_add_to_history() const {
+	    return show_add_to_history_;
+	}
+
+	/**
+	 * \brief Sets verbose history
+	 * \param[in] x if set, each time a command is added to the history
+	 *  it is echoed in the terminal
+	 */
+	void set_show_add_to_history(bool x) {
+	    show_add_to_history_ = x;
+	}
+
       public:
 
         /**
@@ -849,8 +867,10 @@ namespace OGF {
         std::vector<std::string> history_;
 	std::string language_;
 	std::string extension_;
-        // If not set, reocrd_set_property_in_history()) is ignored.
+        // If not set, record_set_property_in_history()) is ignored.
 	bool record_set_property_;
+	// If set, commands added to history are shown in the terminal
+	bool show_add_to_history_;
 
     private:
         static std::map<
