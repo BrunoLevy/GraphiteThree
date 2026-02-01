@@ -183,6 +183,10 @@ function graphite_main_window.draw_modules_menu()
    for index,module in ipairs(graphite_main_window.modules_by_index) do
       if graphite_main_window.draw_module_name_and_toggle(module,true) then
          module.visible = not module.visible
+         gom.set_environment_value(
+            'gui:module_'..module.name..'_visible',
+            tostring(module.visible)
+         )
       end
    end
 end

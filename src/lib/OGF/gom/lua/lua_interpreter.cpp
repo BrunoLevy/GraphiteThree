@@ -53,6 +53,7 @@ extern "C" {
 }
 
 #include <sstream>
+#include <cctype>
 
 /*************************************************************************/
 
@@ -315,12 +316,10 @@ namespace OGF {
 	if(mcommand != nullptr && object->is_a(mcommand)) {
 	    Any grob_any;
 	    Object* grob;
-	    std::string grob_name;
 	    if(
 		object->get_property("grob",grob_any) &&
 		grob_any.get_value(grob) &&
-		grob != nullptr &&
-		grob->get_property("name",grob_name)
+		grob != nullptr
 	    ) {
 		std::string interface_name = object->meta_class()->name();
 		interface_name = String::remove_prefix(
@@ -332,8 +331,7 @@ namespace OGF {
 		if(grob->is_a(mscenegraph)) {
 		    return "scene_graph.I." + interface_name;
 		}
-		return
-		    "scene_graph.objects." + grob_name + ".I." + interface_name;
+		return back_resolve(grob) + ".I." + interface_name;
 	    }
 	    return "";
 	}
@@ -347,7 +345,11 @@ namespace OGF {
 	if(mgrob != nullptr && object->is_a(mgrob)) {
 	    std::string grob_name;
 	    if(object->get_property("name",grob_name)) {
-		return "scene_graph.objects." + grob_name;
+		if(isalpha(grob_name[0]) || grob_name[0] == '_') {
+		    return "scene_graph.objects." + grob_name;
+		} else {
+		    return "scene_graph.objects[\"" + grob_name + "\"]";
+		}
 	    }
 	    return "";
 	}
@@ -356,14 +358,12 @@ namespace OGF {
 	if(mshader != nullptr && object->is_a(mshader)) {
 	    Any grob_any;
 	    Object* grob;
-	    std::string grob_name;
 	    if(
 		object->get_property("grob",grob_any) &&
 		grob_any.get_value(grob) &&
-		grob != nullptr &&
-		grob->get_property("name",grob_name)
+		grob != nullptr
 	    ) {
-		return "scene_graph.objects." + grob_name + ".shader";
+		return back_resolve(grob) + ".shader";
 	    }
 	    return "";
 	}

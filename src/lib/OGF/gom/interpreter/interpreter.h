@@ -518,6 +518,24 @@ namespace OGF {
 	    const std::string& needle, const std::string& path=""
 	) override;
 
+        /**
+         * \brief Saves the history to a file.
+         * \param[in] file_name name of the file where the history should
+         *  be saved.
+         */
+        virtual void save_history(const std::string& file_name) const;
+
+        /**
+         * \brief Clears the history.
+         */
+        virtual void clear_history();
+
+        /**
+         * \brief Adds a command line to the history.
+         * \param[in] command the command line to be added to the history
+         */
+        void add_to_history(const std::string& command);
+
       public:
         /**
          * \brief Gets the default interpreter.
@@ -669,24 +687,6 @@ namespace OGF {
 	    const std::string& cmpword, std::vector<std::string>& matches
 	);
 
-
-        /**
-         * \brief Saves the history to a file.
-         * \param[in] file_name name of the file where the history should
-         *  be saved.
-         */
-        virtual void save_history(const std::string& file_name) const;
-
-        /**
-         * \brief Clears the history.
-         */
-        virtual void clear_history();
-
-        /**
-         * \brief Adds a command line to the history.
-         * \param[in] command the command line to be added to the history
-         */
-        void add_to_history(const std::string& command);
 
 	/**
 	 * \brief Record an object invokation to history
