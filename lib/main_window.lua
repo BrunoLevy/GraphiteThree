@@ -76,6 +76,7 @@ end
 -- \brief Handles the GUI for a module toggle
 -- \param[in] module the module
 -- \param[in] in_menu true if drawing toggles in menu
+-- \return true if the name was clicked
 
 function graphite_main_window.draw_module_name_and_toggle(module, in_menu)
 
@@ -95,7 +96,7 @@ function graphite_main_window.draw_module_name_and_toggle(module, in_menu)
       )
    else
       if in_menu then
-         return
+         return nil
       end
    end
 
@@ -115,10 +116,10 @@ function graphite_main_window.draw_module_name_and_toggle(module, in_menu)
       end
    end
    imgui.SameLine()
-   imgui.Selectable(module.name,false)
+   local sel = imgui.Selectable(module.name,false)
 
    if in_menu then
-      return
+      return sel
    end
 
    if module.draw_menu ~= nil then
@@ -134,6 +135,8 @@ function graphite_main_window.draw_module_name_and_toggle(module, in_menu)
       autogui.in_tree = false
       imgui.TreePop()
    end
+
+   return sel
 end
 
 -- \brief Handles the GUI for a module
@@ -178,7 +181,9 @@ end
 
 function graphite_main_window.draw_modules_menu()
    for index,module in ipairs(graphite_main_window.modules_by_index) do
-      graphite_main_window.draw_module_name_and_toggle(module,true)
+      if graphite_main_window.draw_module_name_and_toggle(module,true) then
+         module.visible = not module.visible
+      end
    end
 end
 
