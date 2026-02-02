@@ -199,10 +199,6 @@ function graphite_main_window.draw_contents()
         imgui.EndMenuBar()
      end
   end
-  toolbox_gui.draw_tools(true)
-  imgui.NewLine()
-  imgui.Spacing()
-  imgui.Separator()
   if gom.get_environment_value('gui:undo') == 'true' then
      local ImGuiStyleVar_Alpha = 0
      if(not main.can_undo) then

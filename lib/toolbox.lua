@@ -1,6 +1,7 @@
 --  Tools for graphite with Skin_imgui
 --------------------------------------
 
+-- The toolbox with the tools associated with the current object
 toolbox_gui = {}
 toolbox_gui.visible = false
 toolbox_gui.name = 'Toolbox'
@@ -11,8 +12,23 @@ toolbox_gui.w = 165*main.scaling()
 toolbox_gui.h = 180*main.scaling()
 toolbox_gui.resizable = true
 
+-- The toolbox with the tools associated with the camera (pan/focus/select...)
+camera_toolbox_gui = {}
+camera_toolbox_gui.visible = false
+camera_toolbox_gui.name = 'Camera Tools'
+camera_toolbox_gui.icon = '@camera'
+camera_toolbox_gui.x = main.width-3*main.margin()-150*main.scaling()
+camera_toolbox_gui.y = main.margin()
+camera_toolbox_gui.w = 165*main.scaling()
+camera_toolbox_gui.h = 180*main.scaling()
+camera_toolbox_gui.resizable = true
+
 function toolbox_gui.draw_window()
     toolbox_gui.draw_tools(false)
+end
+
+function camera_toolbox_gui.draw_window()
+    toolbox_gui.draw_tools(true)
 end
 
 -- \brief draws the toolbox
@@ -124,6 +140,7 @@ function toolbox_gui.tool_button(id, icon)
 end
 
 graphite_main_window.add_module(toolbox_gui)
+graphite_main_window.add_module(camera_toolbox_gui)
 
 --------------------------------------------------------
 
