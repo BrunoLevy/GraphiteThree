@@ -216,42 +216,74 @@ function scene_graph_gui.grob_ops(grob, main_menu)
    if not main_menu then
       imgui.Separator()
 
-      if imgui.MenuItem(imgui.font_icon('edit')..'  rename') then
-         scene_graph_gui.rename_old = name
-         scene_graph_gui.rename_new = name
+      if imgui.BeginMenu(imgui.font_icon('pencil-alt')..'  edit') then
+
+         if imgui.MenuItem(imgui.font_icon('edit')..'  rename') then
+            scene_graph_gui.rename_old = name
+            scene_graph_gui.rename_new = name
+         end
+
+         if imgui.MenuItem(imgui.font_icon('clone')..'  duplicate') then
+            main.save_state()
+            scene_graph.current_object = name
+            local dup = scene_graph.duplicate_current()
+            scene_graph_gui.rename_old = dup.name
+            scene_graph_gui.rename_new = dup.name
+            scene_graph.current_object = dup.name
+         end
+
+         if imgui.MenuItem(imgui.font_icon('window-close')..'  delete') then
+            main.save_state()
+            main.picked_grob = nil
+            scene_graph.current_object = name
+            scene_graph.delete_current_object()
+            return nil
+         end
+
+         if imgui.MenuItem(imgui.font_icon('arrow-up')..' move up') then
+            main.save_state()
+            scene_graph.current_object = name
+            scene_graph.move_current_up()
+         end
+
+         if imgui.MenuItem(imgui.font_icon('arrow-down')..' move down') then
+            main.save_state()
+            scene_graph.current_object = name
+            scene_graph.move_current_down()
+         end
+
+         imgui.EndMenu()
       end
 
-      if imgui.MenuItem(imgui.font_icon('clone')..'  duplicate') then
-         main.save_state()
-         scene_graph.current_object = name
-         local dup = scene_graph.duplicate_current()
-         scene_graph_gui.rename_old = dup.name
-         scene_graph_gui.rename_new = dup.name
-         scene_graph.current_object = dup.name
-      end
+      if imgui.BeginMenu(imgui.font_icon('eye')..' appearance') then
 
-      if imgui.MenuItem(imgui.font_icon('window-close')..'  delete') then
-         main.save_state()
-         main.picked_grob = nil
-         scene_graph.current_object = name
-         scene_graph.delete_current_object()
-         return nil
-      end
+         if imgui.MenuItem(
+            imgui.font_icon('eye')..' show/hide'
+         ) then
+            grob.visible = not grob.visible
+         end
 
-      if imgui.MenuItem(imgui.font_icon('arrow-up')..' move up') then
-         main.save_state()
-         scene_graph.current_object = name
-         scene_graph.move_current_up()
-      end
+         if imgui.MenuItem(
+            imgui.font_icon('cubes')..' copy properties to all'
+         ) then
+            scene_graph.scene_graph_shader_manager.apply_to_scene_graph()
+         end
 
-      if imgui.MenuItem(imgui.font_icon('arrow-down')..' move down') then
-         main.save_state()
-         scene_graph.current_object = name
-         scene_graph.move_current_down()
-      end
+         if imgui.MenuItem(
+            imgui.font_icon('eye')..' copy properties to visible'
+         ) then
+            scene_graph.scene_graph_shader_manager.apply_to_scene_graph(true)
+         end
 
-      if imgui.MenuItem(imgui.font_icon('eye')..' show/hide') then
-         grob.visible = not grob.visible
+         if imgui.MenuItem(
+            imgui.font_icon('clipboard-list')..' copy properties to selected'
+         ) then
+            scene_graph.scene_graph_shader_manager.apply_to_scene_graph(
+               false,true
+            )
+         end
+
+         imgui.EndMenu()
       end
 
       imgui.Separator()

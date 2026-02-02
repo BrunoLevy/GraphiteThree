@@ -1487,7 +1487,7 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
        imgui.Separator()
    end
    autogui.properties_editor_properties(object)
-   if is_shader then
+   if is_shader and not autogui.in_tree then
       imgui.Separator()
       imgui.Text(imgui.font_icon('sync-alt'))
       imgui.SameLine()
@@ -1501,7 +1501,7 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
          scene_graph.scene_graph_shader_manager.apply_to_scene_graph()
          scene_graph.current_object = current_bkp
       end
-      autogui.tooltip('Apply graphic attributes to all objects')
+      autogui.tooltip('Copy graphic properties to all objects')
       imgui.SameLine()
       if imgui.Button(
          imgui.font_icon('eye').."##ops##"..name,w,autogui.icon_size()+6
@@ -1511,7 +1511,7 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
          scene_graph.scene_graph_shader_manager.apply_to_scene_graph(true)
          scene_graph.current_object = current_bkp
       end
-      autogui.tooltip('Apply graphic attributes to visible objects')
+      autogui.tooltip('Copy graphic properties to visible objects')
       imgui.SameLine()
       if imgui.Button(
          imgui.font_icon('clipboard-list').."##ops##"..name,
@@ -1522,7 +1522,7 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
          scene_graph.scene_graph_shader_manager.apply_to_scene_graph(false,true)
          scene_graph.current_object = current_bkp
       end
-      autogui.tooltip('Apply graphic attributes to selected objects')
+      autogui.tooltip('Copy graphic properties to selected objects')
    end
 
    autogui.property_editor_state[k].width_,
