@@ -258,7 +258,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       if imgui.BeginMenu(imgui.font_icon('eye')..' appearance') then
 
          if imgui.MenuItem(
-            imgui.font_icon('eye')..' show/hide'
+            imgui.font_icon('eye-slash')..' show/hide'
          ) then
             grob.visible = not grob.visible
          end
