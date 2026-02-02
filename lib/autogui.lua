@@ -1491,10 +1491,10 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
       imgui.Separator()
       imgui.Text(imgui.font_icon('sync-alt'))
       imgui.SameLine()
+      local w = imgui.GetContentRegionAvail()/3-5
       if imgui.Button(
         imgui.font_icon('cubes')..
-        '##ops##'..name,
-        -imgui.GetContentRegionAvail()/2,autogui.icon_size()+6
+        '##ops##'..name, w,autogui.icon_size()+6
       ) then
          local current_bkp = scene_graph.current_object
          scene_graph.current_object = name
@@ -1504,8 +1504,7 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
       autogui.tooltip('Apply graphic attributes to all objects')
       imgui.SameLine()
       if imgui.Button(
-         imgui.font_icon('eye')..
-         "##ops##"..name,-1,autogui.icon_size()+6
+         imgui.font_icon('eye').."##ops##"..name,w,autogui.icon_size()+6
       ) then
          local current_bkp = scene_graph.current_object
          scene_graph.current_object = name
@@ -1513,6 +1512,17 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
          scene_graph.current_object = current_bkp
       end
       autogui.tooltip('Apply graphic attributes to visible objects')
+      imgui.SameLine()
+      if imgui.Button(
+         imgui.font_icon('clipboard-list').."##ops##"..name,
+         -1,autogui.icon_size()+6
+      ) then
+         local current_bkp = scene_graph.current_object
+         scene_graph.current_object = name
+         scene_graph.scene_graph_shader_manager.apply_to_scene_graph(false,true)
+         scene_graph.current_object = current_bkp
+      end
+      autogui.tooltip('Apply graphic attributes to selected objects')
    end
 
    autogui.property_editor_state[k].width_,

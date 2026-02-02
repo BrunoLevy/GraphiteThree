@@ -631,7 +631,7 @@ function scene_graph_gui.draw_grob_name(grob)
           szx,szy = imgui.CalcTextSize(label)
       end
       if cropped then
-          label = label..'...'
+          label = label..'...'..'##'..grob.name
       end
       if imgui.Selectable(
 	 label, grob.name == scene_graph.current_object,

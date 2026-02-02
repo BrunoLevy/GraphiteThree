@@ -146,8 +146,12 @@ namespace OGF {
          *  that have the same class as the current object.
          * \param[in] visible_only if set, copies the properties
          *  of the current shader only to objects that are visible.
+         * \param[in] selected_only if set, copies the properties
+         *  of the current shader only to objects that are selected.
          */
-        void apply_to_scene_graph(bool visible_only = false);
+        void apply_to_scene_graph(
+	    bool visible_only = false, bool selected_only = false
+	);
 
         /**
          * \brief Gets the shader of the current object.
