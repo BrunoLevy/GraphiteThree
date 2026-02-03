@@ -23,18 +23,18 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the following 
+ * As an exception to the GPL, Graphite can be linked with the following
  *  (non-GPL) libraries:  Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_VOXEL_COMMANDS_VOXEL_GROB_ATTRIBUTES_COMMANDS_H
 #define H_OGF_VOXEL_COMMANDS_VOXEL_GROB_ATTRIBUTES_COMMANDS_H
@@ -65,7 +65,7 @@ namespace OGF {
          * \brief VoxelGrobAttributesCommands destructor.
          */
         ~VoxelGrobAttributesCommands() override;
-	
+
     gom_slots:
 
         /**
@@ -83,7 +83,15 @@ namespace OGF {
             index_t nv = 128,
             index_t nw = 128
         );
-        
+
+        /**
+         * \brief Initializes a voxel grob from a pointset.
+         * \param[in] points name of the pointset. It should have points
+	 *   located on a grid.
+         * \menu /Geometry
+	 */
+	void init_from_pointset(const MeshGrobName& points);
+
         /**
          * \brief Deletes an attribute.
          * \param[in] name the name of the attribute
@@ -101,12 +109,12 @@ namespace OGF {
             const std::string& name,
             float min_val = 0.0, float max_val = 1.0
         );
-        
+
         /**
          * \brief Computes the distance between each vertex and a surface.
          * \param[in] surface the surface
          * \param[in] attribute the name of the vertex attribute
-         * \param[in] signed_dist if true, computes the signed distance 
+         * \param[in] signed_dist if true, computes the signed distance
          *  (needs the input shape to be tetrahedralized)
          */
         void compute_distance_to_surface(
@@ -124,7 +132,7 @@ namespace OGF {
          *  reconstructed implicit function.
          * \param[in] depth the depth of the octree, 8 is the default value,
          *  use 10 or 11 for highly detailed models
-         * \param[in] reconstruction (optional) the name of the 
+         * \param[in] reconstruction (optional) the name of the
          *  reconstructed surface
          */
         void Poisson_reconstruction(
@@ -145,11 +153,10 @@ namespace OGF {
 	    const std::string& attribute,
 	    const FileName& filename
 	);
-	
+
        /*********************************************************************/
-        
+
     };
-    
+
 }
 #endif
-

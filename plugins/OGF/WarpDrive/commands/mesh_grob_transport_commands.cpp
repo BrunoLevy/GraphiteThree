@@ -3454,9 +3454,9 @@ namespace OGF {
                 if(fread(xyzw, record_size, 1, f) != 1) {
                     throw(std::logic_error("Error while reading file"));
                 }
-                mesh_grob()->vertices.point_ptr(i)[0] = double(xyzw[0]);
-                mesh_grob()->vertices.point_ptr(i)[1] = double(xyzw[1]);
-                mesh_grob()->vertices.point_ptr(i)[2] = double(xyzw[2]);
+                mesh_grob()->vertices.point(i) = vec3(
+		    double(xyzw[0]), double(xyzw[1]), double(xyzw[2])
+		);
 		if(format_xyzw32) {
 		    mass[i] = xyzw[3];
 		}
