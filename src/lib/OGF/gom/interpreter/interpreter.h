@@ -536,6 +536,14 @@ namespace OGF {
          */
         void add_to_history(const std::string& command);
 
+	/**
+	 * \brief finds how to refer to an object in the interpreter
+	 * \param[in] object a pointer to an object
+	 * \return a string with the way to refer to the object in
+	 *  the interpreter or the empty string if not found.
+	 */
+	virtual std::string back_resolve(Object* object) const;
+
       public:
         /**
          * \brief Gets the default interpreter.
@@ -742,14 +750,6 @@ namespace OGF {
         std::string history_line(unsigned int l) const {
             return l < history_size() ? history_[l] : std::string("");
         }
-
-	/**
-	 * \brief finds how to refer to an object in the history
-	 * \param[in] object a pointer to an object
-	 * \return a string with the way to refer to the object in
-	 *  the interpreter or the empty string if not found.
-	 */
-	virtual std::string back_resolve(Object* object) const;
 
 
 	/**

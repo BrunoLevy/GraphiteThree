@@ -301,10 +301,30 @@ namespace OGF {
 	    }
 	}
 
-	add_to_history(target_name + "." + prop_name + "=" + val);
+	// Compress multiple assignments to same property into a single
+	// assignment in history.
+	std::string command = target_name + "." + prop_name + "=" + val;
+	if(
+	    history_.size() != 0 &&
+	    String::string_starts_with(
+		*history_.rbegin(), target_name + "." + prop_name + "="
+	    )
+	) {
+	    *history_.rbegin() = command;
+	    if(show_add_to_history_) {
+		Logger::out("History") << command << std::endl;
+	    }
+	} else {
+	    add_to_history(command);
+	}
     }
 
     std::string LuaInterpreter::back_resolve(Object* object) const {
+
+	if(object == nullptr) {
+	    return "nil";
+	}
+
 	MetaType* mcommand =
 	    Meta::instance()->resolve_meta_type("OGF::Commands");
 	MetaType* mscenegraph =
