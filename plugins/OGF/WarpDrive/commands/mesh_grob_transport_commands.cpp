@@ -3398,6 +3398,28 @@ namespace OGF {
 
     void MeshGrobTransportCommands::load_binary(const FileName& filename) {
         try {
+
+	    bool format_xyz32 = String::string_ends_with(
+		filename, ".xyz32.bin"
+	    );
+
+	    bool format_xyzw32 = String::string_ends_with(
+		filename, ".xyzw32.bin"
+	    );
+
+	    if(!format_xyz32 && !format_xyzw32) {
+		Logger::err("Astro")
+		    << "File should be .xyz32.bin or .xyzw32.bin"
+		    << std::endl;
+		return;
+	    }
+
+	    Attribute<double> mass;
+
+	    if(format_xyzw32) {
+		mass.bind(mesh_grob()->vertices.attributes(), "mass");
+	    }
+
             FILE* f = fopen(std::string(filename).c_str(),"rb");
             if(f == nullptr) {
                 throw(std::logic_error(
@@ -3409,23 +3431,35 @@ namespace OGF {
             size_t filesize = size_t(ftell(f));
             rewind(f);
 
-            if(filesize % 12 != 0) {
+	    size_t record_dim = 0;
+	    if(format_xyz32) {
+		record_dim = 3;
+	    } else if(format_xyzw32) {
+		record_dim = 4;
+	    }
+	    size_t record_size = record_dim * sizeof(float);
+
+
+            if(filesize % record_size != 0) {
                 throw(std::logic_error("Invalid file size"));
             }
 
-            index_t N = index_t(filesize/12);
+            index_t N = index_t(filesize/record_size);
 
             mesh_grob()->clear();
             mesh_grob()->vertices.set_dimension(3);
             mesh_grob()->vertices.create_vertices(N);
             for(index_t i=0; i<N; ++i) {
-                float xyz[3];
-                if(fread(xyz, sizeof(xyz), 1, f) != 1) {
+                float xyzw[4];
+                if(fread(xyzw, record_size, 1, f) != 1) {
                     throw(std::logic_error("Error while reading file"));
                 }
-                mesh_grob()->vertices.point_ptr(i)[0] = double(xyz[0]);
-                mesh_grob()->vertices.point_ptr(i)[1] = double(xyz[1]);
-                mesh_grob()->vertices.point_ptr(i)[2] = double(xyz[2]);
+                mesh_grob()->vertices.point_ptr(i)[0] = double(xyzw[0]);
+                mesh_grob()->vertices.point_ptr(i)[1] = double(xyzw[1]);
+                mesh_grob()->vertices.point_ptr(i)[2] = double(xyzw[2]);
+		if(format_xyzw32) {
+		    mass[i] = xyzw[3];
+		}
             }
 
             fclose(f);
