@@ -68,7 +68,7 @@ if(GEOGRAM_WITH_VORPALINE)
   target_link_libraries(WarpDrive vorpalib)
 endif()
 
-target_link_libraries(WarpDrive exploragram geogram_gfx geogram)
+target_link_libraries(WarpDrive voxel exploragram geogram_gfx geogram)
 
 set_target_properties(
    WarpDrive PROPERTIES

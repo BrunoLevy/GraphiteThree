@@ -85,19 +85,10 @@ namespace OGF {
         );
 
         /**
-         * \brief Initializes a voxel grob from a pointset.
-         * \param[in] points name of the pointset. It should have points
-	 *   located on a grid.
-         * \menu /Geometry
-	 */
-	void init_from_pointset(const MeshGrobName& points);
-
-        /**
          * \brief Deletes an attribute.
          * \param[in] name the name of the attribute
          */
         void delete_attribute(const std::string& name);
-
 
         /**
          * \brief Normalizes a floating-point attribute.

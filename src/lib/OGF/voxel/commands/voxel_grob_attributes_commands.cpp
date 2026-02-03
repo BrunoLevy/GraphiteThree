@@ -85,112 +85,6 @@ namespace OGF {
         voxel_grob()->update();
     }
 
-    void VoxelGrobAttributesCommands::init_from_pointset(
-	const MeshGrobName& points_name
-    ) {
-	// Important note: following Farnik's files, W/Z index is fast index
-	// (flipped as compared to Graphite/geogram that uses U/X fast index)
-
-	MeshGrob* pointset = MeshGrob::find(scene_graph(), points_name);
-	if(pointset == nullptr) {
-	    Logger::err("VoxelGrob") << points_name << " :no such MeshGrob"
-				     << std::endl;
-	    return;
-	}
-
-	index_t NUVW[3] = {0,0,0};
-	bool UVW_done[3] = {false, false, false};
-	vec3 prev_p;
-	vec3 p_min(
-	    Numeric::max_float64(),
-	    Numeric::max_float64(),
-	    Numeric::max_float64()
-	);
-	vec3 p_max(
-	    -Numeric::max_float64(),
-	    -Numeric::max_float64(),
-	    -Numeric::max_float64()
-	);
-
-	for(index_t v: pointset->vertices) {
-	    vec3 p = pointset->vertices.point(v);
-
-	    if(v == 0) {
-		++NUVW[0];
-		++NUVW[1];
-		++NUVW[2];
-		prev_p = p;
-		continue;
-	    }
-
-	    int varying_c = 2;
-	    for(int c=2; c>=0; --c) {
-		if(p[index_t(c)] > prev_p[index_t(c)]) {
-		    varying_c = c;
-		    break;
-		}
-	    }
-
-	    if(!UVW_done[varying_c]) {
-		++NUVW[varying_c];
-	    }
-
-	    for(int c=varying_c+1; c<3; ++c) {
-		UVW_done[index_t(c)] = true;
-	    }
-
-	    p_min = vec3(
-		std::min(p_min.x, p.x),
-		std::min(p_min.y, p.y),
-		std::min(p_min.z, p.z)
-	    );
-
-	    p_max = vec3(
-		std::max(p_max.x, p.x),
-		std::max(p_max.y, p.y),
-		std::max(p_max.z, p.z)
-	    );
-
-	    prev_p = p;
-	}
-
-	std::cerr << NUVW[0] << " " << NUVW[1] << " " << NUVW[2] << std::endl;
-
-	if(pointset->vertices.nb() != NUVW[0]*NUVW[1]*NUVW[2]) {
-	    Logger::err("VoxelGrob")
-		<< "Did not find NU,NV,NW, invalid pointset size"
-		<< std::endl;
-	    return;
-	}
-
-        vec3 origin = p_min;
-        vec3 U(p_max.x - p_min.x, 0.0, 0.0);
-        vec3 V(0.0, p_max.y - p_min.y, 0.0);
-        vec3 W(0.0, 0.0, p_max.z - p_min.z);
-
-        voxel_grob()->set_box(origin, U, V, W);
-        voxel_grob()->resize(NUVW[0], NUVW[1], NUVW[2]);
-
-	Attribute<double> pointset_mass;
-	pointset_mass.bind_if_is_defined(pointset->vertices.attributes(),"mass");
-	if(pointset_mass.is_bound()) {
-	    Attribute<float> voxel_mass(voxel_grob()->attributes(), "mass");
-	    for(index_t u=0; u<NUVW[0]; ++u) {
-		for(index_t v=0; v<NUVW[1]; ++v) {
-		    for(index_t w=0; w<NUVW[2]; ++w) {
-			double point_mass = pointset_mass [
-			    w + v * NUVW[2] + u * NUVW[2]*NUVW[1]
-			] ;
-			voxel_mass[voxel_grob()->linear_index(u,v,w)] =
-			    float(point_mass);
-		    }
-		}
-	    }
-	}
-
-        voxel_grob()->update();
-    }
-
     void VoxelGrobAttributesCommands::delete_attribute(
         const std::string& attribute_name
     ) {
@@ -334,6 +228,8 @@ namespace OGF {
     }
     voxel_grob()->update();
     }
+
+
 
     void VoxelGrobAttributesCommands::Poisson_reconstruction(
         const MeshGrobName& points_name,

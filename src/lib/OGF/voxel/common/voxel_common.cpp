@@ -54,6 +54,8 @@ namespace OGF {
         gom_package_initialize(voxel) ;
 
         ogf_register_grob_type<VoxelGrob>();
+	ogf_register_grob_read_file_extension<VoxelGrob>("vox");
+	ogf_register_grob_write_file_extension<VoxelGrob>("vox");
         ogf_register_grob_commands<VoxelGrob,VoxelGrobAttributesCommands>();
         ogf_register_grob_interface<VoxelGrob,VoxelGrobEditor>();
 
