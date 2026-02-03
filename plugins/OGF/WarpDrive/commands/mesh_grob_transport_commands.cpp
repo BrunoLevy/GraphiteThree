@@ -668,9 +668,9 @@ namespace OGF {
 	    }
         } else {
 	    MeshCellsAABB AABB(*mesh_grob());
-	    for(double x=box.xyz_min[0]+l/2.0; x<=box.xyz_max[0]; x += l) {
-		for(double y=box.xyz_min[1]+l/2.0; y<=box.xyz_max[1]; y += l) {
-		    for(double z=box.xyz_min[2]+l/2.0; z<=box.xyz_max[2]; z += l) {
+	    for(double x=box.xyz_min[0]+l/2.0; x<=box.xyz_max[0]; x+=l) {
+		for(double y=box.xyz_min[1]+l/2.0; y<=box.xyz_max[1]; y+=l) {
+		    for(double z=box.xyz_min[2]+l/2.0; z<=box.xyz_max[2]; z+=l) {
 			vec3 p(x,y,z);
 			if(AABB.containing_tet(p) != index_t(-1)) {
 			    sampling->vertices.create_vertex(p.data());
@@ -719,10 +719,12 @@ namespace OGF {
 	index_t air_particles_stride = 0;
 	if(fluid_omega0_name != "") {
 	    if(air_particles_name != "") {
-		air_particles_mesh = MeshGrob::find(scene_graph(), air_particles_name);
+		air_particles_mesh =
+		    MeshGrob::find(scene_graph(), air_particles_name);
 		if(air_particles_mesh == nullptr) {
-		    Logger::err("OTM") << air_particles_name << ": no such MeshGrob"
-				       << std::endl;
+		    Logger::err("OTM")
+			<< air_particles_name << ": no such MeshGrob"
+			<< std::endl;
 		    return;
 		}
 		nb_air_particles = air_particles_mesh->vertices.nb();
@@ -1282,7 +1284,9 @@ namespace OGF {
 
 	    // Remove the tets that are inside the inner shell
 	    {
-		Attribute<index_t> region(mesh_grob()->cells.attributes(),"region");
+		Attribute<index_t> region(
+		    mesh_grob()->cells.attributes(),"region"
+		);
 		vector<index_t> remove_tet(mesh_grob()->cells.nb());
 		index_t shell_id = index_t(-1);
 		for(index_t t : mesh_grob()->cells) {
@@ -2529,17 +2533,13 @@ namespace OGF {
 	dual->vertices.set_dimension(3);
 	dual->vertices.create_vertices(mesh_grob()->facets.nb());
 	FOR(v,dual->vertices.nb()) {
-	    dual->vertices.point_ptr(v)[0]=0.0;
-	    dual->vertices.point_ptr(v)[1]=0.0;
-	    dual->vertices.point_ptr(v)[2]=0.0;
+	    dual->vertices.point(v) = {0.0, 0.0, 0.0};
 	}
 	FOR(f,mesh_grob()->facets.nb()) {
 	    double s = 1.0 / double(mesh_grob()->facets.nb_vertices(f));
 	    FOR(lv, mesh_grob()->facets.nb_vertices(f)) {
 		index_t v = mesh_grob()->facets.vertex(f,lv);
-		dual->vertices.point_ptr(f)[0] += s*mesh_grob()->vertices.point_ptr(v)[0];
-		dual->vertices.point_ptr(f)[1] += s*mesh_grob()->vertices.point_ptr(v)[1];
-		dual->vertices.point_ptr(f)[2] += s*mesh_grob()->vertices.point_ptr(v)[2];
+		dual->vertices.point(f) += s*mesh_grob()->vertices.point(v);
 	    }
 	}
 	vector<index_t> v2f(mesh_grob()->vertices.nb(),index_t(-1));
@@ -2657,8 +2657,9 @@ namespace OGF {
 	index_t nb_per_axis
     ) {
 	if(mesh_grob()->vertices.dimension() != 6) {
-	    Logger::err("OTM") << "Current mesh does not contain any animation data"
-			       << std::endl;
+	    Logger::err("OTM")
+		<< "Current mesh does not contain any animation data"
+		<< std::endl;
 	    return;
 	}
 
@@ -2667,7 +2668,8 @@ namespace OGF {
 	now->vertices.set_dimension(3);
 	now->vertices.create_vertices(mesh_grob()->vertices.nb());
 
-	MeshGrob* initial = MeshGrob::find_or_create(scene_graph(), initial_name);
+	MeshGrob* initial =
+	    MeshGrob::find_or_create(scene_graph(), initial_name);
 	initial->clear();
 	initial->vertices.set_dimension(3);
 	initial->vertices.create_vertices(mesh_grob()->vertices.nb());
@@ -3002,8 +3004,9 @@ namespace OGF {
 	    mesh_grob()->facets.attributes(), chart_attribute_name
 	);
 	if(!chart.is_bound()) {
-	    Logger::err("OTM") << chart_attribute_name << ": no such facet attribute"
-			       << std::endl;
+	    Logger::err("OTM")
+		<< chart_attribute_name << ": no such facet attribute"
+		<< std::endl;
 	    return;
 	}
 	Attribute<bool> selection(
@@ -3038,7 +3041,9 @@ namespace OGF {
     void MeshGrobTransportCommands::EUR_scatter_plot(
 	const NewFileName& filename, index_t nb_per_axis
     ) {
-	index_t N = index_t(pow(double(mesh_grob()->vertices.nb()), 1.0 / 3.0)+0.5);
+	index_t N = index_t(
+	    pow(double(mesh_grob()->vertices.nb()), 1.0 / 3.0)+0.5
+	);
 	if(N*N*N != mesh_grob()->vertices.nb()) {
 	    Logger::err("EUR") << "Number of vertices: " << N << " is not a cube"
 			       << std::endl;
@@ -3047,9 +3052,10 @@ namespace OGF {
 
 	index_t skip = nb_per_axis / N;
 	if(skip * N != nb_per_axis) {
-	    Logger::err("EUR") << "Number of vertices per coord is not a divider of "
-			       << nb_per_axis
-			       << std::endl;
+	    Logger::err("EUR")
+		<< "Number of vertices per coord is not a divider of "
+		<< nb_per_axis
+		<< std::endl;
 	    return;
 	}
 
@@ -3167,16 +3173,20 @@ namespace OGF {
          const NewFileName& file_name
     ) {
        Attribute<double> attrib;
-       attrib.bind_if_is_defined(mesh_grob()->vertices.attributes(), attribute_name);
+       attrib.bind_if_is_defined(
+	   mesh_grob()->vertices.attributes(), attribute_name
+       );
        if(!attrib.is_bound()) {
-	  Logger::err("Export") << attribute_name << ": no such vertices attribute"
-	                        << std::endl;
+	   Logger::err("Export")
+	       << attribute_name << ": no such vertices attribute"
+	       << std::endl;
 	  return;
        }
        std::ofstream out(std::string(file_name).c_str());
        for(index_t i=0; i<mesh_grob()->vertices.nb(); ++i) {
 	  const double* p = mesh_grob()->vertices.point_ptr(i);
-	  out << p[0] << ' ' << p[1] << ' ' << p[2] << ' ' << attrib[i] << std::endl;
+	  out << p[0] << ' ' << p[1] << ' ' << p[2] << ' '
+	      << attrib[i] << std::endl;
        }
     }
 
@@ -3780,10 +3790,14 @@ namespace OGF {
             Logger::err("Cosmo") << err.what() << std::endl;
             return;
         }
-        mesh_grob()->get_shader()->set_property("vertices_style","true; 0 1 0 1; 1");
+        mesh_grob()->get_shader()->set_property(
+	    "vertices_style","true; 0 1 0 1; 1"
+	);
     }
 
-    void MeshGrobTransportCommands::show_Calabi_Yau_coordinates(index_t x, index_t y, index_t z) {
+    void MeshGrobTransportCommands::show_Calabi_Yau_coordinates(
+	index_t x, index_t y, index_t z
+    ) {
         if(x >= 12  || y >= 12 || z >= 12) {
             Logger::err("Cosmo") << "CY coords should be in 0..11" << std::endl;
             return;
@@ -3791,7 +3805,8 @@ namespace OGF {
         Attribute<double> CY;
         CY.bind_if_is_defined(mesh_grob()->vertices.attributes(), "CY");
         if(!CY.is_bound()  || CY.dimension() != 12) {
-            Logger::err("Cosmo") << "Missing or invalid CY attribute" << std::endl;
+            Logger::err("Cosmo") << "Missing or invalid CY attribute"
+				 << std::endl;
             return;
         }
         for(index_t v: mesh_grob()->vertices) {
@@ -3807,7 +3822,8 @@ namespace OGF {
         Attribute<double> CY;
         CY.bind_if_is_defined(mesh_grob()->vertices.attributes(), "CY");
         if(!CY.is_bound()  || CY.dimension() != 12) {
-            Logger::err("Cosmo") << "Missing or invalid CY attribute" << std::endl;
+            Logger::err("Cosmo") << "Missing or invalid CY attribute"
+				 << std::endl;
             return;
         }
 

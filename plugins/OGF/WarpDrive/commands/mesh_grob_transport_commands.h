@@ -201,7 +201,7 @@ namespace OGF {
 	 * \param[in] air_fraction if air is specified, fraction of total
 	 *  surface occupied by air particles
 	 * \param[in] surface3D true if the surface is 3D, else 2D
-	 * \param[in] nb_points number of points
+	 * \param[in] nb_points number of points or 0 to keep existing points
          * \advanced
 	 * \param[in] nb_iter number of Newton iterations
 	 * \param[in] epsilon maximum relative measure error in a cell
