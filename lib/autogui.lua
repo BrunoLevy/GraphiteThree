@@ -1018,7 +1018,6 @@ function autogui.open_command_dialog(object,mmethod,object_as_string,args)
      autogui.command_state[k].object_ = object
      autogui.command_state[k].object_as_string_ = object_as_string
      autogui.command_state[k].mmethod_ = mmethod
-     autogui.command_state[k].target_ = object.name
      autogui.command_state[k].show_as_window_ = true
      autogui.command_state[k].width_  = 250*main.scaling()
      autogui.command_state[k].height_ = 250*main.scaling()
@@ -1067,7 +1066,6 @@ function autogui.command_dialog(object,mmethod,object_as_string)
      autogui.command_state[k].object_ = object
      autogui.command_state[k].object_as_string_ = object_as_string
      autogui.command_state[k].mmethod_ = mmethod
-     autogui.command_state[k].target_ = object.name
      autogui.command_state[k].grob = object
   end
 
