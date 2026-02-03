@@ -49,7 +49,7 @@ namespace OGF {
    /**
     * \brief VoxelGrob commands for optimal transport.
     */
-    gom_class VOXEL_API VoxelGrobTransportCommands : public VoxelGrobCommands {
+    gom_class WarpDrive_API VoxelGrobTransportCommands : public VoxelGrobCommands {
     public:
 
         /**
