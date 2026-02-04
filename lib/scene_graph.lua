@@ -689,6 +689,9 @@ function scene_graph_gui.draw_grob_name(grob)
 	 end
 	 scene_graph.current_object = grob.name
       end
+      if imgui.IO_KeyShift_pressed() and imgui.IsItemFocused() then
+         grob.selected=true
+      end
       if cropped then
          autogui.tooltip(grob.name)
       end
@@ -697,7 +700,7 @@ function scene_graph_gui.draw_grob_name(grob)
        if imgui.IO_KeyCtrl_pressed() then
          selection_op = scene_graph_gui.toggle_selection
        elseif imgui.IO_KeyShift_pressed() then
-         selection_op = scene_graph_gui.expand_selection
+         selection_op = scene_graph_gui.extend_selection
        else
          selection_op = scene_graph_gui.clear_selection
        end
@@ -785,7 +788,7 @@ end
 -- \param grob the object towards which the selection should be expanded
 -- \details on exit, all objects between the current one and \p grob are
 --   selected. The selection flags of the other objects are left unchanged.
-function scene_graph_gui.expand_selection(grob)
+function scene_graph_gui.extend_selection(grob)
    if grob == nil then
       return
    end
