@@ -696,7 +696,7 @@ function scene_graph_gui.draw_grob_name(grob)
          autogui.tooltip(grob.name)
       end
    end
-   if imgui.IsItemClicked() and not imgui.IsItemToggledOpen() then
+   if imgui.IsItemActivated() and not imgui.IsItemToggledOpen() then
        if imgui.IO_KeyCtrl_pressed() then
          selection_op = scene_graph_gui.toggle_selection
        elseif imgui.IO_KeyShift_pressed() then
