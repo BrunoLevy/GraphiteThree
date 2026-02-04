@@ -1019,8 +1019,7 @@ function autogui.request_key(request)
     if object.is_a(OGF.Interface) then
        local interface_name = object.meta_class.name
        local grob_name = object.grob.name
---       return 'rq##'..grob_name..'##'..interface_name..'##'..method_name
-         return 'rq##'..interface_name..'##'..method_name -- HERE
+       return 'rq##'..interface_name..'##'..method_name
     end
     return request.string_id --fallback, normally does not get there, bad to use
 end
@@ -1033,7 +1032,6 @@ function autogui.open_command_dialog(request,args)
   local k = autogui.request_key(request)
   if autogui.command_state[k] == nil then
      autogui.command_state[k] = autogui.init_args(request.method())
-     autogui.command_state[k].request_ = request
      autogui.command_state[k].show_as_window_ = true
      autogui.command_state[k].width_  = 250*main.scaling()
      autogui.command_state[k].height_ = 250*main.scaling()
@@ -1045,6 +1043,7 @@ function autogui.open_command_dialog(request,args)
 	end
      end
   end
+  autogui.command_state[k].request_ = request
 end
 
 -- \brief Programmatically open a dialog for a command that applies to
@@ -1069,8 +1068,11 @@ function autogui.command_dialog(request)
   local k = autogui.request_key(request)
   if autogui.command_state[k] == nil then
      autogui.command_state[k] = autogui.init_args(mmethod)
-     autogui.command_state[k].request_ = request
   end
+  if autogui.in_popup then
+     autogui.command_state[k].show_as_window_ = false
+  end
+  autogui.command_state[k].request_ = request
   if autogui.command_state[k].show_as_window_ and
      request.object().is_a(OGF.Interface) then
      local grob = request.object().grob
@@ -1222,7 +1224,7 @@ function autogui.command_dialogs()
 
 	 imgui.SetNextWindowSize(
 	    cmd_state.width_  +  4.0*main.scaling(),
-	    cmd_state.height_ + 20.0*main.scaling(),
+	    cmd_state.height_ + 40.0*main.scaling(),
 	    ImGuiCond_Appearing
 	 )
 
