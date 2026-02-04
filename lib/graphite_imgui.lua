@@ -73,7 +73,7 @@ function graphite_gui.draw_menu_bar()
          imgui.EndMenu()
       end
 
-
+      -- Scene
       if imgui.BeginMenu('Scene##MainMenu') then
          scene_graph_gui.scene_graph_menu(false)
 	 imgui.EndMenu()

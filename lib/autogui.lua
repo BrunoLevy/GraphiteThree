@@ -691,10 +691,11 @@ autogui.handlers.combo_box = function(
    else
       -- object is a command state dictionnary.
       -- Retrieve 'values' custom attribute of the arg in the meta-method.
-      for i = 0,object.mmethod_.nb_args()-1 do
-         if object.mmethod_.ith_arg_name(i) == property_name then
+      local mmethod = object.request_.method()
+      for i = 0,mmethod.nb_args()-1 do
+         if mmethod.ith_arg_name(i) == property_name then
 	     values_custom_attribute =
-	         object.mmethod_.ith_arg_custom_attribute_value(i,'values')
+	         mmethod.ith_arg_custom_attribute_value(i,'values')
 	 end
       end
    end
@@ -1001,23 +1002,33 @@ function autogui.args_to_string(mmethod,args)
 end
 
 
+-- \brief Gets the key used to handle dialogs for requests
+-- \param[in] request a request
+-- \return a unique key associated with the request
+
+function autogui.request_key(request)
+    local method_name = request.method().name
+    local object = request.object()
+    if object.is_a(OGF.Grob) then
+       return 'rq##'..object.name..'##'..method_name
+    end
+    if object.is_a(OGF.Interface) then
+       local interface_name = object.meta_class.name
+       local grob_name = object.grob.name
+       return 'rq##'..grob_name..'##'..interface_name..'##'..method_name
+    end
+    return request.string_id
+end
+
 -- \brief Programmatically open a dialog for a command
--- \details object is just used as a key to keep track of the latest
---   opened command (it is not necessarily the target of the invokation)
--- \param[in] object the object
--- \param[in] mmethod the meta-method that corresponds to the command
--- \param[in] object_as_string a string with a way to retrieve the object,
---   that will be passed to the LUA interpreter
+-- \param[in] target a Request
 -- \param[in] args optional default values for the arguments
 
-function autogui.open_command_dialog(object,mmethod,object_as_string,args)
-  local k = object.name..':'..object.meta_class.name..':'..mmethod.name
+function autogui.open_command_dialog(request,args)
+  local k = autogui.request_key(request)
   if autogui.command_state[k] == nil then
-     autogui.command_state[k] = autogui.init_args(mmethod)
-     autogui.command_state[k].object_name_ = object.name
-     autogui.command_state[k].object_ = object
-     autogui.command_state[k].object_as_string_ = object_as_string
-     autogui.command_state[k].mmethod_ = mmethod
+     autogui.command_state[k] = autogui.init_args(request.method())
+     autogui.command_state[k].request_ = request
      autogui.command_state[k].show_as_window_ = true
      autogui.command_state[k].width_  = 250*main.scaling()
      autogui.command_state[k].height_ = 250*main.scaling()
@@ -1039,40 +1050,29 @@ end
 
 function autogui.open_command_dialog_for_current_object(cmdclass, cmdname, args)
    local o = scene_graph.current()
-   local mmethod = gom.resolve_meta_type(cmdclass).find_method(cmdname)
-   local o_as_string =
-      'scene_graph.resolve(\'' ..
-      o.name ..
-      '\').query_interface(\'' ..
-      cmdclass ..
-      '\')'
-   autogui.open_command_dialog(o,mmethod,o_as_string,args)
+   local mclass = gom.resolve_meta_type(cmdclass)
+   local commands = mclass.create()
+   commands.grob = scene_graph.current()
+   autogui.open_command_dialog(commands[cmdname],args)
 end
 
 -- \brief Handles the dialog for an object command
--- \details object is just used as a key to keep track of the latest
---   opened command (it is not necessarily the target of the invokation)
--- \param[in] object the object
--- \param[in] mmethod the meta-method that corresponds to the command
--- \param[in] object_as_string a string with a way to retrieve the object,
---   that will be passed to the LUA interpreter
+-- \param[in] request the request
 
-function autogui.command_dialog(object,mmethod,object_as_string)
-
-  local k = object.name..':'..object.meta_class.name..':'..mmethod.name
+function autogui.command_dialog(request)
+  local mmethod = request.method()
+  local k = autogui.request_key(request)
   if autogui.command_state[k] == nil then
      autogui.command_state[k] = autogui.init_args(mmethod)
-     autogui.command_state[k].object_name_ = object.name
-     autogui.command_state[k].object_ = object
-     autogui.command_state[k].object_as_string_ = object_as_string
-     autogui.command_state[k].mmethod_ = mmethod
-     autogui.command_state[k].grob = object
+     autogui.command_state[k].request_ = request
   end
+
+  local target_name = '<Ze target (TODO)>'
 
   if autogui.command_state[k].show_as_window_ then
      imgui.Text(
         'Target: ' ..
-	autogui.remove_underscores(autogui.command_state[k].object_name_)
+	autogui.remove_underscores(target_name)
      )
   elseif imgui.MenuItem(
      imgui.font_icon('code-branch')..'  '..
@@ -1103,9 +1103,7 @@ function autogui.command_dialog(object,mmethod,object_as_string)
   end
 
   if has_advanced_args then
-     if imgui.TreeNode(
-        'Advanced'..'##'..object_as_string..'.'..mmethod.name
-     ) then
+     if imgui.TreeNode('Advanced'..'##'..k..'##advanced') then
         imgui.TreePop()
 	for i=0,mmethod.nb_args()-1 do
 	   if (mmethod.ith_arg_has_custom_attribute(i,'advanced') and
@@ -1122,15 +1120,9 @@ function autogui.command_dialog(object,mmethod,object_as_string)
      imgui.font_icon('cog')
   ) then
       local bkp1 = autogui.command_state[k].show_as_window_
-      local bkp2 = autogui.command_state[k].object_name_
       autogui.command_state[k] = autogui.init_args(mmethod)
-
       autogui.command_state[k].show_as_window_ = bkp1
-      autogui.command_state[k].object_name_ = bkp2
-
-      autogui.command_state[k].object_ = object
-      autogui.command_state[k].object_as_string_ = object_as_string
-      autogui.command_state[k].mmethod_ = mmethod
+      autogui.command_state[k].request_ = request
   end
   autogui.tooltip('reset factory settings')
   imgui.SameLine()
@@ -1161,6 +1153,8 @@ function autogui.command_dialog(object,mmethod,object_as_string)
       local args_string = autogui.args_to_string(
          mmethod,autogui.command_state[k]
       )
+      local object_as_string = gom.back_resolve(request.object())
+
       -- If the 'apply do not close' button was pushed, or if the command
       -- is displayed in a separate window, we directly call the LUA function
       -- (this does not close the menu)
@@ -1183,62 +1177,67 @@ function autogui.command_dialog(object,mmethod,object_as_string)
   end
 end
 
+-- Tests whether a command is still "alive"
+-- A command is not "alive" if the object it refers was destroyed
+
+function autogui.command_is_alive(cmd_state)
+   if cmd_state.request_.object().is_a(OGF.Interface) then
+      local grob = cmd_state.request_.object().grob
+      if grob ~= scene_graph and not scene_graph.is_bound(grob.name) then
+         return false
+      end
+   end
+   return true
+end
+
 -- Draws all the command dialogs that
 -- have been switched to window mode.
 
 function autogui.command_dialogs()
 
-   for k,v in pairs(autogui.command_state) do
+   for k,cmd_state in pairs(autogui.command_state) do
 
       -- Hide window / delete command state if target object was
       -- deleted in the meanwhile.
 
-      if autogui.command_state[k].object_ ~= scene_graph
-         and not scene_graph.is_bound(autogui.command_state[k].object_name_)
-      then
+      if not autogui.command_is_alive(autogui.command_state[k]) then
          autogui.command_state[k] = nil
       elseif autogui.command_state[k].show_as_window_ then
          local sel
 
 	 imgui.SetNextWindowSize(
-	    autogui.command_state[k].width_  +  4.0*main.scaling(),
-	    autogui.command_state[k].height_ + 20.0*main.scaling(),
+	    cmd_state.width_  +  4.0*main.scaling(),
+	    cmd_state.height_ + 20.0*main.scaling(),
 	    ImGuiCond_Appearing
 	 )
 
 	 imgui.SetNextWindowPos(
-	    autogui.command_state[k].x_,
-	    autogui.command_state[k].y_,
+	    cmd_state.x_,
+	    cmd_state.y_,
 	    ImGuiCond_Appearing
 	 )
 
          sel,autogui.command_state[k].show_as_window_ = imgui.Begin(
 	     imgui.font_icon('code-branch')..'  '..
 	     autogui.remove_underscores(
-	        autogui.command_state[k].mmethod_.name
+	        cmd_state.request_.method().name
 	     ) .. '##dialog##' .. k,
-             autogui.command_state[k].show_as_window_
+             cmd_state.show_as_window_
          )
 
-         autogui.command_dialog(
-	   autogui.command_state[k].object_,
-	   autogui.command_state[k].mmethod_,
-	   autogui.command_state[k].object_as_string_
-	 )
+         autogui.command_dialog(cmd_state.request_)
          imgui.End()
       end
    end
 end
 
 -- \brief Handles the menu item for an object command
--- \details object is just used as a key to keep track of the latest
---   opened command (it is not necessarily the target of the invokation)
--- \param[in] object the object
--- \param[in] mmethod the meta-method that corresponds to the command
--- \param[in] object_as_string a string with a way to retrieve the object,
---   that will be passed to the LUA interpreter
+-- \param[in] request the request
 
-function autogui.command_menu_item(object,mmethod,object_as_string)
+function autogui.command_menu_item(request)
+   local commands = request.object()
+   local mmethod = request.method()
+
    if mmethod.nb_args() == 0 then
          -- Need to add '##' suffix with slot name with underscores
          -- else ImGui generates a shortcut I think (to be understood)
@@ -1247,7 +1246,7 @@ function autogui.command_menu_item(object,mmethod,object_as_string)
           mmethod.name
       ) then
          main.exec_command(
-             object_as_string..'.'..mmethod.name..
+             gom.back_resolve(commands)..'.'..mmethod.name..
              '({_invoked_from_gui=true})', false
           )
       end
@@ -1257,7 +1256,7 @@ function autogui.command_menu_item(object,mmethod,object_as_string)
          autogui.remove_underscores(mmethod.name)
       ) then
           autogui.in_popup = true
-          autogui.command_dialog(object, mmethod, object_as_string)
+          autogui.command_dialog(request)
 	  autogui.in_popup = false
           imgui.EndMenu()
       end

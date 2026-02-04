@@ -147,17 +147,8 @@ function scene_graph_gui.menu_map.draw(grob, node)
       if v.meta_class ~= nil then
          local command_class = v.container_meta_class()
 	 local command_class_name = command_class.name
-	 local object_as_string
-	 if grob == scene_graph then
-	    object_as_string = 'scene_graph'
-	 else
-            object_as_string = 'scene_graph.resolve(\'' .. grob.name .. '\')'
-	 end
-
-         object_as_string = object_as_string ..
-            '.query_interface(\''..command_class_name..'\')'
-
-         autogui.command_menu_item(grob, v, object_as_string)
+         local request = grob.I[command_class.name][v.name]
+         autogui.command_menu_item(request)
       else
          if v.name ~= 'menubar' then
             if imgui.BeginMenu(v.name) then
@@ -485,14 +476,10 @@ function scene_graph_gui.scene_graph_menu(with_file_menu)
     end
     imgui.Separator()
     autogui.command_menu_item(
-       scene_graph,
-       commands_meta_class.find_method('create_object'),
-       commands_as_string
+       scene_graph.I.Scene.create_object
     )
     autogui.command_menu_item(
-       scene_graph,
-       commands_meta_class.find_method('delete_all'),
-       commands_as_string
+       scene_graph.I.Scene.delete_all
     )
     if imgui.MenuItem('delete selected') then
        scene_graph_gui.delete_selected()

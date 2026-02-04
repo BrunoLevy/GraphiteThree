@@ -80,10 +80,18 @@ namespace OGF {
     ) {
 
         if(!args_in.has_arg("override_lock") && command_is_running_) {
-            Logger::warn("Commands")
-                << "Tryed to invoke command from locked Commands class"
-                << std::endl ;
-            return false ;
+	    // Do not invoke command while another command is running
+	    MetaMethod* mmethod = meta_class()->find_method(method_name);
+	    if( // ... but this does not concern member function of base classes
+		mmethod->container_meta_class()->is_subclass_of(
+		    ogf_meta<OGF::Commands>::meta_class()
+		)
+	    ) {
+		Logger::warn("Commands")
+		    << "Tryed to invoke command from locked Commands class"
+		    << std::endl ;
+		return false ;
+	    }
         }
 
         command_is_running_ = true ;
@@ -112,52 +120,11 @@ namespace OGF {
 
 
         if(interpreter() != nullptr) {
-
             if(invoked_from_gui) {
                 Object* main = interpreter()->resolve_object("main");
                 main->invoke_method("save_state");
+		interpreter()->record_invoke_in_history(this, method_name, args);
             }
-
-	    bool interp_is_lua = (CmdLine::get_arg("gel") == "Lua");
-	    std::ostringstream out ;
-
-            // TODO: use new .I.xxx. instead of query_interface()
-	    if(get_grob()->meta_class()->name() == "OGF::SceneGraph") {
-		out << "scene_graph.query_interface(\""
-		    << meta_class()->name()
-		    << "\")" ;
-	    } else {
-		out << "scene_graph.current().query_interface(\""
-		    << meta_class()->name()
-		    << "\")" ;
-	    }
-	    out << "." << method_name;
-	    if(interp_is_lua) {
-		// name-value pairs call: '{' = create LUA table.
-		out << "({" ;
-	    } else {
-		out << "(" ;
-	    }
-
-	    // TODO: do not add quotes around integers, floating point
-	    // numbers and truth values.
-	    for(unsigned int i=0; i<args.nb_args(); i++) {
-		out << args.ith_arg_name(i) << "="
-		    << "\"" << args.ith_arg_value(i).as_string() << "\"" ;
-		if(i != args.nb_args() - 1) {
-		    out << ", " ;
-		}
-	    }
-
-	    if(interp_is_lua) {
-		// name-value pairs call: '}' = create LUA table.
-		out << "})" << std::endl ;
-	    } else {
-		out << ")" << std::endl ;
-	    }
-	    // interpreter()->add_to_history(out.str()) ;
-
-	    interpreter()->record_invoke_in_history(this, method_name, args);
         }
 
         // Do not display timings for methods with continuous updates

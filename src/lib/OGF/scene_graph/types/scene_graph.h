@@ -204,7 +204,6 @@ namespace OGF {
 	    const GrobClassName& classname, const std::string& name = ""
 	);
 
-
         /**
          * \brief Creates a mesh.
          * \param[in] name the name of the mesh in the SceneGraph. If no

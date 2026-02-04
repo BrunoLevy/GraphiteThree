@@ -331,6 +331,8 @@ namespace OGF {
 	    Meta::instance()->resolve_meta_type("OGF::SceneGraph");
 	MetaType* mgrob = Meta::instance()->resolve_meta_type("OGF::Grob");
 	MetaType* mshader = Meta::instance()->resolve_meta_type("OGF::Shader");
+	MetaType* mrequest = Meta::instance()->resolve_meta_type("OGF::Request");
+
 
 	// Command
 	if(mcommand != nullptr && object->is_a(mcommand)) {
@@ -386,6 +388,15 @@ namespace OGF {
 		return back_resolve(grob) + ".shader";
 	    }
 	    return "";
+	}
+
+	// Request
+	if(mrequest != nullptr && object->is_a(mrequest)) {
+	    Request* request = dynamic_cast<Request*>(mrequest);
+	    geo_debug_assert(request != nullptr);
+	    return
+		back_resolve(request->object()) + "." +
+		request->method()->name();
 	}
 
 	return "";
