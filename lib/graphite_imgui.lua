@@ -66,6 +66,14 @@ function graphite_gui.draw_menu_bar()
       imgui.PushID('##MainMenu')
       scene_graph_gui.file_menu()
       imgui.PopID()
+
+      -- Modules
+      if imgui.BeginMenu('Modules') then
+         graphite_main_window.draw_modules_menu()
+         imgui.EndMenu()
+      end
+
+
       if imgui.BeginMenu('Scene##MainMenu') then
          scene_graph_gui.scene_graph_menu(false)
 	 imgui.EndMenu()
@@ -78,12 +86,6 @@ function graphite_gui.draw_menu_bar()
          scene_graph_gui.menu_map.draw(
             scene_graph, node
          )
-      end
-
-      -- Modules
-      if imgui.BeginMenu('Modules') then
-         graphite_main_window.draw_modules_menu()
-         imgui.EndMenu()
       end
 
       -- Commands attached to current object
