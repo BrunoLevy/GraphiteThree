@@ -138,6 +138,8 @@ function autogui.combo_box(object, property_name, values, tooltip)
    if sel then
         object[property_name] = new_value
    end
+
+   return sel
 end
 
 -- \brief Edits a value using a combo-box
@@ -1017,7 +1019,8 @@ function autogui.request_key(request)
     if object.is_a(OGF.Interface) then
        local interface_name = object.meta_class.name
        local grob_name = object.grob.name
-       return 'rq##'..grob_name..'##'..interface_name..'##'..method_name
+--       return 'rq##'..grob_name..'##'..interface_name..'##'..method_name
+         return 'rq##'..interface_name..'##'..method_name -- HERE
     end
     return request.string_id --fallback, normally does not get there, bad to use
 end
@@ -1068,14 +1071,24 @@ function autogui.command_dialog(request)
      autogui.command_state[k] = autogui.init_args(mmethod)
      autogui.command_state[k].request_ = request
   end
-
-  local target_name = '<Ze target (TODO)>'
-
-  if autogui.command_state[k].show_as_window_ then
-     imgui.Text(
-        'Target: ' ..
-	autogui.remove_underscores(target_name)
-     )
+  if autogui.command_state[k].show_as_window_ and
+     request.object().is_a(OGF.Interface) then
+     local grob = request.object().grob
+     if not grob.is_a(OGF.SceneGraph) then
+        autogui.command_state[k].Command_target_ = grob.name
+        grob_names = gom.get_environment_value(
+            grob.meta_class.name..'_instances'
+        )
+        if autogui.combo_box(
+            autogui.command_state[k], 'Command_target_', grob_names
+        ) then
+            local commands_name = request.object().meta_class.name
+            local command_name = request.method().name
+            grob = scene_graph.objects[autogui.command_state[k].Command_target_]
+            autogui.command_state[k].request_ =
+                grob.I[commands_name][command_name]
+        end
+     end
   elseif imgui.MenuItem(
      imgui.font_icon('code-branch')..'  '..
      autogui.remove_underscores(mmethod.name)..'##command_apply'
