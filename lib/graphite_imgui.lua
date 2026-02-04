@@ -91,7 +91,7 @@ function graphite_gui.draw_menu_bar()
          if scene_graph.current() ~= nil then
              scene_graph_gui.grob_ops(scene_graph.current())
          else
-            imgui.Text('<no object>')
+            imgui.MenuItem('<no object>',nil,false,false)
          end
          imgui.EndMenu()
       end

@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #ifndef H_OGF_GOM_TYPES_CALLABLE_H
@@ -46,7 +46,7 @@ namespace OGF {
      * \brief A Callable object.
      * \details Callable objects have an invoke() member function.
      */
-    gom_attribute(abstract,"true")     
+    gom_attribute(abstract,"true")
     gom_class GOM_API Callable : public Object {
       public:
 
@@ -54,12 +54,12 @@ namespace OGF {
 	 * \brief Callable constructor.
 	 */
 	Callable();
-	
+
 	/**
 	 * \brief Callable destructor.
 	 */
 	~Callable() override;
-	
+
         /**
          * \brief Invokes a method with an argument list,
          *  and gets the return value.
@@ -100,9 +100,9 @@ namespace OGF {
      * \brief A reference-counted pointer to a Callable.
      */
     typedef SmartPointer<Callable> Callable_var;
-    
+
     /**********************************************************************/
-    
+
     /**
      * \brief A pointer to an object and to a meta-method
      *  of that object (a very limited notion of "closure").
@@ -135,9 +135,9 @@ namespace OGF {
 	  * \copydoc Object::get_doc()
 	  */
           std::string get_doc() const override;
-          
+
       gom_slots:
-	  
+
 	 /**
 	  * \brief Gets the target object.
 	  * \return a pointer to the target Object.
@@ -160,12 +160,12 @@ namespace OGF {
 	  * \brief Forbids copy.
 	  */
 	 Request(const Request& rhs);
-	 
+
 	 /**
 	  * \brief Forbids copy.
 	  */
-	 Request& operator=(const Request& rhs);
-	 
+	 Request& operator=(const Request& rhs) = delete;
+
       private:
  	 Object* object_;
 	 MetaMethod* method_;
@@ -177,7 +177,7 @@ namespace OGF {
      * \brief A reference-counted pointer to a Request.
      */
     typedef SmartPointer<Request> Request_var;
-    
+
     /**********************************************************************/
 
 }
