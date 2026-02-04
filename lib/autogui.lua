@@ -682,6 +682,7 @@ autogui.handlers.combo_box = function(
    object,property_name,mtype,tooltip
 )
    local values_custom_attribute
+   local context = object -- the context for magic '$' evaluation
 
    if object.meta_class ~= nil then
       -- object is a GOM object (Shader).
@@ -698,23 +699,24 @@ autogui.handlers.combo_box = function(
 	         mmethod.ith_arg_custom_attribute_value(i,'values')
 	 end
       end
+      context = object.request_.object() -- For '$' eval, OGF::Commands instance
    end
 
    local values = values_custom_attribute
 
    -- if values start with a '$' sign, execute the content
-   -- with object as the context to get the actual list of
+   -- with 'context' as the context to get the actual list of
    -- values (used for instance to generate list of attributes
-   -- from "$grob.attributes")
+   -- from "$grob.attributes"). In this case 'grob' is obtained
+   -- through 'context.grob' (where 'context' is a OGF::Commands instance)
    if values:sub(1,1) == '$' then
      values = values:sub(2,values:len())
-     -- evaluate 'values' using object as context
-     -- (Lua is so cool !)
+     -- evaluate 'values' using context (Lua is so cool !)
      values = load(
         'return '..values,       -- code to be evaluated
 	'gom_attribute: values', -- tag for error messages
         'bt',                    -- both binary and text
-	object                   -- environment
+	context                  -- environment
      )()
    end
 
@@ -1017,7 +1019,7 @@ function autogui.request_key(request)
        local grob_name = object.grob.name
        return 'rq##'..grob_name..'##'..interface_name..'##'..method_name
     end
-    return request.string_id
+    return request.string_id --fallback, normally does not get there, bad to use
 end
 
 -- \brief Programmatically open a dialog for a command
@@ -1044,7 +1046,7 @@ end
 
 -- \brief Programmatically open a dialog for a command that applies to
 --  the current object.
--- \param[in] cmdclass the classname of the command ('OGF::MeshGrobxxxCommands')
+-- \param[in] cmdclass the classname of the commands ('OGF::MeshGrobxxxCommands')
 -- \param[in] cmdname the function name of the command
 -- \param[in] args optional default values for the arguments
 
