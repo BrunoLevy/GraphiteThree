@@ -172,7 +172,7 @@ function text_editor_gui.run()
          end
          grob.shader_source = text_editor.text
       else
-         main.exec_command(text_editor.text)
+         main.exec_command(text_editor.text,false)
       end
    elseif text_editor.language == 'glsl' then
        local grob = scene_graph.resolve('GLSL_program')

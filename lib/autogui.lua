@@ -1200,6 +1200,7 @@ function autogui.command_dialog(request)
 	 end
       end
   end
+  -- Apply command to selected objects
   if doit_apply_to_sel_button then
       local args_string = autogui.args_to_string(
          mmethod,autogui.command_state[k]
