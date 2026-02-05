@@ -869,7 +869,7 @@ function autogui.property(object, mproperty)
    gom.record_set_property = true
 
    local tooltip = autogui.help(mproperty)
-   if mproperty.type().meta_class.name == 'OGF::MetaEnum' then
+   if mproperty.type().meta_class.is_a(OGF.MetaEnum) then
         autogui.enum(object, mproperty.name, mproperty.type(), tooltip)
    else
         local k = mproperty.type_name()
@@ -904,7 +904,7 @@ end
 function autogui.slot_arg(args,mslot,i)
    local type_name = mslot.ith_arg_type_name(i)
    local mtype = gom.resolve_meta_type(type_name)
-   if mtype.meta_class.name == 'OGF::MetaEnum' then
+   if mtype.is_a(OGF.MetaEnum) then
         autogui.enum(args, mslot.ith_arg_name(i), mtype, tooltip)
 	return
    end
@@ -965,7 +965,7 @@ function autogui.init_args(mmethod)
          val = autogui.default_value[mtype_name]
 	 if val == nil then
 	    mtype = gom.resolve_meta_type(mtype_name)
-	    if mtype.meta_class.name == 'OGF::MetaEnum' then
+	    if mtype.meta_class.is_a(OGF.MetaEnum) then
 	       val = mtype.ith_name(0)
 	    else
 	       val = ''
@@ -1296,10 +1296,7 @@ function autogui.member_is_visible(object, mmember)
   end
 
   -- Ignore readonly properties
-  if (
-      mmember.meta_class.name == 'OGF::MetaProperty' and
-      mmember.read_only()
-  ) then
+  if (mmember.is_a(OGF.MetaProperty) and mmember.read_only()) then
     return false
   end
 
