@@ -24,17 +24,17 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
  */
- 
- 
+
+
 #include <OGF/WarpDrive/common/common.h>
 #include <OGF/basic/modules/module.h>
 #include <OGF/gom/types/gom_defs.h>
@@ -42,6 +42,7 @@
 
 #include <OGF/WarpDrive/commands/mesh_grob_transport_commands.h>
 #include <OGF/WarpDrive/commands/mesh_grob_martingale_commands.h>
+#include <OGF/WarpDrive/commands/voxel_grob_transport_commands.h>
 
 #include <OGF/WarpDrive/interfaces/mesh_grob_transport_interface.h>
 
@@ -68,13 +69,15 @@ namespace OGF {
         ogf_register_grob_commands<OGF::MeshGrob,OGF::MeshGrobMartingaleCommands>();
 	ogf_register_grob_interface<OGF::MeshGrob, OGF::MeshGrobTransport>();
 
+        ogf_register_grob_commands<OGF::VoxelGrob,OGF::VoxelGrobTransportCommands>();
+
 	ogf_register_grob_shader<OGF::MeshGrob,OGF::VoronoiMeshGrobShader>();
 	ogf_register_grob_shader<OGF::MeshGrob,OGF::TransportMeshGrobShader>();
-       
+
         geo_register_MeshIOHandler_creator(XYZWSerializer, "xyzw");
-        MeshGrob::register_geogram_file_extensions();       
-        
-       
+        MeshGrob::register_geogram_file_extensions();
+
+
         ogf_register_grob_shader<OGF::MeshGrob,CosmoMeshGrobShader>();
         ogf_register_grob_shader<OGF::MeshGrob,AnisoMeshGrobShader>();
         // [source insertion point] (do not delete this line, ModuleMaker depends on it)
@@ -92,7 +95,7 @@ namespace OGF {
 
         Logger::out("Init") << "</WarpDrive>" << std::endl;
     }
-    
+
     void WarpDrive_libinit::terminate() {
         Logger::out("Init") << "<~WarpDrive>" << std::endl;
         //_____________________________________________________________
@@ -104,7 +107,7 @@ namespace OGF {
         Module::unbind_module("WarpDrive");
         Logger::out("Init") << "</~WarpDrive>" << std::endl;
     }
-    
+
     WarpDrive_libinit::WarpDrive_libinit() {
         increment_users();
     }
@@ -112,30 +115,30 @@ namespace OGF {
     WarpDrive_libinit::~WarpDrive_libinit() {
         decrement_users();
     }
-    
+
     void WarpDrive_libinit::increment_users() {
         // Note that count_ is incremented before calling
         // initialize, else it would still be equal to
-        // zero at module initialization time, which 
+        // zero at module initialization time, which
         // may cause duplicate initialization of libraries.
         count_++;
         if(count_ == 1) {
             initialize();
         }
     }
-    
+
     void WarpDrive_libinit::decrement_users() {
         count_--;
         if(count_ == 0) {
             terminate();
         }
     }
-    
+
     int WarpDrive_libinit::count_ = 0;
 }
 
 // The initialization and termination functions
-// are also declared using C linkage in order to 
+// are also declared using C linkage in order to
 // enable dynamic linking of modules.
 
 extern "C" void WarpDrive_API OGF_WarpDrive_initialize(void);
@@ -147,7 +150,3 @@ extern "C" void WarpDrive_API OGF_WarpDrive_terminate(void);
 extern "C" void WarpDrive_API OGF_WarpDrive_terminate() {
     OGF::WarpDrive_libinit::decrement_users();
 }
-
-
-
-
