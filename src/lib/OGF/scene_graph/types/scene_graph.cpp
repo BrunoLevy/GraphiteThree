@@ -297,11 +297,6 @@ namespace OGF {
                 return;
             }
         }
-        if(interpreter() != nullptr) {
-            interpreter()->add_to_history(
-                "scene_graph.delete_current_object()"
-            );
-        }
     }
 
     void SceneGraph::clear() {

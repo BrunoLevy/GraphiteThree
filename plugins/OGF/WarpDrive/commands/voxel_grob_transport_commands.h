@@ -80,6 +80,8 @@ namespace OGF {
 	 * \param[in] margin_width number of voxels around data where
 	 *  to interpolate attributes
 	 */
+	gom_arg_attribute(attribute, handler, "combo_box")
+	gom_arg_attribute(attribute, values, "$grob.displayable_attributes")
 	void interpolate_attribute(
 	    const std::string& attribute,
 	    double bkgnd_value, index_t margin_width

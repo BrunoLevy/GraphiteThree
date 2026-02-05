@@ -384,7 +384,13 @@ namespace OGF {
 	if(mgrob != nullptr && object->is_a(mgrob)) {
 	    std::string grob_name;
 	    if(object->get_property("name",grob_name)) {
-		if(isalpha(grob_name[0]) || grob_name[0] == '_') {
+		bool name_does_not_need_quotes =
+		    isalpha(grob_name[0]) || grob_name[0] == '_';
+		for(char c: grob_name) {
+		    name_does_not_need_quotes = name_does_not_need_quotes &&
+			(isalnum(c) || (c == '_'));
+		}
+		if(name_does_not_need_quotes) {
 		    return "scene_graph.objects." + grob_name;
 		} else {
 		    return "scene_graph.objects[\"" + grob_name + "\"]";

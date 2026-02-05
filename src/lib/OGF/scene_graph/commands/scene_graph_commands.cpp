@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 
@@ -42,13 +42,13 @@
 #include <geogram/basic/command_line.h>
 
 namespace OGF {
-    
+
     SceneGraphCommands::SceneGraphCommands() {
     }
 
     SceneGraphCommands::~SceneGraphCommands() {
     }
-    
+
     //_______________________________________________________________________
 
     SceneGraphSceneCommands::SceneGraphSceneCommands() {
@@ -56,7 +56,7 @@ namespace OGF {
 
     SceneGraphSceneCommands::~SceneGraphSceneCommands() {
     }
-    
+
     void SceneGraphSceneCommands::create_object(
         const GrobClassName& type, const std::string& name
     ) {
@@ -84,7 +84,7 @@ namespace OGF {
         // a name collision.
         scene_graph()->set_current_object(g->name());
     }
-    
+
     void SceneGraphSceneCommands::delete_current() {
         scene_graph()->delete_current_object();
     }
@@ -108,21 +108,21 @@ namespace OGF {
             Box3d bbox = current->bbox();
             double w = bbox.xyz_max[0] - bbox.xyz_min[0];
             double h = bbox.xyz_max[1] - bbox.xyz_min[1];
-            double d = bbox.xyz_max[2] - bbox.xyz_min[2];            
+            double d = bbox.xyz_max[2] - bbox.xyz_min[2];
             Logger::status()
                 << "Min: "
                 << bbox.xyz_min[0] << " "
                 << bbox.xyz_min[1] << " "
-                << bbox.xyz_min[2] 
+                << bbox.xyz_min[2]
                 << " Max: "
                 << bbox.xyz_max[0] << " "
                 << bbox.xyz_max[1] << " "
-                << bbox.xyz_max[2]                 
+                << bbox.xyz_max[2]
                 << " Sizes: "
                 << w << " " << h << " " << d
                 << std::endl;
         } else {
-            Logger::err("Dimensions") 
+            Logger::err("Dimensions")
                 << "No object" << std::endl;
         }
     }
@@ -143,7 +143,7 @@ namespace OGF {
                 << std::endl;
         }
     }
-    
+
     void SceneGraphSceneCommands::set_parameter(
         const std::string& name, const std::string& value
     ) {
@@ -162,7 +162,7 @@ namespace OGF {
     }
 
     void SceneGraphSceneCommands::disable_verbose() {
-        GEO::Logger::instance()->set_minimal(true);        
+        GEO::Logger::instance()->set_minimal(true);
     }
-    
+
 }
