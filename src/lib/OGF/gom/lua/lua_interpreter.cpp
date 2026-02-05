@@ -344,18 +344,28 @@ namespace OGF {
 		grob != nullptr
 	    ) {
 		std::string interface_name = object->meta_class()->name();
-		interface_name = String::remove_prefix(
-		    interface_name,grob->meta_class()->name()
-		);
 
-		// Ugly special case for WarpDrive that has both
-		// TransportCommands and TransportInterface (so we need to
-		// keep the Commands suffix in that case)
-		if(!String::string_starts_with(interface_name,"Transport")) {
-		    interface_name = String::remove_suffix(
-			interface_name, "Commands"
-		    );
+		// For legibility of the history,
+		// remove prefix ("OGF::GrobClassName") and suffix ("Commands")
+
+		// Remove "Commands" suffix only if there is no Interface class
+		// with conflicting name (for instance, Transport and
+		// TransportCommands in WarpDrive)
+		if(String::string_ends_with(interface_name, "Commands")) {
+		    std::string interface_name_without_commands =
+			String::remove_suffix(interface_name, "Commands");
+		    if(
+			Meta::instance()->resolve_meta_type(
+			    interface_name_without_commands
+			) == nullptr
+		    ) {
+			interface_name = interface_name_without_commands;
+		    }
 		}
+
+		interface_name = String::remove_prefix(
+		    interface_name, grob->meta_class()->name()
+		);
 
 		if(grob->is_a(mscenegraph)) {
 		    return "scene_graph.I." + interface_name;
