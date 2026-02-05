@@ -1153,6 +1153,12 @@ function autogui.command_dialog(request)
      imgui.SameLine()
   end
 
+  local doit_apply_to_sel_button = imgui.Button(
+     imgui.font_icon('clipboard-list')
+  )
+  autogui.tooltip('apply command to selected objects')
+  imgui.SameLine()
+
   local doit_apply_button = imgui.Button(
      imgui.font_icon('check')..'##commands',-autogui.margin,0
   )
@@ -1192,6 +1198,21 @@ function autogui.command_dialog(request)
 	 if not autogui.command_state[k].show_as_window_ then
   	    imgui.CloseCurrentPopup()
 	 end
+      end
+  end
+  if doit_apply_to_sel_button then
+      local args_string = autogui.args_to_string(
+         mmethod,autogui.command_state[k]
+      )
+      for i=0,scene_graph.nb_children-1 do
+         local grob = scene_graph.ith_child(i)
+         if grob.selected then
+            local cmds = grob.I[request.object().meta_class.name]
+            local cmd_str = gom.back_resolve(cmds)..'.'..mmethod.name
+            main.exec_command_now(
+               cmd_str..'('..args_string..')', false
+            )
+         end
       end
   end
 end
