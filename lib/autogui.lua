@@ -871,7 +871,7 @@ function autogui.property(object, mproperty)
    gom.record_set_property = true
 
    local tooltip = autogui.help(mproperty)
-   if mproperty.type().meta_class.is_a(OGF.MetaEnum) then
+   if mproperty.type().is_a(OGF.MetaEnum) then
         autogui.enum(object, mproperty.name, mproperty.type(), tooltip)
    else
         local k = mproperty.type_name()
@@ -967,7 +967,7 @@ function autogui.init_args(mmethod)
          val = autogui.default_value[mtype_name]
 	 if val == nil then
 	    mtype = gom.resolve_meta_type(mtype_name)
-	    if mtype.meta_class.is_a(OGF.MetaEnum) then
+	    if mtype.is_a(OGF.MetaEnum) then
 	       val = mtype.ith_name(0)
 	    else
 	       val = ''
