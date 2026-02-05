@@ -203,7 +203,9 @@ function autogui.editable_combo_box(object, property_name, values, tooltip)
 
    imgui.PopItemWidth()
    imgui.SameLine()
-   if imgui.Button( imgui.font_icon('caret-down').. '##properties##btn_'..property_name) then
+   if imgui.Button(
+      imgui.font_icon('caret-down').. '##properties##btn_'..property_name
+   ) then
       imgui.OpenPopup('##properties##popup_'..property_name)
    end
 

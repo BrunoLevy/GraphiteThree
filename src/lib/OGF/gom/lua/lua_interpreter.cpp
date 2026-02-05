@@ -347,9 +347,16 @@ namespace OGF {
 		interface_name = String::remove_prefix(
 		    interface_name,grob->meta_class()->name()
 		);
-		interface_name = String::remove_suffix(
-		    interface_name, "Commands"
-		);
+
+		// Ugly special case for WarpDrive that has both
+		// TransportCommands and TransportInterface (so we need to
+		// keep the Commands suffix in that case)
+		if(!String::string_starts_with(interface_name,"Transport")) {
+		    interface_name = String::remove_suffix(
+			interface_name, "Commands"
+		    );
+		}
+
 		if(grob->is_a(mscenegraph)) {
 		    return "scene_graph.I." + interface_name;
 		}
