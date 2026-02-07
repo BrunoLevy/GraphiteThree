@@ -1,4 +1,4 @@
---  Tools for graphite with Skin_imgui
+-- Object and camera toolboxes
 --------------------------------------
 
 -- The toolbox with the tools associated with the current object

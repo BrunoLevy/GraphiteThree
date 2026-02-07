@@ -16,8 +16,10 @@ function autogui.command_dialog(request)
      autogui.command_state[k].show_as_window_ = false
   end
   autogui.command_state[k].request_ = request
-  if autogui.command_state[k].show_as_window_ and
-     request.object().is_a(OGF.Interface) then
+  if (
+     autogui.command_state[k].show_as_window_ or
+     command_gui.visible
+  ) and request.object().is_a(OGF.Interface) then
      local grob = request.object().grob
      if not grob.is_a(OGF.SceneGraph) then
         autogui.command_state[k].Command_target_ = grob.name
@@ -59,6 +61,17 @@ end
 function autogui.command_menu_item(request)
    local commands = request.object()
    local mmethod = request.method()
+
+   -- Special case, using command docking area
+   if command_gui.visible then
+      if imgui.MenuItem(
+          autogui.remove_underscores(mmethod.name)..'##'..mmethod.name
+      ) then
+         command_gui.request = request
+      end
+      return
+   end
+
    if mmethod.nb_args() == 0 then -- invoke command directly when item selected
       -- Need to add '##' suffix with slot name with underscores
       -- else ImGui generates a shortcut I think (to be understood)
@@ -197,7 +210,7 @@ function autogui.command_dialog_apply_buttons(request)
   local doit_recycle_button = false
   if not autogui.command_state[k].show_as_window_ then
      doit_recycle_button = imgui.Button(imgui.font_icon('sync-alt'))
-     autogui.tooltip('apply command without closing menu')
+     autogui.tooltip('apply command without closing dialog')
      imgui.SameLine()
   end
 
@@ -209,10 +222,22 @@ function autogui.command_dialog_apply_buttons(request)
   imgui.SameLine()
 
   -- Apply command and close dialog ----------------------------
+  local btn_width  = 25 * main.scaling()
+  local apply_btn_width = imgui.GetContentRegionAvail() - autogui.margin
+  if command_gui.visible then
+     apply_btn_width = apply_btn_width - btn_width - autogui.margin
+  end
   local doit_apply_button = imgui.Button(
-     imgui.font_icon('check')..'##commands',-autogui.margin,0
+     imgui.font_icon('check')..'##commands',apply_btn_width,0
   )
   autogui.tooltip('apply command')
+
+  local close_dialog = false
+  if command_gui.visible then
+     imgui.SameLine()
+     close_dialog = imgui.Button(imgui.font_icon('window-close')..'##commands')
+     autogui.tooltip('Close command')
+  end
 
   -- Now execute command if one of the buttons was pushed
   if doit_apply_button or doit_recycle_button then
@@ -253,6 +278,9 @@ function autogui.command_dialog_apply_buttons(request)
             main.exec_command_now(cmd_str..'('..args_string..')', false)
          end
       end
+  end
+  if (doit_apply_button and command_gui.visible) or close_dialog then
+     command_gui.request = nil
   end
 end
 

@@ -143,7 +143,7 @@ end
 -- \param[in] module the module
 
 function graphite_main_window.draw_module(module)
-     if module.visible and module.draw_window ~= nil then
+     if module.visible and module.draw_window ~= nil and not module.inhibit then
          if module.x ~= nil and module.y ~= nil then
 	    imgui.SetNextWindowPos(module.x, module.y, ImGuiCond_FirstUseEver)
 	 end
@@ -264,6 +264,10 @@ function graphite_main_window.draw_contents()
      scene_graph_gui.draw_object_list()
      imgui.TreePop()
   end
+
+  -- special case, inhibit command or tool depending on whether command is open
+  command_gui.update_visibility()
+
   for index,module in ipairs(graphite_main_window.modules_by_index) do
      graphite_main_window.draw_module(module)
   end
@@ -272,7 +276,6 @@ end
 -- \brief Draws the main window of Graphite, with all the modules in it.
 
 function graphite_main_window.draw()
-  graphite_gui.right_pane_width = 0
   imgui.SetNextWindowPos(
       3*main.margin(), main.margin(), ImGuiCond_FirstUseEver
   )
