@@ -19,8 +19,14 @@ function autogui.command_dialog(request)
 
   if(command_gui.visible) then
      imgui.TextDisabled(autogui.remove_underscores(mmethod.name))
+     autogui.tooltip(autogui.help(mmethod))
+     imgui.BeginChild(
+        'command_args',
+        0.0,  -30*main.scaling(),
+        false,
+        ImGuiWindowFlags_HorizontalScrollbar
+     )
   end
-  autogui.tooltip(autogui.help(mmethod))
 
   -- Target selector
   if (
@@ -40,7 +46,7 @@ function autogui.command_dialog(request)
             request.object().grob = grob
         end
      end
-  elseif imgui.MenuItem(
+  elseif imgui.MenuItem( -- The button to 'windowify' command
      imgui.font_icon('code-branch')..'  '..
      autogui.remove_underscores(mmethod.name)..'##command_apply'
   ) then
@@ -49,6 +55,11 @@ function autogui.command_dialog(request)
   autogui.tooltip(autogui.help(mmethod))
   imgui.Separator()
   autogui.command_dialog_args(request)
+
+  if(command_gui.visible) then
+     imgui.EndChild()
+  end
+
   imgui.Separator()
   autogui.command_dialog_apply_buttons(request)
 
