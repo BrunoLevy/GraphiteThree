@@ -38,8 +38,7 @@ points.I.TransportCommands.init_Euler(
 )
 
 -- Open the dialog that launches the simulation
-autogui.open_command_dialog_for_current_object(
-   'OGF::MeshGrobTransportCommands',
-   'Euler_on_surface',
+autogui.open_command_dialog(
+   scene_graph.objects.points.I.TransportCommands.Euler_on_surface,
    {nb_iter=100}
 )

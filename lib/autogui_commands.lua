@@ -1,5 +1,75 @@
+-- ------------------------------------------------------------------------------
+-- \file autogui_commands.lua
+-- \brief creates dialogs for calling commands and functions
+-- ------------------------------------------------------------------------------
 
--- \brief User API function for editing command arguments
+-- \brief Handles the menu item for an object command
+-- \param[in] request the request, for instance grob.I.Surface.remesh_smooth
+
+function autogui.command_menu_item(request)
+   local commands = request.object()
+   local mmethod = request.method()
+   if mmethod.nb_args() == 0 then -- invoke command directly when item selected
+      -- Need to add '##' suffix with slot name with underscores
+      -- else ImGui generates a shortcut I think (to be understood)
+      if imgui.MenuItem(
+          autogui.remove_underscores(mmethod.name)..'##'..mmethod.name
+      ) then
+         main.exec_command(
+             gom.back_resolve(commands)..'.'..mmethod.name..
+             '({_invoked_from_gui=true})', false
+          )
+      end
+      autogui.tooltip(autogui.help(mmethod))
+   else
+      if imgui.BeginMenu(autogui.remove_underscores(mmethod.name)) then
+          autogui.in_popup = true
+          autogui.command_dialog(request)
+	  autogui.in_popup = false
+          imgui.EndMenu()
+      end
+   end
+end
+
+-- \brief Programmatically open a dialog for a command
+-- \param[in] target a Request, for instance grob.I.Surface.remesh_smooth
+-- \param[in] args optional default values for the arguments
+
+function autogui.open_command_dialog(request,args)
+  local k = autogui.request_key(request)
+  if autogui.command_state[k] == nil then
+     autogui.command_state[k] = autogui.init_args(request.method())
+     autogui.command_state[k].show_as_window_ = true
+     autogui.command_state[k].width_  = 250*main.scaling()
+     autogui.command_state[k].height_ = 250*main.scaling()
+     autogui.command_state[k].x_ = 400
+     autogui.command_state[k].y_ = 200
+     if args ~= nil then
+        for ak,av in pairs(args) do
+	   autogui.command_state[k][ak] = av
+	end
+     end
+  end
+  autogui.command_state[k].request_ = request
+end
+
+-- \brief Programmatically open a dialog for a command that applies to
+--  the current object.
+-- \param[in] cmdclass the classname of the commands ('OGF::MeshGrobxxxCommands')
+-- \param[in] cmdname the function name of the command
+-- \param[in] args optional default values for the arguments
+
+function autogui.open_command_dialog_for_current_object(cmdclass, cmdname, args)
+   local o = scene_graph.current()
+   local mclass = gom.resolve_meta_type(cmdclass)
+   local commands = mclass.create()
+   commands.grob = scene_graph.current()
+   autogui.open_command_dialog(commands[cmdname],args)
+end
+
+-- ------------------------------------------------------------------------------
+
+-- \brief edits a command argument
 -- \param[in] args a map with the arguments
 -- \param[in] mslot the meta-slot that corresponds to the command
 -- \param[in] i the index of the argument
@@ -118,41 +188,6 @@ function autogui.request_key(request)
     return request.string_id --fallback, normally does not get there, bad to use
 end
 
--- \brief Programmatically open a dialog for a command
--- \param[in] target a Request
--- \param[in] args optional default values for the arguments
-
-function autogui.open_command_dialog(request,args)
-  local k = autogui.request_key(request)
-  if autogui.command_state[k] == nil then
-     autogui.command_state[k] = autogui.init_args(request.method())
-     autogui.command_state[k].show_as_window_ = true
-     autogui.command_state[k].width_  = 250*main.scaling()
-     autogui.command_state[k].height_ = 250*main.scaling()
-     autogui.command_state[k].x_ = 400
-     autogui.command_state[k].y_ = 200
-     if args ~= nil then
-        for ak,av in pairs(args) do
-	   autogui.command_state[k][ak] = av
-	end
-     end
-  end
-  autogui.command_state[k].request_ = request
-end
-
--- \brief Programmatically open a dialog for a command that applies to
---  the current object.
--- \param[in] cmdclass the classname of the commands ('OGF::MeshGrobxxxCommands')
--- \param[in] cmdname the function name of the command
--- \param[in] args optional default values for the arguments
-
-function autogui.open_command_dialog_for_current_object(cmdclass, cmdname, args)
-   local o = scene_graph.current()
-   local mclass = gom.resolve_meta_type(cmdclass)
-   local commands = mclass.create()
-   commands.grob = scene_graph.current()
-   autogui.open_command_dialog(commands[cmdname],args)
-end
 
 -- \brief Handles the dialog for an object command
 -- \param[in] request the request
@@ -361,38 +396,6 @@ function autogui.command_dialogs()
 
          autogui.command_dialog(cmd_state.request_)
          imgui.End()
-      end
-   end
-end
-
--- \brief Handles the menu item for an object command
--- \param[in] request the request
-
-function autogui.command_menu_item(request)
-   local commands = request.object()
-   local mmethod = request.method()
-
-   if mmethod.nb_args() == 0 then
-         -- Need to add '##' suffix with slot name with underscores
-         -- else ImGui generates a shortcut I think (to be understood)
-      if imgui.MenuItem(
-          autogui.remove_underscores(mmethod.name)..'##'..
-          mmethod.name
-      ) then
-         main.exec_command(
-             gom.back_resolve(commands)..'.'..mmethod.name..
-             '({_invoked_from_gui=true})', false
-          )
-      end
-      autogui.tooltip(autogui.help(mmethod))
-   else
-      if imgui.BeginMenu(
-         autogui.remove_underscores(mmethod.name)
-      ) then
-          autogui.in_popup = true
-          autogui.command_dialog(request)
-	  autogui.in_popup = false
-          imgui.EndMenu()
       end
    end
 end
