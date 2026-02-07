@@ -3,34 +3,6 @@
 -- \brief creates dialogs for calling commands and functions
 -- ------------------------------------------------------------------------------
 
--- \brief Handles the menu item for an object command
--- \param[in] request the request, for instance grob.I.Surface.remesh_smooth
-
-function autogui.command_menu_item(request)
-   local commands = request.object()
-   local mmethod = request.method()
-   if mmethod.nb_args() == 0 then -- invoke command directly when item selected
-      -- Need to add '##' suffix with slot name with underscores
-      -- else ImGui generates a shortcut I think (to be understood)
-      if imgui.MenuItem(
-          autogui.remove_underscores(mmethod.name)..'##'..mmethod.name
-      ) then
-         main.exec_command(
-             gom.back_resolve(commands)..'.'..mmethod.name..
-             '({_invoked_from_gui=true})', false
-          )
-      end
-      autogui.tooltip(autogui.help(mmethod))
-   else
-      if imgui.BeginMenu(autogui.remove_underscores(mmethod.name)) then
-          autogui.in_popup = true
-          autogui.command_dialog(request)
-	  autogui.in_popup = false
-          imgui.EndMenu()
-      end
-   end
-end
-
 -- \brief Handles the dialog for an object command
 -- \param[in] request the request, for instance grob.I.Surface.remesh_smoooth
 
@@ -65,10 +37,110 @@ function autogui.command_dialog(request)
   ) then
      autogui.command_state[k].show_as_window_ = true
   end
-
   autogui.tooltip(autogui.help(mmethod))
   imgui.Separator()
+  autogui.command_dialog_args(request)
+  imgui.Separator()
+  autogui.command_dialog_apply_buttons(request)
 
+  autogui.command_state[k].width_,
+  autogui.command_state[k].height_ = imgui.GetWindowSize()
+  -- increase height a little bit so that resizing corner
+  -- does not 'eat' too much and scrollbar does not appear.
+  autogui.command_state[k].height_ = autogui.command_state[k].height_ + 5
+
+  autogui.command_state[k].x_,
+  autogui.command_state[k].y_ = imgui.GetWindowPos()
+end
+
+-- \brief Handles the menu item for an object command
+-- \param[in] request the request, for instance grob.I.Surface.remesh_smooth
+
+function autogui.command_menu_item(request)
+   local commands = request.object()
+   local mmethod = request.method()
+   if mmethod.nb_args() == 0 then -- invoke command directly when item selected
+      -- Need to add '##' suffix with slot name with underscores
+      -- else ImGui generates a shortcut I think (to be understood)
+      if imgui.MenuItem(
+          autogui.remove_underscores(mmethod.name)..'##'..mmethod.name
+      ) then
+         main.exec_command(
+             gom.back_resolve(commands)..'.'..mmethod.name..
+             '({_invoked_from_gui=true})', false
+          )
+      end
+      autogui.tooltip(autogui.help(mmethod))
+   else
+      if imgui.BeginMenu(autogui.remove_underscores(mmethod.name)) then
+          autogui.in_popup = true
+          autogui.command_dialog(request)
+	  autogui.in_popup = false
+          imgui.EndMenu()
+      end
+   end
+end
+
+-- \brief Programmatically open a dialog for a command
+-- \param[in] target a Request, for instance grob.I.Surface.remesh_smooth
+-- \param[in] args optional dictionnary with default values for the arguments
+
+function autogui.open_command_dialog(request,args)
+  local k = autogui.request_key(request)
+  if autogui.command_state[k] == nil then
+     autogui.command_state[k] = autogui.init_args(request.method())
+     autogui.command_state[k].show_as_window_ = true
+     autogui.command_state[k].width_  = 250*main.scaling()
+     autogui.command_state[k].height_ = 250*main.scaling()
+     autogui.command_state[k].x_ = 400
+     autogui.command_state[k].y_ = 200
+     if args ~= nil then
+        for ak,av in pairs(args) do
+	   autogui.command_state[k][ak] = av
+	end
+     end
+  end
+  autogui.command_state[k].request_ = request
+end
+
+-- \brief Draws all the command dialogs that are in windowed mode.
+
+function autogui.command_dialogs()
+   for k,cmd_state in pairs(autogui.command_state) do
+      -- Hide window / delete command state if target object was deleted
+      if not autogui.command_is_alive(autogui.command_state[k]) then
+         autogui.command_state[k] = nil
+      elseif autogui.command_state[k].show_as_window_ then
+      	 imgui.SetNextWindowSize(
+	    cmd_state.width_  +  4.0*main.scaling(),
+	    cmd_state.height_ + 40.0*main.scaling(),
+	    ImGuiCond_Appearing
+	 )
+	 imgui.SetNextWindowPos(cmd_state.x_, cmd_state.y_, ImGuiCond_Appearing)
+         _,autogui.command_state[k].show_as_window_ = imgui.Begin(
+	     imgui.font_icon('code-branch')..'  '..
+	     autogui.remove_underscores(
+	        cmd_state.request_.method().name
+	     ) .. '##dialog##' .. k,
+             cmd_state.show_as_window_
+         )
+         autogui.command_dialog(cmd_state.request_)
+         imgui.End()
+      end
+   end
+end
+
+-- ------------------------------------------------------------------------------
+-- Implementation of command_dialog()
+-- ------------------------------------------------------------------------------
+
+-- \brief Part of the implementation of command_dialog()
+-- \details Handles the gui for command arguments
+-- \param[in] request the request, for instance grob.I.Surface.remesh_smooth
+
+function autogui.command_dialog_args(request)
+  local k = autogui.request_key(request)
+  local mmethod = request.method()
   local has_advanced_args = false
 
   for i=0,mmethod.nb_args()-1 do
@@ -100,10 +172,19 @@ function autogui.command_dialog(request)
      end
   end
 
-  imgui.Separator()
-  if imgui.Button(
-     imgui.font_icon('cog')
-  ) then
+end
+
+
+-- \brief Part of the implementation of command_dialog()
+-- \details Handles the gui for the apply buttons of a command dialog
+-- \param[in] request the request, for instance grob.I.Surface.remesh_smooth
+
+function autogui.command_dialog_apply_buttons(request)
+  local k = autogui.request_key(request)
+  local mmethod = request.method()
+
+  -- Request factory settings -----------------------------------
+  if imgui.Button(imgui.font_icon('cog')) then
       local bkp1 = autogui.command_state[k].show_as_window_
       autogui.command_state[k] = autogui.init_args(mmethod)
       autogui.command_state[k].show_as_window_ = bkp1
@@ -112,6 +193,7 @@ function autogui.command_dialog(request)
   autogui.tooltip('reset factory settings')
   imgui.SameLine()
 
+  -- Apply command without closing ------------------------------
   local doit_recycle_button = false
   if not autogui.command_state[k].show_as_window_ then
      doit_recycle_button = imgui.Button(imgui.font_icon('sync-alt'))
@@ -119,27 +201,20 @@ function autogui.command_dialog(request)
      imgui.SameLine()
   end
 
+  -- Apply command to selected objects --------------------------
   local doit_apply_to_sel_button = imgui.Button(
      imgui.font_icon('clipboard-list')
   )
   autogui.tooltip('apply command to selected objects')
   imgui.SameLine()
 
+  -- Apply command and close dialog ----------------------------
   local doit_apply_button = imgui.Button(
      imgui.font_icon('check')..'##commands',-autogui.margin,0
   )
   autogui.tooltip('apply command')
 
-  autogui.command_state[k].width_,
-  autogui.command_state[k].height_ = imgui.GetWindowSize()
-
-  --   Increase height a little bit so that resizing corner
-  -- does not 'eat' too much and scrollbar does not appear.
-  autogui.command_state[k].height_ = autogui.command_state[k].height_ + 5
-
-  autogui.command_state[k].x_,
-  autogui.command_state[k].y_ = imgui.GetWindowPos()
-
+  -- Now execute command if one of the buttons was pushed
   if doit_apply_button or doit_recycle_button then
       local args_string = autogui.args_to_string(
          mmethod,autogui.command_state[k]
@@ -179,56 +254,6 @@ function autogui.command_dialog(request)
          end
       end
   end
-end
-
--- \brief Programmatically open a dialog for a command
--- \param[in] target a Request, for instance grob.I.Surface.remesh_smooth
--- \param[in] args optional dictionnary with default values for the arguments
-
-function autogui.open_command_dialog(request,args)
-  local k = autogui.request_key(request)
-  if autogui.command_state[k] == nil then
-     autogui.command_state[k] = autogui.init_args(request.method())
-     autogui.command_state[k].show_as_window_ = true
-     autogui.command_state[k].width_  = 250*main.scaling()
-     autogui.command_state[k].height_ = 250*main.scaling()
-     autogui.command_state[k].x_ = 400
-     autogui.command_state[k].y_ = 200
-     if args ~= nil then
-        for ak,av in pairs(args) do
-	   autogui.command_state[k][ak] = av
-	end
-     end
-  end
-  autogui.command_state[k].request_ = request
-end
-
-
--- Draws all the command dialogs that are in windowed mode.
-
-function autogui.command_dialogs()
-   for k,cmd_state in pairs(autogui.command_state) do
-      -- Hide window / delete command state if target object was deleted
-      if not autogui.command_is_alive(autogui.command_state[k]) then
-         autogui.command_state[k] = nil
-      elseif autogui.command_state[k].show_as_window_ then
-      	 imgui.SetNextWindowSize(
-	    cmd_state.width_  +  4.0*main.scaling(),
-	    cmd_state.height_ + 40.0*main.scaling(),
-	    ImGuiCond_Appearing
-	 )
-	 imgui.SetNextWindowPos(cmd_state.x_, cmd_state.y_, ImGuiCond_Appearing)
-         _,autogui.command_state[k].show_as_window_ = imgui.Begin(
-	     imgui.font_icon('code-branch')..'  '..
-	     autogui.remove_underscores(
-	        cmd_state.request_.method().name
-	     ) .. '##dialog##' .. k,
-             cmd_state.show_as_window_
-         )
-         autogui.command_dialog(cmd_state.request_)
-         imgui.End()
-      end
-   end
 end
 
 -- ------------------------------------------------------------------------------
@@ -326,7 +351,7 @@ function autogui.init_args(mmethod)
    return args
 end
 
--- \brief Default values of parameters indexed by type name
+-- \brief Default values of parameters indexed by type name, used by init_args()
 
 autogui.default_value = {}
 autogui.default_value['bool']         = 'false'
