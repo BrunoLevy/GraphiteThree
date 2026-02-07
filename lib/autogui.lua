@@ -11,18 +11,13 @@ function autogui.property(object, mproperty)
    local bkp = autogui.input_text_flags
    autogui.input_text_flags = ImGuiInputTextFlags_EnterReturnsTrue
    gom.record_set_property = true
-
    local tooltip = autogui.help(mproperty)
-   if mproperty.type().is_a(OGF.MetaEnum) then
-        autogui.enum(object, mproperty.name, mproperty.type(), tooltip)
-   else
-        local handler = autogui.handler_by_meta_type(mproperty.type())
-	if mproperty.has_custom_attribute('handler') then
-	   local handler_name = mproperty.custom_attribute_value('handler')
-	   handler = autogui.handler_by_name(handler_name)
-	end
-        handler(object,mproperty.name,mproperty.type(),tooltip)
+   local handler = autogui.handler_by_meta_type(mproperty.type())
+   if mproperty.has_custom_attribute('handler') then
+       local handler_name = mproperty.custom_attribute_value('handler')
+       handler = autogui.handler_by_name(handler_name)
    end
+   handler(object,mproperty.name,mproperty.type(),tooltip)
    gom.record_set_property = false
    autogui.input_text_flags = bkp
 end
