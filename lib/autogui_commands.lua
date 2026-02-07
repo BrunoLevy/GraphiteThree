@@ -16,20 +16,27 @@ function autogui.command_dialog(request)
      autogui.command_state[k].show_as_window_ = false
   end
   autogui.command_state[k].request_ = request
+
+  if(command_gui.visible) then
+     imgui.TextDisabled(autogui.remove_underscores(mmethod.name))
+  end
+  autogui.tooltip(autogui.help(mmethod))
+
+  -- Target selector
   if (
      autogui.command_state[k].show_as_window_ or
      command_gui.visible
   ) and request.object().is_a(OGF.Interface) then
      local grob = request.object().grob
      if not grob.is_a(OGF.SceneGraph) then
-        autogui.command_state[k].Command_target_ = grob.name
+        autogui.command_state[k].target_ = grob.name
         grob_names = gom.get_environment_value(
            grob.meta_class.name..'_instances'
         )
         if autogui.combo_box(
-            autogui.command_state[k], 'Command_target_', grob_names
+            autogui.command_state[k], 'target_', grob_names
         ) then
-            grob = scene_graph.objects[autogui.command_state[k].Command_target_]
+            grob = scene_graph.objects[autogui.command_state[k].target_]
             request.object().grob = grob
         end
      end
@@ -69,6 +76,7 @@ function autogui.command_menu_item(request)
       ) then
          command_gui.request = request
       end
+      autogui.tooltip(autogui.help(mmethod))
       return
    end
 
