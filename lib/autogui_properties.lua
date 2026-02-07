@@ -141,19 +141,16 @@ function autogui.property_editors()
       end
 
       if v.show_as_window_ then
-         local sel
          if not v.inspect_ then
    	    imgui.SetNextWindowSize(
 	        v.width_  + 4.0*main.scaling(),
 	        v.height_ + 2.0*main.scaling(),
 	        ImGuiCond_Appearing
 	    )
-
 	    imgui.SetNextWindowPos(v.x_, v.y_, ImGuiCond_Appearing)
 	 end
-         sel,v.show_as_window_ = imgui.Begin(
-	     imgui.font_icon('edit')..'  '..
-	     v.name_ .. " properties",
+         _,v.show_as_window_ = imgui.Begin(
+	     imgui.font_icon('edit')..'  '.. v.name_ .. " properties",
              v.show_as_window_
          )
          autogui.properties_editor(v.object_)
@@ -166,6 +163,7 @@ end
 -- \details Can be called from Graphite console. Note: use with care,
 --   you are on your own (if the object is destroyed in the meanwhile,
 --   it will crash !
+
 function autogui.inspect(object)
    if object.meta_class == nil then
       print('Object '..tostring(object)..' is not a Graphite object')

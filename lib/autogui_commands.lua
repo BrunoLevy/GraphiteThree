@@ -50,7 +50,7 @@ function autogui.command_dialog(request)
      if not grob.is_a(OGF.SceneGraph) then
         autogui.command_state[k].Command_target_ = grob.name
         grob_names = gom.get_environment_value(
-            grob.meta_class.name..'_instances'
+           grob.meta_class.name..'_instances'
         )
         if autogui.combo_box(
             autogui.command_state[k], 'Command_target_', grob_names
@@ -169,19 +169,16 @@ function autogui.command_dialog(request)
 	 end
       end
   end
-  -- Apply command to selected objects
-  if doit_apply_to_sel_button then
+  if doit_apply_to_sel_button then   -- Apply command to selected objects
       local args_string = autogui.args_to_string(
-         mmethod,autogui.command_state[k]
+         mmethod, autogui.command_state[k]
       )
       for i=0,scene_graph.nb_children-1 do
          local grob = scene_graph.ith_child(i)
          if grob.selected then
             local cmds = grob.I[request.object().meta_class.name]
             local cmd_str = gom.back_resolve(cmds)..'.'..mmethod.name
-            main.exec_command_now(
-               cmd_str..'('..args_string..')', false
-            )
+            main.exec_command_now(cmd_str..'('..args_string..')', false)
          end
       end
   end
@@ -213,37 +210,24 @@ end
 -- Draws all the command dialogs that are in windowed mode.
 
 function autogui.command_dialogs()
-
    for k,cmd_state in pairs(autogui.command_state) do
-
-      -- Hide window / delete command state if target object was
-      -- deleted in the meanwhile.
-
+      -- Hide window / delete command state if target object was deleted
       if not autogui.command_is_alive(autogui.command_state[k]) then
          autogui.command_state[k] = nil
       elseif autogui.command_state[k].show_as_window_ then
-         local sel
-
-	 imgui.SetNextWindowSize(
+      	 imgui.SetNextWindowSize(
 	    cmd_state.width_  +  4.0*main.scaling(),
 	    cmd_state.height_ + 40.0*main.scaling(),
 	    ImGuiCond_Appearing
 	 )
-
-	 imgui.SetNextWindowPos(
-	    cmd_state.x_,
-	    cmd_state.y_,
-	    ImGuiCond_Appearing
-	 )
-
-         sel,autogui.command_state[k].show_as_window_ = imgui.Begin(
+	 imgui.SetNextWindowPos(cmd_state.x_, cmd_state.y_, ImGuiCond_Appearing)
+         _,autogui.command_state[k].show_as_window_ = imgui.Begin(
 	     imgui.font_icon('code-branch')..'  '..
 	     autogui.remove_underscores(
 	        cmd_state.request_.method().name
 	     ) .. '##dialog##' .. k,
              cmd_state.show_as_window_
          )
-
          autogui.command_dialog(cmd_state.request_)
          imgui.End()
       end
