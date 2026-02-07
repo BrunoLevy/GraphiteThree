@@ -72,6 +72,8 @@ namespace OGF {
         initialized_ = false;
         width_ = 0;
         height_ = 0;
+	center_x_ = 0;
+	center_y_ = 0;
         double_buffer_ = false;
 
         inverse_viewing_matrix_dirty_ = false;
@@ -559,6 +561,29 @@ namespace OGF {
             viewport_width_ = w_height;
             viewport_height_ = w_height;
         }
+	viewport_x_ += (center_x_ - w_width / 2);
+	viewport_y_ -= (center_y_ - w_height / 2);
+    }
+
+
+    void RenderingContext::set_center(int x, int y) {
+	center_x_ = x;
+	center_y_ = y;
+        int w_width = int(get_width());
+        int w_height = int(get_height());
+        if(w_width > w_height) {
+            viewport_x_ = 0;
+            viewport_y_ = -(w_width - w_height) / 2;
+            viewport_width_ = w_width;
+            viewport_height_ = w_width;
+        } else {
+            viewport_x_ = -(w_height - w_width) / 2;
+            viewport_y_ = 0;
+            viewport_width_ = w_height;
+            viewport_height_ = w_height;
+        }
+	viewport_x_ += (center_x_ - w_width / 2);
+	viewport_y_ -= (center_y_ - w_height / 2);
     }
 
     vec2 RenderingContext::screen_to_ndc(index_t x_in, index_t y_in) const {

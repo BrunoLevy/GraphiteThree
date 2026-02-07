@@ -155,6 +155,19 @@ namespace OGF {
             index_t width, index_t height
         );
 
+	/**
+	 * \brief Sets the center
+	 * \details This corresponds to the pixel where cordinates (0.0,0.0)
+	 *   will be projected on the screen
+	 * \param[in] x , y the center in pixel coordinates
+	 */
+	void set_center(int x, int y) {
+	    if(rendering_context_ != nullptr) {
+		rendering_context_->set_center(x,y);
+	    }
+	    dirty_ = true;
+	}
+
     gom_properties:
 	/**
 	 * \brief Gets the width of the window.

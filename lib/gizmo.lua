@@ -16,6 +16,11 @@ function gizmo_gui.draw_gizmo()
     end
     x0 = graphite_gui.left_pane_width
     y0 = 20.0
+
+--  For testing camera centering (which is still buggy)
+--  x0 = graphite_main_window.gx
+--  y0 = graphite_main_window.gy
+
     L =  150.0
     ImOGuizmo.SetRect(x0,y0,L)
     ImOGuizmo.BeginFrame(false)

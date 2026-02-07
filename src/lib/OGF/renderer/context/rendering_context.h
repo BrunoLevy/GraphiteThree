@@ -502,6 +502,15 @@ namespace OGF {
          */
         virtual void resize(index_t w, index_t h);
 
+
+	/**
+	 * \brief Sets the center
+	 * \details This corresponds to the pixel where cordinates (0.0,0.0)
+	 *   will be projected on the screen
+	 * \param[in] x , y the center in pixel coordinates
+	 */
+	void set_center(int x, int y);
+
         /**
          * \brief Transforms screen coordinates to normalized
          *  device coordinates (viewport transform).
@@ -763,6 +772,8 @@ namespace OGF {
         int viewport_y_;
         int viewport_width_;
         int viewport_height_;
+	int center_x_;
+	int center_y_;
 
         mat4 viewing_matrix_;
         mutable mat4 inverse_viewing_matrix_;

@@ -141,6 +141,44 @@ function graphite_main_window.draw_module_name_and_toggle(module, in_menu)
    return sel
 end
 
+
+-- Starts computation of center of gravity of free area
+
+function graphite_main_window.begin_G()
+   local w = main.render_area.frame_buffer_width
+   local h = main.render_area.frame_buffer_height
+   local m = w*h
+   graphite_main_window.m = m
+   graphite_main_window.gx = 0.5 * w * m
+   graphite_main_window.gy = 0.5 * h * m
+end
+
+-- Accumulates center of gravity for current window
+--   to compute center of gravity of free area
+
+function graphite_main_window.accumulate_G()
+   local x, y = imgui.GetWindowPos()
+   local w, h = imgui.GetWindowSize()
+   local m = w*h
+   local gx = x + 0.5*w
+   local gy = y + 0.5*h
+   graphite_main_window.gx = graphite_main_window.gx - m*gx
+   graphite_main_window.gy = graphite_main_window.gy - m*gy
+   graphite_main_window.m  = graphite_main_window.m - m
+end
+
+-- Finishes computation of center of gravity of free area
+-- and focuses 3D window there
+
+function graphite_main_window.end_G()
+  graphite_main_window.gx = graphite_main_window.gx / graphite_main_window.m
+  graphite_main_window.gy = graphite_main_window.gy / graphite_main_window.m
+  main.render_area.set_center(
+      graphite_main_window.gx, graphite_main_window.gy
+  )
+end
+
+
 -- \brief Handles the GUI for a module
 -- \param[in] module the module
 
@@ -173,6 +211,7 @@ function graphite_main_window.draw_module(module)
 	       end
 	    end
             module.draw_window()
+            graphite_main_window.accumulate_G()
 	 end
 	 imgui.End()
      end
@@ -270,6 +309,7 @@ function graphite_main_window.draw_contents()
   -- special case, inhibit command or tool depending on whether command is open
   command_gui.update_visibility()
 
+  graphite_main_window.begin_G()
   for index,module in ipairs(graphite_main_window.modules_by_index) do
      graphite_main_window.draw_module(module)
   end
@@ -293,5 +333,8 @@ function graphite_main_window.draw()
   imgui.Begin('Graphite',true,flags)
   graphite_main_window.draw_contents()
   graphite_gui.left_pane_width = imgui.GetWindowWidth()
+  graphite_main_window.accumulate_G()
   imgui.End()
+
+  graphite_main_window.end_G()
 end
