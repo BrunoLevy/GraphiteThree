@@ -22,7 +22,6 @@ gom.connect(main.render_area.dropped_file, scene_graph.load_object)
 --------------------------------------------------------------------
 gom.execute_file("graphite_common.lua")
 gom.execute_file("autogui.lua")
-gom.execute_file("autogui_handlers.lua")
 --------------------------------------------------------------------
 
 gom.execute_file("preferences.lua")

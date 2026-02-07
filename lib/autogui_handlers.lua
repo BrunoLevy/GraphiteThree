@@ -1,13 +1,8 @@
---  GOM/ImGUI/LUA coupling, for use with Skin_imgui
-----------------------------------------------------
-
--- \brief creates editors for commands and properties based on their types.
--- \details it is implemented as a table that maps typenames to
---   'editing functions'.
-
 -- ---------------------------------------------------------------------------
-
--- \brief The handlers indexed by type names
+-- \file autogui_handlers.lua
+-- \brief Low-level implementation for autogui commands and properties.
+--  Creates handlers, that is, graphic editors, for command arguments
+--  and properties based on their types.
 -- \details Each handler is a function with the following prototype:
 --   handler(object, property_name, mtype, tooltip) where
 --   - object is the object beeing edited
@@ -15,10 +10,26 @@
 --   - mtype is the GOM meta-type of the property. It is used by enums (that
 --     need it to query the list of names)
 --   - tooltip is an optional tooltip
+-- ---------------------------------------------------------------------------
 
-autogui.handlers = {}
+-- ---------------------------------------------------------------------------
+-- User API (used by autogui_commands.lua and autogui_properties.lua)
+-- ---------------------------------------------------------------------------
+
+-- \brief Gets a handler by meta-type
+-- \param[in] mtype the meta type, for instance OGF.MeshGrobName
+-- \return the handler (see comment at beginning of file)
+
+function autogui.handler_by_meta_type(mtype)
+   if mtype.is_a(OGF.MetaEnum) then
+      return autogui.enum
+   end
+   return autogui.handler_by_name(mtype.name)
+end
 
 -- \brief Gets a handler by name
+-- \details Used for instance when handler is explicitly specified in
+--   a C++ header through a gom attribute.
 -- \param[in] name the name of the handler, can be either
 --   - a function name, for instance 'combo_box'
 --   - or a type name, for instance 'OGF::MeshGrobName'
@@ -35,23 +46,20 @@ function autogui.handler_by_name(name)
 	      handler = autogui.file_name
 	  end
       else
-          -- Fallback: editor for strings
-          handler = autogui.string
+          handler = autogui.string -- Fallback: editor for strings
       end
    end
    return handler
 end
 
--- \brief Gets a handler by meta-type
--- \param[in] mtype the meta type, for instance OGF.MeshGrobName
--- \return the handler (see comment at beginning of file)
+-- -------------------------------------------------------------------
 
-function autogui.handler_by_meta_type(mtype)
-   if mtype.is_a(OGF.MetaEnum) then
-      return autogui.enum
-   end
-   return autogui.handler_by_name(mtype.name)
-end
+-- \brief The table of handlers indexed by type names
+-- \details Used internally
+
+autogui.handlers = {}
+
+-- -------------------------------------------------------------------
 
 -- \brief Flags to be used for imgui.TextInput
 -- \details When editing properties, need to validate with enter else
@@ -76,6 +84,7 @@ autogui.in_tree = false
 
 -- ------------------------------------------------------------------------------
 -- Utilities
+-- ------------------------------------------------------------------------------
 
 -- \brief Replaces the underscores in a string with spaces
 -- \param[in] name the string
@@ -140,6 +149,7 @@ end
 
 -- ------------------------------------------------------------------------------
 -- Additional widgets
+-- ------------------------------------------------------------------------------
 
 -- \brief Edits a property of an object using a combo-box
 -- \param[in] object the object beeing edited
@@ -271,7 +281,8 @@ function autogui.editable_combo_box(object, property_name, values, tooltip)
 end
 
 -- ------------------------------------------------------------------------------
--- The handlers
+-- All the handlers
+-- ------------------------------------------------------------------------------
 
 -- \brief Handler for enums
 -- \param[in] object, property_name, menum, tooltip handler parameters
