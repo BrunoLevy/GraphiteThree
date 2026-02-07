@@ -45,14 +45,17 @@ function autogui.command_dialog(request)
             grob = scene_graph.objects[autogui.command_state[k].target_]
             request.object().grob = grob
         end
+        autogui.tooltip('Change command target')
      end
-  elseif imgui.MenuItem( -- The button to 'windowify' command
-     imgui.font_icon('code-branch')..'  '..
-     autogui.remove_underscores(mmethod.name)..'##command_apply'
-  ) then
-     autogui.command_state[k].show_as_window_ = true
+  else
+     if imgui.MenuItem( -- The button to 'windowify' command
+        imgui.font_icon('code-branch')..'  '..
+        autogui.remove_underscores(mmethod.name)..'##command_apply'
+     ) then
+        autogui.command_state[k].show_as_window_ = true
+     end
+     autogui.tooltip(autogui.help(mmethod))
   end
-  autogui.tooltip(autogui.help(mmethod))
   imgui.Separator()
   autogui.command_dialog_args(request)
 
@@ -249,7 +252,7 @@ function autogui.command_dialog_apply_buttons(request)
   local doit_apply_button = imgui.Button(
      imgui.font_icon('check')..'##commands',apply_btn_width,0
   )
-  autogui.tooltip('apply command')
+  autogui.tooltip('apply command and close dialog')
 
   local close_dialog = false
   if command_gui.visible then
