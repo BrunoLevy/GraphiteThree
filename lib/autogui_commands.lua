@@ -31,166 +31,8 @@ function autogui.command_menu_item(request)
    end
 end
 
--- \brief Programmatically open a dialog for a command
--- \param[in] target a Request, for instance grob.I.Surface.remesh_smooth
--- \param[in] args optional default values for the arguments
-
-function autogui.open_command_dialog(request,args)
-  local k = autogui.request_key(request)
-  if autogui.command_state[k] == nil then
-     autogui.command_state[k] = autogui.init_args(request.method())
-     autogui.command_state[k].show_as_window_ = true
-     autogui.command_state[k].width_  = 250*main.scaling()
-     autogui.command_state[k].height_ = 250*main.scaling()
-     autogui.command_state[k].x_ = 400
-     autogui.command_state[k].y_ = 200
-     if args ~= nil then
-        for ak,av in pairs(args) do
-	   autogui.command_state[k][ak] = av
-	end
-     end
-  end
-  autogui.command_state[k].request_ = request
-end
-
--- \brief Programmatically open a dialog for a command that applies to
---  the current object.
--- \param[in] cmdclass the classname of the commands ('OGF::MeshGrobxxxCommands')
--- \param[in] cmdname the function name of the command
--- \param[in] args optional default values for the arguments
-
-function autogui.open_command_dialog_for_current_object(cmdclass, cmdname, args)
-   local o = scene_graph.current()
-   local mclass = gom.resolve_meta_type(cmdclass)
-   local commands = mclass.create()
-   commands.grob = scene_graph.current()
-   autogui.open_command_dialog(commands[cmdname],args)
-end
-
--- ------------------------------------------------------------------------------
-
--- \brief edits a command argument
--- \param[in] args a map with the arguments
--- \param[in] mslot the meta-slot that corresponds to the command
--- \param[in] i the index of the argument
-
-function autogui.slot_arg(args,mslot,i)
-   local handler = autogui.handler_by_meta_type(mslot.ith_arg_type(i))
-   if mslot.ith_arg_has_custom_attribute(i,'handler') then
-      local handler_name = mslot.ith_arg_custom_attribute_value(i,'handler')
-      handler = autogui.handler_by_name(handler_name)
-   end
-   local tooltip
-   if mslot.ith_arg_has_custom_attribute(i,'help') then
-      tooltip = mslot.ith_arg_custom_attribute_value(i,'help')
-   end
-   handler(args,mslot.ith_arg_name(i),mtype,tooltip)
-end
-
--- \brief Keeps the state (arg lists) of the invoked commands
--- \details Command state is indexed by
---  'instance_name.classname.method' strings.
-
-autogui.command_state  = {}
-
--- \brief Default values of parameters indexed by type name
-
-autogui.default_value = {}
-autogui.default_value['bool']         = 'false'
-autogui.default_value['float']        = '0.0'
-autogui.default_value['double']       = '0.0'
-autogui.default_value['unsigned int'] = '0'
-autogui.default_value['int']          = '0'
-autogui.default_value['OGF::index_t'] = '0'
-autogui.default_value['GEO::index_t'] = '0'
-
--- \brief Tests whether a parameter needs quotes
--- \details This is used to make the history look better (would work with
---  quotes everywhere)
-
-function autogui.ith_arg_needs_quotes(mmethod, i)
-   return (autogui.default_value[mmethod.ith_arg_type_name(i)] == nil)
-end
-
--- \brief Initializes a LUA table with the default values of the parameters
---  of a meta-method
--- \param[in] mmethod the meta-method
--- \return args a table indexed by argument names and initialized with the
---  default values.
-
-function autogui.init_args(mmethod)
-   local args = {}
-   for i=0,mmethod.nb_args()-1 do
-      local val
-      if mmethod.ith_arg_has_default_value(i) then
-         val = mmethod.ith_arg_default_value_as_string(i)
-      else
-         mtype_name = mmethod.ith_arg_type_name(i)
-         val = autogui.default_value[mtype_name]
-	 if val == nil then
-	    mtype = gom.resolve_meta_type(mtype_name)
-	    if mtype.is_a(OGF.MetaEnum) then
-	       val = mtype.ith_name(0)
-	    else
-	       val = ''
-	    end
-	 end
-      end
-      args[mmethod.ith_arg_name(i)] = val
-   end
-   return args
-end
-
--- \brief Converts a table with name-argument pairs into a string that can
---  be sent to the LUA interpreter
--- \param[in] mmethod the meta-method
--- \param[in] args the table with the name-argument pairs
--- \return the table as a string
-
-function autogui.args_to_string(mmethod,args)
-   local result = '{'
-   for i=0,mmethod.nb_args()-1 do
-      local name=mmethod.ith_arg_name(i)
-      local value=tostring(args[name])
-      if #result > 1 then
-         result = result .. ','
-      end
-      if autogui.ith_arg_needs_quotes(mmethod,i) then
-         result = result .. name .. '=' .. '\'' .. value .. '\''
-      else
-         result = result .. name .. '=' .. value
-      end
-   end
-   if #result > 1 then
-       result = result .. ','
-   end
-   result = result .. '_invoked_from_gui=true'
-   result = result .. '}'
-   return result
-end
-
-
--- \brief Gets the key used to handle dialogs for requests
--- \param[in] request a request
--- \return a unique key associated with the request
-
-function autogui.request_key(request)
-    local method_name = request.method().name
-    local object = request.object()
-    if object.is_a(OGF.Grob) then
-       return 'rq##'..object.name..'##'..method_name
-    end
-    if object.is_a(OGF.Interface) then
-       local interface_name = object.meta_class.name
-       local grob_name = object.grob.name
-       return 'rq##'..interface_name..'##'..method_name
-    end
-    return request.string_id --fallback, normally does not get there, bad to use
-end
-
-
 -- \brief Handles the dialog for an object command
--- \param[in] request the request
+-- \param[in] request the request, for instance grob.I.Surface.remesh_smoooth
 
 function autogui.command_dialog(request)
   local mmethod = request.method()
@@ -345,22 +187,30 @@ function autogui.command_dialog(request)
   end
 end
 
--- Tests whether a command is still "alive"
--- A command is not "alive" if the object it refers was destroyed
+-- \brief Programmatically open a dialog for a command
+-- \param[in] target a Request, for instance grob.I.Surface.remesh_smooth
+-- \param[in] args optional dictionnary with default values for the arguments
 
-function autogui.command_is_alive(cmd_state)
-   if cmd_state.request_.object().is_a(OGF.Interface) then
-      local grob = cmd_state.request_.object().grob
-      if not grob.is_a(OGF.SceneGraph) and
-         not scene_graph.is_bound(grob.name) then
-         return false
-      end
-   end
-   return true
+function autogui.open_command_dialog(request,args)
+  local k = autogui.request_key(request)
+  if autogui.command_state[k] == nil then
+     autogui.command_state[k] = autogui.init_args(request.method())
+     autogui.command_state[k].show_as_window_ = true
+     autogui.command_state[k].width_  = 250*main.scaling()
+     autogui.command_state[k].height_ = 250*main.scaling()
+     autogui.command_state[k].x_ = 400
+     autogui.command_state[k].y_ = 200
+     if args ~= nil then
+        for ak,av in pairs(args) do
+	   autogui.command_state[k][ak] = av
+	end
+     end
+  end
+  autogui.command_state[k].request_ = request
 end
 
--- Draws all the command dialogs that
--- have been switched to window mode.
+
+-- Draws all the command dialogs that are in windowed mode.
 
 function autogui.command_dialogs()
 
@@ -398,4 +248,146 @@ function autogui.command_dialogs()
          imgui.End()
       end
    end
+end
+
+-- ------------------------------------------------------------------------------
+
+-- \brief Keeps the state (arg lists) of the invoked commands
+-- \details Command state is indexed by 'instance_name.classname.method' strings.
+
+autogui.command_state  = {}
+
+-- ------------------------------------------------------------------------------
+-- Utilities for managing windowed commands states
+-- ------------------------------------------------------------------------------
+
+-- \brief Gets the key used to handle dialogs for requests
+-- \param[in] request a request
+-- \return a unique key associated with the request
+
+function autogui.request_key(request)
+    local method_name = request.method().name
+    local object = request.object()
+    if object.is_a(OGF.Grob) then
+       return 'rq##'..object.name..'##'..method_name
+    end
+    if object.is_a(OGF.Interface) then
+       local interface_name = object.meta_class.name
+       local grob_name = object.grob.name
+       return 'rq##'..interface_name..'##'..method_name
+    end
+    return request.string_id --fallback, normally does not get there, bad to use
+end
+
+
+-- \brief Tests whether a command is still "alive"
+-- \details A command is not "alive" if the object it refers was destroyed
+
+function autogui.command_is_alive(cmd_state)
+   if cmd_state.request_.object().is_a(OGF.Interface) then
+      local grob = cmd_state.request_.object().grob
+      if not grob.is_a(OGF.SceneGraph) and
+         not scene_graph.is_bound(grob.name) then
+         return false
+      end
+   end
+   return true
+end
+
+-- ------------------------------------------------------------------------------
+-- Low level management of arguments and arglists
+-- ------------------------------------------------------------------------------
+
+-- \brief edits a command argument
+-- \param[in] args a map with the arguments
+-- \param[in] mslot the meta-slot that corresponds to the command
+-- \param[in] i the index of the argument
+
+function autogui.slot_arg(args,mslot,i)
+   local handler = autogui.handler_by_meta_type(mslot.ith_arg_type(i))
+   if mslot.ith_arg_has_custom_attribute(i,'handler') then
+      local handler_name = mslot.ith_arg_custom_attribute_value(i,'handler')
+      handler = autogui.handler_by_name(handler_name)
+   end
+   local tooltip
+   if mslot.ith_arg_has_custom_attribute(i,'help') then
+      tooltip = mslot.ith_arg_custom_attribute_value(i,'help')
+   end
+   handler(args,mslot.ith_arg_name(i),mtype,tooltip)
+end
+
+-- \brief Initializes a LUA table with the default values of the parameters
+--  of a meta-method
+-- \param[in] mmethod the meta-method
+-- \return args a table indexed by argument names and initialized with the
+--  default values.
+
+function autogui.init_args(mmethod)
+   local args = {}
+   for i=0,mmethod.nb_args()-1 do
+      local val
+      if mmethod.ith_arg_has_default_value(i) then
+         val = mmethod.ith_arg_default_value_as_string(i)
+      else
+         mtype_name = mmethod.ith_arg_type_name(i)
+         val = autogui.default_value[mtype_name]
+	 if val == nil then
+	    mtype = gom.resolve_meta_type(mtype_name)
+	    if mtype.is_a(OGF.MetaEnum) then
+	       val = mtype.ith_name(0)
+	    else
+	       val = ''
+	    end
+	 end
+      end
+      args[mmethod.ith_arg_name(i)] = val
+   end
+   return args
+end
+
+-- \brief Default values of parameters indexed by type name
+
+autogui.default_value = {}
+autogui.default_value['bool']         = 'false'
+autogui.default_value['float']        = '0.0'
+autogui.default_value['double']       = '0.0'
+autogui.default_value['unsigned int'] = '0'
+autogui.default_value['int']          = '0'
+autogui.default_value['OGF::index_t'] = '0'
+autogui.default_value['GEO::index_t'] = '0'
+
+-- \brief Converts a table with name-argument pairs into a string that can
+--  be sent to the LUA interpreter
+-- \param[in] mmethod the meta-method
+-- \param[in] args the table with the name-argument pairs
+-- \return the table as a string
+
+function autogui.args_to_string(mmethod,args)
+   local result = '{'
+   for i=0,mmethod.nb_args()-1 do
+      local name=mmethod.ith_arg_name(i)
+      local value=tostring(args[name])
+      if #result > 1 then
+         result = result .. ','
+      end
+      if autogui.ith_arg_needs_quotes(mmethod,i) then
+         result = result .. name .. '=' .. '\'' .. value .. '\''
+      else
+         result = result .. name .. '=' .. value
+      end
+   end
+   if #result > 1 then
+       result = result .. ','
+   end
+   result = result .. '_invoked_from_gui=true'
+   result = result .. '}'
+   return result
+end
+
+-- \brief Tests whether a parameter needs quotes
+-- \details This is used to make the history look better (would work with
+--  quotes everywhere)
+
+function autogui.ith_arg_needs_quotes(mmethod, i)
+   return (autogui.default_value[mmethod.ith_arg_type_name(i)] == nil)
 end
