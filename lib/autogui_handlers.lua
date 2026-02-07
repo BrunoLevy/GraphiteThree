@@ -1,9 +1,11 @@
 --  GOM/ImGUI/LUA coupling, for use with Skin_imgui
 ----------------------------------------------------
 
--- \brief creates editors for object commands properties based on their types.
+-- \brief creates editors for commands and properties based on their types.
 -- \details it is implemented as a table that maps typenames to
 --   'editing functions'.
+
+-- ---------------------------------------------------------------------------
 
 -- \brief The handlers indexed by type names
 -- \details Each handler is a function with the following prototype:
@@ -15,6 +17,41 @@
 --   - tooltip is an optional tooltip
 
 autogui.handlers = {}
+
+-- \brief Gets a handler by name
+-- \param[in] name the name of the handler, can be either
+--   - a function name, for instance 'combo_box'
+--   - or a type name, for instance 'OGF::MeshGrobName'
+-- \return the handler (see comment at beginning of file)
+
+function autogui.handler_by_name(name)
+   local handler = autogui.handlers[name]
+   if handler == nil then
+      -- special case for OGF::FileName and OGF::NewFileName
+      if string.ends_with(name, 'FileName') then
+	  if string.starts_with(name, 'OGF::New') then
+	      handler = autogui.new_file_name
+	  else
+	      handler = autogui.file_name
+	  end
+      else
+          -- Fallback: editor for strings
+          handler = autogui.string
+      end
+   end
+   return handler
+end
+
+-- \brief Gets a handler by meta-type
+-- \param[in] mtype the meta type, for instance OGF.MeshGrobName
+-- \return the handler (see comment at beginning of file)
+
+function autogui.handler_by_meta_type(mtype)
+   if mtype.is_a(OGF.MetaEnum) then
+      return autogui.enum
+   end
+   return autogui.handler_by_name(mtype.name)
+end
 
 -- \brief Flags to be used for imgui.TextInput
 -- \details When editing properties, need to validate with enter else
@@ -37,7 +74,8 @@ autogui.in_popup = false
 
 autogui.in_tree = false
 
---------------------------------------------------------------------------------
+-- ------------------------------------------------------------------------------
+-- Utilities
 
 -- \brief Replaces the underscores in a string with spaces
 -- \param[in] name the string
@@ -99,6 +137,9 @@ end
 function autogui.icon_size()
    return 18.0 * main.scaling()
 end
+
+-- ------------------------------------------------------------------------------
+-- Additional widgets
 
 -- \brief Edits a property of an object using a combo-box
 -- \param[in] object the object beeing edited
@@ -229,6 +270,8 @@ function autogui.editable_combo_box(object, property_name, values, tooltip)
    end
 end
 
+-- ------------------------------------------------------------------------------
+-- The handlers
 
 -- \brief Handler for enums
 -- \param[in] object, property_name, menum, tooltip handler parameters
@@ -682,7 +725,6 @@ autogui.handlers['OGF::DynamicModuleName'] = function(
    local values = gom.get_environment_value('modules')
    autogui.combo_box(object, property_name, values, tooltip)
 end
-
 
 -- \brief Handler for displaying a combobox
 -- \details the list of values in the combobox is obtained by querying a

@@ -16,26 +16,13 @@ function autogui.property(object, mproperty)
    if mproperty.type().is_a(OGF.MetaEnum) then
         autogui.enum(object, mproperty.name, mproperty.type(), tooltip)
    else
-        local k = mproperty.type_name()
-        local handler = autogui.handlers[k]
+        local handler = autogui.handler_by_meta_type(mproperty.type())
 	if mproperty.has_custom_attribute('handler') then
 	   local handler_name = mproperty.custom_attribute_value('handler')
-	   handler = autogui.handlers[handler_name]
+	   handler = autogui.handler_by_name(handler_name)
 	end
-        if handler == nil then
-	    if string.ends_with(k, 'FileName') then
-	       if string.starts_with(k, 'OGF::New') then
-	          handler = autogui.new_file_name
-	       else
-	          handler = autogui.file_name
-	       end
-	    else
-               handler = autogui.string
-            end
-        end
         handler(object,mproperty.name,mproperty.type(),tooltip)
    end
-
    gom.record_set_property = false
    autogui.input_text_flags = bkp
 end
@@ -46,19 +33,10 @@ end
 -- \param[in] i the index of the argument
 
 function autogui.slot_arg(args,mslot,i)
-   local type_name = mslot.ith_arg_type_name(i)
-   local mtype = gom.resolve_meta_type(type_name)
-   if mtype.is_a(OGF.MetaEnum) then
-        autogui.enum(args, mslot.ith_arg_name(i), mtype, tooltip)
-	return
-   end
-   local handler = autogui.handlers[type_name]
+   local handler = autogui.handler_by_meta_type(mslot.ith_arg_type(i))
    if mslot.ith_arg_has_custom_attribute(i,'handler') then
       local handler_name = mslot.ith_arg_custom_attribute_value(i,'handler')
-      handler = autogui.handlers[handler_name]
-   end
-   if handler == nil then
-      handler = autogui.string
+      handler = autogui.handler_by_name(handler_name)
    end
    local tooltip
    if mslot.ith_arg_has_custom_attribute(i,'help') then
