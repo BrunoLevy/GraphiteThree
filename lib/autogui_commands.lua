@@ -55,11 +55,8 @@ function autogui.command_dialog(request)
         if autogui.combo_box(
             autogui.command_state[k], 'Command_target_', grob_names
         ) then
-            local commands_name = request.object().meta_class.name
-            local command_name = request.method().name
             grob = scene_graph.objects[autogui.command_state[k].Command_target_]
-            autogui.command_state[k].request_ =
-                grob.I[commands_name][command_name]
+            request.object().grob = grob
         end
      end
   elseif imgui.MenuItem(
