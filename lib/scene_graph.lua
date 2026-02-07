@@ -478,9 +478,13 @@ function scene_graph_gui.scene_graph_menu(with_file_menu)
     autogui.command_menu_item(
        scene_graph.I.Scene.create_object
     )
-    autogui.command_menu_item(
-       scene_graph.I.Scene.delete_all
-    )
+    imgui.Separator()
+    if imgui.MenuItem('delete all') then
+       scene_graph.I.Scene.delete_all()
+    end
+    if imgui.MenuItem('delete current') then
+       scene_graph.I.Scene.delete_current()
+    end
     if imgui.MenuItem('delete selected') then
        scene_graph_gui.delete_selected()
     end

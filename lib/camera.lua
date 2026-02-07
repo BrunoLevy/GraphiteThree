@@ -84,6 +84,7 @@ gom.connect(main.render_area.mouse_move, xform.zoom_in)
 camera_gui = {}
 camera_gui.name = 'Camera'
 camera_gui.icon = '@camera'
+camera_gui.help = 'Camera properties'
 camera_gui.x = 3*main.margin()+150*main.scaling()+5
 camera_gui.y = main.margin()
 camera_gui.w = 220*main.scaling()

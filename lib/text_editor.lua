@@ -7,6 +7,7 @@ text_editor = OGF.TextEditor.create(gom)
 text_editor.text = '-- Lua (Keep this comment, this is an indication for editor\'s \'run\' command)\n\n'
 text_editor_gui.name = 'Programs'
 text_editor_gui.icon = '@code'
+text_editor_gui.help = 'Embedded text editor for developing scripts'
 text_editor_gui.menubar = true
 text_editor_gui.x = 4*main.margin() + 150*main.scaling()
 text_editor_gui.y = main.margin()

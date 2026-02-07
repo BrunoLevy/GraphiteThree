@@ -86,6 +86,7 @@ function graphite_main_window.draw_module_name_and_toggle(module, in_menu)
       draw_props = imgui.TreeNodeEx(
          '##'..module.name..'##props',ImGuiTreeNodeFlags_DrawLinesFull
       )
+      autogui.tooltip(module.help)
       imgui.SameLine()
    end
 
@@ -117,6 +118,7 @@ function graphite_main_window.draw_module_name_and_toggle(module, in_menu)
    end
    imgui.SameLine()
    local sel = imgui.Selectable(module.name,false)
+   autogui.tooltip(module.help)
 
    if in_menu then
       return sel

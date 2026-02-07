@@ -11,6 +11,7 @@ console_gui.h = main.height/3 - 3*main.margin()
 console_gui.window_flags = ImGuiWindowFlags_NoScrollbar
 console_gui.menubar = false
 console_gui.icon = '@terminal'
+console_gui.help = 'Console and command entry'
 console_gui.resizable = true
 
 function console_gui.show()

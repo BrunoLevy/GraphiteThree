@@ -1,9 +1,10 @@
 -- A Graphite module for displaying histograms.
 
-Stats = {} 
+Stats = {}
 Stats.visible = true
 Stats.name = 'Statistics'
-Stats.icon = '@chart-bar' 
+Stats.icon = '@chart-bar'
+Stats.help = 'Properties statistics and histogram'
 Stats.x = 100
 Stats.y = 400
 Stats.w = 300
@@ -33,7 +34,7 @@ function Stats.reset()
    Stats.sel2 = 0
    Stats.dirty = false
    Stats.mean = 0
-end   
+end
 
 function Stats.update_histo()
    if not Stats.visible then
@@ -62,7 +63,7 @@ function Stats.update_histo()
        val = math.floor((#Stats.histo)*val)
        if val >= 0 and val < #Stats.histo then
           Stats.histo[val+1] = Stats.histo[val+1]+1
-       end	  
+       end
      end
    end
    Stats.mean = Stats.mean / (#Stats.attrib*Stats.attrib.dimension)
@@ -70,7 +71,7 @@ function Stats.update_histo()
    Stats.histo_max = Stats.histo[1]
    for i = 2,#Stats.histo do
       Stats.histo_min = math.min(Stats.histo_min, Stats.histo[i])
-      Stats.histo_max = math.max(Stats.histo_max, Stats.histo[i])      
+      Stats.histo_max = math.max(Stats.histo_max, Stats.histo[i])
    end
    Stats.histo_min = math.max(Stats.histo_min, 0.0)
    if Stats.histo_max_display == nil then
@@ -78,26 +79,26 @@ function Stats.update_histo()
    end
    Stats.initialized = true
    Stats.dirty = false
-end    
+end
 
 function Stats.update()
 
    local changed = false
    local object = scene_graph.current()
-   
+
    if object == nil then
       Stats.reset()
       return
    end
-   
+
    if object.name ~= Stats.object_name then
       Stats.object_name = object.name
-      Stats.histo_max_display = nil      
+      Stats.histo_max_display = nil
       changed = true
    end
-   
+
    local shd = object.shader
-   
+
    if shd.meta_class.name ~= 'OGF::PlainMeshGrobShader' or
       shd.painting        ~= 'ATTRIBUTE'
    then
@@ -117,11 +118,11 @@ function Stats.update()
       container_attrib_name  = attrib_name
    end
    if attrib_name  ~= Stats.attrib_name then
-      Stats.histo_max_display = nil            
+      Stats.histo_max_display = nil
       Stats.attrib_name = attrib_name
       Stats.attrib_index = attrib_index
       changed = true
-   end      
+   end
 
    Stats.attrib = object.I.Editor.find_attribute(container_attrib_name)
 
@@ -152,7 +153,7 @@ function Stats.update()
       Stats.attrib_min = shd.attribute_min
       Stats.attrib_max = shd.attribute_max
       changed = true
-   end      
+   end
 
    if changed or Stats.dirty then
       Stats.update_histo()
@@ -223,7 +224,7 @@ function Stats.selection_handler()
    if imgui.IsItemHovered() then
       if not Stats.dragging and imgui.IsMouseClicked(0) then
          Stats.sel1 = mi
-         Stats.sel2 = mi	 
+         Stats.sel2 = mi
 	 Stats.dragging = true
       end
       if hovering_histo then
@@ -261,17 +262,17 @@ function Stats.draw_window()
       scene_graph.current().shader.painting == 'ATTRIBUTE'
    then
       if imgui.Button(imgui.font_icon('angle-double-up')) then
-          scene_graph.current().shader.painting = 'SOLID_COLOR'      
+          scene_graph.current().shader.painting = 'SOLID_COLOR'
       end
    else
       if imgui.Button(imgui.font_icon('angle-double-down')) then
-          scene_graph.current().shader.painting = 'ATTRIBUTE'      
+          scene_graph.current().shader.painting = 'ATTRIBUTE'
       end
    end
    autogui.tooltip('Display histogram for current object and attribute')
    imgui.SameLine()
    _,Stats.color = imgui.Checkbox(imgui.font_icon('paint-brush'),Stats.color)
-   imgui.SameLine()   
+   imgui.SameLine()
    if imgui.Button(imgui.font_icon('expand')) then
       scene_graph.current().shader.autorange()
       Stats.sel1 = 0
@@ -284,12 +285,12 @@ function Stats.draw_window()
    if imgui.Button(imgui.font_icon('search')) then
       if Stats.sel1 ~= Stats.sel2 then
          local val1 = Stats.index_to_val(Stats.sel1)
-         local val2 = Stats.index_to_val(Stats.sel2)      
+         local val2 = Stats.index_to_val(Stats.sel2)
          scene_graph.current().shader.attribute_min = math.min(val1,val2)
          scene_graph.current().shader.attribute_max = math.max(val1,val2)
          Stats.sel1 = 0
          Stats.sel2 = 0
-      end	 
+      end
    end
    autogui.tooltip('Set selection as range')
 
@@ -318,19 +319,19 @@ function Stats.draw_window()
       'displayed attribute'
    )
 
-   -- math.floor needed because ImGui lua bindings 
+   -- math.floor needed because ImGui lua bindings
    -- do not do the right thing (to be fixed)
    local graph_color = math.floor(imgui.GetColorU32(ImGuiCol_PlotHistogram,1.0))
-   local lines_color = math.floor(imgui.GetColorU32(ImGuiCol_PlotLines,1.0))    
+   local lines_color = math.floor(imgui.GetColorU32(ImGuiCol_PlotLines,1.0))
    local frame_color = math.floor(imgui.GetColorU32(ImGuiCol_Separator,1.0))
-   local text_color  = math.floor(imgui.GetColorU32(ImGuiCol_Text,1.0))    
-  
-   Stats.pos_x,   Stats.pos_y = imgui.GetCursorScreenPos() 
+   local text_color  = math.floor(imgui.GetColorU32(ImGuiCol_Text,1.0))
+
+   Stats.pos_x,   Stats.pos_y = imgui.GetCursorScreenPos()
    Stats.size_x, Stats.size_y = imgui.GetContentRegionAvail()
    Stats.left_margin   = 15.0 * main.scaling()
    Stats.right_margin  = 15.0 * main.scaling()
    Stats.top_margin    = 15.0 * main.scaling()
-   Stats.bottom_margin = 15.0 * main.scaling()         
+   Stats.bottom_margin = 15.0 * main.scaling()
    Stats.left_prop     = 0.8
 
    local draw_list = imgui.GetWindowDrawList()
@@ -338,21 +339,21 @@ function Stats.draw_window()
    -- Draw the frame around the widget
    imgui.AddRect(
        draw_list,
-       Stats.pos_x, Stats.pos_y, 
+       Stats.pos_x, Stats.pos_y,
        Stats.pos_x + Stats.size_x, Stats.pos_y + Stats.size_y,
        frame_color, 0.0, 0, 1.0
    )
    imgui.InvisibleButton('canvas', Stats.size_x, Stats.size_y)
    imgui.PushClipRect(
-       draw_list, 
-       Stats.pos_x, Stats.pos_y, 
+       draw_list,
+       Stats.pos_x, Stats.pos_y,
        Stats.pos_x + Stats.size_x, Stats.pos_y + Stats.size_y,
        true
    )
 
    local half_line_width =
        0.5*(Stats.size_y - Stats.top_margin - Stats.bottom_margin) /
-       (#Stats.histo+1)  
+       (#Stats.histo+1)
    half_line_width = math.max(half_line_width,1)
 
    local x1,y1,x2,y2,t
@@ -371,7 +372,7 @@ function Stats.draw_window()
 	     )
        else
         imgui.AddRectFilled(
-	        draw_list,  
+	        draw_list,
 	        x1, y1-half_line_width,
 		x2, y2+half_line_width,
  	        graph_color,
@@ -385,9 +386,9 @@ function Stats.draw_window()
    x2,y2 = Stats.transform(#Stats.histo+1,Stats.histo_min)
    imgui.AddLine(draw_list,x1,y1,x2,y2,text_color,2)
    Stats.draw_marker(0, Stats.attrib_min)
-   Stats.draw_marker(#Stats.histo+1, Stats.attrib_max)   
+   Stats.draw_marker(#Stats.histo+1, Stats.attrib_max)
 
-   Stats.selection_handler()   
+   Stats.selection_handler()
 
    imgui.PopClipRect(draw_list)
 
@@ -397,5 +398,3 @@ end
 Stats.reset()
 graphite_main_window.add_module(Stats)
 gom.connect(scene_graph.value_changed, Stats.update_histo)
-
-

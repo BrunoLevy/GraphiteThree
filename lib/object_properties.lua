@@ -5,6 +5,7 @@ object_properties_gui = {}
 object_properties_gui.visible = false
 object_properties_gui.name = 'Properties'
 object_properties_gui.icon = '@edit'
+object_properties_gui.help = 'Display and edit properties of current object'
 object_properties_gui.x = main.width-3*main.margin()-150*main.scaling()
 object_properties_gui.y = main.margin()
 object_properties_gui.w = 165*main.scaling()
