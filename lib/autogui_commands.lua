@@ -124,7 +124,15 @@ function autogui.open_command_dialog(request,args)
   local k = autogui.request_key(request)
   if autogui.command_state[k] == nil then
      autogui.command_state[k] = autogui.init_args(request.method())
-     autogui.command_state[k].show_as_window_ = true
+     -- always open a separate dialog for now, because we want that the
+     --   | apply button keeps the command open and allows gfx update
+     --   v
+     if false and command_gui.visible then
+        autogui.command_state[k].show_as_window_ = false
+        command_gui.request = request
+     else
+        autogui.command_state[k].show_as_window_ = true
+     end
      autogui.command_state[k].width_  = 250*main.scaling()
      autogui.command_state[k].height_ = 250*main.scaling()
      autogui.command_state[k].x_ = 400
@@ -252,7 +260,7 @@ function autogui.command_dialog_apply_buttons(request)
   local doit_apply_button = imgui.Button(
      imgui.font_icon('check')..'##commands',apply_btn_width,0
   )
-  autogui.tooltip('apply command and close dialog')
+  autogui.tooltip('apply command')
 
   local close_dialog = false
   if command_gui.visible then
