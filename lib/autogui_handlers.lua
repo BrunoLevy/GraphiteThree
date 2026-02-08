@@ -289,6 +289,10 @@ end
 -- \see autogui.handlers
 
 function autogui.enum(object, property_name, menum, tooltip)
+   if menum == nil then
+       autogui.string(object, property_name, menum, tooltip)
+       return
+   end
    local values=''
    for i=0,menum.nb_values()-1 do
       if #values ~= 0 then
@@ -300,7 +304,7 @@ function autogui.enum(object, property_name, menum, tooltip)
 end
 
 -- \brief Handler for strings
--- \param[in] object, property_name, menum, tooltip handler parameters
+-- \param[in] object, property_name, metype, tooltip handler parameters
 -- \see autogui.handlers
 
 function autogui.string(object, property_name, mtype, tooltip)

@@ -368,7 +368,8 @@ end
 -- \param[in] i the index of the argument
 
 function autogui.slot_arg(args,mslot,i)
-   local handler = autogui.handler_by_meta_type(mslot.ith_arg_type(i))
+   local mtype = mslot.ith_arg_type(i)
+   local handler = autogui.handler_by_meta_type(mtype)
    if mslot.ith_arg_has_custom_attribute(i,'handler') then
       local handler_name = mslot.ith_arg_custom_attribute_value(i,'handler')
       handler = autogui.handler_by_name(handler_name)
