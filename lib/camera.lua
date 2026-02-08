@@ -63,19 +63,19 @@ gom.connect(main.render_area.mouse_up, translation.release)
 
 gom.connect(translation.value_changed, xform.translate)
 
-gom.connect(main.render_area.mouse_move, xform.zoom_in)
+gom.connect(main.render_area.mouse_move, xform.zoom_out)
    .if_arg('button', 2)
    .if_arg('control', true)
    .if_arg('shift', false)
    .rename_arg('delta_y_ndc', 'value')
 
-gom.connect(main.render_area.mouse_move, xform.zoom_in)
+gom.connect(main.render_area.mouse_move, xform.zoom_out)
    .if_arg('button', 4)
    .if_arg('control', true)
    .if_arg('shift', false)
    .rename_arg('delta_y_ndc', 'value')
 
-gom.connect(main.render_area.mouse_move, xform.zoom_in)
+gom.connect(main.render_area.mouse_move, xform.zoom_out)
    .if_arg('button', 5)
    .if_arg('control', true)
    .if_arg('shift', false)

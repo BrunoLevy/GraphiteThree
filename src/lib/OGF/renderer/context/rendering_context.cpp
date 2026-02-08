@@ -836,10 +836,7 @@ namespace OGF {
         check_gl();
     }
 
-    vec3 RenderingContext::unproject(const vec2& p_ndc_in, double depth) const {
-        // TODO: why do we need to change Y orientation here ?
-        vec2 p_ndc(p_ndc_in.x, -p_ndc_in.y);
-
+    vec3 RenderingContext::unproject(const vec2& p_ndc, double depth) const {
         index_t xs,ys;
         ndc_to_screen(p_ndc, xs, ys);
         double x(xs), y(ys);
@@ -932,11 +929,8 @@ namespace OGF {
         ndc_to_screen(picked_ndc_, x, y);
 
         if(x >= get_width() || y >= get_height()) {
-            picked_id_ = index_t(-1);
+            picked_id_ = NO_INDEX;
         }  else {
-            // TODO: why do we need to change orientation here ?
-            y = get_height()-1-y;
-
             //   This flushes all the rendering commands before reading the
             // pixels. This is probably unneeded, since glReadPixels() is
             // supposed to do that, but it seems to be dependent on the

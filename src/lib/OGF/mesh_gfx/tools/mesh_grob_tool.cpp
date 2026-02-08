@@ -99,7 +99,6 @@ namespace OGF {
 	picked_ndc_ = rendering_context()->screen_to_ndc(
 	    index_t(x_screen), index_t(y_screen)
 	);
-	picked_ndc_.y = -picked_ndc_.y; // I must confess I don't know why !
 
 	return result;
     }

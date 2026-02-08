@@ -511,6 +511,14 @@ namespace OGF {
 	 */
 	void set_center(int x, int y);
 
+	int get_center_x() const {
+	    return center_x_;
+	}
+
+	int get_center_y() const {
+	    return center_y_;
+	}
+
         /**
          * \brief Transforms screen coordinates to normalized
          *  device coordinates (viewport transform).

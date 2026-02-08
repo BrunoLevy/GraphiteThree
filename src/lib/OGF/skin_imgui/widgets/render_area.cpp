@@ -423,6 +423,10 @@ namespace OGF {
 	xf *= sx;
 	yf *= sy;
 
+	// OpenGL window origin is bottom-left, whereas
+	// GLFw window origin is top-right !
+	yf = double(get_frame_buffer_height()) - yf;
+
 	last_point_dc_.x = xf;
 	last_point_dc_.y = yf;
 
@@ -462,7 +466,6 @@ namespace OGF {
 	// Synthetize move/press/release mouse events
 	// with center button pressed.
 
-	//vec2 last_point_dc_bak = last_point_dc_;
 	GLFWwindow* w = (GLFWwindow*)Application::instance()->impl_window();
 	bool ctrl = (glfwGetKey(w, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS);
 	bool shift = (glfwGetKey(w, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS);
