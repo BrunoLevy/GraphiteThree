@@ -49,18 +49,18 @@ namespace OGF {
     }
 
     void Translation::grab(const vec2& value) {
-        last_position_ = vec2(value.x, 1.0-value.y);
+        last_position_ = value;
     }
 
     void Translation::drag(const vec2& value) {
-        vec2 new_pos = vec2(value.x, 1.0-value.y);
+        vec2 new_pos = value;
 	vec2 delta = last_position_ - new_pos;
         value_changed(vec3(delta.x, delta.y, 0.0));
         last_position_ = new_pos ;
     }
 
     void Translation::release(const vec2& value) {
-        vec2 new_pos = vec2(value.x, 1.0-value.y);
+        vec2 new_pos = value;
 	vec2 delta = last_position_ - new_pos;
         value_changed(vec3(delta.x, delta.y, 0.0));
         last_position_ = new_pos ;
