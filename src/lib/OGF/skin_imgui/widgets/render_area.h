@@ -160,9 +160,18 @@ namespace OGF {
 	 * \details This corresponds to the pixel where cordinates (0.0,0.0)
 	 *   will be projected on the screen
 	 * \param[in] x , y the center in DearImgui coordinates, with origin
-	 *   at upper-left corner.
+	 *   at upper-left corner and possibly retina-screen scaling.
 	 */
 	void set_center_from_imgui_coords(int x, int y);
+
+	/**
+	 * \brief Sets the center
+	 * \details This corresponds to the pixel where cordinates (0.0,0.0)
+	 *   will be projected on the screen
+	 * \param[in] x , y the center in OpenGL window coordinates, with origin
+	 *   at lower-left corner.
+	 */
+	void set_center(int x, int y);
 
     gom_properties:
 	/**
