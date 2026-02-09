@@ -151,16 +151,16 @@ namespace OGF {
 	float sx = 1.0f/ImGui::GetIO().DisplayFramebufferScale.x;
 	float sy = 1.0f/ImGui::GetIO().DisplayFramebufferScale.y;
 	P.x1 = sx * P.x1;
-	P.y1 = H-1.0f-sy*P.y1;
+	P.y1 = sy * (H-1.0f-P.y1);
 
 	P.x2 = sx * P.x2;
-	P.y2 = H-1.0f-sy*P.y2;
+	P.y2 = sy * (H-1.0f-P.y2);
 
 	P.x3 = sx * P.x3;
-	P.y3 = H-1.0f-sy*P.y3;
+	P.y3 = sy * (H-1.0f-P.y3);
 
 	P.x4 = sx * P.x4;
-	P.y4 = H-1.0f-sy*P.y4;
+	P.y4 = sy * (H-1.0f-P.y4);
 	primitives_.push_back(P);
     }
 
