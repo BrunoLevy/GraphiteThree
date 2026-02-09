@@ -564,7 +564,7 @@ namespace OGF {
             viewport_height_ = w_height;
         }
 	viewport_x_ += (center_x_ - w_width / 2);
-	viewport_y_ -= (center_y_ - w_height / 2);
+	viewport_y_ += (center_y_ - w_height / 2);
     }
 
 
@@ -585,7 +585,7 @@ namespace OGF {
             viewport_height_ = w_height;
         }
 	viewport_x_ += (center_x_ - w_width / 2);
-	viewport_y_ -= (center_y_ - w_height / 2);
+	viewport_y_ += (center_y_ - w_height / 2);
     }
 
     vec2 RenderingContext::screen_to_ndc(index_t x_in, index_t y_in) const {

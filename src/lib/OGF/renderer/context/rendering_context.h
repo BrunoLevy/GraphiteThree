@@ -507,14 +507,25 @@ namespace OGF {
 	 * \brief Sets the center
 	 * \details This corresponds to the pixel where cordinates (0.0,0.0)
 	 *   will be projected on the screen
-	 * \param[in] x , y the center in pixel coordinates
+	 * \param[in] x , y the center in OpenGL pixel coordinates,
+	 *   with origin at lower-left corner
 	 */
 	void set_center(int x, int y);
 
+	/**
+	 * \brief Gets the x coordinate of the center
+	 * \return the x coordinate of the center, in OpenGL pixel coordinates,
+	 *  with origin at lower-left corner
+	 */
 	int get_center_x() const {
 	    return center_x_;
 	}
 
+	/**
+	 * \brief Gets the y coordinate of the center
+	 * \return the y coordinate of the center, in OpenGL pixel coordinates,
+	 *  with origin at lower-left corner
+	 */
 	int get_center_y() const {
 	    return center_y_;
 	}

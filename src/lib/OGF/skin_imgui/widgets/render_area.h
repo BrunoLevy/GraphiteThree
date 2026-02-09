@@ -159,19 +159,10 @@ namespace OGF {
 	 * \brief Sets the center
 	 * \details This corresponds to the pixel where cordinates (0.0,0.0)
 	 *   will be projected on the screen
-	 * \param[in] x , y the center in pixel coordinates
+	 * \param[in] x , y the center in DearImgui coordinates, with origin
+	 *   at upper-left corner.
 	 */
-	void set_center(int x, int y) {
-	    if(
-		rendering_context_ != nullptr && (
-		    rendering_context_->get_center_x() != x ||
-		    rendering_context_->get_center_y() != y
-		)
-	    ) {
-		rendering_context_->set_center(x,y);
-		dirty_ = true;
-	    }
-	}
+	void set_center_from_imgui_coords(int x, int y);
 
     gom_properties:
 	/**
@@ -459,6 +450,14 @@ namespace OGF {
     public:
 	void mouse_button_callback(int button, int action, int mods);
 	void scroll_callback(double xoffset, double yoffset);
+
+	/**
+	 * \param [in] xf, yf the coordinates of the mouse in 'window
+	 *  pixels', with origin at top-left corner.
+	 * \details The function divides by retina scaling internally
+	 *   to get OpenGL window coordinates (in framebuffer pixels)
+	 *   and flips the Y coordinate (origin at bottom-left corner).
+	 */
 	void cursor_pos_callback(double xf, double yf);
 	void drop_callback(int nb, const char** p);
 	void char_callback(unsigned int c);

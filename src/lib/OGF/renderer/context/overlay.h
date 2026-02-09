@@ -146,6 +146,36 @@ namespace OGF {
          */
         void fillquad(vec2 p1, vec2 p2, vec2 p3, vec2 p4, Color color);
 
+
+	/**
+	 * \brief Converts Dear ImGui coordinates to OpenGL coordinate
+	 * \param[in] XY_imgui a point in imgui coordinates, with
+	 *   origin at top-left corner and possibly retina-screen scaling
+	 * \return the corresponding point in OpenGL Window coordinates,
+	 *   with origin at bottom-left.
+	 */
+	vec2f imgui_to_GL(const vec2f& XY_imgui) const;
+
+	/**
+	 * \brief Converts OpenGL coordinates to Dear ImGui coordinate
+	 * \param[in] XY_GL a point in OpenGL Window coordinates, with
+	 *   origin at bottom-left corner.
+	 * \return the corresponding point in Dear ImGui coordinates,
+	 *   with origin at top-left and possibly retina-screen scaling.
+	 */
+	vec2f GL_to_imgui(const vec2f& XY_GL) const;
+
+	/**
+	 * \brief Converts OpenGL coordinates to Dear ImGui coordinate
+	 * \param[in] XY_GL a point in OpenGL Window coordinates, with
+	 *   origin at bottom-left corner, in double-precision.
+	 * \return the corresponding point in Dear ImGui coordinates,
+	 *   with origin at top-left and possibly retina-screen scaling.
+	 */
+	vec2f GL_to_imgui(const vec2& XY_GL) const {
+	    return GL_to_imgui(vec2f(float(XY_GL.x), float(XY_GL.y)));
+	}
+
     private:
         enum PrimitiveType {
             OVL_SEGMENT =0,
@@ -156,7 +186,8 @@ namespace OGF {
         };
         struct Primitive {
             PrimitiveType type;
-            float x1,y1,x2,y2,x3,y3,x4,y4,R;
+	    vec2f p[4];
+	    float R;
             float thickness;
             Numeric::uint32 color;
             bool filled;

@@ -83,21 +83,33 @@ namespace OGF {
             switch(P.type) {
             case OVL_SEGMENT: {
                 L->AddLine(
-                    ImVec2(P.x1,P.y1), ImVec2(P.x2,P.y2),
+                    ImVec2(P.p[0].x,P.p[0].y), ImVec2(P.p[1].x,P.p[1].y),
                     ImU32(P.color), P.thickness
                 );
             } break;
             case OVL_RECT: {
                 if(P.filled) {
                     L->AddRectFilled(
-                        ImVec2(std::min(P.x1, P.x2), std::min(P.y1, P.y2)),
-                        ImVec2(std::max(P.x1, P.x2), std::max(P.y1, P.y2)),
+                        ImVec2(
+			    std::min(P.p[0].x, P.p[1].x),
+			    std::min(P.p[0].y, P.p[1].y)
+			),
+                        ImVec2(
+			    std::max(P.p[0].x, P.p[1].x),
+			    std::max(P.p[0].y, P.p[1].y)
+			),
                         ImU32(P.color)
                     );
                 } else {
                     L->AddRect(
-                        ImVec2(std::min(P.x1, P.x2), std::min(P.y1, P.y2)),
-                        ImVec2(std::max(P.x1, P.x2), std::max(P.y1, P.y2)),
+                        ImVec2(
+			    std::min(P.p[0].x, P.p[1].x),
+			    std::min(P.p[0].y, P.p[1].y)
+			),
+                        ImVec2(
+			    std::max(P.p[0].x, P.p[1].x),
+			    std::max(P.p[0].y, P.p[1].y)
+			),
                         ImU32(P.color),
                         0.0f, // <- rounding
                         0,    // <- flags
@@ -108,13 +120,13 @@ namespace OGF {
             case OVL_CIRCLE: {
                 if(P.filled) {
                     L->AddCircleFilled(
-                        ImVec2(P.x1, P.y1),
+                        ImVec2(P.p[0].x, P.p[0].y),
                         P.R,
                         ImU32(P.color)
                     );
                 } else {
                     L->AddCircle(
-                        ImVec2(P.x1, P.y1),
+                        ImVec2(P.p[0].x, P.p[0].y),
                         P.R,
                         ImU32(P.color),
                         0, // <- num_segments
@@ -124,18 +136,18 @@ namespace OGF {
             } break;
             case OVL_TRIANGLE: {
                 L->AddTriangleFilled(
-                    ImVec2(P.x1, P.y1),
-                    ImVec2(P.x2, P.y2),
-                    ImVec2(P.x3, P.y3),
+                    ImVec2(P.p[0].x, P.p[0].y),
+                    ImVec2(P.p[1].x, P.p[1].y),
+                    ImVec2(P.p[2].x, P.p[2].y),
                     ImU32(P.color)
                 );
             } break;
             case OVL_QUAD: {
                 L->AddQuadFilled(
-                    ImVec2(P.x1, P.y1),
-                    ImVec2(P.x2, P.y2),
-                    ImVec2(P.x3, P.y3),
-                    ImVec2(P.x4, P.y4),
+                    ImVec2(P.p[0].x, P.p[0].y),
+                    ImVec2(P.p[1].x, P.p[1].y),
+                    ImVec2(P.p[2].x, P.p[2].y),
+                    ImVec2(P.p[3].x, P.p[3].y),
                     ImU32(P.color)
                 );
             } break;
@@ -144,33 +156,14 @@ namespace OGF {
     }
 
     void Overlay::add_primitive(Primitive& P) {
-	// float x0 = ImGui::GetMainViewport()->Pos.x;
-	// float y0 = ImGui::GetMainViewport()->Pos.y;
-	// x1..x4 += x0; y1..y4 += y0 // do not remember why ??
-	float H = float(rendering_context_->get_height());
-	float sx = 1.0f/ImGui::GetIO().DisplayFramebufferScale.x;
-	float sy = 1.0f/ImGui::GetIO().DisplayFramebufferScale.y;
-	P.x1 = sx * P.x1;
-	P.y1 = sy * (H-1.0f-P.y1);
-
-	P.x2 = sx * P.x2;
-	P.y2 = sy * (H-1.0f-P.y2);
-
-	P.x3 = sx * P.x3;
-	P.y3 = sy * (H-1.0f-P.y3);
-
-	P.x4 = sx * P.x4;
-	P.y4 = sy * (H-1.0f-P.y4);
 	primitives_.push_back(P);
     }
 
     void Overlay::segment(vec2 p1, vec2 p2, Color color, double thickness) {
         Primitive P;
         P.type = OVL_SEGMENT;
-        P.x1 = float(p1.x);
-        P.y1 = float(p1.y);
-        P.x2 = float(p2.x);
-        P.y2 = float(p2.y);
+	P.p[0] = GL_to_imgui(p1);
+	P.p[1] = GL_to_imgui(p2);
         P.color = color_to_uint32(color);
         P.thickness = float(thickness);
         add_primitive(P);
@@ -179,10 +172,8 @@ namespace OGF {
     void Overlay::rect(vec2 p1, vec2 p2, Color color, double thickness) {
         Primitive P;
         P.type = OVL_RECT;
-        P.x1 = float(p1.x);
-        P.y1 = float(p1.y);
-        P.x2 = float(p2.x);
-        P.y2 = float(p2.y);
+	P.p[0] = GL_to_imgui(p1);
+	P.p[1] = GL_to_imgui(p2);
         P.color = color_to_uint32(color);
         P.thickness = float(thickness);
         P.filled = false;
@@ -192,10 +183,8 @@ namespace OGF {
     void Overlay::fillrect(vec2 p1, vec2 p2, Color color) {
         Primitive P;
         P.type = OVL_RECT;
-        P.x1 = float(p1.x);
-        P.y1 = float(p1.y);
-        P.x2 = float(p2.x);
-        P.y2 = float(p2.y);
+	P.p[0] = GL_to_imgui(p1);
+	P.p[1] = GL_to_imgui(p2);
         P.color = color_to_uint32(color);
         P.filled = true;
         add_primitive(P);
@@ -204,8 +193,7 @@ namespace OGF {
     void Overlay::circle(vec2 p1, double R, Color color, double thickness) {
         Primitive P;
         P.type = OVL_CIRCLE;
-        P.x1 = float(p1.x);
-        P.y1 = float(p1.y);
+	P.p[0] = GL_to_imgui(p1);
         P.R = float(R);
         P.color = color_to_uint32(color);
         P.thickness = float(thickness);
@@ -216,8 +204,7 @@ namespace OGF {
     void Overlay::fillcircle(vec2 p1, double R, Color color) {
         Primitive P;
         P.type = OVL_CIRCLE;
-        P.x1 = float(p1.x);
-        P.y1 = float(p1.y);
+	P.p[0] = GL_to_imgui(p1);
         P.R = float(R);
         P.color  = color_to_uint32(color);
         P.filled = true;
@@ -227,12 +214,9 @@ namespace OGF {
     void Overlay::filltriangle(vec2 p1, vec2 p2, vec2 p3, Color color) {
         Primitive P;
         P.type = OVL_TRIANGLE;
-        P.x1 = float(p1.x);
-        P.y1 = float(p1.y);
-        P.x2 = float(p2.x);
-        P.y2 = float(p2.y);
-        P.x3 = float(p3.x);
-        P.y3 = float(p3.y);
+	P.p[0] = GL_to_imgui(p1);
+	P.p[1] = GL_to_imgui(p2);
+	P.p[2] = GL_to_imgui(p3);
         P.color  = color_to_uint32(color);
         P.filled = true;
         add_primitive(P);
@@ -241,17 +225,27 @@ namespace OGF {
     void Overlay::fillquad(vec2 p1, vec2 p2, vec2 p3, vec2 p4, Color color) {
         Primitive P;
         P.type = OVL_QUAD;
-        P.x1 = float(p1.x);
-        P.y1 = float(p1.y);
-        P.x2 = float(p2.x);
-        P.y2 = float(p2.y);
-        P.x3 = float(p3.x);
-        P.y3 = float(p3.y);
-        P.x4 = float(p4.x);
-        P.y4 = float(p4.y);
+	P.p[0] = GL_to_imgui(p1);
+	P.p[1] = GL_to_imgui(p2);
+	P.p[2] = GL_to_imgui(p3);
+	P.p[3] = GL_to_imgui(p4);
         P.color  = color_to_uint32(color);
         P.filled = true;
         add_primitive(P);
+    }
+
+    vec2f Overlay::imgui_to_GL(const vec2f& imgui) const {
+	float H = float(rendering_context_->get_height());
+	float sx = ImGui::GetIO().DisplayFramebufferScale.x;
+	float sy = ImGui::GetIO().DisplayFramebufferScale.y;
+	return vec2f(sx*imgui.x, H-1.0f-sy*imgui.y);
+    }
+
+    vec2f Overlay::GL_to_imgui(const vec2f& GL) const {
+	float H = float(rendering_context_->get_height());
+	float sx = 1.0f/ImGui::GetIO().DisplayFramebufferScale.x;
+	float sy = 1.0f/ImGui::GetIO().DisplayFramebufferScale.y;
+	return vec2f(sx*GL.x, sy*(H-1.0f-GL.y));
     }
 
 }

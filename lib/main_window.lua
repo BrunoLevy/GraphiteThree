@@ -178,7 +178,7 @@ end
 function graphite_main_window.end_G()
   graphite_main_window.gx = graphite_main_window.gx / graphite_main_window.m
   graphite_main_window.gy = graphite_main_window.gy / graphite_main_window.m
-  main.render_area.set_center(
+  main.render_area.set_center_from_imgui_coords(
       graphite_main_window.gx, graphite_main_window.gy
   )
 end
