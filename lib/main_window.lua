@@ -90,20 +90,16 @@ function graphite_main_window.draw_module_name_and_toggle(module, in_menu)
       imgui.SameLine()
    end
 
-   if module.no_toggle == nil then
+   if in_menu or module.no_toggle == nil then
       _,module.visible = imgui.Checkbox(
-         "##module_box##"..module.name,
-         module.visible
+         "##module_box##"..module.name, module.visible
       )
-   else
-      if in_menu then
-         return nil
-      end
    end
 
+   local sel = false
+
    gom.set_environment_value(
-      'gui:module_'..module.name..'_visible',
-      tostring(module.visible)
+      'gui:module_'..module.name..'_visible', tostring(module.visible)
    )
    if module.icon ~= nil then
       imgui.SameLine()
@@ -117,18 +113,27 @@ function graphite_main_window.draw_module_name_and_toggle(module, in_menu)
       end
    end
    imgui.SameLine()
-   local sel = imgui.Selectable(module.name,false)
+   if not (in_menu and module.draw_menu ~= nil) then
+      sel = imgui.Selectable(module.name,false)
+   end
    autogui.tooltip(module.help)
+
+   if module.draw_menu ~= nil then
+      if in_menu then
+         if imgui.BeginMenu(module.name..'##ops') then
+             module.draw_menu()
+             imgui.EndMenu()
+         end
+      else
+         if imgui.BeginPopupContextItem(module.name..'##ops') then
+             module.draw_menu()
+             imgui.EndPopup()
+         end
+      end
+   end
 
    if in_menu then
       return sel
-   end
-
-   if module.draw_menu ~= nil then
-      if imgui.BeginPopupContextItem(module.name..'##ops') then
-          module.draw_menu()
-          imgui.EndPopup()
-      end
    end
 
    if draw_props then
