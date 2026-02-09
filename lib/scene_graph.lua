@@ -204,13 +204,13 @@ function scene_graph_gui.grob_ops(grob, main_menu)
 
    scene_graph_gui.menu_map.draw(grob)
 
-   local btn_width  = 25 * main.scaling()
+   local btn_width = autogui.button_size
    if not main_menu then
       imgui.Separator()
       imgui.PushStyleVar_2(ImGuiStyleVar_ItemSpacing, 0.0, 4.0)
       imgui.TextDisabled('Edit...')
       imgui.SameLine()
---      imgui.Dummy(imgui.GetContentRegionAvail()-btn_width*5,1) -- here
+      imgui.Dummy(imgui.GetContentRegionAvail()-btn_width*5,1)
       imgui.SameLine()
       if imgui.SimpleButton(imgui.font_icon('edit')..'##  rename') then
          scene_graph_gui.rename_old = name
@@ -256,7 +256,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       imgui.PushStyleVar_2(ImGuiStyleVar_ItemSpacing, 0.0, 4.0)
       imgui.TextDisabled('Gfx...')
       imgui.SameLine()
---      imgui.Dummy(imgui.GetContentRegionAvail()-btn_width*4,1)
+      imgui.Dummy(imgui.GetContentRegionAvail()-btn_width*4,1)
       imgui.SameLine()
       if imgui.SimpleButton(
          imgui.font_icon('eye-slash')..'## show/hide'
@@ -627,7 +627,7 @@ end
 -- \param[in] grob one of the objects in the list
 -- \return selection_op to be performed on grob or nil
 function scene_graph_gui.draw_grob_name(grob)
-   local btn_width  = 25 * main.scaling()
+   local btn_width = autogui.button_size
    local selection_op = nil
    imgui.SameLine()
    if grob.name == scene_graph_gui.rename_old then
@@ -709,7 +709,7 @@ function scene_graph_gui.draw_grob_eye(grob)
    if grob.name == scene_graph_gui.rename_old then
       return
    end
-   local btn_width  = 25 * main.scaling()
+   local btn_width = autogui.button_size
    local selected_only = main.camera().draw_selected_only
    local visible = false
    if grob ~= nil then

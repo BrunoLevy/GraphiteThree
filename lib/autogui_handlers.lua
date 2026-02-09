@@ -82,6 +82,10 @@ autogui.in_popup = false
 
 autogui.in_tree = false
 
+-- \brief default button size (for little square buttons for tools)
+
+autogui.button_size = 25 * main.scaling()
+
 -- ------------------------------------------------------------------------------
 -- Utilities
 -- ------------------------------------------------------------------------------

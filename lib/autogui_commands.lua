@@ -252,7 +252,7 @@ function autogui.command_dialog_apply_buttons(request)
   imgui.SameLine()
 
   -- Apply command and close dialog ----------------------------
-  local btn_width  = 25 * main.scaling()
+  local btn_width  = autogui.button_size
   local apply_btn_width = imgui.GetContentRegionAvail() - autogui.margin
   if command_gui.visible then
      apply_btn_width = apply_btn_width - btn_width - autogui.margin

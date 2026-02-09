@@ -238,7 +238,7 @@ function graphite_main_window.draw_modules_menu()
 end
 
 function graphite_main_window.draw_contents()
-  local btn_width  = 25 * main.scaling()
+  local btn_width  = autogui.button_size
   if scene_graph_gui ~= nil and graphite_gui.presentation_mode() then
      if imgui.BeginMenuBar() then
         scene_graph_gui.file_menu()
