@@ -208,9 +208,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
    if not main_menu then
       imgui.Separator()
       imgui.PushStyleVar_2(ImGuiStyleVar_ItemSpacing, 0.0, 4.0)
-      imgui.TextDisabled('Edit...')
-      imgui.SameLine()
-      imgui.Dummy(imgui.GetContentRegionAvail()-btn_width*5,1)
+      imgui.TextDisabled('Edit...     ')
       imgui.SameLine()
       if imgui.SimpleButton(imgui.font_icon('edit')..'##  rename') then
          scene_graph_gui.rename_old = name
@@ -254,9 +252,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       imgui.Separator()
 
       imgui.PushStyleVar_2(ImGuiStyleVar_ItemSpacing, 0.0, 4.0)
-      imgui.TextDisabled('Gfx...')
-      imgui.SameLine()
-      imgui.Dummy(imgui.GetContentRegionAvail()-btn_width*4,1)
+      imgui.TextDisabled('Gfx...      ')
       imgui.SameLine()
       if imgui.SimpleButton(
          imgui.font_icon('eye-slash')..'## show/hide'
