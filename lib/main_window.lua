@@ -151,8 +151,9 @@ end
 
 function graphite_main_window.begin_G()
    -- TODO: we need to use ImGui coordinates instead of framebuffer pixel size
-   local w = main.render_area.frame_buffer_width
-   local h = main.render_area.frame_buffer_height
+   local sx,sy = imgui.IO_DisplayFramebufferScale()
+   local w = main.render_area.frame_buffer_width * sx
+   local h = main.render_area.frame_buffer_height * sy
    local m = w*h
    graphite_main_window.m = m
    graphite_main_window.gx = 0.5 * w * m

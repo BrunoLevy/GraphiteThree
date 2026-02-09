@@ -683,6 +683,9 @@ namespace OGF {
 
 
     void RenderArea::set_center_from_imgui_coords(int x, int y) {
+	if(rendering_context_ == nullptr) {
+	    return;
+	}
 	vec2f p_imgui = vec2f(float(x), float(y));
 	vec2f p_GL = rendering_context_->overlay().imgui_to_GL(p_imgui);
 	x = int(p_GL.x);
