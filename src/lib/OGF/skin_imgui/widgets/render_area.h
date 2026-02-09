@@ -162,10 +162,15 @@ namespace OGF {
 	 * \param[in] x , y the center in pixel coordinates
 	 */
 	void set_center(int x, int y) {
-	    if(rendering_context_ != nullptr) {
+	    if(
+		rendering_context_ != nullptr && (
+		    rendering_context_->get_center_x() != x ||
+		    rendering_context_->get_center_y() != y
+		)
+	    ) {
 		rendering_context_->set_center(x,y);
+		dirty_ = true;
 	    }
-	    dirty_ = true;
 	}
 
     gom_properties:
