@@ -35,6 +35,7 @@
  */
 
 #include <OGF/renderer/context/overlay.h>
+#include <OGF/renderer/context/rendering_context.h>
 
 #ifdef GEO_COMPILER_GCC_FAMILY
 #pragma GCC diagnostic push
@@ -143,12 +144,14 @@ namespace OGF {
     }
 
     void Overlay::add_primitive(Primitive& P) {
-	float x0 = ImGui::GetMainViewport()->Pos.x;
-	float y0 = ImGui::GetMainViewport()->Pos.y;
-	P.x1 += x0;
-	P.y1 += y0;
-	P.x2 += x0;
-	P.y2 += y0;
+	// float x0 = ImGui::GetMainViewport()->Pos.x;
+	// float y0 = ImGui::GetMainViewport()->Pos.y;
+	// x1..x4 += x0; y1..y4 += y0 // do not remember why ??
+	float H = float(rendering_context_->get_height());
+	P.y1 = H-1.0f-P.y1;
+	P.y2 = H-1.0f-P.y2;
+	P.y3 = H-1.0f-P.y3;
+	P.y4 = H-1.0f-P.y4;
 	primitives_.push_back(P);
     }
 

@@ -85,14 +85,14 @@ namespace OGF {
             viewport,
             &X, &Y, &Z
         );
-
         // Once again, Y axis is flipped...
+	/*
         double y0 = double(viewport[1]);
         double h  = double(viewport[3]);
         Y -= y0;
         Y  = h-1-Y;
         Y += y0;
-
+	*/
         return vec2(X,Y);
     }
 

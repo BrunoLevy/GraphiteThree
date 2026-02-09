@@ -68,7 +68,9 @@ namespace OGF {
     index_t RenderingContext::nb_render_locks_ = 0;
     index_t RenderingContext::nb_picking_locks_ = 0;
 
-    RenderingContext::RenderingContext(GLUPcontext glup_context) {
+    RenderingContext::RenderingContext(GLUPcontext glup_context) :
+	overlay_(this)
+    {
         initialized_ = false;
         width_ = 0;
         height_ = 0;

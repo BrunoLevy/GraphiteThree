@@ -528,9 +528,7 @@ namespace {
             geo_assert(mask->height() == picking_image->height());
             for(index_t y=0; y<picking_image->height(); ++y) {
                 for(index_t x=0; x<picking_image->width(); ++x) {
-                    // Note: glReadPixels and rasterizer use the opposite
-                    // convention for the Y coordinate-------------v
-                    if(*mask->pixel_base_byte_ptr(x,mask->height()-y-1) == 0) {
+                    if(*mask->pixel_base_byte_ptr(x,y) == 0) {
                         *picking_image->pixel_base_int32_ptr(x,y) =
                             Numeric::int32(-1);
                     }
@@ -1188,13 +1186,6 @@ namespace OGF {
             // In standard mode, get picking image, apply the (optional) mask
             // and find all the picked elements
 
-            // Damnit, glReadPixels and ImageRasterizer use the
-            // opposite convention for Y coordinate.
-            // It has an importance here because we got a mask,
-            // so we flip y0 so that mask and picking image
-            // have the same orientation.
-            y0 = rendering_context()->get_height()-height-1-y0;
-
             pick(raypick, where, picking_image, x0, y0, width, height);
 
             for_each_picked_element(
@@ -1680,21 +1671,21 @@ namespace OGF {
     ) : MeshGrobTool(parent) {
     }
 
-    void MeshGrobRuler::grab(const RayPick& p_ndc) {
-        latest_ndc_    = p_ndc.p_ndc;
-        p_picked_ = pick(p_ndc, p_);
+    void MeshGrobRuler::grab(const RayPick& rp) {
+        latest_ndc_    = rp.p_ndc;
+        p_picked_ = pick(rp, p_);
     }
 
-    void MeshGrobRuler::drag(const RayPick& p_ndc) {
+    void MeshGrobRuler::drag(const RayPick& rp) {
 
-        if(length(p_ndc.p_ndc - latest_ndc_) <= 10.0/1024.0) {
+        if(length(rp.p_ndc - latest_ndc_) <= 10.0/1024.0) {
             return ;
         }
 
-        latest_ndc_ = p_ndc.p_ndc;
+        latest_ndc_ = rp.p_ndc;
 
         vec3 q;
-        bool q_picked = pick(p_ndc,q);
+        bool q_picked = pick(rp,q);
         std::string message;
         if(p_picked_ && q_picked) {
             message =

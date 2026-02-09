@@ -42,6 +42,8 @@
 
 namespace OGF {
 
+    class RenderingContext;
+
     /**
      * \brief A display list that memorizes simple graphic primitives to
      *  be displayed over the 3D rendering window.
@@ -49,9 +51,17 @@ namespace OGF {
      *  because mouse event handler of the 3D window are called completely
      *  independelty of ImGui, so we need a "protocol" to communicate
      *  between the two worlds.
+     *  All functions use OpenGL device coordinates, that is, in pixels,
+     *  with origin in lower left corner.
      */
     class RENDERER_API Overlay {
     public:
+
+        Overlay(
+	    RenderingContext* rendering_context
+	) : rendering_context_(rendering_context) {
+        }
+
         /**
          * \brief Removes all primitives to be displayed.
          */
@@ -69,7 +79,7 @@ namespace OGF {
          * \brief Adds a segment to the display list.
          * \param[in] p1 , p2 the 2D coordinates of the extremities of the
          *  segment. One may use Tool::project_point() to obtain them from
-         *  real-world coordinates.
+         *  real-world coordinates. Origin is lower-left corner.
          * \param[in] color the color, with alpha
          * \param[in] thickness line thickness (ImGui can draw antialiased
          *  thick lines).
@@ -80,7 +90,7 @@ namespace OGF {
          * \brief Adds a rectangle to the display list.
          * \param[in] p1 , p2 the 2D coordinates of two corners of the
          *  rectangle. One may use Tool::project_point() to obtain them from
-         *  real-world coordinates.
+         *  real-world coordinates. Origin is lower-left corner.
          * \param[in] color the color, with alpha
          * \param[in] thickness line thickness (ImGui can draw antialiased
          *  thick lines).
@@ -91,7 +101,7 @@ namespace OGF {
          * \brief Adds a filled rectangle to the display list.
          * \param[in] p1 , p2 the 2D coordinates of two corners of the
          *  rectangle. One may use Tool::project_point() to obtain them from
-         *  real-world coordinates.
+         *  real-world coordinates. Origin is lower-left corner.
          * \param[in] color the color, with alpha
          */
         void fillrect(vec2 p1, vec2 p2, Color color);
@@ -100,7 +110,7 @@ namespace OGF {
          * \brief Adds a circle to the display list.
          * \param[in] p1 the 2D coordinates of the center of the
          *  circle. One may use Tool::project_point() to obtain them from
-         *  real-world coordinates.
+         *  real-world coordinates. Origin is lower-left corner.
          * \param[in] R the radius of the circle
          * \param[in] color the color, with alpha
          * \param[in] thickness line thickness (ImGui can draw antialiased
@@ -112,7 +122,7 @@ namespace OGF {
          * \brief Adds a filled circle to the display list.
          * \param[in] p1 the 2D coordinates of the center of the
          *  circle. One may use Tool::project_point() to obtain them from
-         *  real-world coordinates.
+         *  real-world coordinates. Origin is lower-left corner.
          * \param[in] R the radius of the circle
          * \param[in] color the color, with alpha
          */
@@ -122,7 +132,7 @@ namespace OGF {
          * \brief Adds a filled triangle to the display list.
          * \param[in] p1 , p2 , p3 the 2D coordinates of two corners of the
          *  rectangle. One may use Tool::project_point() to obtain them from
-         *  real-world coordinates.
+         *  real-world coordinates. Origin is lower-left corner.
          * \param[in] color the color, with alpha
          */
         void filltriangle(vec2 p1, vec2 p2, vec2 p3, Color color);
@@ -131,7 +141,7 @@ namespace OGF {
          * \brief Adds a filled triangle to the display list.
          * \param[in] p1 , p2 , p3 , p4 the 2D coordinates of two corners of the
          *  rectangle. One may use Tool::project_point() to obtain them from
-         *  real-world coordinates.
+         *  real-world coordinates. Origin is lower-left corner.
          * \param[in] color the color, with alpha
          */
         void fillquad(vec2 p1, vec2 p2, vec2 p3, vec2 p4, Color color);
@@ -153,8 +163,8 @@ namespace OGF {
         };
 
 	void add_primitive(Primitive& prim);
-
         vector<Primitive> primitives_;
+	RenderingContext* rendering_context_;
     };
 
 }
