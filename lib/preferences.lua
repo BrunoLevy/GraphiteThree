@@ -193,8 +193,14 @@ preferences_window['draw_Appearance and rendering'] = function()
    preferences_window.edit_preference_boolean(
        'Maximize window at startup', 'gfx:full_screen'
    )
-   if imgui.Button('Restore default layout',-1,0) then
+   if imgui.Button(
+      'Restore default layout',-imgui.GetContentRegionAvail()/2,0
+   ) then
       preferences_window.load_preferences('default_layout')
+   end
+   imgui.SameLine()
+   if imgui.Button('Restore legacy layout',-1,0) then
+      preferences_window.load_preferences('legacy_layout')
    end
 
    imgui.Text('\n')
@@ -254,7 +260,7 @@ end
 -- \brief Draws the 'Logger' pane
 
 function preferences_window.draw_Logger()
-   local footer_size = 80
+   local footer_size = 150
    local w = imgui.GetWindowWidth() * 0.5 - 12*main.scaling()
    local sel,include,exclude
    imgui.PushID('##Logger_prefs')
@@ -435,7 +441,7 @@ function preferences_window.draw()
 
       imgui.SetNextWindowSize(
          350*main.scaling(),
-         400*main.scaling(),
+         600*main.scaling(),
          ImGuiCond_FirstUseEver
       )
 
