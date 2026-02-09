@@ -148,8 +148,8 @@ namespace OGF {
 	// float y0 = ImGui::GetMainViewport()->Pos.y;
 	// x1..x4 += x0; y1..y4 += y0 // do not remember why ??
 	float H = float(rendering_context_->get_height());
-	float sx = ImGui::GetIO().DisplayFramebufferScale.x;
-	float sy = ImGui::GetIO().DisplayFramebufferScale.y;
+	float sx = 1.0f/ImGui::GetIO().DisplayFramebufferScale.x;
+	float sy = 1.0f/ImGui::GetIO().DisplayFramebufferScale.y;
 	P.x1 = sx * P.x1;
 	P.y1 = H-1.0f-sy*P.y1;
 
