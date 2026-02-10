@@ -66,14 +66,16 @@ function autogui.command_dialog(request)
   imgui.Separator()
   autogui.command_dialog_apply_buttons(request)
 
-  autogui.command_state[k].width_,
-  autogui.command_state[k].height_ = imgui.GetWindowSize()
-  -- increase height a little bit so that resizing corner
-  -- does not 'eat' too much and scrollbar does not appear.
-  autogui.command_state[k].height_ = autogui.command_state[k].height_ + 5
+  if autogui.command_state[k] ~= nil then
+     autogui.command_state[k].width_,
+     autogui.command_state[k].height_ = imgui.GetWindowSize()
+     -- increase height a little bit so that resizing corner
+     -- does not 'eat' too much and scrollbar does not appear.
+     autogui.command_state[k].height_ = autogui.command_state[k].height_ + 5
 
-  autogui.command_state[k].x_,
-  autogui.command_state[k].y_ = imgui.GetWindowPos()
+     autogui.command_state[k].x_,
+     autogui.command_state[k].y_ = imgui.GetWindowPos()
+  end
 end
 
 -- \brief Handles the menu item for an object command
@@ -124,10 +126,7 @@ function autogui.open_command_dialog(request,args)
   local k = autogui.request_key(request)
   if autogui.command_state[k] == nil then
      autogui.command_state[k] = autogui.init_args(request.method())
-     -- always open a separate dialog for now, because we want that the
-     --   | apply button keeps the command open and allows gfx update
-     --   v
-     if false and command_gui.visible then
+     if command_gui.visible then
         autogui.command_state[k].show_as_window_ = false
         command_gui.request = request
      else
@@ -238,11 +237,11 @@ function autogui.command_dialog_apply_buttons(request)
 
   -- Apply command without closing ------------------------------
   local doit_recycle_button = false
-  if not autogui.command_state[k].show_as_window_ then
+--  if not autogui.command_state[k].show_as_window_ then
      doit_recycle_button = imgui.Button(imgui.font_icon('sync-alt'))
      autogui.tooltip('apply command without closing dialog')
      imgui.SameLine()
-  end
+--  end
 
   -- Apply command to selected objects --------------------------
   local doit_apply_to_sel_button = imgui.Button(
@@ -276,26 +275,31 @@ function autogui.command_dialog_apply_buttons(request)
       )
       local object_as_string = gom.back_resolve(request.object())
 
-      -- If the 'apply do not close' button was pushed, or if the command
-      -- is displayed in a separate window, we directly call the LUA function
-      -- (this does not close the menu)
-      if doit_recycle_button then
+      -- Close the menu (if we were in menu mode).
+      if not doit_recycle_button and
+         not autogui.command_state[k].show_as_window_ and
+         not command_gui.visible then
+         imgui.CloseCurrentPopup()
+      end
+
+      if doit_recycle_button and
+         not command_gui.visible and
+         not autogui.command_state[k].show_as_window_ then
+         -- If command is in menu and 'recycle' was pushed,
+         -- we need to execute the command now else it closes
+         -- the dialog
          main.exec_command_now(
-   	    object_as_string..'.'..mmethod.name..'('..args_string..')', false
+            object_as_string..'.'..mmethod.name..'('..args_string..')', false
          )
-      -- else the command is in the menu and the apply button was pushed,
-      -- and we queue the LUA command, this allows the command to display
-      -- progress bars
       else
+         -- We queue the LUA command, this allows the command to display
+         -- progress bars
          main.exec_command(
-   	    object_as_string..'.'..mmethod.name..'('..args_string..')', false
+            object_as_string..'.'..mmethod.name..'('..args_string..')', false
          )
-	 -- Close the menu (if we were in menu mode).
-	 if not autogui.command_state[k].show_as_window_ then
-  	    imgui.CloseCurrentPopup()
-	 end
       end
   end
+
   if doit_apply_to_sel_button then   -- Apply command to selected objects
       local args_string = autogui.args_to_string(
          mmethod, autogui.command_state[k]
@@ -309,8 +313,10 @@ function autogui.command_dialog_apply_buttons(request)
          end
       end
   end
+
   if (doit_apply_button and command_gui.visible) or close_dialog then
      command_gui.request = nil
+     autogui.command_state[k] = nil
   end
 end
 
