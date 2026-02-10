@@ -150,10 +150,11 @@ end
 -- Starts computation of center of gravity of free area
 
 function graphite_main_window.begin_G()
-   -- TODO: we need to use ImGui coordinates instead of framebuffer pixel size
+   -- convert framebuffer pixel size into ImGui window size
+   -- (taking hidpi retina scaling into account for Macs)
    local sx,sy = imgui.IO_DisplayFramebufferScale()
-   local w = main.render_area.frame_buffer_width * sx
-   local h = main.render_area.frame_buffer_height * sy
+   local w = main.render_area.frame_buffer_width / sx
+   local h = main.render_area.frame_buffer_height / sy
    local m = w*h
    graphite_main_window.m = m
    graphite_main_window.gx = 0.5 * w * m
