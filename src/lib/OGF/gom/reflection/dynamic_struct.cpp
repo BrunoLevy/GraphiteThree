@@ -34,7 +34,7 @@
  *  the Software into proprietary programs.
  */
 
-#include <OGF/gom/reflection/meta_struct.h>
+#include <OGF/gom/reflection/dynamic_struct.h>
 
 namespace OGF {
 
