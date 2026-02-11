@@ -175,6 +175,18 @@ namespace {
 	return result;
     }
 
+    inline OGF::MetaBuiltinStruct* gom_struct_from_member(Node* n) {
+	Node* clazz = Getattr(n,"parentNode");
+	std::string class_name = gom_type_name_from_string(
+	    Getattr(clazz,"name")
+	);
+	OGF::MetaBuiltinStruct* result = dynamic_cast<OGF::MetaBuiltinStruct*>(
+	    OGF::Meta::instance()->resolve_meta_type(class_name)
+	);
+	ogf_assert(result != nullptr);
+	return result;
+    }
+
     void copy_gom_attributes(Node* from, OGF::CustomAttributes* to) {
 	Hash* attributes = Getattr(from,"gom:attributes");
 	if(attributes != nullptr) {
@@ -723,23 +735,6 @@ namespace {
 			<< std::endl;
 		    return SWIG_OK;
 		}
-/*
-// Should we or should we not enforce setter parameter name ?
-{
-std::string param_name = gom_string(Getattr(parms,"name"));
-if(param_name != "value") {
-error_flag = true;
-OGF::Logger::err("GomGen")
-<< mclass->name()
-<< "::" << getset << name
-<< " : malformed property setter,"
-<< " argument should be named \"value\""
-<< " (got " << param_name << ")"
-<< std::endl;
-return SWIG_OK;
-}
-}
-*/
 		OGF::MetaProperty* mprop = mclass->find_property(name);
 		if(mprop == nullptr) {
 		    std::string type = gom_type_name(Getattr(parms,"type"));
@@ -776,8 +771,8 @@ return SWIG_OK;
 	/* Variable handlers */
 
 	virtual int variableHandler(Node *n) {
-	    ogf_argused(n);
-	    return SWIG_OK;
+	    // Dispatches to xxxvariableHandler() functions.
+	    return Language::variableHandler(n);
 	}
 
 	virtual int globalvariableHandler(Node *n) {
@@ -786,7 +781,13 @@ return SWIG_OK;
 	}
 
 	virtual int membervariableHandler(Node *n) {
-	    ogf_argused(n);
+	    OGF::MetaBuiltinStruct* mstruct = gom_struct_from_member(n);
+	    if(mstruct != nullptr) {
+		std::string name = gom_string(Getattr(n,"name"));
+		SwigType* type = Getattr(n,"type");
+		std::string type_name = gom_type_name(type);
+		mstruct->add_field(name, type_name, size_t(-1));
+	    }
 	    return SWIG_OK;
 	}
 
@@ -829,7 +830,8 @@ return SWIG_OK;
 	    // HERE
 	    if(!checkAttribute(n, "gom:kind", "class")) {
 		std::string name = gom_type_name_from_string(Getattr(n, "name"));
-		OGF::MetaBuiltinStruct* mstruct = new OGF::MetaBuiltinStruct(name);
+		OGF::MetaBuiltinStruct* mstruct =
+		    new OGF::MetaBuiltinStruct(name);
 		OGF::Meta::instance()->bind_meta_type(mstruct);
 
 	    }

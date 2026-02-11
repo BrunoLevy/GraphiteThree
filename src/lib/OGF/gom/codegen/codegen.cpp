@@ -134,9 +134,8 @@ namespace OGF {
 	// using dynamic_cast<> instead of GOM meta information because
 	// GOM meta information is not available yet ! (we are generating
 	// it...)
-	bool is_meta_struct = (
-	    dynamic_cast<MetaBuiltinStruct*>(mbuiltin) != nullptr
-	);
+	MetaBuiltinStruct* mbstruct = dynamic_cast<MetaBuiltinStruct*>(mbuiltin);
+	bool is_meta_struct = (mbstruct != nullptr);
 
         out() << "   if(!Meta::instance()->meta_type_is_bound("
               << stringify(mbuiltin->name()) << ")) {" << std::endl;
@@ -149,7 +148,22 @@ namespace OGF {
         }
         out() << mbuiltin->name() << ">("
               << stringify(mbuiltin->name())
-              << ");" << std::endl;
+              << ")";
+
+	if(is_meta_struct) {
+	    MetaStruct* mstruct = mbstruct->get_meta_struct();
+	    index_t nb_fields = index_t(mstruct->nb_properties(false));
+	    for(index_t i=0; i<nb_fields; ++i) {
+		MetaProperty* mprop = mstruct->ith_property(i,false);
+		out() << std::endl
+		      << "         ->ogf_add_field("
+		      << mbstruct->name() << "," << mprop->name()
+		      << ")";
+	    }
+	}
+
+	out() << ";" << std::endl;
+
         out() << "   }" << std::endl;
         out() << std::endl;
     }

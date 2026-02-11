@@ -117,6 +117,28 @@ namespace OGF {
 	    return this;
 	}
 
+	/**
+	 * \brief Declares a new field of this MetaBuiltinStruct
+	 * \param[in] name the name of the field
+	 * \param[in] type_name the type of field as a string
+	 * \param[in] offset the offset of the field in memory, that is,
+	 *   the address of the field supposing that the address of the struct
+	 *   is zero
+	 * \return a pointer to this MetaBuiltinStruct, used to chain
+	 *   calls to add_field()
+	 */
+	MetaBuiltinStruct* add_field(
+	    const std::string& name, const std::string& type_name, size_t offset
+	) {
+	    MetaProperty* mprop = new MetaProperty(
+		name, meta_struct_, type_name
+	    );
+	    mprop->create_custom_attribute(
+		"offset", String::to_string(size_t(offset))
+	    );
+	    return this;
+	}
+
     protected:
 	/**
 	 * \brief Adds a new property to this MetaBuiltinStruct
