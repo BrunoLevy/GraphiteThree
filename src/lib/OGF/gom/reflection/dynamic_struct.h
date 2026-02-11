@@ -96,10 +96,24 @@ namespace OGF {
 
 
     public:
+	/**
+	 * \brief Declares a new field of this MetaBuiltinStruct
+	 * \tparam T the type of the field
+	 * \param[in] name the name of the field
+	 * \param[in] offset the offset of the field in memory, that is,
+	 *   the address of the field supposing that the address of the struct
+	 *   is zero
+	 * \return a pointer to this MetaBuiltinStruct, used to chain
+	 *   calls to add_field()
+	 */
 	template <class T> MetaBuiltinStruct* add_field(
-	    const std::string& name
+	    const std::string& name, T* offset
 	) {
-	    add_property_by_typeid_name(name, typeid(T).name());
+	    MetaProperty* mprop =
+		add_property_by_typeid_name(name, typeid(T).name());
+	    mprop->create_custom_attribute(
+		"offset", String::to_string(size_t(offset))
+	    );
 	    return this;
 	}
 
@@ -117,7 +131,7 @@ namespace OGF {
 
 
     private:
-	MetaStruct_var meta_struct_;
+	MetaStruct* meta_struct_;
     };
 
 

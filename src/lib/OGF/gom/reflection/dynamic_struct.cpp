@@ -53,11 +53,13 @@ namespace OGF {
 	const std::string& struct_name
     ) :  MetaBuiltinType(struct_name) {
 	meta_struct_ = new MetaStruct(
-	    struct_name + "_as_gom_Object"
+	    struct_name + "_as_GOM_Object"
 	);
+	Meta::instance()->bind_meta_type(meta_struct_);
     }
 
     MetaBuiltinStruct::~MetaBuiltinStruct() {
+	meta_struct_ = nullptr;
     }
 
     MetaProperty* MetaBuiltinStruct::add_property_by_typeid_name(

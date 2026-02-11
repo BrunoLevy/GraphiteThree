@@ -309,16 +309,20 @@ namespace OGF {
 
     /***************************************************************************/
 
+#define ogf_offset(structtype,field) \
+	&(reinterpret_cast<structtype*>(0)->field)
+
+#define ogf_add_field(structtype, field) \
+    add_field(#field, ogf_offset(structtype, field))
+
     /**
      * \brief A class to declare a new struct type.
      * \tparam T the struct type to be declared
      * \details Example of use:
      * \code
-     *    MetaBuitlinStruct* mtype = ogf_declare_struct<SurfaceStyle>(
-     *      "OGF::SurfaceStyle"
-     *    );
-     *    mtype->add_property("visible",ogf_meta<bool>.type());
-     *    mtype->add_property("color", ogf_meta<Color>.type());
+     *    ogf_declare_struct<SurfaceStyle>("OGF::SurfaceStyle")
+     *     ->ogf_add_field(SurfaceStyle, visible)
+     *     ->ogf_add_field(SurfaceStyle, color);
      * \endcode
      * \note Used by the C++ code created by GOMGEN.
      *  Client code should not use these functions.

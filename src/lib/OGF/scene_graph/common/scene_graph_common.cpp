@@ -67,26 +67,31 @@ namespace OGF {
 	    ogf_declare_builtin_type<GEO::Color>("GEO::Color");
 	}
 
+	if(!Meta::instance()->meta_type_is_bound("OGF::ColormapName")) {
+	    ogf_declare_builtin_type<OGF::ColormapName>("OGF::ColormapName");
+	}
+
+
 	ogf_declare_struct<PointStyle>("OGF::PointStyle")
-	    ->add_field<bool>("visible")
-	    ->add_field<Color>("color")
-	    ->add_field<index_t>("size");
+	    ->ogf_add_field(PointStyle,visible)
+	    ->ogf_add_field(PointStyle,color)
+	    ->ogf_add_field(PointStyle,size);
 
 	ogf_declare_struct<EdgeStyle>("OGF::EdgeStyle")
-	    ->add_field<bool>("visible")
-	    ->add_field<Color>("color")
-	    ->add_field<index_t>("width");
+	    ->ogf_add_field(EdgeStyle,visible)
+	    ->ogf_add_field(EdgeStyle,color)
+	    ->ogf_add_field(EdgeStyle,width);
 
 	ogf_declare_struct<SurfaceStyle>("OGF::SurfaceStyle")
-	    ->add_field<bool>("visible")
-	    ->add_field<Color>("color");
+	    ->ogf_add_field(SurfaceStyle,visible)
+	    ->ogf_add_field(SurfaceStyle,color);
 
 	ogf_declare_struct<ColormapStyle>("OGF::ColormapStyle")
-	    ->add_field<std::string>("colormap_name")
-	    ->add_field<bool>("smooth")
-	    ->add_field<index_t>("repeat")
-	    ->add_field<bool>("show")
-	    ->add_field<bool>("flip");
+	    ->ogf_add_field(ColormapStyle,colormap_name)
+	    ->ogf_add_field(ColormapStyle,smooth)
+	    ->ogf_add_field(ColormapStyle,repeat)
+	    ->ogf_add_field(ColormapStyle,show)
+	    ->ogf_add_field(ColormapStyle,flip);
 
 	// SceneGraph is not an abstract class, but I do not want
 	// it to appear as an option in the 'create object' menu.
