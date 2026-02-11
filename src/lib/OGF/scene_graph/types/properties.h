@@ -25,16 +25,16 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
- 
+
+
 #ifndef H_OGF_SCENE_GRAPH_TYPES_SHADER_PROPERTIES_H
 #define H_OGF_SCENE_GRAPH_TYPES_SHADER_PROPERTIES_H
 
@@ -87,27 +87,7 @@ namespace OGF {
         index_t size;
     };
 
-    /**
-     * \brief Writes a PointStyle to a stream.
-     * \param[in,out] out the stream
-     * \param[in] ps a const reference to the PointStyle
-     * \return the new state of the stream after writing
-     */
-    SCENE_GRAPH_API std::ostream& operator<<(
-        std::ostream& out, const PointStyle& ps
-    );
-
-    /**
-     * \brief Reads a PointStyle from a stream.
-     * \param[in,out] in the stream
-     * \param[out] ps a reference to the PointStyle
-     * \return the new state of the stream after reading
-     */
-    SCENE_GRAPH_API std::istream& operator>>(
-        std::istream& in, PointStyle& ps
-    );
-
-    //________________________________________________________
+    /****************************************************************/
 
     /**
      * \brief Drawing style for mesh edges.
@@ -122,44 +102,24 @@ namespace OGF {
             color(0.0,0.0,0.0,1.0),
             width(1) {
         }
-        
+
         /**
          * \brief true if edges are visible, false otherwise.
          */
         bool visible;
-        
+
         /**
          * \brief Color of the edges.
          */
         Color color;
-        
+
         /**
          * \brief width of the edges.
          */
         index_t width;
     };
 
-    /**
-     * \brief Writes an EdgeStyle to a stream.
-     * \param[in,out] out the stream
-     * \param[in] es a const reference to the EdgeStyle
-     * \return the new state of the stream after writing
-     */
-    SCENE_GRAPH_API std::ostream& operator<<(
-        std::ostream& out, const EdgeStyle& es
-    );
-
-    /**
-     * \brief Reads an EdgeStyle from a stream.
-     * \param[in,out] in the stream
-     * \param[out] es a reference to the EdgeStyle
-     * \return the new state of the stream after reading
-     */
-    SCENE_GRAPH_API std::istream& operator>>(
-        std::istream& in, EdgeStyle& es
-    );
-
-    //________________________________________________________
+    /*************************************************************/
 
     /**
      * \brief Drawing style for polygons.
@@ -178,37 +138,17 @@ namespace OGF {
          * \brief true if polygons are visible, false otherwise.
          */
         bool visible;
-        
+
         /**
          * \brief The Color used to draw the polygons.
          */
         Color color;
     };
 
-    /**
-     * \brief Writes a SurfaceStyle to a stream.
-     * \param[in,out] out the stream
-     * \param[in] ss a const reference to the SurfaceStyle
-     * \return the new state of the stream after writing
-     */
-    SCENE_GRAPH_API std::ostream& operator<<(
-        std::ostream& out, const SurfaceStyle& ss
-    );
-
-    /**
-     * \brief Reads a SurfaceStyle from a stream.
-     * \param[in,out] in the stream
-     * \param[out] ss a reference to the SurfaceStyle
-     * \return the new state of the stream after reading
-     */
-    SCENE_GRAPH_API std::istream& operator>>(
-        std::istream& in, SurfaceStyle& ss
-    );
-    
     /***********************************************************************/
 
     /**
-     * \brief A template class for strings that need to have a 
+     * \brief A template class for strings that need to have a
      *  specific type in the GOM system.
      * \details This class behaves exactly like std::string. It
      *  has a different type, so that GOM can make the difference
@@ -324,7 +264,7 @@ namespace OGF {
     };
 
     //________________________________________________________
-    
+
     /**
      * \brief Writes a Name to a stream.
      * \param[in,out] out a reference to the stream
@@ -350,15 +290,15 @@ namespace OGF {
         // "in >> name" would truncate the string if it contains whitespace
         // (and under Windows, "My documents" directory contains a
         // whitespace !)
-         
+
         std::getline(in, (std::string&)name) ;
         return in ;
     }
-    
+
     //________________________________________________________
 
     /**
-     * \brief Just a placeholder template to create new 
+     * \brief Just a placeholder template to create new
      *  Name<> types for file names.
      */
     template <class T> class File {
@@ -369,7 +309,7 @@ namespace OGF {
      * \brief The name of an existing file.
      * \details This class can be used as a std::string. The only
      *  difference is that when it is used as a command argument or
-     *  a Shader property, AutoGUI will generate for it a textfield and 
+     *  a Shader property, AutoGUI will generate for it a textfield and
      *  a button that opens a FileSelectionBox configured for selecting
      *  an existing file.
      */
@@ -379,21 +319,21 @@ namespace OGF {
      * \brief The name of a new file.
      * \details This class can be used as a std::string. The only
      *  difference is that when it is used as a command argument or
-     *  a Shader property, AutoGUI will generate for it a textfield and 
+     *  a Shader property, AutoGUI will generate for it a textfield and
      *  a button that opens a FileSelectionBox configured for selecting
      *  an (existing or not) file.
      */
     typedef Name<File<Memory::byte>,true> NewFileName;
-    
+
     //________________________________________________________
 
     /**
      * \brief The name of an existing file that contains an Image.
      * \details This class can be used as a std::string. The only
      *  difference is that when it is used as a command argument or
-     *  a Shader property, AutoGUI will generate for it a textfield and 
+     *  a Shader property, AutoGUI will generate for it a textfield and
      *  a button that opens a FileSelectionBox configured for selecting
-     *  an existing image file. The list of valid extensions for an 
+     *  an existing image file. The list of valid extensions for an
      *  image file is obtained from the ImageLibrary.
      */
     typedef Name<File<Image*> > ImageFileName;
@@ -402,13 +342,13 @@ namespace OGF {
      * \brief The name of an (existing or not) file that contains an Image.
      * \details This class can be used as a std::string. The only
      *  difference is that when it is used as a command argument or
-     *  a Shader property, AutoGUI will generate for it a textfield and 
+     *  a Shader property, AutoGUI will generate for it a textfield and
      *  a button that opens a FileSelectionBox configured for selecting
-     *  an (existing or not) image file. The list of valid extensions for an 
+     *  an (existing or not) image file. The list of valid extensions for an
      *  image file is obtained from the ImageLibrary.
      */
     typedef Name<File<Image*>,true> NewImageFileName;
-    
+
     //________________________________________________________
 
     class Grob;
@@ -439,9 +379,9 @@ namespace OGF {
      * \brief The name of an existing file that contains an object.
      * \details This class can be used as a std::string. The only
      *  difference is that when it is used as a command argument or
-     *  a Shader property, AutoGUI will generate for it a textfield and 
+     *  a Shader property, AutoGUI will generate for it a textfield and
      *  a button that opens a FileSelectionBox configured for selecting
-     *  an existing object file. The list of valid extensions for an 
+     *  an existing object file. The list of valid extensions for an
      *  image file is obtained from the SceneGraphLibrary.
      */
     typedef Name<File<Grob*> > GrobFileName;
@@ -450,13 +390,13 @@ namespace OGF {
      * \brief The name of an (existing or not) file that contains an object.
      * \details This class can be used as a std::string. The only
      *  difference is that when it is used as a command argument or
-     *  a Shader property, AutoGUI will generate for it a textfield and 
+     *  a Shader property, AutoGUI will generate for it a textfield and
      *  a button that opens a FileSelectionBox configured for selecting
-     *  an (existing or not) object file. The list of valid extensions for an 
+     *  an (existing or not) object file. The list of valid extensions for an
      *  image file is obtained from the SceneGraphLibrary.
      */
-    typedef Name<File<Grob*>,true> NewGrobFileName;    
-    
+    typedef Name<File<Grob*>,true> NewGrobFileName;
+
     //________________________________________________________
 
     class GrobClass;
@@ -484,7 +424,7 @@ namespace OGF {
      *  "lib/colormaps" subdirectory.
      */
     typedef Name<Colormap*> ColormapName;
-    
+
     //________________________________________________________
 
     /**
@@ -502,20 +442,20 @@ namespace OGF {
 	   show(false),
 	   flip(false) {
         }
-        
+
         /**
          * \brief Name of the colormap file, in "lib/colormaps"
          */
         ColormapName colormap_name;
-        
+
         /**
          * \brief If true, then colormap is smoothed (using linear
          *  interpolation and mipmaps, else GL_NEAREST is used.
          */
         bool smooth;
-        
+
         /**
-         * \brief Number of times the colormap should be repeated 
+         * \brief Number of times the colormap should be repeated
          *  within the [0,1] range of color indices. Zero or 1 both
          *  mean no repetition.
          */
@@ -534,28 +474,7 @@ namespace OGF {
 	bool flip;
     };
 
-
-    /**
-     * \brief Writes a ColormapStyle to a stream.
-     * \param[in,out] out the stream
-     * \param[in] cms a const reference to the ColormapStyle
-     * \return the new state of the stream after writing
-     */
-    SCENE_GRAPH_API std::ostream& operator<<(
-        std::ostream& out, const ColormapStyle& cms
-    );
-
-    /**
-     * \brief Reads a ColormapStyle from a stream.
-     * \param[in,out] in the stream
-     * \param[out] cms a reference to the ColormapStyle
-     * \return the new state of the stream after reading
-     */
-    SCENE_GRAPH_API std::istream& operator>>(
-        std::istream& in, ColormapStyle& cms
-    );
-    
-    //________________________________________________________
+    /**************************************************************/
 
     class FullScreenEffect;
 
@@ -567,7 +486,7 @@ namespace OGF {
      *  with a list of full screen effect names.
      */
     typedef Name<FullScreenEffect*> FullScreenEffectName;
-    
+
 }
 
 #endif

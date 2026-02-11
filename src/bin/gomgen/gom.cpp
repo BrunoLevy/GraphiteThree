@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/gom/reflection/meta.h>
@@ -41,6 +41,7 @@
 #include <OGF/gom/reflection/meta_property.h>
 #include <OGF/gom/reflection/meta_slot.h>
 #include <OGF/gom/reflection/meta_signal.h>
+#include <OGF/gom/reflection/dynamic_struct.h>
 #include <OGF/basic/os/text_utils.h>
 
 #include <geogram/basic/file_system.h>
@@ -66,7 +67,7 @@ namespace {
     void find_scopes(std::string& name, std::vector<std::string>& scopes) {
 	scopes.clear();
 	for(
-	    size_t pos=name.find("::"); 
+	    size_t pos=name.find("::");
 	    pos != std::string::npos;
 	    pos = name.find("::",pos+2)
 	) {
@@ -102,7 +103,7 @@ namespace {
 	    base = 16;
 	    ptr += 2;
 	}
-	
+
 	char* end;
 	value = int(strtol(ptr, &end, base));
 	return (end != str && *end == '\0' && errno == 0);
@@ -120,7 +121,7 @@ namespace {
 
     /**
      * \brief Removes the double quotes around a string.
-     * \details If the input string has no double quotes around it, 
+     * \details If the input string has no double quotes around it,
      *  it is left unmodified.
      * \param[in,out] s a reference to the string to be unquoted
      */
@@ -143,7 +144,7 @@ namespace {
     }
 
     void gom_msg(const char* msg, Node* n);
-    
+
     inline std::string gom_type_name(SwigType* ty) {
 	String* s = SwigType_str(SwigType_base(ty),nullptr);
 	std::string result = gom_type_name_from_string(s);
@@ -164,7 +165,9 @@ namespace {
 
     inline OGF::MetaClass* gom_class_from_member(Node* n) {
 	Node* clazz = Getattr(n,"parentNode");
-	std::string class_name = gom_type_name_from_string(Getattr(clazz,"name"));
+	std::string class_name = gom_type_name_from_string(
+	    Getattr(clazz,"name")
+	);
 	OGF::MetaClass* result = dynamic_cast<OGF::MetaClass*>(
 	    OGF::Meta::instance()->resolve_meta_type(class_name)
 	);
@@ -182,7 +185,7 @@ namespace {
 	    }
 	}
     }
-    
+
     void copy_gom_attributes(Node* from, OGF::MetaMethod* to) {
 	Hash* attributes = Getattr(from,"gom:attributes");
 	if(attributes != nullptr) {
@@ -206,7 +209,7 @@ namespace {
 			    OGF::Logger::err("GomGen")
 				<< "Error in Doxygen comment:"
 				<< std::endl;
-			    OGF::Logger::err("GomGen") 
+			    OGF::Logger::err("GomGen")
 				<< "gom_arg specified for undefined arg: "
 				<< arg_name << std::endl;
 			    OGF::Logger::err("GomGen")
@@ -224,7 +227,7 @@ namespace {
 			}
 		    } else {
 			error_flag = true;
-			OGF::Logger::err("GomGen") 
+			OGF::Logger::err("GomGen")
 			    << "malformed gom_arg attribute: "
 			    << name << ":" << value << std::endl;
 		    }
@@ -234,7 +237,7 @@ namespace {
 	    }
 	}
     }
-    
+
     void copy_gom_args(Node* from, OGF::MetaMethod* to) {
 	Parm* parms = Getattr(from,"parms");
 	if(parms != nullptr) {
@@ -243,10 +246,10 @@ namespace {
 		SwigType* type_in  = Getattr(p,"type");
 		String*   name_in  = Getattr(p,"name");
 		String*   value_in = Getattr(p,"value");
-		
+
 		std::string name;
 		if(name_in == nullptr) {
-		    OGF::Logger::warn("GomGen") 
+		    OGF::Logger::warn("GomGen")
 			<< "anonymous arg in signal/slot"
 			<< std::endl;
 		    std::ostringstream s;
@@ -255,7 +258,7 @@ namespace {
 		} else {
 		    name = gom_string(name_in);
 		}
-		
+
 		std::string type = gom_type_name(type_in);
 		OGF::MetaArg arg(name, type);
 		copy_gom_attributes(p, &arg);
@@ -282,14 +285,14 @@ namespace {
 
     void gom_msg(const char* msg, Node* n) {
 	Printv(stdout, "[GOM] >>> ", msg, "\n", nullptr);
-	
+
 	List* k = Keys(n);
 	Printv(stdout, "[GOM]      keys = ", nullptr);
 	for(int i=0; i<Len(k); i++) {
 	    Printv(stdout, Getitem(k, i), " ", nullptr);
 	}
 	Printv(stdout, "\n", nullptr);
-	
+
 	print_attr(n, "nodeType");
 	print_attr(n, "name");
 	print_attr(n, "type");
@@ -298,10 +301,10 @@ namespace {
 	print_attr(n, "kind");
 	print_attr(n, "value");
 	print_attr(n, "enumvalue");
-	
+
 	Parm* parms = Getattr(n,"parms");
 	if(parms != nullptr) {
-	    Printv(stdout, "[GOM]      parms = (  ", nullptr);        
+	    Printv(stdout, "[GOM]      parms = (  ", nullptr);
 	    for (Node* p = parms; p != nullptr; p = nextSibling(p)) {
 		SwigType *type  = Getattr(p,"type");
 		String   *name  = Getattr(p,"name");
@@ -309,13 +312,15 @@ namespace {
 		if(value != nullptr) {
 		    Printv(
 			stdout,
-			"( ", SwigType_str(type,nullptr), " ", name, "=", value, " ) ",
+			"( ",
+			SwigType_str(type,nullptr), " ", name, "=", value, " ) ",
 			nullptr
 			);
 		} else {
 		    Printv(
 			stdout,
-			"( ", SwigType_str(type,nullptr), " ", name, " ) ", nullptr
+			"( ",
+			SwigType_str(type,nullptr), " ", name, " ) ", nullptr
 			);
 		}
 	    }
@@ -325,7 +330,7 @@ namespace {
 
 	List* baselist = Getattr(n,"baselist");
 	if(baselist != nullptr) {
-	    Printv(stdout, "[GOM]      baselist = (  ", nullptr);        
+	    Printv(stdout, "[GOM]      baselist = (  ", nullptr);
 	    for(int i=0; i<Len(baselist); i++) {
 		Printv(stdout, Getitem(baselist, i), " ", nullptr);
 	    }
@@ -334,7 +339,7 @@ namespace {
 
 	Hash* attributes = Getattr(n,"gom:attributes");
 	if(attributes != nullptr) {
-	    Printv(stdout, "[GOM]      attributes = (  ", nullptr);        
+	    Printv(stdout, "[GOM]      attributes = (  ", nullptr);
 	    for(int i=0; i<Len(attributes); i++) {
 		String* name  = Getitem(Keys(attributes), i);
 		String* value = Getattr(attributes, name);
@@ -348,9 +353,9 @@ namespace {
 
     class GOMSWIG : public Language {
     public:
-	
+
 	enum GomMemberType { HIDDEN, SLOT, SIGNAL, PROPERTY };
-	
+
 	GOMSWIG() {
 	    gomclass_flag   = false;
 	    gom_member_type = HIDDEN;
@@ -369,19 +374,19 @@ namespace {
 	    package_name_ = package_name;
 	    package_directory_ = package_directory;
 	}
-    
+
 	virtual int top(Node* n) {
-	    return Language::top(n); 
+	    return Language::top(n);
 	}
 
 	virtual void main(int argc, char *argv[]) {
 	    Language::main(argc, argv);
 	}
-	
+
 	/* SWIG directives */
 
-	virtual int pragmaDirective(Node *n) { 
-	    
+	virtual int pragmaDirective(Node *n) {
+
 	    String* lang = Getattr(n, "lang");
 
 	    if(!Strcmp(lang, "gom")) {
@@ -395,7 +400,7 @@ namespace {
 		    gom_member_type = SIGNAL;
 		} else if(!Strcmp(name, "gomproperties")) {
 		    gom_member_type = PROPERTY;
-		} 
+		}
 		return SWIG_OK;
 	    } else if(!Strcmp(lang,"gomattribute")) {
 		String* name  = Getattr(n, "name");
@@ -405,7 +410,7 @@ namespace {
 	    }
 	    return Language::pragmaDirective(n);
 	}
-    
+
 	/* C/C++ parsing */
 
 	virtual int cDeclaration(Node *n) {
@@ -430,12 +435,12 @@ namespace {
 	    cleanup_attributes();
 	    return Language::cDeclaration(n);
 	}
-    
+
 	virtual int externDeclaration(Node *n) {
-	    cleanup_attributes();        
+	    cleanup_attributes();
 	    return Language::externDeclaration(n);
 	}
-    
+
 
 	//   Note: there is no enumHandler()/enumvalueHandler function,
 	// for enum, I've put the code in the "xxxDeclaration" functions.
@@ -444,10 +449,10 @@ namespace {
 	    if(name != "$unnamed$") {
 		OGF::Meta::instance()->bind_meta_type(new OGF::MetaEnum(name));
 	    }
-	    cleanup_attributes();        
+	    cleanup_attributes();
 	    return Language::enumDeclaration(n);
 	}
-    
+
 	virtual int enumvalueDeclaration(Node *n) {
 
 	    std::string name = Char(Getattr(n,"name"));
@@ -457,7 +462,7 @@ namespace {
 		return Language::enumvalueDeclaration(n);
 	    }
 	    OGF::MetaEnum* menum = dynamic_cast<OGF::MetaEnum*>(
-		OGF::Meta::instance()->resolve_meta_type(enum_name) 
+		OGF::Meta::instance()->resolve_meta_type(enum_name)
 		);
 	    ogf_assert(menum != nullptr);
 	    int value = 0;
@@ -466,7 +471,7 @@ namespace {
 	    if(Char(value_string) == nullptr) {
 		value_string = Getattr(n,"enumvalueex");
 	    }
-        
+
 	    sscanf(Char(value_string), "%d", &value);
 	    String* check = NewStringf("%d", value);
 
@@ -490,30 +495,30 @@ namespace {
 			}
 		    }
 		}
-            
+
 		// If this was a more complex expression, issue a warning
 		if(!ok) {
 		    value = int(menum->nb_values());
-		    OGF::Logger::warn("GomGen") 
-			<< enum_name << "::" << name << "=" << Char(value_string) 
+		    OGF::Logger::warn("GomGen")
+			<< enum_name << "::" << name << "=" << Char(value_string)
 			<< " : unspecified enum value, or complex expression"
 			<< std::endl;
-		    OGF::Logger::warn("GomGen") 
+		    OGF::Logger::warn("GomGen")
 			<< "    -> using " << value
 			<< " please check if this is correct" << std::endl;
 		}
 	    }
 	    Delete(check);
 	    menum->add_value(name,value);
-	    cleanup_attributes();        
+	    cleanup_attributes();
 	    return Language::enumvalueDeclaration(n);
 	}
 
 	virtual int enumforwardDeclaration(Node *n) {
-	    cleanup_attributes();        
+	    cleanup_attributes();
 	    return Language::enumforwardDeclaration(n);
 	}
-    
+
 	virtual int classDeclaration(Node *n) {
 
 	    gom_member_type = HIDDEN;
@@ -528,11 +533,11 @@ namespace {
 
 	    std::string filename(Char(file));
 	    OGF::FileSystem::flip_slashes(filename);
-         
+
 	    if(OGF::String::string_starts_with(filename, package_directory_)) {
 		package = package_name_;
-	    } 
-        
+	    }
+
 	    if(gomclass_flag) {
 		Setattr(n,"gom:kind","class");
 		Setattr(n,"gom:package",package.c_str());
@@ -555,12 +560,12 @@ namespace {
 	    cleanup_attributes();
 	    return Language::classDeclaration(n);
 	}
-    
+
 	virtual int classforwardDeclaration(Node *n) {
-	    cleanup_attributes();        
+	    cleanup_attributes();
 	    return Language::classforwardDeclaration(n);
 	}
-    
+
 	virtual int constructorDeclaration(Node *n) {
 	    Node* clazz = Getattr(n,"parentNode");
 	    if(
@@ -570,51 +575,51 @@ namespace {
 		Setattr(n,"gom:kind","constructor");
 		copy_attributes(n);
 	    }
-	    cleanup_attributes();                
+	    cleanup_attributes();
 	    return Language::constructorDeclaration(n);
 	}
-    
+
 	virtual int destructorDeclaration(Node *n) {
-	    cleanup_attributes();                        
+	    cleanup_attributes();
 	    return Language::destructorDeclaration(n);
 	}
-    
+
 	virtual int accessDeclaration(Node *n) {
 	    if(!gom_directive_flag) {
 		gom_member_type = HIDDEN;
 	    }
 	    gom_directive_flag = false;
-	    cleanup_attributes();                                
+	    cleanup_attributes();
 	    return Language::accessDeclaration(n);
 	}
-    
+
 	virtual int usingDeclaration(Node *n) {
-	    cleanup_attributes();                                
+	    cleanup_attributes();
 	    return Language::usingDeclaration(n);
 	}
-    
+
 	virtual int namespaceDeclaration(Node *n) {
-	    cleanup_attributes();                                
+	    cleanup_attributes();
 	    return Language::namespaceDeclaration(n);
 	}
-    
+
 	virtual int templateDeclaration(Node *n) {
-	    cleanup_attributes();                                
+	    cleanup_attributes();
 	    return Language::templateDeclaration(n);
 	}
 
 	virtual int lambdaDeclaration(Node *n) {
-	    cleanup_attributes();                                
+	    cleanup_attributes();
 	    return Language::lambdaDeclaration(n);
 	}
-    
+
 
 	/* Handlers */
 
-	virtual int functionHandler(Node *n) { 
-	    return Language::functionHandler(n); 
+	virtual int functionHandler(Node *n) {
+	    return Language::functionHandler(n);
 	}
-    
+
 	virtual int globalfunctionHandler(Node *n) {
 	    ogf_argused(n);
 	    return SWIG_OK;
@@ -639,7 +644,7 @@ namespace {
 	virtual int signalslotHandler(Node* n) {
 	    String* kind = Getattr(n,"gom:kind");
 	    std::string name = gom_string(Getattr(n,"name"));
-	    
+
 	    OGF::MetaClass* mclass = gom_class_from_member(n);
 	    OGF::MetaMethod* mmethod = nullptr;
 	    if(!Strcmp(kind, "signal")) {
@@ -651,7 +656,7 @@ namespace {
 	    } else {
 		ogf_assert_not_reached;
 	    }
-        
+
 	    copy_gom_args(n, mmethod);
 	    copy_gom_attributes(n, mmethod);
 	    return SWIG_OK;
@@ -661,10 +666,10 @@ namespace {
 
 	    OGF::MetaClass* mclass = gom_class_from_member(n);
 	    std::string name = gom_string(Getattr(n,"name"));
-        
+
 	    if(name.length() < 4) {
 		error_flag = true;
-		OGF::Logger::err("GomGen") 
+		OGF::Logger::err("GomGen")
 		    << "malformed property function: "
 		    << mclass->name() << "::" << name << std::endl;
 		gom_msg("offending node:",n);
@@ -681,16 +686,16 @@ namespace {
 
 	    if(getset == "get_") {
 		if(parms != nullptr) {
-		    error_flag = true;                
+		    error_flag = true;
 		    OGF::Logger::err("GomGen")
 			<< mclass->name() << "::" << getset << name
 			<< " : malformed property getter, "
-			<< "should not take any argument" 
+			<< "should not take any argument"
 			<< std::endl;
 		    return SWIG_OK;
 		}
 		if(!SwigType_isconst(Getattr(n, "decl"))) {
-		    error_flag = true;                
+		    error_flag = true;
 		    OGF::Logger::err("GomGen")
 			<< mclass->name() << "::" << getset << name
 			<< " : malformed property getter, should be const"
@@ -703,12 +708,13 @@ namespace {
 		    mprop = new OGF::MetaProperty(
 			name, mclass, type, true
 			);
-		    copy_gom_attributes(n, mprop); 
+		    copy_gom_attributes(n, mprop);
 		}
-		// copy_gom_attributes(n, mprop->meta_method_get()); // TODO: here?
+		// copy_gom_attributes(n, mprop->meta_method_get());
+                // TODO: here?
 	    } else if(getset == "set_") {
 		if(parms == nullptr || nextSibling(parms) != nullptr) {
-		    error_flag = true;                
+		    error_flag = true;
 		    OGF::Logger::err("GomGen")
 			<< mclass->name()
 			<< "::" << getset << name
@@ -718,11 +724,11 @@ namespace {
 		    return SWIG_OK;
 		}
 /*
-// Should we or should we not enforce setter parameter name ?            
+// Should we or should we not enforce setter parameter name ?
 {
 std::string param_name = gom_string(Getattr(parms,"name"));
-if(param_name != "value") {                
-error_flag = true;                
+if(param_name != "value") {
+error_flag = true;
 OGF::Logger::err("GomGen")
 << mclass->name()
 << "::" << getset << name
@@ -740,15 +746,16 @@ return SWIG_OK;
 		    mprop = new OGF::MetaProperty(
 			name, mclass, type, false
 			);
-		    copy_gom_attributes(n, mprop); 
+		    copy_gom_attributes(n, mprop);
 		} else {
 		    mprop->set_read_only(false);
 		}
 		// copy_gom_attributes(n, mprop->meta_method_set()); TODO: here?
 	    } else {
-		error_flag = true;            
+		error_flag = true;
 		OGF::Logger::err("GomGen") << "malformed property function: "
-					   << mclass->name() << "::" << name << std::endl;
+					   << mclass->name() << "::"
+					   << name << std::endl;
 		gom_msg("offending node:",n);
 		return SWIG_OK;
 	    }
@@ -757,69 +764,77 @@ return SWIG_OK;
 	}
 
 	virtual int staticmemberfunctionHandler(Node *n) {
-	    ogf_argused(n);        
+	    ogf_argused(n);
 	    return SWIG_OK;
 	}
-    
+
 	virtual int callbackfunctionHandler(Node *n) {
-	    ogf_argused(n);        
+	    ogf_argused(n);
 	    return SWIG_OK;
 	}
-  
+
 	/* Variable handlers */
 
 	virtual int variableHandler(Node *n) {
-	    ogf_argused(n);        
+	    ogf_argused(n);
 	    return SWIG_OK;
 	}
-    
+
 	virtual int globalvariableHandler(Node *n) {
-	    ogf_argused(n);        
+	    ogf_argused(n);
 	    return SWIG_OK;
 	}
-   
+
 	virtual int membervariableHandler(Node *n) {
-	    ogf_argused(n);        
+	    ogf_argused(n);
 	    return SWIG_OK;
 	}
 
 	virtual int staticmembervariableHandler(Node *n) {
-	    ogf_argused(n);        
+	    ogf_argused(n);
 	    return SWIG_OK;
 	}
-  
+
 	/* C++ handlers */
 
 	virtual int memberconstantHandler(Node *n) {
-	    ogf_argused(n);        
+	    ogf_argused(n);
 	    return SWIG_OK;
 	}
-  
-	virtual int constructorHandler(Node *n) { 
+
+	virtual int constructorHandler(Node *n) {
 	    if(checkAttribute(n, "gom:kind", "constructor")) {
 		OGF::MetaClass* mclass = gom_class_from_member(n);
 		OGF::MetaConstructor* mconstructor =
 		    new OGF::MetaConstructor(mclass);
 		copy_gom_args(n, mconstructor);
 		copy_gom_attributes(n, mconstructor);
-	    } 
+	    }
 	    return SWIG_OK;
 	}
- 
 
-	virtual int copyconstructorHandler(Node *n) { 
+
+	virtual int copyconstructorHandler(Node *n) {
 	    return constructorHandler(n);
 	}
-    
+
 	virtual int destructorHandler(Node *n) {
-	    ogf_argused(n);        
+	    ogf_argused(n);
 	    return SWIG_OK;
 	}
 
-    
-	virtual int classHandler(Node *n) { 
-	    if(checkAttribute(n, "gom:kind", "class")) {
 
+	virtual int classHandler(Node *n) {
+
+	    // HERE
+	    if(!checkAttribute(n, "gom:kind", "class")) {
+		std::string name = gom_type_name_from_string(Getattr(n, "name"));
+		OGF::MetaBuiltinStruct* mstruct = new OGF::MetaBuiltinStruct(name);
+		OGF::Meta::instance()->bind_meta_type(mstruct);
+
+	    }
+
+	    if(checkAttribute(n, "gom:kind", "class")) {
 
 		bool abstract = (checkAttribute(n, "gom:abstract", "true")!=0);
 		std::string name = gom_type_name_from_string(Getattr(n, "name"));
@@ -832,11 +847,11 @@ return SWIG_OK;
 			Char(Getattr(n, "gom:superclass"));
 		    superclass = dynamic_cast<OGF::MetaClass*>(
 			OGF::Meta::instance()->resolve_meta_type(superclass_name)
-			); 
+		    );
 		    if(superclass == nullptr) {
-			error_flag = true;                    
+			error_flag = true;
 			OGF::Logger::err("GomGen")
-			    << "gom_class " << name 
+			    << "gom_class " << name
 			    << " has invalid GOM superclass: " << superclass_name
 			    << std::endl;
 		    } else {
@@ -846,24 +861,27 @@ return SWIG_OK;
 		    List* baselist = Getattr(n,"baselist");
 		    if(baselist != nullptr) {
 			for(int i=0; i<Len(baselist); i++) {
-			    std::string cur_base_name = 
+			    std::string cur_base_name =
 				gom_type_name_from_string(Getitem(baselist, i));
-			    
+
 			    OGF::MetaClass* cur_base =
 				dynamic_cast<OGF::MetaClass*>(
 				    OGF::Meta::instance()->
 				    resolve_meta_type(cur_base_name)
 				);
-			    
+
 			    // Swig does not include scope in base class names.
 			    //   If cur_base_name is not found, then try getting
-			    // the scope from current class name and prepending it
-			    // to cur_base_name.
+			    // the scope from current class name and
+			    // prepending it to cur_base_name.
 			    if(cur_base == nullptr) {
 				std::vector<std::string> scopes;
 				find_scopes(name, scopes);
-				for(size_t scope=0; scope<scopes.size(); ++scope) {
-				    std::string scoped_cur_base_name = scopes[scope] + "::" + cur_base_name;
+				for(
+				    size_t scope=0; scope<scopes.size(); ++scope
+				) {
+				    std::string scoped_cur_base_name =
+					scopes[scope] + "::" + cur_base_name;
 				    cur_base = dynamic_cast<OGF::MetaClass*>(
 					OGF::Meta::instance()->
 					resolve_meta_type(scoped_cur_base_name)
@@ -882,29 +900,29 @@ return SWIG_OK;
 		}
 
 		if(nb_superclasses > 1) {
-		    error_flag = true;                
-		    OGF::Logger::err("GomGen") 
+		    error_flag = true;
+		    OGF::Logger::err("GomGen")
 			<< "Class \'" << name
 			<< "\' has more than one GOM superclass" << std::endl;
 		}
 
 		OGF::Meta::instance()->bind_meta_type(
-		    new OGF::MetaBuiltinType(name + "*") 
-		    );
-            
+		    new OGF::MetaBuiltinType(name + "*")
+		);
+
 		OGF::MetaClass* mclass =
 		    new OGF::MetaClass(name, superclass, abstract);
 		OGF::Meta::instance()->bind_meta_type(mclass);
 		copy_gom_attributes(n, mclass);
 		mclass->create_custom_attribute(
 		    "package",Char(Getattr(n, "gom:package"))
-		    );
+		);
 
 		{
 		    String* file = Getfile(n);
 		    char* p = strstr(Char(file), "/OGF");
 		    if(p == nullptr) {
-			p = strstr(Char(file), "\\OGF");     
+			p = strstr(Char(file), "\\OGF");
 		    }
 		    if(p != nullptr) {
 			for(char* pp=p; *pp; pp++) {
@@ -916,18 +934,18 @@ return SWIG_OK;
 		generated_classes_.push_back(mclass);
 	    }
 
-	    return Language::classHandler(n); 
+	    return Language::classHandler(n);
 	}
-    
+
 	virtual int typedefHandler(Node *n) {
-	    ogf_argused(n);        
+	    ogf_argused(n);
 	    return SWIG_OK;
 	}
 
 	/* wrappers */
 
 	virtual int constantWrapper(Node *n) {
-	    ogf_argused(n);        
+	    ogf_argused(n);
 	    return SWIG_OK;
 	}
 
@@ -981,7 +999,7 @@ return SWIG_OK;
 	GomMemberType gom_member_type;
 	bool gomclass_flag;
 	bool gom_directive_flag;
-	Hash* user_attributes;    
+	Hash* user_attributes;
 	Hash* system_attributes;
 	std::vector<OGF::MetaClass*> generated_classes_;
 	std::string package_name_;

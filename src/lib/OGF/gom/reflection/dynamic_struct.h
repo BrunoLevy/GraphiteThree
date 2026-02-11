@@ -134,7 +134,47 @@ namespace OGF {
 	MetaStruct* meta_struct_;
     };
 
+    /********************************************************************/
 
+    /**
+     * \brief A reference to a property in an object with a struct type
+     * \details This facilitates setting and getting the fields of the
+     *  struct in scripts.
+     */
+    gom_class GOM_API StructPropertyRef : public Object {
+    public:
+	StructPropertyRef(Object* object, const std::string& prop_name);
+
+	Object* object() const {
+	    return object_;
+	}
+
+	const std::string& property_name() const {
+	    return property_name_;
+	}
+
+	bool set_property(
+            const std::string& name, const std::string& value
+        ) override;
+
+        bool get_property(
+            const std::string& prop_name, std::string& prop_value
+        ) const;
+
+        bool set_property(
+	    const std::string& name, const Any& value
+	) override;
+
+        bool get_property(
+	    const std::string& prop_name, Any& prop_value
+	) const override;
+
+    private:
+	Object* object_;
+	const std::string property_name_;
+    };
+
+    /********************************************************************/
 }
 
 #endif

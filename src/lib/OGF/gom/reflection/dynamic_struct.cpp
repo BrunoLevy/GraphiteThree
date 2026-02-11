@@ -204,4 +204,42 @@ namespace OGF {
 
     /****************************************************************/
 
+    StructPropertyRef::StructPropertyRef(
+	Object* object, const std::string& prop_name
+    ) : object_(object), property_name_(prop_name) {
+	MetaProperty* mprop = object_->meta_class()->find_property(prop_name);
+	geo_assert(mprop != nullptr);
+	MetaBuiltinStruct* mbstruct = dynamic_cast<MetaBuiltinStruct*>(
+	    mprop->type()
+	);
+	geo_assert(mbstruct != nullptr);
+	set_meta_class(mbstruct->get_meta_struct());
+    }
+
+    bool StructPropertyRef::set_property(
+	const std::string& name, const std::string& value
+    ) {
+	return Object::set_property(name, value);
+    }
+
+    bool StructPropertyRef::get_property(
+	const std::string& prop_name, std::string& prop_value
+    ) const {
+	return Object::get_property(prop_name, prop_value);
+    }
+
+    bool StructPropertyRef::set_property(
+	const std::string& name, const Any& value
+    ) {
+	return Object::set_property(name, value);
+    }
+
+    bool StructPropertyRef::get_property(
+	const std::string& prop_name, Any& prop_value
+    ) const {
+	return Object::get_property(prop_name, prop_value);
+    }
+
+    /****************************************************************/
+
 }

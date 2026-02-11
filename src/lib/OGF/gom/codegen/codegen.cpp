@@ -43,6 +43,7 @@
 #include <OGF/gom/reflection/meta_property.h>
 #include <OGF/gom/reflection/meta_slot.h>
 #include <OGF/gom/reflection/meta_signal.h>
+#include <OGF/gom/reflection/dynamic_struct.h>
 
 namespace OGF {
 
@@ -129,11 +130,21 @@ namespace OGF {
     }
 
     void GomCodeGenerator::generate_builtin(MetaBuiltinType* mbuiltin) {
+
+	// using dynamic_cast<> instead of GOM meta information because
+	// GOM meta information is not available yet ! (we are generating
+	// it...)
+	bool is_meta_struct = (
+	    dynamic_cast<MetaBuiltinStruct*>(mbuiltin) != nullptr
+	);
+
         out() << "   if(!Meta::instance()->meta_type_is_bound("
               << stringify(mbuiltin->name()) << ")) {" << std::endl;
         if(mbuiltin->is_pointer_type()) {
             out() << "      ogf_declare_pointer_type<";
-        } else {
+        } else if(is_meta_struct) {
+            out() << "      ogf_declare_struct<";   // TODO: declare fields
+	} else {
             out() << "      ogf_declare_builtin_type<";
         }
         out() << mbuiltin->name() << ">("
