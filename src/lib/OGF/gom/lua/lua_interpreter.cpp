@@ -325,17 +325,20 @@ namespace OGF {
 	    return "nil";
 	}
 
-	MetaType* mcommand =
-	    Meta::instance()->resolve_meta_type("OGF::Commands");
-	MetaType* mscenegraph =
-	    Meta::instance()->resolve_meta_type("OGF::SceneGraph");
-	MetaType* mgrob = Meta::instance()->resolve_meta_type("OGF::Grob");
-	MetaType* mshader = Meta::instance()->resolve_meta_type("OGF::Shader");
-	MetaType* mrequest = Meta::instance()->resolve_meta_type("OGF::Request");
+	MetaClass* mcommand =
+	    Meta::instance()->resolve_meta_class("OGF::Commands");
+	MetaClass* mscenegraph =
+	    Meta::instance()->resolve_meta_class("OGF::SceneGraph");
+	MetaClass* mgrob = Meta::instance()->resolve_meta_class("OGF::Grob");
+	MetaClass* mshader = Meta::instance()->resolve_meta_class("OGF::Shader");
+	MetaClass* mrequest = Meta::instance()->resolve_meta_class(
+	    "OGF::Request"
+	);
 
-
-	// Command
-	if(mcommand != nullptr && object->is_a(mcommand)) {
+	// Using meta_class()->is_subclass_of() rather than object->is_a()
+	// because is_a() uses C++ dynamic type that will not "see" commands
+	// created as DynamicObject/DynamicMetaClass.
+	if(mcommand!=nullptr && object->meta_class()->is_subclass_of(mcommand)) {
 	    Any grob_any;
 	    Object* grob;
 	    if(
@@ -367,9 +370,6 @@ namespace OGF {
 		    interface_name, grob->meta_class()->name()
 		);
 
-		if(grob->is_a(mscenegraph)) {
-		    return "scene_graph.I." + interface_name;
-		}
 		return back_resolve(grob) + ".I." + interface_name;
 	    }
 	    return "";
