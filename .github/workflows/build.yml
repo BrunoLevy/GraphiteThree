@@ -114,8 +114,9 @@ jobs:
 
       - name: Test gompy (Windows)
         if: runner.os == 'Windows'
-        run: python3.exe lib/programming_examples/Python/gompy_example.py > log.txt & exit 0
-        type log.txt
+        run: |
+          python3.exe lib/programming_examples/Python/gompy_example.py > log.txt & exit 0
+          type log.txt
 
       - name: List files (Windows)
         if: runner.os == 'Windows'
