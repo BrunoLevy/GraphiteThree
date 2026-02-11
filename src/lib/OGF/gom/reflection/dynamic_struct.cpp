@@ -37,6 +37,129 @@
 #include <OGF/gom/reflection/dynamic_struct.h>
 #include <OGF/gom/reflection/meta.h>
 
+namespace {
+    using namespace OGF;
+
+    /**
+     * \brief A Serializer that uses a MetaStruct
+     */
+    class BuiltinStructSerializer : public Serializer {
+    public:
+	BuiltinStructSerializer(
+	    MetaStruct* meta_struct
+	) : meta_struct_(meta_struct) {
+	}
+
+	/**
+	 * \copydoc Serializer::serialize_read()
+	 */
+	bool serialize_read(std::istream& stream, void* addr) override {
+	    index_t nb_fields = index_t(meta_struct_->nb_properties(false));
+	    std::string line;
+	    std::getline(stream,line);
+	    std::vector<std::string> words;
+	    String::split_string(line, ';', words);
+	    if(words.size() != nb_fields) {
+		Logger::err("GOM") << meta_struct_->name() << "serialize read: "
+				   << "Invalid number of fields" << std::endl;
+		return false;
+	    }
+	    return for_each_field(
+		[addr,&words](
+		    index_t field_id, Serializer* serializer, size_t offset
+		)->bool	{
+		    std::istringstream in(words[field_id]);
+		    return serializer->serialize_read(
+			in,Memory::pointer(addr)+offset
+		    );
+		}
+	    );
+	}
+
+	/**
+	 * \copydoc Serializer::serialize_write()
+	 */
+	bool serialize_write(std::ostream& stream, void* addr) override {
+	    index_t nb_fields = index_t(meta_struct_->nb_properties(false));
+	    return for_each_field(
+		[addr,&stream,nb_fields](
+		    index_t field_id, Serializer* serializer, size_t offset
+		)->bool	{
+		    if(
+			!serializer->serialize_write(
+			    stream,Memory::pointer(addr)+offset
+			)
+		    ) return false;
+		    if(field_id != nb_fields - 1) {
+			stream << ';';
+		    }
+		    return true;
+		}
+	    );
+	}
+
+    protected:
+
+	/**
+	 * \brief Common implementation of serialize_read() and serialize_write()
+	 * \details Calls a lambda for each field of the meta struct
+	 * \return true on success, false on failure
+	 */
+	bool for_each_field(
+	    std::function<bool(
+	       index_t field_id, Serializer* serializer, size_t offset
+	    )> do_field
+	) {
+	    index_t nb_fields = index_t(meta_struct_->nb_properties(false));
+	    for(index_t i=0; i<nb_fields; ++i) {
+		MetaProperty* mprop = meta_struct_->ith_property(i, false);
+		MetaType* mtype = mprop->type();
+		Serializer* serializer = mtype->serializer();
+		if(serializer == nullptr) {
+		    Logger::err("GOM")
+			<< meta_struct_->name()
+			<< "missing serializer for " << mtype->name()
+			<< std::endl;
+		    return false;
+		}
+		size_t offset = 0;
+		if(!mprop->has_custom_attribute("offset")) {
+		    Logger::err("GOM")
+			<< meta_struct_->name()
+			<< "missing offset for " << mprop->name()
+			<< std::endl;
+		    return false;
+		}
+		if(
+		    !String::from_string(
+			mprop->custom_attribute_value("offset"), offset
+		    )
+		) {
+		    Logger::err("GOM")
+			<< meta_struct_->name()
+			<< "invalid offset for " << mprop->name()
+			<< std::endl;
+		    return false;
+		}
+
+		if(!do_field(i, serializer, offset)) {
+		    Logger::err("GOM")
+			<< meta_struct_->name()
+			<< " could not serialize " << mprop->name()
+			<< std::endl;
+		    return false;
+		}
+	    }
+	    return true;
+	}
+
+    private:
+	MetaStruct* meta_struct_;
+    };
+}
+
+/*****************************************************************************/
+
 namespace OGF {
 
     MetaStruct::MetaStruct(
@@ -56,6 +179,7 @@ namespace OGF {
 	    struct_name + "_as_GOM_Object"
 	);
 	Meta::instance()->bind_meta_type(meta_struct_);
+	set_serializer(new BuiltinStructSerializer(meta_struct_));
     }
 
     MetaBuiltinStruct::~MetaBuiltinStruct() {

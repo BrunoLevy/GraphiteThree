@@ -339,7 +339,7 @@ namespace OGF {
             Meta::instance()->bind_meta_type(
                 meta_type, typeid(T).name()
             );
-            meta_type->set_serializer(new GenericSerializer<T>);
+            //meta_type->set_serializer(new GenericSerializer<T>);
             meta_type->set_life_cycle(new GenericLifeCycle<T>);
             result_ = meta_type;
         }
