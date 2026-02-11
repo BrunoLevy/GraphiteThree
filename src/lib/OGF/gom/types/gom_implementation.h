@@ -44,6 +44,7 @@
 #include <OGF/gom/reflection/meta_builtin.h>
 #include <OGF/gom/reflection/meta_enum.h>
 #include <OGF/gom/reflection/meta_class.h>
+#include <OGF/gom/reflection/dynamic_struct.h>
 #include <OGF/gom/services/serializer.h>
 
 /**
@@ -305,6 +306,52 @@ namespace OGF {
     private:
         MetaEnum* result_;
     };
+
+    /***************************************************************************/
+
+    /**
+     * \brief A class to declare a new struct type.
+     * \tparam T the struct type to be declared
+     * \details Example of use:
+     * \code
+     *    MetaBuitlinStruct* mtype = ogf_declare_struct<SurfaceStyle>(
+     *      "OGF::SurfaceStyle"
+     *    );
+     *    mtype->add_property("visible",ogf_meta<bool>.type());
+     *    mtype->add_property("color", ogf_meta<Color>.type());
+     * \endcode
+     * \note Used by the C++ code created by GOMGEN.
+     *  Client code should not use these functions.
+     */
+    template <class T> class ogf_declare_struct {
+    public:
+        /**
+         * \brief Declares a new struct type.
+         * \param[in] type_name the C++ type name of the struct
+         *  to be declared
+         */
+        explicit ogf_declare_struct(const std::string& type_name) {
+            MetaBuiltinStruct* meta_type = new MetaBuiltinStruct(type_name);
+            Meta::instance()->bind_meta_type(
+                meta_type, typeid(T).name()
+            );
+            meta_type->set_serializer(new GenericSerializer<T>);
+            meta_type->set_life_cycle(new GenericLifeCycle<T>);
+            result_ = meta_type;
+        }
+
+        /**
+         * \brief Gets the created MetaBuiltinStruct object.
+         * \return a pointer to the created MetaBuiltinStruct object
+         */
+        operator MetaBuiltinStruct*() {
+            return result_;
+        }
+    private:
+        MetaBuiltinStruct* result_;
+    };
+
+    /***************************************************************************/
 
     /**
      * \brief A class to declare a class type.

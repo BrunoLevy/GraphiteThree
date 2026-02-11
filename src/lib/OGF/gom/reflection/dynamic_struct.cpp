@@ -66,5 +66,33 @@ namespace OGF {
 	return result;
     }
 
+    /****************************************************************/
+
+    MetaBuiltinStruct::MetaBuiltinStruct(
+	const std::string& struct_name
+    ) :  MetaBuiltinType(struct_name) {
+	meta_struct_ = new MetaStruct(
+	    struct_name + "_as_gom_Object"
+	);
+    }
+
+    MetaBuiltinStruct::~MetaBuiltinStruct() {
+    }
+
+    MetaProperty* MetaBuiltinStruct::add_property(
+	const std::string& property_name,
+	MetaType* property_type
+    ) {
+	return meta_struct_->add_property(property_name, property_type);
+    }
+
+    MetaProperty* MetaBuiltinStruct::add_property(
+	const std::string& property_name,
+	const std::string& property_type_name
+    ) {
+	return meta_struct_->add_property(property_name, property_type_name);
+    }
+
+    /****************************************************************/
 
 }

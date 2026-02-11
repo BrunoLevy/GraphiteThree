@@ -41,11 +41,9 @@
 #include <OGF/scene_graph/grob/composite_grob.h>
 #include <OGF/scene_graph/types/scene_graph.h>
 #include <OGF/scene_graph/types/properties.h>
-
-#include <OGF/scene_graph/types/properties.h>
 #include <OGF/scene_graph/commands/commands.h>
 #include <OGF/scene_graph/commands/scene_graph_commands.h>
-
+#include <OGF/gom/types/gom_implementation.h>
 #include <OGF/basic/modules/module.h>
 
 #include <geogram/basic/environment.h>
@@ -57,14 +55,22 @@ namespace OGF {
     void scene_graph_libinit::initialize() {
         Logger::out("Init") << "<scene_graph>" << std::endl;
 
-        //_____________________________________________________________
-
+        /*******************************************************/
 
         gom_package_initialize(scene_graph);
         SceneGraphLibrary::initialize();
 
 	ogf_register_abstract_grob_type<Grob>();
 	ogf_register_abstract_grob_type<CompositeGrob>();
+
+	{
+	    MetaBuiltinStruct* mstruct = nullptr;
+	    mstruct = ogf_declare_struct<PointStyle>("OGF::PointStyle");
+	    mstruct = ogf_declare_struct<EdgeStyle>("OGF::EdgeStyle");
+	    mstruct = ogf_declare_struct<SurfaceStyle>("OGF::SurfaceStyle");
+	    mstruct = ogf_declare_struct<ColormapStyle>("OGF::ColormapStyle");
+	    geo_argused(mstruct);
+	}
 
 	// SceneGraph is not an abstract class, but I do not want
 	// it to appear as an option in the 'create object' menu.
@@ -76,7 +82,7 @@ namespace OGF {
         ogf_register_grob_write_file_extension<SceneGraph>("graphite");
         ogf_register_grob_write_file_extension<SceneGraph>("graphite_ascii");
 
-        //_____________________________________________________________
+        /*******************************************************/
 
         Module* module_info = new Module;
         module_info->set_name("scene_graph");
