@@ -63,14 +63,30 @@ namespace OGF {
 	ogf_register_abstract_grob_type<Grob>();
 	ogf_register_abstract_grob_type<CompositeGrob>();
 
-	{
-	    MetaBuiltinStruct* mstruct = nullptr;
-	    mstruct = ogf_declare_struct<PointStyle>("OGF::PointStyle");
-	    mstruct = ogf_declare_struct<EdgeStyle>("OGF::EdgeStyle");
-	    mstruct = ogf_declare_struct<SurfaceStyle>("OGF::SurfaceStyle");
-	    mstruct = ogf_declare_struct<ColormapStyle>("OGF::ColormapStyle");
-	    geo_argused(mstruct);
+	if(!Meta::instance()->meta_type_is_bound("GEO::Color")) {
+	    ogf_declare_builtin_type<GEO::Color>("GEO::Color");
 	}
+
+	ogf_declare_struct<PointStyle>("OGF::PointStyle")
+	    ->add_field<bool>("visible")
+	    ->add_field<Color>("color")
+	    ->add_field<index_t>("size");
+
+	ogf_declare_struct<EdgeStyle>("OGF::EdgeStyle")
+	    ->add_field<bool>("visible")
+	    ->add_field<Color>("color")
+	    ->add_field<index_t>("width");
+
+	ogf_declare_struct<SurfaceStyle>("OGF::SurfaceStyle")
+	    ->add_field<bool>("visible")
+	    ->add_field<Color>("color");
+
+	ogf_declare_struct<ColormapStyle>("OGF::ColormapStyle")
+	    ->add_field<std::string>("colormap_name")
+	    ->add_field<bool>("smooth")
+	    ->add_field<index_t>("repeat")
+	    ->add_field<bool>("show")
+	    ->add_field<bool>("flip");
 
 	// SceneGraph is not an abstract class, but I do not want
 	// it to appear as an option in the 'create object' menu.

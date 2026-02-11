@@ -347,6 +347,17 @@ namespace OGF {
         operator MetaBuiltinStruct*() {
             return result_;
         }
+
+        /**
+         * \brief Gets the created MetaBuiltinStruct object.
+	 * \details To be able to write
+	 *   ogf_declare_struct<XXX>("XXX")->add_field<YYY>("zzz")
+         * \return a pointer to the created MetaBuiltinStruct object
+         */
+	MetaBuiltinStruct* operator->() {
+            return result_;
+	}
+
     private:
         MetaBuiltinStruct* result_;
     };

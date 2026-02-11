@@ -41,6 +41,8 @@
 #include <OGF/gom/reflection/meta_class.h>
 #include <OGF/gom/reflection/meta_builtin.h>
 
+#include <typeinfo>
+
 namespace OGF {
 
 
@@ -59,30 +61,6 @@ namespace OGF {
          * \brief MetaStruct destructor.
          */
 	~MetaStruct() override;
-
-    gom_slots:
-
-	/**
-	 * \brief Adds a new property to this MetaStruct
-	 * \param[in] property_name the name of the property
-	 * \param[in] property_type a pointer to the MetaType of the property
-	 * \return a pointer to the created MetaProperty
-	 */
-	MetaProperty* add_property(
-	    const std::string& property_name,
-	    MetaType* property_type
-	);
-
-	/**
-	 * \brief Adds a new property to this MetaStruct
-	 * \param[in] property_name the name of the property
-	 * \param[in] property_type_name the C++ type name of the property
-	 * \return a pointer to the created MetaProperty
-	 */
-	MetaProperty* add_property(
-	    const std::string& property_name,
-	    const std::string& property_type_name
-	);
     };
 
     typedef SmartPointer<MetaStruct> MetaStruct_var;
@@ -116,29 +94,27 @@ namespace OGF {
 	    return meta_struct_;
 	}
 
-    gom_slots:
 
+    public:
+	template <class T> MetaBuiltinStruct* add_field(
+	    const std::string& name
+	) {
+	    add_property_by_typeid_name(name, typeid(T).name());
+	    return this;
+	}
+
+    protected:
 	/**
 	 * \brief Adds a new property to this MetaBuiltinStruct
 	 * \param[in] property_name the name of the property
 	 * \param[in] property_type a pointer to the MetaType of the property
 	 * \return a pointer to the created MetaProperty
 	 */
-	MetaProperty* add_property(
+	MetaProperty* add_property_by_typeid_name(
 	    const std::string& property_name,
-	    MetaType* property_type
+	    const std::string& typeid_name
 	);
 
-	/**
-	 * \brief Adds a new property to this MetaBuiltinStruct
-	 * \param[in] property_name the name of the property
-	 * \param[in] property_type_name the C++ type name of the property
-	 * \return a pointer to the created MetaProperty
-	 */
-	MetaProperty* add_property(
-	    const std::string& property_name,
-	    const std::string& property_type_name
-	);
 
     private:
 	MetaStruct_var meta_struct_;

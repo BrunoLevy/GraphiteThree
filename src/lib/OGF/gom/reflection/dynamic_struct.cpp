@@ -35,6 +35,7 @@
  */
 
 #include <OGF/gom/reflection/dynamic_struct.h>
+#include <OGF/gom/reflection/meta.h>
 
 namespace OGF {
 
@@ -44,26 +45,6 @@ namespace OGF {
     }
 
     MetaStruct::~MetaStruct() {
-    }
-
-    MetaProperty* MetaStruct::add_property(
-	const std::string& property_name,
-	MetaType* property_type
-    ) {
-	MetaProperty* result = new MetaProperty(
-	    property_name, this, property_type
-	);
-	return result;
-    }
-
-    MetaProperty* MetaStruct::add_property(
-	const std::string& property_name,
-	const std::string& property_type_name
-    ) {
-	MetaProperty* result = new MetaProperty(
-	    property_name, this, property_type_name
-	);
-	return result;
     }
 
     /****************************************************************/
@@ -79,18 +60,20 @@ namespace OGF {
     MetaBuiltinStruct::~MetaBuiltinStruct() {
     }
 
-    MetaProperty* MetaBuiltinStruct::add_property(
+    MetaProperty* MetaBuiltinStruct::add_property_by_typeid_name(
 	const std::string& property_name,
-	MetaType* property_type
+	const std::string& typeid_name
     ) {
-	return meta_struct_->add_property(property_name, property_type);
-    }
-
-    MetaProperty* MetaBuiltinStruct::add_property(
-	const std::string& property_name,
-	const std::string& property_type_name
-    ) {
-	return meta_struct_->add_property(property_name, property_type_name);
+	MetaType* mtype = Meta::instance()->resolve_meta_type_by_typeid_name(
+	    typeid_name
+	);
+	if(mtype == nullptr) {
+	    Logger::err("GOM") << "Missing meta information for"
+			       << typeid_name
+			       << std::endl;
+	}
+	geo_assert(mtype != nullptr);
+	return new MetaProperty(property_name, meta_struct_, mtype);
     }
 
     /****************************************************************/
