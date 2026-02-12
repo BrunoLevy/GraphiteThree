@@ -115,7 +115,7 @@ namespace OGF {
 	 *  the file.
 	 * \retval false otherwise.
 	 */
-         bool save_viewer_properties(const std::string& value);
+        bool save_viewer_properties(const std::string& value);
 
         /**
          * \brief Deletes the current object.

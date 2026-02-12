@@ -47,87 +47,248 @@ namespace OGF {
     }
 
     void SceneGraphEditor::set_current(const GrobName& grob_name) {
-	geo_argused(grob_name);
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return;
+	}
+	scene_graph()->set_current_object(grob_name);
     }
 
     void SceneGraphEditor::delete_object(const GrobName& grob_name) {
-	geo_argused(grob_name);
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return;
+	}
+	scene_graph()->set_current_object(grob_name);
+	scene_graph()->delete_current_object();
     }
 
     void SceneGraphEditor::delete_current() {
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return;
+	}
+	scene_graph()->delete_current_object();
     }
 
     void SceneGraphEditor::delete_selected() {
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return;
+	}
+	std::vector<std::string> to_delete;
+	for(index_t i=0; i<scene_graph()->get_nb_children(); ++i) {
+	    Grob* grob = scene_graph()->ith_child(i);
+	    if(grob != nullptr && grob->get_selected()) {
+		to_delete.push_back(grob->name());
+	    }
+	}
+	for(auto& name: to_delete) {
+	    delete_object(name);
+	}
     }
 
     void SceneGraphEditor::delete_all() {
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return;
+	}
+	scene_graph()->clear();
     }
 
     void SceneGraphEditor::show(const GrobName& grob_name) {
-	geo_argused(grob_name);
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return;
+	}
+	Grob* grob = scene_graph()->resolve(grob_name);
+	grob->set_visible(true);
     }
 
     void SceneGraphEditor::show_selected() {
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return;
+	}
+	for(index_t i=0; i<scene_graph()->get_nb_children(); ++i) {
+	    Grob* grob = scene_graph()->ith_child(i);
+	    if(grob->get_selected()) {
+		grob->set_visible(true);
+	    }
+	}
     }
 
     void SceneGraphEditor::show_all() {
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return;
+	}
+	for(index_t i=0; i<scene_graph()->get_nb_children(); ++i) {
+	    scene_graph()->ith_child(i)->set_visible(true);
+	}
     }
 
     void SceneGraphEditor::hide(const GrobName& grob_name) {
-	geo_argused(grob_name);
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return;
+	}
+	Grob* grob = scene_graph()->resolve(grob_name);
+	grob->set_visible(false);
     }
 
     void SceneGraphEditor::hide_selected() {
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return;
+	}
+	for(index_t i=0; i<scene_graph()->get_nb_children(); ++i) {
+	    Grob* grob = scene_graph()->ith_child(i);
+	    if(grob->get_selected()) {
+		grob->set_visible(false);
+	    }
+	}
     }
 
     void SceneGraphEditor::hide_all() {
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return;
+	}
+	for(index_t i=0; i<scene_graph()->get_nb_children(); ++i) {
+	    scene_graph()->ith_child(i)->set_visible(false);
+	}
     }
 
     void SceneGraphEditor::move_up(const GrobName& grob_name) {
-	geo_argused(grob_name);
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return;
+	}
+	scene_graph()->set_current_object(grob_name);
+	scene_graph()->move_current_up();
     }
 
     void SceneGraphEditor::move_down(const GrobName& grob_name) {
-	geo_argused(grob_name);
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return;
+	}
+	scene_graph()->set_current_object(grob_name);
+	scene_graph()->move_current_down();
     }
 
     void SceneGraphEditor::rename(
 	const GrobName& grob_name, const std::string& new_name
     ) {
-	geo_argused(grob_name);
-	geo_argused(new_name);
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return;
+	}
+	scene_graph()->set_current_object(grob_name);
+	if(scene_graph()->current() != nullptr) {
+	    scene_graph()->current()->rename(new_name);
+	}
     }
 
     Grob* SceneGraphEditor::duplicate(const GrobName& grob_name) {
-	geo_argused(grob_name);
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return nullptr;
+	}
+	scene_graph()->set_current_object(grob_name);
+	if(scene_graph()->current() != nullptr) {
+	    return scene_graph()->duplicate_current();
+	}
 	return nullptr;
     }
 
     Grob* SceneGraphEditor::create_object(
 	const GrobClassName& class_name, const std::string& name
     ) {
-	geo_argused(class_name);
-	geo_argused(name);
-	return nullptr;
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return nullptr;
+	}
+        Grob* new_grob = scene_graph()->create_object(class_name);
+        if(new_grob == nullptr) {
+            Logger::err("SceneGraphEditor")
+                << "Could not create object" << std::endl;
+            return nullptr;
+        }
+        if(name.length() > 0) {
+            new_grob->rename(name);
+        }
+        scene_graph()->set_current_object(new_grob->name());
+	return new_grob;
     }
 
     void SceneGraphEditor::copy_graphic_properties_to_all(
 	const GrobName& grob_name
     ) {
-	geo_argused(grob_name);
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return;
+	}
+	scene_graph()->set_current_object(grob_name);
+	Object* shd_mgr = scene_graph()->get_scene_graph_shader_manager();
+	if(scene_graph()->current() != nullptr && shd_mgr != nullptr) {
+	    ArgList args;
+	    args.create_arg("visible_only", false);
+	    args.create_arg("selected_only", false);
+	    shd_mgr->invoke_method("apply_to_scehe_graph",args);
+	}
     }
 
     void SceneGraphEditor::copy_graphic_properties_to_visible(
 	const GrobName& grob_name
     ) {
-	geo_argused(grob_name);
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return;
+	}
+	scene_graph()->set_current_object(grob_name);
+	Object* shd_mgr = scene_graph()->get_scene_graph_shader_manager();
+	if(scene_graph()->current() != nullptr && shd_mgr != nullptr) {
+	    ArgList args;
+	    args.create_arg("visible_only", true);
+	    args.create_arg("selected_only", false);
+	    shd_mgr->invoke_method("apply_to_scehe_graph",args);
+	}
     }
 
     void SceneGraphEditor::copy_graphic_properties_to_selected(
 	const GrobName& grob_name
     ) {
-	geo_argused(grob_name);
+	if(scene_graph() == nullptr) {
+	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;
+	    return;
+	}
+	scene_graph()->set_current_object(grob_name);
+	Object* shd_mgr = scene_graph()->get_scene_graph_shader_manager();
+	if(scene_graph()->current() != nullptr && shd_mgr != nullptr) {
+	    ArgList args;
+	    args.create_arg("visible_only", false);
+	    args.create_arg("selected_only", true);
+	    shd_mgr->invoke_method("apply_to_scehe_graph",args);
+	}
     }
 
+    /*************************************************/
+
+    void SceneGraphEditor::backup_current() {
+	current_bkp_ = scene_graph()->get_current_object();
+    }
+
+    void SceneGraphEditor::restore_current() {
+	if(scene_graph()->is_bound(current_bkp_)) {
+	    scene_graph()->set_current_object(current_bkp_);
+	} else if(scene_graph()->get_nb_children() > 0) {
+	    scene_graph()->set_current_object(
+		scene_graph()->ith_child(0)->name()
+	    );
+	}
+	current_bkp_ = "";
+    }
 
 }

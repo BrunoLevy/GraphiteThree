@@ -97,6 +97,13 @@ namespace OGF {
 	void copy_graphic_properties_to_all(const GrobName& grob_name);
 	void copy_graphic_properties_to_visible(const GrobName& grob_name);
 	void copy_graphic_properties_to_selected(const GrobName& grob_name);
+
+    protected:
+	void backup_current();
+	void restore_current();
+
+    private:
+	std::string current_bkp_;
     };
 
 
