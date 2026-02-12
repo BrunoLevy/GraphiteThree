@@ -108,7 +108,10 @@ function autogui.command_menu_item(request)
              '({_invoked_from_gui=true})', false
           )
       end
-      autogui.tooltip(autogui.help(mmethod))
+      local tt = autogui.help(mmethod)
+      if tt == nil then tt = '' end
+      tt = tt..' Applies immediately (no dialog box)'
+      autogui.tooltip(tt)
    else
       if imgui.BeginMenu(autogui.remove_underscores(mmethod.name)) then
           autogui.in_popup = true

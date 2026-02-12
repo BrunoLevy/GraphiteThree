@@ -394,7 +394,14 @@ end
 function autogui.color(label,oldval,with_alpha)
    local value=oldval
    local words={}
-   for word in string.split(tostring(value),' ') do
+   -- quick and dirty fix for our temporary state with both
+   -- strings and native data structures. Special code that
+   -- handles both 'r g b a' strings and {r,g,b,a} vectors
+   value = tostring(value)
+   value = value:remove_prefix('{')
+   value = value:remove_suffix('}')
+   value = value:gsub(',',' ')
+   for word in string.split(value,' ') do
       words[#words+1] = word
    end
    local r = tonumber(words[1]);
