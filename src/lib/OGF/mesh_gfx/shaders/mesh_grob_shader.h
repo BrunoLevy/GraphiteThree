@@ -250,6 +250,24 @@ namespace OGF {
             return result;
 	}
 
+	bool get_has_vertices_filter() const {
+	    return
+		mesh_grob()->vertices.nb() != 0 &&
+		mesh_grob()->vertices.attributes().is_defined("filter") ;
+	}
+
+	bool get_has_facets_filter() const {
+	    return
+		mesh_grob()->facets.nb() != 0 &&
+		mesh_grob()->facets.attributes().is_defined("filter") ;
+	}
+
+	bool get_has_cells_filter() const {
+	    return
+		mesh_grob()->cells.nb() != 0 &&
+		mesh_grob()->cells.attributes().is_defined("filter") ;
+	}
+
     protected:
         /**
          * \brief Gets the MeshGrob.
@@ -657,7 +675,7 @@ namespace OGF {
          * \brief Sets facet filtering
          * \param[in] value true if facet filtering is activated
          */
-        gom_attribute(visible_if, "has_facets")
+        gom_attribute(visible_if, "has_facets_filter")
         void set_facets_filter(bool value) {
             facets_filter_ = value;
             gfx_.set_filter(
@@ -759,7 +777,7 @@ namespace OGF {
          * \brief Sets cells filtering
          * \param[in] value true if facet filtering is activated
          */
-        gom_attribute(visible_if, "has_cells")
+        gom_attribute(visible_if, "has_cells_filter")
         void set_cells_filter(bool value) {
             gfx_.set_filter(
                 MESH_CELLS, value ? "filter" : ""
@@ -990,6 +1008,7 @@ namespace OGF {
          * \brief Sets vertices filtering
          * \param[in] value true if vertices filtering is activated
          */
+        gom_attribute(visible_if, "has_vertices_filter")
         void set_vertices_filter(bool value) {
             gfx_.set_filter(
                 MESH_VERTICES, value ? "filter" : ""
@@ -1002,6 +1021,7 @@ namespace OGF {
             return vertices_filter_;
         }
 
+    public: // removing vertices transparency from GUI, nobody uses it.
 	/**
 	 * \brief Sets the transparency of the vertices
 	 *  (use with dark background).
@@ -1021,6 +1041,8 @@ namespace OGF {
 	double get_vertices_transparency() const {
 	    return vertices_transparency_;
 	}
+
+    gom_properties:
 
         /**
          * \brief Sets the vertices selection style.

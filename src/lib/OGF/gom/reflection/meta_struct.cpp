@@ -307,6 +307,19 @@ namespace OGF {
 	return true;
     }
 
+    std::string StructPropertyRef::to_string() const {
+	MetaStruct* mstruct = dynamic_cast<MetaStruct*>(meta_class());
+	geo_assert(mstruct != nullptr);
+	index_t nb_fields = index_t(mstruct->nb_properties(false));
+	std::vector<std::string> field(nb_fields);
+	for(index_t i=0; i<nb_fields; ++i) {
+	    get_property(
+		mstruct->ith_property(i,false)->name(), field[i]
+	    );
+	}
+	return String::join_strings(field,';');
+    }
+
     /****************************************************************/
 
 }

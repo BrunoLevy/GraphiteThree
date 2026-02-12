@@ -28,6 +28,9 @@ end
 -- \return an iterator on the words contained in the string
 
 function string.split(str,sep)
+   if type(str) ~= 'string' then -- workaround for struct types
+       str = str.as_string
+   end
    return str:gmatch("([^"..sep.."]+)")
 end
 

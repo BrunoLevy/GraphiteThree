@@ -40,6 +40,7 @@
 #include <OGF/gom/lua/vec_mat_interop.h>
 #include <OGF/gom/types/object.h>
 #include <OGF/gom/reflection/meta.h>
+#include <OGF/gom/reflection/meta_struct.h>
 
 
 extern "C" {
@@ -216,9 +217,28 @@ namespace OGF {
 		return 1;
 	    }
 
+	    // Special case: struct property ref, as_string (workaround)
+	    // TODO: general mechanism for tostring() with Graphite types
+	    if(
+		object->is_a(ogf_meta<StructPropertyRef>::type()) &&
+		!strcmp(name,"as_string")
+	    ) {
+		std::string s =
+		    dynamic_cast<StructPropertyRef*>(object)->to_string();
+		lua_pushstring(L,s.c_str());
+		return 1;
+	    }
+
 	    // Case 1: regular property
 	    MetaProperty* mprop = object->meta_class()->find_property(name);
 	    if(mprop != nullptr) {
+
+		// Special case: struct property
+		if(mprop->type()->is_a(ogf_meta<MetaBuiltinStruct>::type())) {
+		    lua_pushgraphite(L, new StructPropertyRef(object,name));
+		    return 1;
+		}
+
 		Any value;
 		if(!object->get_property(name, value)) {
 		    return luaL_error(

@@ -229,6 +229,11 @@ namespace OGF {
 	 */
         bool get_property(const std::string& name, Any& value) const override;
 
+	/**
+	 * \brief Gets a string representation of this struct
+	 */
+	std::string to_string() const;
+
     private:
 	Object* object_;
 	const std::string property_name_;

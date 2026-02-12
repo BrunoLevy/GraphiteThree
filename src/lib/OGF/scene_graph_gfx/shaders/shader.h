@@ -111,6 +111,16 @@ namespace OGF {
 
     gom_properties:
 
+	/**
+	 * \brief Gets the grob.
+	 * \return a pointer to the Grob associated with this Shader.
+	 */
+	Grob* get_grob() const {
+	    return grob();
+	}
+
+
+    public: // removing 'set_multi() / get_multi()' from GOM, no body uses it...
         /**
          * \brief Sets multi shader mode.
          * \param[in] value true if multi shader mode should be activated,
@@ -134,14 +144,6 @@ namespace OGF {
          * \retval false otherwise
          */
         bool get_multi() const;
-
-	/**
-	 * \brief Gets the grob.
-	 * \return a pointer to the Grob associated with this Shader.
-	 */
-	Grob* get_grob() const {
-	    return grob();
-	}
 
     public:
         GLdouble* latest_modelview() {
