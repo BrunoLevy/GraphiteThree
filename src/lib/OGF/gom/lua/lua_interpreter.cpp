@@ -45,6 +45,7 @@
 #include <OGF/gom/reflection/meta_struct.h>
 #include <OGF/basic/os/file_manager.h>
 #include <OGF/basic/modules/modmgr.h>
+#include <geogram/image/color.h>
 #include <geogram/basic/process.h>
 #include <geogram/lua/lua_io.h>
 
@@ -83,7 +84,8 @@ namespace {
 	    name == "Numeric::uint64" ||
 	    name == "Numeric::float32" ||
 	    name == "Numeric::float64" ||
-	    name == "unsigned int"
+	    name == "unsigned int" ||
+	    name == "GEO::Color"
 	) {
 	    return false;
 	}
@@ -444,6 +446,16 @@ namespace OGF {
 	if(value.meta_type() == nullptr) {
 	    return "nil";
 	}
+
+	if(value.meta_type() == ogf_meta<Color>::type()) {
+	    Color C;
+	    if(value.get_value(C)) {
+		return String::format(
+		    "{ %f, %f, %f, %f }", C.r(), C.g(), C.b(), C.a()
+		);
+	    }
+	}
+
 	std::string result;
 	value.get_value(result);
 	if(needs_quotes(value.meta_type())) {

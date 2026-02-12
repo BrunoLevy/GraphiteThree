@@ -150,8 +150,7 @@ namespace OGF {
 		if(
 		    lua_tographitevec<4,double>(
 			L, index, V_as_any, ogf_meta<vec4>::type()
-		    ) &&
-		    V_as_any.get_value(V)
+		    ) && V_as_any.get_value(V)
 		) {
 		    C = Color(V.x, V.y, V.z, V.w);
 		    result.set_value(C);

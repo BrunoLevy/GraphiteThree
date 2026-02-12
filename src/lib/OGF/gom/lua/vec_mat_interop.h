@@ -57,8 +57,8 @@ namespace OGF {
 
 	/**
 	 * \brief Converts a Lua object into a Graphite vec or mat type
-	 * \details Works with vec2, vec3, vec4 of doubles and integers, and
-	 *   with mat4 of doubles.
+	 * \details Works with vec2, vec3, vec4 of doubles and integers,
+	 *   with mat4 of doubles and Color.
 	 * \param[in] L a pointer to the Lua state
 	 * \param[in] index the index of the Lua object to be converted
 	 * \param[out] result the result, as an Any
@@ -83,8 +83,8 @@ namespace OGF {
 
 	/**
 	 * \brief Pushes a Graphite object onto the Lua stack
-	 * \details Works with vec2, vec3, vec4 of doubles and integers, and
-	 *   with mat4 of doubles.
+	 * \details Works with vec2, vec3, vec4 of doubles and integers,
+	 *   mat4 of doubles and Color.
 	 * \param[in] matvec the input vec or mat stored in an Any
 	 * \retval true if conversion was successful
 	 * \retval false otherwise
