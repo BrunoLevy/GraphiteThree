@@ -119,32 +119,6 @@ namespace OGF {
 	    return grob();
 	}
 
-
-    public: // removing 'set_multi() / get_multi()' from GOM, no body uses it...
-        /**
-         * \brief Sets multi shader mode.
-         * \param[in] value true if multi shader mode should be activated,
-         *  false otherwise
-         * \details In multi shader mode, several shaders can be
-         *  active for the same object, i.e. all the shaders that have
-         *  multi mode activated are drawn. For instance, this makes it
-         *  possible to display an object with a scalar attribute painted
-         *  on it and several vector attributes superimposed.
-         */
-        void set_multi(bool value);
-
-        /**
-         * \brief Tests whether multi shader mode is active.
-         * \details In multi shader mode, several shaders can be
-         *  active for the same object, i.e. all the shaders that have
-         *  multi mode activated are drawn. For instance, this makes it
-         *  possible to display an object with a scalar attribute painted
-         *  on it and several vector attributes superimposed.
-         * \retval true if multi shader mode is active
-         * \retval false otherwise
-         */
-        bool get_multi() const;
-
     public:
         GLdouble* latest_modelview() {
             return modelview_;
@@ -211,7 +185,6 @@ namespace OGF {
 
     private:
         Grob* grob_;
-        bool multi_;
 
         // Viewing parameters, queried when this object is drawn.
         // Useful for picking or for drawing overlays.

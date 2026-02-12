@@ -106,16 +106,7 @@ namespace OGF {
 	    return;
 	}
         if(current_shader_ != nullptr) {
-            if(current_shader_->get_multi()) {
-                for(auto& it : shaders_) {
-                    Shader* shd = it.second ;
-                    if(shd->get_multi()) {
-                        shd->draw() ;
-                    }
-                }
-            } else {
-                current_shader_->draw() ;
-            }
+	    current_shader_->draw() ;
         }
     }
 }

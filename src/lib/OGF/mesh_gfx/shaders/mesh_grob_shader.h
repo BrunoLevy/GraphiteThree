@@ -1021,27 +1021,6 @@ namespace OGF {
             return vertices_filter_;
         }
 
-    public: // removing vertices transparency from GUI, nobody uses it.
-	/**
-	 * \brief Sets the transparency of the vertices
-	 *  (use with dark background).
-	 * \param[in] value the transparency, 0.0 for opaque,
-	 *  1.0 for invisible.
-	 */
-	void set_vertices_transparency(double value) {
-	    vertices_transparency_ = value;
-	    update();
-	}
-
-	/**
-	 * \brief Gets the transparency of the vertices.
-	 * \return the transparency coefficient, 0.0 for opaque,
-	 *  1.0 for invisible.
-	 */
-	double get_vertices_transparency() const {
-	    return vertices_transparency_;
-	}
-
     gom_properties:
 
         /**
@@ -1220,7 +1199,6 @@ namespace OGF {
         EdgeStyle    border_style_;
         PointStyle   vertices_style_;
         bool         vertices_filter_;
-	double       vertices_transparency_;
         PointStyle   vertices_selection_style_;
         bool         animate_;
         double       time_;

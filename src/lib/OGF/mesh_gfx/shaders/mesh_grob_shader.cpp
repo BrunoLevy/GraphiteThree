@@ -139,7 +139,8 @@ namespace OGF {
         mesh_style_.width   = 1;
 
         border_style_.visible = true;
-        border_style_.color = dark_mode() ? Color(1.0,1.0,1.0) : Color(0.0,0.0,0.5);
+        border_style_.color =
+	    dark_mode() ? Color(1.0,1.0,1.0) : Color(0.0,0.0,0.5);
         border_style_.width   = 2;
 
         vertices_style_.visible = false;
@@ -147,8 +148,6 @@ namespace OGF {
         vertices_style_.size    = 2;
 
         vertices_filter_ = false;
-
-	vertices_transparency_ = 0.0;
 
         vertices_selection_style_.visible = true;
         vertices_selection_style_.color   = Color(1.0,0.0,0.0);
@@ -494,28 +493,14 @@ namespace OGF {
         }
 
         if(vertices_style_.visible) {
-
-	    if(vertices_transparency_ != 0.0) {
-		glDepthMask(GL_FALSE);
-		glEnable(GL_BLEND);
-		glBlendEquation(GL_FUNC_ADD);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	    }
-
             gfx_.set_points_color(
                 float(vertices_style_.color.r()),
                 float(vertices_style_.color.g()),
                 float(vertices_style_.color.b()),
-		float(1.0 - vertices_transparency_)
+		float(1.0)
             );
-
             gfx_.set_points_size(float(vertices_style_.size));
             gfx_.draw_vertices();
-
-	    if(vertices_transparency_ != 0.0) {
-		glDisable(GL_BLEND);
-		glDepthMask(GL_TRUE);
-	    }
         }
 
 	RenderingContext* context = RenderingContext::current();

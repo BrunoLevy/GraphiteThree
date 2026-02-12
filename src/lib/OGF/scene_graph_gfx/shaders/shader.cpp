@@ -56,7 +56,6 @@ namespace OGF {
         Grob* grob
     ) :
         grob_(grob),
-        multi_(false),
         no_grob_update_(false) {
     }
 
@@ -67,15 +66,6 @@ namespace OGF {
         glupGetMatrixdv(GLUP_MODELVIEW_MATRIX, modelview_);
         glupGetMatrixdv(GLUP_PROJECTION_MATRIX, project_);
         glGetIntegerv(GL_VIEWPORT, viewport_);
-    }
-
-    bool Shader::get_multi() const {
-        return multi_ ;
-    }
-
-    void Shader::set_multi(bool x) {
-        multi_ = x ;
-        update() ;
     }
 
     void Shader::update() {
