@@ -44,7 +44,7 @@
 #include <OGF/gom/reflection/meta_builtin.h>
 #include <OGF/gom/reflection/meta_enum.h>
 #include <OGF/gom/reflection/meta_class.h>
-#include <OGF/gom/reflection/dynamic_struct.h>
+#include <OGF/gom/reflection/meta_struct.h>
 #include <OGF/gom/services/serializer.h>
 
 /**

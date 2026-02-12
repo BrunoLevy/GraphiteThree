@@ -41,7 +41,7 @@
 #include <OGF/gom/reflection/meta_property.h>
 #include <OGF/gom/reflection/meta_slot.h>
 #include <OGF/gom/reflection/meta_signal.h>
-#include <OGF/gom/reflection/dynamic_struct.h>
+#include <OGF/gom/reflection/meta_struct.h>
 #include <OGF/basic/os/text_utils.h>
 
 #include <geogram/basic/file_system.h>

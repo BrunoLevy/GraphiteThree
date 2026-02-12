@@ -43,7 +43,7 @@
 #include <OGF/gom/reflection/meta_property.h>
 #include <OGF/gom/reflection/meta_slot.h>
 #include <OGF/gom/reflection/meta_signal.h>
-#include <OGF/gom/reflection/dynamic_struct.h>
+#include <OGF/gom/reflection/meta_struct.h>
 
 namespace OGF {
 

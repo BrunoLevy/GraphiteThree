@@ -181,26 +181,52 @@ namespace OGF {
      */
     gom_class GOM_API StructPropertyRef : public Object {
     public:
+	/**
+	 * \brief StructPropertyRef constructor
+	 * \param[in] object a pointer to the object that has the struct as a
+	 *   property
+	 * \param[in] prop_name the name of the struct property in the object
+	 */
 	StructPropertyRef(Object* object, const std::string& prop_name);
 
+	/**
+	 * \brief Gets the object that contains the struct property
+	 * \return a pointer to the object that contains the struct property
+	 */
 	Object* object() const {
 	    return object_;
 	}
 
+	/**
+	 * \brief Gets the name of the struct property
+	 * \return the name of the struct property in the object
+	 */
 	const std::string& property_name() const {
 	    return property_name_;
 	}
 
+	/**
+	 * \copydoc Object::set_property()
+	 */
 	bool set_property(
 	    const std::string& name, const std::string& value
 	) override;
 
+	/**
+	 * \copydoc Object::get_property()
+	 */
         bool get_property(
 	    const std::string& name, std::string& value
 	) const override;
 
+	/**
+	 * \copydoc Object::set_property()
+	 */
         bool set_property(const std::string& name, const Any& value) override;
 
+	/**
+	 * \copydoc Object::get_property()
+	 */
         bool get_property(const std::string& name, Any& value) const override;
 
     private:
