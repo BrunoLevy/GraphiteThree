@@ -653,6 +653,16 @@ namespace OGF {
 
 	static std::string meta_type_name(const MetaType* mt);
 
+      public:
+	/**
+	 * \brief Gets a pointer to the stored value
+	 * \details Use at your own risk !
+	 * \return a raw untyped pointer to the stored value
+	 */
+	Memory::pointer data() {
+	    return value_;
+	}
+
       private:
 	Memory::pointer value_;
 	Memory::byte buffer_[BUFFER_SIZE];

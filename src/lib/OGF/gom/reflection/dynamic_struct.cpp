@@ -170,6 +170,26 @@ namespace OGF {
     MetaStruct::~MetaStruct() {
     }
 
+    size_t MetaStruct::offset(const MetaProperty* mprop) const {
+	geo_assert(mprop->has_custom_attribute("offset"));
+	size_t result;
+	bool ok = String::from_string(
+	    mprop->custom_attribute_value("offset"), result
+	);
+	geo_assert(ok);
+	return result;
+    }
+
+    index_t MetaStruct::field_index(const MetaProperty* mprop) const {
+	index_t nb_fields = index_t(nb_properties(false));
+	for(index_t i=0; i<nb_fields; ++i) {
+	    if(ith_property(i,false) == mprop) {
+		return i;
+	    }
+	}
+	return NO_INDEX;
+    }
+
     /****************************************************************/
 
     MetaBuiltinStruct::MetaBuiltinStruct(
@@ -217,27 +237,74 @@ namespace OGF {
     }
 
     bool StructPropertyRef::set_property(
+	const std::string& prop_name, const Any& prop_value
+    ) {
+	// Always use string version (less elegant, but then we have no
+	// type conversion issue)
+	return set_property(prop_name, prop_value.as_string());
+    }
+
+    bool StructPropertyRef::set_property(
 	const std::string& name, const std::string& value
     ) {
-	return Object::set_property(name, value);
+	MetaStruct* mstruct = dynamic_cast<MetaStruct*>(meta_class());
+	geo_assert(mstruct != nullptr);
+	const MetaProperty* mprop = mstruct->find_property(name, false);
+	if(mprop == nullptr) {
+	    return Object::set_property(name, value);
+	}
+
+	std::string struct_value_string;
+	if(!object_->get_property(property_name_, struct_value_string)) {
+	    return false;
+	}
+
+	index_t field_id = mstruct->field_index(mprop);
+	if(field_id == NO_INDEX) {
+	    Logger::err("GOM") << "Did not find field in struct"
+			       << std::endl;
+	    return false;
+	}
+	std::vector<std::string> fields;
+	String::split_string(struct_value_string, ';', fields);
+	if(fields.size() != index_t(mstruct->nb_properties(false))) {
+	    Logger::err("GOM") << "Invalid struct property value in object"
+			       << std::endl;
+	    return false;
+	}
+	geo_assert(field_id < index_t(fields.size()));
+	fields[field_id] = value;
+	return object_->set_property(
+	    property_name_, String::join_strings(fields,';')
+	);
     }
 
     bool StructPropertyRef::get_property(
 	const std::string& prop_name, std::string& prop_value
     ) const {
+	// string version, use baseclass implementation that
+	// converts and routes to the version using Any
 	return Object::get_property(prop_name, prop_value);
-    }
-
-    bool StructPropertyRef::set_property(
-	const std::string& name, const Any& value
-    ) {
-	return Object::set_property(name, value);
     }
 
     bool StructPropertyRef::get_property(
 	const std::string& prop_name, Any& prop_value
     ) const {
-	return Object::get_property(prop_name, prop_value);
+	MetaStruct* mstruct = dynamic_cast<MetaStruct*>(meta_class());
+	geo_assert(mstruct != nullptr);
+	const MetaProperty* mprop = mstruct->find_property(
+	    prop_name, false
+	);
+	if(mprop == nullptr) {
+	    return Object::get_property(prop_name, prop_value);
+	}
+	Any struct_value;
+	if(!object_->get_property(property_name_, struct_value)) {
+	    return false;
+	}
+	size_t offset = mstruct->offset(mprop);
+	prop_value.copy_from(struct_value.data() + offset, mprop->type());
+	return true;
     }
 
     /****************************************************************/

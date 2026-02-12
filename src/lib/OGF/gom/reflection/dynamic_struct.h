@@ -61,6 +61,22 @@ namespace OGF {
          * \brief MetaStruct destructor.
          */
 	~MetaStruct() override;
+
+	/**
+	 * \brief Finds the offset of a field
+	 * \param[in] mprop the MetaProperty corresponding to the field
+	 * \return the offset in memory of the field from the beginning of
+	 *  the struct
+	 */
+	size_t offset(const MetaProperty* mprop) const;
+
+	/**
+	 * \brief Finds the index of a field
+	 * \param[in] mprop the MetaProperty corresponding to the field
+	 * \return 0 for the first field, 1 for the second field etc...
+	 *    or NO_INDEX if there is no such a field
+	 */
+	index_t field_index(const MetaProperty* mprop) const;
     };
 
     typedef SmartPointer<MetaStruct> MetaStruct_var;
@@ -176,20 +192,16 @@ namespace OGF {
 	}
 
 	bool set_property(
-            const std::string& name, const std::string& value
-        ) override;
-
-        bool get_property(
-            const std::string& prop_name, std::string& prop_value
-        ) const;
-
-        bool set_property(
-	    const std::string& name, const Any& value
+	    const std::string& name, const std::string& value
 	) override;
 
         bool get_property(
-	    const std::string& prop_name, Any& prop_value
+	    const std::string& name, std::string& value
 	) const override;
+
+        bool set_property(const std::string& name, const Any& value) override;
+
+        bool get_property(const std::string& name, Any& value) const override;
 
     private:
 	Object* object_;
