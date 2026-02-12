@@ -37,7 +37,7 @@
 #include <OGF/gom/lua/vec_mat_interop.h>
 #include <OGF/gom/reflection/meta.h>
 #include <geogram/lua/lua_vec_mat.h>
-
+#include <geogram/image/color.h>
 /*
 extern "C" {
 #include <geogram/third_party/lua/lauxlib.h>
@@ -143,6 +143,22 @@ namespace OGF {
 		return true;
 	    }
 
+	    if(mtype == ogf_meta<Color>::type()) {
+		vec4 V;
+		Any V_as_any;
+		Color C;
+		if(
+		    lua_tographitevec<4,double>(
+			L, index, V_as_any, ogf_meta<vec4>::type()
+		    ) &&
+		    V_as_any.get_value(V)
+		) {
+		    C = Color(V.x, V.y, V.z, V.w);
+		    result.set_value(C);
+		    return true;
+		}
+	    }
+
 	    return false;
 	}
 
@@ -210,6 +226,13 @@ namespace OGF {
 	    }
 
 	    if(lua_pushmat<4,double>(L,value)) {
+		return true;
+	    }
+
+	    if(value.meta_type() == ogf_meta<Color>::type()) {
+		Color C;
+		value.get_value(C);
+		lua_push(L,C);
 		return true;
 	    }
 
