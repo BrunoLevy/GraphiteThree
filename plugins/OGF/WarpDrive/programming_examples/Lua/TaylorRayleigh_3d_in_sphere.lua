@@ -3,6 +3,7 @@
 N = 20000 -- Number of points
 
 scene_graph.clear()
+autogui.close_command_dialogs()
 Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
 Omega.I.Shapes.create_sphere()
 Omega.visible=false

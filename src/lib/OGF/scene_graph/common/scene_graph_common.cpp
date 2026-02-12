@@ -63,6 +63,11 @@ namespace OGF {
 	ogf_register_abstract_grob_type<Grob>();
 	ogf_register_abstract_grob_type<CompositeGrob>();
 
+
+	// For some reason gomgen does not manage to generate these
+	// two guys before the structs that use them (I have implemented
+	// the mechanism for that but something is probably missing...)
+
 	if(!Meta::instance()->meta_type_is_bound("GEO::Color")) {
 	    ogf_declare_builtin_type<GEO::Color>("GEO::Color");
 	}

@@ -142,7 +142,7 @@ namespace OGF {
         if(mbuiltin->is_pointer_type()) {
             out() << "      ogf_declare_pointer_type<";
         } else if(is_meta_struct) {
-            out() << "      ogf_declare_struct<";   // TODO: declare fields
+            out() << "      ogf_declare_struct<";
 	} else {
             out() << "      ogf_declare_builtin_type<";
         }
@@ -253,22 +253,54 @@ namespace OGF {
               << "*>(" << stringify(mclass->name() + "*" ) << ");"
               << std::endl;
 
+	// Little local function (used twice)
+	auto generate_enum_or_builtin = [this](MetaType* mtype) {
+            MetaEnum* menum = dynamic_cast<MetaEnum*>(mtype);
+            if(menum != nullptr) {
+                generate_enum(menum);
+		return;
+            }
+            MetaBuiltinType* mbuiltin = dynamic_cast<MetaBuiltinType*>(mtype);
+            if(mbuiltin != nullptr) {
+                generate_builtin(mbuiltin);
+		return;
+            }
+	};
+
+	// Get the types used by the struct types
+	std::set<std::string> struct_used_types;
         for(auto& it : used_types) {
+            MetaType* mtype = Meta::instance()->resolve_meta_type(it);
+	    geo_assert(mtype != nullptr);
+	    MetaBuiltinStruct* mbstruct=dynamic_cast<MetaBuiltinStruct*>(mtype);
+	    if(mbstruct != nullptr) {
+		MetaStruct* mstruct = mbstruct->get_meta_struct();
+		geo_assert(mstruct != nullptr);
+		index_t nb_fields = index_t(mstruct->nb_properties(false));
+		for(index_t i=0; i<nb_fields; ++i) {
+		    MetaProperty* mprop = mstruct->ith_property(i,false);
+		    // Note: use type_name(), not type()->name(), because
+		    // type() is not initialized yet here ! (using a
+		    // dummy meta info populated by the parser)
+		    struct_used_types.insert(mprop->type_name());
+		}
+	    }
+	}
 
-            MetaType* cur_type = Meta::instance()->resolve_meta_type(it);
+	// Generate first the meta info for the types used as struct fields
+        for(auto& it : struct_used_types) {
+            MetaType* mtype = Meta::instance()->resolve_meta_type(it);
+	    generate_enum_or_builtin(mtype);
+        }
 
-            MetaEnum* cur_enum = dynamic_cast<MetaEnum*>(cur_type);
-            if(cur_enum != nullptr) {
-                generate_enum(cur_enum);
-                continue;
-            }
-            MetaBuiltinType* cur_builtin = dynamic_cast<MetaBuiltinType*>(
-                cur_type
-            );
-            if(cur_builtin != nullptr) {
-                generate_builtin(cur_builtin);
-                continue;
-            }
+	// Now we can generate the rest of the meta info
+        for(auto& it : used_types) {
+	    // Already generated if in struct_used_types
+	    if(struct_used_types.find(it) != struct_used_types.end()) {
+		continue;
+	    }
+            MetaType* mtype = Meta::instance()->resolve_meta_type(it);
+	    generate_enum_or_builtin(mtype);
         }
 
         if(

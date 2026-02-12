@@ -4,6 +4,7 @@
 -- Gallouet-Merigot scheme.
 
 N = 5000 -- Number of points
+autogui.close_command_dialogs()
 scene_graph.clear()
 Omega = scene_graph.create_object(OGF.MeshGrob,'Omega')
 Omega.I.Shapes.create_sphere()

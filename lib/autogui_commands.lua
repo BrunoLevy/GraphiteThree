@@ -145,6 +145,13 @@ function autogui.open_command_dialog(request,args)
   autogui.command_state[k].request_ = request
 end
 
+-- \brief Closes all command dialogs
+
+function autogui.close_command_dialogs()
+   autogui.command_state = {}
+   command_gui.request = nil
+end
+
 -- \brief Draws all the command dialogs that are in windowed mode.
 
 function autogui.command_dialogs()

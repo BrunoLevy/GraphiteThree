@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 
 #ifndef H_GOM_CODEGEN_CODEGEN_H
 #define H_GOM_CODEGEN_CODEGEN_H
@@ -83,15 +83,15 @@ namespace OGF {
 
 
         /**
-         * \brief Generates C++ code to create the Meta information 
+         * \brief Generates C++ code to create the Meta information
          *  and adapters.
-         * \details Dependencies (e.g., superclasses) are also generated, 
+         * \details Dependencies (e.g., superclasses) are also generated,
          *  provided that they belong to package \p package_name.
-         * \param[out] out a reference to the stream that will 
+         * \param[out] out a reference to the stream that will
          *  receive the generated C++ code
-         * \param[in] classes the list of classes to generate, 
+         * \param[in] classes the list of classes to generate,
          *  specified as a vector of pointers to MetaClass objects.
-         * \param[in] package_name the name of the package 
+         * \param[in] package_name the name of the package
          */
         void generate(
             std::ostream& out, std::vector<MetaClass*> classes,
@@ -101,9 +101,9 @@ namespace OGF {
     protected:
 
         /**
-         * \brief Generates C++ code that creates the meta information 
+         * \brief Generates C++ code that creates the meta information
          *  associated with a class.
-         * \details C++ code is generated in the stream returned by out(). 
+         * \details C++ code is generated in the stream returned by out().
          *  The function also generates dependencies (superclasses).
          * \param[in] type pointer to the MetaClass
          * \see out() generate_class()
@@ -111,7 +111,7 @@ namespace OGF {
         void generate(MetaClass* type);
 
         /**
-         * \brief Generates C++ code that creates the meta 
+         * \brief Generates C++ code that creates the meta
          *  information associated with a builtin type.
          * \details C++ code is generated in the stream returned by out().
          * \param[in] mbuiltin pointer to the MetaBuiltinType
@@ -120,7 +120,7 @@ namespace OGF {
         void generate_builtin(MetaBuiltinType* mbuiltin);
 
         /**
-         * \brief Generates C++ code that creates the meta information 
+         * \brief Generates C++ code that creates the meta information
          *  associated with an enum.
          * \details C++ code is generated in the stream returned by out().
          * \param[in] menum pointer to the MetaEnum
@@ -129,10 +129,10 @@ namespace OGF {
         void generate_enum(MetaEnum* menum);
 
         /**
-         * \brief Generates C++ code that creates the meta information 
+         * \brief Generates C++ code that creates the meta information
          *  associated with a class.
-         * \details C++ code is generated in the stream returned by out(). 
-         *  The function only generates this MetaClass (and does not take 
+         * \details C++ code is generated in the stream returned by out().
+         *  The function only generates this MetaClass (and does not take
          *  care of dependencies).
          * \param[in] mclass pointer to the MetaClass
          * \see out() generate(MetaClass*)
@@ -141,16 +141,16 @@ namespace OGF {
 
         /**
          * \brief Generates a method adapter.
-         * \details C++ code is generated in the stream returned by out(). 
+         * \details C++ code is generated in the stream returned by out().
          * \param[in] method a pointer to the MetaMethod
          */
         void generate_method_adapter(MetaMethod* method);
 
         /**
          * \brief Generates a method adapter.
-         * \details This version is used for the special case where the 
+         * \details This version is used for the special case where the
          *   method takes a ArgList as an argument.
-         *  C++ code is generated in the stream returned by out(). 
+         *  C++ code is generated in the stream returned by out().
          * \param[in] method a pointer to the MetaMethod
          * \see generate_method_adapter()
          */
@@ -158,7 +158,7 @@ namespace OGF {
 
         /**
          * \brief Generates a signal adapter.
-         * \details C++ code is generated in the stream returned by out(). 
+         * \details C++ code is generated in the stream returned by out().
          * \param[in] signal a pointer to the MetaSignal
          * \see generate_method_adapter()
          */
@@ -166,7 +166,7 @@ namespace OGF {
 
         /**
          * \brief Generates a factory from a MetaConstructor.
-         * \details C++ code is generated in the stream returned by out(). 
+         * \details C++ code is generated in the stream returned by out().
          * \param[in] constructor a pointer to the MetaConstructor
          * \see generate_method_adapter()
          */
@@ -176,10 +176,10 @@ namespace OGF {
          * \brief Generates C++ code that creates the CustomAttributes
          *  associated with a language construct.
          * \param[in] info pointer to an object that inherits CustomAttributes
-         * \param[in] variable_name the name of the C++ variable in the 
+         * \param[in] variable_name the name of the C++ variable in the
          *  generated code where custom attributes should be copied
          * \param[in] is_pointer true if variable_name is a pointer (to a class
-         *  that inherits CustomAttributes), false if variable_name is a 
+         *  that inherits CustomAttributes), false if variable_name is a
          *  reference.
          */
         void generate_attributes(
@@ -210,7 +210,7 @@ namespace OGF {
 	 *   otherwise
          */
         std::string stringify_default_value(const MetaArg* marg);
-        
+
         /**
          * \brief Replaces all colons (":") with underscores ("_") in a string.
          * \param[in] s a const reference to the input string
@@ -263,7 +263,7 @@ namespace OGF {
         std::vector<MetaClass*> sorted_;
         std::string package_name_;
     };
-    
+
 }
 
 #endif
