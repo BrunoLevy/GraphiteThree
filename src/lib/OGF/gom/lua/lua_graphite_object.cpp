@@ -217,18 +217,6 @@ namespace OGF {
 		return 1;
 	    }
 
-	    // Special case: struct property ref, as_string (workaround)
-	    // TODO: general mechanism for tostring() with Graphite types
-	    if(
-		object->is_a(ogf_meta<StructPropertyRef>::type()) &&
-		!strcmp(name,"as_string")
-	    ) {
-		std::string s =
-		    dynamic_cast<StructPropertyRef*>(object)->to_string();
-		lua_pushstring(L,s.c_str());
-		return 1;
-	    }
-
 	    // Case 1: regular property
 	    MetaProperty* mprop = object->meta_class()->find_property(name);
 	    if(mprop != nullptr) {
@@ -457,6 +445,29 @@ namespace OGF {
 	    }
 	}
 
+	static int graphite_tostring(lua_State* L) {
+	    geo_debug_assert(lua_isgraphite(L,1));
+	    Object* object = lua_tographite(L,1);
+
+	    if(object == nullptr) {
+		lua_pushstring(L,"<GOM: nil>");
+		return 1;
+	    }
+
+	    if(object->is_a(ogf_meta<StructPropertyRef>::type())) {
+		StructPropertyRef* struct_ref
+		    = dynamic_cast<StructPropertyRef*>(object);
+		geo_assert(struct_ref != nullptr);
+		lua_pushstring(L,struct_ref->to_string().c_str());
+		return 1;
+	    }
+
+	    std::string result = "<GOM: " + object->string_id() + ">";
+	    lua_pushstring(L,result.c_str());
+	    return 1;
+	}
+
+
 	/*********************************************************************/
 
 	void init_lua_graphite(LuaInterpreter* interpreter) {
@@ -491,6 +502,12 @@ namespace OGF {
 		lua_pushliteral(L,"__call");
 		lua_pushcfunction(L,graphite_call);
 		lua_settable(L,-3);
+
+		// String conversion
+		lua_pushliteral(L,"__tostring");
+		lua_pushcfunction(L,graphite_tostring);
+		lua_settable(L,-3);
+
 
 		lua_setfield(L, LUA_REGISTRYINDEX, "graphite_vtbl");
 	    }

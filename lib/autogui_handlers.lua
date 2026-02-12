@@ -394,7 +394,7 @@ end
 function autogui.color(label,oldval,with_alpha)
    local value=oldval
    local words={}
-   for word in string.split(value,' ') do
+   for word in string.split(tostring(value),' ') do
       words[#words+1] = word
    end
    local r = tonumber(words[1]);
@@ -445,7 +445,7 @@ autogui.handlers['OGF::Color'] = autogui.handlers['GEO::Color']
 function autogui.bool_color(object, property_name, mtype, tooltip)
    local value=object[property_name]
    local words={}
-   for word in string.split(value,';') do
+   for word in string.split(tostring(value),';') do
       words[#words+1] = word
    end
    local visible=(words[1]=='true')
@@ -477,7 +477,7 @@ end
 function autogui.bool_color_int(object,property_name, mtype, tooltip)
    local value=object[property_name]
    local words={}
-   for word in string.split(value,';') do
+   for word in string.split(tostring(value),';') do
       words[#words+1] = word
    end
    local visible=(words[1]=='true')
@@ -591,7 +591,7 @@ autogui.handlers['OGF::ColormapStyle'] = function(
    imgui.Separator()
    local value=object[property_name]
    local words={}
-   for word in string.split(value,';') do
+   for word in string.split(tostring(value),';') do
       words[#words+1] = word
    end
    local colormap=words[1]
