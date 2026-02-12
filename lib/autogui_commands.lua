@@ -86,7 +86,8 @@ function autogui.command_menu_item(request)
    local mmethod = request.method()
 
    -- Special case, using command docking area
-   if command_gui.visible then
+   -- (except when nb_args == 0, in which case we'll invoke cmd directly)
+   if command_gui.visible and mmethod.nb_args() ~= 0 then
       if imgui.MenuItem(
           autogui.remove_underscores(mmethod.name)..'##'..mmethod.name
       ) then
