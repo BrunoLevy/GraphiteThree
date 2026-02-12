@@ -706,7 +706,7 @@ function text_editor_gui.tooltip(args)
      elseif obj.is_a(gom.meta_types.OGF.Callable) then
         imgui.Text('builtin or function')
      else
-        text_editor_gui.Text_title(mclass.name)
+        text_editor_gui.Text_title(mclass.name..' = '..tostring(obj))
         text_editor_gui.show_help(mclass)
         imgui.Separator()
         imgui.BeginGroup()

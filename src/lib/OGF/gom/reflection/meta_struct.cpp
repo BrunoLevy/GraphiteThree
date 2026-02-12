@@ -36,6 +36,7 @@
 
 #include <OGF/gom/reflection/meta_struct.h>
 #include <OGF/gom/reflection/meta.h>
+#include <OGF/gom/interpreter/interpreter.h>
 
 namespace {
     using namespace OGF;
@@ -274,9 +275,16 @@ namespace OGF {
 	}
 	geo_assert(field_id < index_t(fields.size()));
 	fields[field_id] = value;
-	return object_->set_property(
+	bool result = object_->set_property(
 	    property_name_, String::join_strings(fields,';')
 	);
+
+	Interpreter* interpreter = Interpreter::default_interpreter();
+	if(interpreter != nullptr) {
+	    Any value_as_any;
+	    value_as_any.set_value(value);
+	}
+	return result;
     }
 
     bool StructPropertyRef::get_property(

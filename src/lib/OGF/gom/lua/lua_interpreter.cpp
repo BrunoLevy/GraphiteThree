@@ -42,6 +42,7 @@
 #include <OGF/gom/types/node.h>
 #include <OGF/gom/types/callable.h>
 #include <OGF/gom/reflection/meta.h>
+#include <OGF/gom/reflection/meta_struct.h>
 #include <OGF/basic/os/file_manager.h>
 #include <OGF/basic/modules/modmgr.h>
 #include <geogram/basic/process.h>
@@ -334,6 +335,10 @@ namespace OGF {
 	MetaClass* mrequest = Meta::instance()->resolve_meta_class(
 	    "OGF::Request"
 	);
+	MetaClass* mstructpropertyref = Meta::instance()->resolve_meta_class(
+	    "OGF::StructPropertyRef"
+	);
+
 
 	// Using meta_class()->is_subclass_of() rather than object->is_a()
 	// because is_a() uses C++ dynamic type that will not "see" commands
@@ -415,11 +420,21 @@ namespace OGF {
 
 	// Request
 	if(mrequest != nullptr && object->is_a(mrequest)) {
-	    Request* request = dynamic_cast<Request*>(mrequest);
+	    Request* request = dynamic_cast<Request*>(object);
 	    geo_debug_assert(request != nullptr);
 	    return
 		back_resolve(request->object()) + "." +
 		request->method()->name();
+	}
+
+	// StructPropertyRef
+	if(mstructpropertyref != nullptr && object->is_a(mstructpropertyref)) {
+	    StructPropertyRef* struct_prop =
+		dynamic_cast<StructPropertyRef*>(object);
+	    geo_debug_assert(struct_prop != nullptr);
+	    return
+		back_resolve(struct_prop->object()) + "." +
+		struct_prop->property_name();
 	}
 
 	return "";

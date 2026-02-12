@@ -41,6 +41,8 @@
 #include <OGF/scene_graph/types/scene_graph_library.h>
 #include <OGF/scene_graph/types/scene_graph.h>
 #include <OGF/gom/types/node.h>
+#include <OGF/gom/reflection/meta.h>
+#include <OGF/gom/reflection/meta_struct.h>
 #include <OGF/renderer/context/rendering_context.h>
 #include <OGF/basic/os/file_manager.h>
 
@@ -86,15 +88,75 @@ namespace OGF {
     }
 
     bool Shader::set_property(const std::string& name, const Any& value) {
-	bool result = Node::set_property(name, value);
 	Interpreter* interpreter =
 	    (grob_ == nullptr) ? nullptr : grob_->interpreter();
+	MetaProperty* mprop = meta_class()->find_property(name);
+
+	if(mprop == nullptr) {
+	    return false;
+	}
+
+	// Special case, Struct property. We want to properly record
+	// it in the history, so we need to do something special:
+	// use the string representation to detect the fields that changed
+	// value, and record changes only for these ones.
+	if(mprop->type()->is_a(ogf_meta<MetaBuiltinStruct>::type())) {
+	    MetaBuiltinStruct* mbstruct = dynamic_cast<MetaBuiltinStruct*>(
+		mprop->type()
+	    );
+	    geo_assert(mbstruct != nullptr);
+	    MetaStruct* mstruct = mbstruct->get_meta_struct();
+	    std::string val_as_string;
+	    std::vector<std::string> prev_fields;
+	    if(!get_property(name, val_as_string)) {
+		return false;
+	    }
+	    String::split_string(val_as_string, ';', prev_fields);
+	    if(!Node::set_property(name, value)) {
+		return false;
+	    }
+	    std::vector<std::string> new_fields;
+	    if(!get_property(name, val_as_string)) {
+		return false;
+	    }
+	    String::split_string(val_as_string, ';', new_fields);
+	    index_t nb_fields = index_t(mstruct->nb_properties(false));
+	    if(
+		index_t(prev_fields.size()) == nb_fields &&
+		index_t(new_fields.size()) == nb_fields
+	    ) {
+		Object_var struct_prop_ref = new StructPropertyRef(
+		    this, name
+		);
+		for(index_t i=0; i<nb_fields; ++i) {
+		    if(new_fields[i] != prev_fields[i]) {
+			std::string field_name =
+			    mstruct->ith_property(i,false)->name();
+			Any new_val_as_any;
+			struct_prop_ref->get_property(
+			    field_name, new_val_as_any
+			);
+			if(interpreter != nullptr) {
+			    interpreter->record_set_property_in_history(
+				struct_prop_ref, field_name, new_val_as_any
+			    );
+			}
+		    }
+		}
+	    }
+	    return true;
+	}
+
+	// Standard property (much simpler !!)
+	if(!Node::set_property(name, value)) {
+	    return false;
+	}
 	if(interpreter != nullptr) {
 	    interpreter->record_set_property_in_history(
 		this, name, value
 	    );
 	}
-	return result;
+	return true;
     }
 
 
