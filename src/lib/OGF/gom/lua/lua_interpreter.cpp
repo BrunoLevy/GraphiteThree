@@ -149,15 +149,16 @@ namespace OGF {
             Logger::out("GOMLua") << command << std::endl;
         }
 
+        if(save_in_history) {
+            add_to_history(command);
+        }
+
 	if(luaL_dostring(lua_state_,command.c_str())) {
 	    adjust_lua_state();
 	    const char* msg = lua_tostring(lua_state_,-1);
 	    display_error_message(msg);
 	    result = false;
 	}
-        if(save_in_history) {
-            add_to_history(command);
-        }
         return result;
     }
 

@@ -51,6 +51,7 @@ namespace OGF {
     }
 
     void MeshGrobMeshCommands::display_statistics() {
+	show_console();
         mesh_grob()->show_stats("Mesh");
 	Logger::out("Mesh") << "bbox min = "
 			    << mesh_grob()->bbox().x_min()
@@ -96,6 +97,7 @@ namespace OGF {
     }
 
     void MeshGrobMeshCommands::display_topology() {
+	show_console();
         Logger::out("MeshTopology/surface")
             << "Nb components = "
             << mesh_nb_connected_components(*mesh_grob())

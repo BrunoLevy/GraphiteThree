@@ -41,6 +41,7 @@
 #include <OGF/gom/interpreter/interpreter.h>
 #include <OGF/gom/reflection/meta.h>
 #include <OGF/gom/reflection/meta_class.h>
+#include <OGF/gom/lua/lua_interpreter.h>
 #include <geogram/basic/stopwatch.h>
 #include <geogram/basic/command_line.h>
 #include <sstream>
@@ -175,6 +176,15 @@ namespace OGF {
 	    return nullptr;
 	}
 	return get_grob()->interpreter();
+    }
+
+    void Commands::show_console() {
+	if(dynamic_cast<LuaInterpreter*>(interpreter()) != nullptr) {
+	    interpreter()->execute(
+		"pcall(function() console_gui.show() end)",
+		false, false
+	    );
+	}
     }
 
 }
