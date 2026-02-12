@@ -109,8 +109,8 @@ function autogui.command_menu_item(request)
           )
       end
       local tt = autogui.help(mmethod)
-      if tt == nil then tt = '' end
-      tt = tt..' Applies immediately (no dialog box)'
+      if tt == nil then tt = '' else tt = tt..'\n  ' end
+      tt = tt..'Applies immediately (no dialog box)'
       autogui.tooltip(tt)
    else
       if imgui.BeginMenu(autogui.remove_underscores(mmethod.name)) then

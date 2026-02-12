@@ -80,7 +80,10 @@ namespace OGF {
         const ArgList& args_in, Any& ret_val
     ) {
 
-        if(!args_in.has_arg("override_lock") && command_is_running_) {
+	// override_lock_ is not used anywhere, except in a commented-out
+	// code in GeometricIntelligence plugin.
+
+        if(!args_in.has_arg("_override_lock") && command_is_running_) {
 	    // Do not invoke command while another command is running
 	    MetaMethod* mmethod = meta_class()->find_method(method_name);
 	    if( // ... but this does not concern member function of base classes
@@ -131,15 +134,12 @@ namespace OGF {
         // Do not display timings for methods with continuous updates
         // (e.g. set_multiresolution_level)
         MetaMethod* mmethod = meta_class()->find_method(method_name) ;
+
         bool do_timings = chrono_ && mmethod != nullptr &&
             !mmethod->has_custom_attribute("continuous_update") ;
 
         if(get_grob() != nullptr) {
             if(do_timings) {
-
-		// TODO: prevent user from changing current object
-                // during execution the command.
-
                 std::string full_name =
                     meta_class()->name() + "::" + method_name ;
                 Stopwatch timer ;
@@ -151,13 +151,6 @@ namespace OGF {
                 Logger::out("timings")
                     << "(" << full_name << ") Elapsed time: "
                     << timer.elapsed_time() << std::endl ;
-
-		// TODO: re-enable changing current object here.
-
-		//   If the user clicked on the object list attempting
-		// to change current object, restore selected item.
-
-		// TODO: take into account user changed object here
 
 		command_is_running_ = false ;
                 return result ;

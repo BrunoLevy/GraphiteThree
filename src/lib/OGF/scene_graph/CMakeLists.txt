@@ -5,6 +5,7 @@ aux_source_directories(SOURCES "Source Files\\common"              common)
 aux_source_directories(SOURCES "Source Files\\types"               types)
 aux_source_directories(SOURCES "Source Files\\skin"                skin)
 aux_source_directories(SOURCES "Source Files\\grob"                grob)
+aux_source_directories(SOURCES "Source Files\\interfaces"          interfaces)
 aux_source_directories(SOURCES "Source Files\\commands"            commands)
 aux_source_directories(SOURCES "Source Files\\NL"                  NL)
 

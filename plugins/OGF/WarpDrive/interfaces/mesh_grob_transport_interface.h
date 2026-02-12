@@ -23,19 +23,19 @@
  *  Contact: Bruno Levy - levy@loria.fr
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
- * As an exception to the GPL, Graphite can be linked with the following 
+ * As an exception to the GPL, Graphite can be linked with the following
  *  (non-GPL) libraries:
  *     Qt, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #ifndef H_OGF_WARPDRIVE_COMMANDS_MESH_GROB_TRANSPORT_INTERFACE_H
 #define H_OGF_WARPDRIVE_COMMANDS_MESH_GROB_TRANSPORT_INTERFACE_H
@@ -55,7 +55,7 @@ namespace OGF {
 namespace OGF {
 
     /**
-     * \brief A wrapper to script low-level editing operations 
+     * \brief A wrapper to script low-level editing operations
      *  on a MeshGrob.
      */
     gom_class WarpDrive_API MeshGrobTransport : public Interface {
@@ -84,7 +84,7 @@ namespace OGF {
 	 * \brief Computes the centroids of the Laguerre cells
 	 *  that realize an optimal transport from a domain to
 	 *  the vertices of the current mesh.
-	 * \param[in] Omega the domain, either a surfacic or a 
+	 * \param[in] Omega the domain, either a surfacic or a
 	 *  volumetric mesh.
 	 * \param[out] centroids the coordinates of the centroids
 	 *  of the Laguerre cells. If mode is EULER_2D, then there
@@ -96,12 +96,13 @@ namespace OGF {
 	void compute_optimal_Laguerre_cells_centroids(
 	    MeshGrob* Omega, NL::Vector* centroids,
 	    NL::Vector* weights = nullptr,
-	    MeshGrobTransportCommands::EulerMode mode = MeshGrobTransportCommands::EULER_2D
+	    MeshGrobTransportCommands::EulerMode mode =
+	    MeshGrobTransportCommands::EULER_2D
 	);
 
 	/**
 	 * \brief Computes the measures of the Laguerre cells.
-	 * \param[in] Omega the domain, either a surfacic or a 
+	 * \param[in] Omega the domain, either a surfacic or a
 	 *  volumetric mesh.
 	 * \param[in] weights the weights of the Laguerre diagram.
 	 * \param[out] measures the measures of all Laguerre cells.
@@ -116,12 +117,12 @@ namespace OGF {
 
 	/**
 	 * \brief Computes the P1 Laplacian of the Laguerre cells.
-	 * \param[in] Omega the domain, either a surfacic or a 
+	 * \param[in] Omega the domain, either a surfacic or a
 	 *  volumetric mesh.
 	 * \param[in] weights the weights of the Laguerre diagram.
-	 * \param[out] Laplacian P1 Laplacian of the Laguerre diagram or nullptr if 
+	 * \param[out] Laplacian P1 Laplacian of the Laguerre diagram or nullptr if
 	 *  not needed.
-	 * \param[out] measures optional measures the measures of 
+	 * \param[out] measures optional measures the measures of
 	 *  all Laguerre cells, or nullptr if not needed.
 	 * \param[in] mode one of EULER_2D, EULER_3D or EULER_ON_SURFACE.
 	 */
@@ -135,7 +136,7 @@ namespace OGF {
 
 	/**
 	 * \brief Computes the Laguerre diagram.
-	 * \param[in] Omega the domain, either a surfacic or a 
+	 * \param[in] Omega the domain, either a surfacic or a
 	 *  volumetric mesh.
 	 * \param[in] weights the weights of the Laguerre diagram.
 	 * \param[out] RVD MeshGrob with the resulting Laguerre diagram.
@@ -145,23 +146,23 @@ namespace OGF {
 	    MeshGrob* Omega,
 	    NL::Vector* weights,
 	    MeshGrob* RVD,
-	    MeshGrobTransportCommands::EulerMode mode	    
+	    MeshGrobTransportCommands::EulerMode mode
 	);
-	
+
 	/**
 	 * \brief Computes the measure of the domain.
-	 *  \param[in] Omega the domain, either a surfacic or a 
+	 *  \param[in] Omega the domain, either a surfacic or a
 	 *  volumetric mesh.
 	 * \param[in] mode one of EULER_2D, EULER_3D or EULER_ON_SURFACE.
 	 */
 	double Omega_measure(
 	    MeshGrob* Omega,
-	    MeshGrobTransportCommands::EulerMode mode	    
+	    MeshGrobTransportCommands::EulerMode mode
 	);
 
-	
-    };    
-    
+
+    };
+
 }
 
 

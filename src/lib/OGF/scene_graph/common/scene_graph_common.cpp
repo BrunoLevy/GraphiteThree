@@ -43,6 +43,7 @@
 #include <OGF/scene_graph/types/properties.h>
 #include <OGF/scene_graph/commands/commands.h>
 #include <OGF/scene_graph/commands/scene_graph_commands.h>
+#include <OGF/scene_graph/interfaces/scene_graph_editor.h>
 #include <OGF/gom/types/gom_implementation.h>
 #include <OGF/basic/modules/module.h>
 
@@ -80,6 +81,7 @@ namespace OGF {
 	// it to appear as an option in the 'create object' menu.
         ogf_register_abstract_grob_type<SceneGraph>();
 	ogf_register_grob_commands<SceneGraph, SceneGraphSceneCommands>();
+	ogf_register_grob_interface<SceneGraph, SceneGraphEditor>();
         ogf_register_grob_read_file_extension<SceneGraph>("graphite");
         ogf_register_grob_read_file_extension<SceneGraph>("graphite_ascii");
         ogf_register_grob_read_file_extension<SceneGraph>("aln");

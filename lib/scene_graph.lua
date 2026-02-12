@@ -643,10 +643,6 @@ function scene_graph_gui.draw_grob_name(grob)
          if scene_graph_gui.rename_new ~= '' then
             main.save_state()
             scene_graph.current_object = grob.name
-            gom.add_to_history(
-               gom.back_resolve(grob)..'.rename('..
-                 scene_graph_gui.rename_new ..')'
-            )
             grob.rename(scene_graph_gui.rename_new)
          end
 	 scene_graph.current_object = grob.name
