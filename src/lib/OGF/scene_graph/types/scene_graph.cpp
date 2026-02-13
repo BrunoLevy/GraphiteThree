@@ -57,7 +57,7 @@
 
 namespace OGF {
 
-/*************************************************************************/
+/******************************************************************************/
 
     SceneGraph::SceneGraph(Interpreter* interpreter, bool transfer_ownership) :
 	CompositeGrob(nullptr),
@@ -78,118 +78,34 @@ namespace OGF {
 	meta_class()->set_instance(nullptr);
     }
 
-    void SceneGraph::set_scene_graph_shader_manager(
-	Object* sgshdmgr
-    ) {
-	scene_graph_shader_manager_ = sgshdmgr;
-    }
+/*******************************************************************************/
 
-    Object* SceneGraph::get_scene_graph_shader_manager() const {
-	return scene_graph_shader_manager_;
-    }
-
-    void SceneGraph::set_visibility(index_t index, bool value) {
-        Grob* g = ith_child(index);
-        if(g != nullptr) {
-            g->set_visible(value);
+    void SceneGraph::clear() {
+        while(get_nb_children() != 0) {
+            delete_current_object();
         }
     }
 
-    void SceneGraph::register_grob_commands(
-        MetaClass* grob_class, MetaClass* commands_class
-    ) {
-        SceneGraphLibrary::instance()->register_grob_commands(
-            grob_class->name(), commands_class->name()
-        );
-    }
 
-    void SceneGraph::update_values() {
-        values_changed(get_values());
-        value_changed(this);
-        if(this == SceneGraphLibrary::instance()->scene_graph()) {
-            SceneGraphLibrary::instance()->
-                scene_graph_values_changed_notify_environment();
+    void SceneGraph::delete_current_object() {
+        Grob* cur = current();
+        set_current_object(std::string());
+        if(cur != nullptr) {
+            std::string name = cur->name();  // copy it before deletion
+            cur->get_parent()->remove_child(cur);
         }
-    }
-
-    void SceneGraph::update() {
-        value_changed(this);
-    }
-
-
-    void SceneGraph::begin_graphite_file(
-        OutputGraphiteFile& out, bool all_scene
-    ) {
-        if(all_scene) {
-            std::string version;
-            Environment::instance()->get_value("version", version);
-
-            // Scene graph header
-            {
-                ArgList args;
-                args.create_arg("version", version);
-                args.create_arg("current_object", get_current_object());
-
-		// skin_imgui version
-
-		copy_property_to_arglist("camera.auto_focus",args);
-		copy_property_to_arglist("camera.draw_selected_only",args);
-		copy_property_to_arglist("camera.clipping",args);
-		copy_property_to_arglist("camera.lighting_matrix",args);
-
-		copy_property_to_arglist("xform.u", args);
-		copy_property_to_arglist("xform.v", args);
-		copy_property_to_arglist("xform.w", args);
-		copy_property_to_arglist("xform.zoom", args);
-		copy_property_to_arglist("xform.look_at", args);
-
-                out.write_scene_graph_header(args);
-            }
-
-        }
-
-        // Command line
-        {
-            std::vector<std::string> args;
-            CmdLine::get_args(args);
-            out.write_command_line(args);
-        }
-
-        // History
-        {
-            std::vector<std::string> history(
-                interpreter()->history_size()
-            );
-            for(index_t i=0;
-                i<interpreter()->history_size(); ++i
-            ) {
-                history[i] = interpreter()->history_line(i);
-            }
-            out.write_history(history);
-        }
-    }
-
-    void SceneGraph::end_graphite_file(OutputGraphiteFile& out) {
-        geo_argused(out);
-        Logger::out("GeoFile") << "<< EOF" << std::endl;
-    }
-
-    std::string SceneGraph::get_values() const {
-        std::string result;
+        update_values();
         for(index_t i=0; i<get_nb_children(); i++) {
-            Grob* cur = ith_child(i);
-            if(cur != nullptr) {
-                if(result.length() > 0) {
-                    result += ";";
-                }
-                result += cur->get_name();
+            Grob* cur_child = ith_child(i);
+            if(cur_child != nullptr) {
+                set_current_object(cur_child->name());
+                return;
             }
         }
-        return result;
     }
 
     Grob* SceneGraph::duplicate_current() {
-        Grob* cur = resolve(current_object_name_);
+        Grob* cur = current();
         set_current_object("");
         if(cur == nullptr) {
             Logger::err("SceneGraph") << "no object selected" << std::endl;
@@ -235,49 +151,6 @@ namespace OGF {
             return;
         }
         swap_children(next, current());
-    }
-
-    void SceneGraph::delete_current_object() {
-        Grob* cur = resolve(current_object_name_);
-        set_current_object(std::string());
-        if(cur != nullptr) {
-            std::string name = cur->name();  // copy it before deletion
-            cur->get_parent()->remove_child(cur);
-        }
-        update_values();
-        for(index_t i=0; i<get_nb_children(); i++) {
-            Grob* cur_child = ith_child(i);
-            if(cur_child != nullptr) {
-                set_current_object(cur_child->name());
-                return;
-            }
-        }
-    }
-
-    void SceneGraph::clear() {
-        while(get_nb_children() != 0) {
-            delete_current_object();
-        }
-    }
-
-    void SceneGraph::set_current_object(const GrobName& value_in) {
-	std::string value = value_in;
-        if(current_object_name_ == value) {
-            return;
-        }
-	if(value != "" && resolve(value) == nullptr) {
-	    Logger::warn("SceneGraph") << value << ": no such object"
-				       << std::endl;
-	    value = "";
-	}
-        current_object_name_ = value;
-        disable_slots();
-        current_object_changed(current_object_name_);
-        enable_slots();
-    }
-
-    const GrobName& SceneGraph::get_current_object() const {
-        return current_object_name_;
     }
 
     Grob* SceneGraph::load_object(
@@ -369,13 +242,6 @@ namespace OGF {
             }
         }
 
-        if(interpreter() != nullptr) {
-            std::ostringstream out;
-            out << "scene_graph.load_object(\""
-                << file_name << "\")" << std::endl;
-            interpreter()->add_to_history(out.str());
-        }
-
         if(invoked_from_gui) {
             const std::string dir = FileSystem::dir_name(file_name);
             if( FileSystem::is_directory(dir) ) {
@@ -399,7 +265,7 @@ namespace OGF {
 
     bool SceneGraph::save_current_object(const NewFileName& file_name) {
         if(is_bound(current_object_name_)) {
-            Grob* grob = resolve(current_object_name_);
+            Grob* grob = current();
             std::string ext = FileSystem::extension(file_name);
             if(ext == "graphite" || ext == "graphite_ascii") {
                 if(!grob->is_serializable()) {
@@ -423,6 +289,20 @@ namespace OGF {
             }
         }
 	return true;
+    }
+
+    bool SceneGraph::save_viewer_properties(const std::string& filename) {
+	bool result = true;
+	try {
+	    OutputGraphiteFile out(filename);
+	    begin_graphite_file(out,true);
+	    end_graphite_file(out);
+	} catch(const std::logic_error& e) {
+	    Logger::err("I/O") << "Caught exception: " << e.what()
+			       << std::endl;
+	    result = false;
+	}
+	return result;
     }
 
     Grob* SceneGraph::create_object(
@@ -494,48 +374,69 @@ namespace OGF {
         return resolve(current_object_name_);
     }
 
-    /**
-     * Loading alignment data files (as in Aim@Shape repository)
-     */
-    bool SceneGraph::load_aln(const std::string& filename, SceneGraph* sg) {
+    void SceneGraph::set_current(Grob* grob) {
+	set_current_object(grob->name());
+    }
 
-        std::ifstream in(filename.c_str());
-        if(!in) {
-            return false;
+    void SceneGraph::register_grob_commands(
+        MetaClass* grob_class, MetaClass* commands_class
+    ) {
+        SceneGraphLibrary::instance()->register_grob_commands(
+            grob_class->name(), commands_class->name()
+        );
+    }
+
+    /************************************************************************/
+
+    void SceneGraph::set_current_object(const GrobName& value_in) {
+	std::string value = value_in;
+        if(current_object_name_ == value) {
+            return;
         }
+	if(value != "" && resolve(value) == nullptr) {
+	    Logger::warn("SceneGraph") << value << ": no such object"
+				       << std::endl;
+	    value = "";
+	}
+        current_object_name_ = value;
+        disable_slots();
+        current_object_changed(current_object_name_);
+        enable_slots();
+    }
 
-        std::string dirname = FileSystem::dir_name(filename);
-        if(dirname == "") {
-            dirname = ".";
-        }
+    const GrobName& SceneGraph::get_current_object() const {
+        return current_object_name_;
+    }
 
-        unsigned int nb;
-        in >> nb;
-        for(unsigned int i=0; i<nb; i++) {
-            std::string current;
-            in >> current;
-            current = dirname + "/" + current;
-            Grob* grob = sg->load_object(current);
-
-            in >> current; // Load '#' comment.
-
-            mat4 M;
-            in >> M;
-            M = M.transpose();
-              // Ehhh oui, transpose ! On avait une chance sur deux :-)
-
-            if(grob != nullptr) {
-                grob->set_obj_to_world_transform(M);
+    std::string SceneGraph::get_values() const {
+        std::string result;
+        for(index_t i=0; i<get_nb_children(); i++) {
+            Grob* cur = ith_child(i);
+            if(cur != nullptr) {
+                if(result.length() > 0) {
+                    result += ";";
+                }
+                result += cur->get_name();
             }
         }
-
-        return true;
+        return result;
     }
+
+    void SceneGraph::set_scene_graph_shader_manager(
+	Object* sgshdmgr
+    ) {
+	scene_graph_shader_manager_ = sgshdmgr;
+    }
+
+    Object* SceneGraph::get_scene_graph_shader_manager() const {
+	return scene_graph_shader_manager_;
+    }
+
+    /************************************************************************/
 
     bool SceneGraph::is_serializable() const {
         return true;
     }
-
 
     bool SceneGraph::serialize_read(
         InputGraphiteFile& in
@@ -584,19 +485,26 @@ namespace OGF {
         return true;
     }
 
-    bool SceneGraph::save_viewer_properties(const std::string& filename) {
-	bool result = true;
-	try {
-	    OutputGraphiteFile out(filename);
-	    begin_graphite_file(out,true);
-	    end_graphite_file(out);
-	} catch(const std::logic_error& e) {
-	    Logger::err("I/O") << "Caught exception: " << e.what()
-			       << std::endl;
-	    result = false;
-	}
-	return result;
+    /************************************************************************/
+
+    void SceneGraph::update_values() {
+        values_changed(get_values());
+        value_changed(this);
+        if(this == SceneGraphLibrary::instance()->scene_graph()) {
+            SceneGraphLibrary::instance()->
+                scene_graph_values_changed_notify_environment();
+        }
     }
+
+    void SceneGraph::update() {
+        value_changed(this);
+    }
+
+    Interpreter* SceneGraph::interpreter() {
+	return interpreter_;
+    }
+
+    /************************************************************************/
 
     void SceneGraph::get_grob_shader(
         Grob* grob, std::string& classname, ArgList& properties
@@ -608,6 +516,102 @@ namespace OGF {
         Grob* grob, const std::string& classname, const ArgList& properties
     ) {
 	grob->set_shader_and_shader_properties(classname, properties);
+    }
+
+
+    /**
+     * Loading alignment data files (as in Aim@Shape repository)
+     */
+    bool SceneGraph::load_aln(const std::string& filename, SceneGraph* sg) {
+
+        std::ifstream in(filename.c_str());
+        if(!in) {
+            return false;
+        }
+
+        std::string dirname = FileSystem::dir_name(filename);
+        if(dirname == "") {
+            dirname = ".";
+        }
+
+        unsigned int nb;
+        in >> nb;
+        for(unsigned int i=0; i<nb; i++) {
+            std::string current;
+            in >> current;
+            current = dirname + "/" + current;
+            Grob* grob = sg->load_object(current);
+
+            in >> current; // Load '#' comment.
+
+            mat4 M;
+            in >> M;
+            M = M.transpose();
+              // Ehhh oui, transpose ! On avait une chance sur deux :-)
+
+            if(grob != nullptr) {
+                grob->set_obj_to_world_transform(M);
+            }
+        }
+
+        return true;
+    }
+
+    void SceneGraph::begin_graphite_file(
+        OutputGraphiteFile& out, bool all_scene
+    ) {
+        if(all_scene) {
+            std::string version;
+            Environment::instance()->get_value("version", version);
+
+            // Scene graph header
+            {
+                ArgList args;
+                args.create_arg("version", version);
+                args.create_arg("current_object", get_current_object());
+
+		// skin_imgui version
+
+		copy_property_to_arglist("camera.auto_focus",args);
+		copy_property_to_arglist("camera.draw_selected_only",args);
+		copy_property_to_arglist("camera.clipping",args);
+		copy_property_to_arglist("camera.lighting_matrix",args);
+
+		copy_property_to_arglist("xform.u", args);
+		copy_property_to_arglist("xform.v", args);
+		copy_property_to_arglist("xform.w", args);
+		copy_property_to_arglist("xform.zoom", args);
+		copy_property_to_arglist("xform.look_at", args);
+
+                out.write_scene_graph_header(args);
+            }
+
+        }
+
+        // Command line
+        {
+            std::vector<std::string> args;
+            CmdLine::get_args(args);
+            out.write_command_line(args);
+        }
+
+        // History
+        {
+            std::vector<std::string> history(
+                interpreter()->history_size()
+            );
+            for(index_t i=0;
+                i<interpreter()->history_size(); ++i
+            ) {
+                history[i] = interpreter()->history_line(i);
+            }
+            out.write_history(history);
+        }
+    }
+
+    void SceneGraph::end_graphite_file(OutputGraphiteFile& out) {
+        geo_argused(out);
+        Logger::out("GeoFile") << "<< EOF" << std::endl;
     }
 
     void SceneGraph::serialize_grob_write(
@@ -771,8 +775,6 @@ namespace OGF {
 	}
     }
 
-    Interpreter* SceneGraph::interpreter() {
-	return interpreter_;
-    }
+    /************************************************************************/
 
 }

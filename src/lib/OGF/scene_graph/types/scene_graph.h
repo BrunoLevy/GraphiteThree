@@ -78,44 +78,14 @@ namespace OGF {
          */
          ~SceneGraph() override;
 
-        /**
-         * \brief Triggers the value_changed() signal.
-         */
-        void update() override;
-
-        /**
-         * \brief Triggers the values_changed(), visibilities_changed(),
-         *  types_changed() and value_changed() signals.
-         */
-        void update_values();
-
-        /**
-         * \copydoc Grob::is_serializable()
-         */
-         bool is_serializable() const override;
-
-        /**
-         * \copydoc Grob::serialize_read()
-         */
-	 bool serialize_read(InputGraphiteFile& in) override;
-
-        /**
-         * \copydoc Grob::serialize_write()
-         */
-	 bool serialize_write(OutputGraphiteFile& out) override;
 
     gom_slots:
 
-	/**
-	 * \brief Saves viewer properties to a file.
-	 * \details This saves current viewpoint, clipping and background
-	 *  color to a .graphite file.
-	 * \param[in] value a .graphite file name.
-	 * \retval true if viewer properties could be successfully saved to
-	 *  the file.
-	 * \retval false otherwise.
-	 */
-        bool save_viewer_properties(const std::string& value);
+        /**
+         * \brief Clears this SceneGraph.
+         * \details Deletes all the objects of this SceneGraph.
+         */
+        void clear() override;
 
         /**
          * \brief Deletes the current object.
@@ -145,11 +115,6 @@ namespace OGF {
          */
         void move_current_down();
 
-        /**
-         * \brief Clears this SceneGraph.
-         * \details Deletes all the objects of this SceneGraph.
-         */
-        void clear() override;
 
         /**
          * \brief Loads an object from a file, and stores it in this
@@ -190,6 +155,17 @@ namespace OGF {
          * \param[in] value the name of the file
          */
         bool save_current_object(const NewFileName& value);
+
+	/**
+	 * \brief Saves viewer properties to a file.
+	 * \details This saves current viewpoint, clipping and background
+	 *  color to a .graphite file.
+	 * \param[in] value a .graphite file name.
+	 * \retval true if viewer properties could be successfully saved to
+	 *  the file.
+	 * \retval false otherwise.
+	 */
+        bool save_viewer_properties(const std::string& value);
 
         /**
          * \brief Creates an object.
@@ -235,13 +211,10 @@ namespace OGF {
         Grob* current();
 
         /**
-         * \brief Sets the visibility flag of one of the objects.
-         * \param[in] index the index of the object, in O..nb_children()-1
-         * \param[in] value true if the object is made visible, false if it
-         *  is made invisible
+         * \brief Sets the current object.
+         * \return a pointer to the current object
          */
-        void set_visibility(index_t index, bool value);
-
+	void set_current(Grob* grob);
 
         /**
          * \brief Associates a Commands class to a Grob class.
@@ -257,12 +230,14 @@ namespace OGF {
         /**
          * \brief Sets the current object by name.
          * \param[in] value the name of the object that should be made current
+	 * NOTE: deprecated, use set_current(Grob*) instead
          */
         void set_current_object(const GrobName& value);
 
         /**
          * \brief Gets the name of the current object.
          * \return the name of the current object
+	 * NOTE: deprecated, use current()->Grob* instead
          */
         const GrobName& get_current_object() const;
 
@@ -320,6 +295,39 @@ namespace OGF {
 	 */
 	Object* get_scene_graph_shader_manager() const;
 
+
+    public:
+        /**
+         * \brief Triggers the value_changed() signal.
+         */
+        void update() override;
+
+        /**
+         * \brief Triggers the values_changed(), visibilities_changed(),
+         *  types_changed() and value_changed() signals.
+         */
+        void update_values();
+
+        /**
+         * \copydoc Grob::is_serializable()
+         */
+         bool is_serializable() const override;
+
+        /**
+         * \copydoc Grob::serialize_read()
+         */
+	 bool serialize_read(InputGraphiteFile& in) override;
+
+        /**
+         * \copydoc Grob::serialize_write()
+         */
+	 bool serialize_write(OutputGraphiteFile& out) override;
+
+	/**
+	 * \copydoc Grob::interpreter()
+	 */
+	Interpreter* interpreter() override;
+
     gom_signals:
         /**
          * \brief a signal that is triggered whenever the list of objects
@@ -341,12 +349,6 @@ namespace OGF {
          * \param[in] value the name of the new current object
          */
         virtual void current_object_changed(const std::string& value);
-
-    public:
-	/**
-	 * \copydoc Grob::interpreter()
-	 */
-	Interpreter* interpreter() override;
 
     protected:
         /**
