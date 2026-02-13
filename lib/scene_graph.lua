@@ -222,7 +222,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
          }
          scene_graph_gui.rename_old = dup.name
          scene_graph_gui.rename_new = dup.name
-         scene_graph.set_current{grob=dup,_invoked_from_gui=true}
+         scene_graph_gui.set_current(dup)
       end
       autogui.tooltip('duplicate')
       imgui.SameLine()
@@ -637,9 +637,9 @@ function scene_graph_gui.draw_grob_name(grob)
          ImGuiSelectableFlags_SelectOnNav
       ) then
 	 if imgui.IsMouseDoubleClicked(0) then
-              scene_graph.show_only{grob=grob,_invoked_from_gui=true}
-	 end
-         scene_graph.set_current{grob=grob,_invoked_from_gui=true}
+            scene_graph.show_only{grob=grob,_invoked_from_gui=true}
+         end
+         scene_graph_gui.set_current(grob)
       end
       if imgui.IO_KeyShift_pressed() and
          imgui.IsItemFocused() and not grob.selected then
@@ -704,7 +704,7 @@ function scene_graph_gui.draw_grob_eye(grob)
       else
          scene_graph.hide_object{grob=grob,_invoked_from_gui=true}
       end
-      scene_graph.set_current{grob=grob,_invoked_from_gui=true}
+      scene_graph_gui.set_current(grob)
    end
 end
 
@@ -730,6 +730,15 @@ end
 
 -- -----------------------------------------------------------------------
 
+-- \brief sets the current object in the scene graph
+-- \param[in] grob the object to be set as current
+function scene_graph_gui.set_current(grob)
+   if grob ~= nil then
+      if grob.name ~= scene_graph.current_object then
+         scene_graph.set_current{grob=grob,_invoked_from_gui=true}
+      end
+   end
+end
 
 -- \brief toggles the selection flag for a given object
 -- \param grob the object
