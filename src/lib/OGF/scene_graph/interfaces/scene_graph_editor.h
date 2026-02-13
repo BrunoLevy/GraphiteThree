@@ -69,6 +69,16 @@ namespace OGF {
 	    return dynamic_cast<SceneGraph*>(grob());
 	}
 
+        /**
+         * \copydoc Object::invoke_method
+         * \details Overload of the invokation mechanism,
+         *  that adds timings and history recording.
+         */
+        bool invoke_method(
+            const std::string& method_name,
+            const ArgList& args, Any& ret_val
+        ) override;
+
       gom_slots:
 
 	void set_current(const GrobName& grob_name);
@@ -106,7 +116,7 @@ namespace OGF {
 	std::string current_bkp_;
     };
 
-
+    // TODO: load/save ...
 }
 
 #endif

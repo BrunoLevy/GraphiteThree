@@ -107,7 +107,6 @@ namespace OGF {
         initialize_name(value);
         if(scene_graph() != this) {
             scene_graph()->update_values();
-            scene_graph()->grob_renamed();
         }
     }
 

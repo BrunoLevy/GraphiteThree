@@ -46,6 +46,13 @@ namespace OGF {
     SceneGraphEditor::~SceneGraphEditor() {
     }
 
+    bool SceneGraphEditor::invoke_method(
+	const std::string& method_name,
+	const ArgList& args, Any& ret_val
+    ) {
+	return Interface::invoke_method(method_name, args, ret_val);
+    }
+
     void SceneGraphEditor::set_current(const GrobName& grob_name) {
 	if(scene_graph() == nullptr) {
 	    Logger::err("SceneGraphEditor") << "No SceneGraph" << std::endl;

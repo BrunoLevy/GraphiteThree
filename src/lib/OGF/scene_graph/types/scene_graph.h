@@ -272,27 +272,6 @@ namespace OGF {
          */
         std::string get_values() const;
 
-        /**
-         * \brief Sets the visibility flags for all the objects.
-         * \param[in] value the ';'-separated list of object visibilities, as
-         *  a string
-         */
-        void set_visibilities(const std::string& value);
-
-        /**
-         * \brief Gets the visibility flags for all the objects.
-         * \return the ';'-separated list of object visibilities, as
-         *  a string
-         */
-        std::string get_visibilities() const;
-
-        /**
-         * \brief Gets the object types for all the objects.
-         * \return the ';'-separated list of object types.
-         */
-        std::string get_types() const;
-
-
 	/**
 	 * \brief Sets the render area.
 	 * \param[in] rdra a pointer to the render area.
@@ -350,21 +329,6 @@ namespace OGF {
         virtual void values_changed(const std::string& value);
 
         /**
-         * \brief a signal that is triggered whenever object visibility
-         *  flags change.
-         * \param[in] value the ';'-separated list of object visibility
-         *  flags
-         */
-        virtual void visibilities_changed(const std::string& value);
-
-        /**
-         * \brief a signal that is triggered whenever the list of
-         *  objects changes.
-         * \param[in] value the ';'-separated list of object types
-         */
-        virtual void types_changed(const std::string& value);
-
-        /**
          * \brief a signal that is triggered whenever this SceneGraph
          *  changes.
          * \param[in] value a pointer to this SceneGraph
@@ -377,26 +341,6 @@ namespace OGF {
          * \param[in] value the name of the new current object
          */
         virtual void current_object_changed(const std::string& value);
-
-        /**
-         * \brief a signal that is triggered whenever an object is
-         *  created in this SceneGraph
-         * \param[in] name the name of the created object
-         */
-        void grob_created(const std::string& name);
-
-        /**
-         * \brief a signal that is triggered whenever an object is
-         *  deleted in this SceneGraph
-         * \param[in] name the name of the deleted object
-         */
-        void grob_deleted(const std::string& name);
-
-        /**
-         * \brief a signal that is triggered whenever an object is
-         *  renamed in this SceneGraph
-         */
-        void grob_renamed();
 
     public:
         /**

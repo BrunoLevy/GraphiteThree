@@ -103,51 +103,8 @@ namespace OGF {
         );
     }
 
-    void SceneGraph::set_visibilities(const std::string& x) {
-        std::vector< std::string > values;
-        String::split_string( x, ';', values );
-        for( index_t i = 0; i < get_nb_children(); i++ ) {
-            Grob* g = ith_child(i);
-            if( g != nullptr ) {
-                bool value = values[i] == "true" ? true : false;
-                g->set_visible( value );
-            }
-        }
-        update_values();
-    }
-
-    std::string SceneGraph::get_visibilities() const {
-        std::string result;
-        for(index_t i=0; i<get_nb_children(); i++) {
-            Grob* g = ith_child(i);
-            if(g != nullptr) {
-                if(result.length() != 0) {
-                    result += ";";
-                }
-                result = result + (g->get_visible() ? "true" : "false");
-            }
-        }
-        return result;
-    }
-
-    std::string SceneGraph::get_types() const {
-        std::string result;
-        for(index_t i=0; i<get_nb_children(); i++) {
-            Grob* g = ith_child(i);
-            if(g != nullptr) {
-                if(result.length() != 0) {
-                    result += ";";
-                }
-                result = result + g->meta_class()->name();
-            }
-        }
-        return result;
-    }
-
     void SceneGraph::update_values() {
         values_changed(get_values());
-        visibilities_changed(get_visibilities());
-        types_changed(get_types());
         value_changed(this);
         if(this == SceneGraphLibrary::instance()->scene_graph()) {
             SceneGraphLibrary::instance()->
@@ -242,7 +199,6 @@ namespace OGF {
         std::string copy_name = cur->name() + "_copy";
         Grob* dupl = cur->duplicate(this);
         dupl->rename(copy_name);
-        grob_created(dupl->name());
         set_current_object(cur->name(),false);
 	return dupl;
     }
@@ -287,7 +243,6 @@ namespace OGF {
         if(cur != nullptr) {
             std::string name = cur->name();  // copy it before deletion
             cur->get_parent()->remove_child(cur);
-            grob_deleted( name );
         }
         update_values();
         for(index_t i=0; i<get_nb_children(); i++) {
@@ -312,6 +267,7 @@ namespace OGF {
     void SceneGraph::set_current_object(
         const std::string& value_in, bool record_history
     ) {
+	record_history = false; // ignore history, we now use SceneGraphEditor
 	std::string value = value_in;
         if(current_object_ == value) {
             return;
@@ -416,7 +372,6 @@ namespace OGF {
             bool ok = result->load(file_name);
 
             update_values();
-            grob_created( result->name() );
             set_current_object(result->name(),false);
 
             if(ok) {
@@ -524,7 +479,6 @@ namespace OGF {
 	// then the stored meta class is not always the right one !
 	result->set_meta_class(mclass);
 
-        grob_created(result->name());
         update_values();
 	if(name != "") {
 	    result->rename(name);
@@ -776,7 +730,6 @@ namespace OGF {
             result->serialize_read(in);
             result->set_visible(visible);
             update_values();
-            grob_created( result->name() );
             set_current_object(result->name(),false);
 
             std::string shader_class_name;
