@@ -245,6 +245,8 @@ namespace OGF {
 	cmd_funccall += slot_name;
 	std::string cmd_args;
 	index_t nb_cmd_args=0;
+	std::string first_arg_name = "";
+	std::string first_arg_val = "";
 
 	for(index_t i=0; i<args.nb_args(); ++i) {
 	    std::string arg_name = args.ith_arg_name(i);
@@ -267,6 +269,10 @@ namespace OGF {
 	    cmd_args += args.ith_arg_name(i);
 	    cmd_args += "=";
 	    cmd_args += arg_val;
+	    if(nb_cmd_args == 0) {
+		first_arg_name = args.ith_arg_name(i);
+		first_arg_val = arg_val;
+	    }
 	    ++nb_cmd_args;
 	}
 
@@ -277,10 +283,9 @@ namespace OGF {
 	    // nicer.
 	    if(
 		nb_cmd_args == 1 &&
-		args.ith_arg_name(0) == mslot->ith_arg(0)->name()
+		first_arg_name == mslot->ith_arg(0)->name()
 	    ) {
-		std::string arg_val = back_parse(args.ith_arg_value(0));
-		command += "(" + arg_val + ")";
+		command += "(" + first_arg_val + ")";
 	    } else {
 		command += "{";
 		command += cmd_args;

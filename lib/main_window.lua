@@ -1,5 +1,7 @@
---  GUI for the main window of Graphite, for use with Skin_imgui
-----------------------------------------------------------------
+--  GUI for the main window of Graphite
+--  - Manages a set of 'Modules', that is, a set of GUI components
+--  - Draws the main window, with the tree with modules GUI and object list
+------------------------------------------------------------------------------
 
 -- A table of functions to be called when
 --  handling the GUI for Graphite objects.
