@@ -255,7 +255,7 @@ namespace OGF {
 
     gom_properties:
         /**
-         * \brief Gets the current object by name.
+         * \brief Sets the current object by name.
          * \param[in] value the name of the object that should be made current
          */
         void set_current_object(const std::string& value);
@@ -343,15 +343,6 @@ namespace OGF {
         virtual void current_object_changed(const std::string& value);
 
     public:
-        /**
-         * \brief Sets the current object.
-         * \param[in] value name of the current object
-         * \param[in] record_history if true, the change of current object
-         *  is recorded in Graphite's history
-         */
-        void set_current_object(const std::string& value, bool record_history);
-
-
 	/**
 	 * \copydoc Grob::interpreter()
 	 */

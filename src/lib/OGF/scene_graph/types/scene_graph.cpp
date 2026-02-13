@@ -190,7 +190,7 @@ namespace OGF {
 
     Grob* SceneGraph::duplicate_current() {
         Grob* cur = resolve(current_object_);
-        set_current_object("",false);
+        set_current_object("");
         if(cur == nullptr) {
             Logger::err("SceneGraph") << "no object selected" << std::endl;
             return nullptr;
@@ -199,7 +199,7 @@ namespace OGF {
         std::string copy_name = cur->name() + "_copy";
         Grob* dupl = cur->duplicate(this);
         dupl->rename(copy_name);
-        set_current_object(cur->name(),false);
+        set_current_object(cur->name());
 	return dupl;
     }
 
@@ -239,7 +239,7 @@ namespace OGF {
 
     void SceneGraph::delete_current_object() {
         Grob* cur = resolve(current_object_);
-        set_current_object(std::string(),false);
+        set_current_object(std::string());
         if(cur != nullptr) {
             std::string name = cur->name();  // copy it before deletion
             cur->get_parent()->remove_child(cur);
@@ -248,7 +248,7 @@ namespace OGF {
         for(index_t i=0; i<get_nb_children(); i++) {
             Grob* cur_child = ith_child(i);
             if(cur_child != nullptr) {
-                set_current_object(cur_child->name(),false);
+                set_current_object(cur_child->name());
                 return;
             }
         }
@@ -260,14 +260,7 @@ namespace OGF {
         }
     }
 
-    void SceneGraph::set_current_object(const std::string& value) {
-        set_current_object(value, true);
-    }
-
-    void SceneGraph::set_current_object(
-        const std::string& value_in, bool record_history
-    ) {
-	record_history = false; // ignore history, we now use SceneGraphEditor
+    void SceneGraph::set_current_object(const std::string& value_in) {
 	std::string value = value_in;
         if(current_object_ == value) {
             return;
@@ -281,12 +274,6 @@ namespace OGF {
         disable_slots();
         current_object_changed(current_object_);
         enable_slots();
-        if(record_history && interpreter() != nullptr) {
-            std::ostringstream out;
-            out << "scene_graph.current_object = \""
-                << value << "\"" << std::endl;
-            interpreter()->add_to_history(out.str());
-        }
     }
 
     const std::string& SceneGraph::get_current_object() const {
@@ -372,7 +359,7 @@ namespace OGF {
             bool ok = result->load(file_name);
 
             update_values();
-            set_current_object(result->name(),false);
+            set_current_object(result->name());
 
             if(ok) {
                 break;
@@ -483,7 +470,7 @@ namespace OGF {
 	if(name != "") {
 	    result->rename(name);
 	}
-        set_current_object(result->name(),false);
+        set_current_object(result->name());
         return result;
     }
 
@@ -730,7 +717,7 @@ namespace OGF {
             result->serialize_read(in);
             result->set_visible(visible);
             update_values();
-            set_current_object(result->name(),false);
+            set_current_object(result->name());
 
             std::string shader_class_name;
             if(shader_properties.has_arg("class_name")) {
