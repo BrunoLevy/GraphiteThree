@@ -217,34 +217,28 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       autogui.tooltip('rename')
       imgui.SameLine()
       if imgui.SimpleButton(imgui.font_icon('clone')..'##  duplicate') then
-         main.save_state()
-         scene_graph.current_object = name
-         local dup = scene_graph.duplicate_current()
+         local dup = scene_graph.duplicate_object{
+             grob=grob,_invoked_from_gui=true
+         }
          scene_graph_gui.rename_old = dup.name
          scene_graph_gui.rename_new = dup.name
-         scene_graph.current_object = dup.name
+         scene_graph.set_current{grob=dup,_invoked_from_gui=true}
       end
       autogui.tooltip('duplicate')
       imgui.SameLine()
       if imgui.SimpleButton(imgui.font_icon('window-close')..'##  delete') then
-         main.save_state()
          main.picked_grob = nil
-         scene_graph.current_object = name
-         scene_graph.delete_current_object()
+         scene_graph.delete_object{grob=grob,_invoked_from_gui=true}
       end
       autogui.tooltip('delete')
       imgui.SameLine()
       if imgui.SimpleButton(imgui.font_icon('arrow-up')..'##move up') then
-         main.save_state()
-         scene_graph.current_object = name
-         scene_graph.move_current_up()
+         scene_graph.move_object_up{grob=grob,_invoked_from_gui=true}
       end
       autogui.tooltip('move up')
       imgui.SameLine()
       if imgui.SimpleButton(imgui.font_icon('arrow-down')..'##move down') then
-         main.save_state()
-         scene_graph.current_object = name
-         scene_graph.move_current_down()
+         scene_graph.move_object_down{grob=grob,_invoked_from_gui=true}
       end
       autogui.tooltip('move down')
       imgui.PopStyleVar()
@@ -257,30 +251,38 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       if imgui.SimpleButton(
          imgui.font_icon('eye-slash')..'## show/hide'
       ) then
-         grob.visible = not grob.visible
+         if grob.visible then
+            scene_graph.hide_object{grob=grob,_invoked_from_gui=true}
+         else
+            scene_graph.show_object{grob=grob,_invoked_from_gui=true}
+         end
       end
       autogui.tooltip('show/hide')
       imgui.SameLine()
       if imgui.SimpleButton(
          imgui.font_icon('cubes')..'## copy properties to all'
       ) then
-         scene_graph.scene_graph_shader_manager.apply_to_scene_graph()
+         scene_graph.copy_graphic_properties_to_all{
+            grob=grob,_invoked_from_gui=true
+         }
       end
       autogui.tooltip('copy graphic properties to all')
       imgui.SameLine()
       if imgui.SimpleButton(
          imgui.font_icon('eye')..'## copy properties to visible'
       ) then
-         scene_graph.scene_graph_shader_manager.apply_to_scene_graph(true)
+         scene_graph.copy_graphic_properties_to_visible{
+            grob=grob,_invoked_from_gui=true
+         }
       end
       autogui.tooltip('copy graphic properties to visible objects')
       imgui.SameLine()
       if imgui.SimpleButton(
          imgui.font_icon('clipboard-list')..'## copy properties to selected'
       ) then
-         scene_graph.scene_graph_shader_manager.apply_to_scene_graph(
-            false,true
-         )
+         scene_graph.copy_graphic_properties_to_selected{
+            grob=grob,_invoked_from_gui=true
+         }
       end
       autogui.tooltip('copy graphic properties to selected objects')
       imgui.PopStyleVar()
@@ -607,11 +609,11 @@ function scene_graph_gui.draw_grob_name(grob)
       imgui.PopItemWidth()
       if renamed then
          if scene_graph_gui.rename_new ~= '' then
-            main.save_state()
-            scene_graph.current_object = grob.name
-            grob.rename(scene_graph_gui.rename_new)
+            scene_graph.rename{
+                grob=grob, new_name=scene_graph_gui.rename_new,
+                _invoked_from_gui=true
+            }
          end
-	 scene_graph.current_object = grob.name
          scene_graph_gui.rename_old = nil
 	 scene_graph_gui.rename_new = nil
       end
@@ -635,15 +637,13 @@ function scene_graph_gui.draw_grob_name(grob)
          ImGuiSelectableFlags_SelectOnNav
       ) then
 	 if imgui.IsMouseDoubleClicked(0) then
-              for i = 0,scene_graph.nb_children-1 do
-	         scene_graph.ith_child(i).visible = false
-	      end
-	      grob.visible=true
+              scene_graph.show_only{grob=grob,_invoked_from_gui=true}
 	 end
-	 scene_graph.current_object = grob.name
+         scene_graph.set_current{grob=grob,_invoked_from_gui=true}
       end
-      if imgui.IO_KeyShift_pressed() and imgui.IsItemFocused() then
-         grob.selected=true
+      if imgui.IO_KeyShift_pressed() and
+         imgui.IsItemFocused() and not grob.selected then
+           scene_graph.select_object{grob=grob,_invoked_from_gui=true}
       end
       if cropped then
          autogui.tooltip(grob.name)
@@ -699,8 +699,12 @@ function scene_graph_gui.draw_grob_eye(grob)
    autogui.tooltip('show/hide')
    imgui.PopStyleVar()
    if visible_changed and grob ~= nil then
-      grob.visible=visible
-      scene_graph.current_object = grob.name
+      if visible then
+         scene_graph.show_object{grob=grob,_invoked_from_gui=true}
+      else
+         scene_graph.hide_object{grob=grob,_invoked_from_gui=true}
+      end
+      scene_graph.set_current{grob=grob,_invoked_from_gui=true}
    end
 end
 
@@ -708,32 +712,30 @@ end
 
 function scene_graph_gui.delete_grob(grob)
    if grob ~= nil then
-      scene_graph.current_object = grob.name
-      scene_graph.delete_current_object()
+      scene_graph.delete_object{grob=grob,_invoked_from_gui=true}
    end
 end
 
 function scene_graph_gui.move_grob_up(grob)
    if grob ~= nil then
-      scene_graph.current_object = grob.name
-      scene_graph.move_current_up()
+      scene_graph.move_object_up{grob=grob,_invoked_from_gui=true}
    end
 end
 
 function scene_graph_gui.move_grob_down(grob)
    if grob ~= nil then
-      scene_graph.current_object = grob.name
-      scene_graph.move_current_down()
+      scene_graph.move_object_down{grob=grob,_invoked_from_gui=true}
    end
 end
 
 -- -----------------------------------------------------------------------
 
+
 -- \brief toggles the selection flag for a given object
 -- \param grob the object
 function scene_graph_gui.toggle_selection(grob)
    if grob ~= nil then
-      grob.selected = not grob.selected
+      scene_graph.toggle_selection{grob=grob,_invoked_from_gui=true}
    end
 end
 
@@ -742,51 +744,19 @@ end
 -- \details on exit, all objects between the current one and \p grob are
 --   selected. The selection flags of the other objects are left unchanged.
 function scene_graph_gui.extend_selection(grob)
-   if grob == nil then
-      return
-   end
-   cur_index = -1
-   grob_index = -1
-   for i=0,scene_graph.nb_children-1 do
-       cur_name = scene_graph.ith_child(i).name
-       if cur_name == scene_graph.current_object then
-          cur_index = i
-       end
-       if cur_name == grob.name then
-          grob_index = i
-       end
-   end
-   if cur_index ~= -1 and grob_index ~= -1 then
-      for i = math.min(cur_index,grob_index),math.max(cur_index,grob_index) do
-         scene_graph.ith_child(i).selected = true
-      end
+   if grob ~= nil then
+      scene_graph.extend_selection{grob=grob, _invoked_from_gui=true}
    end
 end
 
 -- \brief Resets the selection flag for all object of the SceneGraph
 function scene_graph_gui.clear_selection()
-   for i=0,scene_graph.nb_children-1 do
-      scene_graph.ith_child(i).selected = false
+   if scene_graph.nb_selected() ~= 0 then
+      scene_graph.clear_selection{_invoked_from_gui=true}
    end
 end
 
 -- \brief Deletes all the selected objects of the SceneGraph
 function scene_graph_gui.delete_selected()
-  main.save_state()
-  main.picked_grob = nil
-  local changed = true
-  while changed do
-     changed = false
-     for i=0,scene_graph.nb_children-1 do
-        grob = scene_graph.ith_child(i)
-        if grob.selected then
-            main.save_state()
-            main.picked_grob = nil
-            scene_graph.current_object = grob.name
-            scene_graph.delete_current_object()
-            changed = true
-            break
-        end
-     end
-  end
+   scene_graph.delete_selected{_invoked_from_gui=true}
 end

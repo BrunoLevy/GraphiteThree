@@ -122,6 +122,13 @@ namespace OGF {
 	void show_object(const GrobName& grob);
 
 	/**
+	 * \brief Makes an object visible and hides all the other ones.
+	 * \details Ignored in terminal applications.
+	 * \param[in] grob the object to be shown or its name
+	 */
+	void show_only(const GrobName& grob);
+
+	/**
 	 * \brief Makes all selected objects visible.
 	 * \details Ignored in terminal applications.
 	 */
@@ -232,6 +239,18 @@ namespace OGF {
 	 * \brief Removes all objects from selection.
 	 */
 	void clear_selection();
+
+
+	/**
+	 * \brief Extends selection
+	 * \details Selects all objects between current object and grob
+	 */
+	void extend_selection(const GrobName& grob);
+
+	/**
+	 * \brief Gets the number of selected objects
+	 */
+	index_t nb_selected() const;
 
 	/*************************************/
 

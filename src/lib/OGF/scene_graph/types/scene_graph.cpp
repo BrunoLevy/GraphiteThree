@@ -113,6 +113,13 @@ namespace OGF {
 	}
     }
 
+    void SceneGraph::show_only(const GrobName& grob_name) {
+	for(index_t i=0; i<get_nb_children(); ++i) {
+	    Grob* grob = ith_child(i);
+	    grob->set_visible(grob->name() == std::string(grob_name));
+	}
+    }
+
     void SceneGraph::show_selected() {
 	for(index_t i=0; i<get_nb_children(); ++i) {
 	    Grob* grob = ith_child(i);
@@ -169,6 +176,7 @@ namespace OGF {
 	if(grob != nullptr) {
 	    grob->rename(new_name);
 	}
+	set_current(grob->name());
     }
 
     Grob* SceneGraph::duplicate_object(const GrobName& grob_name) {
@@ -245,6 +253,39 @@ namespace OGF {
 	for(index_t i=0; i<get_nb_children(); ++i) {
 	    ith_child(i)->set_selected(false);
 	}
+    }
+
+    void SceneGraph::extend_selection(const GrobName& grob) {
+	index_t cur_index = NO_INDEX;
+	index_t grob_index = NO_INDEX;
+	for(index_t i=0; i<get_nb_children(); ++i) {
+	    if(ith_child(i)->name() == std::string(current_object_name_)) {
+		cur_index = i;
+	    }
+	    if(ith_child(i)->name() == std::string(grob)) {
+		grob_index = i;
+	    }
+	}
+	if(cur_index == NO_INDEX || grob_index == NO_INDEX) {
+	    return;
+	}
+	for(
+	    index_t i=std::min(cur_index,grob_index);
+	    i<=std::max(cur_index,grob_index);
+	    ++i
+	) {
+	    ith_child(i)->set_selected(true);
+	}
+    }
+
+    index_t SceneGraph::nb_selected() const {
+	index_t result = 0;
+	for(index_t i=0; i<get_nb_children(); ++i) {
+	    if(ith_child(i)->get_selected()) {
+		++result;
+	    }
+	}
+	return result;
     }
 
 /*******************************************************************************/

@@ -104,6 +104,9 @@ namespace OGF {
     }
 
     void Grob::rename(const std::string& value) {
+	if(value == name()) {
+	    return;
+	}
         initialize_name(value);
         if(scene_graph() != this) {
             scene_graph()->update_values();
