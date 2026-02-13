@@ -92,6 +92,14 @@ namespace OGF {
 	    return value_ == nullptr;
 	}
 
+        /**
+         * \brief Tests whether the stored object inherits a given type.
+         * \param[in] type a const pointer to the MetaType to be tested.
+         * \retval true if this object inherits \p type
+         * \retval false otherwise
+         */
+	bool is_a(const MetaType* type) const;
+
 	/**
 	 * \brief Resets this Any to the initial null value.
 	 */

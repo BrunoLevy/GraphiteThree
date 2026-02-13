@@ -244,6 +244,7 @@ namespace OGF {
 	cmd_funccall += ".";
 	cmd_funccall += slot_name;
 	std::string cmd_args;
+	index_t nb_cmd_args=0;
 
 	for(index_t i=0; i<args.nb_args(); ++i) {
 	    std::string arg_name = args.ith_arg_name(i);
@@ -266,13 +267,25 @@ namespace OGF {
 	    cmd_args += args.ith_arg_name(i);
 	    cmd_args += "=";
 	    cmd_args += arg_val;
+	    ++nb_cmd_args;
 	}
 
 	std::string command = cmd_funccall;
-	if(cmd_args.length() > 0) {
-	    command += "({";
-	    command += cmd_args;
-	    command += "})";
+	if(nb_cmd_args > 0) {
+	    // Special case: there is a single argument, and it is the first
+	    // one. Do not use name-value-pairs calls, to make history look
+	    // nicer.
+	    if(
+		nb_cmd_args == 1 &&
+		args.ith_arg_name(0) == mslot->ith_arg(0)->name()
+	    ) {
+		std::string arg_val = back_parse(args.ith_arg_value(0));
+		command += "(" + arg_val + ")";
+	    } else {
+		command += "{";
+		command += cmd_args;
+		command += "}";
+	    }
 	} else {
 	    command += "()";
 	}
@@ -444,6 +457,7 @@ namespace OGF {
     }
 
     std::string LuaInterpreter::back_parse(const Any& value) const {
+
 	if(value.meta_type() == nullptr) {
 	    return "nil";
 	}
@@ -454,6 +468,13 @@ namespace OGF {
 		return String::format(
 		    "{ %f, %f, %f, %f }", C.r(), C.g(), C.b(), C.a()
 		);
+	    }
+	}
+
+	if(value.is_a(ogf_meta<Object*>::type())) {
+	    Object* o;
+	    if(value.get_value(o)) {
+		return back_resolve(o);
 	    }
 	}
 

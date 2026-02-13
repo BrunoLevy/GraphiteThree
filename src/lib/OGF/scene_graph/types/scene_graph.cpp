@@ -80,6 +80,139 @@ namespace OGF {
 
 /*******************************************************************************/
 
+    void SceneGraph::delete_object(const GrobName& grob_name) {
+	set_current_object(grob_name);
+	delete_current_object();
+    }
+
+    void SceneGraph::delete_current() {
+	delete_current_object();
+    }
+
+    void SceneGraph::delete_selected() {
+	std::vector<std::string> to_delete;
+	for(index_t i=0; i<get_nb_children(); ++i) {
+	    Grob* grob = ith_child(i);
+	    if(grob->get_selected()) {
+		to_delete.push_back(grob->name());
+	    }
+	}
+	for(auto& name: to_delete) {
+	    delete_object(name);
+	}
+    }
+
+    void SceneGraph::delete_all() {
+	clear();
+    }
+
+    void SceneGraph::show_object(const GrobName& grob_name) {
+	Grob* grob = resolve(grob_name);
+	if(grob != nullptr) {
+	    grob->set_visible(true);
+	}
+    }
+
+    void SceneGraph::show_selected() {
+	for(index_t i=0; i<get_nb_children(); ++i) {
+	    Grob* grob = ith_child(i);
+	    if(grob->get_selected()) {
+		grob->set_visible(true);
+	    }
+	}
+    }
+
+    void SceneGraph::show_all() {
+	for(index_t i=0; i<get_nb_children(); ++i) {
+	    ith_child(i)->set_visible(true);
+	}
+    }
+
+    void SceneGraph::hide_object(const GrobName& grob_name) {
+	Grob* grob = resolve(grob_name);
+	if(grob != nullptr) {
+	    grob->set_visible(false);
+	}
+    }
+
+    void SceneGraph::hide_selected() {
+	for(index_t i=0; i<get_nb_children(); ++i) {
+	    Grob* grob = ith_child(i);
+	    if(grob->get_selected()) {
+		grob->set_visible(false);
+	    }
+	}
+    }
+
+    void SceneGraph::hide_all() {
+	for(index_t i=0; i<get_nb_children(); ++i) {
+	    ith_child(i)->set_visible(false);
+	}
+    }
+
+    void SceneGraph::move_object_up(const GrobName& grob_name) {
+	set_current_object(grob_name);
+	move_current_up();
+    }
+
+    void SceneGraph::move_object_down(const GrobName& grob_name) {
+	set_current_object(grob_name);
+	move_current_down();
+    }
+
+    void SceneGraph::rename_object(
+	const GrobName& grob_name, const std::string& new_name
+    ) {
+	Grob* grob = resolve(grob_name);
+	if(grob != nullptr) {
+	    grob->rename(new_name);
+	}
+    }
+
+    Grob* SceneGraph::duplicate_object(const GrobName& grob_name) {
+	set_current_object(grob_name);
+	return duplicate_current();
+    }
+
+    void SceneGraph::copy_object_properties_to_all(const GrobName& grob_name) {
+	scene_graph()->set_current_object(grob_name);
+	Object* shd_mgr = scene_graph()->get_scene_graph_shader_manager();
+	if(scene_graph()->current() != nullptr && shd_mgr != nullptr) {
+	    ArgList args;
+	    args.create_arg("visible_only", false);
+	    args.create_arg("selected_only", false);
+	    shd_mgr->invoke_method("apply_to_scehe_graph",args);
+	}
+    }
+
+    void SceneGraph::copy_object_properties_to_visible(
+	const GrobName& grob_name
+    ) {
+	scene_graph()->set_current_object(grob_name);
+	Object* shd_mgr = scene_graph()->get_scene_graph_shader_manager();
+	if(scene_graph()->current() != nullptr && shd_mgr != nullptr) {
+	    ArgList args;
+	    args.create_arg("visible_only", true);
+	    args.create_arg("selected_only", false);
+	    shd_mgr->invoke_method("apply_to_scehe_graph",args);
+	}
+    }
+
+    void SceneGraph::copy_object_properties_to_selected(
+	const GrobName& grob_name
+    ) {
+	scene_graph()->set_current_object(grob_name);
+	Object* shd_mgr = scene_graph()->get_scene_graph_shader_manager();
+	if(scene_graph()->current() != nullptr && shd_mgr != nullptr) {
+	    ArgList args;
+	    args.create_arg("visible_only", false);
+	    args.create_arg("selected_only", true);
+	    shd_mgr->invoke_method("apply_to_scehe_graph",args);
+	}
+    }
+
+/*******************************************************************************/
+
     void SceneGraph::clear() {
         while(get_nb_children() != 0) {
             delete_current_object();
@@ -155,7 +288,7 @@ namespace OGF {
 
     Grob* SceneGraph::load_object(
         const FileName& file_name_in, const std::string& type,
-        bool invoked_from_gui
+        bool change_cwd
     ) {
 
         std::string file_name = file_name_in;
@@ -242,7 +375,7 @@ namespace OGF {
             }
         }
 
-        if(invoked_from_gui) {
+        if(change_cwd) {
             const std::string dir = FileSystem::dir_name(file_name);
             if( FileSystem::is_directory(dir) ) {
                 FileSystem::set_current_working_directory(dir);
@@ -254,12 +387,12 @@ namespace OGF {
 
     void SceneGraph::load_objects(
         const std::string& file_names_str, const std::string& type,
-        bool invoked_from_gui
+        bool change_cwd
     ) {
         std::vector<std::string> file_names;
         String::split_string(file_names_str, ';', file_names);
         for(unsigned int i=0; i<file_names.size(); i++) {
-            load_object(file_names[i],type,invoked_from_gui);
+            load_object(file_names[i],type,change_cwd);
         }
     }
 
@@ -374,8 +507,8 @@ namespace OGF {
         return resolve(current_object_name_);
     }
 
-    void SceneGraph::set_current(Grob* grob) {
-	set_current_object(grob->name());
+    void SceneGraph::set_current(const GrobName& grob_name) {
+	set_current_object(grob_name);
     }
 
     void SceneGraph::register_grob_commands(
@@ -430,6 +563,42 @@ namespace OGF {
 
     Object* SceneGraph::get_scene_graph_shader_manager() const {
 	return scene_graph_shader_manager_;
+    }
+
+    /************************************************************************/
+
+    bool SceneGraph::invoke_method(
+	const std::string& method_name,
+	const ArgList& args_in, Any& ret_val
+    ) {
+
+        bool invoked_from_gui = false;
+
+        // Copy argument list, ignore arguments that start with '_'
+        ArgList args;
+        for(index_t i=0; i<args_in.nb_args(); ++i) {
+            const std::string& name = args_in.ith_arg_name(i);
+            const Any& value = args_in.ith_arg_value(i);
+            if(name.length() > 0 && name[0] == '_') {
+                if(name == "_invoked_from_gui" && value.as_string() == "true") {
+                    invoked_from_gui = true;
+                }
+                continue;
+            }
+            args.create_arg(name, value);
+        }
+
+        if(interpreter() != nullptr) {
+            if(invoked_from_gui) {
+                Object* main = interpreter()->resolve_object("main");
+		if(main != nullptr) {
+		    main->invoke_method("save_state");
+		}
+		interpreter()->record_invoke_in_history(this, method_name, args);
+            }
+        }
+
+	return CompositeGrob::invoke_method(method_name, args, ret_val);
     }
 
     /************************************************************************/

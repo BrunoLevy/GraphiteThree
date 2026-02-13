@@ -82,6 +82,131 @@ namespace OGF {
     gom_slots:
 
         /**
+         * \brief Gets the current object.
+         * \return a pointer to the current object.
+         */
+        Grob* current();
+
+        /**
+         * \brief Sets the current object.
+         * \param grob the object to be set as current or its name.
+         */
+	void set_current(const GrobName& grob);
+
+	/**
+	 * \brief Removes an object from this SceneGraph and deletes it
+	 * \param[in] grob the object to be deleted or its name
+	 */
+	void delete_object(const GrobName& grob);
+
+	/**
+	 * \brief Removes the current object from this SceneGraph and deletes it
+	 */
+	void delete_current();
+
+	/**
+	 * \brief Removes and deletes all the selected objects in this SceneGraph
+	 */
+	void delete_selected();
+
+	/**
+	 * \brief Deletes and removes all the objects in this SceneGraph
+	 */
+	void delete_all();
+
+	/**
+	 * \brief Makes an object visible.
+	 * \details Ignored in terminal applications.
+	 * \param[in] grob the object to be shown or its name
+	 */
+	void show_object(const GrobName& grob);
+
+	/**
+	 * \brief Makes all selected objects visible.
+	 * \details Ignored in terminal applications.
+	 */
+	void show_selected();
+
+	/**
+	 * \brief Makes all objects visible.
+	 * \details Ignored in terminal applications.
+	 */
+	void show_all();
+
+	/**
+	 * \brief Makes an object invisible.
+	 * \details Ignored in terminal applications.
+	 * \param[in] grob the object to be hidden or its name
+	 */
+	void hide_object(const GrobName& grob);
+
+	/**
+	 * \brief Makes all selected objects invisible.
+	 * \details Ignored in terminal applications.
+	 */
+	void hide_selected();
+
+	/**
+	 * \brief Makes all objects invisible.
+	 * \details Ignored in terminal applications.
+	 */
+	void hide_all();
+
+	/**
+	 * \brief Moves an object up in the SceneGraph
+	 * \param[in] grob the object to be moved up or its name
+	 */
+	void move_object_up(const GrobName& grob);
+
+	/**
+	 * \brief Moves an object down in the SceneGraph
+	 * \param[in] grob the object to be moved down or its name
+	 */
+	void move_object_down(const GrobName& grob);
+
+	/**
+	 * \brief Renames an object
+	 * \param[in] grob the object to be renamed or its name
+	 * \param[in] new_name the desired new name for the object
+	 */
+	void rename_object(
+	    const GrobName& grob, const std::string& new_name
+	);
+
+        /**
+         * \brief Duplicates an object object.
+         * \details The name of the created object will be the same as
+         *  current object name with "_copy" appended.
+	 * \param[in] grob the grob to be copied or its name
+	 * \return the created object or nullptr if there was no current
+	 *  object.
+         */
+	Grob* duplicate_object(const GrobName& grob);
+
+	/**
+	 * \brief Copies graphic properties of an object to all objects
+	 * \details Ignored in terminal applications
+	 * \param[in] grob the object or its name
+	 */
+	void copy_object_properties_to_all(const GrobName& grob);
+
+	/**
+	 * \brief Copies graphic properties of an object to all visible objects
+	 * \details Ignored in terminal applications
+	 * \param[in] grob the object or its name
+	 */
+	void copy_object_properties_to_visible(const GrobName& grob);
+
+	/**
+	 * \brief Copies graphic properties of an object to all selected objects
+	 * \details Ignored in terminal applications
+	 * \param[in] grob the object or its name
+	 */
+	void copy_object_properties_to_selected(const GrobName& grob);
+
+	/*************************************/
+
+        /**
          * \brief Clears this SceneGraph.
          * \details Deletes all the objects of this SceneGraph.
          */
@@ -115,7 +240,6 @@ namespace OGF {
          */
         void move_current_down();
 
-
         /**
          * \brief Loads an object from a file, and stores it in this
          *  SceneGraph.
@@ -123,15 +247,14 @@ namespace OGF {
          * \param[in] type the class name that should be used to
          *  create the object, or "default" (then it is deduced from
          *  the file extension)
-         * \param[in] invoked_from_gui set to true by file menu, and
-         *  makes it change directory to the directory that contains the
-         *  file
+         * \param[in] change_cwd set if set, change current working directory
+	 *  to the directory that contains the file
          * \return a pointer to the loaded object, or nullptr if no object
          *  could be loaded
          */
         Grob* load_object(
             const FileName& value, const std::string& type="default",
-            bool invoked_from_gui=false
+            bool change_cwd=false
         );
 
         /**
@@ -141,13 +264,12 @@ namespace OGF {
          * \param[in] type the class name that should be used to
          *  create the objects, or "default" (then it is deduced from
          *  the file extensions)
-         * \param[in] invoked_from_gui set to true by file menu, and
-         *  makes it change directory to the directory that contains the
-         *  file
+         * \param[in] change_cwd if set, change current working directory to the
+	 *  directory that contains the file
          */
         void load_objects(
             const std::string& value, const std::string& type="default",
-            bool invoked_from_gui=false
+            bool change_cwd=false
         );
 
         /**
@@ -204,17 +326,6 @@ namespace OGF {
 	    const GrobClassName& classname, const std::string& name
 	);
 
-        /**
-         * \brief Gets the current object.
-         * \return a pointer to the current object
-         */
-        Grob* current();
-
-        /**
-         * \brief Sets the current object.
-         * \return a pointer to the current object
-         */
-	void set_current(Grob* grob);
 
         /**
          * \brief Associates a Commands class to a Grob class.
@@ -349,6 +460,17 @@ namespace OGF {
          * \param[in] value the name of the new current object
          */
         virtual void current_object_changed(const std::string& value);
+
+    public:
+        /**
+         * \copydoc Object::invoke_method
+         * \details Overload of the invokation mechanism,
+         *  that adds history recording.
+         */
+        bool invoke_method(
+            const std::string& method_name,
+            const ArgList& args, Any& ret_val
+        ) override;
 
     protected:
         /**

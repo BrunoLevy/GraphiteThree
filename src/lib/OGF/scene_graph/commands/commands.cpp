@@ -126,7 +126,9 @@ namespace OGF {
         if(interpreter() != nullptr) {
             if(invoked_from_gui) {
                 Object* main = interpreter()->resolve_object("main");
-                main->invoke_method("save_state");
+		if(main != nullptr) {
+		    main->invoke_method("save_state");
+		}
 		interpreter()->record_invoke_in_history(this, method_name, args);
             }
         }

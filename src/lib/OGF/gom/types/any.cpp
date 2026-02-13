@@ -188,6 +188,15 @@ namespace OGF {
 	return mt->name();
     }
 
+    bool Any::is_a(const MetaType* type) const {
+	MetaType* this_type = meta_type();
+	if(this_type == nullptr) {
+	    return false;
+	}
+	return this_type->is_subtype_of(type);
+    }
+
+
     /********************************************************************/
 
 }

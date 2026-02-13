@@ -505,7 +505,7 @@ function scene_graph_gui.scene_graph_ops()
 
   sel,filename = imgui.FileDialog('##scene_graph##load_dlg',filename)
   if sel then
-     scene_graph.load_object({value=filename,invoked_from_gui=true})
+     scene_graph.load_object({value=filename,change_cwd=true})
   end
 
   sel,filename = imgui.FileDialog('##scene_graph##save_dlg',filename)
