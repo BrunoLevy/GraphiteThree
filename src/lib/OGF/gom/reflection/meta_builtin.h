@@ -72,6 +72,11 @@ namespace OGF {
          * \retval false otherwise
          */
         bool is_pointer_type() const ;
+
+	/**
+	 * \copydoc MetaType::is_subtype_of
+	 */
+	bool is_subtype_of(const MetaType* other) const override;
     } ;
 
     /**

@@ -755,9 +755,12 @@ namespace OGF {
 	/**
 	 * \brief finds a scriptable representation of a value
 	 * \param[in] value the value stored in an Any
+	 * \param[in] mtype an optional expected MetaType, if known
 	 * \return a string with a parsable representation of the value
 	 */
-	virtual std::string back_parse(const Any& any) const;
+	virtual std::string back_parse(
+	    const Any& any, MetaType* mtype=nullptr
+	) const;
 
       protected:
 	/**

@@ -147,7 +147,9 @@ namespace OGF {
 	/**
 	 * \copydoc Interpreter::back_resolve()
 	 */
-	std::string back_parse(const Any& value) const override;
+	std::string back_parse(
+	    const Any& value, MetaType* mtype = nullptr
+	) const override;
 
     protected:
 

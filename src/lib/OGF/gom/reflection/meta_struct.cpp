@@ -278,12 +278,6 @@ namespace OGF {
 	bool result = object_->set_property(
 	    property_name_, String::join_strings(fields,';')
 	);
-
-	Interpreter* interpreter = Interpreter::default_interpreter();
-	if(interpreter != nullptr) {
-	    Any value_as_any;
-	    value_as_any.set_value(value);
-	}
 	return result;
     }
 

@@ -25,34 +25,61 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/gom/reflection/meta_builtin.h>
+#include <OGF/gom/reflection/meta.h>
 
-//___________________________________________________
+/*************************************************************************/
 
 namespace OGF {
-    
+
     MetaBuiltinType::MetaBuiltinType(
         const std::string& name
     ):MetaType(name) {
     }
-    
+
     MetaBuiltinType::~MetaBuiltinType() {
     }
 
     bool MetaBuiltinType::is_pointer_type() const {
         return (
             name().length() >= 2 &&
-            name()[name().length() - 1] == '*' 
+            name()[name().length() - 1] == '*'
         ) ;
-    }    
-}
+    }
 
+    bool MetaBuiltinType::is_subtype_of(const MetaType* other) const {
+	const MetaBuiltinType* other_as_builtin =
+	    dynamic_cast<const MetaBuiltinType*>(other);
+	if(
+	    other_as_builtin != nullptr &&
+	    is_pointer_type() && other_as_builtin->is_pointer_type()
+	) {
+	    std::string pointed_type = name().substr(0, name().length()-1);
+	    std::string other_pointed_type = name().substr(0, name().length()-1);
+	    MetaType* pointed_mtype = Meta::instance()->resolve_meta_type(
+		pointed_type
+	    );
+	    MetaType* other_pointed_mtype = Meta::instance()->resolve_meta_type(
+		other_pointed_type
+	    );
+	    if(
+		pointed_mtype != nullptr &&
+		other_pointed_mtype != nullptr &&
+		pointed_mtype->is_subtype_of(other_pointed_mtype)
+	    ) {
+		return true;
+	    }
+	}
+	return MetaType::is_subtype_of(other);
+    }
+
+}

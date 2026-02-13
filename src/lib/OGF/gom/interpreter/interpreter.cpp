@@ -179,7 +179,10 @@ namespace OGF {
 	return "";
     }
 
-    std::string Interpreter::back_parse(const Any& value) const {
+    std::string Interpreter::back_parse(
+	const Any& value, MetaType* mtype
+    ) const {
+	geo_argused(mtype);
 	std::string result;
 	value.get_value(result);
 	return String::quote(result);

@@ -250,12 +250,18 @@ namespace OGF {
 
 	for(index_t i=0; i<args.nb_args(); ++i) {
 	    std::string arg_name = args.ith_arg_name(i);
-	    std::string arg_val = back_parse(args.ith_arg_value(i));
 	    const MetaArg* marg = mslot->find_arg(arg_name);
+	    MetaType* arg_meta_type = nullptr;
 	    std::string arg_default_val;
 	    if(marg != nullptr) {
-		arg_default_val = back_parse(marg->default_value());
+		arg_meta_type = marg->type();
+		arg_default_val = back_parse(
+		    marg->default_value(), arg_meta_type
+		);
 	    }
+	    std::string arg_val = back_parse(
+		args.ith_arg_value(i), arg_meta_type
+	    );
 
 	    // Do not display parameter if equal to default value.
 	    if(arg_default_val == arg_val) {
@@ -309,8 +315,13 @@ namespace OGF {
 	    return; // Could not find target
 	}
 
-	std::string val = back_parse(value);
 	MetaProperty* mprop = target->meta_class()->find_property(prop_name);
+	MetaType* mtype = nullptr;
+	if(mprop != nullptr) {
+	    mtype = mprop->type();
+	}
+	std::string val = back_parse(value,mtype);
+
 	if(mprop != nullptr) {
 	    if(needs_quotes(mprop->type())) {
 		if(!is_quoted(val)) {
@@ -461,10 +472,56 @@ namespace OGF {
 	return "";
     }
 
-    std::string LuaInterpreter::back_parse(const Any& value) const {
+    std::string LuaInterpreter::back_parse(
+	const Any& value, MetaType* mtype
+    ) const {
 
 	if(value.meta_type() == nullptr) {
 	    return "nil";
+	}
+
+	// If stored value is a string, parse/unparse it to get a normalized
+	// representation.
+	if(
+	    mtype != nullptr &&
+	    mtype != ogf_meta<std::string>::type() &&
+	    value.is_a(ogf_meta<std::string>::type())
+	) {
+	    std::string string_value;
+	    if(value.get_value(string_value)) {
+
+		// Find Grob by name in SceneGraph
+		if(String::string_ends_with(mtype->name(),"GrobName")) {
+		    MetaClass* msg = Meta::instance()->resolve_meta_class(
+			"OGF::SceneGraph"
+		    );
+		    Object* scene_graph = msg->get_instance();
+		    Any scope_as_any;
+		    Scope* scope;
+		    if(
+			scene_graph != nullptr &&
+			scene_graph->get_property("objects",scope_as_any)  &&
+			scope_as_any.get_value(scope)
+		    ) {
+			scope->ref();
+			Any o_as_any = scope->resolve(string_value);
+			scope->unref();
+			if(!o_as_any.is_null()) {
+			    return back_parse(o_as_any, mtype);
+			}
+		    }
+		}
+
+		Any parsed;
+		parsed.create(mtype);
+		if(
+		    Any::convert_from_string(
+			mtype, string_value, parsed.data()
+		    )
+		) {
+		    return back_parse(parsed,mtype);
+		}
+	    }
 	}
 
 	if(value.meta_type() == ogf_meta<Color>::type()) {
@@ -473,6 +530,13 @@ namespace OGF {
 		return String::format(
 		    "{ %f, %f, %f, %f }", C.r(), C.g(), C.b(), C.a()
 		);
+	    }
+	}
+
+	if(value.meta_type() == ogf_meta<vec3>::type()) {
+	    vec3 p;
+	    if(value.get_value(p)) {
+		return String::format("{ %f, %f, %f }", p.x, p.y, p.z);
 	    }
 	}
 
