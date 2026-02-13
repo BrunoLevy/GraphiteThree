@@ -150,7 +150,7 @@ function post_init()
 	       gom.execute_file(arg)
 	    end
 	 else
-            scene_graph.load_object({value=arg,_invoked_from_gui=true})
+            scene_graph.load_object({filename=arg,_invoked_from_gui=true})
 	 end
       end
    end

@@ -272,7 +272,6 @@ namespace OGF {
         /**
          * \brief Loads an object from a file, and stores it in this
          *  SceneGraph.
-         * \param[in] value the name of the file
          * \param[in] type the class name that should be used to
          *  create the object, or "default" (then it is deduced from
          *  the file extension)
@@ -282,14 +281,14 @@ namespace OGF {
          *  could be loaded
          */
         Grob* load_object(
-            const FileName& value, const std::string& type="default",
+            const FileName& filename, const std::string& type="default",
             bool change_cwd=false
         );
 
         /**
          * \brief Loads objects from a list of files, and stores them in this
          *  SceneGraph.
-         * \param[in] value the list of file names, separated with ';'
+         * \param[in] filenames the list of file names, separated with ';'
          * \param[in] type the class name that should be used to
          *  create the objects, or "default" (then it is deduced from
          *  the file extensions)
@@ -297,26 +296,29 @@ namespace OGF {
 	 *  directory that contains the file
          */
         void load_objects(
-            const std::string& value, const std::string& type="default",
+            const std::string& filenames, const std::string& type="default",
             bool change_cwd=false
         );
 
         /**
          * \brief Saves the current object to a file.
-         * \param[in] value the name of the file
+         * \param[in] filename where to save the obect
+	 * \retval true if viewer properties could be successfully saved to
+	 *  the file.
+	 * \retval false otherwise.
          */
-        bool save_current_object(const NewFileName& value);
+        bool save_current_object(const NewFileName& filename);
 
 	/**
 	 * \brief Saves viewer properties to a file.
 	 * \details This saves current viewpoint, clipping and background
 	 *  color to a .graphite file.
-	 * \param[in] value a .graphite file name.
+	 * \param[in] filename a file name with the .graphite extension
 	 * \retval true if viewer properties could be successfully saved to
 	 *  the file.
 	 * \retval false otherwise.
 	 */
-        bool save_viewer_properties(const std::string& value);
+        bool save_viewer_properties(const std::string& filename);
 
         /**
          * \brief Creates an object.

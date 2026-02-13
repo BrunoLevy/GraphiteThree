@@ -469,17 +469,19 @@ function scene_graph_gui.scene_graph_ops()
 
   sel,filename = imgui.FileDialog('##scene_graph##load_dlg',filename)
   if sel then
-     scene_graph.load_object({value=filename,change_cwd=true})
+     scene_graph.load_object{
+        filename=filename, change_cwd=true, _invoked_from_gui=true
+     }
   end
 
   sel,filename = imgui.FileDialog('##scene_graph##save_dlg',filename)
   if sel then
-     scene_graph.save(filename)
+     scene_graph.save{filename=filename,_invoked_from_gui=true}
   end
 
   sel,filename = imgui.FileDialog('##scene_graph##save_view_dlg',filename)
   if sel then
-     scene_graph.save_viewer_properties(filename)
+     scene_graph.save_viewer_properties{filename=filename,_invoked_from_gui=true}
   end
 end
 
