@@ -258,13 +258,13 @@ namespace OGF {
          * \brief Sets the current object by name.
          * \param[in] value the name of the object that should be made current
          */
-        void set_current_object(const std::string& value);
+        void set_current_object(const GrobName& value);
 
         /**
          * \brief Gets the name of the current object.
          * \return the name of the current object
          */
-        const std::string& get_current_object() const;
+        const GrobName& get_current_object() const;
 
         /**
          * \brief Gets the names of all the objects in this SceneGraph.
@@ -427,7 +427,7 @@ namespace OGF {
 	void copy_arglist_to_properties(const ArgList& args);
 
     private:
-        std::string current_object_;
+        GrobName current_object_name_;
 	Interpreter* interpreter_;
 	Object* render_area_;
 	Object* application_;

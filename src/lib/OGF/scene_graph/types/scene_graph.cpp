@@ -189,7 +189,7 @@ namespace OGF {
     }
 
     Grob* SceneGraph::duplicate_current() {
-        Grob* cur = resolve(current_object_);
+        Grob* cur = resolve(current_object_name_);
         set_current_object("");
         if(cur == nullptr) {
             Logger::err("SceneGraph") << "no object selected" << std::endl;
@@ -238,7 +238,7 @@ namespace OGF {
     }
 
     void SceneGraph::delete_current_object() {
-        Grob* cur = resolve(current_object_);
+        Grob* cur = resolve(current_object_name_);
         set_current_object(std::string());
         if(cur != nullptr) {
             std::string name = cur->name();  // copy it before deletion
@@ -260,9 +260,9 @@ namespace OGF {
         }
     }
 
-    void SceneGraph::set_current_object(const std::string& value_in) {
+    void SceneGraph::set_current_object(const GrobName& value_in) {
 	std::string value = value_in;
-        if(current_object_ == value) {
+        if(current_object_name_ == value) {
             return;
         }
 	if(value != "" && resolve(value) == nullptr) {
@@ -270,14 +270,14 @@ namespace OGF {
 				       << std::endl;
 	    value = "";
 	}
-        current_object_ = value;
+        current_object_name_ = value;
         disable_slots();
-        current_object_changed(current_object_);
+        current_object_changed(current_object_name_);
         enable_slots();
     }
 
-    const std::string& SceneGraph::get_current_object() const {
-        return current_object_;
+    const GrobName& SceneGraph::get_current_object() const {
+        return current_object_name_;
     }
 
     Grob* SceneGraph::load_object(
@@ -398,8 +398,8 @@ namespace OGF {
     }
 
     bool SceneGraph::save_current_object(const NewFileName& file_name) {
-        if(is_bound(current_object_)) {
-            Grob* grob = resolve(current_object_);
+        if(is_bound(current_object_name_)) {
+            Grob* grob = resolve(current_object_name_);
             std::string ext = FileSystem::extension(file_name);
             if(ext == "graphite" || ext == "graphite_ascii") {
                 if(!grob->is_serializable()) {
@@ -491,7 +491,7 @@ namespace OGF {
     }
 
     Grob* SceneGraph::current() {
-        return resolve(current_object_);
+        return resolve(current_object_name_);
     }
 
     /**
