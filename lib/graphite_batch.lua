@@ -17,3 +17,4 @@
 
 gom.execute_file("graphite_common.lua")
 scene_graph = OGF.SceneGraph.create(gom)
+o = scene_graph.objects

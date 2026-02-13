@@ -240,7 +240,6 @@ namespace OGF {
 	 */
 	void clear_selection();
 
-
 	/**
 	 * \brief Extends selection
 	 * \details Selects all objects between current object and grob

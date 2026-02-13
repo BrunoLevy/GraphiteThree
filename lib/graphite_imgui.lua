@@ -4,6 +4,7 @@
 
 main = gom.meta_types.OGF.Application.create(gom)
 scene_graph = gom.meta_types.OGF.SceneGraph.create(gom)
+o = scene_graph.objects
 scene_graph.render_area = main.render_area
 scene_graph.application = main
 gom.connect(scene_graph.value_changed, main.render_area.update)

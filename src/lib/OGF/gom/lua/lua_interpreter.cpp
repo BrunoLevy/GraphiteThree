@@ -336,11 +336,11 @@ namespace OGF {
 
 	// Compress multiple assignments to same property into a single
 	// assignment in history.
-	std::string command = target_name + "." + prop_name + "=" + val;
+	std::string command = target_name + "." + prop_name + " = " + val;
 	if(
 	    history_.size() != 0 &&
 	    String::string_starts_with(
-		*history_.rbegin(), target_name + "." + prop_name + "="
+		*history_.rbegin(), target_name + "." + prop_name + " = "
 	    )
 	) {
 	    *history_.rbegin() = command;
@@ -428,9 +428,9 @@ namespace OGF {
 			(isalnum(c) || (c == '_'));
 		}
 		if(name_does_not_need_quotes) {
-		    return "scene_graph.objects." + grob_name;
+		    return "o." + grob_name;
 		} else {
-		    return "scene_graph.objects[\"" + grob_name + "\"]";
+		    return "o[\"" + grob_name + "\"]";
 		}
 	    }
 	    return "";
