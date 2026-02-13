@@ -150,15 +150,15 @@ function post_init()
 	       gom.execute_file(arg)
 	    end
 	 else
-            scene_graph.load_object(arg)
+            scene_graph.load_object({value=arg,_invoked_from_gui=true})
 	 end
       end
    end
 
    -- Now that Graphite is started, enable verbose add_to_history()
-   -- so that user can see in the terminal how is interactions 
+   -- so that user can see in the terminal how is interactions
    -- reflect as commands.
-   
+
    gom.show_add_to_history = true
 
    collectgarbage()

@@ -120,6 +120,7 @@ namespace OGF {
 		grob->set_visible(true);
 	    }
 	}
+	clear_selection();
     }
 
     void SceneGraph::show_all() {
@@ -142,6 +143,7 @@ namespace OGF {
 		grob->set_visible(false);
 	    }
 	}
+	clear_selection();
     }
 
     void SceneGraph::hide_all() {
@@ -208,6 +210,40 @@ namespace OGF {
 	    args.create_arg("visible_only", false);
 	    args.create_arg("selected_only", true);
 	    shd_mgr->invoke_method("apply_to_scehe_graph",args);
+	}
+	clear_selection();
+    }
+
+    void SceneGraph::select_object(const GrobName& grob_name) {
+	Grob* grob = resolve(grob_name);
+	if(grob != nullptr) {
+	    grob->set_selected(true);
+	}
+    }
+
+    void SceneGraph::unselect_object(const GrobName& grob_name) {
+	Grob* grob = resolve(grob_name);
+	if(grob != nullptr) {
+	    grob->set_selected(false);
+	}
+    }
+
+    void SceneGraph::toggle_selection(const GrobName& grob_name) {
+	Grob* grob = resolve(grob_name);
+	if(grob != nullptr) {
+	    grob->set_selected(!grob->get_selected());
+	}
+    }
+
+    void SceneGraph::select_all() {
+	for(index_t i=0; i<get_nb_children(); ++i) {
+	    ith_child(i)->set_selected(true);
+	}
+    }
+
+    void SceneGraph::clear_selection() {
+	for(index_t i=0; i<get_nb_children(); ++i) {
+	    ith_child(i)->set_selected(false);
 	}
     }
 

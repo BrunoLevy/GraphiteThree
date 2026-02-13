@@ -204,6 +204,35 @@ namespace OGF {
 	 */
 	void copy_object_properties_to_selected(const GrobName& grob);
 
+
+	/**
+	 * \brief Adds an object to the selection
+	 * \param[in] grob the object or its name
+	 */
+	void select_object(const GrobName& grob);
+
+	/**
+	 * \brief Removes an object from the selection
+	 * \param[in] grob the object or its name
+	 */
+	void unselect_object(const GrobName& grob);
+
+	/**
+	 * \brief Toggles the selection flag for an object
+	 * \param[in] grob the object or its name
+	 */
+	void toggle_selection(const GrobName& grob);
+
+	/**
+	 * \brief Adds all objects to selection.
+	 */
+	void select_all();
+
+	/**
+	 * \brief Removes all objects from selection.
+	 */
+	void clear_selection();
+
 	/*************************************/
 
         /**
@@ -299,7 +328,8 @@ namespace OGF {
          * \return a pointer to the created object
          */
         Grob* create_object(
-	    const GrobClassName& classname, const std::string& name = ""
+	    const GrobClassName& classname="OGF::MeshGrob",
+	    const std::string& name = "new_object"
 	);
 
         /**

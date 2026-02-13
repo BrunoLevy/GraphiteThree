@@ -438,52 +438,16 @@ function scene_graph_gui.file_menu()
 end
 
 function scene_graph_gui.scene_graph_menu(with_file_menu)
-    local commands_meta_class =
-           gom.resolve_meta_type('OGF::SceneGraphSceneCommands')
-    local commands_as_string =
-           'scene_graph.query_interface(\'OGF::SceneGraphSceneCommands\')'
-    if imgui.MenuItem('show all') then
-       for i=0,scene_graph.nb_children-1 do
-          scene_graph.ith_child(i).visible = true
-       end
-    end
-    if imgui.MenuItem('hide all') then
-       for i=0,scene_graph.nb_children-1 do
-          scene_graph.ith_child(i).visible = false
-       end
-    end
-    if imgui.MenuItem('show selected') then
-       for i=0,scene_graph.nb_children-1 do
-          grob = scene_graph.ith_child(i)
-          if grob.selected then
-              grob.visible = true
-          end
-       end
-       scene_graph_gui.clear_selection()
-    end
-    if imgui.MenuItem('hide selected') then
-       for i=0,scene_graph.nb_children-1 do
-          grob = scene_graph.ith_child(i)
-          if grob.selected then
-              grob.visible = false
-          end
-       end
-       scene_graph_gui.clear_selection()
-    end
+    autogui.command_menu_item(scene_graph.show_all)
+    autogui.command_menu_item(scene_graph.hide_all)
+    autogui.command_menu_item(scene_graph.show_selected)
+    autogui.command_menu_item(scene_graph.hide_selected)
     imgui.Separator()
-    autogui.command_menu_item(
-       scene_graph.I.Scene.create_object
-    )
+    autogui.command_menu_item(scene_graph.create_object)
     imgui.Separator()
-    if imgui.MenuItem('delete all') then
-       scene_graph.I.Scene.delete_all()
-    end
-    if imgui.MenuItem('delete current') then
-       scene_graph.I.Scene.delete_current()
-    end
-    if imgui.MenuItem('delete selected') then
-       scene_graph_gui.delete_selected()
-    end
+    autogui.command_menu_item(scene_graph.delete_all)
+    autogui.command_menu_item(scene_graph.delete_current)
+    autogui.command_menu_item(scene_graph.delete_selected)
     imgui.Separator()
     scene_graph_gui.menu_map.draw(scene_graph, nil)
     if with_file_menu then
