@@ -420,7 +420,11 @@ function scene_graph_gui.draw_grob_edit_list_buttons(grob)
    if imgui.SimpleButton(imgui.font_icon('window-close')..'##'..grob.name) then
        edit_op = scene_graph_gui.delete_grob
    end
-   autogui.tooltip('delete')
+   if scene_graph.nb_selected() ~= 0 then
+      autogui.tooltip('delete selected')
+   else
+      autogui.tooltip('delete this object')
+   end
    imgui.SameLine()
    if imgui.SimpleButton(imgui.font_icon('arrow-up')..'##'..grob.name) then
        edit_op = scene_graph_gui.move_grob_up
@@ -544,7 +548,11 @@ function scene_graph_gui.draw_grob_eye(grob)
            visible = true
        end
    end
-   autogui.tooltip('show/hide')
+   if scene_graph.nb_selected() ~= 0 then
+      autogui.tooltip('show/hide selected')
+   else
+      autogui.tooltip('show/hide')
+   end
    imgui.PopStyleVar()
    if visible_changed and grob ~= nil then
       if visible then
