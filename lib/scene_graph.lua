@@ -548,11 +548,18 @@ function scene_graph_gui.draw_grob_eye(grob)
    imgui.PopStyleVar()
    if visible_changed and grob ~= nil then
       if visible then
-         scene_graph.show_object{grob=grob,_invoked_from_gui=true}
+         if scene_graph.nb_selected() ~= 0 then
+            scene_graph.show_selected{_invoked_from_gui=true}
+         else
+            scene_graph.show_object{grob=grob,_invoked_from_gui=true}
+         end
       else
-         scene_graph.hide_object{grob=grob,_invoked_from_gui=true}
+         if scene_graph.nb_selected() ~= 0 then
+            scene_graph.hide_selected{_invoked_from_gui=true}
+         else
+            scene_graph.hide_object{grob=grob,_invoked_from_gui=true}
+         end
       end
-      scene_graph_gui.set_current(grob)
    end
 end
 
@@ -560,7 +567,9 @@ end
 -- Some wrappers around SceneGraph functions
 
 function scene_graph_gui.delete_grob(grob)
-   if grob ~= nil then
+   if scene_graph.nb_selected() ~= 0 then
+      scene_graph.delete_selected{_invoked_from_gui=true}
+   elseif grob ~= nil then
       scene_graph.delete_object{grob=grob,_invoked_from_gui=true}
    end
 end

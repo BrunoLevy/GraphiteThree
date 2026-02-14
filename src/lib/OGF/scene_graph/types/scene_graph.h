@@ -211,7 +211,6 @@ namespace OGF {
 	 */
 	void copy_object_properties_to_selected(const GrobName& grob);
 
-
 	/**
 	 * \brief Adds an object to the selection
 	 * \param[in] grob the object or its name

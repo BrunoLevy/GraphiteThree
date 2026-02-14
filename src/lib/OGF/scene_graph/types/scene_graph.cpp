@@ -127,7 +127,6 @@ namespace OGF {
 		grob->set_visible(true);
 	    }
 	}
-	clear_selection();
     }
 
     void SceneGraph::show_all() {
@@ -150,7 +149,6 @@ namespace OGF {
 		grob->set_visible(false);
 	    }
 	}
-	clear_selection();
     }
 
     void SceneGraph::hide_all() {
@@ -219,7 +217,6 @@ namespace OGF {
 	    args.create_arg("selected_only", true);
 	    shd_mgr->invoke_method("apply_to_scehe_graph",args);
 	}
-	clear_selection();
     }
 
     void SceneGraph::select_object(const GrobName& grob_name) {

@@ -312,28 +312,28 @@ namespace OGF {
 
         /**
          * \brief Replaces this Grob with the contents of a file.
-         * \param[in] value the name of the file
+         * \param[in] filename the name of the file to load
 	 * \retval true on success
 	 * \retval false otherwise
          */
-        virtual bool load(const FileName& value);
+        virtual bool load(const FileName& filename);
 
         /**
          * \brief Saves this Grob to a file.
-         * \param[in] value the name of the file
+         * \param[in] filename the name of the file where to save
 	 * \retval true on success
 	 * \retval false otherwise
          */
-        virtual bool save(const NewFileName& value);
+        virtual bool save(const NewFileName& filename);
 
 	/**
 	 * \brief Appends the content of the specified file to
 	 *  this Grob.
-         * \param[in] value the name of the file
+         * \param[in] filename the name of the file to append
 	 * \retval true on success
 	 * \retval false otherwise
 	 */
-	virtual bool append(const FileName& value);
+	virtual bool append(const FileName& filename);
 
         /**
          * \brief Clears this Grob
