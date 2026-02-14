@@ -1,7 +1,7 @@
--- ------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------
 -- \file autogui.properties.lua
 -- \brief creates dialogs for editing object properties
--- ------------------------------------------------------------------------------
+-- ----------------------------------------------------------------------------
 
 -- \brief Handles the GUI for an object's property editor
 -- \param[in] object the object to be edited. For Graphite objects,
@@ -349,9 +349,9 @@ function shader_selector(grob)
       tooltip
     )
     if xxx.shader ~= xxx.old_shader then
-       local bkp = scene_graph.current_object
-       scene_graph.current_object = grob.name
-       scene_graph.scene_graph_shader_manager.shader(xxx.shader)
-       scene_graph.current_object = bkp
+        scene_graph.set_object_shader{
+                grob=grob, user_name=xxx.shader,
+                _invoked_from_gui = true
+        }
     end
 end

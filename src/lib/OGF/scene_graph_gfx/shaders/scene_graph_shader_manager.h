@@ -284,7 +284,7 @@ namespace OGF {
         bool highlight_selected_;
         bool draw_selected_only_;
 
-        std::string last_shader_;
+        // std::string last_shader_;
 
         typedef std::map<std::string, FullScreenEffect_var> EffectsMap;
         EffectsMap effects_;

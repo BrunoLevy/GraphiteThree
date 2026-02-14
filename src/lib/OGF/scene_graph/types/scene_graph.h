@@ -205,11 +205,23 @@ namespace OGF {
 	void copy_object_properties_to_visible(const GrobName& grob);
 
 	/**
-	 * \brief Copies graphic properties of an object to all selected objects
+	 * \brief Copies graphic properties of an object to
+	 *  all selected objects
 	 * \details Ignored in terminal applications
 	 * \param[in] grob the object or its name
 	 */
 	void copy_object_properties_to_selected(const GrobName& grob);
+
+	/**
+	 * \brief Sets the shader for an object
+	 * \details Ignored in terminal applications
+	 * \param[in] grob the object or its name
+	 * \param[in] user_name the user name of the shader, that is,
+	 *   without the "OGF::" prefix
+	 */
+	void set_object_shader(
+	    const GrobName& grob, const std::string& user_name
+	);
 
 	/**
 	 * \brief Adds an object to the selection

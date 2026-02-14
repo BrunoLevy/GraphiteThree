@@ -57,7 +57,7 @@
 
 namespace OGF {
 
-/******************************************************************************/
+/*****************************************************************************/
 
     SceneGraph::SceneGraph(Interpreter* interpreter, bool transfer_ownership) :
 	CompositeGrob(nullptr),
@@ -68,7 +68,9 @@ namespace OGF {
 	render_area_(nullptr),
 	application_(nullptr) {
         Grob::scene_graph_ = this;
-        SceneGraphLibrary::instance()->set_scene_graph(this, transfer_ownership);
+        SceneGraphLibrary::instance()->set_scene_graph(
+	    this, transfer_ownership
+	);
 	Any value;
 	value.set_value(this);
 	meta_class()->set_instance(this);
@@ -78,7 +80,7 @@ namespace OGF {
 	meta_class()->set_instance(nullptr);
     }
 
-/*******************************************************************************/
+/*****************************************************************************/
 
     void SceneGraph::delete_object(const GrobName& grob_name) {
 	set_current_object(grob_name);
@@ -217,6 +219,21 @@ namespace OGF {
 	    args.create_arg("selected_only", true);
 	    shd_mgr->invoke_method("apply_to_scehe_graph",args);
 	}
+    }
+
+    void SceneGraph::set_object_shader(
+	const GrobName& grobname, const std::string& shader_name
+    ) {
+	Grob* grob = resolve(grobname);
+	if(grob == nullptr) {
+	    return;
+	}
+        std::string shader_classname =
+            SceneGraphLibrary::instance()->shader_user_to_classname(
+                grob->meta_class()->name(), shader_name
+            );
+	ArgList properties;
+	grob->set_shader_and_shader_properties(shader_classname, properties);
     }
 
     void SceneGraph::select_object(const GrobName& grob_name) {
@@ -760,7 +777,6 @@ namespace OGF {
     ) {
 	grob->set_shader_and_shader_properties(classname, properties);
     }
-
 
     /**
      * Loading alignment data files (as in Aim@Shape repository)

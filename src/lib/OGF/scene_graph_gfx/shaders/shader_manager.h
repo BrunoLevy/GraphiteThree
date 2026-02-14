@@ -60,7 +60,8 @@ namespace OGF {
         /**
          * \brief ShaderManager constructor.
          * \param[in] grob a pointer to the Grob
-         * \param[in] sg_shader_manager a pointer to the SceneGraphShaderManager
+         * \param[in] sg_shader_manager a pointer to the
+	 *  SceneGraphShaderManager
          */
         ShaderManager(Grob* grob, SceneGraphShaderManager* sg_shader_manager);
 

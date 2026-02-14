@@ -67,7 +67,8 @@ namespace OGF {
         draw_selected_only_ = false;
         highlight_selected_ = false;
 
-	FullScreenEffect* default_FSE = new PlainFullScreenEffect(scene_graph_);
+	FullScreenEffect* default_FSE =
+	    new PlainFullScreenEffect(scene_graph_);
 	effects_["OGF::PlainFullScreenEffect"] = default_FSE;
         effect_ = default_FSE;
 
@@ -95,7 +96,7 @@ namespace OGF {
         }
 
         shader_mgr->set_shader(shader_name);
-        last_shader_ = shader_name;
+        // last_shader_ = shader_name;
     }
 
     void SceneGraphShaderManager::full_screen_effect(
@@ -169,7 +170,7 @@ namespace OGF {
     ) {
         if(name.length() == 0) {
             current_object_ = nullptr;
-            last_shader_ = "";
+            // last_shader_ = "";
             return;
         }
 
