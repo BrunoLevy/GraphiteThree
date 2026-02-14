@@ -111,7 +111,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       if imgui.SimpleButton(
          imgui.font_icon('cubes')..'## copy properties to all'
       ) then
-         scene_graph.copy_graphic_properties_to_all{
+         scene_graph.copy_object_properties_to_all{
             grob=grob,_invoked_from_gui=true
          }
       end
@@ -120,7 +120,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       if imgui.SimpleButton(
          imgui.font_icon('eye')..'## copy properties to visible'
       ) then
-         scene_graph.copy_graphic_properties_to_visible{
+         scene_graph.copy_object_properties_to_visible{
             grob=grob,_invoked_from_gui=true
          }
       end
@@ -129,7 +129,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       if imgui.SimpleButton(
          imgui.font_icon('clipboard-list')..'## copy properties to selected'
       ) then
-         scene_graph.copy_graphic_properties_to_selected{
+         scene_graph.copy_object_properties_to_selected{
             grob=grob,_invoked_from_gui=true
          }
       end

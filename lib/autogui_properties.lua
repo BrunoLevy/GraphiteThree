@@ -39,7 +39,6 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
    end
 
    imgui.PushID(k)
-
    if not no_windowify and
       not autogui.property_editor_state[k].show_as_window_ then
       if imgui.MenuItem(
@@ -60,6 +59,7 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
        autogui.properties_editor_functions(object)
        imgui.Separator()
    end
+
    autogui.properties_editor_properties(object)
    if is_shader and not autogui.in_tree then
       imgui.Separator()
@@ -70,20 +70,18 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
         imgui.font_icon('cubes')..
         '##ops##'..name, w,autogui.icon_size()+6
       ) then
-         local current_bkp = scene_graph.current_object
-         scene_graph.current_object = name
-         scene_graph.scene_graph_shader_manager.apply_to_scene_graph()
-         scene_graph.current_object = current_bkp
+         scene_graph.copy_object_properties_to_all{
+            grob=name, _invoked_from_gui=true
+         }
       end
       autogui.tooltip('Copy graphic properties to all objects')
       imgui.SameLine()
       if imgui.Button(
          imgui.font_icon('eye').."##ops##"..name,w,autogui.icon_size()+6
       ) then
-         local current_bkp = scene_graph.current_object
-         scene_graph.current_object = name
-         scene_graph.scene_graph_shader_manager.apply_to_scene_graph(true)
-         scene_graph.current_object = current_bkp
+         scene_graph.copy_object_properties_to_visible{
+            grob=name,_invoked_from_gui=true
+         }
       end
       autogui.tooltip('Copy graphic properties to visible objects')
       imgui.SameLine()
@@ -91,10 +89,9 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
          imgui.font_icon('clipboard-list').."##ops##"..name,
          -1,autogui.icon_size()+6
       ) then
-         local current_bkp = scene_graph.current_object
-         scene_graph.current_object = name
-         scene_graph.scene_graph_shader_manager.apply_to_scene_graph(false,true)
-         scene_graph.current_object = current_bkp
+         scene_graph.copy_object_properties_to_selected{
+            grob=name,_invoked_from_gui=true
+         }
       end
       autogui.tooltip('Copy graphic properties to selected objects')
    end

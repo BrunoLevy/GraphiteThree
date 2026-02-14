@@ -191,7 +191,7 @@ namespace OGF {
 	    ArgList args;
 	    args.create_arg("visible_only", false);
 	    args.create_arg("selected_only", false);
-	    shd_mgr->invoke_method("apply_to_scehe_graph",args);
+	    shd_mgr->invoke_method("apply_to_scene_graph",args);
 	}
     }
 
@@ -204,7 +204,7 @@ namespace OGF {
 	    ArgList args;
 	    args.create_arg("visible_only", true);
 	    args.create_arg("selected_only", false);
-	    shd_mgr->invoke_method("apply_to_scehe_graph",args);
+	    shd_mgr->invoke_method("apply_to_scene_graph",args);
 	}
     }
 
@@ -217,7 +217,7 @@ namespace OGF {
 	    ArgList args;
 	    args.create_arg("visible_only", false);
 	    args.create_arg("selected_only", true);
-	    shd_mgr->invoke_method("apply_to_scehe_graph",args);
+	    shd_mgr->invoke_method("apply_to_scene_graph",args);
 	}
     }
 
