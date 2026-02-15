@@ -126,7 +126,7 @@ function Stats.update()
 
    Stats.attrib = object.I.Editor.find_attribute(container_attrib_name)
 
-   local f = shd.colormap:split(';')
+   local f = tostring(shd.colormap):split(';')
    local colormap_name = f()
    local smooth  = f()
    local mult    = math.max(tonumber(f()),1.0)

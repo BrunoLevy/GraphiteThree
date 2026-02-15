@@ -420,7 +420,7 @@ function scene_graph_gui.draw_grob_edit_list_buttons(grob)
    if imgui.SimpleButton(imgui.font_icon('window-close')..'##'..grob.name) then
        edit_op = scene_graph_gui.delete_grob
    end
-   if scene_graph.nb_selected() ~= 0 then
+   if grob.selected then
       autogui.tooltip('delete selected')
    else
       autogui.tooltip('delete this object')
@@ -548,7 +548,7 @@ function scene_graph_gui.draw_grob_eye(grob)
            visible = true
        end
    end
-   if scene_graph.nb_selected() ~= 0 then
+   if grob.selected then
       autogui.tooltip('show/hide selected')
    else
       autogui.tooltip('show/hide')
@@ -556,13 +556,13 @@ function scene_graph_gui.draw_grob_eye(grob)
    imgui.PopStyleVar()
    if visible_changed and grob ~= nil then
       if visible then
-         if scene_graph.nb_selected() ~= 0 then
+         if grob.selected then
             scene_graph.show_selected{_invoked_from_gui=true}
          else
             scene_graph.show_object{grob=grob,_invoked_from_gui=true}
          end
       else
-         if scene_graph.nb_selected() ~= 0 then
+         if grob.selected then
             scene_graph.hide_selected{_invoked_from_gui=true}
          else
             scene_graph.hide_object{grob=grob,_invoked_from_gui=true}
@@ -575,10 +575,12 @@ end
 -- Some wrappers around SceneGraph functions
 
 function scene_graph_gui.delete_grob(grob)
-   if scene_graph.nb_selected() ~= 0 then
-      scene_graph.delete_selected{_invoked_from_gui=true}
-   elseif grob ~= nil then
-      scene_graph.delete_object{grob=grob,_invoked_from_gui=true}
+   if grob ~= nil then
+      if grob.selected then
+         scene_graph.delete_selected{_invoked_from_gui=true}
+      else
+         scene_graph.delete_object{grob=grob,_invoked_from_gui=true}
+      end
    end
 end
 
@@ -624,7 +626,7 @@ end
 
 -- \brief Resets the selection flag for all object of the SceneGraph
 function scene_graph_gui.clear_selection()
-   if scene_graph.nb_selected() ~= 0 then
+   if scene_graph.nb_selected() ~= 0 then -- test to avoid littering history
       scene_graph.clear_selection{_invoked_from_gui=true}
    end
 end
