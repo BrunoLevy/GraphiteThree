@@ -40,8 +40,7 @@
 #define H_OGF_SCENE_GRAPH_INTERFACES_SCENE_GRAPH_GRAPHICS_H
 
 #include <OGF/scene_graph/common/common.h>
-#include <OGF/scene_graph/commands/commands.h>
-#include <OGF/scene_graph/types/scene_graph.h>
+#include <OGF/scene_graph/interfaces/scene_graph_interface.h>
 
 namespace OGF {
 
@@ -51,7 +50,8 @@ namespace OGF {
      * \details Calls are logged to the history if called
      *  from user interaction.
      */
-    gom_class SCENE_GRAPH_API SceneGraphGraphicsInterface : public Interface {
+    gom_class SCENE_GRAPH_API SceneGraphGraphicsInterface :
+	public SceneGraphInterface {
     public:
 	/**
 	 * \brief SceneGraphSelectionInterface constructor.

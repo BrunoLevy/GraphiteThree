@@ -86,7 +86,8 @@ namespace OGF {
         if(!args_in.has_arg("_override_lock") && command_is_running_) {
 	    // Do not invoke command while another command is running
 	    MetaMethod* mmethod = meta_class()->find_method(method_name);
-	    if( // ... but this does not concern member function of base classes
+	    if(
+                // but this does not concern member function of base classes
 		mmethod->container_meta_class()->is_subclass_of(
 		    ogf_meta<OGF::Commands>::meta_class()
 		)
@@ -114,7 +115,8 @@ namespace OGF {
             const std::string& name = args_in.ith_arg_name(i);
             const Any& value = args_in.ith_arg_value(i);
             if(name.length() > 0 && name[0] == '_') {
-                if(name == "_invoked_from_gui" && value.as_string() == "true") {
+                if(name == "_invoked_from_gui" &&
+		   value.as_string() == "true") {
                     invoked_from_gui = true;
                 }
                 continue;
@@ -129,7 +131,9 @@ namespace OGF {
 		if(main != nullptr) {
 		    main->invoke_method("save_state");
 		}
-		interpreter()->record_invoke_in_history(this, method_name, args);
+		interpreter()->record_invoke_in_history(
+		    this, method_name, args
+		);
             }
         }
 
