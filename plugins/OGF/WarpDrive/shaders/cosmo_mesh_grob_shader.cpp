@@ -25,19 +25,19 @@
  *  Contact for this Plugin: OGF
  *
  *     Project ALICE
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  *
  * As an exception to the GPL, Graphite can be linked with the following
  * (non-GPL) libraries:
  *     Qt, tetgen, SuperLU, WildMagic and CGAL
  */
- 
+
 
 #include <OGF/WarpDrive/shaders/cosmo_mesh_grob_shader.h>
 #include <OGF/renderer/context/rendering_context.h>
@@ -67,13 +67,13 @@ namespace OGF {
         colormap_style_.colormap_name = "inferno";
         view_changed_ = false;
     }
-        
+
     CosmoMeshGrobShader::~CosmoMeshGrobShader() {
         if(texture_ != 0) {
 	    glDeleteTextures(1, &texture_);
 	    texture_ = 0;
 	}
-    }        
+    }
 
     void CosmoMeshGrobShader::draw() {
         create_or_resize_image_if_needed();
@@ -85,7 +85,7 @@ namespace OGF {
 
     void CosmoMeshGrobShader::draw_points() {
 
-        // Get colormap image 
+        // Get colormap image
         if(colormap_image_.is_null()) {
             std::string filename =
                 "icons/colormaps/" +
@@ -113,7 +113,7 @@ namespace OGF {
             float(geo_sqr(double(viewport_[3]/1000.0)/double(modelview_[15])));
 
         pw *= float(skip_);
-        
+
         // Splat the points into the floating-point image
         parallel_for(
             0, mesh_grob()->vertices.nb(),
@@ -123,7 +123,7 @@ namespace OGF {
                 if(v % skip_ != 0) {
                     return;
                 }
-                
+
                 const double* p = mesh_grob()->vertices.point_ptr(v);
 
                 // Discard points outside of selection window
@@ -151,8 +151,8 @@ namespace OGF {
                 ) {
                     return;
                 }
-                
-                
+
+
                 // Splat point onto floating point image
                 if(point_size_ == 0 || view_changed_) {
                     splat(X,Y,pw);
@@ -212,7 +212,7 @@ namespace OGF {
 	    Any tmp;
 	    main->get_property("width",tmp);
 	    tmp.get_value(w);
-	    main->get_property("height",tmp);	
+	    main->get_property("height",tmp);
 	    tmp.get_value(h);
 	}
 
@@ -237,7 +237,7 @@ namespace OGF {
 	glGetIntegerv(GL_VIEWPORT, viewport_);
 	glupGetMatrixdv(GLUP_MODELVIEW_MATRIX, modelview_);
 	glupGetMatrixdv(GLUP_PROJECTION_MATRIX, project_);
-        
+
         view_changed_ = false;
         for(index_t i=0; i<16; ++i) {
             view_changed_ = view_changed_||(modelview_[i] != modelview_bkp[i]);
@@ -247,13 +247,13 @@ namespace OGF {
             view_changed_ = view_changed_||(viewport_[i] != viewport_bkp[i]);
         }
         skip_ = 1;
+        if(!fast_draw_) {
+            view_changed_ = false;
+        }
         if(view_changed_) {
             skip_ = mesh_grob()->vertices.nb() /
                 (3000000u * std::max(point_size_, 1u));
             skip_ = std::max(skip_, 1u);
-        }
-        if(!fast_draw_) {
-            view_changed_ = false;
         }
     }
 
@@ -306,7 +306,7 @@ namespace OGF {
         float x = r/R;
         return R*(1.0f-x*x*(3.0f-2.0f*x));
     }
-    
+
     void CosmoMeshGrobShader::set_splat_size(index_t size) {
         // Computes splatting weights.
         // Used splat is a little radial smoothstep function
@@ -331,5 +331,5 @@ namespace OGF {
         }
         update();
     }
-    
+
 }
