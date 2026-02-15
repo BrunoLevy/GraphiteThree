@@ -36,83 +36,44 @@
  *     Qt, SuperLU, WildMagic and CGAL
  */
 
-#ifndef H_OGF_SCENE_GRAPH_INTERFACES_SCENE_GRAPH_SELECTION_H
-#define H_OGF_SCENE_GRAPH_INTERFACES_SCENE_GRAPH_SELECTION_H
+#ifndef H_OGF_SCENE_GRAPH_INTERFACES_SCENE_GRAPH_INTERFACE_H
+#define H_OGF_SCENE_GRAPH_INTERFACES_SCENE_GRAPH_INTERFACE_H
 
 #include <OGF/scene_graph/common/common.h>
-#include <OGF/scene_graph/interfaces/scene_graph_interface.h>
+#include <OGF/scene_graph/commands/commands.h>
+#include <OGF/scene_graph/types/scene_graph.h>
 
 namespace OGF {
 
     /**
-     * \brief All SceneGraph modifications related with selection
-     *  go through this Interface.
+     * \brief All SceneGraph modifications go through a SceneGraphInterface.
      * \details Calls are logged to the history if called
      *  from user interaction.
      */
-    gom_class SCENE_GRAPH_API SceneGraphSelectionInterface
-	: public SceneGraphInterface {
+    gom_class SCENE_GRAPH_API SceneGraphInterface : public Interface {
     public:
+	/**
+	 * \brief SceneGraphInterface constructor
+	 */
+	SceneGraphInterface();
+
+	/**
+	 * \brief SceneGraphInterface destructor
+	 */
+	~SceneGraphInterface() override;
 
         /**
-         * \brief SceneGraphSelectionInterface constructor.
+         * \copydoc Object::invoke_method
+         * \details Overload of the invokation mechanism,
+         *  that adds timings and history recording.
          */
-	SceneGraphSelectionInterface();
-
-	/**
-	 * \brief SceneGraphEditor destrutor.
-	 */
-	~SceneGraphSelectionInterface() override;
-
-	/**
-	 * \brief Gets the wrapped MeshGrob.
-	 * \return a pointer to the MeshGrob or nullptr.
-	 */
-	SceneGraph* scene_graph() const {
-	    return dynamic_cast<SceneGraph*>(grob());
-	}
-
-    gom_slots:
-	/**
-	 * \brief Adds an object to the selection
-	 * \param[in] grob the object or its name
-	 */
-	void select_object(const GrobName& grob);
-
-	/**
-	 * \brief Removes an object from the selection
-	 * \param[in] grob the object or its name
-	 */
-	void unselect_object(const GrobName& grob);
-
-	/**
-	 * \brief Toggles the selection flag for an object
-	 * \param[in] grob the object or its name
-	 */
-	void toggle_selection(const GrobName& grob);
-
-	/**
-	 * \brief Adds all objects to selection.
-	 */
-	void select_all();
-
-	/**
-	 * \brief Removes all objects from selection.
-	 */
-	void clear_selection();
-
-	/**
-	 * \brief Extends selection
-	 * \details Selects all objects between current object and grob
-	 */
-	void extend_selection(const GrobName& grob);
-
-	/**
-	 * \brief Gets the number of selected objects
-	 */
-	index_t nb_selected() const;
+        bool invoke_method(
+            const std::string& method_name,
+            const ArgList& args, Any& ret_val
+        ) override;
     };
 
 }
+
 
 #endif

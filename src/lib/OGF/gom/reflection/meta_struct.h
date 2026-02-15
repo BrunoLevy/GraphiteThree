@@ -144,7 +144,8 @@ namespace OGF {
 	 *   calls to add_field()
 	 */
 	MetaBuiltinStruct* add_field(
-	    const std::string& name, const std::string& type_name, size_t offset
+	    const std::string& name, const std::string& type_name,
+	    size_t offset
 	) {
 	    MetaProperty* mprop = new MetaProperty(
 		name, meta_struct_, type_name
@@ -159,7 +160,7 @@ namespace OGF {
 	/**
 	 * \brief Adds a new property to this MetaBuiltinStruct
 	 * \param[in] property_name the name of the property
-	 * \param[in] property_type a pointer to the MetaType of the property
+	 * \param[in] typeid_name the type name as obtained by typeid(T).name()
 	 * \return a pointer to the created MetaProperty
 	 */
 	MetaProperty* add_property_by_typeid_name(

@@ -716,7 +716,7 @@ namespace OGF {
 
 	/**
 	 * \brief Record an object invokation to history
-	 * \param[in] the target object
+	 * \param[in] target the target object
 	 * \param[in] slot_name the invoked slot
 	 * \param[in] args the arguments of the slot
 	 */
@@ -754,7 +754,7 @@ namespace OGF {
 
 	/**
 	 * \brief finds a scriptable representation of a value
-	 * \param[in] value the value stored in an Any
+	 * \param[in] any the value stored in an Any
 	 * \param[in] mtype an optional expected MetaType, if known
 	 * \return a string with a parsable representation of the value
 	 */
