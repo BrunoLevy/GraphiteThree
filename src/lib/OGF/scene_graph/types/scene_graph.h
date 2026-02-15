@@ -100,12 +100,14 @@ namespace OGF {
 	void delete_object(const GrobName& grob);
 
 	/**
-	 * \brief Removes the current object from this SceneGraph and deletes it
+	 * \brief Removes the current object from this SceneGraph
+	 *  and deletes it
 	 */
 	void delete_current();
 
 	/**
-	 * \brief Removes and deletes all the selected objects in this SceneGraph
+	 * \brief Removes and deletes all the selected objects
+	 *  in this SceneGraph
 	 */
 	void delete_selected();
 
@@ -113,51 +115,6 @@ namespace OGF {
 	 * \brief Deletes and removes all the objects in this SceneGraph
 	 */
 	void delete_all();
-
-	/**
-	 * \brief Makes an object visible.
-	 * \details Ignored in terminal applications.
-	 * \param[in] grob the object to be shown or its name
-	 */
-	void show_object(const GrobName& grob);
-
-	/**
-	 * \brief Makes an object visible and hides all the other ones.
-	 * \details Ignored in terminal applications.
-	 * \param[in] grob the object to be shown or its name
-	 */
-	void show_only(const GrobName& grob);
-
-	/**
-	 * \brief Makes all selected objects visible.
-	 * \details Ignored in terminal applications.
-	 */
-	void show_selected();
-
-	/**
-	 * \brief Makes all objects visible.
-	 * \details Ignored in terminal applications.
-	 */
-	void show_all();
-
-	/**
-	 * \brief Makes an object invisible.
-	 * \details Ignored in terminal applications.
-	 * \param[in] grob the object to be hidden or its name
-	 */
-	void hide_object(const GrobName& grob);
-
-	/**
-	 * \brief Makes all selected objects invisible.
-	 * \details Ignored in terminal applications.
-	 */
-	void hide_selected();
-
-	/**
-	 * \brief Makes all objects invisible.
-	 * \details Ignored in terminal applications.
-	 */
-	void hide_all();
 
 	/**
 	 * \brief Moves an object up in the SceneGraph
@@ -190,77 +147,6 @@ namespace OGF {
          */
 	Grob* duplicate_object(const GrobName& grob);
 
-	/**
-	 * \brief Copies graphic properties of an object to all objects
-	 * \details Ignored in terminal applications
-	 * \param[in] grob the object or its name
-	 */
-	void copy_object_properties_to_all(const GrobName& grob);
-
-	/**
-	 * \brief Copies graphic properties of an object to all visible objects
-	 * \details Ignored in terminal applications
-	 * \param[in] grob the object or its name
-	 */
-	void copy_object_properties_to_visible(const GrobName& grob);
-
-	/**
-	 * \brief Copies graphic properties of an object to
-	 *  all selected objects
-	 * \details Ignored in terminal applications
-	 * \param[in] grob the object or its name
-	 */
-	void copy_object_properties_to_selected(const GrobName& grob);
-
-	/**
-	 * \brief Sets the shader for an object
-	 * \details Ignored in terminal applications
-	 * \param[in] grob the object or its name
-	 * \param[in] user_name the user name of the shader, that is,
-	 *   without the "OGF::" prefix
-	 */
-	void set_object_shader(
-	    const GrobName& grob, const std::string& user_name
-	);
-
-	/**
-	 * \brief Adds an object to the selection
-	 * \param[in] grob the object or its name
-	 */
-	void select_object(const GrobName& grob);
-
-	/**
-	 * \brief Removes an object from the selection
-	 * \param[in] grob the object or its name
-	 */
-	void unselect_object(const GrobName& grob);
-
-	/**
-	 * \brief Toggles the selection flag for an object
-	 * \param[in] grob the object or its name
-	 */
-	void toggle_selection(const GrobName& grob);
-
-	/**
-	 * \brief Adds all objects to selection.
-	 */
-	void select_all();
-
-	/**
-	 * \brief Removes all objects from selection.
-	 */
-	void clear_selection();
-
-	/**
-	 * \brief Extends selection
-	 * \details Selects all objects between current object and grob
-	 */
-	void extend_selection(const GrobName& grob);
-
-	/**
-	 * \brief Gets the number of selected objects
-	 */
-	index_t nb_selected() const;
 
 	/*************************************/
 

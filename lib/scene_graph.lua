@@ -101,9 +101,13 @@ function scene_graph_gui.grob_ops(grob, main_menu)
          imgui.font_icon('eye-slash')..'## show/hide'
       ) then
          if grob.visible then
-            scene_graph.hide_object{grob=grob,_invoked_from_gui=true}
+            scene_graph.I.Graphics.hide_object{
+               grob=grob,_invoked_from_gui=true
+            }
          else
-            scene_graph.show_object{grob=grob,_invoked_from_gui=true}
+            scene_graph.I.Graphics.show_object{
+               grob=grob,_invoked_from_gui=true
+            }
          end
       end
       autogui.tooltip('show/hide')
@@ -111,7 +115,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       if imgui.SimpleButton(
          imgui.font_icon('cubes')..'## copy properties to all'
       ) then
-         scene_graph.copy_object_properties_to_all{
+         scene_graph.I.Graphics.copy_object_properties_to_all{
             grob=grob,_invoked_from_gui=true
          }
       end
@@ -120,7 +124,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       if imgui.SimpleButton(
          imgui.font_icon('eye')..'## copy properties to visible'
       ) then
-         scene_graph.copy_object_properties_to_visible{
+         scene_graph.I.Graphics.copy_object_properties_to_visible{
             grob=grob,_invoked_from_gui=true
          }
       end
@@ -129,7 +133,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       if imgui.SimpleButton(
          imgui.font_icon('clipboard-list')..'## copy properties to selected'
       ) then
-         scene_graph.copy_object_properties_to_selected{
+         scene_graph.I.Graphics.copy_object_properties_to_selected{
             grob=grob,_invoked_from_gui=true
          }
       end
@@ -288,10 +292,10 @@ function scene_graph_gui.file_menu()
 end
 
 function scene_graph_gui.scene_graph_menu(with_file_menu)
-    autogui.command_menu_item(scene_graph.show_all)
-    autogui.command_menu_item(scene_graph.hide_all)
-    autogui.command_menu_item(scene_graph.show_selected)
-    autogui.command_menu_item(scene_graph.hide_selected)
+    autogui.command_menu_item(scene_graph.I.Graphics.show_all)
+    autogui.command_menu_item(scene_graph.I.Graphics.hide_all)
+    autogui.command_menu_item(scene_graph.I.Graphics.show_selected)
+    autogui.command_menu_item(scene_graph.I.Graphics.hide_selected)
     imgui.Separator()
     autogui.command_menu_item(scene_graph.create_object)
     imgui.Separator()
@@ -489,13 +493,15 @@ function scene_graph_gui.draw_grob_name(grob)
          ImGuiSelectableFlags_SelectOnNav
       ) then
 	 if imgui.IsMouseDoubleClicked(0) then
-            scene_graph.show_only{grob=grob,_invoked_from_gui=true}
+            scene_graph.I.Graphics.show_only{grob=grob,_invoked_from_gui=true}
          end
          scene_graph_gui.set_current(grob)
       end
       if imgui.IO_KeyShift_pressed() and
          imgui.IsItemFocused() and not grob.selected then
-           scene_graph.select_object{grob=grob,_invoked_from_gui=true}
+           scene_graph.I.Selection.select_object{
+              grob=grob,_invoked_from_gui=true
+           }
       end
       if cropped then
          autogui.tooltip(grob.name)
@@ -557,15 +563,19 @@ function scene_graph_gui.draw_grob_eye(grob)
    if visible_changed and grob ~= nil then
       if visible then
          if grob.selected then
-            scene_graph.show_selected{_invoked_from_gui=true}
+            scene_graph.I.Graphics.show_selected{_invoked_from_gui=true}
          else
-            scene_graph.show_object{grob=grob,_invoked_from_gui=true}
+            scene_graph.I.Graphics.show_object{
+               grob=grob,_invoked_from_gui=true
+            }
          end
       else
          if grob.selected then
-            scene_graph.hide_selected{_invoked_from_gui=true}
+            scene_graph.I.Graphics.hide_selected{_invoked_from_gui=true}
          else
-            scene_graph.hide_object{grob=grob,_invoked_from_gui=true}
+            scene_graph.I.Graphics.hide_object{
+               grob=grob,_invoked_from_gui=true
+            }
          end
       end
    end
@@ -610,7 +620,9 @@ end
 -- \param grob the object
 function scene_graph_gui.toggle_selection(grob)
    if grob ~= nil then
-      scene_graph.toggle_selection{grob=grob,_invoked_from_gui=true}
+      scene_graph.I.Selection.toggle_selection{
+          grob=grob,_invoked_from_gui=true
+      }
    end
 end
 
@@ -620,14 +632,17 @@ end
 --   selected. The selection flags of the other objects are left unchanged.
 function scene_graph_gui.extend_selection(grob)
    if grob ~= nil then
-      scene_graph.extend_selection{grob=grob, _invoked_from_gui=true}
+      scene_graph.I.Selection.extend_selection{
+         grob=grob, _invoked_from_gui=true
+      }
    end
 end
 
 -- \brief Resets the selection flag for all object of the SceneGraph
 function scene_graph_gui.clear_selection()
-   if scene_graph.nb_selected() ~= 0 then -- test to avoid littering history
-      scene_graph.clear_selection{_invoked_from_gui=true}
+   -- test to avoid littering history
+   if scene_graph.I.Selection.nb_selected() ~= 0 then
+      scene_graph.I.Selection.clear_selection{_invoked_from_gui=true}
    end
 end
 

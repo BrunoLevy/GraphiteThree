@@ -108,57 +108,6 @@ namespace OGF {
 	clear();
     }
 
-    void SceneGraph::show_object(const GrobName& grob_name) {
-	Grob* grob = resolve(grob_name);
-	if(grob != nullptr) {
-	    grob->set_visible(true);
-	}
-    }
-
-    void SceneGraph::show_only(const GrobName& grob_name) {
-	for(index_t i=0; i<get_nb_children(); ++i) {
-	    Grob* grob = ith_child(i);
-	    grob->set_visible(grob->name() == std::string(grob_name));
-	}
-    }
-
-    void SceneGraph::show_selected() {
-	for(index_t i=0; i<get_nb_children(); ++i) {
-	    Grob* grob = ith_child(i);
-	    if(grob->get_selected()) {
-		grob->set_visible(true);
-	    }
-	}
-    }
-
-    void SceneGraph::show_all() {
-	for(index_t i=0; i<get_nb_children(); ++i) {
-	    ith_child(i)->set_visible(true);
-	}
-    }
-
-    void SceneGraph::hide_object(const GrobName& grob_name) {
-	Grob* grob = resolve(grob_name);
-	if(grob != nullptr) {
-	    grob->set_visible(false);
-	}
-    }
-
-    void SceneGraph::hide_selected() {
-	for(index_t i=0; i<get_nb_children(); ++i) {
-	    Grob* grob = ith_child(i);
-	    if(grob->get_selected()) {
-		grob->set_visible(false);
-	    }
-	}
-    }
-
-    void SceneGraph::hide_all() {
-	for(index_t i=0; i<get_nb_children(); ++i) {
-	    ith_child(i)->set_visible(false);
-	}
-    }
-
     void SceneGraph::move_object_up(const GrobName& grob_name) {
 	set_current_object(grob_name);
 	move_current_up();
@@ -184,132 +133,14 @@ namespace OGF {
 	return duplicate_current();
     }
 
-    void SceneGraph::copy_object_properties_to_all(const GrobName& grob_name) {
-	scene_graph()->set_current_object(grob_name);
-	Object* shd_mgr = scene_graph()->get_scene_graph_shader_manager();
-	if(scene_graph()->current() != nullptr && shd_mgr != nullptr) {
-	    ArgList args;
-	    args.create_arg("visible_only", false);
-	    args.create_arg("selected_only", false);
-	    shd_mgr->invoke_method("apply_to_scene_graph",args);
-	}
-    }
 
-    void SceneGraph::copy_object_properties_to_visible(
-	const GrobName& grob_name
-    ) {
-	scene_graph()->set_current_object(grob_name);
-	Object* shd_mgr = scene_graph()->get_scene_graph_shader_manager();
-	if(scene_graph()->current() != nullptr && shd_mgr != nullptr) {
-	    ArgList args;
-	    args.create_arg("visible_only", true);
-	    args.create_arg("selected_only", false);
-	    shd_mgr->invoke_method("apply_to_scene_graph",args);
-	}
-    }
-
-    void SceneGraph::copy_object_properties_to_selected(
-	const GrobName& grob_name
-    ) {
-	scene_graph()->set_current_object(grob_name);
-	Object* shd_mgr = scene_graph()->get_scene_graph_shader_manager();
-	if(scene_graph()->current() != nullptr && shd_mgr != nullptr) {
-	    ArgList args;
-	    args.create_arg("visible_only", false);
-	    args.create_arg("selected_only", true);
-	    shd_mgr->invoke_method("apply_to_scene_graph",args);
-	}
-    }
-
-    void SceneGraph::set_object_shader(
-	const GrobName& grobname, const std::string& shader_name
-    ) {
-	Grob* grob = resolve(grobname);
-	if(grob == nullptr) {
-	    return;
-	}
-        std::string shader_classname =
-            SceneGraphLibrary::instance()->shader_user_to_classname(
-                grob->meta_class()->name(), shader_name
-            );
-	ArgList properties;
-	grob->set_shader_and_shader_properties(shader_classname, properties);
-    }
-
-    void SceneGraph::select_object(const GrobName& grob_name) {
-	Grob* grob = resolve(grob_name);
-	if(grob != nullptr) {
-	    grob->set_selected(true);
-	}
-    }
-
-    void SceneGraph::unselect_object(const GrobName& grob_name) {
-	Grob* grob = resolve(grob_name);
-	if(grob != nullptr) {
-	    grob->set_selected(false);
-	}
-    }
-
-    void SceneGraph::toggle_selection(const GrobName& grob_name) {
-	Grob* grob = resolve(grob_name);
-	if(grob != nullptr) {
-	    grob->set_selected(!grob->get_selected());
-	}
-    }
-
-    void SceneGraph::select_all() {
-	for(index_t i=0; i<get_nb_children(); ++i) {
-	    ith_child(i)->set_selected(true);
-	}
-    }
-
-    void SceneGraph::clear_selection() {
-	for(index_t i=0; i<get_nb_children(); ++i) {
-	    ith_child(i)->set_selected(false);
-	}
-    }
-
-    void SceneGraph::extend_selection(const GrobName& grob) {
-	index_t cur_index = NO_INDEX;
-	index_t grob_index = NO_INDEX;
-	for(index_t i=0; i<get_nb_children(); ++i) {
-	    if(ith_child(i)->name() == std::string(current_object_name_)) {
-		cur_index = i;
-	    }
-	    if(ith_child(i)->name() == std::string(grob)) {
-		grob_index = i;
-	    }
-	}
-	if(cur_index == NO_INDEX || grob_index == NO_INDEX) {
-	    return;
-	}
-	for(
-	    index_t i=std::min(cur_index,grob_index);
-	    i<=std::max(cur_index,grob_index);
-	    ++i
-	) {
-	    ith_child(i)->set_selected(true);
-	}
-    }
-
-    index_t SceneGraph::nb_selected() const {
-	index_t result = 0;
-	for(index_t i=0; i<get_nb_children(); ++i) {
-	    if(ith_child(i)->get_selected()) {
-		++result;
-	    }
-	}
-	return result;
-    }
-
-/*******************************************************************************/
+/****************************************************************************/
 
     void SceneGraph::clear() {
         while(get_nb_children() != 0) {
             delete_current_object();
         }
     }
-
 
     void SceneGraph::delete_current_object() {
         Grob* cur = current();

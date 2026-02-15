@@ -62,6 +62,86 @@ namespace OGF {
 	 * \brief SceneGraphEditor destrutor.
 	 */
 	~SceneGraphGraphicsInterface() override;
+
+    gom_slots:
+
+	/**
+	 * \brief Makes an object visible.
+	 * \details Ignored in terminal applications.
+	 * \param[in] grob the object to be shown or its name
+	 */
+	void show_object(const GrobName& grob);
+
+	/**
+	 * \brief Makes an object visible and hides all the other ones.
+	 * \details Ignored in terminal applications.
+	 * \param[in] grob the object to be shown or its name
+	 */
+	void show_only(const GrobName& grob);
+
+	/**
+	 * \brief Makes all selected objects visible.
+	 * \details Ignored in terminal applications.
+	 */
+	void show_selected();
+
+	/**
+	 * \brief Makes all objects visible.
+	 * \details Ignored in terminal applications.
+	 */
+	void show_all();
+
+	/**
+	 * \brief Makes an object invisible.
+	 * \details Ignored in terminal applications.
+	 * \param[in] grob the object to be hidden or its name
+	 */
+	void hide_object(const GrobName& grob);
+
+	/**
+	 * \brief Makes all selected objects invisible.
+	 * \details Ignored in terminal applications.
+	 */
+	void hide_selected();
+
+	/**
+	 * \brief Makes all objects invisible.
+	 * \details Ignored in terminal applications.
+	 */
+	void hide_all();
+
+	/**
+	 * \brief Copies graphic properties of an object to all objects
+	 * \details Ignored in terminal applications
+	 * \param[in] grob the object or its name
+	 */
+	void copy_object_properties_to_all(const GrobName& grob);
+
+	/**
+	 * \brief Copies graphic properties of an object to all visible objects
+	 * \details Ignored in terminal applications
+	 * \param[in] grob the object or its name
+	 */
+	void copy_object_properties_to_visible(const GrobName& grob);
+
+	/**
+	 * \brief Copies graphic properties of an object to
+	 *  all selected objects
+	 * \details Ignored in terminal applications
+	 * \param[in] grob the object or its name
+	 */
+	void copy_object_properties_to_selected(const GrobName& grob);
+
+	/**
+	 * \brief Sets the shader for an object
+	 * \details Ignored in terminal applications
+	 * \param[in] grob the object or its name
+	 * \param[in] user_name the user name of the shader, that is,
+	 *   without the "OGF::" prefix
+	 */
+	void set_object_shader(
+	    const GrobName& grob, const std::string& user_name
+	);
     };
 
 }

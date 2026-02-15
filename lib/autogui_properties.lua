@@ -70,7 +70,7 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
         imgui.font_icon('cubes')..
         '##ops##'..name, w,autogui.icon_size()+6
       ) then
-         scene_graph.copy_object_properties_to_all{
+         scene_graph.I.Graphics.copy_object_properties_to_all{
             grob=name, _invoked_from_gui=true
          }
       end
@@ -79,7 +79,7 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
       if imgui.Button(
          imgui.font_icon('eye').."##ops##"..name,w,autogui.icon_size()+6
       ) then
-         scene_graph.copy_object_properties_to_visible{
+         scene_graph.I.Graphics.copy_object_properties_to_visible{
             grob=name,_invoked_from_gui=true
          }
       end
@@ -89,7 +89,7 @@ function autogui.properties_editor(object,called_from_inspect,no_windowify)
          imgui.font_icon('clipboard-list').."##ops##"..name,
          -1,autogui.icon_size()+6
       ) then
-         scene_graph.copy_object_properties_to_selected{
+         scene_graph.I.Graphics.copy_object_properties_to_selected{
             grob=name,_invoked_from_gui=true
          }
       end
@@ -346,7 +346,7 @@ function shader_selector(grob)
       tooltip
     )
     if xxx.shader ~= xxx.old_shader then
-        scene_graph.set_object_shader{
+        scene_graph.I.Graphics.set_object_shader{
                 grob=grob, user_name=xxx.shader,
                 _invoked_from_gui = true
         }

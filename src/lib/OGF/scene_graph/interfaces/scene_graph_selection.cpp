@@ -46,4 +46,101 @@ namespace OGF {
     SceneGraphSelectionInterface::~SceneGraphSelectionInterface() {
     }
 
+    void SceneGraphSelectionInterface::select_object(
+	const GrobName& grob_name
+    ) {
+	if(scene_graph() == nullptr) {
+	    return;
+	}
+	Grob* grob = scene_graph()->resolve(grob_name);
+	if(grob != nullptr) {
+	    grob->set_selected(true);
+	}
+    }
+
+    void SceneGraphSelectionInterface::unselect_object(
+	const GrobName& grob_name
+    ) {
+	if(scene_graph() == nullptr) {
+	    return;
+	}
+	Grob* grob = scene_graph()->resolve(grob_name);
+	if(grob != nullptr) {
+	    grob->set_selected(false);
+	}
+    }
+
+    void SceneGraphSelectionInterface::toggle_selection(
+	const GrobName& grob_name
+    ) {
+	if(scene_graph() == nullptr) {
+	    return;
+	}
+	Grob* grob = scene_graph()->resolve(grob_name);
+	if(grob != nullptr) {
+	    grob->set_selected(!grob->get_selected());
+	}
+    }
+
+    void SceneGraphSelectionInterface::select_all() {
+	if(scene_graph() == nullptr) {
+	    return;
+	}
+	for(index_t i=0; i<scene_graph()->get_nb_children(); ++i) {
+	    scene_graph()->ith_child(i)->set_selected(true);
+	}
+    }
+
+    void SceneGraphSelectionInterface::clear_selection() {
+	if(scene_graph() == nullptr) {
+	    return;
+	}
+	for(index_t i=0; i<scene_graph()->get_nb_children(); ++i) {
+	    scene_graph()->ith_child(i)->set_selected(false);
+	}
+    }
+
+    void SceneGraphSelectionInterface::extend_selection(const GrobName& grob) {
+	if(scene_graph() == nullptr) {
+	    return;
+	}
+	index_t cur_index = NO_INDEX;
+	index_t grob_index = NO_INDEX;
+	for(index_t i=0; i<scene_graph()->get_nb_children(); ++i) {
+	    Grob* cur_grob = scene_graph()->ith_child(i);
+	    if(
+		cur_grob->name() ==
+		std::string(scene_graph()->get_current_object())) {
+		cur_index = i;
+	    }
+	    if(cur_grob->name() == std::string(grob)) {
+		grob_index = i;
+	    }
+	}
+	if(cur_index == NO_INDEX || grob_index == NO_INDEX) {
+	    return;
+	}
+	for(
+	    index_t i=std::min(cur_index,grob_index);
+	    i<=std::max(cur_index,grob_index);
+	    ++i
+	) {
+	    scene_graph()->ith_child(i)->set_selected(true);
+	}
+    }
+
+    index_t SceneGraphSelectionInterface::nb_selected() const {
+	if(scene_graph() == nullptr) {
+	    return 0;
+	}
+	index_t result = 0;
+	for(index_t i=0; i<scene_graph()->get_nb_children(); ++i) {
+	    if(scene_graph()->ith_child(i)->get_selected()) {
+		++result;
+	    }
+	}
+	return result;
+    }
+
+
 }

@@ -71,6 +71,46 @@ namespace OGF {
 	SceneGraph* scene_graph() const {
 	    return dynamic_cast<SceneGraph*>(grob());
 	}
+
+    gom_slots:
+	/**
+	 * \brief Adds an object to the selection
+	 * \param[in] grob the object or its name
+	 */
+	void select_object(const GrobName& grob);
+
+	/**
+	 * \brief Removes an object from the selection
+	 * \param[in] grob the object or its name
+	 */
+	void unselect_object(const GrobName& grob);
+
+	/**
+	 * \brief Toggles the selection flag for an object
+	 * \param[in] grob the object or its name
+	 */
+	void toggle_selection(const GrobName& grob);
+
+	/**
+	 * \brief Adds all objects to selection.
+	 */
+	void select_all();
+
+	/**
+	 * \brief Removes all objects from selection.
+	 */
+	void clear_selection();
+
+	/**
+	 * \brief Extends selection
+	 * \details Selects all objects between current object and grob
+	 */
+	void extend_selection(const GrobName& grob);
+
+	/**
+	 * \brief Gets the number of selected objects
+	 */
+	index_t nb_selected() const;
     };
 
 }
