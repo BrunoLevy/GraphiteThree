@@ -40,6 +40,8 @@
 #include <OGF/gom/reflection/meta_type.h>
 #include <OGF/gom/reflection/meta_class.h>
 #include <OGF/gom/reflection/meta_method.h>
+#include <OGF/gom/reflection/meta_struct.h>
+#include <OGF/gom/interpreter/interpreter.h>
 #include <sstream>
 
 
@@ -347,7 +349,88 @@ namespace OGF {
         geo_argused(path);
     }
 
+/***************************************************************************/
 
-/******************************************************************/
+    bool Object::set_property_and_record_to_history(
+	const std::string& name, const Any& value, Interpreter* interpreter
+    ) {
+	MetaProperty* mprop = meta_class()->find_property(name);
+	if(mprop == nullptr) {
+	    return false;
+	}
+
+	// Special case, Struct property. We want to properly record
+	// it in the history, so we need to do something special:
+	// use the string representation to detect the fields that changed
+	// value, and record changes only for these ones.
+	if(mprop->type()->is_a(ogf_meta<MetaBuiltinStruct>::type())) {
+	    MetaBuiltinStruct* mbstruct = dynamic_cast<MetaBuiltinStruct*>(
+		mprop->type()
+	    );
+	    geo_assert(mbstruct != nullptr);
+	    MetaStruct* mstruct = mbstruct->get_meta_struct();
+	    std::string val_as_string;
+	    std::vector<std::string> prev_fields;
+	    if(!get_property(name, val_as_string)) {
+		return false;
+	    }
+	    String::split_string(val_as_string, ';', prev_fields);
+	    if(!Object::set_property(name, value)) {
+		return false;
+	    }
+	    std::vector<std::string> new_fields;
+	    if(!get_property(name, val_as_string)) {
+		return false;
+	    }
+	    String::split_string(val_as_string, ';', new_fields);
+	    index_t nb_fields = index_t(mstruct->nb_properties(false));
+	    if(
+		index_t(prev_fields.size()) == nb_fields &&
+		index_t(new_fields.size()) == nb_fields
+	    ) {
+		Object_var struct_prop_ref = new StructPropertyRef(
+		    this, name
+		);
+		for(index_t i=0; i<nb_fields; ++i) {
+		    if(new_fields[i] != prev_fields[i]) {
+			std::string field_name =
+			    mstruct->ith_property(i,false)->name();
+			Any new_val_as_any;
+			struct_prop_ref->get_property(
+			    field_name, new_val_as_any
+			);
+			if(interpreter != nullptr) {
+			    interpreter->record_set_property_in_history(
+				struct_prop_ref, field_name, new_val_as_any
+			    );
+			}
+		    }
+		}
+	    }
+	    return true;
+	}
+
+	// Standard property (much simpler !!)
+	if(!Object::set_property(name, value)) {
+	    return false;
+	}
+	if(interpreter != nullptr) {
+	    interpreter->record_set_property_in_history(
+		this, name, value
+	    );
+	}
+	return true;
+    }
+
+    bool Object::invoke_method_and_record_to_history(
+	const std::string& method_name,
+	const ArgList& args, Any& ret_val,
+	Interpreter* interpreter
+    ) {
+	geo_argused(interpreter);
+	return invoke_method(method_name, args, ret_val);
+    }
+
+/***************************************************************************/
 
 }

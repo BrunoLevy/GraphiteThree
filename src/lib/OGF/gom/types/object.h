@@ -487,6 +487,39 @@ namespace OGF {
     protected:
 
         /**
+         * \brief Sets an individual property
+	 *   and record modification to history
+         * \param[in] name name of the property
+         * \param[in] value value of the property
+	 * \param[in] interpreter a pointer to the interpreter that should
+	 *   record the property change in its history.
+         * \retval true if the property could be sucessfully set
+         * \retval false otherwise
+         */
+	virtual bool set_property_and_record_to_history(
+	    const std::string& name, const Any& value, Interpreter* interpreter
+	);
+
+
+        /**
+         * \brief Invokes a method by method name and argument list,
+         *  and gets the return value.
+         * \param[in] method_name name of the method
+         * \param[in] args a const reference to the ArgList
+         * \param[out] ret_val the return value as an Any
+	 * \param[in] interpreter a pointer to the interpreter that should
+	 *   record the invokation in its history.
+         * \retval true if the method could be sucessfully invoked
+         * \retval false otherwise
+         */
+        virtual bool invoke_method_and_record_to_history(
+            const std::string& method_name,
+            const ArgList& args, Any& ret_val,
+	    Interpreter* interpreter
+        );
+
+
+        /**
          * \brief Emits a signal and calls the slots it is connected to.
          * \details This function is used by GOMGEN to implement all the
          *  signal adapters, that marshall the signal's arguments in
