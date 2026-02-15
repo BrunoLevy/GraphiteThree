@@ -358,12 +358,13 @@ namespace OGF {
 	    return "nil";
 	}
 
-	MetaClass* mcommand =
-	    Meta::instance()->resolve_meta_class("OGF::Commands");
+	MetaClass* minterface =
+	    Meta::instance()->resolve_meta_class("OGF::Interface");
 	MetaClass* mscenegraph =
 	    Meta::instance()->resolve_meta_class("OGF::SceneGraph");
 	MetaClass* mgrob = Meta::instance()->resolve_meta_class("OGF::Grob");
-	MetaClass* mshader = Meta::instance()->resolve_meta_class("OGF::Shader");
+	MetaClass* mshader =
+	    Meta::instance()->resolve_meta_class("OGF::Shader");
 	MetaClass* mrequest = Meta::instance()->resolve_meta_class(
 	    "OGF::Request"
 	);
@@ -375,7 +376,10 @@ namespace OGF {
 	// Using meta_class()->is_subclass_of() rather than object->is_a()
 	// because is_a() uses C++ dynamic type that will not "see" commands
 	// created as DynamicObject/DynamicMetaClass.
-	if(mcommand!=nullptr && object->meta_class()->is_subclass_of(mcommand)) {
+	if(
+	    minterface!=nullptr &&
+	    object->meta_class()->is_subclass_of(minterface)
+	) {
 	    Any grob_any;
 	    Object* grob;
 	    if(
@@ -400,6 +404,19 @@ namespace OGF {
 			) == nullptr
 		    ) {
 			interface_name = interface_name_without_commands;
+		    }
+		}
+
+		// Same thing for removing "Commands" suffix
+		if(String::string_ends_with(interface_name, "Interface")) {
+		    std::string interface_name_without_interface =
+			String::remove_suffix(interface_name, "Interface");
+		    if(
+			Meta::instance()->resolve_meta_type(
+			    interface_name_without_interface
+			) == nullptr
+		    ) {
+			interface_name = interface_name_without_interface;
 		    }
 		}
 
