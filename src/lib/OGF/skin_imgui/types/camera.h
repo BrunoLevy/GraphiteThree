@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 #ifndef H_SKIN_IMGUI_CAMERA_H
 #define H_SKIN_IMGUI_CAMERA_H
 
@@ -55,18 +55,18 @@ namespace OGF {
     class Clipping;
 
     /**
-     * \brief An autogui string type for clipping 
+     * \brief An autogui string type for clipping
      *  configuration.
      */
     typedef Name<Clipping*> ClippingConfig;
-    
+
     /**
      * \brief Application attributes and methods related
      *  with camera management.
      * \details Camera does not store any information by
-     *  itself. It only routes attributes and slots to 
+     *  itself. It only routes attributes and slots to
      *  other GOM objects (SceneGraphShaderManager and
-     *  RenderArea). Gathering them in a single place 
+     *  RenderArea). Gathering them in a single place
      *  makes it simpler to generate the GUI.
      */
     gom_class SKIN_IMGUI_API Camera : public Object {
@@ -81,17 +81,17 @@ namespace OGF {
 	 * \brief Camera destructor.
 	 */
 	 ~Camera() override;
-	
+
       gom_properties:
         /**
          * \brief Sets autofocus mode.
          * \details In autofocus mode, the focus matrix adapts the
          *  camera to display the current object.
-         * \param[in] value true if autofocus should be activated, 
+         * \param[in] value true if autofocus should be activated,
          *  false otherwise
          */
         void set_auto_focus(bool value);
-	
+
         /**
          * \brief Tests whether autofocus is active.
          * \details In autofocus mode, the focus matrix adapts the
@@ -107,7 +107,7 @@ namespace OGF {
          *  false if the whole scene graph is drawn
          */
         void set_draw_selected_only(bool value);
- 
+
         /**
          * \brief Tests whether only the selected object should be drawn.
          * \retval true if only the selected object is drawn
@@ -142,7 +142,7 @@ namespace OGF {
          *  color, then a color-ramp between both is generated.
          */
         const Color& get_bkg_color_2() const;
-	
+
 	/**
 	 * \brief Sets the full screen effect.
 	 * \param[in] effect the user effect name.
@@ -164,7 +164,7 @@ namespace OGF {
 
         /**
          * \brief Sets the current clipping configuration
-         * \param[in] value a ';'-separated string with 
+         * \param[in] value a ';'-separated string with
          *  the following fields:
          *  - active (one of "true","false")
          *  - axis (one of "x","y","z","d")
@@ -174,7 +174,7 @@ namespace OGF {
 	 *  - invert (one of "true", "false")
          */
         void set_clipping(ClippingConfig value);
-	
+
         /**
          * \brief Gets the current clipping configuration
          * \return a ';'-separated string with the following fields:
@@ -199,14 +199,22 @@ namespace OGF {
 	 * \param[in] value the new lighting matrix.
 	 */
 	void set_lighting_matrix(const mat4& value);
-	
+
       gom_slots:
-	
+
 	/**
 	 * \brief Gets the SceneGraphShaderManager
 	 * \return a pointer to the SceneGraphShaderManager
 	 */
 	SceneGraphShaderManager* scene_graph_shader_manager() const;
+
+      public:
+	/**
+	 * \copydoc Object::set_property
+	 */
+        bool set_property(
+            const std::string& name, const Any& value
+        ) override;
 
       private:
 	Application* application_;

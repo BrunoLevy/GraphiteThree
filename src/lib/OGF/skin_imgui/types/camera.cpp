@@ -118,4 +118,10 @@ namespace OGF {
     void Camera::set_lighting_matrix(const mat4& value) {
 	application_->get_render_area()->set_lighting_matrix(value);
     }
+
+    bool Camera::set_property(const std::string& name, const Any& value) {
+	Interpreter* interpreter = application_->interpreter();
+	return set_property_and_record_to_history(name, value, interpreter);
+    }
+
 }

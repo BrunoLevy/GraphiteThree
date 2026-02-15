@@ -371,6 +371,13 @@ namespace OGF {
 	MetaClass* mstructpropertyref = Meta::instance()->resolve_meta_class(
 	    "OGF::StructPropertyRef"
 	);
+	MetaClass* mcamera = Meta::instance()->resolve_meta_class(
+	    "OGF::Camera"
+	);
+
+	if(mcamera != nullptr && object->is_a(mcamera)) {
+	    return "main.camera";
+	}
 
 
 	// Using meta_class()->is_subclass_of() rather than object->is_a()
