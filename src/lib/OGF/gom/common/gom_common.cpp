@@ -83,6 +83,7 @@ namespace OGF {
 
         ogf_declare_builtin_type<void>("void");
         ogf_declare_builtin_type<bool>("bool");
+        ogf_declare_builtin_type<char>("char");
         ogf_declare_builtin_type<int>("int");
         ogf_declare_builtin_type<long>("long");
         ogf_declare_builtin_type<unsigned int>("unsigned int");

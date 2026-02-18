@@ -38,6 +38,7 @@
 #define H_SKIN_IMGUI_CAMERA_H
 
 #include <OGF/skin_imgui/common/common.h>
+#include <OGF/skin_imgui/widgets/render_area.h>
 #include <OGF/scene_graph/types/properties.h>
 #include <OGF/gom/types/node.h>
 #include <geogram/image/color.h>
@@ -59,6 +60,19 @@ namespace OGF {
      *  configuration.
      */
     typedef Name<Clipping*> ClippingConfig;
+
+    /**
+     * \brief Clipping configuration
+     */
+    struct ClippingConfig2 {
+	bool active;
+	char axis;   /**< one of 'x', 'y', 'z', 'd' */
+	int shift;   /**< integer shifting of clipping plane along axis */
+	GLUPclipMode mode;
+	mat4 rotation;
+	bool invert;
+    };
+
 
     /**
      * \brief Application attributes and methods related
@@ -175,6 +189,14 @@ namespace OGF {
          */
         void set_clipping(ClippingConfig value);
 
+	const ClippingConfig2& get_clipping2() const {
+	    return clipping_config2_;
+	}
+
+	void set_clipping2(const ClippingConfig2& x) {
+	    clipping_config2_ = x;
+	}
+
         /**
          * \brief Gets the current clipping configuration
          * \return a ';'-separated string with the following fields:
@@ -218,6 +240,7 @@ namespace OGF {
 
       private:
 	Application* application_;
+	ClippingConfig2 clipping_config2_;
     };
 
     typedef SmartPointer<Camera> Camera_var;

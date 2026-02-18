@@ -376,7 +376,7 @@ namespace OGF {
 	);
 
 	if(mcamera != nullptr && object->is_a(mcamera)) {
-	    return "main.camera";
+	    return "main.camera()";
 	}
 
 

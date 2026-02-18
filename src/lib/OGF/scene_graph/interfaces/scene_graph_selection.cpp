@@ -142,5 +142,4 @@ namespace OGF {
 	return result;
     }
 
-
 }

@@ -70,9 +70,7 @@ namespace OGF {
         if(scene_graph() != nullptr && invoked_from_gui) {
 	    Interpreter* interpreter = scene_graph()->interpreter();
 	    if(interpreter != nullptr) {
-                Object* main = interpreter->resolve_object(
-		    "main"
-		);
+                Object* main = interpreter->resolve_object("main");
 		if(main != nullptr) {
 		    main->invoke_method("save_state");
 		}

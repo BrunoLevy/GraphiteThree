@@ -64,8 +64,8 @@ namespace OGF {
 
         /**
          * \copydoc Object::invoke_method
-         * \details Overload of the invokation mechanism,
-         *  that adds timings and history recording.
+         * \details Overload of the invokation mechanism
+         *  that adds history recording.
          */
         bool invoke_method(
             const std::string& method_name,

@@ -45,6 +45,14 @@
 namespace OGF {
 
     Camera::Camera(Application* app) : application_(app) {
+	clipping_config2_ = {
+	    false,
+	    'x',
+	    0,
+	    GLUP_CLIP_WHOLE_CELLS,
+	    mat4 {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}},
+	    false
+	};
     }
 
     Camera::~Camera() {

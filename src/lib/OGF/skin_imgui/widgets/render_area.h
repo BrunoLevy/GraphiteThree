@@ -168,8 +168,8 @@ namespace OGF {
 	 * \brief Sets the center
 	 * \details This corresponds to the pixel where cordinates (0.0,0.0)
 	 *   will be projected on the screen
-	 * \param[in] x , y the center in OpenGL window coordinates, with origin
-	 *   at lower-left corner.
+	 * \param[in] x , y the center in OpenGL window coordinates,
+	 *   with origin at lower-left corner.
 	 */
 	void set_center(int x, int y);
 
