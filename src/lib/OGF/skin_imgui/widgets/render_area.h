@@ -312,34 +312,6 @@ namespace OGF {
          */
         std::string get_gpu_extensions() const;
 
-        /**
-         * \brief Gets the current clipping configuration
-         * \return a ';'-separated string with the following fields:
-         *  - active (one of "true","false")
-         *  - axis (one of "x","y","z","d")
-         *  - volume-mode (one of "std.","cell","strad.","slice")
-         *  - shift (an integer in [-250, 250])
-         *  - rotation (the 16 coefficients of a rotation matrix)
-         */
-        const std::string& get_clipping_config() const {
-            return clipping_config_;
-        }
-
-        /**
-         * \brief Sets the current clipping configuration
-         * \param[in] clipping_config a ';'-separated string with
-         *  the following fields:
-         *  - active (one of "true","false")
-         *  - axis (one of "x","y","z","d")
-         *  - volume-mode (one of "std.","cell","strad.","slice")
-         *  - shift (an integer in [-250, 250])
-         *  - rotation (the 16 coefficients of a rotation matrix)
-         */
-        void set_clipping_config(const std::string& clipping_config) {
-            clipping_config_ = clipping_config;
-            update_clipping_config();
-        }
-
     gom_signals:
 	/**
 	 * \brief This signal is triggered when the contents
@@ -483,7 +455,6 @@ namespace OGF {
 	 * \brief Deallocates OpenGL and GLUP objects.
 	 */
 	void GL_terminate();
-	void update_clipping_config();
 
     private:
 	RenderingContext_var rendering_context_;
@@ -491,7 +462,6 @@ namespace OGF {
 	index_t height_;
 	index_t frame_buffer_width_;
 	index_t frame_buffer_height_;
-	std::string clipping_config_;
 
 	index_t button_down_;
 	bool control_is_down_;

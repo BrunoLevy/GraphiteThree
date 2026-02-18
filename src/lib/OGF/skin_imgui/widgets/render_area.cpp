@@ -71,10 +71,6 @@ namespace OGF {
 	last_point_ndc_ = vec2(0.0, 0.0);
 	last_point_wc_ = vec2(0.0, 0.0);
 
-        // active;axis;volume_mode;shift;rotation;flip
-        clipping_config_ =
-            "false;z;strad.;0;1 0 0 0  0 1 0 0  0 0 1 0  0 0 0 1;false";
-
 	button_down_ = 0;
 	control_is_down_ = false;
 	shift_is_down_ = false;
@@ -187,82 +183,6 @@ namespace OGF {
         return rc->get_gpu_extensions();
     }
 
-    void RenderArea::update_clipping_config() {
-        std::vector<std::string> words;
-        String::split_string(clipping_config_, ';', words);
-        if(words.size() != 6) {
-            Logger::warn("Skin_imgui")
-                << "update_clipping_config(): Wrong clipping config: "
-                << clipping_config_ << std::endl;
-            return;
-        }
-        if(rendering_context_ == nullptr) {
-            Logger::warn("Skin_imgui")
-                << "update_clipping_config(): no rendering context"
-                << std::endl;
-            return;
-        }
-
-        rendering_context_->set_clipping(String::to_bool(words[0]));
-
-        bool viewer = false;
-        vec4 eqn(0.0, 0.0, 0.0, 0.0);
-
-        if(words[1] == "x") {
-            eqn[0] = 1.0;
-        } else if(words[1] == "y") {
-            eqn[1] = 1.0;
-        } else if(words[1] == "z") {
-            eqn[2] = 1.0;
-        } else if(words[1] == "d") {
-            eqn[2] = 1.0;
-            viewer = true;
-        } else {
-            Logger::warn("Skin_imgui")
-                << "update_clipping_config(): invalid clipping axis:"
-                << words[2]
-                << std::endl;
-        }
-
-        double shift = double(String::to_int(words[3]) + 500)/1000.0;
-        eqn[3] = 1.0 - (shift * 2.0); // in [-1,1] rather than [0,1] !!
-
-        if(!String::to_bool(words[5])) {
-            eqn = -1.0 * eqn;
-        }
-
-        rendering_context_->set_clipping_equation(eqn);
-        rendering_context_->set_clipping_viewer(viewer);
-
-        GLUPclipMode mode = GLUP_CLIP_STANDARD;
-        if(words[2] == "std.") {
-            mode = GLUP_CLIP_STANDARD;
-        } else if(words[2] == "cell") {
-            mode = GLUP_CLIP_WHOLE_CELLS;
-        } else if(words[2] == "strad.") {
-            mode = GLUP_CLIP_STRADDLING_CELLS;
-        } else if(words[2] == "slice") {
-            mode = GLUP_CLIP_SLICE_CELLS;
-        } else {
-            Logger::warn("Skin_imgui")
-                << "update_clipping_config(): invalid clipping mode:"
-                << words[2]
-                << std::endl;
-        }
-        rendering_context_->set_clipping_mode(mode);
-
-        mat4 rotation;
-        if(!String::from_string(words[4],rotation)) {
-            Logger::warn("Skin_imgui")
-                << "update_clipping_config(): invalid clipping rotation:"
-                << words[3]
-                << std::endl;
-        } else {
-            rendering_context_->set_clipping_matrix(rotation);
-        }
-	update();
-    }
-
     void RenderArea::draw() {
 	// The contents of the off-screen buffer should be generated if:
 	//   - it is marked as dirty_ (update() was called before) or
@@ -346,8 +266,6 @@ namespace OGF {
 	rendering_context_->set_background_color_2(background_color_2_);
 	rendering_context_->load_viewing_matrix(viewing_matrix_);
 	rendering_context_->set_lighting_matrix(lighting_matrix_);
-	update_clipping_config();
-
 	update();
     }
 

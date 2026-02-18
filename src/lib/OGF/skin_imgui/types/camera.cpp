@@ -52,7 +52,8 @@ namespace OGF {
 
     SceneGraphShaderManager* Camera::scene_graph_shader_manager() const {
 	return dynamic_cast<SceneGraphShaderManager*>(
-	    SceneGraphLibrary::instance()->scene_graph()->get_scene_graph_shader_manager()
+	    SceneGraphLibrary::instance()->scene_graph()->
+	      get_scene_graph_shader_manager()
 	);
     }
 
