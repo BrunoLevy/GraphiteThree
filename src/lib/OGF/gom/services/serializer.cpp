@@ -25,16 +25,16 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
- 
+
+
 #include <OGF/gom/services/serializer.h>
 #include <OGF/gom/reflection/meta_enum.h>
 
@@ -46,7 +46,7 @@ namespace OGF {
 
     Serializer::~Serializer() {
     }
-    
+
 //__________________________________________________________________________
 
     // Note: we use "std::getline(in, x)" instead of "in >> x" since
@@ -61,7 +61,7 @@ namespace OGF {
         std::getline(stream, *object) ;
         return true ;
     }
-    
+
     bool StringSerializer::serialize_write(
         std::ostream& stream, void* addr
     ) {
@@ -88,7 +88,7 @@ namespace OGF {
         }
         return true ;
     }
-    
+
     bool BoolSerializer::serialize_write(
         std::ostream& stream, void* addr
     ) {
@@ -102,11 +102,11 @@ namespace OGF {
     bool PointerSerializer::serialize_read(
         std::istream& stream, void* addr
     ) {
-// Workaround for bugged Wine's built-in MSVCP90.DLL 
-#ifdef GEO_OS_WINDOWS_WINE       
+// Workaround for bugged Wine's built-in MSVCP90.DLL
+#ifdef GEO_OS_WINDOWS_WINE
         Numeric::uint32 val ;
         stream >> val ;
-        void** object = 
+        void** object =
             static_cast<void**>(addr) ;
         *object = reinterpret_cast<void*>(val) ;
         return true ;
@@ -115,49 +115,49 @@ namespace OGF {
     #ifdef GEO_OS_APPLE
         unsigned long val ;
         stream >> val ;
-        void** object = 
+        void** object =
             static_cast<void**>(addr) ;
         *object = reinterpret_cast<void*>(val) ;
         return true;
     #else
         Numeric::pointer val ;
         stream >> val ;
-        void** object = 
+        void** object =
             static_cast<void**>(addr) ;
         *object = reinterpret_cast<void*>(val) ;
         return true ;
     #endif
-#endif       
+#endif
     }
 
     bool PointerSerializer::serialize_write(
         std::ostream& stream, void* addr
     ) {
-// Workaround for bugged Wine's built-in MSVCP90.DLL 
-#ifdef GEO_OS_WINDOWS_WINE       
-        void** object = 
+// Workaround for bugged Wine's built-in MSVCP90.DLL
+#ifdef GEO_OS_WINDOWS_WINE
+        void** object =
             static_cast<void**>(addr) ;
-        Numeric::uint32 val = 
+        Numeric::uint32 val =
             reinterpret_cast<Numeric::uint32>(*object) ;
         stream << val ;
         return true ;
 #else
     // special for os x : erreur with isstream in libc++ in 10.9
     #ifdef GEO_OS_APPLE
-        void** object = 
+        void** object =
             static_cast<void**>(addr) ;
         unsigned long val = reinterpret_cast<unsigned long>(*object) ;
         stream << val;
         return true;
     #else
-       void** object = 
+       void** object =
             static_cast<void**>(addr) ;
-        Numeric::pointer val = 
+        Numeric::pointer val =
             reinterpret_cast<Numeric::pointer>(*object) ;
         stream << val ;
         return true ;
     #endif
-#endif       
+#endif
     }
 
 //__________________________________________________________________________
@@ -169,6 +169,10 @@ namespace OGF {
         std::string value_name ;
         stream >> value_name ;
         if(!meta_enum_->has_value(value_name)) {
+	    Logger::err("EnumSerializer::read")
+		<< "invalid value name: "
+		<< value_name
+		<< std::endl;
             *val = -1 ;
             return false ;
         }
@@ -182,6 +186,10 @@ namespace OGF {
         int* val = static_cast<int*>(addr) ;
         if(!meta_enum_->has_value(*val)) {
             stream << "error" ;
+	    Logger::err("EnumSerializer::write")
+		<< "invalid value : "
+		<< *val
+		<< std::endl;
             return false ;
         }
         stream << meta_enum_->get_name_by_value(*val) ;
@@ -192,7 +200,7 @@ namespace OGF {
 
    GenericSerializer<ArgList>::~GenericSerializer() {
    }
-   
+
    bool GenericSerializer<ArgList>::serialize_read(
        std::istream& stream, void* addr
    ) {
@@ -208,8 +216,8 @@ namespace OGF {
        ogf_argused(addr);
        return false;
    }
- 
-   
-//__________________________________________________________________________   
-   
+
+
+//__________________________________________________________________________
+
 }

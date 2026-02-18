@@ -219,14 +219,15 @@ end
 autogui.handlers['OGF::ClippingConfig'] =
          function(object, property_name, mtype, tooltip)
 
-   local value = object[property_name]
+   local value = tostring(object[property_name])
    local words={}
    for word in string.split(value,';') do
       words[#words+1] = word
    end
+
    local active = (words[1] == 'true')
    local axis = words[2]
-   local volume_mode = words[3]
+   local clipping_mode = words[3]
    local shift = tonumber(words[4])
    local rotation = words[5]
    local invert = (words[6] == 'true')
@@ -244,9 +245,14 @@ autogui.handlers['OGF::ClippingConfig'] =
        '##axis##'..property_name,axis,'x;y;z;d'
       )
       imgui.SameLine()
-      sel3,volume_mode = autogui.combo_box_value(
-          '##volume_mode##'..property_name,volume_mode,'std.;cell;strad.;slice'
+      imgui.PopItemWidth()
+      imgui.PushItemWidth(-1)
+      clipping_mode = clipping_mode:remove_prefix('GLUP_CLIP_')
+      sel3,clipping_mode = autogui.combo_box_value(
+          '##clipping_mode##'..property_name,clipping_mode,
+          'STANDARD;WHOLE_CELLS;STRADDLING_CELLS;SLICE_CELLS'
       )
+      clipping_mode = 'GLUP_CLIP_'..clipping_mode
       imgui.PopItemWidth()
       imgui.PushItemWidth(main.scaling()*80)
       sel4, shift = imgui.SliderInt(
@@ -278,7 +284,7 @@ autogui.handlers['OGF::ClippingConfig'] =
        local result =
             tostring(active)..';'
 	     ..axis..';'
-	     ..volume_mode..';'
+	     ..clipping_mode..';'
              ..tostring(shift)..';'
 	     ..rotation..';'
 	     ..tostring(invert)

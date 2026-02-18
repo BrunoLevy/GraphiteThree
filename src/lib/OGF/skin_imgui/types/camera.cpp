@@ -45,14 +45,6 @@
 namespace OGF {
 
     Camera::Camera(Application* app) : application_(app) {
-	clipping_config2_ = {
-	    false,
-	    'x',
-	    0,
-	    GLUP_CLIP_WHOLE_CELLS,
-	    mat4 {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}},
-	    false
-	};
     }
 
     Camera::~Camera() {
@@ -111,14 +103,6 @@ namespace OGF {
 	return application_->get_render_area()->get_background_color_2();
     }
 
-    void Camera::set_clipping(ClippingConfig value) {
-	application_->get_render_area()->set_clipping_config(value);
-    }
-
-    ClippingConfig Camera::get_clipping() const {
-	return application_->get_render_area()->get_clipping_config();
-    }
-
     mat4 Camera::get_lighting_matrix() const {
 	return application_->get_render_area()->get_lighting_matrix();
     }
@@ -132,4 +116,47 @@ namespace OGF {
 	return set_property_and_record_to_history(name, value, interpreter);
     }
 
+    void Camera::update_clipping_config() {
+	RenderingContext* ctxt =
+	    application_->get_render_area()->get_rendering_context();
+	ctxt->set_clipping(clipping_config_.active);
+
+        bool viewer = false;
+        vec4 eqn(0.0, 0.0, 0.0, 0.0);
+
+	switch(clipping_config_.axis) {
+	case 'x':
+	    eqn[0] = 1.0;
+	    break;
+	case 'y':
+	    eqn[1] = 1.0;
+	    break;
+	case 'z':
+	    eqn[2] = 1.0;
+	    break;
+	case 'd':
+	    eqn[2] = 1.0;
+	    viewer = true;
+	    break;
+	default:
+            Logger::warn("Skin_imgui")
+                << "update_clipping_config(): invalid clipping axis:"
+                << clipping_config_.axis
+                << std::endl;
+	}
+
+        double shift = double(clipping_config_.shift + 500)/1000.0;
+        eqn[3] = 1.0 - (shift * 2.0); // in [-1,1] rather than [0,1] !!
+
+        if(!clipping_config_.invert) {
+            eqn = -1.0 * eqn;
+        }
+
+        ctxt->set_clipping_equation(eqn);
+        ctxt->set_clipping_viewer(viewer);
+	ctxt->set_clipping_mode(clipping_config_.mode);
+	ctxt->set_clipping_matrix(clipping_config_.rotation);
+
+	application_->get_render_area()->update();
+    }
 }

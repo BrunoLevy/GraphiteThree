@@ -50,25 +50,21 @@ namespace OGF {
     class FullScreenEffect;
 
     /**
-     * \brief A dummy class, just used as a template
-     *  argument for Name.
-     */
-    class Clipping;
-
-    /**
-     * \brief An autogui string type for clipping
-     *  configuration.
-     */
-    typedef Name<Clipping*> ClippingConfig;
-
-    /**
      * \brief Clipping configuration
      */
-    struct ClippingConfig2 {
+    struct ClippingConfig {
+	ClippingConfig() :
+	    active(false),
+	    axis('z'),
+	    mode(GLUP_CLIP_STRADDLING_CELLS),
+	    shift(0),
+	    rotation{{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}},
+	    invert(false) {
+	}
 	bool active;
 	char axis;   /**< one of 'x', 'y', 'z', 'd' */
-	int shift;   /**< integer shifting of clipping plane along axis */
 	GLUPclipMode mode;
+	int shift;   /**< integer shifting of clipping plane along axis */
 	mat4 rotation;
 	bool invert;
     };
@@ -178,36 +174,20 @@ namespace OGF {
 
         /**
          * \brief Sets the current clipping configuration
-         * \param[in] value a ';'-separated string with
-         *  the following fields:
-         *  - active (one of "true","false")
-         *  - axis (one of "x","y","z","d")
-         *  - volume-mode (one of "std.","cell","strad.","slice")
-         *  - shift (an integer in [-250, 250])
-         *  - rotation (the 16 coefficients of a rotation matrix)
-	 *  - invert (one of "true", "false")
+         * \param[in] value a const reference to a ClippingConfig.
          */
-        void set_clipping(ClippingConfig value);
-
-	const ClippingConfig2& get_clipping2() const {
-	    return clipping_config2_;
-	}
-
-	void set_clipping2(const ClippingConfig2& x) {
-	    clipping_config2_ = x;
+        void set_clipping(const ClippingConfig& value) {
+	    clipping_config_ = value;
+	    update_clipping_config();
 	}
 
         /**
          * \brief Gets the current clipping configuration
-         * \return a ';'-separated string with the following fields:
-         *  - active (one of "true","false")
-         *  - axis (one of "x","y","z","d")
-         *  - volume-mode (one of "std.","cell","strad.","slice")
-         *  - shift (an integer in [-250, 250])
-         *  - rotation (the 16 coefficients of a rotation matrix)
-	 *  - invert (one of "true", "false")
+	 * \return a const reference to a ClippingConfig
          */
-        ClippingConfig get_clipping() const;
+        const ClippingConfig& get_clipping() const {
+	    return clipping_config_;
+	}
 
 	/**
 	 * \brief Gets the lighting matrix.
@@ -238,9 +218,12 @@ namespace OGF {
             const std::string& name, const Any& value
         ) override;
 
+      protected:
+	void update_clipping_config();
+
       private:
 	Application* application_;
-	ClippingConfig2 clipping_config2_;
+	ClippingConfig clipping_config_;
     };
 
     typedef SmartPointer<Camera> Camera_var;
