@@ -278,7 +278,9 @@ function graphite_main_window.draw_contents()
         ImGuiTreeNodeFlags_DrawLinesFull
   ) then
      for index,module in ipairs(graphite_main_window.modules_by_index) do
-        graphite_main_window.draw_module_name_and_toggle(module)
+        if not module.not_in_tree then
+           graphite_main_window.draw_module_name_and_toggle(module)
+        end
      end
      imgui.TreePop()
   end

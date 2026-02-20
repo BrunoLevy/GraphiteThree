@@ -18,6 +18,7 @@ text_editor_gui.filename = nil
 text_editor_gui.find_visible = false
 text_editor_gui.find_word = ''
 text_editor_gui.find_focus = false
+text_editor_gui.not_in_tree = true
 
 function text_editor_gui.error(msg)
    gom.err(msg)

@@ -13,6 +13,7 @@ console_gui.menubar = false
 console_gui.icon = '@terminal'
 console_gui.help = 'Console and command entry'
 console_gui.resizable = true
+console_gui.not_in_tree = true
 
 function console_gui.show()
    console_gui.visible = true

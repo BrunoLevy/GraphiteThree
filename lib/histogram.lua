@@ -10,6 +10,7 @@ Stats.y = 400
 Stats.w = 300
 Stats.h = 600
 Stats.bins = 500
+Stats.not_in_tree = true
 
 Stats.histo = {}
 Stats.color = true

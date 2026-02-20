@@ -12,6 +12,7 @@ toolbox_gui.y = main.margin()
 toolbox_gui.w = 165*main.scaling()
 toolbox_gui.h = 180*main.scaling()
 toolbox_gui.resizable = true
+toolbox_gui.not_in_tree = true
 
 -- The toolbox with the tools associated with the camera (pan/focus/select...)
 camera_toolbox_gui = {}
@@ -24,6 +25,7 @@ camera_toolbox_gui.y = main.margin()
 camera_toolbox_gui.w = 165*main.scaling()
 camera_toolbox_gui.h = 180*main.scaling()
 camera_toolbox_gui.resizable = true
+camera_toolbox_gui.not_in_tree = true
 
 function toolbox_gui.draw_window()
     toolbox_gui.draw_tools(false)
