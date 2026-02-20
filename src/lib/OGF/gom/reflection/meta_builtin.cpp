@@ -64,7 +64,8 @@ namespace OGF {
 	    is_pointer_type() && other_as_builtin->is_pointer_type()
 	) {
 	    std::string pointed_type = name().substr(0, name().length()-1);
-	    std::string other_pointed_type = name().substr(0, name().length()-1);
+	    std::string other_pointed_type =
+		other->name().substr(0, other->name().length()-1);
 	    MetaType* pointed_mtype = Meta::instance()->resolve_meta_type(
 		pointed_type
 	    );

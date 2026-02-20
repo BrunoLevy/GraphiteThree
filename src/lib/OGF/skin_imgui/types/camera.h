@@ -170,7 +170,7 @@ namespace OGF {
 	 * \return a pointer to the FullScreenEffect.
 	 */
 	gom_attribute(aggregate_properties,"true")
-	FullScreenEffect* get_effect_object() const;
+	FullScreenEffect* get_effect_properties() const;
 
         /**
          * \brief Sets the current clipping configuration

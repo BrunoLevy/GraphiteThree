@@ -81,6 +81,13 @@ namespace OGF {
          */
         virtual void update();
 
+	/**
+	 * \copydoc Object::set_property
+	 */
+        bool set_property(
+            const std::string& name, const Any& value
+        ) override;
+
       private:
 	SceneGraph* scene_graph_;
     };

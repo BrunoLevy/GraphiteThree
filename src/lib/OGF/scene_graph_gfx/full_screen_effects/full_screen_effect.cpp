@@ -55,6 +55,14 @@ namespace OGF {
 	}
     }
 
+    bool FullScreenEffect::set_property(
+	const std::string& name, const Any& value
+    ) {
+	Interpreter* interpreter =
+	    (scene_graph_ == nullptr) ? nullptr : scene_graph_->interpreter();
+	return set_property_and_record_to_history(name, value, interpreter);
+    }
+
     /***************************************************************/
 
     PlainFullScreenEffect::PlainFullScreenEffect(

@@ -378,16 +378,17 @@ namespace OGF {
 	}
     }
 
-    // Has memory leak ! (InterfaceScope / Interfaces ?)
     std::string LuaInterpreter::recursive_back_resolve(
 	Object* haystack,
 	const std::string& haystack_name,
 	Object* needle
     ) const {
 	geo_lua_check_stack(lua_state_);
+	// Case 1: simple !
 	if(haystack == needle) {
 	    return haystack_name;
 	}
+	// Case 2: haystack is a Scope, traverse it recursively
 	Scope* scope = dynamic_cast<Scope*>(haystack);
 	if(
 	    scope != nullptr &&
@@ -430,6 +431,35 @@ namespace OGF {
 		}
 	    }
 	}
+	// Case 3: haystack is an Object, traverse its properties of type Object*
+	// (except the Scopes, we don't want to traverse Grob interfaces for
+	// instance since we already have a mechanism to back_resolve interfaces
+	// in LuaInterpreter::back_resolve()).
+	MetaClass* mclass = haystack->meta_class();
+	for(index_t i=0; i<mclass->nb_properties(false); ++i) {
+	    MetaProperty* mprop = mclass->ith_property(i,false);
+	    if(
+		mprop->type()->is_subtype_of(ogf_meta<Object*>::type()) &&
+		!mprop->type()->is_subtype_of(ogf_meta<Scope*>::type())
+	    ) {
+		Any haystack2_as_any;
+		Object* haystack2;
+		if(
+		    haystack->get_property(mprop->name(), haystack2_as_any) &&
+		    haystack2_as_any.get_value(haystack2) &&
+		    haystack2 != nullptr
+		) {
+		    std::string haystack2_name =
+			haystack_name + "." + mprop->name();
+		    std::string result = recursive_back_resolve(
+			haystack2, haystack2_name, needle
+		    );
+		    if(result != "") {
+			return result;
+		    }
+		}
+	    }
+	}
 	return "";
     }
 
@@ -441,54 +471,27 @@ namespace OGF {
 	    return "nil";
 	}
 
-	{
-	    std::string result = recursive_back_resolve(
-		const_cast<LuaInterpreter*>(this)->get_globals(),"",object
-	    );
-	    if(result != "") {
-		return result;
+	// Tests whether an object is of a class, where class is given by name
+	auto object_is_a = [](
+	    Object* object, const std::string& class_name, bool strict = true
+	)->bool {
+	    MetaClass* mclass = Meta::instance()->resolve_meta_class(class_name);
+	    if(object == nullptr || mclass == nullptr) {
+		return false;
 	    }
-	}
+	    if(strict) {
+		return object->is_a(mclass);
+	    }
+	    // Use object->meta_class()->is_subclass_of(xxx) rather than
+	    // object->is_a(xxx) because is_a() uses C++ dynamic type
+	    // that will not "see" commands created as DynamicObject /
+	    // DynamicMetaClass.
+	    return (object->meta_class()->is_subclass_of(mclass));
+	};
 
-	MetaClass* minterface =
-	    Meta::instance()->resolve_meta_class("OGF::Interface");
-
-	/*
-	MetaClass* mscenegraph =
-	    Meta::instance()->resolve_meta_class("OGF::SceneGraph");
-	MetaClass* mgrob = Meta::instance()->resolve_meta_class("OGF::Grob");
-	*/
-
-	MetaClass* mshader =
-	    Meta::instance()->resolve_meta_class("OGF::Shader");
-
-	MetaClass* mrequest = Meta::instance()->resolve_meta_class(
-	    "OGF::Request"
-	);
-	MetaClass* mstructpropertyref = Meta::instance()->resolve_meta_class(
-	    "OGF::StructPropertyRef"
-	);
-
-	/*
-	MetaClass* mcamera = Meta::instance()->resolve_meta_class(
-	    "OGF::Camera"
-	);
-	*/
-
-	/*
-	if(mcamera != nullptr && object->is_a(mcamera)) {
-	    return "main.camera()";
-	}
-	*/
-
-
-	// Using meta_class()->is_subclass_of() rather than object->is_a()
-	// because is_a() uses C++ dynamic type that will not "see" commands
-	// created as DynamicObject/DynamicMetaClass.
-	if(
-	    minterface!=nullptr &&
-	    object->meta_class()->is_subclass_of(minterface)
-	) {
+	// Interface
+	// Not strict (see comment in object_is_a above)
+	if(object_is_a(object, "OGF::Interface", false)) {
 	    Any grob_any;
 	    Object* grob;
 	    if(
@@ -533,39 +536,17 @@ namespace OGF {
 		    interface_name, grob->meta_class()->name()
 		);
 
-		return back_resolve(grob) + ".I." + interface_name;
+		std::string ctxt = back_resolve(grob);
+		if(ctxt == "") {
+		    return "";
+		}
+		return ctxt + ".I." + interface_name;
 	    }
 	    return "";
 	}
-
-	/*
-	// SceneGraph
-	if(mgrob != nullptr && object->is_a(mscenegraph)) {
-	    return "scene_graph";
-	}
-
-	// Grob
-	if(mgrob != nullptr && object->is_a(mgrob)) {
-	    std::string grob_name;
-	    if(object->get_property("name",grob_name)) {
-		bool name_does_not_need_quotes =
-		    isalpha(grob_name[0]) || grob_name[0] == '_';
-		for(char c: grob_name) {
-		    name_does_not_need_quotes = name_does_not_need_quotes &&
-			(isalnum(c) || (c == '_'));
-		}
-		if(name_does_not_need_quotes) {
-		    return "o." + grob_name;
-		} else {
-		    return "o[\"" + grob_name + "\"]";
-		}
-	    }
-	    return "";
-	}
-	*/
 
 	// Shader
-	if(mshader != nullptr && object->is_a(mshader)) {
+	if(object_is_a(object,"OGF::Shader")) {
 	    Any grob_any;
 	    Object* grob;
 	    if(
@@ -573,28 +554,46 @@ namespace OGF {
 		grob_any.get_value(grob) &&
 		grob != nullptr
 	    ) {
-		return back_resolve(grob) + ".shader";
+		std::string ctxt = back_resolve(grob);
+		if(ctxt == "") {
+		    return "";
+		}
+		return ctxt + ".shader";
 	    }
 	    return "";
 	}
 
 	// Request
-	if(mrequest != nullptr && object->is_a(mrequest)) {
+	if(object_is_a(object, "OGF::Request")) {
 	    Request* request = dynamic_cast<Request*>(object);
 	    geo_debug_assert(request != nullptr);
-	    return
-		back_resolve(request->object()) + "." +
-		request->method()->name();
+	    std::string ctxt = back_resolve(request->object());
+	    if(ctxt == "") {
+		return "";
+	    }
+	    return ctxt + "." + request->method()->name();
 	}
 
 	// StructPropertyRef
-	if(mstructpropertyref != nullptr && object->is_a(mstructpropertyref)) {
+	if(object_is_a(object, "OGF::StructPropertyRef")) {
 	    StructPropertyRef* struct_prop =
 		dynamic_cast<StructPropertyRef*>(object);
 	    geo_debug_assert(struct_prop != nullptr);
-	    return
-		back_resolve(struct_prop->object()) + "." +
-		struct_prop->property_name();
+	    std::string ctxt = back_resolve(struct_prop->object());
+	    if(ctxt == "") {
+		return "";
+	    }
+	    return ctxt + "." + struct_prop->property_name();
+	}
+
+	// Not found, use brute force !
+	{
+	    std::string result = recursive_back_resolve(
+		const_cast<LuaInterpreter*>(this)->get_globals(),"",object
+	    );
+	    if(result != "") {
+		return result;
+	    }
 	}
 
 	return "";

@@ -84,7 +84,7 @@ namespace OGF {
 	return scene_graph_shader_manager()->get_effect();
     }
 
-    FullScreenEffect* Camera::get_effect_object() const {
+    FullScreenEffect* Camera::get_effect_properties() const {
 	return scene_graph_shader_manager()->current_effect();
     }
 

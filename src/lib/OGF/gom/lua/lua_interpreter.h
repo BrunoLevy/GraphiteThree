@@ -153,13 +153,24 @@ namespace OGF {
 
     protected:
 
+	/**
+	 * \brief This function recursively tracks all possible references from
+	 *  an object until it finds another object.
+	 * \details This function costs a lot, because it traverses recursively
+	 *  all the possible references, but it can be called for instance to
+	 *  record a user event in the history.
+	 * \param[in] haystack the object from which to search
+	 * \param[in] haystack_name the way \p haystack can be referred to in
+	 *  this interpreter
+	 * \param[in] needle the object to be found
+	 * \return a string with the way \p needle can be refereed to in this
+	 *  interpreter, or the empty string if \p needle was not found
+	 */
 	std::string recursive_back_resolve(
 	    Object* haystack,
 	    const std::string& haystack_name,
 	    Object* needle
 	) const;
-
-
 
 	/**
 	 * \brief Adjusts LUA state to recover from errors.
