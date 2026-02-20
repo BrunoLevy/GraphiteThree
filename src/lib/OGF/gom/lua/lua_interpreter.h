@@ -153,6 +153,14 @@ namespace OGF {
 
     protected:
 
+	std::string recursive_back_resolve(
+	    Object* haystack,
+	    const std::string& haystack_name,
+	    Object* needle
+	) const;
+
+
+
 	/**
 	 * \brief Adjusts LUA state to recover from errors.
 	 * \details Base class implementation does nothing. It can

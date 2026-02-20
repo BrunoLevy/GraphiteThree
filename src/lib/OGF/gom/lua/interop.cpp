@@ -38,6 +38,7 @@
 #include <OGF/gom/lua/lua_graphite_object.h>
 #include <OGF/gom/lua/lua_callable.h>
 #include <OGF/gom/lua/vec_mat_interop.h>
+#include <OGF/gom/interpreter/interpreter.h>
 #include <OGF/gom/reflection/meta.h>
 
 extern "C" {
@@ -230,5 +231,108 @@ namespace OGF {
 	    }
 	    result.reset();
 	}
+
+
+	/****************************************************/
+
+	void StackDebugger::stacktrace(lua_State* L) {
+	    std::cerr << "STACK TRACE:" << std::endl;
+	    std::cerr << "   state = " << L << std::endl;
+	    int top = lua_gettop(L);
+	    for(int i=1; i<=top; ++i) {
+		Any any;
+		lua_tographiteval(L, i, any);
+		Object* object;
+		if(
+		    !any.is_null() &&
+		    any.meta_type()->is_subtype_of(ogf_meta<Object*>::type()) &&
+		    any.get_value(object)
+		) {
+		    std::cerr << i << ":" << object->meta_class()->name()
+			      << std::endl;
+		    Request* rq = dynamic_cast<Request*>(object);
+		    if(rq != nullptr) {
+			std::cerr << "   Request" << std::endl;
+			std::cerr << "      "
+				  << rq->object()->meta_class()->name()
+				  << std::endl;
+			std::cerr << "      "
+				  << rq->method()->name()
+				  << std::endl;
+		    }
+		} else {
+		    int t = lua_type(L, i);
+		    std::cerr << i << ":" << type_to_string(t) << std::endl;
+		    if(t == 5) {
+			dump_table(L,i);
+		    }
+		}
+	    }
+	}
+
+	// https://stackoverflow.com/questions/6137684/iterate-through-lua-table
+	void StackDebugger::dump_table(lua_State* L, int index) {
+	    StackDebugger dbg(L,"dump_table");
+	    std::cerr << "   ";
+	    lua_pushvalue(L,index); // stack: -1=>table
+	    lua_pushnil(L);         // stack: -1=>nil  -2=>table
+	    while(lua_next(L,-2) != 0) {
+		// stack: -1=>key -2=>value -3=>table
+		// copy key so that lua_tostring does not modify the original
+		lua_pushvalue(L,-2);
+		// stack: -1=>key -2=>value -3=>key -4=>table
+		const char* key = lua_tostring(L,-1);
+		//const char *value = lua_tostring(L, -2);
+		int t = lua_type(L,-2);
+		std::cerr << key << "->" << type_to_string(t) << " ";
+		lua_pop(L,2);
+		// stack: -1=>key -2=>table
+	    }
+	    // stack: -1=>table
+	    lua_pop(L,1);
+	    std::cerr << std::endl;
+	}
+
+	const char* StackDebugger::type_to_string(int type) {
+	    static const char* totype[] = {
+		"nil",
+		"boolean",
+		"lightuserdata",
+		"number",
+		"string",
+		"table",
+		"function",
+		"userdata",
+		"thread"
+	    };
+	    return ((index_t(type) < 9) ? totype[type] : "<error>");
+	}
+
+	StackDebugger::StackDebugger(
+	    lua_State* L, const std::string& name, int line
+	) {
+	    state_ = L;
+	    top_ = lua_gettop(L);
+	    if(line == 0) {
+		name_ = name;
+	    } else {
+		name_ = name + ":" + String::to_string(line);
+	    }
+	}
+
+	StackDebugger::~StackDebugger() {
+	    if(lua_gettop(state_) != top_) {
+		std::cerr << "=================> Lua stack dbg " << name_
+			  << " " << lua_gettop(state_) << "--> "
+			  << top_ << std::endl;
+		stacktrace(state_);
+		lua_settop(state_, top_);
+	    }
+
+	    // geo_assert(lua_gettop(state_) == top_);
+	}
+
+	/****************************************************/
+
     }
 }

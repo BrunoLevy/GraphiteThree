@@ -714,9 +714,7 @@ namespace OGF {
 	geo_assert(
 	    dynamic_cast<Interpreter*>(object_) != nullptr
 	);
-	return dynamic_cast<Interpreter*>(
-	    object_
-	)->resolve(name);
+	return dynamic_cast<Interpreter*>(object_)->resolve(name);
     }
 
     /********************************************************/

@@ -37,6 +37,8 @@
 #ifndef H_OGF_GOM_LUA_INTEROP_H
 #define H_OGF_GOM_LUA_INTEROP_H
 
+#include <string>
+
 /**
  * \file OGF/gom/lua/interop.h
  * \brief Functions to exchange objects between Lua and Graphite
@@ -71,6 +73,36 @@ namespace OGF {
 	void lua_tographiteval(
 	    lua_State* L, int index, Any& result, MetaType* mtype = nullptr
 	);
+
+
+	/**
+	 * \brief Small class to debug wrong management of Lua stack
+	 * \details Detects whenever Lua stack size changes inside a function
+	 */
+	class StackDebugger {
+	public:
+	    StackDebugger(
+		lua_State* L,
+		const std::string& name = "",
+		int line = 0
+	    );
+	    ~StackDebugger();
+	    static void stacktrace(lua_State* L);
+	    static void dump_table(lua_State* L, int index);
+	    static const char* type_to_string(int type);
+
+	private:
+	    std::string name_;
+	    lua_State* state_;
+	    int top_;
+	};
+
+#ifdef GEO_DEBUG
+#define geo_lua_check_stack(L) StackDebugger(L, __FILE__,__LINE__)
+#else
+#define geo_lua_check_stack(L)
+#endif
+
     }
 }
 

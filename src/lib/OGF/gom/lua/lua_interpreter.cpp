@@ -143,6 +143,7 @@ namespace OGF {
     bool LuaInterpreter::execute(
         const std::string& command, bool save_in_history, bool log
     ) {
+	geo_lua_check_stack(lua_state_);
 	bool result = true;
 
         if(log) {
@@ -163,6 +164,7 @@ namespace OGF {
     }
 
     bool LuaInterpreter::execute_file(const std::string& file_name_in) {
+	geo_lua_check_stack(lua_state_);
 	std::string file_name = file_name_in;
         Environment::instance()->set_value("current_gel_file", file_name);
         if(!FileManager::instance()->find_file(file_name)) {
@@ -181,12 +183,15 @@ namespace OGF {
     }
 
     void LuaInterpreter::bind(const std::string& id, const Any& value) {
+	geo_lua_check_stack(lua_state_);
 	lua_pushgraphiteval(lua_state_, value);
 	lua_setglobal(lua_state_, id.c_str());
     }
 
     Any LuaInterpreter::resolve(const std::string& name, bool quiet) const {
 	Any any_result;
+	geo_lua_check_stack(lua_state_);
+
 	Object* result = Interpreter::resolve_object_by_global_id(name, true);
 	if(result != nullptr) {
 	    any_result.set_value(result);
@@ -195,6 +200,7 @@ namespace OGF {
 
 	lua_getglobal(lua_state_, name.c_str());
 	lua_tographiteval(lua_state_, -1, any_result);
+	lua_pop(lua_state_,1);
 
 	if(any_result.is_null() && !quiet) {
 	    Logger::err("Lua") << name << ": no such global"
@@ -203,9 +209,8 @@ namespace OGF {
 	return any_result;
     }
 
-    Any LuaInterpreter::eval(
-	const std::string& expression, bool quiet
-    ) const {
+    Any LuaInterpreter::eval(const std::string& expression, bool quiet) const {
+	geo_lua_check_stack(lua_state_);
 	geo_argused(quiet);
 	Any result;
 	lua_pushfstring(lua_state_,"return %s", expression.c_str());
@@ -218,7 +223,25 @@ namespace OGF {
     }
 
     void LuaInterpreter::list_names(std::vector<std::string>& names) const {
+	geo_lua_check_stack(lua_state_);
 	names.clear();
+
+	lua_pushglobaltable(lua_state_); // stack: -1=>table
+	lua_pushnil(lua_state_);         // stack: -1=>nil  -2=>table
+	while(lua_next(lua_state_,-2) != 0) {
+	    // stack: -1=>key -2=>value -3=>table
+	    // copy key so that lua_tostring does not modify the original
+	    lua_pushvalue(lua_state_,-2);
+	    // stack: -1=>key -2=>value -3=>key -4=>table
+	    const char* key = lua_tostring(lua_state_,-1);
+	    names.push_back(std::string(key));
+	    lua_pop(lua_state_,2);
+	    // stack: -1=>key -2=>table
+	}
+	// stack: -1=>table
+	lua_pop(lua_state_,1);
+
+	/*
 	lua_pushglobaltable(lua_state_);
 	int index = lua_gettop(lua_state_);
 	lua_pushnil(lua_state_);
@@ -227,12 +250,13 @@ namespace OGF {
 	    names.push_back(std::string(key));
 	    lua_pop(lua_state_,1);
 	}
+	*/
     }
 
     void LuaInterpreter::record_invoke_in_history(
 	Object* target, const std::string& slot_name, const ArgList& args
     ) {
-
+	geo_lua_check_stack(lua_state_);
 	std::string cmd_funccall = back_resolve(target);
 
 	if(cmd_funccall == "") {
@@ -306,6 +330,8 @@ namespace OGF {
     void LuaInterpreter::record_set_property_in_history(
 	Object* target, const std::string& prop_name, const Any& value
     ) {
+	geo_lua_check_stack(lua_state_);
+
 	if(!record_set_property_) {
 	    return;
 	}
@@ -352,32 +378,108 @@ namespace OGF {
 	}
     }
 
+    // Has memory leak ! (InterfaceScope / Interfaces ?)
+    std::string LuaInterpreter::recursive_back_resolve(
+	Object* haystack,
+	const std::string& haystack_name,
+	Object* needle
+    ) const {
+	geo_lua_check_stack(lua_state_);
+	if(haystack == needle) {
+	    return haystack_name;
+	}
+	Scope* scope = dynamic_cast<Scope*>(haystack);
+	if(
+	    scope != nullptr &&
+	    dynamic_cast<InterfaceScope*>(haystack) == nullptr &&
+	    dynamic_cast<MetaTypesScope*>(haystack) == nullptr
+	) {
+	    std::vector<std::string> names;
+	    scope->list_names(names);
+	    for(const std::string& name: names) {
+		Any any;
+		any = scope->resolve(name);
+		Object_var haystack2;
+		if(
+		    any.meta_type() != nullptr &&
+		    any.meta_type()->is_subtype_of(ogf_meta<Object*>::type()) &&
+		    any.get_value(haystack2)
+		) {
+		    bool name_does_not_need_quotes =
+			isalpha(name[0]) || name[0] == '_';
+		    for(char c: name) {
+			name_does_not_need_quotes = name_does_not_need_quotes &&
+			    (isalnum(c) || (c == '_'));
+		    }
+		    std::string haystack2_name = haystack_name;
+		    if(name_does_not_need_quotes) {
+			haystack2_name = haystack_name;
+			if(haystack2_name != "") {
+			    haystack2_name += ".";
+			}
+			haystack2_name += name;
+		    } else {
+			haystack2_name = haystack_name + "[\"" + name + "\"]";
+		    }
+		    std::string result = recursive_back_resolve(
+			haystack2, haystack2_name, needle
+		    );
+		    if(result != "") {
+			return result;
+		    }
+		}
+	    }
+	}
+	return "";
+    }
+
+
     std::string LuaInterpreter::back_resolve(Object* object) const {
+	geo_lua_check_stack(lua_state_);
 
 	if(object == nullptr) {
 	    return "nil";
 	}
 
+	{
+	    std::string result = recursive_back_resolve(
+		const_cast<LuaInterpreter*>(this)->get_globals(),"",object
+	    );
+	    if(result != "") {
+		return result;
+	    }
+	}
+
 	MetaClass* minterface =
 	    Meta::instance()->resolve_meta_class("OGF::Interface");
+
+	/*
 	MetaClass* mscenegraph =
 	    Meta::instance()->resolve_meta_class("OGF::SceneGraph");
 	MetaClass* mgrob = Meta::instance()->resolve_meta_class("OGF::Grob");
+	*/
+
 	MetaClass* mshader =
 	    Meta::instance()->resolve_meta_class("OGF::Shader");
+
 	MetaClass* mrequest = Meta::instance()->resolve_meta_class(
 	    "OGF::Request"
 	);
 	MetaClass* mstructpropertyref = Meta::instance()->resolve_meta_class(
 	    "OGF::StructPropertyRef"
 	);
+
+	/*
 	MetaClass* mcamera = Meta::instance()->resolve_meta_class(
 	    "OGF::Camera"
 	);
+	*/
 
+	/*
 	if(mcamera != nullptr && object->is_a(mcamera)) {
 	    return "main.camera()";
 	}
+	*/
 
 
 	// Using meta_class()->is_subclass_of() rather than object->is_a()
@@ -436,6 +538,7 @@ namespace OGF {
 	    return "";
 	}
 
+	/*
 	// SceneGraph
 	if(mgrob != nullptr && object->is_a(mscenegraph)) {
 	    return "scene_graph";
@@ -459,6 +562,7 @@ namespace OGF {
 	    }
 	    return "";
 	}
+	*/
 
 	// Shader
 	if(mshader != nullptr && object->is_a(mshader)) {
@@ -499,6 +603,8 @@ namespace OGF {
     std::string LuaInterpreter::back_parse(
 	const Any& value, MetaType* mtype
     ) const {
+
+	geo_lua_check_stack(lua_state_);
 
 	if(value.meta_type() == nullptr) {
 	    return "nil";
@@ -585,6 +691,7 @@ namespace OGF {
     void LuaInterpreter::get_keys(
 	const std::string& context, std::vector<std::string>& keys
     ) {
+	geo_lua_check_stack(lua_state_);
 	keys.clear();
 	if(context != "") {
 	    lua_pushfstring(lua_state_,"return %s", context.c_str());

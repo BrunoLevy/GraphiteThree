@@ -212,9 +212,24 @@ namespace OGF {
 	}
 
 	/**
+	 * \brief Gets the stored value as a SmartPointer.
+	 * \param[out] value the stored value.
+	 * \retval true if the specified type T corresponded to the stored value.
+	 * \retval false otherwise.
+	 */
+	template <class T> bool get_value(SmartPointer<T>& value) const {
+	    T* value_as_ptr = nullptr;
+	    if(!get_value(value_as_ptr)) {
+		return false;
+	    }
+	    value = value_as_ptr;
+	    return true;
+	}
+
+	/**
 	 * \brief Gets the stored value.
 	 * \param[out] value the stored value.
-	 * \retval true if the specified type was correct.
+	 * \retval true if the specified type T corresponded to the stored value.
 	 * \retval false otherwise.
 	 */
 	template <class T> bool get_value(T& value) const {

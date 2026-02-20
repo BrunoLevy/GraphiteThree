@@ -48,6 +48,7 @@ namespace OGF {
     using namespace OGF::GOMLua;
 
     LuaCallable::LuaCallable(lua_State* L, int target_index) {
+	geo_lua_check_stack(L);
 	lua_state_ = L;
 
 	// Since we change the stack, we need to convert index relative
@@ -57,6 +58,7 @@ namespace OGF {
 	}
 	++current_instance_id_;
 	instance_id_ = current_instance_id_;
+
 	// Memorize a copy of the target in the "graphite_lua_targets"
 	// table (indexed by instance_id_)
 	lua_getfield(lua_state_,LUA_REGISTRYINDEX,"graphite_lua_targets");
@@ -82,6 +84,7 @@ namespace OGF {
     }
 
     bool LuaCallable::invoke(const ArgList& args, Any& ret_val) {
+	geo_lua_check_stack(lua_state_);
 	ret_val.reset();
 	bool result = true;
 
@@ -108,20 +111,23 @@ namespace OGF {
 
 	if(result) {
 	    lua_tographiteval(lua_state_,-1,ret_val);
+	    lua_pop(lua_state_,2);
 	} else {
 	    std::string err = std::string(lua_tostring(lua_state_, -1));
-	    lua_pop(lua_state_,1);
+	    lua_pop(lua_state_,2);
 	    LuaInterpreter::display_error_message(err);
 	}
 	return result;
     }
 
     LuaCallable::~LuaCallable() {
+	geo_lua_check_stack(lua_state_);
 	// Remove the memorized target from the "graphite_lua_targets"
 	// table (indexed by instance_id_)
 	lua_getfield(lua_state_,LUA_REGISTRYINDEX,"graphite_lua_targets");
 	lua_pushnil(lua_state_);
 	lua_seti(lua_state_, -2, lua_Integer(instance_id_));
+	lua_pop(lua_state_,1);
     }
 
     index_t LuaCallable::current_instance_id_ = 0;
