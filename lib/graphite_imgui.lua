@@ -70,7 +70,7 @@ function graphite_gui.draw_menu_bar()
       imgui.PopID()
 
       -- Modules
-      if imgui.BeginMenu('Modules') then
+      if imgui.BeginMenu('Windows') then
          graphite_main_window.draw_modules_menu()
          imgui.EndMenu()
       end
