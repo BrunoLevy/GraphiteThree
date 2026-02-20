@@ -240,17 +240,6 @@ namespace OGF {
 	}
 	// stack: -1=>table
 	lua_pop(lua_state_,1);
-
-	/*
-	lua_pushglobaltable(lua_state_);
-	int index = lua_gettop(lua_state_);
-	lua_pushnil(lua_state_);
-	while(lua_next(lua_state_,index) != 0) {
-	    const char* key = lua_tostring(lua_state_,-2);
-	    names.push_back(std::string(key));
-	    lua_pop(lua_state_,1);
-	}
-	*/
     }
 
     void LuaInterpreter::record_invoke_in_history(
