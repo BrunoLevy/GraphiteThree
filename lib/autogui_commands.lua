@@ -247,12 +247,9 @@ function autogui.command_dialog_apply_buttons(request)
   imgui.SameLine()
 
   -- Apply command without closing ------------------------------
-  local doit_recycle_button = false
---  if not autogui.command_state[k].show_as_window_ then
-     doit_recycle_button = imgui.Button(imgui.font_icon('sync-alt'))
-     autogui.tooltip('apply command without closing dialog')
-     imgui.SameLine()
---  end
+  local doit_recycle_button = imgui.Button(imgui.font_icon('sync-alt'))
+  autogui.tooltip('apply command without closing dialog')
+  imgui.SameLine()
 
   -- Apply command to selected objects --------------------------
   local doit_apply_to_sel_button = imgui.Button(
@@ -279,13 +276,9 @@ function autogui.command_dialog_apply_buttons(request)
      autogui.tooltip('Close command')
   end
 
+
   -- Now execute command if one of the buttons was pushed
   if doit_apply_button or doit_recycle_button then
-      local args_string = autogui.args_to_string(
-         mmethod,autogui.command_state[k]
-      )
-      local object_as_string = gom.back_resolve(request.object())
-
       -- Close the menu (if we were in menu mode).
       if not doit_recycle_button and
          not autogui.command_state[k].show_as_window_ and
@@ -293,9 +286,57 @@ function autogui.command_dialog_apply_buttons(request)
          imgui.CloseCurrentPopup()
       end
 
-      if doit_recycle_button and
-         not command_gui.visible and
-         not autogui.command_state[k].show_as_window_ then
+      -- If command is in menu and 'recycle' was pushed,
+      -- we need to execute the command now else it closes the dialog
+      local no_progress = doit_recycle_button and
+                          not command_gui.visible and
+                          not autogui.command_state[k].show_as_window_
+
+      autogui.run_command(request, no_progress)
+  end
+
+  if doit_apply_to_sel_button then   -- Apply command to selected objects
+      -- If command is in menu and 'recycle' was pushed,
+      -- we need to execute the command now else it closes the dialog
+      local no_progress = not command_gui.visible and
+                          not autogui.command_state[k].show_as_window_
+      autogui.run_command(request, no_progress, true)
+  end
+
+  if (doit_apply_button and command_gui.visible) or close_dialog then
+     command_gui.request = nil
+     autogui.command_state[k] = nil
+  end
+end
+
+-- \brief executes a command
+-- \param[in] request the request, for instance grob.I.Surface.remesh_smooth
+-- \param[in] no_progress do not show progress while command is running
+--  (to be set when called directly from a menu, else this closes the menu)
+-- \param[in] apply_to_selection apply the command to all selected objects
+-- \param[in] k an optional command key (used internally)
+
+function autogui.run_command(request, no_progress, apply_to_selection, k)
+   if k == nil then
+      k = autogui.request_key(request)
+   end
+   local mmethod = request.method()
+   local args_string = autogui.args_to_string(mmethod,autogui.command_state[k])
+   local object_as_string = gom.back_resolve(request.object())
+   if apply_to_selection then
+      request_grob = request.object().grob
+      for i=0,scene_graph.nb_children-1 do
+         local grob = scene_graph.ith_child(i)
+         if grob.selected and
+            request_grob.meta_class.name == grob.meta_class.name then
+             autogui.run_command(
+                grob.I[request.object().meta_class.name][mmethod.name],
+                no_progress, false, k
+             )
+         end
+      end
+   else
+      if no_progress then
          -- If command is in menu and 'recycle' was pushed,
          -- we need to execute the command now else it closes
          -- the dialog
@@ -309,26 +350,7 @@ function autogui.command_dialog_apply_buttons(request)
             object_as_string..'.'..mmethod.name..'('..args_string..')', false
          )
       end
-  end
-
-  if doit_apply_to_sel_button then   -- Apply command to selected objects
-      local args_string = autogui.args_to_string(
-         mmethod, autogui.command_state[k]
-      )
-      for i=0,scene_graph.nb_children-1 do
-         local grob = scene_graph.ith_child(i)
-         if grob.selected then
-            local cmds = grob.I[request.object().meta_class.name]
-            local cmd_str = gom.back_resolve(cmds)..'.'..mmethod.name
-            main.exec_command_now(cmd_str..'('..args_string..')', false)
-         end
-      end
-  end
-
-  if (doit_apply_button and command_gui.visible) or close_dialog then
-     command_gui.request = nil
-     autogui.command_state[k] = nil
-  end
+   end
 end
 
 -- ------------------------------------------------------------------------------
