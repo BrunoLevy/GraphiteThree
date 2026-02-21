@@ -240,6 +240,7 @@ namespace OGF {
          bool xray_mode_;
          index_t picked_element_;
 	 Tool_var probe_tool_; // For middle button
+	 MeshGrob* prev_mesh_grob_; // See reset()
     };
 
     /**********************************************************/

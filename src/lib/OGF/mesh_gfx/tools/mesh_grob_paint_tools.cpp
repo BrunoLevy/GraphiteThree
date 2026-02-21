@@ -594,9 +594,15 @@ namespace OGF {
        probe_tool->set_probed_as_paint(false);
        probe_tool->set_display_probed_on_release(false);
        probe_tool_ = probe_tool;
+       prev_mesh_grob_ = mesh_grob();
     }
 
     void MeshGrobPaintTool::reset() {
+	// Detect that reset() was due to active grob change, and in this
+	// case we do not touch graphic attributes.
+	if(prev_mesh_grob_ != mesh_grob()) {
+	    return;
+	}
         MeshElementsFlags where;
         std::string attribute_name;
         index_t component;
@@ -629,6 +635,8 @@ namespace OGF {
         index_t& component
     ) {
         if(!get_visible_attribute(mesh_grob(),where,attribute_name,component)){
+	    Logger::err("Paint") << "No visible selection or attribute"
+				 << std::endl;
             return false;
         }
         op = PAINT_SET;
