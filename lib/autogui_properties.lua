@@ -252,7 +252,6 @@ function autogui.property(object, mproperty)
    local prev_val = tostring(object[mproperty.name])
 
    handler(object,mproperty.name,mproperty.type(),tooltip)
-   gom.record_set_property = false
 
    local new_val = tostring(object[mproperty.name])
 
@@ -270,6 +269,7 @@ function autogui.property(object, mproperty)
       end
    end
 
+   gom.record_set_property = false
    autogui.input_text_flags = bkp
 end
 
