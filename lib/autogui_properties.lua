@@ -197,7 +197,8 @@ function autogui.properties_editor_properties(object)
                if imgui.TreeNodeEx(
                    autogui.to_display_string(mproperty.name)..
                      '##'..subobject.string_id,
-                   ImGuiTreeNodeFlags_DrawLinesFull
+                   ImGuiTreeNodeFlags_DrawLinesFull |
+                   ImGuiTreeNodeFlags_DrawLinesToNodes
                ) then
                    autogui.properties_editor_properties(subobject)
                    imgui.TreePop()

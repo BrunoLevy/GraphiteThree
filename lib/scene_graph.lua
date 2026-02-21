@@ -110,7 +110,11 @@ function scene_graph_gui.grob_ops(grob, main_menu)
             }
          end
       end
-      autogui.tooltip('show/hide')
+      if camera.draw_selected_only then
+         autogui.tooltip('show/hide disabled in selected only mode')
+      else
+         autogui.tooltip('show/hide')
+      end
       imgui.SameLine()
       if imgui.SimpleButton(
          imgui.font_icon('cubes')..'## copy properties to all'
@@ -354,7 +358,9 @@ function scene_graph_gui.draw_object_list()
 
        local grob = scene_graph.ith_child(i)
        local flags = ImGuiTreeNodeFlags_DrawLinesFull |
+                     ImGuiTreeNodeFlags_DrawLinesToNodes |
                      ImGuiTreeNodeFlags_AllowOverlap
+
        if grob.selected then
           flags = flags | ImGuiTreeNodeFlags_Selected
        end
@@ -554,10 +560,14 @@ function scene_graph_gui.draw_grob_eye(grob)
            visible = true
        end
    end
-   if grob.selected then
-      autogui.tooltip('show/hide selected')
+   if camera.draw_selected_only then
+      autogui.tooltip('show/hide disabled in selected only mode')
    else
-      autogui.tooltip('show/hide')
+      if grob.selected then
+         autogui.tooltip('show/hide selected')
+      else
+         autogui.tooltip('show/hide')
+      end
    end
    imgui.PopStyleVar()
    if visible_changed and grob ~= nil then
