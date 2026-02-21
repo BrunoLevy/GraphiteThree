@@ -467,6 +467,17 @@ namespace OGF {
 	    return 1;
 	}
 
+	static int graphite_equals(lua_State* L) {
+	    geo_debug_assert(lua_isgraphite(L,-1));
+	    bool result = false;
+	    if(lua_isgraphite(L,-2)) {
+		Object* o1 = lua_tographite(L,-1);
+		Object* o2 = lua_tographite(L,-2);
+		result = (o1 == o2);
+	    }
+	    lua_pushboolean(L,result);
+	    return 1;
+	}
 
 	/*********************************************************************/
 
@@ -508,6 +519,10 @@ namespace OGF {
 		lua_pushcfunction(L,graphite_tostring);
 		lua_settable(L,-3);
 
+		// Equality
+		lua_pushliteral(L,"__eq");
+		lua_pushcfunction(L,graphite_equals);
+		lua_settable(L,-3);
 
 		lua_setfield(L, LUA_REGISTRYINDEX, "graphite_vtbl");
 	    }

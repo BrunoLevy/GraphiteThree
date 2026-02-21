@@ -6,6 +6,7 @@ scene_graph_gui = {}
 scene_graph_gui.name = 'Scene'
 scene_graph_gui.icon = '@cubes'
 scene_graph_gui.edit_list = false -- true when up/down/delete btn are visible
+scene_graph_gui.picked_grob = nil
 
 gom.execute_file("scene_graph_menu_map.lua")
 
@@ -349,6 +350,13 @@ end
 function scene_graph_gui.draw_object_list()
    local selection_op=nil
    local edit_op=nil
+   local picked_grob=nil
+
+   -- Detect if object was just picked (to scroll there if list is looooonnng)
+   if main.picked_grob ~= scene_graph_gui.picked_grob then
+       scene_graph_gui.picked_grob = main.picked_grob
+       picked_grob = main.picked_grob
+   end
 
    for i=0,scene_graph.nb_children-1 do
 
@@ -358,13 +366,15 @@ function scene_graph_gui.draw_object_list()
 
        local grob = scene_graph.ith_child(i)
        local flags = ImGuiTreeNodeFlags_DrawLinesFull |
-                     ImGuiTreeNodeFlags_DrawLinesToNodes |
                      ImGuiTreeNodeFlags_AllowOverlap
 
        if grob.selected then
           flags = flags | ImGuiTreeNodeFlags_Selected
        end
        draw_props = imgui.TreeNodeEx('##'..grob.name..'##props', flags)
+       if grob == picked_grob then
+          imgui.SetScrollHereY()
+       end
        edit_op = scene_graph_gui.draw_grob_edit_list_buttons(grob)
        local selection_op = scene_graph_gui.draw_grob_name(grob)
        if imgui.BeginPopupContextItem(grob.name..'##ops') then
