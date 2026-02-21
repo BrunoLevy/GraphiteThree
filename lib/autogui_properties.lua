@@ -248,8 +248,28 @@ function autogui.property(object, mproperty)
        local handler_name = mproperty.custom_attribute_value('handler')
        handler = autogui.handler_by_name(handler_name)
    end
+
+   local prev_val = tostring(object[mproperty.name])
+
    handler(object,mproperty.name,mproperty.type(),tooltip)
    gom.record_set_property = false
+
+   local new_val = tostring(object[mproperty.name])
+
+   if new_val ~= prev_val and object.is_a(OGF.Shader) then
+      local grob = object.grob
+      if grob.selected and scene_graph.I.Selection.nb_selected() > 1 then
+          for i=0,scene_graph.nb_children-1 do
+              local current_grob = scene_graph.ith_child(i)
+              local current_shader = current_grob.shader
+              if current_grob.name ~= grob.name and
+                 current_shader.meta_class.name == object.meta_class.name then
+                 current_shader[mproperty.name] = new_val
+              end
+          end
+      end
+   end
+
    autogui.input_text_flags = bkp
 end
 
