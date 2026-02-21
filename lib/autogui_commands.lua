@@ -29,23 +29,38 @@ function autogui.command_dialog(request)
   end
 
   -- Target selector
+
+  local apply_to_selection = false
+  if command_gui.visible and request.object().is_a(OGF.Interface) then
+      apply_to_selection = request.object().grob.selected
+  end
+
   if (
      autogui.command_state[k].show_as_window_ or
      command_gui.visible
   ) and request.object().is_a(OGF.Interface) then
      local grob = request.object().grob
      if not grob.is_a(OGF.SceneGraph) then
-        autogui.command_state[k].target_ = grob.name
-        grob_names = gom.get_environment_value(
-           grob.meta_class.name..'_instances'
-        )
-        if autogui.combo_box(
-            autogui.command_state[k], 'target_', grob_names
-        ) then
-            grob = scene_graph.objects[autogui.command_state[k].target_]
-            request.object().grob = grob
+        if apply_to_selection then
+           imgui.Text('Target:')
+           imgui.SameLine()
+           imgui.TextDisabled(
+             tostring(scene_graph.I.Selection.nb_selected())..
+             ' selected object(s)'
+           )
+        else
+           autogui.command_state[k].target_ = grob.name
+           grob_names = gom.get_environment_value(
+              grob.meta_class.name..'_instances'
+           )
+           if autogui.combo_box(
+               autogui.command_state[k], 'target_', grob_names
+           ) then
+               grob = scene_graph.objects[autogui.command_state[k].target_]
+               request.object().grob = grob
+           end
+           autogui.tooltip('Change command target')
         end
-        autogui.tooltip('Change command target')
      end
   else
      if imgui.MenuItem( -- The button to 'windowify' command
@@ -295,10 +310,10 @@ function autogui.command_dialog_apply_buttons(request)
                           not autogui.command_state[k].show_as_window_
 
       local apply_to_selection = false
-      pcall(function()
+      if request.object().is_a(OGF.Interface) then
          apply_to_selection = command_gui.visible and
                               request.object().grob.selected
-      end)
+      end
 
       autogui.run_command(request, no_progress, apply_to_selection)
   end
