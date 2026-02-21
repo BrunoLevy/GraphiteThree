@@ -173,7 +173,7 @@ namespace OGF {
 		<< "invalid value name: "
 		<< value_name
 		<< std::endl;
-            *val = -1 ;
+            *val = 0 ;
             return false ;
         }
         *val = meta_enum_->get_value_by_name(value_name) ;
