@@ -252,11 +252,14 @@ function autogui.command_dialog_apply_buttons(request)
   imgui.SameLine()
 
   -- Apply command to selected objects --------------------------
-  local doit_apply_to_sel_button = imgui.Button(
-     imgui.font_icon('clipboard-list')
-  )
-  autogui.tooltip('apply command to selected objects')
-  imgui.SameLine()
+  local doit_apply_to_sel_button = false
+  if not command_gui.visible then
+     doit_apply_to_sel_button = imgui.Button(
+        imgui.font_icon('clipboard-list')
+     )
+     autogui.tooltip('apply command to selected objects')
+     imgui.SameLine()
+  end
 
   -- Apply command and close dialog ----------------------------
   local btn_width  = autogui.button_size
@@ -276,7 +279,6 @@ function autogui.command_dialog_apply_buttons(request)
      autogui.tooltip('Close command')
   end
 
-
   -- Now execute command if one of the buttons was pushed
   if doit_apply_button or doit_recycle_button then
       -- Close the menu (if we were in menu mode).
@@ -292,7 +294,13 @@ function autogui.command_dialog_apply_buttons(request)
                           not command_gui.visible and
                           not autogui.command_state[k].show_as_window_
 
-      autogui.run_command(request, no_progress)
+      local apply_to_selection = false
+      pcall(function()
+         apply_to_selection = command_gui.visible and
+                              request.object().grob.selected
+      end)
+
+      autogui.run_command(request, no_progress, apply_to_selection)
   end
 
   if doit_apply_to_sel_button then   -- Apply command to selected objects
@@ -304,8 +312,11 @@ function autogui.command_dialog_apply_buttons(request)
   end
 
   if (doit_apply_button and command_gui.visible) or close_dialog then
-     command_gui.request = nil
      autogui.command_state[k] = nil
+     -- this one needs to be queued after the commands to be executed
+     -- when running on selection else this tries to run a command
+     -- from a locked commands object (but I don't know why)
+     main.exec_command('command_gui.request = nil',false)
   end
 end
 
@@ -324,7 +335,7 @@ function autogui.run_command(request, no_progress, apply_to_selection, k)
    local args_string = autogui.args_to_string(mmethod,autogui.command_state[k])
    local object_as_string = gom.back_resolve(request.object())
    if apply_to_selection then
-      request_grob = request.object().grob
+      local request_grob = request.object().grob
       for i=0,scene_graph.nb_children-1 do
          local grob = scene_graph.ith_child(i)
          if grob.selected and
