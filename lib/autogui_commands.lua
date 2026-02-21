@@ -400,12 +400,16 @@ function autogui.request_key(request)
     if object.is_a(OGF.Grob) then
        return 'rq##'..object.name..'##'..method_name
     end
-    if object.is_a(OGF.Interface) then
+    -- using meta_class.is_subclass_of rather than is_a so that
+    -- it also works with command classes implemented in Lua or Python
+    if object.meta_class.is_subclass_of(OGF.Interface) then
        local interface_name = object.meta_class.name
        local grob_name = object.grob.name
        return 'rq##'..interface_name..'##'..method_name
     end
-    return request.string_id --fallback, normally does not get there, bad to use
+    -- fallback, normally does not get there, bad to use
+    print('Warning: no request_key for '..object.meta_class.name)
+    return request.string_id
 end
 
 
