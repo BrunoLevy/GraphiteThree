@@ -261,7 +261,8 @@ function autogui.property(object, mproperty)
           for i=0,scene_graph.nb_children-1 do
               local current_grob = scene_graph.ith_child(i)
               local current_shader = current_grob.shader
-              if current_grob.name ~= grob.name and
+              if current_grob.selected and
+                 current_grob.name ~= grob.name and
                  current_shader.meta_class.name == object.meta_class.name then
                  current_shader[mproperty.name] = new_val
               end
