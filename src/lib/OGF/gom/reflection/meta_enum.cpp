@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/gom/reflection/meta_enum.h>
@@ -44,7 +44,9 @@ namespace OGF {
     MetaEnum::MetaEnum(
         const std::string& enum_name
     ) : MetaType(enum_name) {
+	enum generic_enum {};
         set_serializer(new EnumSerializer(this)) ;
+	set_life_cycle(new GenericLifeCycle<generic_enum>);
     }
 
     MetaEnum::~MetaEnum(){
@@ -78,11 +80,11 @@ namespace OGF {
                 add_value(name, value);
             } else {
                 Logger::err("GOM") << name << " is not an integer" << std::endl;
-            } 
+            }
         }
     }
 
-    
+
     bool MetaEnum::has_value(int value) const {
         for(unsigned int i=0; i<values_.size(); i++) {
             if(values_[i].value == value) {
@@ -91,7 +93,7 @@ namespace OGF {
         }
         return false ;
     }
-    
+
     bool MetaEnum::has_value(const std::string& name) const {
         for(unsigned int i=0; i<values_.size(); i++) {
             if(values_[i].name == name) {
@@ -100,7 +102,7 @@ namespace OGF {
         }
         return false ;
     }
-    
+
     int MetaEnum::get_value_by_name(const std::string& name) const {
         for(unsigned int i=0; i<values_.size(); i++) {
             if(values_[i].name == name) {
@@ -111,7 +113,7 @@ namespace OGF {
         ogf_assert(found) ;
         return -1 ;
     }
-    
+
     const std::string& MetaEnum::get_name_by_value(int value) const {
         for(unsigned int i=0; i<values_.size(); i++) {
             if(values_[i].value == value) {
@@ -122,9 +124,6 @@ namespace OGF {
         ogf_assert(found) ;
         static std::string empty;
         return empty;
-    } 
+    }
 
 }
-
-
-

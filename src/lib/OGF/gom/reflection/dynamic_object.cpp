@@ -138,9 +138,10 @@ namespace OGF {
 		MetaClass* mclass_commands =
 		    Meta::instance()->resolve_meta_class("OGF::Commands");
 
-		bool is_commands = target->meta_class()->is_subclass_of(
-		    mclass_commands
-		);
+		bool is_commands = (mclass_commands != nullptr) &&
+		    target->meta_class()->is_subclass_of(
+			mclass_commands
+		    );
 
 		if(is_commands) {
 		    bool invoked_from_gui = false;
