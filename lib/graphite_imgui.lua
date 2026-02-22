@@ -20,26 +20,28 @@ gom.connect(
 )
 gom.connect(main.render_area.dropped_file, scene_graph.load_object)
 
---------------------------------------------------------------------
-gom.execute_file("graphite_common.lua")
-gom.execute_file("autogui.lua")
---------------------------------------------------------------------
+---------------------------------------------------------------------------------
+gom.execute_file("graphite_common.lua") -- utilities
+gom.execute_file("autogui.lua")         -- gui for commandsds and attributes
+---------------------------------------------------------------------------------
 
-gom.execute_file("preferences.lua")
-gom.execute_file("main_window.lua")
-gom.execute_file("scene_graph.lua")
-gom.execute_file("camera.lua")
-gom.execute_file("gizmo.lua")
-gom.execute_file("object_properties.lua")
-gom.execute_file("command.lua")
-gom.execute_file("toolbox.lua")
-gom.execute_file("text_editor.lua")
-gom.execute_file("console.lua")
-gom.execute_file("histogram.lua")
+gom.execute_file("preferences.lua") -- the preferences window
+gom.execute_file("main_window.lua") -- the main window and modules managemnt
+gom.execute_file("scene_graph.lua") -- special module, always on
+gom.execute_file("camera.lua")      -- camera management and optional module
+gom.execute_file("gizmo.lua")       -- module for 3D gizmo (axes)
+gom.execute_file("object_properties.lua") -- module for optional ppties window
+gom.execute_file("command.lua")     -- special module for command zone
+gom.execute_file("toolbox.lua")     -- special modules for obj and camera tools
+gom.execute_file("text_editor.lua") -- module for programs/text editor
+gom.execute_file("console.lua")     -- module for the console
+gom.execute_file("histogram.lua")   -- module for statistics and histo display
 
 preferences_window.bind_function_keys()
 
---------------------------------------------------------------------
+--------------------------------------------------------------------------------
+-- Menu bar, status bar, main callback to display GUI
+--------------------------------------------------------------------------------
 
 graphite_gui = {}
 

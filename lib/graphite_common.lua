@@ -1,6 +1,12 @@
 -- =============================================================================
 -- Utilities
 -- =============================================================================
+-- - Python-like string manipulation 
+--   starts_with, ends_with, remove_prefix, remove_suffix, split
+-- - Correct display of tables (by default print(table) is not correct in lua)
+-- - Mechanism to load plugins, and also objects and scripts specified 
+--   as command line arguments
+-- - Globals for types (OGF and NL)
 
 -- \brief Tests whether a string starts with a prefix
 -- \param[in] str the string

@@ -1,6 +1,17 @@
 --  Camera for graphite with Skin_imgui
 ----------------------------------------------------
 
+camera_gui = {}
+camera_gui.name = 'Camera'
+camera_gui.icon = '@camera'
+camera_gui.help = 'Camera properties'
+camera_gui.x = 3*main.margin()+150*main.scaling()+5
+camera_gui.y = main.margin()
+camera_gui.w = 220*main.scaling()
+camera_gui.h = 300*main.scaling()
+camera_gui.no_toggle = true
+camera_gui.in_tree = true
+
 xform = OGF.Transform3d.create()
 arcball = OGF.ArcBall.create()
 translation = OGF.Translation.create()
@@ -80,17 +91,6 @@ gom.connect(main.render_area.mouse_move, xform.zoom_out)
    .if_arg('control', true)
    .if_arg('shift', false)
    .rename_arg('delta_y_ndc', 'value')
-
-camera_gui = {}
-camera_gui.name = 'Camera'
-camera_gui.icon = '@camera'
-camera_gui.help = 'Camera properties'
-camera_gui.x = 3*main.margin()+150*main.scaling()+5
-camera_gui.y = main.margin()
-camera_gui.w = 220*main.scaling()
-camera_gui.h = 300*main.scaling()
-camera_gui.no_toggle = true
-camera_gui.in_tree = true
 
 function camera_gui.backgrounds()
 
