@@ -11,7 +11,6 @@ object_properties_gui.y = main.margin()
 object_properties_gui.w = 165*main.scaling()
 object_properties_gui.h = 180*main.scaling()
 object_properties_gui.resizable = true
-object_properties_gui.not_in_tree = true
 
 function object_properties_gui.draw_window()
   if scene_graph.current() ~= nil then

@@ -9,7 +9,6 @@ command_gui.x = 3*main.margin()+150*main.scaling()+5
 command_gui.y = main.margin()
 command_gui.w = 220*main.scaling()
 command_gui.h = 300*main.scaling()
-command_gui.not_in_tree = true
 
 function command_gui.update_visibility()
    command_gui.inhibit = (command_gui.request == nil)

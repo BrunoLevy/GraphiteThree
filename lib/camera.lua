@@ -90,6 +90,7 @@ camera_gui.y = main.margin()
 camera_gui.w = 220*main.scaling()
 camera_gui.h = 300*main.scaling()
 camera_gui.no_toggle = true
+camera_gui.in_tree = true
 
 function camera_gui.backgrounds()
 

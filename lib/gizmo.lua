@@ -6,6 +6,7 @@ gizmo_gui.visible = true
 gizmo_gui.name = 'Gizmo'
 gizmo_gui.icon = '@crosshairs'
 gizmo_gui.help = 'The 3D gizmo for rotating and resetting view'
+gizmo_gui.in_tree = true
 
 -- a special function directly called in graphite_imgui.lua instead
 -- of a standard module callback because it needs to be called outside

@@ -255,6 +255,8 @@ function autogui.property(object, mproperty)
 
    local new_val = tostring(object[mproperty.name])
 
+   -- if object is a Shader and if there is a selection, reflect the property
+   -- change to all selected objects
    if new_val ~= prev_val and object.is_a(OGF.Shader) then
       local grob = object.grob
       if grob.selected and scene_graph.I.Selection.nb_selected() > 1 then

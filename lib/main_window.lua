@@ -26,6 +26,7 @@ graphite_main_window.modules_by_name = {}
 --     e.g. file dialogs
 --   (optional) x,y,w,h: initial position and size of the window.
 --   (optional) window_flags: additional window flags passed to imgui.Begin()
+--   (optional) in_tree: display module toggle and properties in tree
 --
 -- \details One can overwrite a previously added object
 
@@ -278,7 +279,7 @@ function graphite_main_window.draw_contents()
         ImGuiTreeNodeFlags_DrawLinesFull
   ) then
      for index,module in ipairs(graphite_main_window.modules_by_index) do
-        if not module.not_in_tree then
+        if module.in_tree then
            graphite_main_window.draw_module_name_and_toggle(module)
         end
      end
