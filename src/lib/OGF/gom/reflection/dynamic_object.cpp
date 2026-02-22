@@ -36,6 +36,7 @@
 
 #include <OGF/gom/reflection/dynamic_object.h>
 #include <OGF/gom/reflection/meta.h>
+#include <OGF/gom/interpreter/interpreter.h>
 
 namespace OGF {
 
@@ -130,6 +131,45 @@ namespace OGF {
                                        << std::endl;
                     return false;
                 }
+
+
+		// record invokation in history if MetaClass inherits Commands
+
+		MetaClass* mclass_commands =
+		    Meta::instance()->resolve_meta_class("OGF::Commands");
+
+		bool is_commands = target->meta_class()->is_subclass_of(
+		    mclass_commands
+		);
+
+		if(is_commands) {
+		    bool invoked_from_gui = false;
+		    ArgList args_for_history; // without '_' args
+		    for(index_t i=0; i<args.nb_args(); ++i) {
+			const std::string& name = args.ith_arg_name(i);
+			const Any& value = args.ith_arg_value(i);
+			if(name.length() > 0 && name[0] == '_') {
+			    if(name == "_invoked_from_gui" &&
+			       value.as_string() == "true") {
+				invoked_from_gui = true;
+			    }
+			    continue;
+			}
+			args_for_history.create_arg(name, value);
+		    }
+		    if(invoked_from_gui) {
+			Interpreter* interpreter =
+			    Interpreter::default_interpreter();
+			Object* main = interpreter->resolve_object("main");
+			if(main != nullptr) {
+			    main->invoke_method("save_state");
+			}
+			interpreter->record_invoke_in_history(
+			    target, mmethod->name(), args_for_history
+			);
+		    }
+		}
+
                 ArgList args2;
                 args2.create_arg("self",target);
                 args2.create_arg("method",method_name);
