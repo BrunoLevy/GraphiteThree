@@ -133,7 +133,7 @@ namespace OGF {
                 }
 
 
-		// record invokation in history if MetaClass inherits Commands
+		// Record invokation in history if MetaClass inherits Commands
 
 		MetaClass* mclass_commands =
 		    Meta::instance()->resolve_meta_class("OGF::Commands");
@@ -170,7 +170,9 @@ namespace OGF {
 		    }
 		}
 
-                ArgList args2;
+		// End of mechanism for recording in history
+
+                ArgList args2; // add 'self' and 'method' args
                 args2.create_arg("self",target);
                 args2.create_arg("method",method_name);
                 args2.append(args);
