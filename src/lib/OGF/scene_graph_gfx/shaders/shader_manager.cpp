@@ -111,7 +111,16 @@ namespace OGF {
 		glDepthMask(GL_FALSE);
 		glEnable(GL_BLEND);
 		glBlendEquation(GL_FUNC_ADD);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+		switch(current_shader_->get_transparency()) {
+		case Shader::TRANSP_ACCUM:
+		    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+		    break;
+		case Shader::TRANSP_BLEND:
+		    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		    break;
+		case Shader::TRANSP_OPAQUE:
+		    break;
+		}
 	    }
 
 	    current_shader_->draw() ;

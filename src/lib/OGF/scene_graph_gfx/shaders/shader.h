@@ -65,8 +65,9 @@ namespace OGF {
     public:
 
 	enum Transparency {
-	    OPAQUE,
-	    TRANSPARENT
+	    TRANSP_OPAQUE,
+	    TRANSP_ACCUM,
+	    TRANSP_BLEND
 	};
 
         /**
@@ -126,7 +127,7 @@ namespace OGF {
 
 
 	bool get_transparent() const {
-	    return transparency_ != OPAQUE;
+	    return transparency_ != TRANSP_OPAQUE;
 	}
 
 	/**
