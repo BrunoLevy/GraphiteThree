@@ -59,7 +59,7 @@ namespace OGF {
     ) :
         grob_(grob),
         no_grob_update_(false),
-	transparent_(false) {
+	transparency_(OPAQUE) {
     }
 
     Shader::~Shader() {

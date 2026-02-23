@@ -64,6 +64,11 @@ namespace OGF {
     gom_class SCENE_GRAPH_GFX_API Shader : public Node {
     public:
 
+	enum Transparency {
+	    OPAQUE,
+	    TRANSPARENT
+	};
+
         /**
          * \brief Shader constructor.
          * \param[in] grob a pointer to the Grob this Shader is responsible of.
@@ -120,16 +125,20 @@ namespace OGF {
 	}
 
 
-	/**
-	 * \brief Transparent rendering
-	 */
 	bool get_transparent() const {
-	    return transparent_;
+	    return transparency_ != OPAQUE;
 	}
 
-	void set_transparent(bool x) {
-	    transparent_ = x;
+	/**
+	 * \brief Transparent rendering mode
+	 */
+	void set_transparency(Transparency x) {
+	    transparency_ = x;
 	    update();
+	}
+
+	Transparency get_transparency() const {
+	    return transparency_;
 	}
 
     public:
@@ -215,7 +224,7 @@ namespace OGF {
          */
         bool no_grob_update_;
 
-	bool transparent_;
+	Transparency transparency_;
     };
 
     /**
