@@ -106,7 +106,21 @@ namespace OGF {
 	    return;
 	}
         if(current_shader_ != nullptr) {
+
+	    if(current_shader_->get_transparent()) {
+		glDepthMask(GL_FALSE);
+		glEnable(GL_BLEND);
+		glBlendEquation(GL_FUNC_ADD);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	    }
+
 	    current_shader_->draw() ;
+
+	    if(current_shader_->get_transparent()) {
+		glDisable(GL_BLEND);
+		glDepthMask(GL_TRUE);
+	    }
+
         }
     }
 }

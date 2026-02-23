@@ -119,6 +119,19 @@ namespace OGF {
 	    return grob();
 	}
 
+
+	/**
+	 * \brief Transparent rendering
+	 */
+	bool get_transparent() const {
+	    return transparent_;
+	}
+
+	void set_transparent(bool x) {
+	    transparent_ = x;
+	    update();
+	}
+
     public:
         GLdouble* latest_modelview() {
             return modelview_;
@@ -201,6 +214,8 @@ namespace OGF {
          * \details Can be set by derived classes constructors.
          */
         bool no_grob_update_;
+
+	bool transparent_;
     };
 
     /**
