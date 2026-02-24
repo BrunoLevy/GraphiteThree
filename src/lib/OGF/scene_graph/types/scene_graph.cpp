@@ -118,6 +118,16 @@ namespace OGF {
 	move_current_down();
     }
 
+    void SceneGraph::move_object_to_top(const GrobName& grob_name) {
+	set_current_object(grob_name);
+	move_current_to_top();
+    }
+
+    void SceneGraph::move_object_to_bottom(const GrobName& grob_name) {
+	set_current_object(grob_name);
+	move_current_to_bottom();
+    }
+
     void SceneGraph::rename_object(
 	const GrobName& grob_name, const std::string& new_name
     ) {
@@ -206,6 +216,21 @@ namespace OGF {
             return;
         }
         swap_children(next, current());
+    }
+
+
+    void SceneGraph::move_current_to_top() {
+        if(current() == nullptr) {
+            return;
+        }
+	move_child_to_top(current());
+    }
+
+    void SceneGraph::move_current_to_bottom() {
+        if(current() == nullptr) {
+            return;
+        }
+	move_child_to_bottom(current());
     }
 
     Grob* SceneGraph::load_object(

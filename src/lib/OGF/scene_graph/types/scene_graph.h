@@ -129,6 +129,19 @@ namespace OGF {
 	void move_object_down(const GrobName& grob);
 
 	/**
+	 * \brief Makes an object the first in the list
+	 * \param[in] grob the object to be moved up or its name
+	 */
+	void move_object_to_top(const GrobName& grob);
+
+	/**
+	 * \brief Makes an object the last in the list
+	 * \param[in] grob the object to be moved down or its name
+	 */
+	void move_object_to_bottom(const GrobName& grob);
+
+
+	/**
 	 * \brief Renames an object
 	 * \param[in] grob the object to be renamed or its name
 	 * \param[in] new_name the desired new name for the object
@@ -183,6 +196,16 @@ namespace OGF {
          *  if current object is the last one
          */
         void move_current_down();
+
+	/**
+	 * \brief Makes the current object the first of the list
+	 */
+        void move_current_to_top();
+
+	/**
+	 * \brief Makes the current object the last of the list
+	 */
+        void move_current_to_bottom();
 
         /**
          * \brief Loads an object from a file, and stores it in this

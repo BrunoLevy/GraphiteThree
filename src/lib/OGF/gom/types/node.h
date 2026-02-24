@@ -117,7 +117,7 @@ namespace OGF {
 
     protected:
         /**
-         * \brief Swaps two children by indices
+         * \brief Swaps two children
          * \param[in] n1 , n2 the two children to swap
          */
         void swap_children(Node* n1, Node* n2) {
@@ -134,6 +134,32 @@ namespace OGF {
             geo_assert(i != NO_INDEX && j != NO_INDEX);
             std::swap(children_[i], children_[j]);
         }
+
+	/**
+	 * \brief Makes a child the first element in the list
+	 * \param[in] n the child
+	 */
+	void move_child_to_top(Node* n) {
+	    SmartPointer<Node> pn;
+	    auto it = std::find(children_.begin(), children_.end(), n);
+	    geo_assert(it != children_.end());
+	    pn = *it;
+	    children_.erase(it);
+	    children_.insert(children_.begin(), pn);
+	}
+
+	/**
+	 * \brief Makes a child the last element in the list
+	 * \param[in] n the child
+	 */
+	void move_child_to_bottom(Node* n) {
+	    SmartPointer<Node> pn;
+	    auto it = std::find(children_.begin(), children_.end(), n);
+	    geo_assert(it != children_.end());
+	    pn = *it;
+	    children_.erase(it);
+	    children_.push_back(pn);
+	}
 
     private:
         std::vector< SmartPointer<Node> > children_ ;

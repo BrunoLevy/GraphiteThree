@@ -58,7 +58,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
    if not main_menu then
       imgui.Separator()
       imgui.PushStyleVar_2(ImGuiStyleVar_ItemSpacing, 0.0, 4.0)
-      imgui.TextDisabled('Edit...     ')
+      imgui.TextDisabled('Edit...   ')
       imgui.SameLine()
       if imgui.SimpleButton(imgui.font_icon('edit')..'##  rename') then
          scene_graph_gui.rename_old = name
@@ -82,6 +82,11 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       end
       autogui.tooltip('delete')
       imgui.SameLine()
+      if imgui.SimpleButton(imgui.font_icon('sort-up')..'##move to top') then
+         scene_graph.move_object_to_top{grob=grob,_invoked_from_gui=true}
+      end
+      autogui.tooltip('move to top')
+      imgui.SameLine()
       if imgui.SimpleButton(imgui.font_icon('arrow-up')..'##move up') then
          scene_graph.move_object_up{grob=grob,_invoked_from_gui=true}
       end
@@ -91,6 +96,12 @@ function scene_graph_gui.grob_ops(grob, main_menu)
          scene_graph.move_object_down{grob=grob,_invoked_from_gui=true}
       end
       autogui.tooltip('move down')
+      imgui.SameLine()
+      if imgui.SimpleButton(imgui.font_icon('sort-down')..'##move to bot') then
+         scene_graph.move_object_to_bottom{grob=grob,_invoked_from_gui=true}
+      end
+      autogui.tooltip('move to bottom')
+      imgui.SameLine()
       imgui.PopStyleVar()
 
       imgui.Separator()
