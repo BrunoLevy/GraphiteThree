@@ -423,10 +423,10 @@ namespace OGF {
         /**
          * \brief A signal that is triggered whenever a file is drag-dropped
          *  into this RenderArea.
-         * \param[in] value the name of the file that was dropped
+         * \param[in] filename the name of the file that was dropped
          * \see set_accept_drops(), get_accept_drops()
          */
-        void dropped_file(const std::string& value);
+        void dropped_file(const std::string& filename);
 
     public:
 	void mouse_button_callback(int button, int action, int mods);
