@@ -107,7 +107,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       imgui.Separator()
 
       imgui.PushStyleVar_2(ImGuiStyleVar_ItemSpacing, 0.0, 4.0)
-      imgui.TextDisabled('Gfx...      ')
+      imgui.TextDisabled('Gfx...    ')
       imgui.SameLine()
       if imgui.SimpleButton(
          imgui.font_icon('eye-slash')..'## show/hide'
@@ -408,10 +408,8 @@ function scene_graph_gui.draw_object_list()
           break
        end
        if draw_props then
-          autogui.in_popup = true
           autogui.in_tree = true
           autogui.properties_editor(grob.shader, false, true)
-	  autogui.in_popup = false
           autogui.in_tree = false
           imgui.TreePop()
        end
