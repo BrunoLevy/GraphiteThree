@@ -131,7 +131,8 @@ namespace OGF {
         cells_filter_ = false;
 
         edges_style_.visible = true;
-        edges_style_.color  = dark_mode() ? Color(0.0,1.0,1.0) : Color(0.0,0.0,0.5);
+        edges_style_.color  =
+	    dark_mode() ? Color(0.0,1.0,1.0) : Color(0.0,0.0,0.5);
         edges_style_.width  = 1;
 
         mesh_style_.visible = false;
@@ -212,6 +213,17 @@ namespace OGF {
 	}
 	update();
     }
+
+    void PlainMeshGrobShader::set_transparency(Transparency x) {
+	if(x == TRANSP_BLEND) {
+	    set_culling_mode(CULL_BACK);
+	}
+	if(surface_style_.color.a() == 1.0) {
+	    surface_style_.color.set_a(0.5);
+	}
+	Shader::set_transparency(x);
+    }
+
 
     void PlainMeshGrobShader::set_attribute(const std::string& value) {
         attribute_ = value;

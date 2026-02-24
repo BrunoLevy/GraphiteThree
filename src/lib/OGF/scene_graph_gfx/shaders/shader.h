@@ -66,8 +66,8 @@ namespace OGF {
 
 	enum Transparency {
 	    TRANSP_OPAQUE,
-	    TRANSP_ACCUM,
-	    TRANSP_BLEND
+	    TRANSP_BLEND,
+	    TRANSP_ACCUM
 	};
 
         /**
@@ -133,10 +133,7 @@ namespace OGF {
 	/**
 	 * \brief Transparent rendering mode
 	 */
-	void set_transparency(Transparency x) {
-	    transparency_ = x;
-	    update();
-	}
+	virtual void set_transparency(Transparency x);
 
 	Transparency get_transparency() const {
 	    return transparency_;

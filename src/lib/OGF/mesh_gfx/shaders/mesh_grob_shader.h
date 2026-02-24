@@ -1152,6 +1152,10 @@ namespace OGF {
 	    return glsl_source_;
 	}
 
+    public:
+	void set_transparency(Transparency x) override;
+
+
     protected:
         void draw_slivers();
         void draw_weird_cells();

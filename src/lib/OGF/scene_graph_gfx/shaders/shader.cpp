@@ -52,7 +52,7 @@
 
 namespace OGF {
 
-//_________________________________________________________
+/******************************************************************************/
 
     Shader::Shader(
         Grob* grob
@@ -94,6 +94,11 @@ namespace OGF {
 	return set_property_and_record_to_history(name, value, interpreter);
     }
 
+
+    void Shader::set_transparency(Transparency x) {
+	transparency_ = x;
+	update();
+    }
 
     Texture* Shader::create_texture_from_file(
         const std::string& file_name, GLint filtering, GLint wrapping
@@ -147,6 +152,6 @@ namespace OGF {
         return result;
     }
 
-//_________________________________________________________
+/****************************************************************/
 
 }
