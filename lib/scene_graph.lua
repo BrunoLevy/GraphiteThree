@@ -7,6 +7,7 @@ scene_graph_gui.name = 'Scene'
 scene_graph_gui.icon = '@cubes'
 scene_graph_gui.edit_list = false -- true when up/down/delete btn are visible
 scene_graph_gui.picked_grob = nil
+scene_graph_gui.nb_sel_in_ctrl_group = 0
 
 gom.execute_file("scene_graph_menu_map.lua")
 
@@ -535,10 +536,15 @@ function scene_graph_gui.draw_grob_name(grob)
    if imgui.IsItemActivated() and not imgui.IsItemToggledOpen() then
        if imgui.IO_KeyCtrl_pressed() then
          selection_op = scene_graph_gui.toggle_selection
-       elseif imgui.IO_KeyShift_pressed() then
-         selection_op = scene_graph_gui.extend_selection
+         scene_graph_gui.nb_sel_in_ctrl_group =
+            scene_graph_gui.nb_sel_in_ctrl_group + 1
        else
-         selection_op = scene_graph_gui.clear_selection
+         scene_graph_gui.nb_sel_in_ctrl_group = 0
+         if imgui.IO_KeyShift_pressed() then
+           selection_op = scene_graph_gui.extend_selection
+         else
+           selection_op = scene_graph_gui.clear_selection
+         end
        end
    end
    return selection_op
@@ -652,6 +658,13 @@ function scene_graph_gui.toggle_selection(grob)
       scene_graph.I.Selection.toggle_selection{
           grob=grob,_invoked_from_gui=true
       }
+      if scene_graph_gui.nb_sel_in_ctrl_group == 1 and
+         scene_graph.current() ~= nil and grob.selected
+      then
+         scene_graph.I.Selection.select_object{
+            grob=scene_graph.current(),_invoked_from_gui=true
+         }
+      end
    end
 end
 
