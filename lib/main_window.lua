@@ -28,7 +28,7 @@ graphite_main_window.modules_by_name = {}
 --   (optional) window_flags: additional window flags passed to imgui.Begin()
 --   (optional) in_tree: display module toggle and properties in tree
 --
---   In addition, the system manages a 'inhibit' flag that prevents the 
+--   In addition, the system manages a 'inhibit' flag that prevents the
 --   module from appearing when set. It is used to display the command zone
 --   and toolbox at the same location (toobox is inhibited when there is an
 --   active command, else command is inhibited)
@@ -313,7 +313,7 @@ function graphite_main_window.draw_contents()
     end
     autogui.tooltip('done editing')
   else
-    if imgui.SimpleButton(imgui.font_icon('ellipsis-h')) then
+    if imgui.SimpleButton(imgui.font_icon('ellipsis')) then
        scene_graph_gui.edit_list = true
     end
     autogui.tooltip('edit object list')

@@ -83,7 +83,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       end
       autogui.tooltip('delete')
       imgui.SameLine()
-      if imgui.SimpleButton(imgui.font_icon('sort-up')..'##move to top') then
+      if imgui.SimpleButton(imgui.font_icon('angles-up')..'##move to top') then
          scene_graph.move_object_to_top{grob=grob,_invoked_from_gui=true}
       end
       autogui.tooltip('move to top')
@@ -98,7 +98,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       end
       autogui.tooltip('move down')
       imgui.SameLine()
-      if imgui.SimpleButton(imgui.font_icon('sort-down')..'##move to bot') then
+      if imgui.SimpleButton(imgui.font_icon('angles-down')..'##move to bot') then
          scene_graph.move_object_to_bottom{grob=grob,_invoked_from_gui=true}
       end
       autogui.tooltip('move to bottom')
