@@ -261,17 +261,17 @@ function Stats.draw_window()
       'OGF::PlainMeshGrobShader' and
       scene_graph.current().shader.painting == 'ATTRIBUTE'
    then
-      if imgui.Button(imgui.font_icon('angle-double-up')) then
+      if imgui.Button(imgui.font_icon('angles-up')) then
           scene_graph.current().shader.painting = 'SOLID_COLOR'
       end
    else
-      if imgui.Button(imgui.font_icon('angle-double-down')) then
+      if imgui.Button(imgui.font_icon('angles-down')) then
           scene_graph.current().shader.painting = 'ATTRIBUTE'
       end
    end
    autogui.tooltip('Display histogram for current object and attribute')
    imgui.SameLine()
-   _,Stats.color = imgui.Checkbox(imgui.font_icon('paint-brush'),Stats.color)
+   _,Stats.color = imgui.Checkbox(imgui.font_icon('paintbrush'),Stats.color)
    imgui.SameLine()
    if imgui.Button(imgui.font_icon('expand')) then
       scene_graph.current().shader.autorange()
@@ -282,7 +282,7 @@ function Stats.draw_window()
    end
    autogui.tooltip('Autofit range')
    imgui.SameLine()
-   if imgui.Button(imgui.font_icon('search')) then
+   if imgui.Button(imgui.font_icon('magnifying-glass')) then
       if Stats.sel1 ~= Stats.sel2 then
          local val1 = Stats.index_to_val(Stats.sel1)
          local val2 = Stats.index_to_val(Stats.sel2)

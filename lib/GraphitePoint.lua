@@ -111,13 +111,13 @@ end
 function GraphitePoint.reset_tool()
    -- To change tool, we need to have at least one object
    scene_graph.create_object('OGF::MeshGrob')
-   tools.tool('OGF::GrobPan') 
-   tools.tool('OGF::GrobPan') 
+   tools.tool('OGF::GrobPan')
+   tools.tool('OGF::GrobPan')
 end
 
 function GraphitePoint.set_background(file)
    main.render_area.background_image = GraphitePoint.basedir .. '/' .. file
-   main.render_area.update()   
+   main.render_area.update()
 end
 
 function GraphitePoint.clear_background()
@@ -130,7 +130,7 @@ function GraphitePoint.reset()
    end
    GraphitePoint.clear3d()
    GraphitePoint.reset_tool()
-   GraphitePoint.cur = 1 
+   GraphitePoint.cur = 1
    GraphitePoint.cur_script = 1
    GraphitePoint.update()
 end
@@ -144,7 +144,7 @@ end
 function GraphitePoint.next()
   if GraphitePoint.locked then
      return
-  end	 
+  end
   GraphitePoint.locked = true
   if GraphitePoint.run_script(GraphitePoint.cur, GraphitePoint.cur_script) then
      GraphitePoint.cur_script = GraphitePoint.cur_script + 1
@@ -152,20 +152,20 @@ function GraphitePoint.next()
      GraphitePoint.clear3d()
      GraphitePoint.cur = GraphitePoint.cur + 1
      GraphitePoint.cur_script = 1
-     GraphitePoint.update()   
+     GraphitePoint.update()
      GraphitePoint.run_script(GraphitePoint.cur, 0)
-  end	 
+  end
   GraphitePoint.locked = false
 end
 
 function GraphitePoint.prev()
   if GraphitePoint.locked then
      return
-  end	 
-  GraphitePoint.clear3d() 
+  end
+  GraphitePoint.clear3d()
   if GraphitePoint.scripts_enabled then
      GraphitePoint.reset_tool()
-  end	 
+  end
   GraphitePoint.cur_script = 1
   GraphitePoint.cur = GraphitePoint.cur - 1
   GraphitePoint.update()
@@ -182,17 +182,17 @@ function GraphitePoint.draw_pdf_slide(slidenum)
    GraphitePoint.cairo_context:rectangle(0,0,pw,ph)
    GraphitePoint.cairo_context:fill()
    page:render(GraphitePoint.cairo_context)
-   GraphitePoint.cairo_context:scale(1./scale,1./scale)           
+   GraphitePoint.cairo_context:scale(1./scale,1./scale)
 end
 
 function GraphitePoint.save_pdf_slide(filename)
   if GraphitePoint.cairo_OK then
-     GraphitePoint.cairo_surface:write_to_png(filename)  
+     GraphitePoint.cairo_surface:write_to_png(filename)
   else
      command = 'cp /tmp/snapshot.png ' .. filename
      os.execute(command)
-  end   
-end  
+  end
+end
 
 function GraphitePoint.update()
    if GraphitePoint.cairo_OK then
@@ -204,7 +204,7 @@ function GraphitePoint.update()
           return
        end
        GraphitePoint.draw_pdf_slide(GraphitePoint.cur-1)
-       
+
        -- Directly update the background from cairo context raw data.
        -- Disable here if this causes some problems with cairo/lgi versions
        -- (activated by default, much much faster !!)
@@ -226,21 +226,21 @@ function GraphitePoint.update()
    else
       -- even slower version that uses an external program (pdftocairo)
       command = 'pdftocairo -png -r 90 -f ' .. GraphitePoint.cur ..
-                  ' -l ' .. GraphitePoint.cur .. ' -singlefile ' .. 
+                  ' -l ' .. GraphitePoint.cur .. ' -singlefile ' ..
                    GraphitePoint.pdf_file_name .. ' ' .. '/tmp/snapshot'
-      os.execute(command) 
+      os.execute(command)
       main.render_area.background_image = '/tmp/snapshot.png'
       main.render_area.update()
-   end   
-end   
+   end
+end
 
 function GraphitePoint.goto_slide(value)
    print('GraphitePoint goto slide '..value)
    if not GraphitePoint.ready then
       return
-   end   
+   end
    GraphitePoint.clear3d()
-   GraphitePoint.cur = tonumber(value) 
+   GraphitePoint.cur = tonumber(value)
    GraphitePoint.cur_script = 1
    GraphitePoint.update()
 end
@@ -249,7 +249,7 @@ function GraphitePoint.load_presentation(value)
    gom.out('load presentation: ' .. value)
    ScriptManager.init()
    GraphitePoint.pdf_file = nil
-   GraphitePoint.pdf_file_name = ''  
+   GraphitePoint.pdf_file_name = ''
    GraphitePoint.basedir=FileSystem.dir_name(value)
    GraphitePoint.presentation_name = FileSystem.base_name(
        GraphitePoint.basedir,true
@@ -267,7 +267,7 @@ function GraphitePoint.load_presentation(value)
    if FileSystem.is_file(script_manager_file) then
       gom.out('load scripts: ' .. script_manager_file)
       gom.execute_file(script_manager_file)
-   end	 
+   end
    GraphitePoint.slide_template = GraphitePoint.basedir .. '/template.png'
    keys = GraphitePoint.script_manager.presentation_keys()
    GraphitePoint.reset()
@@ -283,14 +283,14 @@ function GraphitePoint.close_presentation()
    ScriptManager.init()
    GraphitePoint.init()
    graphite_gui.escape()
-end   
+end
 
 function GraphitePoint.hide_graphite()
    GraphitePoint.was_full_screen = main.full_screen
    main.full_screen = false
    if main.full_screen then
        main.iconify()
-   end       
+   end
 end
 
 function GraphitePoint.show_graphite()
@@ -310,18 +310,18 @@ function GraphitePoint.run_geex(cmd_in)
 end
 
 function GraphitePoint.run_geex_over_slide(cmd_in)
-   GraphitePoint.save_pdf_slide(GraphitePoint.slide_snapshot) 
+   GraphitePoint.save_pdf_slide(GraphitePoint.slide_snapshot)
    cmd = 'cd ' .. GraphitePoint.geex_dir .. ' ; '
    cmd = cmd .. 'binaries/bin/' .. cmd_in
    cmd = cmd .. ' -fs -bkg ' .. GraphitePoint.slide_snapshot
    gom.out('command = ' .. cmd)
-   GraphitePoint.hide_graphite()   
+   GraphitePoint.hide_graphite()
    os.execute(cmd)
    GraphitePoint.show_graphite()
 end
 
 function GraphitePoint.run_geex_with_template(cmd_in)
-   GraphitePoint.save_pdf_slide(GraphitePoint.slide_snapshot) 
+   GraphitePoint.save_pdf_slide(GraphitePoint.slide_snapshot)
    cmd = 'cd ' .. GraphitePoint.geex_dir + ' ; '
    cmd = cmd .. 'binaries/bin/' .. cmd_in
    cmd = cmd .. ' -fs -bkg ' .. GraphitePoint.slide_template
@@ -334,25 +334,25 @@ end
 function GraphitePoint.run_vorpaview(args)
    cmd = GraphitePoint.vorpaview_dir ..
       '/vorpaview full_screen=true ' ..
-      GraphitePoint.data_path() .. '/' .. args 
+      GraphitePoint.data_path() .. '/' .. args
    gom.out(cmd)
    GraphitePoint.hide_graphite()
    os.execute(cmd)
    GraphitePoint.show_graphite()
-end   
+end
 
 function GraphitePoint.data_path()
    return GraphitePoint.basedir .. '/Data'
-end   
+end
 
 function GraphitePoint.load_object(filename)
    scene_graph.load_object(GraphitePoint.data_path() .. '/' .. filename)
-end   
+end
 
 function GraphitePoint.play_video(filename)
     GraphitePoint.hide_graphite()
     os.execute('mplayer -fs ' .. GraphitePoint.data_path() .. '/' .. filename)
-    GraphitePoint.show_graphite()    
+    GraphitePoint.show_graphite()
 end
 
 function GraphitePoint.scripts(value)
@@ -363,7 +363,7 @@ function GraphitePoint.scripts(value)
       GraphitePoint.scripts_enabled = false
       gom.out('Disable scripts')
    end
-end   
+end
 
 
 function GraphitePoint.filtering(value)
@@ -371,25 +371,25 @@ function GraphitePoint.filtering(value)
        GraphitePoint.filtering_mode = 'MIPMAP'
    else
        GraphitePoint.filtering_mode = 'NO_FILTERING'
-   end   
+   end
    GraphitePoint.update()
 end
 
 function GraphitePoint.goto_key(k)
    GraphitePoint.goto_slide(GraphitePoint.script_manager.key_to_slide(k))
-end   
+end
 
 function GraphitePoint.presentation_mode()
    main.full_screen = true
    preferences_window.load_preferences('presentation_layout');
-end   
+end
 
 function GraphitePoint.reload()
    gom.out('reload')
    current = GraphitePoint.cur
    GraphitePoint.load_presentation(GraphitePoint.pdf_file_name)
    GraphitePoint.goto_slide(current)
-end   
+end
 
 function GraphitePoint.key_event(k)
    if not GraphitePoint.ready then
@@ -398,23 +398,23 @@ function GraphitePoint.key_event(k)
    if k == 'page_down' or k == 'down' or k == ' ' then
       GraphitePoint.next()
       return
-   end   
+   end
    if k == 'page_up' or k == 'up' then
       GraphitePoint.prev()
       return
-   end   
+   end
    if k == 'home' then
       GraphitePoint.reset()
       return
-   end   
+   end
    if k == 'end' then
       GraphitePoint.goto_end()
       return
-   end   
+   end
 end
 
 GraphitePoint.name = 'GraphitePoint'
-GraphitePoint.icon = '@chalkboard-teacher'
+GraphitePoint.icon = '@person-chalkboard'
 GraphitePoint.x = 4*main.margin() + 250*main.scaling()
 GraphitePoint.y = main.margin()
 GraphitePoint.w = 300*main.scaling()
@@ -444,7 +444,7 @@ function GraphitePoint.draw_window()
 	) then
 	   GraphitePoint.reset()
 	end
-	autogui.tooltip('Reset slideshow')	
+	autogui.tooltip('Reset slideshow')
 
 	imgui.SameLine()
 
@@ -454,7 +454,7 @@ function GraphitePoint.draw_window()
 	   GraphitePoint.presentation_mode()
 	end
 	autogui.tooltip('Presentation mode\nPress ESC for normal mode')
-	
+
 	imgui.SameLine()
 
 	if imgui.SimpleButton(
@@ -462,7 +462,7 @@ function GraphitePoint.draw_window()
 	) then
 	   GraphitePoint.reload()
 	end
-	autogui.tooltip('Reload presentation')	
+	autogui.tooltip('Reload presentation')
 
 	imgui.SameLine()
 
@@ -479,7 +479,7 @@ function GraphitePoint.draw_window()
 	    '##beamer##mode', GraphitePoint.mode,
 	    '640x480;800x600;1024x768;1280x1024;1680x1050;1920x1080'
         )
-	imgui.SameLine()    
+	imgui.SameLine()
 	if imgui.Button('Apply##beamer') then
 	    local cmd = gom.get_environment_value('PROJECT_ROOT')..'/lib/beamer.sh '..GraphitePoint.mode
 	    os.execute(cmd)
@@ -487,7 +487,7 @@ function GraphitePoint.draw_window()
 	autogui.tooltip('(tentatively) set both screen resolution\n and beamer plugged on the HDMI')
 
 	imgui.Separator()
-	
+
 	_,GraphitePoint.scripts_enabled = imgui.Checkbox(
 	    'scripts##GraphitePoint',
 	    GraphitePoint.scripts_enabled
@@ -510,7 +510,7 @@ function GraphitePoint.draw_window()
            progress_fraction = GraphitePoint.cur / GraphitePoint.pdf_file:get_n_pages()
 	   progress_str = 'slide ' ..
 	                  tostring(math.floor(GraphitePoint.cur)) .. ' / ' ..
-	                  tostring(math.floor(GraphitePoint.pdf_file:get_n_pages())) 
+	                  tostring(math.floor(GraphitePoint.pdf_file:get_n_pages()))
         end
 
 	imgui.ProgressBar(progress_fraction, progress_str)
@@ -542,7 +542,7 @@ function GraphitePoint.draw_window()
       GraphitePoint.load_presentation(GraphitePoint.pdf_file_name)
   end
 
-end    
+end
 
 function GraphitePoint.draw_menu()
   if imgui.BeginMenu('File...') then
@@ -557,7 +557,7 @@ function GraphitePoint.draw_menu()
      end
      imgui.EndMenu()
   end
-end  
+end
 
 function GraphitePoint.init()
    GraphitePoint.visible=false
@@ -575,7 +575,7 @@ function GraphitePoint.init()
    GraphitePoint.scripts_enabled = true
    GraphitePoint.presentation_name = FileSystem.base_name(
       GraphitePoint.basedir,true
-   )   
+   )
    GraphitePoint.locked = false
    GraphitePoint.pdf_file_name = ''
    GraphitePoint.script_manager = ScriptManager
@@ -602,7 +602,7 @@ function GraphitePoint.init()
    else
       gom.out(
      'GraphitePoint: Could not create Cairo context, using pdftocairo fallback.'
-      )   
+      )
    end
 end
 

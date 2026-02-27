@@ -514,14 +514,14 @@ function text_editor_gui.draw_window()
    autogui.tooltip('Hide editor')
    imgui.SameLine()
    if imgui.SimpleButton(
-      imgui.font_icon('play-circle')
+      imgui.font_icon('circle-play')
    ) then
       text_editor_gui.run()
    end
    autogui.tooltip('Run program <F5>')
    imgui.SameLine()
    if imgui.SimpleButton(
-      imgui.font_icon('stop-circle')
+      imgui.font_icon('circle-stop')
    ) then
       text_editor_gui.stop()
    end
