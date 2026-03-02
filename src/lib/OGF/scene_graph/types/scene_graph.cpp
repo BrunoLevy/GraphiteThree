@@ -128,6 +128,102 @@ namespace OGF {
 	move_current_to_bottom();
     }
 
+    void SceneGraph::move_selection_to_top() {
+	vector<Grob_var> new_children;
+	for(index_t i=0; i<get_nb_children(); ++i) {
+	    if(ith_child(i)->get_selected()) {
+		new_children.push_back(ith_child(i));
+	    }
+	}
+	for(index_t i=0; i<get_nb_children(); ++i) {
+	    if(!ith_child(i)->get_selected()) {
+		new_children.push_back(ith_child(i));
+	    }
+	}
+	for(index_t i=0; i<get_nb_children(); ++i) {
+	    set_ith_child(i, new_children[i].get());
+	}
+    }
+
+    void SceneGraph::move_selection_to_bottom() {
+	vector<Grob_var> new_children;
+	for(index_t i=0; i<get_nb_children(); ++i) {
+	    if(!ith_child(i)->get_selected()) {
+		new_children.push_back(ith_child(i));
+	    }
+	}
+	for(index_t i=0; i<get_nb_children(); ++i) {
+	    if(ith_child(i)->get_selected()) {
+		new_children.push_back(ith_child(i));
+	    }
+	}
+	for(index_t i=0; i<get_nb_children(); ++i) {
+	    set_ith_child(i, new_children[i].get());
+	}
+    }
+
+    void SceneGraph::move_selection_up() {
+	if(get_nb_children() <= 1 || ith_child(0)->get_selected()) {
+	    return;
+	}
+	vector<Grob_var> selected;
+	vector<Grob_var> unselected;
+	for(index_t i=0; i<get_nb_children(); ++i) {
+	    if(ith_child(i)->get_selected()) {
+		selected.push_back(ith_child(i));
+	    } else {
+		unselected.push_back(ith_child(i));
+	    }
+	}
+	for(index_t i=0; i<get_nb_children()-1; ++i) {
+	    if(ith_child(i+1)->get_selected()) {
+		geo_assert(selected.size() > 0);
+		set_ith_child(i, selected.begin()->get());
+		selected.erase(selected.begin());
+	    } else {
+		geo_assert(unselected.size() > 0);
+		set_ith_child(i, unselected.begin()->get());
+		unselected.erase(unselected.begin());
+	    }
+	}
+	geo_assert(unselected.size()==1);
+	set_ith_child(index_t(get_nb_children()-1), unselected.begin()->get());
+    }
+
+    void SceneGraph::move_selection_down() {
+	index_t nb_children = index_t(get_nb_children());
+	if(nb_children <= 1 || ith_child(nb_children-1)->get_selected()) {
+	    return;
+	}
+	vector<Grob_var> selected;
+	vector<Grob_var> unselected;
+	vector<Grob_var> new_children(nb_children);
+	for(index_t i=0; i<nb_children; ++i) {
+	    if(ith_child(i)->get_selected()) {
+		selected.push_back(ith_child(i));
+	    } else {
+		unselected.push_back(ith_child(i));
+	    }
+	}
+	geo_assert(unselected.size() > 0);
+	new_children[0] = unselected.begin()->get();
+	unselected.erase(unselected.begin());
+	for(index_t i=1; i<nb_children; ++i) {
+	    if(ith_child(i-1)->get_selected()) {
+		geo_assert(selected.size() > 0);
+		new_children[i] = selected.begin()->get();
+		selected.erase(selected.begin());
+	    } else {
+		geo_assert(unselected.size() > 0);
+		new_children[i] = unselected.begin()->get();
+		unselected.erase(unselected.begin());
+	    }
+	}
+	for(index_t i=0; i<nb_children; ++i) {
+	    set_ith_child(i, new_children[i]);
+	}
+    }
+
     void SceneGraph::rename_object(
 	const GrobName& grob_name, const std::string& new_name
     ) {

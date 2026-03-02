@@ -42,7 +42,14 @@ function scene_graph_gui.grob_ops(grob, main_menu)
    local name = grob.name
 
    if not main_menu then
-      imgui.MenuItem(name,nil,false,false)
+      if scene_graph.I.Selection.nb_selected() == 0 then
+         imgui.MenuItem(name,nil,false,false)
+      else
+         imgui.MenuItem(
+             tostring(scene_graph.I.Selection.nb_selected())..' selected',
+             nil,false,false
+         )
+      end
       imgui.Separator()
       if imgui.BeginMenu(imgui.font_icon('edit')..'  properties') then
          autogui.in_popup = true
@@ -79,27 +86,27 @@ function scene_graph_gui.grob_ops(grob, main_menu)
       imgui.SameLine()
       if imgui.SimpleButton(imgui.font_icon('window-close')..'##  delete') then
          main.picked_grob = nil
-         scene_graph.delete_object{grob=grob,_invoked_from_gui=true}
+         scene_graph_gui.delete_grob(grob)
       end
       autogui.tooltip('delete')
       imgui.SameLine()
       if imgui.SimpleButton(imgui.font_icon('angles-up')..'##move to top') then
-         scene_graph.move_object_to_top{grob=grob,_invoked_from_gui=true}
+         scene_graph_gui.move_grob_to_top(grob)
       end
       autogui.tooltip('move to top')
       imgui.SameLine()
       if imgui.SimpleButton(imgui.font_icon('arrow-up')..'##move up') then
-         scene_graph.move_object_up{grob=grob,_invoked_from_gui=true}
+         scene_graph_gui.move_grob_up(grob)
       end
       autogui.tooltip('move up')
       imgui.SameLine()
       if imgui.SimpleButton(imgui.font_icon('arrow-down')..'##move down') then
-         scene_graph.move_object_down{grob=grob,_invoked_from_gui=true}
+         scene_graph_gui.move_grob_down(grob)
       end
       autogui.tooltip('move down')
       imgui.SameLine()
       if imgui.SimpleButton(imgui.font_icon('angles-down')..'##move to bot') then
-         scene_graph.move_object_to_bottom{grob=grob,_invoked_from_gui=true}
+         scene_graph_gui.move_grob_to_bottom(grob)
       end
       autogui.tooltip('move to bottom')
       imgui.SameLine()
@@ -124,7 +131,7 @@ function scene_graph_gui.grob_ops(grob, main_menu)
          end
       end
       if camera.draw_selected_only then
-         autogui.tooltip('show/hide disabled in selected only mode')
+         autogui.tooltip('show/hide (disabled in selected only mode)')
       else
          autogui.tooltip('show/hide')
       end
@@ -586,7 +593,7 @@ function scene_graph_gui.draw_grob_eye(grob)
        end
    end
    if camera.draw_selected_only then
-      autogui.tooltip('show/hide disabled in selected only mode')
+      autogui.tooltip('show/hide (disabled in selected only mode)')
    else
       if grob.selected then
          autogui.tooltip('show/hide selected')
@@ -631,13 +638,42 @@ end
 
 function scene_graph_gui.move_grob_up(grob)
    if grob ~= nil then
-      scene_graph.move_object_up{grob=grob,_invoked_from_gui=true}
+      if scene_graph.I.Selection.nb_selected() ~= 0 then
+         scene_graph.move_selection_up{_invoked_from_gui=true}
+      else
+         scene_graph.move_object_up{grob=grob,_invoked_from_gui=true}
+      end
    end
 end
 
 function scene_graph_gui.move_grob_down(grob)
    if grob ~= nil then
-      scene_graph.move_object_down{grob=grob,_invoked_from_gui=true}
+      if scene_graph.I.Selection.nb_selected() ~= 0 then
+         scene_graph.move_selection_down{_invoked_from_gui=true}
+      else
+         scene_graph.move_object_down{grob=grob,_invoked_from_gui=true}
+      end
+   end
+end
+
+
+function scene_graph_gui.move_grob_to_top(grob)
+   if grob ~= nil then
+      if scene_graph.I.Selection.nb_selected() ~= 0 then
+         scene_graph.move_selection_to_top{_invoked_from_gui=true}
+      else
+         scene_graph.move_object_to_top{grob=grob,_invoked_from_gui=true}
+      end
+   end
+end
+
+function scene_graph_gui.move_grob_to_bottom(grob)
+   if grob ~= nil then
+      if scene_graph.I.Selection.nb_selected() ~= 0 then
+         scene_graph.move_selection_to_bottom{_invoked_from_gui=true}
+      else
+         scene_graph.move_object_to_bottom{grob=grob,_invoked_from_gui=true}
+      end
    end
 end
 

@@ -142,6 +142,31 @@ namespace OGF {
 
 
 	/**
+	 * \brief Reorganizes the object list in such a way that
+	 *  all selected objects move one position up.
+	 */
+	void move_selection_up();
+
+	/**
+	 * \brief Reorganizes the object list in such a way that
+	 *  all selected objects move one position down.
+	 */
+	void move_selection_down();
+
+	/**
+	 * \brief Reorganizes the object list in such a way that
+	 *  all selected objects appear first.
+	 */
+	void move_selection_to_top();
+
+	/**
+	 * \brief Reorganizes the object list in such a way that
+	 *  all selected objects appear last.
+	 */
+	void move_selection_to_bottom();
+
+
+	/**
 	 * \brief Renames an object
 	 * \param[in] grob the object to be renamed or its name
 	 * \param[in] new_name the desired new name for the object

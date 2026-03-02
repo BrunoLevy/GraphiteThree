@@ -161,6 +161,16 @@ namespace OGF {
 	    children_.push_back(pn);
 	}
 
+	/**
+	 * \brief Replaces a child
+	 * \param[in] i the index of the child, in 0 .. get_nb_children()-1
+	 * \param[in] n the new child
+	 */
+	void set_ith_child(index_t i, Node* n) {
+	    geo_debug_assert(i < get_nb_children());
+	    children_[i] = n;
+	}
+
     private:
         std::vector< SmartPointer<Node> > children_ ;
         Node* parent_ ;
