@@ -575,6 +575,28 @@ namespace OGF {
 	    return ctxt + "." + struct_prop->property_name();
 	}
 
+	// Grob
+	// (can work without it, but when grob to be found is the picked grob,
+	//  it says so, and I prefer to systematically have o.XXX because
+	//  picked grob will not be set if playing back the history)
+	if(object_is_a(object, "OGF::Grob")) {
+	    Any o_as_any = get_globals()->resolve("o");
+	    Object_var o_as_object;
+	    if(
+		o_as_any.meta_type() != nullptr &&
+		o_as_any.meta_type()->is_subtype_of(ogf_meta<Object*>::type()) &&
+		o_as_any.get_value(o_as_object)
+	    ) {
+		std::string result = recursive_back_resolve(
+		    o_as_object, "o", object
+		);
+		if(result != "") {
+		    return result;
+		}
+	    }
+	}
+
+
 	// Not found, use brute force !
 	{
 	    std::string result = recursive_back_resolve(
