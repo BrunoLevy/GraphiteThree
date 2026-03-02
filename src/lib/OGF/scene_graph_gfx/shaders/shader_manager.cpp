@@ -114,7 +114,7 @@ namespace OGF {
 	FrameBufferObject* FBO = nullptr;
 	FrameBufferObject* aux_FBO = nullptr;
 
-	if(current_shader_->get_transparent()) {
+	if(current_shader_->get_transparency() != Shader::TRANSP_OPAQUE) {
 	    FBO = context->get_FBO(RenderingContext::MAIN_FBO);
 	    aux_FBO = context->get_FBO(RenderingContext::AUX_FBO);
 
@@ -155,7 +155,7 @@ namespace OGF {
 
 	current_shader_->draw() ;
 
-	if(current_shader_->get_transparent()) {
+	if(current_shader_->get_transparency() != Shader::TRANSP_OPAQUE) {
 	    // Backup viewport transform
 	    GLint vp[4];
 	    glGetIntegerv(GL_VIEWPORT, vp);

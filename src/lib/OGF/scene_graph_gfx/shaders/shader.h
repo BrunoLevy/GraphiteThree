@@ -125,11 +125,6 @@ namespace OGF {
 	    return grob();
 	}
 
-
-	bool get_transparent() const {
-	    return transparency_ != TRANSP_OPAQUE;
-	}
-
 	/**
 	 * \brief Transparent rendering mode
 	 */

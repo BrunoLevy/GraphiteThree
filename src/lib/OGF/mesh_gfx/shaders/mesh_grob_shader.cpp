@@ -338,7 +338,10 @@ namespace OGF {
             mesh_grob()->up_to_date();
         }
 
-	if((get_texturing() || get_coloring()) && !get_transparent()) {
+	if(
+	    (get_texturing() || get_coloring()) &&
+	    get_transparency() == TRANSP_OPAQUE
+	) {
 	    glupEnable(GLUP_ALPHA_DISCARD);
 	    glupSetAlphaThreshold(0.05f);
 
@@ -550,7 +553,10 @@ namespace OGF {
                 float(mesh_style_.color.b())
             );
             gfx_.set_mesh_width(mesh_style_.width);
-	    if(surface_style_.color.a() < 1.0 && !get_transparent()) {
+	    if(
+		surface_style_.color.a() < 1.0 &&
+		get_transparency() == TRANSP_OPAQUE
+	    ) {
 		Color bkg = 0.5 * (
 		    context->background_color() +
 		    context->background_color_2()
@@ -641,7 +647,10 @@ namespace OGF {
                     float(volume_style_.color.b()),
                     float(volume_style_.color.a())
                 );
-		if(volume_style_.color.a() < 1.0 && !get_transparent()) {
+		if(
+		    volume_style_.color.a() < 1.0 &&
+		    get_transparency() == TRANSP_OPAQUE
+		) {
 		    Color bkg = 0.5 * (
 			context->background_color() +
 			context->background_color_2()
