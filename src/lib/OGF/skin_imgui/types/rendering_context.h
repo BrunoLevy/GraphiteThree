@@ -94,8 +94,14 @@ namespace OGF {
 	    index_t w = 0, index_t h = 0
 	) override;
 
+	/**
+	 * \copydoc RenderingContext::get_FBO()
+	 */
+	FrameBufferObject* get_FBO(RenderingContextFBO FBO_id) override;
+
     private:
 	FrameBufferObject FBO_;
+	FrameBufferObject aux_FBO_;
     };
 
 }

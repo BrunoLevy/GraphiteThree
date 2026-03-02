@@ -649,6 +649,24 @@ namespace OGF {
             return overlay_;
         }
 
+	/**
+	 * \brief Constants for get_FBO()
+	 */
+	enum RenderingContextFBO {
+	    MAIN_FBO=0,
+	    AUX_FBO=1
+	};
+
+	/**
+	 * \brief Gets one of the FBOs
+	 * \param[in] FBO_id one of:
+	 *   - MAIN_FBO: the main Frame Buffer Object, used for 3D scene display
+	 *   - AUX_FBO: an auxiliary FBO, for drawing transparent objects
+	 * \details The auxiliary FBO is created the first time get_FBO(AUX_FBO)
+	 *   is called, then it is managed and automatically resized.
+	 */
+	virtual FrameBufferObject* get_FBO(RenderingContextFBO FBO_id);
+
     protected:
 
         /**

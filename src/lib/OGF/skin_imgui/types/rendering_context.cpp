@@ -70,6 +70,9 @@ namespace OGF {
 	if(FBO_.initialized()) {
 	    FBO_.resize(w,h);
 	}
+	if(aux_FBO_.initialized()) {
+	    aux_FBO_.resize(w,h);
+	}
     }
 
     void SkinImGUIRenderingContext::draw_last_frame() {
@@ -105,6 +108,19 @@ namespace OGF {
 	if(make_current && need_to_bind) {
 	    FBO_.unbind();
 	}
+    }
+
+    FrameBufferObject* SkinImGUIRenderingContext::get_FBO(
+	RenderingContextFBO FBO_id
+    ) {
+	switch(FBO_id) {
+	case MAIN_FBO:
+	    return &FBO_;
+	case AUX_FBO:
+	    return &aux_FBO_;
+	}
+	geo_assert_not_reached;
+	return nullptr;
     }
 
 }

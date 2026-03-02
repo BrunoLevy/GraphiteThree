@@ -1076,6 +1076,13 @@ namespace OGF {
         }
     }
 
+    FrameBufferObject* RenderingContext::get_FBO(RenderingContextFBO FBO_id) {
+	// Default implementation returns nullptr,
+	// Implemented in ImGuiRenderingContext
+	geo_argused(FBO_id);
+	return nullptr;
+    }
+
 /**************************************************************************/
 
 }
