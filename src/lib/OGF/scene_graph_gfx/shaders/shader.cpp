@@ -94,7 +94,6 @@ namespace OGF {
 	return set_property_and_record_to_history(name, value, interpreter);
     }
 
-
     void Shader::set_transparency(Transparency x) {
 	transparency_ = x;
 	update();

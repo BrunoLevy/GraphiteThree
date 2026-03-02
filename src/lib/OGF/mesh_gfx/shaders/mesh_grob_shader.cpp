@@ -215,15 +215,11 @@ namespace OGF {
     }
 
     void PlainMeshGrobShader::set_transparency(Transparency x) {
-	if(x == TRANSP_BLEND) {
-	    set_culling_mode(CULL_BACK);
-	}
 	if(x != TRANSP_OPAQUE && surface_style_.color.a() == 1.0) {
 	    surface_style_.color.set_a(0.5);
 	}
 	if(x == TRANSP_OPAQUE && surface_style_.color.a() != 1.0) {
 	    surface_style_.color.set_a(1.0);
-	    set_culling_mode(NO_CULL);
 	}
 	Shader::set_transparency(x);
     }

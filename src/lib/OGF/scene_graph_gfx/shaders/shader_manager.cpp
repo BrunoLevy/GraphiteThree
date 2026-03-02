@@ -39,6 +39,7 @@
 #include <OGF/scene_graph/types/scene_graph_library.h>
 #include <OGF/scene_graph/types/scene_graph.h>
 #include <OGF/scene_graph/grob/grob.h>
+#include <OGF/renderer/context/rendering_context.h>
 #include <OGF/gom/reflection/meta_class.h>
 #include <OGF/gom/interpreter/interpreter.h>
 
@@ -105,31 +106,75 @@ namespace OGF {
 	if(grob() == nullptr || grob()->nb_graphics_locks_ > 0) {
 	    return;
 	}
-        if(current_shader_ != nullptr) {
+        if(current_shader_ == nullptr) {
+	    return;
+	}
 
-	    if(current_shader_->get_transparent()) {
-		glDepthMask(GL_FALSE);
-		glEnable(GL_BLEND);
-		glBlendEquation(GL_FUNC_ADD);
-		switch(current_shader_->get_transparency()) {
-		case Shader::TRANSP_ACCUM:
-		    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-		    break;
-		case Shader::TRANSP_BLEND:
-		    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		    break;
-		case Shader::TRANSP_OPAQUE:
-		    break;
-		}
+	RenderingContext* context = RenderingContext::current();
+	FrameBufferObject* FBO = nullptr;
+	FrameBufferObject* aux_FBO = nullptr;
+
+	// TODO: copy depth buffer
+	if(current_shader_->get_transparent()) {
+	    FBO = context->get_FBO(RenderingContext::MAIN_FBO);
+	    aux_FBO = context->get_FBO(RenderingContext::AUX_FBO);
+
+	    if(!aux_FBO->initialized()) {
+		GEO_CHECK_GL();
+		aux_FBO->initialize(
+		    context->get_width(), context->get_height(),
+		    true, // with depth buffer
+		    GL_RGBA,
+		    false // no mip-mapping
+		);
+		GEO_CHECK_GL();
 	    }
 
-	    current_shader_->draw() ;
+	    FBO->unbind();
+	    aux_FBO->bind_as_framebuffer();
+            glClearColor(0.0, 0.0, 0.0, 0.0);
+	    glClear((GLbitfield)(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+	}
 
-	    if(current_shader_->get_transparent()) {
-		glDisable(GL_BLEND);
-		glDepthMask(GL_TRUE);
+	current_shader_->draw() ;
+
+	if(current_shader_->get_transparent()) {
+	    GLint vp[4];
+	    glGetIntegerv(GL_VIEWPORT, vp);
+
+	    aux_FBO->unbind();
+	    FBO->bind_as_framebuffer();
+	    glActiveTexture(GL_TEXTURE0);
+	    aux_FBO->bind_as_texture();
+
+	    glDepthMask(GL_FALSE);
+	    glDisable(GL_DEPTH_TEST);
+	    glEnable(GL_BLEND);
+	    glBlendEquation(GL_FUNC_ADD);
+	    switch(current_shader_->get_transparency()) {
+	    case Shader::TRANSP_ACCUM:
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+		break;
+	    case Shader::TRANSP_BLEND:
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		break;
+	    case Shader::TRANSP_OPAQUE:
+		break;
 	    }
 
-        }
+	    glViewport(
+		0,0,GLint(context->get_width()),GLint(context->get_height())
+	    );
+
+	    draw_unit_textured_quad();
+
+	    aux_FBO->unbind();
+	    FBO->bind_as_framebuffer(); // needed (because prev line restores
+	                                // prev. bnd. FBO, that was aux_FBO !)
+	    glEnable(GL_DEPTH_TEST);
+	    glDepthMask(GL_TRUE);
+	    glDisable(GL_BLEND);
+	    glViewport(vp[0],vp[1],vp[2],vp[3]);
+	}
     }
 }
