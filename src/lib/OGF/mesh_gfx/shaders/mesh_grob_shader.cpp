@@ -803,7 +803,7 @@ namespace OGF {
         gfx_.set_object_picking_id(object_id);
         picking_ = true;
         draw();
-        gfx_.set_object_picking_id(index_t(-1));
+        gfx_.set_object_picking_id(NO_INDEX);
         picking_ = false;
     }
 

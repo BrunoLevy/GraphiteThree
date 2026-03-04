@@ -179,10 +179,7 @@ namespace OGF {
         if(CmdLine::get_arg_bool("dbg:picking")) {
 	    Logger::out("Tool") << "Saving pick_debug.png" << std::endl;
             Image_var dbg_image = new Image;
-
-            rendering_context()->snapshot(
-                dbg_image
-            );
+            rendering_context()->snapshot(dbg_image);
             ImageLibrary::instance()->save_image(
                 "pick_debug.png",dbg_image
             );
