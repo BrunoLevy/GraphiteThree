@@ -116,6 +116,12 @@ namespace OGF {
 
 	if(current_shader_->get_transparency() != Shader::TRANSP_OPAQUE) {
 	    FBO = context->get_FBO(RenderingContext::MAIN_FBO);
+
+	    FullScreenEffectImpl* fso = context->get_full_screen_effect();
+	    if(fso != nullptr && fso->FBO() != nullptr) {
+		FBO = fso->FBO();
+	    }
+
 	    aux_FBO = context->get_FBO(RenderingContext::AUX_FBO);
 
 	    // Initialize aux FBO if not already initialized.
@@ -137,19 +143,18 @@ namespace OGF {
 	    glClear((GLbitfield)(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
 	    // Copy depth from FBO to aux_FBO
+	    // note: need to keep GL_DEPTH_TEST activated, else
+	    //  draw_unit_textured_quad(TEX_QUAD_DEPTH) does not update zbuffer
+
 	    FBO->bind_depth_buffer_as_texture();
 	    GLint vp[4];
 	    glGetIntegerv(GL_VIEWPORT, vp);
 	    glViewport(
 		0,0,GLint(context->get_width()),GLint(context->get_height())
 	    );
-	    // note: GL_DEPTH_TEST needs to be enabled for next line to work.
 	    draw_unit_textured_quad(TEX_QUAD_DEPTH);
 	    glViewport(vp[0],vp[1],vp[2],vp[3]);
-	    glEnable(GL_DEPTH_TEST);
 	    FBO->unbind();
-
-	    // Let's rock'n roll
 	    aux_FBO->bind_as_framebuffer();
 	}
 
@@ -163,6 +168,7 @@ namespace OGF {
 	    // Draw aux_FBO contents with alpha-blending
 	    aux_FBO->unbind();
 	    FBO->bind_as_framebuffer();
+
 	    glActiveTexture(GL_TEXTURE0);
 	    aux_FBO->bind_as_texture();
 
@@ -190,8 +196,6 @@ namespace OGF {
 	    // Restore everything so that the other shaders can work as
 	    // expected.
 	    aux_FBO->unbind();
-	    FBO->bind_as_framebuffer(); // needed (because prev line restores
-	                                // prev. bnd. FBO, that was aux_FBO !)
 	    glEnable(GL_DEPTH_TEST);
 	    glDepthMask(GL_TRUE);
 	    glDisable(GL_BLEND);
