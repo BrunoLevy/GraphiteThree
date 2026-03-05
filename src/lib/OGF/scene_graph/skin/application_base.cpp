@@ -212,7 +212,7 @@ namespace OGF {
         Object* scene_graph = interpreter()->resolve_object("scene_graph");
         if(scene_graph != nullptr) {
             ArgList args;
-            args.create_arg("value",filename);
+            args.create_arg("filename",filename);
             scene_graph->invoke_method("save", args);
         }
     }
@@ -231,7 +231,7 @@ namespace OGF {
         if(scene_graph != nullptr) {
             ArgList args;
             scene_graph->invoke_method("clear",args);
-            args.create_arg("value",filename);
+            args.create_arg("filename",filename);
             scene_graph->invoke_method("load_object", args);
         }
     }

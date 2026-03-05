@@ -367,14 +367,23 @@ namespace OGF {
 
         /**
          * \brief Saves Graphite state to a file.
+	 * \param[in] filename a filename with or without path with .graphite
+	 *   extension.
+	 * \details The Graphite state contains all the objects of the
+	 *   scene graph, their graphic attributes, the command-line parameters,
+	 *   the placement of the windows and the command history.
          */
         virtual void save_state_to_file(const std::string& filename);
 
         /**
-         * \brief Saves Graphite state to a file.
+         * \brief Loads Graphite state from a file.
+	 * \param[in] filename a filename with or without path with .graphite
+	 *   extension.
+	 * \details The Graphite state contains all the objects of the
+	 *   scene graph, their graphic attributes, the command-line parameters,
+	 *   the placement of the windows and the command history.
          */
         virtual void load_state_from_file(const std::string& filename);
-
 
         /**
          * \brief Gets the file name to be used to store a state buffer.
