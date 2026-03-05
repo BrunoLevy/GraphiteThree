@@ -261,7 +261,7 @@ function graphite_main_window.draw_contents()
      if(not main.can_undo) then
         imgui.PushStyleVar(ImGuiStyleVar_Alpha, 0.3);
      end
-     if imgui.Button(imgui.font_icon('undo')..' undo') then
+     if imgui.Button(imgui.font_icon('arrow-rotate-left')..' undo') then
         main.undo()
      end
      if(not main.can_undo) then
@@ -271,7 +271,7 @@ function graphite_main_window.draw_contents()
      if(not main.can_redo) then
         imgui.PushStyleVar(ImGuiStyleVar_Alpha, 0.3);
      end
-     if imgui.Button(imgui.font_icon('redo')..' redo') then
+     if imgui.Button(imgui.font_icon('arrow-rotate-right')..' redo') then
         main.redo();
      end
      if(not main.can_redo) then
