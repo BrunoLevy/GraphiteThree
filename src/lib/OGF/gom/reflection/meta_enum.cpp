@@ -53,35 +53,35 @@ namespace OGF {
     }
 
 
-    void MetaEnum::add_value(const std::string& name, int value) {
-        if(has_value(name)) {
+    bool MetaEnum::add_value(
+	const std::string& name, int value, bool allow_aliases
+    ) {
+        if(!allow_aliases && has_value(name)) {
             Logger::err("GOM") << this->name()
                                << " enum value " << name
                                << " already exists" << std::endl;
-            return;
-        }
-        if(has_value(value)) {
-            Logger::err("GOM") << this->name()
-                               << " enum value " << value
-                               << " already exists" << std::endl;
-            return;
+            return false;
         }
         Value val ;
         val.name = name ;
         val.value = value ;
         values_.push_back(val) ;
+	return true;
     }
 
-    void MetaEnum::add_values(const ArgList& values) {
+    bool MetaEnum::add_values(const ArgList& values, bool allow_aliases) {
+	bool result = true;
         for(index_t i=0; i<values.nb_args(); ++i) {
             const std::string& name = values.ith_arg_name(i);
             signed_index_t value;
             if(values.ith_arg_value(i).get_value(value)) {
-                add_value(name, value);
+                result = result && add_value(name, value, allow_aliases);
             } else {
                 Logger::err("GOM") << name << " is not an integer" << std::endl;
+		result = false;
             }
         }
+	return result;
     }
 
 

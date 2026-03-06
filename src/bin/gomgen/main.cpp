@@ -165,7 +165,7 @@ namespace {
 		    !strcmp(argv[i],"-version") ||
 		    !strcmp(argv[i],"-h")       ||
 		    !strcmp(argv[i],"-help")
-		    ) {
+		) {
 		    fprintf(stderr,"\nSWIG Version %s\n", PACKAGE_VERSION);
 		    fprintf(stderr,"Modified for Graphite/GOM\n");
 		    fprintf(stderr,"Copyright (c) 1995-1998\n");

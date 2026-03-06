@@ -498,12 +498,69 @@ namespace {
 
 		if(string_to_int(sym, value)) {
 		    ok = true;
-		} else {
-		    if(sym.substr(sym.length() - 4,4) == " + 1") {
-			sym = sym.substr(0, sym.length() - 4);
-			if(menum->has_value(sym)) {
-			    value = menum->get_value_by_name(sym) + 1;
-			    ok = true;
+		}
+
+		if(!ok) {
+		    // Parse simple expressions like:
+		    // val1 + val2
+		    // val1 - val2
+		    // val1 << val2
+		    // where val1 and val2 are either integer constants
+		    // or enum symbolic value names.
+		    std::vector<std::string> words;
+		    OGF::String::split_string(sym, ' ', words);
+		    if(words.size() == 3) {
+			int val1;
+			int val2;
+			bool has_val_1 = false;
+			bool has_val_2 = false;
+			has_val_1 = string_to_int(words[0], val1);
+			if(!has_val_1 && menum->has_value(words[0])) {
+			    val1 = menum->get_value_by_name(words[0]);
+			    has_val_1 = true;
+			}
+			has_val_2 = string_to_int(words[2], val2);
+			if(!has_val_2 && menum->has_value(words[2])) {
+			    val2 = menum->get_value_by_name(words[2]);
+			    has_val_2 = true;
+			}
+			if(has_val_1 && has_val_2) {
+			    if(words[1] == "+") {
+				value = val1 + val2;
+				ok = true;
+			    } else if(words[1] == "-") {
+				value = val1 - val2;
+				ok = true;
+			    } else if(words[1] == "<<") {
+				value = val1 << val2;
+				ok = true;
+			    }
+			}
+		    }
+		}
+
+		if(!ok) {
+		    // Parse simple expressions like:
+		    // val1 | val2 | val3 | ... | valn
+		    // where val1 ... valn are either integer constants
+		    // or enum symbolic value names.
+		    std::vector<std::string> words;
+		    OGF::String::split_string(sym, '|', words);
+		    if(words.size() > 0) {
+			ok = true;
+			value = 0;
+			for(const std::string& w: words) {
+			    int w_val;
+			    bool has_val = string_to_int(w, w_val);
+			    if(!has_val && menum->has_value(w)) {
+				w_val = menum->get_value_by_name(w);
+				has_val = true;
+			    }
+			    if(!has_val) {
+				ok = false;
+				break;
+			    }
+			    value = value | w_val;
 			}
 		    }
 		}
@@ -521,7 +578,7 @@ namespace {
 		}
 	    }
 	    Delete(check);
-	    menum->add_value(name,value);
+	    menum->add_value(name,value,true); // true: allow aliases
 	    cleanup_attributes();
 	    return Language::enumvalueDeclaration(n);
 	}

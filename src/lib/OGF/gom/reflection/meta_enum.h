@@ -133,15 +133,26 @@ namespace OGF {
          * \brief Adds a new value to this MetaEnum.
          * \param[in] name symbolic name
          * \param[in] value associated value. Can be negative.
+	 * \param[in] allow_aliases if set, then one can add the same value
+	 *   several times with different names
+	 * \return true if the value could be added
+	 * \return false otherwise, that is, value already existed in enum and
+	 *  allow_aliases was not set
          */
-        void add_value(const std::string& name, int value) ;
+        bool add_value(
+	    const std::string& name, int value,
+	    bool allow_aliases=false
+	);
 
 
         /**
          * \brief Adds values to this MegaEnum
          * \param[in] values an arglist with name,value pairs
+	 * \return true if the values could be added
+	 * \return false otherwise, that is, one or several values already
+	 *  existed in enum and allow_aliases was not set
          */
-        void add_values(const ArgList& values);
+        bool add_values(const ArgList& values, bool allow_aliases = false);
 
     private:
         struct Value {

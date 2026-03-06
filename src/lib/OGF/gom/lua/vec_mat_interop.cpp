@@ -38,12 +38,6 @@
 #include <OGF/gom/reflection/meta.h>
 #include <geogram/lua/lua_vec_mat.h>
 #include <geogram/image/color.h>
-/*
-extern "C" {
-#include <geogram/third_party/lua/lauxlib.h>
-#include <geogram/third_party/lua/lualib.h>
-}
-*/
 
 namespace OGF {
     namespace GOMLua {
