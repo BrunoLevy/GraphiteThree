@@ -258,23 +258,25 @@ function graphite_main_window.draw_contents()
   end
   if gom.get_environment_value('gui:undo') == 'true' then
      local ImGuiStyleVar_Alpha = 0
-     if(not main.can_undo) then
+     local can_undo = main.can_undo
+     local can_redo = main.can_redo
+     if(not can_undo) then
         imgui.PushStyleVar(ImGuiStyleVar_Alpha, 0.3);
      end
      if imgui.Button(imgui.font_icon('arrow-rotate-left')..' undo') then
         main.undo()
      end
-     if(not main.can_undo) then
+     if(not can_undo) then
         imgui.PopStyleVar()
      end
      imgui.SameLine()
-     if(not main.can_redo) then
+     if(not can_redo) then
         imgui.PushStyleVar(ImGuiStyleVar_Alpha, 0.3);
      end
      if imgui.Button(imgui.font_icon('arrow-rotate-right')..' redo') then
         main.redo();
      end
-     if(not main.can_redo) then
+     if(not can_redo) then
         imgui.PopStyleVar()
      end
      imgui.Separator()
