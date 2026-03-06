@@ -261,23 +261,25 @@ function graphite_main_window.draw_contents()
      local can_undo = main.can_undo
      local can_redo = main.can_redo
      if(not can_undo) then
-        imgui.PushStyleVar(ImGuiStyleVar_Alpha, 0.3);
+        autogui.begin_disabled()
      end
      if imgui.Button(imgui.font_icon('arrow-rotate-left')..' undo') then
+        autogui.close_command_dialogs() -- make sure there is no dangling request
         main.undo()
      end
      if(not can_undo) then
-        imgui.PopStyleVar()
+        autogui.end_disabled()
      end
      imgui.SameLine()
      if(not can_redo) then
-        imgui.PushStyleVar(ImGuiStyleVar_Alpha, 0.3);
+        autogui.begin_disabled()
      end
      if imgui.Button(imgui.font_icon('arrow-rotate-right')..' redo') then
+        autogui.close_command_dialogs() -- make sure there is no dangling request
         main.redo();
      end
      if(not can_redo) then
-        imgui.PopStyleVar()
+        autogui.end_disabled()
      end
      imgui.Separator()
   end

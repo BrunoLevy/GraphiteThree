@@ -394,7 +394,9 @@ function scene_graph_gui.draw_object_list()
        if grob == picked_grob then
           imgui.SetScrollHereY()
        end
-       edit_op = scene_graph_gui.draw_grob_edit_list_buttons(grob)
+       edit_op = scene_graph_gui.draw_grob_edit_list_buttons(
+          grob, i==0, i==scene_graph.nb_children-1
+       )
        local selection_op = scene_graph_gui.draw_grob_name(grob)
        if imgui.BeginPopupContextItem(grob.name..'##ops') then
           grob = scene_graph_gui.grob_ops(grob)
@@ -446,8 +448,12 @@ end
 
 -- \brief Draws the optional buttons to edit the list (move up/down and delete)
 -- \param[in] grob one of the objects in the list
+-- \param[in] move_up_disabled if set, move up arrow is grayed out
+-- \param[in] move_down_disabled if set, move down arrow is grayed out
 -- \return edit_op, the function to be applied on grob or nil
-function scene_graph_gui.draw_grob_edit_list_buttons(grob)
+function scene_graph_gui.draw_grob_edit_list_buttons(
+  grob, move_up_disabled, move_down_disabled
+)
    local edit_op = nil
    if not scene_graph_gui.edit_list then
       return edit_op
@@ -463,13 +469,25 @@ function scene_graph_gui.draw_grob_edit_list_buttons(grob)
       autogui.tooltip('delete this object')
    end
    imgui.SameLine()
+   if move_up_disabled then
+      autogui.begin_disabled()
+   end
    if imgui.SimpleButton(imgui.font_icon('arrow-up')..'##'..grob.name) then
        edit_op = scene_graph_gui.move_grob_up
    end
+   if move_up_disabled then
+      autogui.end_disabled()
+   end
    autogui.tooltip('move up')
    imgui.SameLine()
+   if move_down_disabled then
+      autogui.begin_disabled()
+   end
    if imgui.SimpleButton(imgui.font_icon('arrow-down')..'##'..grob.name) then
        edit_op = scene_graph_gui.move_grob_down
+   end
+   if move_down_disabled then
+      autogui.end_disabled()
    end
    autogui.tooltip('move down')
    imgui.PopStyleVar()

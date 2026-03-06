@@ -226,7 +226,6 @@ namespace OGF {
                                << std::endl;
             return;
         }
-
         Object* scene_graph = interpreter()->resolve_object("scene_graph");
         if(scene_graph != nullptr) {
             ArgList args;

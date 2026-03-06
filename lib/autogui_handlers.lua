@@ -151,6 +151,15 @@ function autogui.icon_size()
    return 18.0 * main.scaling()
 end
 
+function autogui.begin_disabled()
+   local ImGuiStyleVar_Alpha = 0
+   imgui.PushStyleVar(ImGuiStyleVar_Alpha, 0.3)
+end
+
+function autogui.end_disabled()
+   imgui.PopStyleVar()
+end
+
 -- ------------------------------------------------------------------------------
 -- Additional widgets
 -- ------------------------------------------------------------------------------
