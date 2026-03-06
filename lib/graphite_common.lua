@@ -1,10 +1,10 @@
 -- =============================================================================
 -- Utilities
 -- =============================================================================
--- - Python-like string manipulation 
+-- - Python-like string manipulation
 --   starts_with, ends_with, remove_prefix, remove_suffix, split
 -- - Correct display of tables (by default print(table) is not correct in lua)
--- - Mechanism to load plugins, and also objects and scripts specified 
+-- - Mechanism to load plugins, and also objects and scripts specified
 --   as command line arguments
 -- - Globals for types (OGF and NL)
 
@@ -141,6 +141,8 @@ function post_init()
     auto_load_plugins()
 
     local arglist = gom.get_environment_value("command_line")
+    local undo_bkp = gom.get_environment_value('gui:undo')
+    gom.set_environment_value('gui:undo', 'false')
     for arg in arglist:split("!") do
       if arg:starts_with("-") or arg:find("=") then
           gom.out("Flag on command line: " .. arg)
@@ -160,6 +162,7 @@ function post_init()
 	 end
       end
    end
+   gom.set_environment_value('gui:undo', undo_bkp)
 
    -- Now that Graphite is started, enable verbose add_to_history()
    -- so that user can see in the terminal how is interactions
