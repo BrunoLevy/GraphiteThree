@@ -264,9 +264,7 @@ namespace {
 		    OGF::Logger::warn("GomGen")
 			<< "anonymous arg in signal/slot"
 			<< std::endl;
-		    std::ostringstream s;
-		    s << "prm_" << param_id;
-		    name = s.str();
+		    name = GEO::String::format("prm_%d",param_id);
 		} else {
 		    name = gom_string(name_in);
 		}
@@ -530,9 +528,8 @@ namespace {
 	    }
 
 	    if(
-		!ok && GEO::String::split_string(
-		    sym, std::string("<<"), sop1, sop2
-		) && to_int(sop1, op1) && to_int(sop2, op2)
+		!ok && GEO::String::split_string(sym, "<<", sop1, sop2) &&
+		to_int(sop1, op1) && to_int(sop2, op2)
 	    ) {
 		value = op1 << op2;
 		ok = true;
@@ -1013,8 +1010,8 @@ namespace {
 
 	virtual int typedefHandler(Node *n) {
 	    if(mode_ == GOMGEN_LUAWRAP_MODE) {
-		std::string name = Char(Getattr(n,"name"));
-		std::string type = Char(Getattr(n,"type"));
+		std::string name = gom_string(Getattr(n,"name"));
+		std::string type = gom_string(Getattr(n,"type"));
 		std::cerr << "Typedef " << type << " " << name << std::endl;
 		OGF::MetaType* mtype =
 		    OGF::Meta::instance()->resolve_meta_type(type);
