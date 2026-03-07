@@ -36,6 +36,9 @@
 
 #include <OGF/gom/reflection/meta_class.h>
 #include <OGF/gom/codegen/codegen.h>
+#include <OGF/gom/reflection/meta.h>
+#include <OGF/gom/reflection/meta_class.h>
+#include <OGF/gom/types/gom_implementation.h>
 #include <OGF/basic/os/text_utils.h>
 
 #include <geogram/basic/command_line.h>
@@ -124,6 +127,7 @@ namespace {
     std::string output_path;
     bool dependencies=false;
     bool save_preprocessor_output=false;
+    GomGenMode mode = GOMGEN_GOM_MODE;
 
     void parse_command_line(int argc, char** argv) {
 	for (int i = 1; i < argc; i++) {
@@ -160,6 +164,9 @@ namespace {
 		    output_path = OGF::FileSystem::normalized_path(
 			std::string(argv[i] + 2)
 		    );
+		    Swig_mark_arg(i);
+		} else if(!strncmp(argv[i], "-lua", 4)) {
+		    mode = GOMGEN_LUAWRAP_MODE;
 		    Swig_mark_arg(i);
 		} else if (
 		    !strcmp(argv[i],"-version") ||
@@ -208,9 +215,11 @@ namespace {
 
     bool is_gom_header(const std::string& filename) {
 	return (
-	    OGF::FileSystem::extension(filename) == "h" &&
-	    OGF::TextUtils::file_contains_string(filename, "gom_class")
-	    );
+	    OGF::FileSystem::extension(filename) == "h" && (
+		mode == GOMGEN_LUAWRAP_MODE ||
+		OGF::TextUtils::file_contains_string(filename, "gom_class")
+	    )
+	);
     }
 
     void remove_path(std::string& filename) {
@@ -324,72 +333,153 @@ namespace {
 	Swig_process_types(top);
 	Swig_default_allocators(top);
 
+	// Pre-declare all integer types, char* and bool* used in ImGui
+	if(mode == GOMGEN_LUAWRAP_MODE) {
+	    OGF::ogf_declare_builtin_type<signed char>("signed char");
+	    OGF::ogf_declare_builtin_type<unsigned char>("unsigned char");
+	    OGF::ogf_declare_builtin_type<short>("short");
+	    OGF::ogf_declare_builtin_type<unsigned short>("unsigned short");
+	    OGF::ogf_declare_builtin_type<long long>("long long");
+	    OGF::ogf_declare_builtin_type<unsigned long long>(
+		"unsigned long long"
+	    );
+	    OGF::ogf_declare_pointer_type<char*>("char*");
+	    OGF::ogf_declare_pointer_type<bool*>("bool*");
+	}
+
 	if (top) {
 	    if (Swig_contract_mode_get()) {
 		Swig_contracts(top);
 	    }
 	    lang->top(top);
 
-	    out << "// GOMGEN automatically generated code" << std::endl;
-	    out << "// Do not edit." << std::endl;
-	    out << std::endl;
-	    out << "// Command line:" << std::endl;
-	    for(int i=0; i<argc; ++i) {
-		out << "//  " << argv[i] << std::endl;
+	    if(mode == GOMGEN_GOM_MODE) {
+		out << "// GOMGEN automatically generated code" << std::endl;
+		out << "// Do not edit." << std::endl;
+		out << std::endl;
+		out << "// Command line:" << std::endl;
+		for(int i=0; i<argc; ++i) {
+		    out << "//  " << argv[i] << std::endl;
+		}
+		out << std::endl;
+		out << std::endl;
+		out << "// Include path:" << std::endl;
+		for(GEO::index_t i=0; i<include_path.size(); ++i) {
+		    out << "//   " << include_path[i] << std::endl;
+		}
+		out << "// Input path:" << std::endl;
+		out << "//   " << input_path << std::endl;
+		out << "// Output file:" << std::endl;
+		out << "//   " << output_path << std::endl;
+		out << std::endl;
+		out << std::endl;
+
+		for(size_t i =0; i<sources.size(); ++i) {
+		    out << "#include <" << sources[i] << ">" << std::endl;
+		}
+		out << "#include <OGF/gom/types/gom_implementation.h>"
+		    << std::endl;
+		out << std::endl;
+		out << std::endl;
+
+
+		out << "#ifdef GEO_COMPILER_GCC" << std::endl;
+		out << "#pragma GCC diagnostic ignored \"-Wunused-parameter\""
+		    << std::endl;
+		out << "#pragma GCC optimize (\"O0\")"
+		    << std::endl;
+		out << "#endif" << std::endl;
+		out << std::endl;
+
+		out << "#ifdef GEO_COMPILER_MSVC" << std::endl;
+		out << "#pragma warning(disable: 4100)" << std::endl;
+		out << "#endif" << std::endl;
+		out << std::endl;
+
+		out << "#ifdef GEO_COMPILER_CLANG" << std::endl;
+		out << "#pragma GCC diagnostic ignored \"-Wweak-vtables\""
+		    << std::endl;
+		out << "#pragma GCC diagnostic ignored \"-Wmissing-prototypes\""
+		    << std::endl;
+		out << "#pragma GCC diagnostic ignored \"-Wunused-parameter\""
+		    << std::endl;
+		out << "#endif" << std::endl;
+
+		out << std::endl;
+		out << std::endl;
+
+		const std::vector<OGF::MetaClass*> classes =
+		    get_swig_gom_generated_classes();
+
+		OGF::GomCodeGenerator generator;
+		OGF::Logger::out("Gom::CodeGen") << ">>" << std::endl;
+		generator.generate(out, classes, get_package_name(input_path));
 	    }
-	    out << std::endl;
-	    out << std::endl;
-	    out << "// Include path:" << std::endl;
-	    for(GEO::index_t i=0; i<include_path.size(); ++i) {
-		out << "//   " << include_path[i] << std::endl;
+	}
+    }
+}
+
+/****************************************************************************/
+
+void show_imgui() {
+    OGF::MetaClass* mclass = OGF::Meta::instance()->resolve_meta_class("ImGui");
+    if(mclass == nullptr) {
+	std::cerr << "  DID NOT FIND ImGui" << std::endl;
+	return;
+    }
+    GEO::index_t N = GEO::index_t(mclass->nb_members());
+    for(GEO::index_t i=0; i<N; ++i) {
+	OGF::MetaMember* mmember = mclass->ith_member(i);
+	OGF::MetaMethod* mmethod = dynamic_cast<OGF::MetaMethod*>(mmember);
+	if(mmethod != nullptr) {
+	    bool name_only = false;
+	    bool check_types = true;
+	    if(name_only) {
+		std::cerr << mmethod->name() << std::endl;
+	    } else {
+		std::cerr << mmethod->return_type_name() << " ";
+		std::cerr << mmethod->name() << "(";
+		for(GEO::index_t i=0; i<mmethod->nb_args(); ++i) {
+		    OGF::MetaArg* marg = mmethod->ith_arg(i);
+		    std::cerr << marg->type_name() << " "
+			      << marg->name();
+		    if(marg->has_default_value()) {
+			std::cerr << "=" << marg->default_value().as_string();
+		    }
+		    if(i != mmethod->nb_args()-1) {
+			std::cerr << ",";
+		    }
+		}
+		std::cerr << ")" << std::endl;
+		if(check_types) {
+		    bool OK = true;
+		    for(GEO::index_t i=0; i<mmethod->nb_args(); ++i) {
+			OGF::MetaArg* marg = mmethod->ith_arg(i);
+			OGF::MetaType* mtype =
+			    OGF::Meta::instance()->resolve_meta_type(
+				marg->type_name()
+			    );
+			std::cerr << "  " << marg->name()
+				  << ":" << marg->type_name()
+				  << " " << ((mtype == nullptr) ? "KO" : "OK")
+				  << std::endl;
+			OK = OK && (mtype != nullptr);
+		    }
+		    if(mmethod->return_type_name() != "void") {
+			OGF::MetaType* mtype =
+			    OGF::Meta::instance()->resolve_meta_type(
+				mmethod->return_type_name()
+			    );
+			std::cerr << "-->" << mmethod->return_type_name()
+				  << " " << ((mtype == nullptr) ? "KO" : "OK")
+				  << std::endl;
+			OK = OK && (mtype != nullptr);
+		    }
+		    if(OK) {
+			std::cerr << "===> OK to generate" << std::endl;
+		    }
+		}
 	    }
-	    out << "// Input path:" << std::endl;
-	    out << "//   " << input_path << std::endl;
-	    out << "// Output file:" << std::endl;
-	    out << "//   " << output_path << std::endl;
-	    out << std::endl;
-	    out << std::endl;
-
-	    for(size_t i =0; i<sources.size(); ++i) {
-		out << "#include <" << sources[i] << ">" << std::endl;
-	    }
-	    out << "#include <OGF/gom/types/gom_implementation.h>" << std::endl;
-	    out << std::endl;
-	    out << std::endl;
-
-
-	    out << "#ifdef GEO_COMPILER_GCC" << std::endl;
-	    out << "#pragma GCC diagnostic ignored \"-Wunused-parameter\""
-		<< std::endl;
-	    out << "#pragma GCC optimize (\"O0\")"
-		<< std::endl;
-	    out << "#endif" << std::endl;
-	    out << std::endl;
-
-	    out << "#ifdef GEO_COMPILER_MSVC" << std::endl;
-	    out << "#pragma warning(disable: 4100)" << std::endl;
-	    out << "#endif" << std::endl;
-	    out << std::endl;
-
-	    out << "#ifdef GEO_COMPILER_CLANG" << std::endl;
-	    out << "#pragma GCC diagnostic ignored \"-Wweak-vtables\""
-		<< std::endl;
-	    out << "#pragma GCC diagnostic ignored \"-Wmissing-prototypes\""
-		<< std::endl;
-	    out << "#pragma GCC diagnostic ignored \"-Wunused-parameter\""
-		<< std::endl;
-	    out << "#endif" << std::endl;
-
-
-	    out << std::endl;
-	    out << std::endl;
-
-	    const std::vector<OGF::MetaClass*> classes =
-		get_swig_gom_generated_classes();
-
-	    OGF::GomCodeGenerator generator;
-	    OGF::Logger::out("Gom::CodeGen") << ">>" << std::endl;
-	    generator.generate(out, classes, get_package_name(input_path));
 	}
     }
 }
@@ -402,7 +492,6 @@ int main(int argc, char** argv) {
     Swig_init();
     Swig_warnfilter("201,202,309,401,403,501,502,503,512,321,322",1);
     Preprocessor_init();
-    Language* lang = get_swig_gom_language();
 
     Preprocessor_define((DOH *) "SWIG 1", 0);
     Preprocessor_define((DOH *) "__STDC__ 1", 0);
@@ -434,7 +523,7 @@ int main(int argc, char** argv) {
     Preprocessor_ignore_missing(1);
 
     parse_command_line(argc, argv);
-
+    Language* lang = get_swig_gom_language(mode);
     set_swig_gom_package(get_package_name(input_path),input_path);
 
     // Define the __cplusplus symbol
@@ -471,6 +560,10 @@ int main(int argc, char** argv) {
         Swig_register_filebyname("null", NewString(""));
         std::ofstream out(output_path.c_str());
         run_generator(lang,gom_headers,cpps,out,argc,argv);
+    }
+
+    if(!swig_gom_error_occured() && mode == GOMGEN_LUAWRAP_MODE) {
+	show_imgui();
     }
 
     return swig_gom_error_occured() ? -1 : 0;

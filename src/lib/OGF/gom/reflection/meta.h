@@ -111,6 +111,16 @@ namespace OGF {
          */
         bool bind_meta_type(MetaType* meta_type) ;
 
+
+	/**
+	 * \brief Declares an alias (typedef) to a MetaType
+	 * \param[in] meta_type a pointer to a meta_type already bound
+	 * \param[in] alias a new name under which it will be also possible to
+	 *   retreive the meta_type using resolve_meta_type().
+	 * \pre \p meta_type is already bound
+	 */
+	void bind_meta_type_alias(MetaType* meta_type, const std::string& alias);
+
         /**
          * \brief Declares a MetaType to the system
          * \param[in] meta_type a pointer to the MetaType. Ownership

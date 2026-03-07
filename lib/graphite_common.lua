@@ -142,6 +142,7 @@ function post_init()
 
     local arglist = gom.get_environment_value("command_line")
     local undo_bkp = gom.get_environment_value('gui:undo')
+    -- diable undo: do not record state for each loaded object !
     gom.set_environment_value('gui:undo', 'false')
     for arg in arglist:split("!") do
       if arg:starts_with("-") or arg:find("=") then
@@ -161,16 +162,16 @@ function post_init()
             scene_graph.load_object({filename=arg,_invoked_from_gui=true})
 	 end
       end
-   end
-   gom.set_environment_value('gui:undo', undo_bkp)
+    end
+    gom.set_environment_value('gui:undo', undo_bkp) -- re-enable undo
 
-   -- Now that Graphite is started, enable verbose add_to_history()
-   -- so that user can see in the terminal how is interactions
-   -- reflect as commands.
+    -- Now that Graphite is started, enable verbose add_to_history()
+    -- so that user can see in the terminal how is interactions
+    -- reflect as commands.
 
-   gom.show_add_to_history = true
+    gom.show_add_to_history = true
 
-   collectgarbage()
+    collectgarbage()
 end
 
 -- Print tables (lua's default print function prints 'nil' for each value

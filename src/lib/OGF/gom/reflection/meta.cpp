@@ -25,13 +25,13 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/gom/reflection/meta.h>
@@ -62,7 +62,7 @@ namespace OGF {
         ogf_assert(instance_ == nullptr) ;
         instance_ = new Meta ;
     }
-    
+
     void Meta::terminate() {
         delete instance_ ;
         instance_ = nullptr ;
@@ -75,8 +75,8 @@ namespace OGF {
     }
 
     bool Meta::meta_type_is_bound(const std::string& name) const {
-        return ( 
-            type_name_to_meta_type_.find(name) != 
+        return (
+            type_name_to_meta_type_.find(name) !=
             type_name_to_meta_type_.end()
         ) ;
     }
@@ -89,6 +89,13 @@ namespace OGF {
         return true ;
     }
 
+    void Meta::bind_meta_type_alias(
+	MetaType* meta_type, const std::string& alias
+    ) {
+	geo_debug_assert(meta_type_is_bound(meta_type->name()));
+	type_name_to_meta_type_[alias] = meta_type ;
+    }
+
     bool Meta::bind_meta_type(
         MetaType* meta_type, const std::string& typeid_name
     ) {
@@ -97,7 +104,7 @@ namespace OGF {
         // in gom_implementation.h, that creates SmartPointers
         // that are subsequently deallocated if the type is
         // already bound (not very clean)...
-        
+
         //  If meta type is already bound with same "user name",
         // then there is nothing to do (same meta type can be
         // registered several times in GOMGEN generated code).
@@ -117,9 +124,9 @@ namespace OGF {
         }
         return true ;
     }
-    
+
     bool Meta::unbind_meta_type(const std::string& name) {
-        MetaType* type = nullptr ;            
+        MetaType* type = nullptr ;
         {
             auto it = type_name_to_meta_type_.find(name) ;
             if(it == type_name_to_meta_type_.end()) {
@@ -131,7 +138,7 @@ namespace OGF {
 
         {
             for(
-                auto it = typeid_name_to_meta_type_.begin(); 
+                auto it = typeid_name_to_meta_type_.begin();
                 it != typeid_name_to_meta_type_.end(); ++it
             ) {
                 if(it->second == type) {
@@ -152,8 +159,8 @@ namespace OGF {
     }
 
     bool Meta::typeid_name_is_bound(const std::string& typeid_name) const {
-        return ( 
-            typeid_name_to_meta_type_.find(typeid_name) != 
+        return (
+            typeid_name_to_meta_type_.find(typeid_name) !=
             typeid_name_to_meta_type_.end()
         ) ;
     }
@@ -182,6 +189,3 @@ namespace OGF {
         }
     }
 }
-
-
-

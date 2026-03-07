@@ -183,7 +183,7 @@ namespace {
 	OGF::MetaBuiltinStruct* result = dynamic_cast<OGF::MetaBuiltinStruct*>(
 	    OGF::Meta::instance()->resolve_meta_type(class_name)
 	);
-	ogf_assert(result != nullptr);
+	// ogf_assert(result != nullptr);
 	return result;
     }
 
@@ -368,12 +368,13 @@ namespace {
 
 	enum GomMemberType { HIDDEN, SLOT, SIGNAL, PROPERTY };
 
-	GOMSWIG() {
+	GOMSWIG(GomGenMode mode) {
 	    gomclass_flag   = false;
 	    gom_member_type = HIDDEN;
 	    gom_directive_flag = false;
 	    user_attributes   = nullptr;
 	    system_attributes = nullptr;
+	    mode_ = mode;
 	}
 
 	const std::vector<OGF::MetaClass*>& get_generated_classes() const {
@@ -461,6 +462,9 @@ namespace {
 	    if(name != "$unnamed$") {
 		OGF::Meta::instance()->bind_meta_type(new OGF::MetaEnum(name));
 	    }
+	    if(mode_ == GOMGEN_LUAWRAP_MODE) {
+		std::cerr << "Enum: " << name << std::endl;
+	    }
 	    cleanup_attributes();
 	    return Language::enumDeclaration(n);
 	}
@@ -484,100 +488,90 @@ namespace {
 		value_string = Getattr(n,"enumvalueex");
 	    }
 
-	    sscanf(Char(value_string), "%d", &value);
-	    String* check = NewStringf("%d", value);
+	    std::string sym = Char(value_string);
 
-	    // Checks whether the value was an expression
-	    // TODO: there is probably a Swig function to get the value.
-	    if(Strcmp(value_string, check)) {
-
-		bool ok = false;
-
-		// Default value is previous value + 1
-		std::string sym = Char(value_string);
-
-		if(string_to_int(sym, value)) {
+	    // Converts a string to an integer, either because the string
+	    // contains the ascii representation of the integer, or as
+	    // a symbolic value in menum.
+	    auto to_int = [menum](const std::string& s, int& value)->bool {
+		std::string t = GEO::String::trim_spaces(s);
+		bool ok = string_to_int(t, value);
+		if(!ok && menum->has_value(t)) {
 		    ok = true;
+		    value = menum->get_value_by_name(t);
 		}
+		return ok;
+	    };
 
-		if(!ok) {
-		    // Parse simple expressions like:
-		    // val1 + val2
-		    // val1 - val2
-		    // val1 << val2
-		    // where val1 and val2 are either integer constants
-		    // or enum symbolic value names.
-		    std::vector<std::string> words;
-		    OGF::String::split_string(sym, ' ', words);
-		    if(words.size() == 3) {
-			int val1;
-			int val2;
-			bool has_val_1 = false;
-			bool has_val_2 = false;
-			has_val_1 = string_to_int(words[0], val1);
-			if(!has_val_1 && menum->has_value(words[0])) {
-			    val1 = menum->get_value_by_name(words[0]);
-			    has_val_1 = true;
+	    // Simplest case
+	    bool ok = to_int(sym, value);
+
+
+	    // Try val1+val2, val1-val2 and val1<<val2
+	    // where val1 and val2 are either integer constants
+	    // or enum symbolic value names.
+	    std::string sop1, sop2;
+	    int op1, op2;
+
+	    if(
+		!ok && GEO::String::split_string(sym, '+', sop1, sop2) &&
+		to_int(sop1, op1) && to_int(sop2, op2)
+	    ) {
+		value = op1 + op2;
+		ok = true;
+	    }
+
+	    if(
+		!ok && GEO::String::split_string(sym, '-', sop1, sop2) &&
+		to_int(sop1, op1) && to_int(sop2, op2)
+	    ) {
+		value = op1 - op2;
+		ok = true;
+	    }
+
+	    if(
+		!ok && GEO::String::split_string(sym, "<<", sop1, sop2) &&
+		to_int(sop1, op1) && to_int(sop2, op2)
+	    ) {
+		value = op1 << op2;
+		ok = true;
+	    }
+
+	    // Parse simple expressions like:
+	    // val1 | val2 | val3 | ... | valn
+	    // where val1 ... valn are either integer constants
+	    // or enum symbolic value names.
+
+	    if(!ok) {
+		std::vector<std::string> words;
+		OGF::String::split_string(sym, '|', words);
+		if(words.size() > 0) {
+		    ok = true;
+		    value = 0;
+		    for(std::string w: words) {
+			w = GEO::String::trim_spaces(w);
+			int w_val;
+			if(!to_int(w,w_val)) {
+			    ok = false;
+			    break;
 			}
-			has_val_2 = string_to_int(words[2], val2);
-			if(!has_val_2 && menum->has_value(words[2])) {
-			    val2 = menum->get_value_by_name(words[2]);
-			    has_val_2 = true;
-			}
-			if(has_val_1 && has_val_2) {
-			    if(words[1] == "+") {
-				value = val1 + val2;
-				ok = true;
-			    } else if(words[1] == "-") {
-				value = val1 - val2;
-				ok = true;
-			    } else if(words[1] == "<<") {
-				value = val1 << val2;
-				ok = true;
-			    }
-			}
+			value = value | w_val;
 		    }
-		}
-
-		if(!ok) {
-		    // Parse simple expressions like:
-		    // val1 | val2 | val3 | ... | valn
-		    // where val1 ... valn are either integer constants
-		    // or enum symbolic value names.
-		    std::vector<std::string> words;
-		    OGF::String::split_string(sym, '|', words);
-		    if(words.size() > 0) {
-			ok = true;
-			value = 0;
-			for(const std::string& w: words) {
-			    int w_val;
-			    bool has_val = string_to_int(w, w_val);
-			    if(!has_val && menum->has_value(w)) {
-				w_val = menum->get_value_by_name(w);
-				has_val = true;
-			    }
-			    if(!has_val) {
-				ok = false;
-				break;
-			    }
-			    value = value | w_val;
-			}
-		    }
-		}
-
-		// If this was a more complex expression, issue a warning
-		if(!ok) {
-		    value = int(menum->nb_values());
-		    OGF::Logger::warn("GomGen")
-			<< enum_name << "::" << name << "=" << Char(value_string)
-			<< " : unspecified enum value, or complex expression"
-			<< std::endl;
-		    OGF::Logger::warn("GomGen")
-			<< "    -> using " << value
-			<< " please check if this is correct" << std::endl;
 		}
 	    }
-	    Delete(check);
+
+	    // If this was a more complex expression, issue a warning
+	    if(!ok) {
+		value = int(menum->nb_values());
+		OGF::Logger::warn("GomGen")
+		    << enum_name << "::" << name << "=" << Char(value_string)
+		    << " : unspecified enum value, or complex expression"
+		    << std::endl;
+		OGF::Logger::warn("GomGen")
+		    << "    -> using " << value
+		    << " please check if this is correct" << std::endl;
+	    }
+
 	    menum->add_value(name,value,true); // true: allow aliases
 	    cleanup_attributes();
 	    return Language::enumvalueDeclaration(n);
@@ -668,6 +662,13 @@ namespace {
 	}
 
 	virtual int namespaceDeclaration(Node *n) {
+	    // quick and dirty: storing namespace contents in
+	    // a pseudo class. TODO: something cleaner, a true
+	    // namespace object.
+	    if(mode_ == GOMGEN_LUAWRAP_MODE) {
+		std::string name = Char(Getattr(n,"name"));
+		return classDeclaration(n);
+	    }
 	    cleanup_attributes();
 	    return Language::namespaceDeclaration(n);
 	}
@@ -696,6 +697,12 @@ namespace {
 
 	virtual int memberfunctionHandler(Node *n) {
 	    std::string name = gom_string(Getattr(n,"name"));
+
+	    if(mode_ == GOMGEN_LUAWRAP_MODE) {
+		signalslotHandler(n);
+		return SWIG_OK;
+	    }
+
 	    String* kind = Getattr(n,"gom:kind");
 	    if(kind != nullptr) {
 		if(
@@ -716,7 +723,11 @@ namespace {
 
 	    OGF::MetaClass* mclass = gom_class_from_member(n);
 	    OGF::MetaMethod* mmethod = nullptr;
-	    if(!Strcmp(kind, "signal")) {
+	    if(mode_ == GOMGEN_LUAWRAP_MODE) {
+		SwigType* type_in = Getattr(n,"type");
+		std::string type = gom_type_name(type_in);
+		mmethod = new OGF::MetaSlot(name, mclass, type);
+	    } else if(!Strcmp(kind, "signal")) {
 		mmethod = new OGF::MetaSignal(name, mclass);
 	    } else if(!Strcmp(kind, "slot")) {
 		SwigType* type_in = Getattr(n,"type");
@@ -884,13 +895,16 @@ namespace {
 
 	virtual int classHandler(Node *n) {
 
-	    // HERE
 	    if(!checkAttribute(n, "gom:kind", "class")) {
 		std::string name = gom_type_name_from_string(Getattr(n, "name"));
-		OGF::MetaBuiltinStruct* mstruct =
-		    new OGF::MetaBuiltinStruct(name);
-		OGF::Meta::instance()->bind_meta_type(mstruct);
-
+		if(mode_ == GOMGEN_LUAWRAP_MODE) {
+		    OGF::MetaClass* mclass = new OGF::MetaClass(name);
+		    OGF::Meta::instance()->bind_meta_type(mclass);
+		} else {
+		    OGF::MetaBuiltinStruct* mstruct =
+			new OGF::MetaBuiltinStruct(name);
+		    OGF::Meta::instance()->bind_meta_type(mstruct);
+		}
 	    }
 
 	    if(checkAttribute(n, "gom:kind", "class")) {
@@ -997,6 +1011,19 @@ namespace {
 	}
 
 	virtual int typedefHandler(Node *n) {
+	    if(mode_ == GOMGEN_LUAWRAP_MODE) {
+		std::string name = Char(Getattr(n,"name"));
+		std::string type = Char(Getattr(n,"type"));
+		std::cerr << "Typedef " << type << " " << name << std::endl;
+		OGF::MetaType* mtype =
+		    OGF::Meta::instance()->resolve_meta_type(type);
+		if(mtype != nullptr) {
+		    OGF::Meta::instance()->bind_meta_type_alias(mtype, name);
+		    std::cerr << "  OK" << std::endl;
+		} else {
+		    std::cerr << "  KO" << std::endl;
+		}
+	    }
 	    ogf_argused(n);
 	    return SWIG_OK;
 	}
@@ -1063,16 +1090,17 @@ namespace {
 	std::vector<OGF::MetaClass*> generated_classes_;
 	std::string package_name_;
 	std::string package_directory_;
+	GomGenMode mode_;
     };
 
 }
 
 /***********************************************************************/
 
-Language* get_swig_gom_language() {
-    static Language* instance = nullptr;
+Language* get_swig_gom_language(GomGenMode mode) {
+    static GOMSWIG* instance = nullptr;
     if(instance == nullptr) {
-        instance = new GOMSWIG();
+        instance = new GOMSWIG(mode);
     }
     return instance;
 }
