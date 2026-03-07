@@ -460,9 +460,6 @@ namespace {
 	    if(name != "$unnamed$") {
 		OGF::Meta::instance()->bind_meta_type(new OGF::MetaEnum(name));
 	    }
-	    if(mode_ == GOMGEN_LUAWRAP_MODE) {
-		std::cerr << "Enum: " << name << std::endl;
-	    }
 	    cleanup_attributes();
 	    return Language::enumDeclaration(n);
 	}
@@ -1012,14 +1009,16 @@ namespace {
 	    if(mode_ == GOMGEN_LUAWRAP_MODE) {
 		std::string name = gom_string(Getattr(n,"name"));
 		std::string type = gom_string(Getattr(n,"type"));
-		std::cerr << "Typedef " << type << " " << name << std::endl;
 		OGF::MetaType* mtype =
 		    OGF::Meta::instance()->resolve_meta_type(type);
 		if(mtype != nullptr) {
 		    OGF::Meta::instance()->bind_meta_type_alias(mtype, name);
-		    std::cerr << "  OK" << std::endl;
 		} else {
-		    std::cerr << "  KO" << std::endl;
+		    GEO::Logger::warn("GomGen") << "typedef "
+						<< type << " " << name
+						<< ":" << type
+						<< " not understood"
+						<< std::endl;
 		}
 	    }
 	    ogf_argused(n);

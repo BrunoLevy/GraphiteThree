@@ -345,6 +345,8 @@ namespace {
 	    );
 	    OGF::ogf_declare_pointer_type<char*>("char*");
 	    OGF::ogf_declare_pointer_type<bool*>("bool*");
+	    OGF::ogf_declare_pointer_type<int*>("int*");
+	    OGF::ogf_declare_pointer_type<float*>("float*");
 	}
 
 	if (top) {
@@ -421,6 +423,39 @@ namespace {
 
 /****************************************************************************/
 
+bool check_types(OGF::MetaMethod* mmethod, bool report=false) {
+    bool OK = true;
+    for(GEO::index_t i=0; i<mmethod->nb_args(); ++i) {
+	OGF::MetaArg* marg = mmethod->ith_arg(i);
+	OGF::MetaType* mtype =
+	    OGF::Meta::instance()->resolve_meta_type(
+		marg->type_name()
+	    );
+	if(report) {
+	    GEO::Logger::out("GomGen")
+		<< "   arg: " << marg->name()
+		<< ":" << marg->type_name()
+		<< " " << ((mtype == nullptr) ? "KO" : "OK")
+		<< std::endl;
+	}
+	OK = OK && (mtype != nullptr);
+    }
+    if(mmethod->return_type_name() != "void") {
+	OGF::MetaType* mtype =
+	    OGF::Meta::instance()->resolve_meta_type(
+		mmethod->return_type_name()
+	    );
+	if(report) {
+	    GEO::Logger::out("GomGen")
+		<< "   ret type: " << mmethod->return_type_name()
+		<< " " << ((mtype == nullptr) ? "KO" : "OK")
+		<< std::endl;
+	}
+	OK = OK && (mtype != nullptr);
+    }
+    return OK;
+}
+
 void show_imgui() {
     OGF::MetaClass* mclass = OGF::Meta::instance()->resolve_meta_class("ImGui");
     if(mclass == nullptr) {
@@ -432,53 +467,31 @@ void show_imgui() {
 	OGF::MetaMember* mmember = mclass->ith_member(i);
 	OGF::MetaMethod* mmethod = dynamic_cast<OGF::MetaMethod*>(mmember);
 	if(mmethod != nullptr) {
-	    bool name_only = false;
-	    bool check_types = true;
-	    if(name_only) {
-		std::cerr << mmethod->name() << std::endl;
-	    } else {
-		std::cerr << mmethod->return_type_name() << " ";
-		std::cerr << mmethod->name() << "(";
+	    bool OK = check_types(mmethod);
+	    std::string proto;
+	    if(true) {
+		proto += (mmethod->return_type_name() + " ");
+		proto += (mmethod->name() + "(");
 		for(GEO::index_t i=0; i<mmethod->nb_args(); ++i) {
 		    OGF::MetaArg* marg = mmethod->ith_arg(i);
-		    std::cerr << marg->type_name() << " "
-			      << marg->name();
+		    proto += (marg->type_name() + " " + marg->name());
 		    if(marg->has_default_value()) {
-			std::cerr << "=" << marg->default_value().as_string();
+			proto += ("=" + marg->default_value().as_string());
 		    }
 		    if(i != mmethod->nb_args()-1) {
-			std::cerr << ",";
+			proto += ",";
 		    }
 		}
-		std::cerr << ")" << std::endl;
-		if(check_types) {
-		    bool OK = true;
-		    for(GEO::index_t i=0; i<mmethod->nb_args(); ++i) {
-			OGF::MetaArg* marg = mmethod->ith_arg(i);
-			OGF::MetaType* mtype =
-			    OGF::Meta::instance()->resolve_meta_type(
-				marg->type_name()
-			    );
-			std::cerr << "  " << marg->name()
-				  << ":" << marg->type_name()
-				  << " " << ((mtype == nullptr) ? "KO" : "OK")
-				  << std::endl;
-			OK = OK && (mtype != nullptr);
-		    }
-		    if(mmethod->return_type_name() != "void") {
-			OGF::MetaType* mtype =
-			    OGF::Meta::instance()->resolve_meta_type(
-				mmethod->return_type_name()
-			    );
-			std::cerr << "-->" << mmethod->return_type_name()
-				  << " " << ((mtype == nullptr) ? "KO" : "OK")
-				  << std::endl;
-			OK = OK && (mtype != nullptr);
-		    }
-		    if(OK) {
-			std::cerr << "===> OK to generate" << std::endl;
-		    }
-		}
+		proto += ")";
+	    } else {
+		proto = mmethod->name();
+	    }
+	    GEO::Logger::out("GomGen")
+		<<  (OK ? "OK " : "KO ")
+		<< proto
+		<< std::endl;
+	    if(!OK) {
+		check_types(mmethod, true);
 	    }
 	}
     }
