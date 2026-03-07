@@ -530,8 +530,9 @@ namespace {
 	    }
 
 	    if(
-		!ok && GEO::String::split_string(sym, "<<", sop1, sop2) &&
-		to_int(sop1, op1) && to_int(sop2, op2)
+		!ok && GEO::String::split_string(
+		    sym, std::string("<<"), sop1, sop2
+		) && to_int(sop1, op1) && to_int(sop2, op2)
 	    ) {
 		value = op1 << op2;
 		ok = true;
