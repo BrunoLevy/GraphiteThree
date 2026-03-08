@@ -106,4 +106,7 @@ namespace OGF {
 
     /***********************************************************/
 
+    MeshGrobEditEdge::~MeshGrobEditEdge() {
+    }
+
 }

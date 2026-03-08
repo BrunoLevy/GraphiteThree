@@ -127,6 +127,7 @@ namespace OGF {
             set_tool(MOUSE_BUTTON_LEFT, new MeshGrobCreateEdge(parent));
             set_tool(MOUSE_BUTTON_RIGHT, new MeshGrobDeleteEdge(parent));
         }
+	~MeshGrobEditEdge() override;
     };
 
 

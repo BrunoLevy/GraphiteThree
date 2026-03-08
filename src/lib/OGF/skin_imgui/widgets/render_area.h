@@ -433,7 +433,7 @@ namespace OGF {
 	void scroll_callback(double xoffset, double yoffset);
 
 	/**
-	 * \param [in] xf, yf the coordinates of the mouse in 'window
+	 * \param[in] xf , yf the coordinates of the mouse in 'window
 	 *  pixels', with origin at top-left corner.
 	 * \details The function divides by retina scaling internally
 	 *   to get OpenGL window coordinates (in framebuffer pixels)
