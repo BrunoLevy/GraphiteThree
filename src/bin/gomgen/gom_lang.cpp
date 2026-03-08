@@ -48,7 +48,7 @@
 
 // Swig includes need to be AFTER OGF includes
 // else it causes a problem under Windows.
-#include "gom.h"
+#include "gom_lang.h"
 #include <swig/Modules/swigmod.h>
 #include <swig/CParse/cparse.h>
 
