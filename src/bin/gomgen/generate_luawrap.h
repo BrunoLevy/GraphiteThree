@@ -37,12 +37,12 @@
 #ifndef GOM_GENERATE_LUAWRAP
 #define GOM_GENERATE_LUAWRAP
 
-#include <swig/Modules/swigmod.h>
-#include <swig/CParse/cparse.h>
-
 #include <vector>
 #include <fstream>
 #include <string>
+
+class Language;
+typedef void DOH;
 
 void generate_luawrap(
     Language* lang, const std::vector<std::string>& sources,

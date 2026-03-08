@@ -37,12 +37,12 @@
 #ifndef GOM_GENERATE_GOM
 #define GOM_GENERATE_GOM
 
-#include <swig/Modules/swigmod.h>
-#include <swig/CParse/cparse.h>
-
 #include <vector>
 #include <fstream>
 #include <string>
+
+class Language;
+typedef void DOH;
 
 void generate_gom(
     Language* lang, const std::vector<std::string>& sources,
