@@ -185,17 +185,10 @@ namespace {
 	    }
 	    if(OK) {
 		for(index_t i=0; i<mmethod->nb_args(); ++i) {
-		    MetaArg* marg = mmethod->ith_arg(i);
-		    MetaType* mtype = Meta::instance()->resolve_meta_type(
-			marg->type_name()
-		    );
-		    used_types_.insert(mtype);
+		    used_type(mmethod->ith_arg(i)->type_name());
 		}
 		if(mmethod->return_type_name() != "void") {
-		    MetaType* mtype = Meta::instance()->resolve_meta_type(
-			mmethod->return_type_name()
-		    );
-		    used_types_.insert(mtype);
+		    used_type(mmethod->return_type_name());
 		}
 	    }
 	    return OK;
@@ -267,6 +260,43 @@ namespace {
 	    }
 	}
 
+	void generate_consts() {
+	    for(MetaType* mtype: used_types_) {
+		MetaEnum* menum = dynamic_cast<MetaEnum*>(mtype);
+		if(menum != nullptr) {
+		    Logger::out("GomGen") << " Enum " << menum->name()
+					  << std::endl;
+		    for(index_t i=0; i<menum->nb_values(); ++i) {
+			Logger::out("GomGen") << "   "
+					      << menum->ith_name(i)
+					      << std::endl;
+		    }
+		}
+	    }
+	}
+
+
+	/**
+	 * \brief Mark a type as used
+	 * \details All enums and bitmasks with corresponding enums will
+	 *  have the corresponding symbolic values generated as constants.
+	 * \param[in] type_name a string with the type name
+	 */
+	void used_type(const std::string& type_name) {
+	    MetaType* mtype = Meta::instance()->resolve_meta_type(type_name);
+	    if(mtype != nullptr) {
+		used_types_.insert(mtype);
+	    }
+	    // In Dear Imgui, some bitfields are typedefed as integer types,
+	    // with the corresponding constants declared in an enum with
+	    // a trailing underscore (we need to also generate the constants
+	    // for these ones).
+	    mtype = Meta::instance()->resolve_meta_type(type_name + "_");
+	    if(mtype != nullptr) {
+		used_types_.insert(mtype);
+	    }
+	}
+
     private:
 	/**
 	 * \brief all integer-like types, signed and unsigned, with various
@@ -307,5 +337,6 @@ void generate_luawrap(
 	lang->top(top);
 
 	generator.generate_wrappers("ImGui");
+	generator.generate_consts();
     }
 }
