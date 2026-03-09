@@ -50,29 +50,53 @@
 /****************************************************************************/
 
 namespace {
+    using namespace OGF;
+
+    std::vector<MetaType*> integer_types;
+
+    bool type_is_integer_like(MetaType* mtype) {
+	if(dynamic_cast<MetaEnum*>(mtype) != nullptr) {
+	    return true;
+	}
+
+	if(
+	    std::find(integer_types.begin(), integer_types.end(), mtype) !=
+	    integer_types.end()
+	) {
+	    return true;
+	}
+
+	return false;
+    }
+
+    bool type_is_integer_like(const std::string& type_name) {
+	MetaType* mtype = Meta::instance()->resolve_meta_type(type_name);
+	return type_is_integer_like(mtype);
+    }
 
     bool check_type(const std::string& type_name) {
-	OGF::MetaType* mtype = OGF::Meta::instance()->resolve_meta_type(
-	    type_name
-	);
+	if(type_name == "ImVec2" || type_name == "ImVec4") {
+	    return true;
+	}
+	if(type_name == "void*") {
+	    return false;
+	}
+	MetaType* mtype = Meta::instance()->resolve_meta_type(type_name);
 	if(mtype == nullptr) {
 	    return false;
 	}
-	if(
-	    type_name != "ImVec2" && type_name != "ImVec4" &&
-	    dynamic_cast<OGF::MetaClass*>(mtype) != nullptr
-	) {
+	if(dynamic_cast<MetaClass*>(mtype) != nullptr) {
 	    return false;
 	}
 	return true;
     }
 
-    bool check_types(OGF::MetaMethod* mmethod, bool report=false) {
+    bool check_types(MetaMethod* mmethod, bool report=false) {
 	bool OK = true;
-	for(GEO::index_t i=0; i<mmethod->nb_args(); ++i) {
-	    OGF::MetaArg* marg = mmethod->ith_arg(i);
+	for(index_t i=0; i<mmethod->nb_args(); ++i) {
+	    MetaArg* marg = mmethod->ith_arg(i);
 	    if(report) {
-		GEO::Logger::out("GomGen")
+		Logger::out("GomGen")
 		    << "   arg: " << marg->name()
 		    << ":" << marg->type_name()
 		    << " " << (check_type(marg->type_name()) ? "OK" : "KO")
@@ -82,7 +106,7 @@ namespace {
 	}
 	if(mmethod->return_type_name() != "void") {
 	    if(report) {
-		GEO::Logger::out("GomGen")
+		Logger::out("GomGen")
 		    << "   ret type: " << mmethod->return_type_name()
 		    << " " << (
 			check_type(mmethod->return_type_name()) ? "OK" : "KO"
@@ -94,26 +118,35 @@ namespace {
 	return OK;
     }
 
+    std::string show_type_name(const std::string& type_name) {
+	if(type_is_integer_like(type_name)) {
+	    return type_name + "(I)";
+	}
+	return type_name;
+    }
+
     void show_imgui() {
-	OGF::MetaClass* mclass =
-	    OGF::Meta::instance()->resolve_meta_class("ImGui");
+	MetaClass* mclass = Meta::instance()->resolve_meta_class("ImGui");
 	if(mclass == nullptr) {
 	    std::cerr << "  DID NOT FIND ImGui" << std::endl;
 	    return;
 	}
-	GEO::index_t N = GEO::index_t(mclass->nb_members());
-	for(GEO::index_t i=0; i<N; ++i) {
-	    OGF::MetaMember* mmember = mclass->ith_member(i);
-	    OGF::MetaMethod* mmethod = dynamic_cast<OGF::MetaMethod*>(mmember);
+	index_t N = index_t(mclass->nb_members());
+	for(index_t i=0; i<N; ++i) {
+	    MetaMember* mmember = mclass->ith_member(i);
+	    MetaMethod* mmethod = dynamic_cast<MetaMethod*>(mmember);
 	    if(mmethod != nullptr) {
 		bool OK = check_types(mmethod);
 		std::string proto;
 		if(true) {
-		    proto += (mmethod->return_type_name() + " ");
+		    proto += (show_type_name(mmethod->return_type_name()) + " ");
 		    proto += (mmethod->name() + "(");
-		    for(GEO::index_t i=0; i<mmethod->nb_args(); ++i) {
-			OGF::MetaArg* marg = mmethod->ith_arg(i);
-			proto += (marg->type_name() + " " + marg->name());
+		    for(index_t i=0; i<mmethod->nb_args(); ++i) {
+			MetaArg* marg = mmethod->ith_arg(i);
+			proto += (
+			    show_type_name(marg->type_name()) + " " +
+			    marg->name()
+			);
 			if(marg->has_default_value()) {
 			    proto += ("=" + marg->default_value().as_string());
 			}
@@ -125,7 +158,7 @@ namespace {
 		} else {
 		    proto = mmethod->name();
 		}
-		GEO::Logger::out("GomGen")
+		Logger::out("GomGen")
 		    <<  (OK ? "OK " : "KO ")
 		    << proto
 		    << std::endl;
@@ -147,22 +180,48 @@ void generate_luawrap(
     const std::string& output_path,
     const std::string& package_name
 ) {
-    Node *top = Swig_cparse(cpps);
+    using namespace OGF;
+
+    ::Node *top = Swig_cparse(cpps);
     Swig_process_types(top);
     Swig_default_allocators(top);
 
+    // List of integer-like types
+
+    integer_types.push_back(ogf_meta<int>::type());
+    integer_types.push_back(ogf_meta<long>::type());
+    integer_types.push_back(ogf_meta<unsigned int>::type());
+    integer_types.push_back(ogf_meta<unsigned long>::type());
+    integer_types.push_back(ogf_meta<GEO::index_t>::type());
+    integer_types.push_back(ogf_meta<OGF::index_t>::type());
+    integer_types.push_back(ogf_meta<size_t>::type());
+
     // Pre-declare all integer types, char* and bool* used in ImGui
-    OGF::ogf_declare_builtin_type<signed char>("signed char");
-    OGF::ogf_declare_builtin_type<unsigned char>("unsigned char");
-    OGF::ogf_declare_builtin_type<short>("short");
-    OGF::ogf_declare_builtin_type<unsigned short>("unsigned short");
-    OGF::ogf_declare_builtin_type<long long>("long long");
-    OGF::ogf_declare_builtin_type<unsigned long long>("unsigned long long");
-    OGF::ogf_declare_pointer_type<char*>("char*");
-    OGF::ogf_declare_pointer_type<bool*>("bool*");
-    OGF::ogf_declare_pointer_type<int*>("int*");
-    OGF::ogf_declare_pointer_type<float*>("float*");
-    OGF::ogf_declare_pointer_type<double*>("double*");
+
+    integer_types.push_back(
+	ogf_declare_builtin_type<signed char>("signed char")
+    );
+    integer_types.push_back(
+	ogf_declare_builtin_type<unsigned char>("unsigned char")
+    );
+    integer_types.push_back(
+	ogf_declare_builtin_type<short>("short")
+    );
+    integer_types.push_back(
+	ogf_declare_builtin_type<unsigned short>("unsigned short")
+    );
+    integer_types.push_back(
+	ogf_declare_builtin_type<long long>("long long")
+    );
+    integer_types.push_back(
+	ogf_declare_builtin_type<unsigned long long>("unsigned long long")
+    );
+
+    ogf_declare_pointer_type<char*>("char*");
+    ogf_declare_pointer_type<bool*>("bool*");
+    ogf_declare_pointer_type<int*>("int*");
+    ogf_declare_pointer_type<float*>("float*");
+    ogf_declare_pointer_type<double*>("double*");
 
     if (top) {
 	if (Swig_contract_mode_get()) {

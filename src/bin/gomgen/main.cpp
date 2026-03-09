@@ -125,7 +125,7 @@ namespace {
     }
 
     std::vector<std::string> include_path;
-    std::string input_path;
+    std::string input_path;  // directory or single file
     std::string output_path;
     bool dependencies=false;
     bool save_preprocessor_output=false;
@@ -189,7 +189,10 @@ namespace {
 	}
 
 
-	if(!OGF::FileSystem::is_directory(input_path)) {
+	if(
+	    !OGF::FileSystem::is_file(input_path) &&
+	    !OGF::FileSystem::is_directory(input_path)
+	) {
 	    OGF::Logger::err("Gom::CodeGen")
 		<< "Specified input path \'"
 		<< input_path << "\': no such directory"
@@ -245,6 +248,12 @@ namespace {
     void find_gom_headers(
 	const std::string& path, std::vector<std::string>& gom_headers
     ) {
+
+	if(OGF::FileSystem::is_file(path)) {
+	    gom_headers.push_back(path);
+	    return;
+	}
+
 	GEO::Logger::out("gom_classes") << "<< " << path << std::endl;
 	std::vector<std::string> remaining_directories;
 	remaining_directories.push_back(path);
