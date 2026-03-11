@@ -393,13 +393,13 @@ namespace {
 		 << std::endl;
 
 	    // prototype has a string (used to display error messages)
-	    if(true || mmethod->nb_args() != 0) {
+	    if(mmethod->nb_args() != 0) {
 		out_ << "      static const char* proto = \""
 		     << get_prototype(mmethod)
 		     << "\";" << std::endl;
 	    }
 
-	    // Generate a local variable for each argument
+	    // Declare, initialize and fetch arguments
 	    int stackptr = 1;
 	    for(index_t i=0; i<mmethod->nb_args(); ++i) {
 		MetaArg* marg = mmethod->ith_arg(i);
@@ -408,8 +408,8 @@ namespace {
 		if(type_name == "char*") {
 		    type_name = "const char*";
 		} else {
-		    is_pointer = String::string_ends_with(type_name,"*");
-		    type_name = String::remove_suffix(type_name, "*");
+		    is_pointer = OGF::String::string_ends_with(type_name,"*");
+		    type_name = OGF::String::remove_suffix(type_name, "*");
 		}
 		std::string default_value;
 		if(is_pointer) {
@@ -421,7 +421,7 @@ namespace {
 		} else if(marg->has_default_value()) {
 		    default_value = marg->default_value().as_string();
 		    if(type_is_string_like(marg->type())) {
-			default_value = String::quote(default_value);
+			default_value = OGF::String::quote(default_value);
 		    }
 		}
 		MetaType* mtype = Meta::instance()->resolve_meta_type(type_name);
@@ -458,6 +458,23 @@ namespace {
 		} else {
 		    stackptr++;
 		}
+	    }
+
+	    // Check arguments
+	    if(mmethod->nb_args() > 0) {
+		out_ << "      auto [arglist_OK, err_msg] = luawrap_check_args(";
+		out_ << "proto, ";
+		for(index_t i=0; i<mmethod->nb_args(); ++i) {
+		    out_ << mmethod->ith_arg(i)->name();
+		    if(i != mmethod->nb_args()-1) {
+			out_ << ", ";
+		    }
+		}
+		out_ << ");" << std::endl;
+		out_ << "      if(!arglist_OK) {" << std::endl;
+		out_ << "         return luaL_error(L, err_msg.c_str());"
+		     << std::endl;
+		out_ << "      }" << std::endl;
 
 	    }
 	    out_ << "      return 0;" << std::endl;
