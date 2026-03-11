@@ -75,6 +75,9 @@ extern "C" {
 #include <imgui.h>
 #endif
 
+#include <vector>
+#include <string>
+
 #define LUAWRAP_DECLARE_GLOBAL_CONSTANT(L,C) \
     lua_pushinteger(L,C);                    \
     lua_setglobal(L,#C)
@@ -194,6 +197,42 @@ public LuaWrapArgBase {
    }
 };
 
+inline std::pair<bool, std::string> luawrap_check_args(
+   const std::vector<LuaWrapArgBase>& args
+) {
+   bool OK = true;
+   std::string missing;
+   std::string wrong_type;
+   int i = 0;
+   for(const auto& arg : args) {
+      if(!arg.initialized) {
+         if(missing == "") {
+           missing = std::to_string(i);
+         } else {
+           missing += ("," + std::to_string(i));
+         }
+      }
+      if(!arg.type_OK) {
+         if(wrong_type == "") {
+           wrong_type = std::to_string(i);
+         } else {
+           wrong_type += ("," + std::to_string(i));
+         }
+      }
+      OK = OK && arg.initialized && arg.type_OK;
+      ++i;
+   }
+   if(OK) { return std::make_pair(true, "");  }
+   std::string err_msg =
+         "\nmissing args: " + missing + " wrong type args: " + wrong_type;
+   return std::make_pair(false, err_msg);
+}
+
+
+#define LUAWRAP_CHECK_ARGS(...) \
+   auto [arglist_OK, err_msg] = luawrap_check_args({__VA_ARGS__}); \
+   if(!arglist_OK) \
+      return luaL_error(L,(proto+err_msg).c_str())
 
 )";
 
@@ -462,8 +501,7 @@ namespace {
 
 	    // Check arguments
 	    if(mmethod->nb_args() > 0) {
-		out_ << "      auto [arglist_OK, err_msg] = luawrap_check_args(";
-		out_ << "proto, ";
+		out_ << "      LUAWRAP_CHECK_ARGS(";
 		for(index_t i=0; i<mmethod->nb_args(); ++i) {
 		    out_ << mmethod->ith_arg(i)->name();
 		    if(i != mmethod->nb_args()-1) {
@@ -471,12 +509,25 @@ namespace {
 		    }
 		}
 		out_ << ");" << std::endl;
-		out_ << "      if(!arglist_OK) {" << std::endl;
-		out_ << "         return luaL_error(L, err_msg.c_str());"
-		     << std::endl;
-		out_ << "      }" << std::endl;
-
 	    }
+
+	    // Call function
+	    /*
+	    out_ << "      ";
+	    if(mmethod->return_type_name() != "void") {
+		out_ << mmethod->return_type_name() << " retval=";
+	    }
+	    out_ << mmethod->name() << "(";
+	    for(index_t i=0; i<mmethod->nb_args(); ++i) {
+		MetaArg* marg = mmethod->ith_arg(i);
+		if(i != 0) {
+		    out_ << ", ";
+		}
+		out_ << marg->name() << ".value"; // TODO: pointers
+	    }
+	    out_ << ");" << std::endl;
+	    */
+
 	    out_ << "      return 0;" << std::endl;
 	    out_ << "   }" << std::endl << std::endl;
 	}
