@@ -47,7 +47,6 @@
 #include <swig/Modules/swigmod.h>
 #include <swig/CParse/cparse.h>
 
-
 void generate_gom(
     Language* lang, const std::vector<std::string>& sources,
     DOH* cpps, std::ofstream& out, int argc, char** argv,
@@ -59,22 +58,6 @@ void generate_gom(
     Node *top = Swig_cparse(cpps);
     Swig_process_types(top);
     Swig_default_allocators(top);
-
-    // Pre-declare all integer types, char* and bool* used in ImGui
-    /*
-    if(mode == GOMGEN_LUAWRAP_MODE) {
-	OGF::ogf_declare_builtin_type<signed char>("signed char");
-	OGF::ogf_declare_builtin_type<unsigned char>("unsigned char");
-	OGF::ogf_declare_builtin_type<short>("short");
-	OGF::ogf_declare_builtin_type<unsigned short>("unsigned short");
-	OGF::ogf_declare_builtin_type<long long>("long long");
-	OGF::ogf_declare_builtin_type<unsigned long long>("unsigned long long");
-	OGF::ogf_declare_pointer_type<char*>("char*");
-	OGF::ogf_declare_pointer_type<bool*>("bool*");
-	OGF::ogf_declare_pointer_type<int*>("int*");
-	OGF::ogf_declare_pointer_type<float*>("float*");
-    }
-    */
 
     if (top) {
 	if (Swig_contract_mode_get()) {

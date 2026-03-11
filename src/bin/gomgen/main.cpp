@@ -108,8 +108,7 @@ namespace {
 			c++;
 		    }
 		    if (
-			((i+1) < (argc-1)) && (argv[i+1]) &&
-			(*argv[i+1] != '-')
+			((i+1) < (argc-1)) && (argv[i+1]) && (*argv[i+1] != '-')
 		    ) {
 			Printf(opt," %s", argv[i+1]);
 			i++;
@@ -188,7 +187,6 @@ namespace {
 	    }
 	}
 
-
 	if(
 	    !OGF::FileSystem::is_file(input_path) &&
 	    !OGF::FileSystem::is_directory(input_path)
@@ -240,8 +238,8 @@ namespace {
 	}
 	if(prefix_length != 0) {
 	    filename = filename.substr(
-		prefix_length,filename.length()-prefix_length
-		);
+		prefix_length, filename.length()-prefix_length
+	    );
 	}
     }
 
@@ -260,13 +258,14 @@ namespace {
 	while(remaining_directories.size() > 0) {
 	    std::string current_directory = *remaining_directories.rbegin();
 	    remaining_directories.pop_back();
-	    if (!OGF::FileSystem::is_file(
-		    current_directory + "/" + "gomgen.skip")
+	    if(
+		!OGF::FileSystem::is_file(
+		    current_directory + "/" + "gomgen.skip"
+		)
 	    ) {
 		OGF::FileSystem::get_subdirectories(
 		    current_directory, remaining_directories , false
 		);
-
 		std::vector<std::string> files_in_directory;
 		OGF::FileSystem::get_directory_entries(
 		    current_directory, files_in_directory

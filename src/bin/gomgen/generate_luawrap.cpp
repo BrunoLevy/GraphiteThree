@@ -49,13 +49,121 @@
 
 /****************************************************************************/
 
+static const char* luawrap_header = R"(// Generated with gomgen
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef GEOGRAM_USE_BUILTIN_DEPS
+#include <geogram/third_party/lua/lua.h>
+#include <geogram/third_party/lua/lauxlib.h>
+#include <geogram/third_party/lua/lualib.h>
+#else
+#include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#define LUAWRAP_DECLARE_GLOBAL_CONSTANT(L,C) \
+    lua_pushinteger(L,C);                    \
+    lua_setglobal(L,#C)
+
+struct LuawrapArg {
+   LuawrapArg() : initialized(false), type_OK(true) {  }
+   bool initialized;
+   bool type_OK;
+};
+
+template <class T> struct LuawrapArg_integer : public LuawrapArg {
+   LuawrapArg_integer(lua_State* L, int idx) { get(L,idx); }
+   LuawrapArg_integer(const T& value_in) {
+       value = value_in; initialized=true; get(L,idx);
+   }
+   void get(lua_State* L, int idx) {
+      if(!lua_isnoneornil(L,idx)) {
+         if(lua_isinteger(L,idx)) {
+            value = T(lua_tointeger(idx));
+            initialized = true;
+         } else {
+            type_OK = false;
+         }
+      }
+   }
+   T value;
+};
+
+template <class T> struct LuawrapArg_number : public LuawrapArg {
+   LuawrapArg_number(lua_State* L, int idx) { get(L,idx); }
+   LuawrapArg_number(const T& value_in) {
+       value = value_in; initialized=true; get(L,idx);
+   }
+   void get(lua_State* L, int idx) {
+      if(!lua_isnoneornil(L,idx)) {
+         if(lua_isnumber(L,idx)) {
+            value = T(lua_tonumber(idx));
+            initialized = true;
+         } else {
+            type_OK = false;
+         }
+      }
+   }
+   T value;
+};
+
+template <class T> struct LuawrapArg_boolean : public LuawrapArg {
+   LuawrapArg_boolean(lua_State* L, int idx) { get(L,idx); }
+   LuawrapArg_boolean(const T& value_in) {
+       value = value_in; initialized=true; get(L,idx);
+   }
+   void get(lua_State* L, int idx) {
+      if(!lua_isnoneornil(L,idx)) {
+         if(lua_isboolean(L,idx)) {
+            value = T(lua_toboolean(idx));
+            initialized = true;
+         } else {
+            type_OK = false;
+         }
+      }
+   }
+   T value;
+};
+
+template <class T> struct LuawrapArg_string : public LuawrapArg {
+   LuawrapArg_string(lua_State* L, int idx) { get(L,idx); }
+   LuawrapArg_string(const T& value_in) {
+       value = value_in; initialized=true; get(L,idx);
+   }
+   void get(lua_State* L, int idx) {
+      if(!lua_isnoneornil(L,idx)) {
+         if(lua_isstring(L,idx)) {
+            value = T(lua_tostring(idx));
+            initialized = true;
+         } else {
+            type_OK = false;
+         }
+      }
+   }
+   T value;
+};
+
+
+)";
+
+/****************************************************************************/
+
 namespace {
     using namespace OGF;
 
-
     class LuaWrapGenerator {
     public:
-	LuaWrapGenerator() {
+	LuaWrapGenerator(std::ostream& out) : out_(out) {
+	    prefix_ = "gomgenerated_";
+
 	    // List of integer-like types
 	    integer_types_.push_back(ogf_meta<int>::type());
 	    integer_types_.push_back(ogf_meta<long>::type());
@@ -93,6 +201,8 @@ namespace {
 	    ogf_declare_pointer_type<int*>("int*");
 	    ogf_declare_pointer_type<float*>("float*");
 	    ogf_declare_pointer_type<double*>("double*");
+
+	    out_ << luawrap_header << std::endl;
 	}
 
 
@@ -115,15 +225,31 @@ namespace {
 
 	/**
 	 * \brief Tests whether a MetaType corresponds to an integer type
-	 * \param[in] type_name a string with the type name, for instance
-	 *  "unsigned int", "signed char", "long long int".
-	 * \retval true if mtype corresponds to a (signed or not) integer of
-	 *  any bitlength
+	 * \param[in] mtype a pointer to the MetaType
+	 * \retval true if mtype corresponds to an integer type or a
+	 *   floating-point type
 	 * \retval false otherwise
 	 */
-	bool type_is_integer_like(const std::string& type_name) const {
-	    MetaType* mtype = Meta::instance()->resolve_meta_type(type_name);
-	    return type_is_integer_like(mtype);
+	bool type_is_number_like(MetaType* mtype) const {
+	    if(mtype == nullptr) {
+		return false;
+	    }
+	    return type_is_integer_like(mtype) ||
+		mtype->name() == "float" ||
+		mtype->name() == "double" ;
+	}
+
+	/**
+	 * \brief Tests whether a MetaType corresponds to an integer type
+	 * \param[in] mtype a pointer to the MetaType
+	 * \retval true if mtype corresponds to a C++ string or C string (char*)
+	 * \retval false otherwise
+	 */
+	bool type_is_string_like(MetaType* mtype) const {
+	    if(mtype == nullptr) {
+		return false;
+	    }
+	    return (mtype->name() == "std::string" || mtype->name() == "char*");
 	}
 
 	/**
@@ -195,24 +321,126 @@ namespace {
 	}
 
 	/**
-	 * \brief decorates a type name with additional information
-	 * \param[in] type_name a type name
-	 * \return type_name plus some additional information:
-	 *   - "(I)" for integer-like or enum types
+	 * \brief Gets the prototype of a MetaMethod
+	 * \param[in] mmethod the MetaMethod
+	 * \return a string with the return type, name, argument types, names
+	 *  and optional default values.
 	 */
-	std::string show_type_name(const std::string& type_name) const {
-	    if(type_is_integer_like(type_name)) {
-		return type_name + "(I)";
+	std::string get_prototype(MetaMethod* mmethod) {
+	    std::string proto = mmethod->return_type_name() + " ";
+	    proto += mmethod->container_meta_class()->name() + "::" +
+		mmethod->name() + "(";
+	    for(index_t i=0; i<mmethod->nb_args(); ++i) {
+		MetaArg* marg = mmethod->ith_arg(i);
+		proto += (marg->type_name() + " " + marg->name());
+		if(marg->has_default_value()) {
+		    proto += ("=" + marg->default_value().as_string());
+		}
+		if(i != mmethod->nb_args()-1) {
+		    proto += ", ";
+		}
 	    }
-	    return type_name;
+	    proto += ")";
+	    return proto;
 	}
 
+	void generate_wrapper(MetaMethod* mmethod) {
+	    out_ << "   int " << mmethod->name() << "(lua_State* L) {"
+		 << std::endl;
+
+	    // prototype has a string (used to display error messages)
+	    if(true || mmethod->nb_args() != 0) {
+		out_ << "      static const char* proto = \""
+		     << get_prototype(mmethod)
+		     << "\";" << std::endl;
+	    }
+
+	    // Generate a local variable for each argument
+	    // and initialize it with the default value.
+	    // Each argument XXX has a twin bool XXX_initialized variable
+	    // keeping track of the initialized state.
+	    for(index_t i=0; i<mmethod->nb_args(); ++i) {
+		MetaArg* marg = mmethod->ith_arg(i);
+		std::string type_name = marg->type_name();
+		bool is_pointer = String::string_ends_with(type_name,"*");
+		if(type_name != "char*") {
+		    type_name = String::remove_suffix(type_name, "*");
+		}
+		out_ << "      " << type_name << " " << marg->name();
+
+		if(!is_pointer && marg->has_default_value()) {
+		    std::string default_value =
+			marg->default_value().as_string();
+		    if(type_is_string_like(marg->type())) {
+			default_value = String::quote(default_value);
+		    }
+		    out_ << " = " << default_value;
+		} else if(type_name == "char*") {
+		    out_ << " = nullptr";
+		}
+		out_ << ";" << std::endl;
+		if(marg->has_default_value()) {
+		    out_ << "      bool " << marg->name()
+			 << "_initialized = true;" << std::endl;
+		} else {
+		    out_ << "      bool " << marg->name()
+			 << "_initialized = false;" << std::endl;
+		}
+		out_ << "      bool " << marg->name()
+		     << "_type_OK = true;" << std::endl;
+	    }
+
+	    // Now get the arguments from lua
+	    int stackptr = 1;
+	    for(index_t i=0; i<mmethod->nb_args(); ++i) {
+		MetaArg* marg = mmethod->ith_arg(i);
+		std::string type_name = marg->type_name();
+		bool is_pointer = String::string_ends_with(type_name,"*");
+		if(type_name != "char*") {
+		    type_name = String::remove_suffix(type_name, "*");
+		}
+		MetaType* mtype = Meta::instance()->resolve_meta_type(type_name);
+		geo_assert(mtype != nullptr);
+
+		if(type_name == "ImVec2" || type_name == "ImVec4") {
+		} else {
+		    std::string lua_type = "";
+		    if(type_is_integer_like(mtype)) {
+			lua_type = "integer";
+		    } else if(type_is_number_like(mtype)) {
+			lua_type = "number";
+		    } else if(type_is_string_like(mtype)) {
+			lua_type = "string";
+		    } else if(mtype->name() == "bool") {
+			lua_type = "bool";
+		    } else {
+			Logger::warn("GomGen") << "Unknown type: "
+					       << mtype->name()
+					       << std::endl;
+		    }
+		    if(lua_type != "") {
+			out_ << "      "
+			     << "LUAWRAP_GET_" << lua_type << "_ARG("
+			     << type_name << "," << marg->name() << ","
+			     << stackptr
+			     << ");" << std::endl;
+		    }
+
+		    stackptr++;
+		}
+	    }
+
+	    out_ << "   }" << std::endl << std::endl;
+	}
 
 	/**
 	 * \brief Generates wrappers for all functions in a namespace
 	 * \param[in] name_space the name of the namespace, as a string
 	 */
 	void generate_wrappers(const std::string& name_space) {
+	    prefix_ += name_space;
+	    out_ << "namespace " << prefix_ << "_wrappers {"
+		 << std::endl << std::endl;
 	    MetaClass* mclass = Meta::instance()->resolve_meta_class(name_space);
 	    if(mclass == nullptr) {
 		Logger::err("Gom::CodeGen") << "Did not find namespace:"
@@ -226,55 +454,37 @@ namespace {
 		MetaMethod* mmethod = dynamic_cast<MetaMethod*>(mmember);
 		if(mmethod != nullptr) {
 		    bool OK = check_types(mmethod);
-		    std::string proto;
-		    if(true) {
-			proto += (
-			    show_type_name(mmethod->return_type_name()) + " "
-			);
-			proto += (mmethod->name() + "(");
-			for(index_t i=0; i<mmethod->nb_args(); ++i) {
-			    MetaArg* marg = mmethod->ith_arg(i);
-			    proto += (
-				show_type_name(marg->type_name()) + " " +
-				marg->name()
-			    );
-			    if(marg->has_default_value()) {
-				proto += ("=" +
-					  marg->default_value().as_string()
-					 );
-			    }
-			    if(i != mmethod->nb_args()-1) {
-				proto += ",";
-			    }
-			}
-			proto += ")";
-		    } else {
-			proto = mmethod->name();
-		    }
+		    std::string proto = get_prototype(mmethod);
 		    Logger::out("GomGen") << (OK ? "OK " : "KO ") << proto
 					  << std::endl;
-		    if(!OK) {
+		    if(OK) {
+			generate_wrapper(mmethod);
+		    } else {
 			check_types(mmethod,true);
 		    }
 		}
 	    }
+	    out_ << "} // namespace " << prefix_ << "_wrappers" << std::endl;
 	}
 
 	void generate_consts() {
+	    out_ << "void " << prefix_
+		 << "_register_constants(lua_State* L) {"
+		 << std::endl;
 	    for(MetaType* mtype: used_types_) {
 		MetaEnum* menum = dynamic_cast<MetaEnum*>(mtype);
 		if(menum != nullptr) {
-		    Logger::out("GomGen") << " Enum " << menum->name()
+		    Logger::out("GomGen") << "Enum " << menum->name()
 					  << std::endl;
 		    for(index_t i=0; i<menum->nb_values(); ++i) {
-			Logger::out("GomGen") << "   "
-					      << menum->ith_name(i)
-					      << std::endl;
+			out_ << "   LUAWRAP_DECLARE_GLOBAL_CONSTANT(L,"
+			     << menum->ith_name(i)
+			     << ");" << std::endl;
 		    }
 		}
 	    }
+	    out_ << "}" << std::endl;
 	}
-
 
 	/**
 	 * \brief Mark a type as used
@@ -298,6 +508,16 @@ namespace {
 	}
 
     private:
+	/**
+	 * \brief The stream where generated code is output
+	 */
+	std::ostream& out_;
+
+	/**
+	 * \brief string prepended to all generated names
+	 */
+	std::string prefix_;
+
 	/**
 	 * \brief all integer-like types, signed and unsigned, with various
 	 * bitlength
@@ -328,7 +548,7 @@ void generate_luawrap(
     Swig_process_types(top);
     Swig_default_allocators(top);
 
-    LuaWrapGenerator generator;
+    LuaWrapGenerator generator(out);
 
     if (top) {
 	if (Swig_contract_mode_get()) {

@@ -719,8 +719,15 @@ namespace {
 	    OGF::MetaClass* mclass = gom_class_from_member(n);
 	    OGF::MetaMethod* mmethod = nullptr;
 	    if(mode_ == GOMGEN_LUAWRAP_MODE) {
+		// Remove namespace:: prefix from name
+		name = GEO::String::remove_prefix(name, mclass->name() + "::");
 		SwigType* type_in = Getattr(n,"type");
 		std::string type = gom_type_name(type_in);
+		if(mclass->find_slot(name) != nullptr) {
+		    OGF::Logger::warn("GomGen")
+			<< name << ": duplicated member name"
+			<< std::endl;
+		}
 		mmethod = new OGF::MetaSlot(name, mclass, type);
 	    } else if(!Strcmp(kind, "signal")) {
 		mmethod = new OGF::MetaSignal(name, mclass);
