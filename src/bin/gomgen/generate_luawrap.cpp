@@ -50,190 +50,7 @@
 /****************************************************************************/
 
 static const char* luawrap_header = R"(// Generated with gomgen
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#ifdef GEOGRAM_USE_BUILTIN_DEPS
-#include <geogram/third_party/lua/lua.h>
-#include <geogram/third_party/lua/lauxlib.h>
-#include <geogram/third_party/lua/lualib.h>
-#else
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-#endif
-
-#ifdef __cplusplus
-}
-#endif
-
-#ifdef GEOGRAM_USE_BUILTIN_DEPS
-#include <geogram_gfx/third_party/imgui/imgui.h>
-#else
-#include <imgui.h>
-#endif
-
-#include <vector>
-#include <string>
-
-#define LUAWRAP_DECLARE_GLOBAL_CONSTANT(L,C) \
-    lua_pushinteger(L,C);                    \
-    lua_setglobal(L,#C)
-
-
-template <class T> struct LuaType {
-    static bool check([[maybe_unused]] lua_State* L, [[maybe_unused]] int idx) {
-       assert(false);
-       return false;
-    }
-    static T get([[maybe_unused]] lua_State* L, [[maybe_unused]] int idx) {
-       assert(false);
-       return T();
-    }
-};
-
-template <> struct LuaType<lua_Integer> {
-   static bool check(lua_State* L, int idx) {
-      return lua_isinteger(L,idx);
-   }
-   static lua_Integer get(lua_State* L, int idx) {
-      return lua_tointeger(L, idx);
-   }
-};
-
-template <> struct LuaType<lua_Number> {
-   static bool check(lua_State* L, int idx) {
-      return lua_isnumber(L,idx);
-   }
-   static lua_Number get(lua_State* L, int idx) {
-      return lua_tonumber(L, idx);
-   }
-};
-
-template <> struct LuaType<const char*> {
-   static bool check(lua_State* L, int idx) {
-      return lua_isstring(L,idx);
-   }
-   static const char* get(lua_State* L, int idx) {
-      return lua_tostring(L, idx);
-   }
-};
-
-template <> struct LuaType<bool> {
-   static bool check(lua_State* L, int idx) {
-      return lua_isboolean(L,idx);
-   }
-   static bool get(lua_State* L, int idx) {
-      return lua_toboolean(L, idx);
-   }
-};
-
-template <> struct LuaType<ImVec2> {
-   static bool check(lua_State* L, int idx) {
-      return (lua_gettop(L) >= idx+1) &&
-             lua_isnumber(L,idx) && lua_isnumber(L,idx+1);
-   }
-   static ImVec2 get(lua_State* L, int idx) {
-      return ImVec2(lua_tonumber(L,idx),lua_tonumber(L,idx+1));
-   }
-};
-
-template <> struct LuaType<ImVec4> {
-   static bool check(lua_State* L, int idx) {
-      return (lua_gettop(L) >= idx+3) &&
-         lua_isnumber(L,idx  ) && lua_isnumber(L,idx+1) &&
-         lua_isnumber(L,idx+2) && lua_isnumber(L,idx+3) ;
-   }
-   static ImVec4 get(lua_State* L, int idx) {
-      return ImVec4(
-         lua_tonumber(L,idx  ),lua_tonumber(L,idx+1),
-         lua_tonumber(L,idx+2),lua_tonumber(L,idx+3)
-      );
-   }
-};
-
-struct LuaWrapArgBase {
-   enum UninitializedPointer { };
-   enum NullPointer { };
-   LuaWrapArgBase() : initialized(false), type_OK(true), is_pointer(false) {  }
-   bool initialized;
-   bool type_OK;
-   bool is_pointer;
-};
-
-template <class CTYPE, class LUATYPE=CTYPE> struct LuaWrapArg :
-public LuaWrapArgBase {
-   LuaWrapArg(lua_State* L, int idx) {
-      get(L, idx);
-   }
-   LuaWrapArg(lua_State* L, int idx, CTYPE val) {
-      value = val;
-      initialized = true;
-      get(L, idx);
-   }
-   LuaWrapArg(lua_State* L, int idx, NullPointer) {
-      initialized = true;
-      is_pointer = true;
-      get(L, idx);
-   }
-   LuaWrapArg(lua_State* L, int idx, UninitializedPointer) {
-      is_pointer = true;
-      get(L, idx);
-   }
-   CTYPE value;
-   protected:
-   void get(lua_State* L, int idx) {
-      if(lua_isnoneornil(L,idx)) {
-         return;
-      }
-      if(LuaType<LUATYPE>::check(L,idx)) {
-         value = CTYPE(LuaType<LUATYPE>::get(L,idx));
-         initialized = true;
-      } else {
-         type_OK = false;
-      }
-   }
-};
-
-inline std::pair<bool, std::string> luawrap_check_args(
-   const std::vector<LuaWrapArgBase>& args
-) {
-   bool OK = true;
-   std::string missing;
-   std::string wrong_type;
-   int i = 0;
-   for(const auto& arg : args) {
-      if(!arg.initialized) {
-         if(missing == "") {
-           missing = std::to_string(i);
-         } else {
-           missing += ("," + std::to_string(i));
-         }
-      }
-      if(!arg.type_OK) {
-         if(wrong_type == "") {
-           wrong_type = std::to_string(i);
-         } else {
-           wrong_type += ("," + std::to_string(i));
-         }
-      }
-      OK = OK && arg.initialized && arg.type_OK;
-      ++i;
-   }
-   if(OK) { return std::make_pair(true, "");  }
-   std::string err_msg =
-         "\nmissing args: " + missing + " wrong type args: " + wrong_type;
-   return std::make_pair(false, err_msg);
-}
-
-
-#define LUAWRAP_CHECK_ARGS(...) \
-   auto [arglist_OK, err_msg] = luawrap_check_args({__VA_ARGS__}); \
-   if(!arglist_OK) \
-      return luaL_error(L,(proto+err_msg).c_str())
-
+#include "luawrap_runtime.h"
 )";
 
 /****************************************************************************/
@@ -427,7 +244,28 @@ namespace {
 	    return proto;
 	}
 
+	std::string type_to_lua_type(MetaType* mtype) {
+	    std::string lua_type = "";
+	    if(type_is_integer_like(mtype)) {
+		lua_type = "lua_Integer";
+	    } else if(type_is_number_like(mtype)) {
+		lua_type = "lua_Number";
+	    } else if(type_is_string_like(mtype)) {
+		lua_type = "const char*";
+	    } else if(mtype->name() == "bool") {
+		lua_type = "bool";
+	    } else {
+		lua_type = mtype->name();
+		Logger::warn("GomGen") << "Unknown type: "
+				       << mtype->name()
+				       << std::endl;
+	    }
+	    return lua_type;
+	}
+
+
 	void generate_wrapper(MetaMethod* mmethod) {
+
 	    out_ << "   int " << mmethod->name() << "(lua_State* L) {"
 		 << std::endl;
 
@@ -438,14 +276,23 @@ namespace {
 		     << "\";" << std::endl;
 	    }
 
-	    // Declare, initialize and fetch arguments
-	    int stackptr = 1;
+	    // get argument information
+	    // - arg_is_pointer: an argument passed by address and returned
+	    // - arg_type: C++ type of the argument
+	    // - arg_default_value: default value as a string or "" if not any
+
+	    bool has_pointers = false;
+	    vector<bool> arg_is_pointer;
+	    vector<MetaType*> arg_type;
+	    vector<std::string> arg_default_value;
+
 	    for(index_t i=0; i<mmethod->nb_args(); ++i) {
 		MetaArg* marg = mmethod->ith_arg(i);
 		std::string type_name = marg->type_name();
 		bool is_pointer = false;
 		if(type_name == "char*") {
-		    type_name = "const char*";
+		    type_name = "const char*"; // quick and dirty,
+  		                               // TODO: fix lang instead
 		} else {
 		    is_pointer = OGF::String::string_ends_with(type_name,"*");
 		    type_name = OGF::String::remove_suffix(type_name, "*");
@@ -453,9 +300,9 @@ namespace {
 		std::string default_value;
 		if(is_pointer) {
 		    if(marg->has_default_value()) {
-			default_value = "LuaWrapArgBase::NullPointer()";
+			default_value = "NullPointer()";
 		    } else {
-			default_value = "LuaWrapArgBase::UninitializedPointer()";
+			default_value = "UninitializedPointer()";
 		    }
 		} else if(marg->has_default_value()) {
 		    default_value = marg->default_value().as_string();
@@ -465,22 +312,23 @@ namespace {
 		}
 		MetaType* mtype = Meta::instance()->resolve_meta_type(type_name);
 		geo_assert(mtype != nullptr);
-		std::string lua_type = "";
-		if(type_is_integer_like(mtype)) {
-		    lua_type = "lua_Integer";
-		} else if(type_is_number_like(mtype)) {
-		    lua_type = "lua_Number";
-		} else if(type_is_string_like(mtype)) {
-		    lua_type = "const char*";
-		} else if(mtype->name() == "bool") {
-		    lua_type = "bool";
-		} else {
-		    lua_type = mtype->name();
-		    Logger::warn("GomGen") << "Unknown type: "
-					   << mtype->name()
-					   << std::endl;
-		}
-		out_ << "      " << "LuaWrapArg<" << type_name;
+
+		arg_is_pointer.push_back(is_pointer);
+		has_pointers = has_pointers || is_pointer;
+		arg_type.push_back(mtype);
+		arg_default_value.push_back(default_value);
+	    }
+
+	    // Generate code to declare, initialize and fetch arguments
+
+	    int stackptr = 1;
+	    for(index_t i=0; i<mmethod->nb_args(); ++i) {
+		MetaArg* marg = mmethod->ith_arg(i);
+		MetaType* mtype = arg_type[i];
+		std::string type_name = mtype->name();
+		std::string default_value = arg_default_value[i];
+		std::string lua_type = type_to_lua_type(mtype);
+		out_ << "      " << "Arg<" << type_name;
 		if(lua_type != type_name) {
 		    out_ << "," << lua_type;
 		}
@@ -512,23 +360,54 @@ namespace {
 	    }
 
 	    // Call function
-	    /*
 	    out_ << "      ";
 	    if(mmethod->return_type_name() != "void") {
-		out_ << mmethod->return_type_name() << " retval=";
+		std::string ret_type = mmethod->return_type_name();
+		if(ret_type == "char*") {
+		    ret_type = "const char*";
+		}
+		MetaType* mret_type =
+		    Meta::instance()->resolve_meta_type(ret_type);
+		geo_assert(mret_type != nullptr);
+		std::string lua_rettype = type_to_lua_type(mret_type);
+		if(ret_type == lua_rettype) {
+		    out_ << "Arg<" << ret_type << "> retval = ";
+		} else {
+		    out_ << "Arg<" << ret_type << "," << lua_rettype << ">"
+			 << " retval = ";
+		}
 	    }
-	    out_ << mmethod->name() << "(";
+	    out_ << "ImGui::" << mmethod->name() << "(";
 	    for(index_t i=0; i<mmethod->nb_args(); ++i) {
 		MetaArg* marg = mmethod->ith_arg(i);
 		if(i != 0) {
 		    out_ << ", ";
 		}
-		out_ << marg->name() << ".value"; // TODO: pointers
+		if(arg_is_pointer[i]) {
+		    out_ << "&" << marg->name() << ".value";
+		} else {
+		    out_ << marg->name() << ".value";
+		}
 	    }
 	    out_ << ");" << std::endl;
-	    */
 
-	    out_ << "      return 0;" << std::endl;
+	    // Push result and pointer values
+	    if(has_pointers || mmethod->return_type_name() != "void") {
+		out_ << "      int prevtop = lua_gettop(L);" << std::endl;
+		if(mmethod->return_type_name() != "void") {
+		    out_ << "      ret_val.push(L);" << std::endl;
+		}
+		for(index_t i=0; i<mmethod->nb_args(); ++i) {
+		    if(arg_is_pointer[i]) {
+			out_ << "      " << mmethod->ith_arg(i)->name()
+			     << ".push_pointer_if_set(L);" << std::endl;
+		    }
+		}
+		out_ << "      return lua_gettop(L)-prevtop;" << std::endl;
+	    } else {
+		out_ << "      return 0;" << std::endl;
+	    }
+
 	    out_ << "   }" << std::endl << std::endl;
 	}
 
@@ -539,7 +418,8 @@ namespace {
 	void generate_wrappers(const std::string& name_space) {
 	    prefix_ += name_space;
 	    out_ << "namespace " << prefix_ << "_wrappers {"
-		 << std::endl << std::endl;
+		 << std::endl;
+	    out_ << "   using namespace LuaWrap;" << std::endl << std::endl;
 	    MetaClass* mclass = Meta::instance()->resolve_meta_class(name_space);
 	    if(mclass == nullptr) {
 		Logger::err("Gom::CodeGen") << "Did not find namespace:"

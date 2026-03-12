@@ -146,10 +146,16 @@ namespace {
     void gom_msg(const char* msg, Node* n);
 
     inline std::string gom_type_name(SwigType* ty) {
+	// TODO: is there a simple way of getting the fully qualified
+	// type name from Swig instead of adding one thing at a time
+	// with SwigType_isxxx() ?
 	String* s = SwigType_str(SwigType_base(ty),nullptr);
 	std::string result = gom_type_name_from_string(s);
 	if(SwigType_ispointer(ty)) {
 	    result = result + "*";
+	}
+	if(SwigType_isarray(ty)) {
+	    result = result + "[]";
 	}
 	return result;
     }
