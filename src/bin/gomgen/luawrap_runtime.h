@@ -262,6 +262,10 @@ namespace LuaWrap {
     lua_pushinteger(L,C);                    \
     lua_setglobal(L,#C)
 
+#define LUAWRAP_DECLARE_FUNCTION(L,F) \
+    lua_pushliteral(L,#F);  \
+    lua_pushcfunction(L,F); \
+    lua_settable(L,-3);
 
 #define LUAWRAP_CHECK_ARGS(...) \
    auto [arglist_OK, err_msg] = check_args({__VA_ARGS__}); \

@@ -61,8 +61,6 @@ namespace {
     class LuaWrapGenerator {
     public:
 	LuaWrapGenerator(std::ostream& out) : out_(out) {
-	    prefix_ = "gomgenerated_";
-
 	    // List of integer-like types
 	    integer_types_.push_back(ogf_meta<int>::type());
 	    integer_types_.push_back(ogf_meta<long>::type());
@@ -395,7 +393,7 @@ namespace {
 	    if(has_pointers || mmethod->return_type_name() != "void") {
 		out_ << "      int prevtop = lua_gettop(L);" << std::endl;
 		if(mmethod->return_type_name() != "void") {
-		    out_ << "      ret_val.push(L);" << std::endl;
+		    out_ << "      retval.push(L);" << std::endl;
 		}
 		for(index_t i=0; i<mmethod->nb_args(); ++i) {
 		    if(arg_is_pointer[i]) {
@@ -416,8 +414,9 @@ namespace {
 	 * \param[in] name_space the name of the namespace, as a string
 	 */
 	void generate_wrappers(const std::string& name_space) {
-	    prefix_ += name_space;
-	    out_ << "namespace " << prefix_ << "_wrappers {"
+	    name_space_ = name_space;
+	    prefix_ = name_space + "_lua_wrappers";
+	    out_ << "namespace " << prefix_ << " {"
 		 << std::endl;
 	    out_ << "   using namespace LuaWrap;" << std::endl << std::endl;
 	    MetaClass* mclass = Meta::instance()->resolve_meta_class(name_space);
@@ -446,10 +445,41 @@ namespace {
 	    out_ << "} // namespace " << prefix_ << "_wrappers" << std::endl;
 	}
 
-	void generate_consts() {
-	    out_ << "void " << prefix_
-		 << "_register_constants(lua_State* L) {"
+	void generate_register_func() {
+	    out_ << "void " << prefix_ << "_register(lua_State* L) {"
 		 << std::endl;
+
+
+	    // Retreive or create imgui table if it does not already exist,
+	    // Keep the table on the top of the stack
+	    out_ << "   lua_getglobal(L, \"imgui\");" << std::endl;
+	    out_ << "   if(lua_isnil(L,-1)) {" << std::endl;
+	    out_ << "      lua_pop(L,1); " << std::endl;
+	    out_ << "      lua_newtable(L); " << std::endl;
+	    out_ << "      lua_pushvalue(L, -1);" << std::endl;
+	    out_ << "      lua_setglobal(L, \"imgui\");" << std::endl;
+            out_ << "   } " << std::endl << std::endl;
+
+	    out_ << "   using namespace " << prefix_ << ";" << std::endl;
+
+	    // Register functions
+	    MetaClass* mclass =
+		Meta::instance()->resolve_meta_class(name_space_);
+	    index_t N = index_t(mclass->nb_members());
+	    for(index_t i=0; i<N; ++i) {
+		MetaMember* mmember = mclass->ith_member(i);
+		MetaMethod* mmethod = dynamic_cast<MetaMethod*>(mmember);
+		if(mmethod != nullptr && check_types(mmethod)) {
+		    out_ << "   LUAWRAP_DECLARE_FUNCTION(L," << mmethod->name()
+			 << ");" << std::endl;
+		}
+	    }
+
+	    // Pop the imgui table from the top of the stack
+	    out_ << "   lua_pop(L,1);" << std::endl << std::endl;
+
+
+	    // Register enums
 	    for(MetaType* mtype: used_types_) {
 		MetaEnum* menum = dynamic_cast<MetaEnum*>(mtype);
 		if(menum != nullptr) {
@@ -491,6 +521,11 @@ namespace {
 	 * \brief The stream where generated code is output
 	 */
 	std::ostream& out_;
+
+	/**
+	 * \brief namespace of the generated functions
+	 */
+	std::string name_space_;
 
 	/**
 	 * \brief string prepended to all generated names
@@ -536,6 +571,6 @@ void generate_luawrap(
 	lang->top(top);
 
 	generator.generate_wrappers("ImGui");
-	generator.generate_consts();
+	generator.generate_register_func();
     }
 }
