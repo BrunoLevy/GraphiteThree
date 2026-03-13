@@ -354,12 +354,12 @@ int main(int argc, char** argv) {
     Preprocessor_define((DOH *) "__GNUC__ 1", 0);
     Preprocessor_define((DOH *) "__x86_64__ 1", 0);
 
-    // Turn on contracts (TODO: figure out what it is)
-    Swig_contract_mode_set(1);
-    Preprocessor_define(get_swig_version(),0);
+    // Turn on contracts (pre/post conditions, not needed)
+    //Swig_contract_mode_set(1);
+    //Preprocessor_define(get_swig_version(),0);
 
-    // Turn on director protected mode (TODO: figure out what it is)
-    Wrapper_director_protected_mode_set(0);
+    // Turn on director protected mode (callbacks in target language, not needed)
+    //Wrapper_director_protected_mode_set(0);
 
     // Turn on C++ mode
     CPlusPlus=1;

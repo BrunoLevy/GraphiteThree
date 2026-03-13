@@ -513,8 +513,9 @@ function GraphitePoint.draw_window()
 	                  tostring(math.floor(GraphitePoint.pdf_file:get_n_pages()))
         end
 
-	imgui.ProgressBar(progress_fraction, progress_str)
-
+	-- imgui.ProgressBar(progress_fraction, progress_str)
+	imgui.ProgressBar(progress_fraction, 0, 0, progress_str)
+	
 	imgui.Separator()
 
 	local keys = ScriptManager.presentation_keys()

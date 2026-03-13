@@ -73,8 +73,11 @@ namespace LuaWrap {
     };
 
     template <> struct LuaType<lua_Integer> {
+	static constexpr lua_Integer default_value = 0;
 	static bool check(lua_State* L, int idx) {
-	    return lua_isinteger(L,idx);
+	    return
+		lua_isinteger(L,idx) ||
+		lua_isboolean(L,idx) ; // we tolerate false->0 true->1 conversion
 	}
 	static lua_Integer get(lua_State* L, int idx) {
 	    return lua_tointeger(L, idx);
@@ -85,6 +88,7 @@ namespace LuaWrap {
     };
 
     template <> struct LuaType<lua_Number> {
+	static constexpr lua_Integer default_value = 0.0;
 	static bool check(lua_State* L, int idx) {
 	    return lua_isnumber(L,idx);
 	}
@@ -92,11 +96,12 @@ namespace LuaWrap {
 	    return lua_tonumber(L, idx);
 	}
 	template <class T> static void push(lua_State* L, T val) {
-	    lua_pushinteger(L,lua_Number(val));
+	    lua_pushnumber(L,lua_Number(val));
 	}
     };
 
     template <> struct LuaType<const char*> {
+	static constexpr const char* default_value = nullptr;
 	static bool check(lua_State* L, int idx) {
 	    return lua_isstring(L,idx);
 	}
@@ -109,6 +114,7 @@ namespace LuaWrap {
     };
 
     template <> struct LuaType<bool> {
+	static constexpr bool default_value = false;
 	static bool check(lua_State* L, int idx) {
 	    return lua_isboolean(L,idx);
 	}
@@ -121,12 +127,16 @@ namespace LuaWrap {
     };
 
     template <> struct LuaType<ImVec2> {
+	static constexpr ImVec2 default_value = ImVec2(0.0f, 0.0f);
 	static bool check(lua_State* L, int idx) {
 	    return (lua_gettop(L) >= idx+1) &&
 		lua_isnumber(L,idx) && lua_isnumber(L,idx+1);
 	}
 	static ImVec2 get(lua_State* L, int idx) {
-	    return ImVec2(lua_tonumber(L,idx),lua_tonumber(L,idx+1));
+	    return ImVec2(
+		float(lua_tonumber(L,idx)),
+		float(lua_tonumber(L,idx+1))
+	    );
 	}
 	static void push(lua_State* L, ImVec2 val) {
 	    lua_pushnumber(L,lua_Number(val.x));
@@ -135,6 +145,7 @@ namespace LuaWrap {
     };
 
     template <> struct LuaType<ImVec4> {
+	static constexpr ImVec4 default_value = ImVec4(0.0f, 0.0f, 0.0f, 0.0f);
 	static bool check(lua_State* L, int idx) {
 	    return (lua_gettop(L) >= idx+3) &&
 		lua_isnumber(L,idx  ) && lua_isnumber(L,idx+1) &&
@@ -142,8 +153,10 @@ namespace LuaWrap {
 	}
 	static ImVec4 get(lua_State* L, int idx) {
 	    return ImVec4(
-		lua_tonumber(L,idx  ),lua_tonumber(L,idx+1),
-		lua_tonumber(L,idx+2),lua_tonumber(L,idx+3)
+		float(lua_tonumber(L,idx  )),
+		float(lua_tonumber(L,idx+1)),
+		float(lua_tonumber(L,idx+2)),
+		float(lua_tonumber(L,idx+3))
 	    );
 	}
 	static void push(lua_State* L, ImVec4 val) {
@@ -154,12 +167,26 @@ namespace LuaWrap {
 	}
     };
 
+    template <> struct LuaType<ImTextureRef> {
+	static constexpr ImTextureID default_value = 0;
+	static bool check(lua_State* L, int idx) {
+	    return lua_isinteger(L,idx);
+	}
+	static ImTextureRef get(lua_State* L, int idx) {
+	    return ImTextureRef(ImTextureID(lua_tointeger(L, idx)));
+	}
+
+	template <class T> static void push(lua_State* L, T val) {
+	    lua_pushinteger(L,lua_Integer(val.GetTexID()));
+	}
+    };
+
     enum UninitializedPointer { };
     enum NullPointer { };
 
     struct ArgBase {
 	enum State { UNINITIALIZED, INITIALIZED, SET, INVALID };
-	ArgBase() : state(UNINITIALIZED) { }
+	ArgBase() : state(UNINITIALIZED), is_pointer(false) { }
 	bool OK() const {
 	    return (state != UNINITIALIZED) && (state != INVALID);
 	}
@@ -199,14 +226,19 @@ namespace LuaWrap {
 	    LuaType<LUATYPE>::push(L,value);
 	}
 
-	void push_pointer_if_set(lua_State* L) {
-	    assert(is_pointer);
+	void push_if_set(lua_State* L) {
 	    if(state == SET) {
 		LuaType<LUATYPE>::push(L,value);
 	    }
 	}
 
-	CTYPE value;
+	CTYPE* pointer() {
+	    assert(is_pointer);
+	    assert(state == INITIALIZED || state == SET);
+	    return (state == SET) ? &value : nullptr;
+	}
+
+	CTYPE value = CTYPE(LuaType<LUATYPE>::default_value);
     protected:
 	void get(lua_State* L, int idx) {
 	    if(lua_isnoneornil(L,idx)) {

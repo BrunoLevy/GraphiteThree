@@ -152,7 +152,6 @@ function autogui.icon_size()
 end
 
 function autogui.begin_disabled()
-   local ImGuiStyleVar_Alpha = 0
    imgui.PushStyleVar(ImGuiStyleVar_Alpha, 0.3)
 end
 
@@ -343,9 +342,9 @@ function autogui.integer(object, property_name, mtype, tooltip)
    autogui.Text(property_name)
    autogui.tooltip(tooltip)
    imgui.PushItemWidth(-autogui.margin)
+   local old_value = tonumber(object[property_name])
    local sel,new_value = imgui.InputInt(
-	'##properties##'..property_name,
-	object[property_name]
+      '##properties##'..property_name, old_value
    )
    imgui.PopItemWidth()
    if sel then
@@ -361,9 +360,9 @@ function autogui.unsigned_integer(object, property_name, mtype, tooltip)
    autogui.Text(property_name)
    autogui.tooltip(tooltip)
    imgui.PushItemWidth(-autogui.margin)
+   local old_value = tonumber(object[property_name])
    local sel,new_value = imgui.InputInt(
-	'##properties##'..property_name,
-	object[property_name]
+	'##properties##'..property_name, old_value
    )
    imgui.PopItemWidth()
    if new_value < 0 then

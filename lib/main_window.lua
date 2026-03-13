@@ -257,7 +257,6 @@ function graphite_main_window.draw_contents()
      end
   end
   if gom.get_environment_value('gui:undo') == 'true' then
-     local ImGuiStyleVar_Alpha = 0
      local can_undo = main.can_undo
      local can_redo = main.can_redo
      if(not can_undo) then

@@ -379,6 +379,11 @@ namespace {
 	    user_attributes   = nullptr;
 	    system_attributes = nullptr;
 	    mode_ = mode;
+	    // allow_overloading(mode == GOMGEN_LUAWRAP_MODE);
+	    // TODO: before uncommenting prev line, find a way of
+	    // having different "real name" and "overload name"
+	    // Find also a way of disabling overloads generations based on
+	    // default values.
 	}
 
 	const std::vector<OGF::MetaClass*>& get_generated_classes() const {
@@ -727,12 +732,13 @@ namespace {
 	    if(mode_ == GOMGEN_LUAWRAP_MODE) {
 		// Remove namespace:: prefix from name
 		name = GEO::String::remove_prefix(name, mclass->name() + "::");
+		std::string base_name = name;
 		SwigType* type_in = Getattr(n,"type");
 		std::string type = gom_type_name(type_in);
-		if(mclass->find_slot(name) != nullptr) {
-		    OGF::Logger::warn("GomGen")
-			<< name << ": duplicated member name"
-			<< std::endl;
+		int instance = 1;
+		while(mclass->find_slot(name) != nullptr) {
+		    ++instance;
+		    name = base_name + "_" + OGF::String::to_string(instance);
 		}
 		mmethod = new OGF::MetaSlot(name, mclass, type);
 	    } else if(!Strcmp(kind, "signal")) {

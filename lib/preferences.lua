@@ -22,7 +22,7 @@ function preferences_window.edit_list(label, vals_string, extension)
       table.insert(vals,s)
    end
    imgui.PushItemWidth(-1)
-   imgui.BeginListBox(label, #vals)
+   imgui.BeginListBox(label)
    for i = 1,#vals do
       if imgui.Selectable(
             vals[i],
@@ -176,7 +176,7 @@ preferences_window['draw_Appearance and rendering'] = function()
 
    imgui.Text('Font size')
    imgui.SameLine()
-   local font_size = gom.get_environment_value('gui:font_size')
+   local font_size = tonumber(gom.get_environment_value('gui:font_size'))
    imgui.PushItemWidth(-1)
    sel,font_size = imgui.InputInt('##font_size',font_size)
    imgui.PopItemWidth()
@@ -453,7 +453,7 @@ function preferences_window.draw()
 
       if preferences_window.visible then
 
-         imgui.BeginTabBar('##tabs')
+         if imgui.BeginTabBar('##tabs') then
 	 for i in string.split(
 	    'Appearance and rendering;Plugins;Startup;Logger;FnKeys;Advanced',
 	    ';'
@@ -464,7 +464,7 @@ function preferences_window.draw()
 	    end
 	 end
 	 imgui.EndTabBar()
-
+         end
 
 	 local h
 	 _,h = imgui.GetContentRegionAvail()

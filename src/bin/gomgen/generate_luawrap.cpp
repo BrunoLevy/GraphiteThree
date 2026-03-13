@@ -147,7 +147,11 @@ namespace {
 	    if(mtype == nullptr) {
 		return false;
 	    }
-	    return (mtype->name() == "std::string" || mtype->name() == "char*");
+	    return (
+		mtype->name() == "std::string" ||
+		mtype->name() == "char*" ||
+		mtype->name() == "const char*"
+	    );
 	}
 
 	/**
@@ -158,7 +162,10 @@ namespace {
 	 *  or as its return type
 	 */
 	bool check_type(const std::string& type_name) const {
-	    if(type_name == "ImVec2" || type_name == "ImVec4") {
+	    if(
+		type_name == "ImVec2" || type_name == "ImVec4" ||
+		type_name == "ImTextureRef"
+	    ) {
 		return true;
 	    }
 	    if(type_name == "void*") {
@@ -254,9 +261,15 @@ namespace {
 		lua_type = "bool";
 	    } else {
 		lua_type = mtype->name();
-		Logger::warn("GomGen") << "Unknown type: "
-				       << mtype->name()
-				       << std::endl;
+		if(
+		    mtype->name() != "ImVec2" &&
+		    mtype->name() != "ImVec4" &&
+		    mtype->name() != "ImTextureRef"
+		) {
+		    Logger::warn("GomGen") << "Unknown type: "
+					   << mtype->name()
+					   << std::endl;
+		}
 	    }
 	    return lua_type;
 	}
@@ -264,7 +277,8 @@ namespace {
 
 	void generate_wrapper(MetaMethod* mmethod) {
 
-	    out_ << "   int " << mmethod->name() << "(lua_State* L) {"
+	    out_ << "   int " << mmethod->name()
+		 << "([[maybe_unused]] lua_State* L) {"
 		 << std::endl;
 
 	    // prototype has a string (used to display error messages)
@@ -304,7 +318,10 @@ namespace {
 		    }
 		} else if(marg->has_default_value()) {
 		    default_value = marg->default_value().as_string();
-		    if(type_is_string_like(marg->type())) {
+		    if(
+			type_is_string_like(marg->type()) &&
+			default_value != "NULL" // TODO: smthg cleaner
+		    ) {
 			default_value = OGF::String::quote(default_value);
 		    }
 		}
@@ -382,7 +399,7 @@ namespace {
 		    out_ << ", ";
 		}
 		if(arg_is_pointer[i]) {
-		    out_ << "&" << marg->name() << ".value";
+		    out_ << marg->name() << ".pointer()";
 		} else {
 		    out_ << marg->name() << ".value";
 		}
@@ -398,7 +415,7 @@ namespace {
 		for(index_t i=0; i<mmethod->nb_args(); ++i) {
 		    if(arg_is_pointer[i]) {
 			out_ << "      " << mmethod->ith_arg(i)->name()
-			     << ".push_pointer_if_set(L);" << std::endl;
+			     << ".push_if_set(L);" << std::endl;
 		    }
 		}
 		out_ << "      return lua_gettop(L)-prevtop;" << std::endl;

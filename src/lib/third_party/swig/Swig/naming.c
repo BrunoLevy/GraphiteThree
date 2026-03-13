@@ -1452,7 +1452,7 @@ void Swig_name_rename_add(String *prefix, String *name, SwigType *decl, Hash *ne
   if (decl) {
     int constqualifier = SwigType_isconst(decl);
     while (declparms) {
-      if (ParmList_has_defaultargs(declparms)) {
+      if (ParmList_has_defaultargs(declparms)) { 
 
         /* Create a parameter list for the new rename by copying all
            but the last (defaulted) parameter */
