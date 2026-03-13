@@ -265,8 +265,7 @@ function preferences_window.draw_Logger()
    local sel,include,exclude
    imgui.PushID('##Logger_prefs')
    imgui.BeginChild(
-      '##include',
-      w, -footer_size, true
+      '##include', w, -footer_size, ImGuiChildFlags_Borders
    )
    imgui.Text('features to log')
    include = gom.get_environment_value('log:features')
@@ -277,8 +276,7 @@ function preferences_window.draw_Logger()
    imgui.EndChild()
    imgui.SameLine()
    imgui.BeginChild(
-      '##exclude',
-      w, -footer_size, true
+      '##exclude', w, -footer_size, ImGuiChildFlags_Borders
    )
    imgui.Text('features to exclude')
    exclude = gom.get_environment_value('log:features_exclude')

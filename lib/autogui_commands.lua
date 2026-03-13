@@ -23,7 +23,7 @@ function autogui.command_dialog(request)
      imgui.BeginChild(
         'command_args',
         0.0,  -30*main.scaling(),
-        false,
+        ImGuiChildFlags_None,
         ImGuiWindowFlags_HorizontalScrollbar
      )
   end
