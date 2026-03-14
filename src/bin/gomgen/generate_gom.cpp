@@ -65,7 +65,7 @@ void generate_gom(
 	}
 	lang->top(top);
 
-	if(true /* mode == GOMGEN_GOM_MODE*/) {
+	{
 	    out << "// GOMGEN automatically generated code" << std::endl;
 	    out << "// Do not edit." << std::endl;
 	    out << std::endl;

@@ -49,12 +49,6 @@
 
 /****************************************************************************/
 
-static const char* luawrap_header = R"(// Generated with gomgen
-#include "luawrap_runtime.h"
-)";
-
-/****************************************************************************/
-
 namespace {
     using namespace OGF;
 
@@ -99,8 +93,6 @@ namespace {
 	    ogf_declare_pointer_type<int*>("int*");
 	    ogf_declare_pointer_type<float*>("float*");
 	    ogf_declare_pointer_type<double*>("double*");
-
-	    out_ << luawrap_header << std::endl;
 	}
 
 
@@ -277,7 +269,7 @@ namespace {
 
 	void generate_wrapper(MetaMethod* mmethod) {
 
-	    out_ << "   int " << mmethod->name()
+	    out_ << "   static int " << mmethod->name()
 		 << "([[maybe_unused]] lua_State* L) {"
 		 << std::endl;
 
@@ -578,6 +570,28 @@ void generate_luawrap(
     ::Node *top = Swig_cparse(cpps);
     Swig_process_types(top);
     Swig_default_allocators(top);
+
+    out << "#include \"luawrap_runtime.h\"" << std::endl << std::endl;
+
+    out << "// GOMGEN automatically generated code" << std::endl;
+    out << "// Do not edit." << std::endl;
+    out << std::endl;
+    out << "// Command line:" << std::endl;
+    for(int i=0; i<argc; ++i) {
+	out << "//  " << argv[i] << std::endl;
+    }
+    out << std::endl;
+    out << std::endl;
+    out << "// Include path:" << std::endl;
+    for(GEO::index_t i=0; i<include_path.size(); ++i) {
+	out << "//   " << include_path[i] << std::endl;
+    }
+    out << "// Input path:" << std::endl;
+    out << "//   " << input_path << std::endl;
+    out << "// Output file:" << std::endl;
+    out << "//   " << output_path << std::endl;
+    out << std::endl;
+    out << std::endl;
 
     LuaWrapGenerator generator(out);
 
