@@ -548,8 +548,10 @@ function scene_graph_gui.draw_grob_name(grob)
          end
          scene_graph_gui.set_current(grob)
       end
-      if imgui.IO_KeyShift_pressed() and
-         imgui.IsItemFocused() and not grob.selected then
+      if (
+           imgui.IsKeyDown(ImGuiKey_LeftShift) or
+           imgui.IsKeyDown(ImGuiKey_RightShift)
+      ) and imgui.IsItemFocused() and not grob.selected then
            scene_graph.I.Selection.select_object{
               grob=grob,_invoked_from_gui=true
            }
@@ -559,13 +561,19 @@ function scene_graph_gui.draw_grob_name(grob)
       end
    end
    if imgui.IsItemActivated() and not imgui.IsItemToggledOpen() then
-       if imgui.IO_KeyCtrl_pressed() then
+       if (
+           imgui.IsKeyDown(ImGuiKey_LeftCtrl) or
+           imgui.IsKeyDown(ImGuiKey_RightCtrl)
+       ) then
          selection_op = scene_graph_gui.toggle_selection
          scene_graph_gui.nb_sel_in_ctrl_group =
             scene_graph_gui.nb_sel_in_ctrl_group + 1
        else
          scene_graph_gui.nb_sel_in_ctrl_group = 0
-         if imgui.IO_KeyShift_pressed() then
+         if (
+           imgui.IsKeyDown(ImGuiKey_LeftShift) or
+           imgui.IsKeyDown(ImGuiKey_RightShift)
+         ) then
            selection_op = scene_graph_gui.extend_selection
          else
            selection_op = scene_graph_gui.clear_selection
