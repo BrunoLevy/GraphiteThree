@@ -96,23 +96,9 @@ namespace {
 	    ogf_declare_pointer_type<float*>("float*");
 	    ogf_declare_pointer_type<double*>("double*");
 
-	    /*
-	    OGF::Meta::instance()->bind_meta_type(
-		new OGF::MetaBuiltinType("ImGuiViewport*")
-	    );
-
-	    OGF::Meta::instance()->bind_meta_type(
-		new OGF::MetaBuiltinType("ImGuiStyle*")
-	    );
-
-	    //OGF::Meta::instance()->bind_meta_type(
-	    //new OGF::MetaBuiltinType("ImGuiContext*")
-	    //);
-
-	    OGF::Meta::instance()->bind_meta_type(
-		new OGF::MetaBuiltinType("ImDrawList*")
-	    );
-	    */
+	    // quick and dirty fix for constness problem with
+	    // AcceptDragDropPayload() and GetDragDropLayload()
+	    unsupported_types_.insert("ImGuiPayload*");
 	}
 
 
@@ -174,6 +160,9 @@ namespace {
 	 *  or as its return type
 	 */
 	bool check_type(const std::string& type_name) const {
+	    if(unsupported_types_.find(type_name) != unsupported_types_.end()) {
+		return false;
+	    }
 	    if(
 		type_name == "ImVec2" || type_name == "ImVec4" ||
 		type_name == "ImTextureRef"
@@ -335,7 +324,18 @@ namespace {
   		                               // TODO: fix lang instead
 		} else {
 		    is_pointer = OGF::String::string_ends_with(type_name,"*");
-		    type_name = OGF::String::remove_suffix(type_name, "*");
+		    if(is_pointer) {
+			// If type is a pointer to a struct or class, then
+			// keep type as is (no special pointer management
+			// mechanism).
+			type_name = OGF::String::remove_suffix(type_name, "*");
+			MetaClass* mclass =
+			    Meta::instance()->resolve_meta_class(type_name);
+			if(mclass != nullptr) {
+			    is_pointer = false;
+			    type_name = type_name + "*";
+			}
+		    }
 		}
 		std::string default_value;
 		if(is_pointer) {
@@ -609,6 +609,12 @@ namespace {
 	 *  generated functions
 	 */
 	std::set<MetaType*> used_types_;
+
+	/**
+	 * \brief Quick fix for ignoring functions that manipulate
+	 *  usupported types.
+	 */
+	std::set<std::string> unsupported_types_;
     };
 }
 
