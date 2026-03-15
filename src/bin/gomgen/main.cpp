@@ -126,6 +126,7 @@ namespace {
     std::vector<std::string> include_path;
     std::string input_path;  // directory or single file
     std::string output_path;
+    std::string input_scope = "ImGui";
     bool dependencies=false;
     bool save_preprocessor_output=false;
     GomGenMode mode = GOMGEN_GOM_MODE;
@@ -168,6 +169,9 @@ namespace {
 		    Swig_mark_arg(i);
 		} else if(!strncmp(argv[i], "-lua", 4)) {
 		    mode = GOMGEN_LUAWRAP_MODE;
+		    Swig_mark_arg(i);
+		} else if(!strncmp(argv[i], "-s", 2)) {
+		    input_scope = std::string(argv[i] + 2);
 		    Swig_mark_arg(i);
 		} else if (
 		    !strcmp(argv[i],"-version") ||
@@ -415,14 +419,16 @@ int main(int argc, char** argv) {
 	    generate_gom(
 		lang,gom_headers,cpps,out,argc,argv,
 		include_path, input_path, output_path,
-		get_package_name(input_path)
+		get_package_name(input_path),
+		input_scope
 	    );
 	    break;
 	case GOMGEN_LUAWRAP_MODE:
 	    generate_luawrap(
 		lang,gom_headers,cpps,out,argc,argv,
 		include_path, input_path, output_path,
-		get_package_name(input_path)
+		get_package_name(input_path),
+		input_scope
 	    );
 	    break;
 	}

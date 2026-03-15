@@ -38,6 +38,7 @@
 #include <OGF/gom/codegen/codegen.h>
 #include <OGF/gom/reflection/meta.h>
 #include <OGF/gom/reflection/meta_class.h>
+#include <OGF/gom/reflection/meta_namespace.h>
 #include <OGF/gom/types/gom_implementation.h>
 
 #include "gom_lang.h"
@@ -58,6 +59,7 @@ namespace {
 	    // List of integer-like types
 	    integer_types_.push_back(ogf_meta<int>::type());
 	    integer_types_.push_back(ogf_meta<long>::type());
+	    integer_types_.push_back(ogf_meta<unsigned short>::type());
 	    integer_types_.push_back(ogf_meta<unsigned int>::type());
 	    integer_types_.push_back(ogf_meta<unsigned long>::type());
 	    integer_types_.push_back(ogf_meta<GEO::index_t>::type());
@@ -93,6 +95,24 @@ namespace {
 	    ogf_declare_pointer_type<int*>("int*");
 	    ogf_declare_pointer_type<float*>("float*");
 	    ogf_declare_pointer_type<double*>("double*");
+
+	    /*
+	    OGF::Meta::instance()->bind_meta_type(
+		new OGF::MetaBuiltinType("ImGuiViewport*")
+	    );
+
+	    OGF::Meta::instance()->bind_meta_type(
+		new OGF::MetaBuiltinType("ImGuiStyle*")
+	    );
+
+	    //OGF::Meta::instance()->bind_meta_type(
+	    //new OGF::MetaBuiltinType("ImGuiContext*")
+	    //);
+
+	    OGF::Meta::instance()->bind_meta_type(
+		new OGF::MetaBuiltinType("ImDrawList*")
+	    );
+	    */
 	}
 
 
@@ -214,6 +234,13 @@ namespace {
 		    used_type(mmethod->return_type_name());
 		}
 	    }
+	    if(mmethod->name()[0] == '_') {
+		Logger::out("GomGen")
+		    << mmethod->name() << ":"
+		    << "skipping function starting with _"
+		    << std::endl;
+		OK = false;
+	    }
 	    return OK;
 	}
 
@@ -251,12 +278,15 @@ namespace {
 		lua_type = "const char*";
 	    } else if(mtype->name() == "bool") {
 		lua_type = "bool";
+	    } else if(mtype->name() == "ImDrawList*") {
+		lua_type = mtype->name();
 	    } else {
 		lua_type = mtype->name();
 		if(
 		    mtype->name() != "ImVec2" &&
 		    mtype->name() != "ImVec4" &&
-		    mtype->name() != "ImTextureRef"
+		    mtype->name() != "ImDrawList*"
+
 		) {
 		    Logger::warn("GomGen") << "Unknown type: "
 					   << mtype->name()
@@ -269,16 +299,10 @@ namespace {
 
 	void generate_wrapper(MetaMethod* mmethod) {
 
-	    out_ << "   static int " << mmethod->name()
-		 << "([[maybe_unused]] lua_State* L) {"
-		 << std::endl;
-
-	    // prototype has a string (used to display error messages)
-	    if(mmethod->nb_args() != 0) {
-		out_ << "      static const char* proto = \""
-		     << get_prototype(mmethod)
-		     << "\";" << std::endl;
-	    }
+	    MetaClass* mclass = mmethod->container_meta_class();
+	    bool is_in_class = (
+		dynamic_cast<OGF::MetaNamespace*>(mclass) == nullptr
+	    );
 
 	    // get argument information
 	    // - arg_is_pointer: an argument passed by address and returned
@@ -286,9 +310,21 @@ namespace {
 	    // - arg_default_value: default value as a string or "" if not any
 
 	    bool has_pointers = false;
+	    vector<std::string> arg_name;
 	    vector<bool> arg_is_pointer;
 	    vector<MetaType*> arg_type;
 	    vector<std::string> arg_default_value;
+	    index_t nb_args = index_t(mmethod->nb_args());
+
+	    if(is_in_class) {
+		++nb_args;
+		arg_name.push_back("self");
+		arg_is_pointer.push_back(false);
+		arg_type.push_back(
+		    Meta::instance()->resolve_meta_type(mclass->name()+"*")
+		);
+		arg_default_value.push_back("");
+	    }
 
 	    for(index_t i=0; i<mmethod->nb_args(); ++i) {
 		MetaArg* marg = mmethod->ith_arg(i);
@@ -320,17 +356,33 @@ namespace {
 		MetaType* mtype = Meta::instance()->resolve_meta_type(type_name);
 		geo_assert(mtype != nullptr);
 
+		arg_name.push_back(marg->name());
 		arg_is_pointer.push_back(is_pointer);
 		has_pointers = has_pointers || is_pointer;
 		arg_type.push_back(mtype);
 		arg_default_value.push_back(default_value);
 	    }
 
-	    // Generate code to declare, initialize and fetch arguments
 
+	    out_ << "   static int " << mmethod->name();
+	    if(nb_args == 0 && mmethod->return_type_name() == "void") {
+		out_ << "(lua_State*) {"
+		     << std::endl;
+	    } else {
+		out_ << "(lua_State* L) {"
+		     << std::endl;
+	    }
+
+	    // prototype has a string (used to display error messages)
+	    if(nb_args != 0) {
+		out_ << "      static const char* proto = \""
+		     << get_prototype(mmethod)
+		     << "\";" << std::endl;
+	    }
+
+	    // Generate code to declare, initialize and fetch arguments
 	    int stackptr = 1;
-	    for(index_t i=0; i<mmethod->nb_args(); ++i) {
-		MetaArg* marg = mmethod->ith_arg(i);
+	    for(index_t i=0; i<nb_args; ++i) {
 		MetaType* mtype = arg_type[i];
 		std::string type_name = mtype->name();
 		std::string default_value = arg_default_value[i];
@@ -339,7 +391,7 @@ namespace {
 		if(lua_type != type_name) {
 		    out_ << "," << lua_type;
 		}
-		out_ << ">" << " " << marg->name() << "("
+		out_ << ">" << " " << arg_name[i] << "("
 		     <<  "L," << stackptr;
 		if(default_value != "") {
 		    out_ << "," << default_value;
@@ -355,11 +407,11 @@ namespace {
 	    }
 
 	    // Check arguments
-	    if(mmethod->nb_args() > 0) {
+	    if(nb_args > 0) {
 		out_ << "      LUAWRAP_CHECK_ARGS(";
-		for(index_t i=0; i<mmethod->nb_args(); ++i) {
-		    out_ << mmethod->ith_arg(i)->name();
-		    if(i != mmethod->nb_args()-1) {
+		for(index_t i=0; i<nb_args; ++i) {
+		    out_ << arg_name[i];
+		    if(i != nb_args-1) {
 			out_ << ", ";
 		    }
 		}
@@ -384,16 +436,21 @@ namespace {
 			 << " retval = ";
 		}
 	    }
-	    out_ << "ImGui::" << mmethod->name() << "(";
-	    for(index_t i=0; i<mmethod->nb_args(); ++i) {
-		MetaArg* marg = mmethod->ith_arg(i);
-		if(i != 0) {
+	    index_t first_arg = 0;
+	    if(!is_in_class) {
+		out_ << mclass->name() << "::" << mmethod->name() << "(";
+	    } else {
+		out_ << "self.value->" << mmethod->name() << "(";
+		++first_arg;
+	    }
+	    for(index_t i=first_arg; i<nb_args; ++i) {
+		if(i != first_arg) {
 		    out_ << ", ";
 		}
 		if(arg_is_pointer[i]) {
-		    out_ << marg->name() << ".pointer()";
+		    out_ << arg_name[i] << ".pointer()";
 		} else {
-		    out_ << marg->name() << ".value";
+		    out_ << arg_name[i] << ".value";
 		}
 	    }
 	    out_ << ");" << std::endl;
@@ -404,9 +461,9 @@ namespace {
 		if(mmethod->return_type_name() != "void") {
 		    out_ << "      retval.push(L);" << std::endl;
 		}
-		for(index_t i=0; i<mmethod->nb_args(); ++i) {
+		for(index_t i=first_arg; i<nb_args; ++i) {
 		    if(arg_is_pointer[i]) {
-			out_ << "      " << mmethod->ith_arg(i)->name()
+			out_ << "      " << arg_name[i]
 			     << ".push_if_set(L);" << std::endl;
 		    }
 		}
@@ -563,7 +620,8 @@ void generate_luawrap(
     const std::vector<std::string>& include_path,
     const std::string& input_path,
     const std::string& output_path,
-    const std::string& package_name
+    const std::string& package_name,
+    const std::string& input_scope
 ) {
     using namespace OGF;
 
@@ -600,8 +658,8 @@ void generate_luawrap(
 	    Swig_contracts(top);
 	}
 	lang->top(top);
-
-	generator.generate_wrappers("ImGui");
+	generator.generate_wrappers(input_scope);
+	out << std::endl << std::endl;
 	generator.generate_register_func();
     }
 }

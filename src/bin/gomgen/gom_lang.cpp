@@ -38,10 +38,12 @@
 #include <OGF/gom/reflection/meta_builtin.h>
 #include <OGF/gom/reflection/meta_enum.h>
 #include <OGF/gom/reflection/meta_class.h>
+#include <OGF/gom/reflection/meta_namespace.h>
 #include <OGF/gom/reflection/meta_property.h>
 #include <OGF/gom/reflection/meta_slot.h>
 #include <OGF/gom/reflection/meta_signal.h>
 #include <OGF/gom/reflection/meta_struct.h>
+#include <OGF/gom/reflection/meta_builtin.h>
 #include <OGF/basic/os/text_utils.h>
 
 #include <geogram/basic/file_system.h>
@@ -640,7 +642,7 @@ namespace {
 	    if(
 		Getattr(clazz,"gom:kind")     != nullptr &&
 		Getattr(clazz,"gom:abstract") == nullptr
-		) {
+	    ) {
 		Setattr(n,"gom:kind","constructor");
 		copy_attributes(n);
 	    }
@@ -672,7 +674,8 @@ namespace {
 	    // a pseudo class. TODO: something cleaner, a true
 	    // namespace object.
 	    if(mode_ == GOMGEN_LUAWRAP_MODE) {
-		std::string name = Char(Getattr(n,"name"));
+		// std::string name = Char(Getattr(n,"name"));
+		Setattr(n, "gom:kind", "namespace");
 		return classDeclaration(n);
 	    }
 	    cleanup_attributes();
@@ -912,8 +915,17 @@ namespace {
 	    if(!checkAttribute(n, "gom:kind", "class")) {
 		std::string name = gom_type_name_from_string(Getattr(n, "name"));
 		if(mode_ == GOMGEN_LUAWRAP_MODE) {
-		    OGF::MetaClass* mclass = new OGF::MetaClass(name);
-		    OGF::Meta::instance()->bind_meta_type(mclass);
+		    if(checkAttribute(n, "gom:kind", "namespace")) {
+			OGF::MetaNamespace* mnamespace =
+			    new OGF::MetaNamespace(name);
+			OGF::Meta::instance()->bind_meta_type(mnamespace);
+		    } else {
+			OGF::MetaClass* mclass = new OGF::MetaClass(name);
+			OGF::Meta::instance()->bind_meta_type(mclass);
+			OGF::Meta::instance()->bind_meta_type(
+			    new OGF::MetaBuiltinType(name+"*")
+			);
+		    }
 		} else {
 		    OGF::MetaBuiltinStruct* mstruct =
 			new OGF::MetaBuiltinStruct(name);

@@ -53,8 +53,11 @@ void generate_gom(
     const std::vector<std::string>& include_path,
     const std::string& input_path,
     const std::string& output_path,
-    const std::string& package_name
+    const std::string& package_name,
+    const std::string& input_scope
 ) {
+    GEO::geo_argused(input_scope);
+
     Node *top = Swig_cparse(cpps);
     Swig_process_types(top);
     Swig_default_allocators(top);

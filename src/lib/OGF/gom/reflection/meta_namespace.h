@@ -57,9 +57,9 @@ namespace OGF {
     public:
         /**
          * \brief Constructs a new MetaNamespace
-         * \param[in] namespace the C++ name of the namespace
+         * \param[in] name the C++ name of the namespace
          */
-        explicit MetaNamespace(const std::string& class_name);
+        explicit MetaNamespace(const std::string& name);
 
         /**
          * \brief MetaNamespace destructor.

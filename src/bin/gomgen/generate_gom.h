@@ -50,7 +50,8 @@ void generate_gom(
     const std::vector<std::string>& include_path,
     const std::string& input_path,
     const std::string& output_path,
-    const std::string& package_name
+    const std::string& package_name,
+    const std::string& input_scope
 );
 
 #endif
