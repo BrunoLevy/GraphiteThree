@@ -873,6 +873,9 @@ namespace {
 			OGF::Meta::instance()->bind_meta_type(
 			    new OGF::MetaBuiltinType(name+"*")
 			);
+			OGF::Meta::instance()->bind_meta_type(
+			    new OGF::MetaBuiltinType("const "+name+"*")
+			);
 		    }
 		} else {
 		    OGF::MetaBuiltinStruct* mstruct =

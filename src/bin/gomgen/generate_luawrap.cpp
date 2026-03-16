@@ -102,6 +102,10 @@ namespace {
 	    ogf_declare_pointer_type<const double*>("const double*");
 
 	    unsupported_types_.insert("void*");
+	    unsupported_types_.insert("ImVec2*");
+	    unsupported_types_.insert("ImVec4*");
+	    unsupported_types_.insert("const ImVec2*");
+	    unsupported_types_.insert("const ImVec4*");
 
 	    supported_types_.insert("ImVec2");
 	    supported_types_.insert("ImVec4");
@@ -175,6 +179,12 @@ namespace {
 		return true;
 	    }
 
+ 	    if(GEO::String::string_starts_with(type_name, "const ")) {
+		return check_type(
+		    GEO::String::remove_prefix(type_name, "const ")
+		);
+	    }
+
 	    if(GEO::String::string_ends_with(type_name, "*")) {
 		return (
 		    OGF::Meta::instance()->resolve_meta_type(type_name) !=
@@ -182,11 +192,6 @@ namespace {
 		);
 	    }
 
- 	    if(GEO::String::string_starts_with(type_name, "const ")) {
-		return check_type(
-		    GEO::String::remove_prefix(type_name, "const ")
-		);
-	    }
 
 	    MetaType* mtype = Meta::instance()->resolve_meta_type(type_name);
 	    if(mtype == nullptr) {
