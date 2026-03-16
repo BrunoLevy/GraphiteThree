@@ -175,14 +175,14 @@ namespace {
 		return true;
 	    }
 
-	    if(String::string_ends_with(type_name, "*")) {
+	    if(GEO::String::string_ends_with(type_name, "*")) {
 		return (
 		    OGF::Meta::instance()->resolve_meta_type(type_name) !=
 		    nullptr
 		);
 	    }
 
-	    if(String::string_starts_with(type_name, "const ")) {
+	    if(GEO::String::string_starts_with(type_name, "const ")) {
 		return check_type(String::remove_prefix(type_name, "const "));
 	    }
 
@@ -654,6 +654,9 @@ void generate_luawrap(
     const std::string& input_scope
 ) {
     using namespace OGF;
+
+    geo_argused(sources);
+    geo_argused(package_name);
 
     ::Node *top = Swig_cparse(cpps);
     Swig_process_types(top);

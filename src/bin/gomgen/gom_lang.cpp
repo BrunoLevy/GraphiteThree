@@ -466,7 +466,8 @@ namespace {
 	    // where val1 and val2 are either integer constants
 	    // or enum symbolic value names.
 	    std::string sop1, sop2;
-	    int op1, op2;
+	    int op1 = 0;
+	    int op2 = 0;
 
 	    if(
 		!ok && GEO::String::split_string(sym, '+', sop1, sop2) &&
