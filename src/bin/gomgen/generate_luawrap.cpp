@@ -90,15 +90,22 @@ namespace {
 	    );
 
 	    ogf_declare_pointer_type<char*>("char*");
-	    ogf_declare_pointer_type<const char*>("const char*");
 	    ogf_declare_pointer_type<bool*>("bool*");
 	    ogf_declare_pointer_type<int*>("int*");
 	    ogf_declare_pointer_type<float*>("float*");
 	    ogf_declare_pointer_type<double*>("double*");
 
-	    // quick and dirty fix for constness problem with
-	    // AcceptDragDropPayload() and GetDragDropLayload()
-	    unsupported_types_.insert("ImGuiPayload*");
+	    ogf_declare_pointer_type<const char*>("const char*");
+	    ogf_declare_pointer_type<const bool*>("const bool*");
+	    ogf_declare_pointer_type<const int*>("const int*");
+	    ogf_declare_pointer_type<const float*>("const float*");
+	    ogf_declare_pointer_type<const double*>("const double*");
+
+	    unsupported_types_.insert("void*");
+
+	    supported_types_.insert("ImVec2");
+	    supported_types_.insert("ImVec4");
+	    supported_types_.insert("ImTextureRef");
 	}
 
 
@@ -163,22 +170,31 @@ namespace {
 	    if(unsupported_types_.find(type_name) != unsupported_types_.end()) {
 		return false;
 	    }
-	    if(
-		type_name == "ImVec2" || type_name == "ImVec4" ||
-		type_name == "ImTextureRef"
-	    ) {
+
+	    if(supported_types_.find(type_name) != supported_types_.end()) {
 		return true;
 	    }
-	    if(type_name == "void*") {
-		return false;
+
+	    if(String::string_ends_with(type_name, "*")) {
+		return (
+		    OGF::Meta::instance()->resolve_meta_type(type_name) !=
+		    nullptr
+		);
 	    }
+
+	    if(String::string_starts_with(type_name, "const ")) {
+		return check_type(String::remove_prefix(type_name, "const "));
+	    }
+
 	    MetaType* mtype = Meta::instance()->resolve_meta_type(type_name);
 	    if(mtype == nullptr) {
 		return false;
 	    }
+
 	    if(dynamic_cast<MetaClass*>(mtype) != nullptr) {
 		return false;
 	    }
+
 	    return true;
 	}
 
@@ -287,7 +303,6 @@ namespace {
 
 
 	void generate_wrapper(MetaMethod* mmethod) {
-
 	    MetaClass* mclass = mmethod->container_meta_class();
 	    bool is_in_class = (
 		dynamic_cast<OGF::MetaNamespace*>(mclass) == nullptr
@@ -319,10 +334,8 @@ namespace {
 		MetaArg* marg = mmethod->ith_arg(i);
 		std::string type_name = marg->type_name();
 		bool is_pointer = false;
-		if(type_name == "char*") {
-		    type_name = "const char*"; // quick and dirty,
-  		                               // TODO: fix lang instead
-		} else {
+
+		if(!OGF::String::string_starts_with(type_name, "const ")) {
 		    is_pointer = OGF::String::string_ends_with(type_name,"*");
 		    if(is_pointer) {
 			// If type is a pointer to a struct or class, then
@@ -337,6 +350,7 @@ namespace {
 			}
 		    }
 		}
+
 		std::string default_value;
 		if(is_pointer) {
 		    if(marg->has_default_value()) {
@@ -354,6 +368,11 @@ namespace {
 		    }
 		}
 		MetaType* mtype = Meta::instance()->resolve_meta_type(type_name);
+		if(mtype == nullptr) {
+		    Logger::err("GomGen") << "FATAL: did not find type:"
+					  << type_name
+					  << std::endl;
+		}
 		geo_assert(mtype != nullptr);
 
 		arg_name.push_back(marg->name());
@@ -611,10 +630,15 @@ namespace {
 	std::set<MetaType*> used_types_;
 
 	/**
-	 * \brief Quick fix for ignoring functions that manipulate
-	 *  usupported types.
+	 * \brief Explicitly unsupported types.
 	 */
 	std::set<std::string> unsupported_types_;
+
+	/**
+	 * \brief Explicitly supported types.
+	 */
+	std::set<std::string> supported_types_;
+
     };
 }
 

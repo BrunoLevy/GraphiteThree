@@ -133,11 +133,6 @@ namespace {
 	}
     }
 
-    inline std::string gom_type_name_from_string(String* s) {
-	std::string result = std::string(Char(s));
-	return result;
-    }
-
     inline std::string gom_value_from_string(String* s) {
 	if(!Strncmp(s, "OGF::", 5)) {
 	    return std::string(Char(s)+5);
@@ -146,21 +141,6 @@ namespace {
     }
 
     void gom_msg(const char* msg, Node* n);
-
-    inline std::string gom_type_name(SwigType* ty) {
-	// TODO: is there a simple way of getting the fully qualified
-	// type name from Swig instead of adding one thing at a time
-	// with SwigType_isxxx() ?
-	String* s = SwigType_str(SwigType_base(ty),nullptr);
-	std::string result = gom_type_name_from_string(s);
-	if(SwigType_ispointer(ty)) {
-	    result = result + "*";
-	}
-	if(SwigType_isarray(ty)) {
-	    result = result + "[]";
-	}
-	return result;
-    }
 
     inline std::string gom_enum_name(Node* n) {
 	String* s = Getattr(n, "name");
@@ -173,7 +153,7 @@ namespace {
 
     inline OGF::MetaClass* gom_class_from_member(Node* n) {
 	Node* clazz = Getattr(n,"parentNode");
-	std::string class_name = gom_type_name_from_string(
+	std::string class_name = gom_string(
 	    Getattr(clazz,"name")
 	);
 	OGF::MetaClass* result = dynamic_cast<OGF::MetaClass*>(
@@ -185,7 +165,7 @@ namespace {
 
     inline OGF::MetaBuiltinStruct* gom_struct_from_member(Node* n) {
 	Node* clazz = Getattr(n,"parentNode");
-	std::string class_name = gom_type_name_from_string(
+	std::string class_name = gom_string(
 	    Getattr(clazz,"name")
 	);
 	OGF::MetaBuiltinStruct* result = dynamic_cast<OGF::MetaBuiltinStruct*>(
@@ -258,39 +238,6 @@ namespace {
 	}
     }
 
-    void copy_gom_args(Node* from, OGF::MetaMethod* to) {
-	Parm* parms = Getattr(from,"parms");
-	if(parms != nullptr) {
-	    int param_id = 1;
-	    for(Node* p = parms; p != nullptr; p = nextSibling(p)) {
-		SwigType* type_in  = Getattr(p,"type");
-		String*   name_in  = Getattr(p,"name");
-		String*   value_in = Getattr(p,"value");
-
-		std::string name;
-		if(name_in == nullptr) {
-		    OGF::Logger::warn("GomGen")
-			<< "anonymous arg in signal/slot"
-			<< std::endl;
-		    name = GEO::String::format("prm_%d",param_id);
-		} else {
-		    name = gom_string(name_in);
-		}
-
-		std::string type = gom_type_name(type_in);
-		OGF::MetaArg arg(name, type);
-		copy_gom_attributes(p, &arg);
-		if(value_in != nullptr) {
-		    std::string default_value = gom_value_from_string(value_in);
-		    gom_unquote(default_value);
-		    //gom_unqualify(default_value);
-		    arg.default_value().set_value(default_value);
-		}
-		to->add_arg(arg);
-		param_id++;
-	    }
-	}
-    }
 
 //-------------------------------- Debugging ------------------------------
 
@@ -913,7 +860,7 @@ namespace {
 	virtual int classHandler(Node *n) {
 
 	    if(!checkAttribute(n, "gom:kind", "class")) {
-		std::string name = gom_type_name_from_string(Getattr(n, "name"));
+		std::string name = gom_string(Getattr(n, "name"));
 		if(mode_ == GOMGEN_LUAWRAP_MODE) {
 		    if(checkAttribute(n, "gom:kind", "namespace")) {
 			OGF::MetaNamespace* mnamespace =
@@ -936,7 +883,7 @@ namespace {
 	    if(checkAttribute(n, "gom:kind", "class")) {
 
 		bool abstract = (checkAttribute(n, "gom:abstract", "true")!=0);
-		std::string name = gom_type_name_from_string(Getattr(n, "name"));
+		std::string name = gom_string(Getattr(n, "name"));
 
 		int nb_superclasses = 0;
 		OGF::MetaClass* superclass = nullptr;
@@ -961,7 +908,7 @@ namespace {
 		    if(baselist != nullptr) {
 			for(int i=0; i<Len(baselist); i++) {
 			    std::string cur_base_name =
-				gom_type_name_from_string(Getitem(baselist, i));
+				gom_string(Getitem(baselist, i));
 
 			    OGF::MetaClass* cur_base =
 				dynamic_cast<OGF::MetaClass*>(
@@ -1007,6 +954,10 @@ namespace {
 
 		OGF::Meta::instance()->bind_meta_type(
 		    new OGF::MetaBuiltinType(name + "*")
+		);
+
+		OGF::Meta::instance()->bind_meta_type(
+		    new OGF::MetaBuiltinType("const " + name + "*")
 		);
 
 		OGF::MetaClass* mclass =
@@ -1107,6 +1058,69 @@ namespace {
 	    system_attributes = nullptr;
 	    Delete(user_attributes);
 	    user_attributes = nullptr;
+	}
+
+	void copy_gom_args(Node* from, OGF::MetaMethod* to) {
+	    Parm* parms = Getattr(from,"parms");
+	    if(parms != nullptr) {
+		int param_id = 1;
+		for(Node* p = parms; p != nullptr; p = nextSibling(p)) {
+		    SwigType* type_in  = Getattr(p,"type");
+		    String*   name_in  = Getattr(p,"name");
+		    String*   value_in = Getattr(p,"value");
+
+		    std::string name;
+		    if(name_in == nullptr) {
+			OGF::Logger::warn("GomGen")
+			    << "anonymous arg in signal/slot"
+			    << std::endl;
+			name = GEO::String::format("prm_%d",param_id);
+		    } else {
+			name = gom_string(name_in);
+		    }
+
+		    std::string type = gom_type_name(type_in);
+		    OGF::MetaArg arg(name, type);
+		    copy_gom_attributes(p, &arg);
+		    if(value_in != nullptr) {
+			std::string default_value =
+			    gom_value_from_string(value_in);
+			gom_unquote(default_value);
+			//gom_unqualify(default_value);
+			arg.default_value().set_value(default_value);
+		    }
+		    to->add_arg(arg);
+		    param_id++;
+		}
+	    }
+	}
+
+	std::string gom_type_name(SwigType* ty) {
+	    if(mode_ == GOMGEN_GOM_MODE) {
+		// in GOMGEN mode, use base type (and re-decorate with "*" if
+		// type was a pointer type).
+		String* s = SwigType_str(SwigType_base(ty),nullptr);
+		std::string result = gom_string(s);
+		if(SwigType_ispointer(ty)) {
+		    result = result + "*";
+		}
+		return result;
+	    } else {
+		std::string result = gom_string(SwigType_str(ty,nullptr));
+		result = OGF::String::remove_suffix(result, " const &");
+		if(OGF::String::string_ends_with(result, " *")) {
+		    result = OGF::String::remove_suffix(result, " *");
+		    if(OGF::String::string_ends_with(result, " const")) {
+			result = OGF::String::remove_suffix(result, " const");
+			result = "const " + result;
+		    }
+		    result += "*";
+		}
+		if(result == "char const*") {
+		    result = "const char*";
+		}
+		return result;
+	    }
 	}
 
     private:
