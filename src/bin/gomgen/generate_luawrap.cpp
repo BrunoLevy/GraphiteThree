@@ -182,7 +182,7 @@ namespace {
 		);
 	    }
 
-	    if(GEO::String::string_starts_with(type_name, "const ")) {
+ 	    if(GEO::String::string_starts_with(type_name, "const ")) {
 		return check_type(String::remove_prefix(type_name, "const "));
 	    }
 
