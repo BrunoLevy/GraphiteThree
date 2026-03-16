@@ -183,7 +183,9 @@ namespace {
 	    }
 
  	    if(GEO::String::string_starts_with(type_name, "const ")) {
-		return check_type(String::remove_prefix(type_name, "const "));
+		return check_type(
+		    GEO::String::remove_prefix(type_name, "const ")
+		);
 	    }
 
 	    MetaType* mtype = Meta::instance()->resolve_meta_type(type_name);
