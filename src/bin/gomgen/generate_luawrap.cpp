@@ -56,6 +56,7 @@ namespace {
     class LuaWrapGenerator {
     public:
 	LuaWrapGenerator(std::ostream& out) : out_(out) {
+
 	    // List of integer-like types
 	    integer_types_.push_back(ogf_meta<int>::type());
 	    integer_types_.push_back(ogf_meta<long>::type());
@@ -67,7 +68,6 @@ namespace {
 	    integer_types_.push_back(ogf_meta<size_t>::type());
 
 	    // Pre-declare all integer types, char* and bool* used in ImGui
-
 	    integer_types_.push_back(
 		ogf_declare_builtin_type<signed char>("signed char")
 	    );
@@ -110,6 +110,9 @@ namespace {
 	    supported_types_.insert("ImVec2");
 	    supported_types_.insert("ImVec4");
 	    supported_types_.insert("ImTextureRef");
+
+	    nb_components_["ImVec2"] = 2;
+	    nb_components_["ImVec4"] = 4;
 	}
 
 
@@ -205,6 +208,22 @@ namespace {
 	    return true;
 	}
 
+	/**
+	 * \brief Tests whether a function is printf-like
+	 * \details A function is printf-like if its two last arguments
+	 *  are a format string (const char*) and the ellipsis
+	 */
+	bool is_printf_like(MetaMethod* mmethod) {
+	    index_t N = index_t(mmethod->nb_args());
+	    if(N < 2) {
+		return false;
+	    }
+	    return (
+		(mmethod->ith_arg(N-2)->type_name() == "const char*") &&
+		(mmethod->ith_arg(N-1)->type_name() == "...")
+	    );
+	}
+
 
 	/**
 	 * \brief Tests whether a wrapper can be generated for a function
@@ -218,21 +237,24 @@ namespace {
 	    bool OK = true;
 	    for(index_t i=0; i<mmethod->nb_args(); ++i) {
 		MetaArg* marg = mmethod->ith_arg(i);
+		bool ok =
+		    ((i == mmethod->nb_args()-1) && is_printf_like(mmethod)) ||
+		    check_type(marg->type_name());
 		if(report) {
 		    Logger::out("GomGen")
 			<< "   arg: " << marg->name()
 			<< ":" << marg->type_name()
-			<< " " << (check_type(marg->type_name()) ? "OK" : "KO")
+			<< " " << (ok ? "ok" : "ko")
 			<< std::endl;
 		}
-		OK = OK && check_type(marg->type_name());
+		OK = OK && ok;
 	    }
 	    if(mmethod->return_type_name() != "void") {
 		if(report) {
 		    Logger::out("GomGen")
 			<< "   ret type: " << mmethod->return_type_name()
 			<< " " << (
-			    check_type(mmethod->return_type_name()) ? "OK" : "KO"
+			    check_type(mmethod->return_type_name()) ? "ok" : "ko"
 			)
 			<< std::endl;
 		}
@@ -266,13 +288,17 @@ namespace {
 	    std::string proto = mmethod->return_type_name() + " ";
 	    proto += mmethod->container_meta_class()->name() + "::" +
 		mmethod->name() + "(";
-	    for(index_t i=0; i<mmethod->nb_args(); ++i) {
+	    index_t N = index_t(mmethod->nb_args());
+	    if(is_printf_like(mmethod)) {
+		--N;
+	    }
+	    for(index_t i=0; i<N; ++i) {
 		MetaArg* marg = mmethod->ith_arg(i);
 		proto += (marg->type_name() + " " + marg->name());
 		if(marg->has_default_value()) {
 		    proto += ("=" + marg->default_value().as_string());
 		}
-		if(i != mmethod->nb_args()-1) {
+		if(i != N-1) {
 		    proto += ", ";
 		}
 	    }
@@ -280,6 +306,11 @@ namespace {
 	    return proto;
 	}
 
+	/**
+	 * \brief Gets the Lua type associated with a C++ type
+	 * \param[in] mtype the C++ type, as a MetaType
+	 * \return the lua type name as a string
+	 */
 	std::string type_to_lua_type(MetaType* mtype) {
 	    std::string lua_type = "";
 	    if(type_is_integer_like(mtype)) {
@@ -290,25 +321,33 @@ namespace {
 		lua_type = "const char*";
 	    } else if(mtype->name() == "bool") {
 		lua_type = "bool";
-	    } else if(mtype->name() == "ImDrawList*") {
-		lua_type = mtype->name();
 	    } else {
 		lua_type = mtype->name();
-		if(
-		    mtype->name() != "ImVec2" &&
-		    mtype->name() != "ImVec4" &&
-		    mtype->name() != "ImDrawList*"
-
-		) {
-		    Logger::warn("GomGen") << "Unknown type: "
-					   << mtype->name()
-					   << std::endl;
-		}
 	    }
 	    return lua_type;
 	}
 
+	/**
+	 * \brief Gets the number of components associated with a type
+	 * \param[in] mtype the C++ type, as a MetaType
+	 * \return the number of values that will be consumed on the Lua
+	 *  stack to initialize a variable of that type. It is almost always
+	 *  1, except for ImVec2 (2) and ImVec4(4).
+	 */
+	int type_nb_components(MetaType* mtype) {
+	    auto it = nb_components_.find(mtype->name());
+	    if(it == nb_components_.end()) {
+		return 1;
+	    }
+	    return it->second;
+	}
 
+	/**
+	 * \brief Generates a wrapper for a function
+	 * \param[in] mmethod the function, as a MetaMethod
+	 * \details if the container is a class, then an additional
+	 *  parameter is generated for the "this" pointer.
+	 */
 	void generate_wrapper(MetaMethod* mmethod) {
 	    MetaClass* mclass = mmethod->container_meta_class();
 	    bool is_in_class = (
@@ -316,7 +355,9 @@ namespace {
 	    );
 
 	    // get argument information
-	    // - arg_is_pointer: an argument passed by address and returned
+	    // - nb_args: an additional arg is generated if container is a class
+	    // - arg_name: name of the argument, as a string
+	    // - arg_is_pointer: if argument passed by address and returned
 	    // - arg_type: C++ type of the argument
 	    // - arg_default_value: default value as a string or "" if not any
 
@@ -337,7 +378,12 @@ namespace {
 		arg_default_value.push_back("");
 	    }
 
-	    for(index_t i=0; i<mmethod->nb_args(); ++i) {
+
+	    bool printf_like = is_printf_like(mmethod);
+	    if(printf_like) {
+		--nb_args;
+	    }
+	    for(index_t i=0; i<mmethod->nb_args()-int(printf_like); ++i) {
 		MetaArg* marg = mmethod->ith_arg(i);
 		std::string type_name = marg->type_name();
 		bool is_pointer = false;
@@ -399,7 +445,7 @@ namespace {
 		     << std::endl;
 	    }
 
-	    // prototype has a string (used to display error messages)
+	    // prototype as a string (used to display error messages)
 	    if(nb_args != 0) {
 		out_ << "      static const char* proto = \""
 		     << get_prototype(mmethod)
@@ -423,13 +469,7 @@ namespace {
 		    out_ << "," << default_value;
 		}
 		out_ << ");" << std::endl;
-		if(type_name == "ImVec2") {
-		    stackptr += 2;
-		} else if(type_name == "ImVec4") {
-		    stackptr += 4;
-		} else {
-		    stackptr++;
-		}
+		stackptr += type_nb_components(mtype);
 	    }
 
 	    // Check arguments
@@ -448,9 +488,6 @@ namespace {
 	    out_ << "      ";
 	    if(mmethod->return_type_name() != "void") {
 		std::string ret_type = mmethod->return_type_name();
-		if(ret_type == "char*") {
-		    ret_type = "const char*";
-		}
 		MetaType* mret_type =
 		    Meta::instance()->resolve_meta_type(ret_type);
 		geo_assert(mret_type != nullptr);
@@ -473,7 +510,9 @@ namespace {
 		if(i != first_arg) {
 		    out_ << ", ";
 		}
-		if(arg_is_pointer[i]) {
+		if(i == nb_args - 1 && printf_like) {
+		    out_ << "\"%s\"," << arg_name[i] << ".value";
+		} else if(arg_is_pointer[i]) {
 		    out_ << arg_name[i] << ".pointer()";
 		} else {
 		    out_ << arg_name[i] << ".value";
@@ -537,6 +576,10 @@ namespace {
 	    out_ << "} // namespace " << prefix_ << "_wrappers" << std::endl;
 	}
 
+	/**
+	 * \brief Generates the function that registers the wrappers and
+	 *  constants to the Lua interpreter
+	 */
 	void generate_register_func() {
 	    out_ << "void " << prefix_ << "_register(lua_State* L) {"
 		 << std::endl;
@@ -646,6 +689,11 @@ namespace {
 	 */
 	std::set<std::string> supported_types_;
 
+	/**
+	 * \brief Maps type names to number of components
+	 * \details 2 for ImVec2, 4 for ImVec4, 1 if not in the table
+	 */
+	std::map<std::string, int> nb_components_;
     };
 }
 
