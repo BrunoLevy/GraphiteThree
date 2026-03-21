@@ -267,6 +267,37 @@ namespace LuaWrap {
 	}
     };
 
+    template <int DIM, class CTYPE, class LUATYPE=CTYPE>
+    class ArgArray : public ArgBase {
+    public:
+	ArgArray(lua_State* L, int idx) {
+	    get(L, idx);
+	}
+	void push(lua_State* L) {
+	    for(int i=0; i<DIM; ++i) {
+		LuaType<LUATYPE>::push(L,value[i]);
+	    }
+	}
+	CTYPE value[DIM];
+
+    protected:
+	void get(lua_State* L, int idx) {
+	    for(int i=0; i<DIM; ++i) {
+		if(lua_isnoneornil(L,i+idx)) {
+		    return;
+		}
+	    }
+	    for(int i=0; i<DIM; ++i) {
+		if(LuaType<LUATYPE>::check(L,i+idx)) {
+		    value[i] = CTYPE(LuaType<LUATYPE>::get(L,i+idx));
+		} else {
+		    state = INVALID;
+		    return;
+		}
+	    }
+	    state = SET;
+	}
+    };
 
     inline bool arglist_OK() { return true; }
 

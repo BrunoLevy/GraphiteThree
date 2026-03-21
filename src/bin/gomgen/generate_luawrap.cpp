@@ -101,12 +101,14 @@ namespace {
 	    ogf_declare_pointer_type<const float*>("const float*");
 	    ogf_declare_pointer_type<const double*>("const double*");
 
+	    unsupported_types_.insert("char*");
 	    unsupported_types_.insert("void*");
 	    unsupported_types_.insert("ImVec2*");
 	    unsupported_types_.insert("ImVec4*");
 	    unsupported_types_.insert("const ImVec2*");
 	    unsupported_types_.insert("const ImVec4*");
 
+	    supported_types_.insert("const char*");
 	    supported_types_.insert("ImVec2");
 	    supported_types_.insert("ImVec4");
 	    supported_types_.insert("ImTextureRef");
@@ -224,6 +226,25 @@ namespace {
 	    );
 	}
 
+	/**
+	 * \brief Gets the number of valid arguments
+	 * \details Ignores the arguments at the end of the list that
+	 *  have invalid types but that have default values
+	 */
+	index_t nb_valid_args(MetaMethod* mmethod) {
+	    if(is_printf_like(mmethod)) {
+		return index_t(mmethod->nb_args()-1);
+	    }
+	    index_t N = index_t(mmethod->nb_args());
+	    while(
+		N > 0 &&
+		!check_type(mmethod->ith_arg(N-1)->type_name()) &&
+		mmethod->ith_arg(N-1)->has_default_value()
+	    ) {
+		--N;
+	    }
+	    return N;
+	}
 
 	/**
 	 * \brief Tests whether a wrapper can be generated for a function
@@ -235,7 +256,8 @@ namespace {
 	 */
 	bool check_types(MetaMethod* mmethod, bool report=false) {
 	    bool OK = true;
-	    for(index_t i=0; i<mmethod->nb_args(); ++i) {
+	    index_t N = nb_valid_args(mmethod);
+	    for(index_t i=0; i<N; ++i) {
 		MetaArg* marg = mmethod->ith_arg(i);
 		bool ok =
 		    ((i == mmethod->nb_args()-1) && is_printf_like(mmethod)) ||
@@ -288,10 +310,7 @@ namespace {
 	    std::string proto = mmethod->return_type_name() + " ";
 	    proto += mmethod->container_meta_class()->name() + "::" +
 		mmethod->name() + "(";
-	    index_t N = index_t(mmethod->nb_args());
-	    if(is_printf_like(mmethod)) {
-		--N;
-	    }
+	    index_t N = nb_valid_args(mmethod);
 	    for(index_t i=0; i<N; ++i) {
 		MetaArg* marg = mmethod->ith_arg(i);
 		proto += (marg->type_name() + " " + marg->name());
@@ -366,7 +385,8 @@ namespace {
 	    vector<bool> arg_is_pointer;
 	    vector<MetaType*> arg_type;
 	    vector<std::string> arg_default_value;
-	    index_t nb_args = index_t(mmethod->nb_args());
+	    index_t mmethod_nb_args = nb_valid_args(mmethod);
+	    index_t nb_args = mmethod_nb_args;
 
 	    if(is_in_class) {
 		++nb_args;
@@ -377,13 +397,8 @@ namespace {
 		);
 		arg_default_value.push_back("");
 	    }
-
-
 	    bool printf_like = is_printf_like(mmethod);
-	    if(printf_like) {
-		--nb_args;
-	    }
-	    for(index_t i=0; i<mmethod->nb_args()-int(printf_like); ++i) {
+	    for(index_t i=0; i<mmethod_nb_args; ++i) {
 		MetaArg* marg = mmethod->ith_arg(i);
 		std::string type_name = marg->type_name();
 		bool is_pointer = false;
