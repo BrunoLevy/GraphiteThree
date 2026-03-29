@@ -596,7 +596,8 @@ namespace {
 	 *  constants to the Lua interpreter
 	 */
 	void generate_register_func() {
-	    out_ << "void " << prefix_ << "_register(lua_State* L) {"
+	    out_ << "void " << "Load" << name_space_
+		 << "Bindings(lua_State* L) {"
 		 << std::endl;
 
 
