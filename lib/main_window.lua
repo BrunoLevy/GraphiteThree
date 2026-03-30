@@ -223,6 +223,13 @@ function graphite_main_window.draw_module(module)
 	    if with_menubar then
 	       if imgui.BeginMenuBar() then
 	          module.draw_menu()
+                  local btn_width  = autogui.button_size
+                  imgui.Dummy(imgui.GetContentRegionAvail()-btn_width,2)
+                  if imgui.SimpleButton(
+                      imgui.font_icon('window-close')..'##close'
+                  ) then
+                      module.visible = false
+                  end
 	          imgui.EndMenuBar()
 	       end
 	    end

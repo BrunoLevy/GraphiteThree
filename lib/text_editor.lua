@@ -507,13 +507,6 @@ end
 function text_editor_gui.draw_window()
    text_editor_gui.parse_errors()
    if imgui.SimpleButton(
-      imgui.font_icon('window-close')..'##close'
-   ) then
-      text_editor_gui.visible = false
-   end
-   autogui.tooltip('Hide editor')
-   imgui.SameLine()
-   if imgui.SimpleButton(
       imgui.font_icon('circle-play')
    ) then
       text_editor_gui.run()
