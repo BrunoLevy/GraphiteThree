@@ -60,6 +60,10 @@ namespace OGF {
         grob_ = grob ;
     }
 
+    Grob* Interface::get_grob() const {
+	return ((grob_->id() == Object::INVALID_ID) ? nullptr : grob_);
+    }
+
     SceneGraph* Interface::scene_graph() const {
         return grob_->scene_graph() ;
     }
@@ -171,7 +175,7 @@ namespace OGF {
     }
 
     Interpreter* Commands::interpreter() {
-	if(get_grob() == nullptr) {
+	if(get_grob() == nullptr || get_grob()->id() == Object::INVALID_ID) {
 	    return nullptr;
 	}
 	return get_grob()->interpreter();

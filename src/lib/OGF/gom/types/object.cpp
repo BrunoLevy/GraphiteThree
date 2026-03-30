@@ -90,6 +90,7 @@ namespace OGF {
 		id_to_object_ = nullptr;
 	    }
 	}
+	id_ = static_cast<unsigned int>(0xbadbeef);
     }
 
     void Object::disconnect() {

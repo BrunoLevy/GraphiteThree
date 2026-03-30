@@ -64,6 +64,9 @@ namespace OGF {
     gom_attribute(abstract,"true")
     gom_class GOM_API Object : public Counted {
     public:
+	static constexpr unsigned int INVALID_ID
+	    = static_cast<unsigned int>(0xbadbeef);
+
         /**
          * \brief Object constructor.
 	 * \param[in] transient if true, the object is transient.

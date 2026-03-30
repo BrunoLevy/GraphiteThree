@@ -111,9 +111,7 @@ namespace OGF {
          * \brief Gets the current Grob
          * \return a pointer to the current Grob
          */
-        Grob* get_grob() const {
-            return grob_;
-        }
+        Grob* get_grob() const;
 
     private:
         Grob* grob_;

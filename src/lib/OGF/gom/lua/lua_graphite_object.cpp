@@ -561,9 +561,15 @@ namespace OGF {
 
 	Object* lua_tographite(lua_State* L, int index) {
 	    geo_debug_assert(lua_isgraphite(L,index));
-	    return static_cast<GraphiteRef*>(
+	    Object* result = static_cast<GraphiteRef*>(
 		lua_touserdata(L,index)
 	    )->object;
+	    if(result->id() == Object::INVALID_ID) {
+		Logger::warn("GOM") << "Reference to invalid Object"
+				    << std::endl;
+		result = nullptr;
+	    }
+	    return result;
 	}
 
 
