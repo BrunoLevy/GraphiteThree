@@ -289,20 +289,21 @@ function graphite_main_window.draw_contents()
      end
      imgui.Separator()
   end
-  if imgui.TreeNodeEx(
+  local modules_node_opened = imgui.TreeNodeEx(
         imgui.font_icon('cog')..'Modules',
         ImGuiTreeNodeFlags_DrawLinesFull
-  ) then
+  )
+  if imgui.BeginPopupContextItem('Modules##ShowHide') then
+      graphite_main_window.draw_modules_menu()
+      imgui.EndPopup()
+  end
+  if modules_node_opened then
      for index,module in ipairs(graphite_main_window.modules_by_index) do
         if module.in_tree then
            graphite_main_window.draw_module_name_and_toggle(module)
         end
      end
      imgui.TreePop()
-  end
-  if imgui.BeginPopupContextItem('Modules##ShowHide') then
-      graphite_main_window.draw_modules_menu()
-      imgui.EndPopup()
   end
 
   imgui.PushItemWidth(-100)
