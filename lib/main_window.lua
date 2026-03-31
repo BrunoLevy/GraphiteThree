@@ -168,6 +168,7 @@ function graphite_main_window.begin_G()
    graphite_main_window.m = m
    graphite_main_window.gx = 0.5 * w * m
    graphite_main_window.gy = 0.5 * h * m
+   graphite_main_window.rects = {}
 end
 
 -- Accumulates center of gravity for current window
@@ -197,7 +198,6 @@ function graphite_main_window.end_G()
   main.render_area.set_center_from_imgui_coords(
       graphite_main_window.gx, graphite_main_window.gy
   )
-  graphite_main_window.rects = {}
 end
 
 
