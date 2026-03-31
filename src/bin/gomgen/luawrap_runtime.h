@@ -129,7 +129,8 @@ namespace LuaWrap {
     template <> struct LuaType<bool> {
 	static constexpr bool default_value = false;
 	static bool check(lua_State* L, int idx) {
-	    return lua_isboolean(L,idx);
+	    return lua_isboolean(L,idx) ||
+		   lua_isinteger(L,idx) ; // we tolerate int->bool conversions
 	}
 	static bool get(lua_State* L, int idx) {
 	    return lua_toboolean(L, idx);
