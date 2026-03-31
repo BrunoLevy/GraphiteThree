@@ -58,10 +58,10 @@ namespace {
 		// If <tab> was pushed and if there are some completions
 		// and if the mouse is on the same line as the cursor,
 		// display the completions in the tooltip.
-		::TextEditor::Coordinates mouse_coord =
+		::TextEditor::CursorPosition mouse_coord =
 			target->impl()->GetMousePosition();
 
-		::TextEditor::Coordinates cursor_coord =
+		::TextEditor::CursorPosition cursor_coord =
 		      target->impl()->GetCurrentCursorPosition();
 
 		std::vector<std::string>& matches = target->completions();
@@ -114,7 +114,7 @@ namespace {
 		    return;
 		}
 
-		::TextEditor::Coordinates coords =
+		::TextEditor::CursorPosition coords =
 		      target->impl()->GetCurrentCursorPosition();
 		std::string L = target->impl()->GetLine(coords.line);
 
@@ -226,7 +226,7 @@ namespace OGF {
     void TextEditor::clear() {
 	impl_->SetText("\n");
 	impl_->SetCursorPosition(
-	    ::TextEditor::Coordinates(0,0)
+	    ::TextEditor::CursorPosition(0,0)
 	);
     }
 
@@ -261,7 +261,7 @@ namespace OGF {
 	    impl_->InsertText("\n");
 	}
 	impl_->SetCursorPosition(
-	    ::TextEditor::Coordinates(0,0)
+	    ::TextEditor::CursorPosition(0,0)
 	);
     }
 
@@ -286,7 +286,7 @@ namespace OGF {
 	);
 	// Move cursor position to first error so that users sees it !
 	if(first_one) {
-	    impl_->SetCursorPosition(::TextEditor::Coordinates(int(line-1),0));
+	    impl_->SetCursorPosition(::TextEditor::CursorPosition(int(line-1),0));
 	}
     }
 
