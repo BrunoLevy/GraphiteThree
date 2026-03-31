@@ -25,23 +25,23 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
 
 #include <OGF/skin_imgui/widgets/text_editor.h>
 #include <OGF/skin_imgui/types/application.h>
 #include <OGF/gom/interpreter/interpreter.h>
-#include <geogram_gfx/third_party/ImGuiColorTextEdit/TextEditor.h>
+#include <geogram_gfx/third_party/ImGuiColorTextEdit_geogram/TextEditor.h>
 
 namespace {
     using namespace OGF;
-    
+
     void text_editor_callback(TextEditorAction action, void* client_data) {
 	OGF::TextEditor* target = static_cast<OGF::TextEditor*>(client_data);
 	switch(action) {
@@ -49,10 +49,7 @@ namespace {
 		target->save_request();
 		break;
 	    case TEXT_EDITOR_RUN:
-		target->run_request();		
-		break;
-	    case TEXT_EDITOR_FIND:
-		target->find_request();		
+		target->run_request();
 		break;
 	    case TEXT_EDITOR_STOP:
 		target->stop_request();
@@ -63,24 +60,24 @@ namespace {
 		// display the completions in the tooltip.
 		::TextEditor::Coordinates mouse_coord =
 			target->impl()->GetMousePosition();
-		    
+
 		::TextEditor::Coordinates cursor_coord =
-		      target->impl()->GetCursorPosition();
-		    
+		      target->impl()->GetCurrentCursorPosition();
+
 		std::vector<std::string>& matches = target->completions();
 		if(
-		    mouse_coord.mLine == cursor_coord.mLine &&
+		    mouse_coord.line == cursor_coord.line &&
 		    matches.size() != 0
 		) {
 		    ImGui::BeginTooltip();
 		    ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[0]);
 
 		    if(matches[0] == "Completion: No match") {
-			ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[2]); 
+			ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[2]);
 			ImGui::PushStyleColor(
 			    0, ImVec4(1.0f, 0.0f, 0.0f, 1.0f)
 			);
-			ImGui::Text("%s",matches[0].c_str());			
+			ImGui::Text("%s",matches[0].c_str());
 			ImGui::PopStyleColor();
 			ImGui::PopFont();
 		    } else {
@@ -112,18 +109,18 @@ namespace {
 		target->completions().clear();
 		break;
 	    case TEXT_EDITOR_COMPLETION:
-		
+
 		if(target->get_language() == "GLSL") {
 		    return;
 		}
-		
+
 		::TextEditor::Coordinates coords =
-		      target->impl()->GetCursorPosition();
-		std::string L = target->impl()->GetLine(coords.mLine);
+		      target->impl()->GetCurrentCursorPosition();
+		std::string L = target->impl()->GetLine(coords.line);
 
 		static const char*
 		    completer_word_break_characters = " .(){},+-*/=";
-		
+
 		if(L == "") {
 		    return;
 		}
@@ -131,7 +128,7 @@ namespace {
 		const char* buf = &L[0];
 
 		// Locate beginning of current word
-		const char* word_end = buf + coords.mColumn;
+		const char* word_end = buf + coords.column;
 		const char* word_start = word_end;
 		while (word_start > buf) {
 		    const char c = word_start[-1];
@@ -139,7 +136,7 @@ namespace {
 			break;
 		    }
 		    word_start--;
-		}  
+		}
 		index_t startw = index_t(word_start - buf);
 		index_t endw   = index_t(word_end - buf);
 		std::string cmpword(word_start, size_t(word_end - word_start));
@@ -223,9 +220,9 @@ namespace OGF {
     }
 
     std::string TextEditor::get_selection() const {
-	return impl_->GetSelectedText();
+	return impl_->GetSelection();
     }
-    
+
     void TextEditor::clear() {
 	impl_->SetText("\n");
 	impl_->SetCursorPosition(
@@ -240,15 +237,15 @@ namespace OGF {
 		"Light"
 	    )
 	) {
-	    impl_->SetPalette(::TextEditor::GetLightPalette());	    
+	    impl_->SetPalette(::TextEditor::GetLightPalette());
 	} else {
-	    impl_->SetPalette(::TextEditor::GetDarkPalette());	    	    
+	    impl_->SetPalette(::TextEditor::GetDarkPalette());
 	}
-	ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[1]);	
+	ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[1]);
 	impl_->Render(title.c_str());
 	ImGui::PopFont();
     }
-    
+
 
     void TextEditor::load(const std::string& filename) {
 	impl_->SetText("");
@@ -261,7 +258,7 @@ namespace OGF {
 	    std::string line;
 	    std::getline(in,line);
 	    impl_->InsertText(line);
-	    impl_->InsertText("\n");	    
+	    impl_->InsertText("\n");
 	}
 	impl_->SetCursorPosition(
 	    ::TextEditor::Coordinates(0,0)
@@ -280,138 +277,47 @@ namespace OGF {
     void TextEditor::add_error_marker(
 	index_t line, const std::string& error_message
     ) {
+	bool first_one = !impl_->HasMarkers();
 	if(get_language() == "lua" && impl()->HasSelection()) {
-	    line += index_t(impl()->GetSelectionStart().mLine);
+	    line += index_t(impl()->GetSelectionStart().line);
 	}
-	
-	std::map<int, std::string> error_markers = impl_->GetErrorMarkers();
-	bool first_one = (error_markers.size() == 0);
-	error_markers[int(line)] = error_message;
-	impl_->SetErrorMarkers(error_markers);
+	impl_->AddMarker(
+	    line-1, 0xFF0000FF, 0xFF0000FF, error_message, error_message
+	);
 	// Move cursor position to first error so that users sees it !
 	if(first_one) {
 	    impl_->SetCursorPosition(::TextEditor::Coordinates(int(line-1),0));
 	}
     }
-    
+
     void TextEditor::clear_error_markers() {
-	std::map<int, std::string> error_markers;
-	impl_->SetErrorMarkers(error_markers);
+	impl_->ClearMarkers();
     }
 
-    void TextEditor::add_breakpoint(index_t line) {
-	::TextEditor::Breakpoints bp = impl_->GetBreakpoints();
-	bp.insert(int(line));
-	impl_->SetBreakpoints(bp);	
-    }
-    
-    void TextEditor::clear_breakpoints() {
-	::TextEditor::Breakpoints bp;
-	impl_->SetBreakpoints(bp);
+    void TextEditor::show_find_and_replace_dialog() {
+	impl_->ShowFindAndReplaceDialog();
     }
 
-    
-    
     void TextEditor::set_language(const std::string& language) {
 	language_ = language;
 	if(language_ == "lua") {
-	    impl_->SetLanguageDefinition(
-		::TextEditor::LanguageDefinition::Lua()
-	    );
+	    impl_->SetLanguage(::TextEditor::Language::Lua());
 	} else if(language == "glsl") {
-	    impl_->SetLanguageDefinition(
-		::TextEditor::LanguageDefinition::GLSL()
-	    );
+	    impl_->SetLanguage(::TextEditor::Language::Glsl());
 	} else if(language == "c") {
-	    impl_->SetLanguageDefinition(
-		::TextEditor::LanguageDefinition::C()
-	    );
+	    impl_->SetLanguage(::TextEditor::Language::C());
 	} else if(language == "c++") {
-	    impl_->SetLanguageDefinition(
-		::TextEditor::LanguageDefinition::CPlusPlus()
-	    );
+	    impl_->SetLanguage(::TextEditor::Language::Cpp());
 	} else if(language == "py" || language == "Python") {
 	    language_ = "py";
-	    // TODO: implement Python language definition
-	    impl_->SetLanguageDefinition(
-		::TextEditor::LanguageDefinition::Lua()
-	    );
+	    impl_->SetLanguage(::TextEditor::Language::Python());
 	} else {
 	    Logger::err("TextEditor") << language << ": unknown language"
 				      << std::endl;
 	}
     }
-    
+
     const std::string& TextEditor::get_language() const {
 	return language_;
     }
-
-    void TextEditor::find(const std::string& s) {
-	if(s == "") {
-	    clear_breakpoints();
-	    return;
-	}
-	int first = -1;
-	int where_in_first = -1;
-	int cursor_line = impl_->GetCursorPosition().mLine;
-	int cursor_column = impl_->GetCursorPosition().mColumn;	
-	int found_line = -1;
-	int where_in_line = -1;
-	::TextEditor::Breakpoints bp;	
-	for(int i=0; i<impl_->GetTotalLines(); ++i) {
-	    std::string cur_line = impl_->GetText(
-		::TextEditor::Coordinates(i,0),
-		::TextEditor::Coordinates(i+1,0)
-	    );
-	    size_t from = (i == cursor_line) ? size_t(cursor_column) : 0;
-	    size_t where_in_this_line = cur_line.find(s,from);
-	    if(where_in_this_line != std::string::npos) {
-		if(first == -1) {
-		    first = i;
-		    where_in_first = int(where_in_this_line);
-		}
-		if(i >= cursor_line && found_line == -1) {
-		    found_line = i;
-		    where_in_line = int(where_in_this_line);
-		}
-	    }
-	    if(
-		where_in_this_line != std::string::npos ||
-		cur_line.find(s) != std::string::npos
-	    ) {
-		bp.insert(i+1);
-	    }
-	}
-	impl_->SetBreakpoints(bp);
-	if(found_line == -1 && first != -1) {
-	    found_line = first;
-	    where_in_line = where_in_first;
-	}
-
-	if(found_line != -1) {
-	    std::string line = impl_->GetText(
-		::TextEditor::Coordinates(found_line,0),
-		::TextEditor::Coordinates(found_line+1,0)
-	    );
-	    impl_->SetCursorPosition(
-		::TextEditor::Coordinates(found_line,int(where_in_line))
-	    );
-	    impl_->SetSelection(
-		::TextEditor::Coordinates(found_line,int(where_in_line)),
-		::TextEditor::Coordinates(
-		    found_line,int(where_in_line) + int(s.length())
-		)
-	    );
-	}
-	
-    }
-
-    void TextEditor::cursor_forward() {
-	int cursor_line = impl_->GetCursorPosition().mLine;
-	int cursor_column = impl_->GetCursorPosition().mColumn;	
-	impl_->SetCursorPosition(
-	    ::TextEditor::Coordinates(cursor_line,cursor_column+1)
-	);	
-    }
-    
 }

@@ -15,9 +15,6 @@ text_editor_gui.w = main.width - 5*main.margin() - 150*main.scaling()
 text_editor_gui.h = 200*main.scaling()
 text_editor_gui.window_flags = ImGuiWindowFlags_ResizeFromAnySide
 text_editor_gui.filename = nil
-text_editor_gui.find_visible = false
-text_editor_gui.find_word = ''
-text_editor_gui.find_focus = false
 
 function text_editor_gui.error(msg)
    gom.err(msg)
@@ -317,7 +314,7 @@ function text_editor_gui.draw_menu()
 	 text_editor_gui.filename = nil
       end
       if imgui.MenuItem('Find...##edit') then
-         text_editor_gui.show_find()
+         text_editor.show_find_and_replace_dialog()
       end
       if imgui.MenuItem('Adapt ShaderToy code') then
          text_editor_gui.set_language('glsl')
@@ -484,26 +481,6 @@ function text_editor_gui.draw_menu()
    end
 end
 
-function text_editor_gui.find_next()
-   text_editor.cursor_forward()
-   text_editor.find(text_editor_gui.find_word)
-end
-
-function text_editor_gui.show_find()
-   if text_editor_gui.find_visible then
-      text_editor_gui.find_next()
-   else
-      text_editor_gui.find_word = ''
-      text_editor_gui.find_visible = true
-      text_editor_gui.find_focus = true
-   end
-end
-
-function text_editor_gui.hide_find()
-   text_editor.clear_breakpoints()
-   text_editor_gui.find_visible = false
-end
-
 function text_editor_gui.draw_window()
    text_editor_gui.parse_errors()
    if imgui.SimpleButton(
@@ -534,36 +511,6 @@ function text_editor_gui.draw_window()
    else
       imgui.Text(FileSystem.base_name(text_editor_gui.filename,false))
       autogui.tooltip(text_editor_gui.filename)
-   end
-   if text_editor_gui.find_visible then
-     imgui.SameLine()
-     imgui.Text('   '..imgui.font_icon('search'))
-     imgui.SameLine()
-     local sel
-     imgui.PushItemWidth(-70.0*main.scaling())
-     if text_editor_gui.find_focus then
-	imgui.SetKeyboardFocusHere()
-	text_editor_gui.find_focus = false
-     end
-     sel,text_editor_gui.find_word = imgui.TextInput(
-	'##TextEditorFind',
-	text_editor_gui.find_word,
-        0
-     )
-     imgui.PopItemWidth()
-     if(sel) then
-        text_editor.find(text_editor_gui.find_word)
-     end
-     imgui.SameLine()
-     if imgui.Button('Next') then
-        text_editor_gui.find_next()
-     end
-     imgui.SameLine()
-     if imgui.Button(
-        imgui.font_icon('window-close')
-     ) then
-        text_editor_gui.hide_find()
-     end
    end
    imgui.Separator()
    text_editor.draw('Lua Editor##area')
@@ -752,5 +699,4 @@ graphite_main_window.add_module(text_editor_gui)
 gom.connect(text_editor.run_request,  text_editor_gui.run)
 gom.connect(text_editor.save_request, text_editor_gui.save)
 gom.connect(text_editor.stop_request, text_editor_gui.stop)
-gom.connect(text_editor.find_request, text_editor_gui.show_find)
 gom.connect(text_editor.tooltip_request, text_editor_gui.tooltip)

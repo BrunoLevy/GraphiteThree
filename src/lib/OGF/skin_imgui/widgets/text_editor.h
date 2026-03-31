@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 #ifndef H_SKIN_IMGUI_TEXT_EDITOR_H
 #define H_SKIN_IMGUI_TEXT_EDITOR_H
 
@@ -84,7 +84,7 @@ namespace OGF {
 	std::vector<std::string>& completions() {
 	    return completions_;
 	}
-	
+
       gom_properties:
 	/**
 	 * \brief Sets the text.
@@ -104,7 +104,7 @@ namespace OGF {
 	 * \return a string with the selected text.
 	 */
 	std::string get_selection() const;
-	
+
 	/**
 	 * \brief Sets the language used for syntax highlighting.
 	 * \param[in] language one of "lua","glsl","c","c++"
@@ -124,7 +124,7 @@ namespace OGF {
 
 	/**
 	 * \brief Draws the editor.
-	 * \param[in] title a unique ImGui ID used to 
+	 * \param[in] title a unique ImGui ID used to
 	 *  identify this editor.
 	 */
 	void draw(const std::string& title);
@@ -141,18 +141,25 @@ namespace OGF {
 	 */
 	void save(const std::string& filename);
 
+	/**
+	 * \brief Adds an error marker on a specific line
+	 * \param[in] line the line number
+	 * \param[in] error_message the message to be displayed in a help bubble
+	 */
 	void add_error_marker(index_t line, const std::string& error_message);
 
+	/**
+	 * \brief Removes all error markers
+	 */
 	void clear_error_markers();
 
-	void add_breakpoint(index_t line);
+	/**
+	 * \brief Opens the find and replace dialog
+	 * \details Uses the internal find and replace dialog
+	 *  of ImGuiColorTextEdit
+	 */
+	void show_find_and_replace_dialog();
 
-	void clear_breakpoints();
-
-	void find(const std::string& s);
-
-	void cursor_forward();
-	
       gom_signals:
 	/**
 	 * \brief Invoked when <F5> is pressed.
@@ -163,11 +170,6 @@ namespace OGF {
 	 * \brief Invoked when <F2> is pressed.
 	 */
 	void save_request();
-
-	/**
-	 * \brief Invoked when <Ctrl><F> is pressed.
-	 */
-	void find_request();
 
 	/**
 	 * \brief Invoked when <Ctrl><C> is pressed.
@@ -181,14 +183,14 @@ namespace OGF {
 	 *  element to be explained in the tooltip.
 	 */
 	void tooltip_request(const std::string& context);
-	
+
       private:
 	Interpreter* interpreter_;
 	::TextEditor* impl_;
 	std::string language_;
 	std::vector<std::string> completions_;
     };
-    
+
 }
 
 #endif
