@@ -8,6 +8,7 @@
 graphite_main_window = {}
 graphite_main_window.modules_by_index = {}
 graphite_main_window.modules_by_name = {}
+graphite_main_window.rects = {}
 
 -- \brief Adds a new graphite module
 -- \param[in] module the graphite module, a table with the
@@ -178,9 +179,13 @@ function graphite_main_window.accumulate_G()
    local m = w*h
    local gx = x + 0.5*w
    local gy = y + 0.5*h
-   graphite_main_window.gx = graphite_main_window.gx - m*gx
-   graphite_main_window.gy = graphite_main_window.gy - m*gy
-   graphite_main_window.m  = graphite_main_window.m - m
+   local K = tostring({x,y,w,h}); -- do not count stacked windows twice
+   if graphite_main_window.rects[K] == nil then
+      graphite_main_window.rects[K] = 1
+      graphite_main_window.gx = graphite_main_window.gx - m*gx
+      graphite_main_window.gy = graphite_main_window.gy - m*gy
+      graphite_main_window.m  = graphite_main_window.m - m
+   end
 end
 
 -- Finishes computation of center of gravity of free area
@@ -192,6 +197,7 @@ function graphite_main_window.end_G()
   main.render_area.set_center_from_imgui_coords(
       graphite_main_window.gx, graphite_main_window.gy
   )
+  graphite_main_window.rects = {}
 end
 
 
