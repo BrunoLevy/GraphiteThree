@@ -69,7 +69,8 @@ namespace OGF {
 	return true;
     }
 
-    bool MetaEnum::add_values(const ArgList& values, bool allow_aliases) {
+    bool MetaEnum::add_values(const ArgList& values) {
+	bool allow_aliases = false;
 	bool result = true;
         for(index_t i=0; i<values.nb_args(); ++i) {
             const std::string& name = values.ith_arg_name(i);

@@ -150,9 +150,9 @@ namespace OGF {
          * \param[in] values an arglist with name,value pairs
 	 * \return true if the values could be added
 	 * \return false otherwise, that is, one or several values already
-	 *  existed in enum and allow_aliases was not set
+	 *  existed in enum.
          */
-        bool add_values(const ArgList& values, bool allow_aliases = false);
+        bool add_values(const ArgList& values);
 
     private:
         struct Value {

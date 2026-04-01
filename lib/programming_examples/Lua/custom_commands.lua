@@ -16,7 +16,6 @@ menum = gom.meta_types.OGF.MetaEnum.create('Titi')
 menum.add_value('tutu',0)
 menum.add_value('tata',1)
 menum.add_value('toto',2)
--- menum.add_values({tutu=0,tata=1,toto=2})
 -- Make new enum visible from GOM type system
 gom.bind_meta_type(menum)
 
@@ -279,5 +278,3 @@ scene_graph.register_grob_commands(gom.meta_types.OGF.SceneGraph, mclass)
 -- Your new command classes are a "citizen" of the Graphite Object Model,
 -- with the same "rights" as the ones implemented in C++ (can be scripted
 -- and invoked from the gui)
-
-
