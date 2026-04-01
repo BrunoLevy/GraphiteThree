@@ -419,6 +419,9 @@ end
 function autogui.command_is_alive(cmd_state)
    if cmd_state.request_.object().is_a(OGF.Interface) then
       local grob = cmd_state.request_.object().grob
+      if grob == nil then
+	  return false
+      end
       if not grob.is_a(OGF.SceneGraph) and
          not scene_graph.is_bound(grob.name) then
          return false

@@ -84,6 +84,15 @@ namespace OGF {
         const ArgList& args_in, Any& ret_val
     ) {
 
+       // do not do anything special for functions inherited from
+       // Commands (and base classes).
+       if(
+	  ogf_meta<Commands>::meta_class()->find_method(method_name) !=
+	  nullptr
+       ) {
+	  return Interface::invoke_method(method_name, args_in, ret_val);
+       }
+
 	// override_lock_ is not used anywhere, except in a commented-out
 	// code in GeometricIntelligence plugin.
 
