@@ -538,12 +538,10 @@ namespace OGF {
         void initialize_name(const std::string& name);
 
         /**
-         * \brief Sets the ShaderManager associated with this
-         *  Grob.
+         * \brief Sets the ShaderManager associated with this Grob.
          * \param[in] s a pointer to the ShaderManager
          */
-        void set_shader_manager(Object* s/* ShaderManager* s */) {
-            // shader_manager_ = (Object *)s;
+        void set_shader_manager(Object* s) {
             shader_manager_ = s;
         }
 

@@ -64,8 +64,7 @@ namespace OGF {
     gom_attribute(abstract,"true")
     gom_class GOM_API Object : public Counted {
     public:
-	static constexpr unsigned int INVALID_ID
-	    = static_cast<unsigned int>(0xbadbeef);
+	static constexpr Numeric::uint32 INVALID_ID = 0xbadbeef;
 
         /**
          * \brief Object constructor.
@@ -107,7 +106,7 @@ namespace OGF {
          * \return the unique identifier of this object
          * \see string_id()
          */
-        unsigned int id() const {
+	Numeric::uint32 id() const {
             return id_;
         }
 
@@ -525,12 +524,12 @@ namespace OGF {
         ConnectionTable* connections_;
         bool signals_enabled_;
         bool slots_enabled_;
-        unsigned int id_;
+	Numeric::uint32 id_;
 
         // Signal method adapter needs to call
         // emit_signal() which is protected.
         friend class MetaMethod;
-	static std::map<index_t, Object*>* id_to_object_;
+	static std::map<Numeric::uint32, Object*>* id_to_object_;
     };
 
     /**************************************************************/

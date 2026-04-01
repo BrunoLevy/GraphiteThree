@@ -175,6 +175,9 @@ end
 --   to compute center of gravity of free area
 
 function graphite_main_window.accumulate_G()
+   if not imgui.IsWindowDocked() then
+      return
+   end
    local x, y = imgui.GetWindowPos()
    local w, h = imgui.GetWindowSize()
    local m = w*h

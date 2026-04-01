@@ -54,7 +54,7 @@ namespace OGF {
     public:
     };
 
-    std::map<index_t, Object*>* Object::id_to_object_ = nullptr;
+    std::map<Numeric::uint32, Object*>* Object::id_to_object_ = nullptr;
 
     Object::Object(bool transient) {
         slots_enabled_ = true;
@@ -64,7 +64,7 @@ namespace OGF {
 	    id_ = 0;
 	    connections_ = nullptr;
 	} else {
-	    static unsigned int cur_id = 1;
+	    static Numeric::uint32 cur_id = 1;
 	    connections_ = new ConnectionTable;
 	    id_ = cur_id;
 	    cur_id++;
@@ -90,7 +90,7 @@ namespace OGF {
 		id_to_object_ = nullptr;
 	    }
 	}
-	id_ = static_cast<unsigned int>(0xbadbeef);
+	id_ = INVALID_ID;
     }
 
     void Object::disconnect() {
