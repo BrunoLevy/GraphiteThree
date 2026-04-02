@@ -191,8 +191,9 @@ function scene_graph_gui.about_window()
       )
       imgui.SameLine()
       imgui.Text( '\n'..
-          'Graphite version: '..gom.get_environment_value('version')..'\n\n'..
-	  'Released: '..gom.get_environment_value('release_date')..'\n\n'..
+          '\n'..
+	  'Graphite version: '..gom.get_environment_value('version')..'\n\n'..
+	  '\n'..
 	  'Running on: '..gom.get_environment_value('nb_cores')..' cores'
       )
       imgui.Separator()
