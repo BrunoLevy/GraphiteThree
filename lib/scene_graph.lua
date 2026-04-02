@@ -441,16 +441,17 @@ function scene_graph_gui.draw_object_list()
      end
    end
 
-   -- <ctrl><A> select all shortcut
-   if imgui.IsKeyChordPressed(ImGuiKey_A | ImGuiMod_Ctrl) then
-      scene_graph.I.Selection.select_all({_invoked_from_gui=true})
-   end
+   if imgui.IsWindowFocused() then
+      -- <ctrl><A> select all shortcut
+      if imgui.IsKeyChordPressed(ImGuiKey_A | ImGuiMod_Ctrl) then
+         scene_graph.I.Selection.select_all({_invoked_from_gui=true})
+      end
 
-   -- Too dangerous, fires also when one presses delete in a text widget !
-   -- if imgui.IsKeyPressed(ImGuiKey_Delete) then
-   --    main.picked_grob = nil
-   --    scene_graph_gui.delete_grob(scene_graph.current())
-   -- end
+      if imgui.IsKeyPressed(ImGuiKey_Delete) then
+         main.picked_grob = nil
+         scene_graph_gui.delete_grob(scene_graph.current())
+      end
+   end
 
    scene_graph_gui.about_window()
 end
