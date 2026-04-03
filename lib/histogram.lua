@@ -125,6 +125,11 @@ function Stats.update()
    end
 
    Stats.attrib = object.I.Editor.find_attribute(container_attrib_name)
+   if Stats.attrib == nil then
+       Stats.reset()
+       shd.attribute = 'vertices.point[0]'
+       return
+   end
 
    local f = tostring(shd.colormap):split(';')
    local colormap_name = f()
