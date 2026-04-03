@@ -832,7 +832,7 @@ autogui.handlers.slider_int = function(
    local sel,val
    sel,val = imgui.SliderInt(
        autogui.remove_underscores(property_name),
-       object[property_name], min, max, '%d'
+       math.floor(object[property_name]), min, max, '%d'
    )
    if sel then
       object[property_name] = val
