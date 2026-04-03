@@ -646,7 +646,11 @@ namespace OGF {
 			scope->ref();
 			Any o_as_any = scope->resolve(string_value);
 			scope->unref();
-			if(!o_as_any.is_null()) {
+			Object* o = nullptr;
+			o_as_any.get_value(o);
+			if(o == nullptr) {
+			    return String::quote(string_value);
+			} else {
 			    return back_parse(o_as_any, mtype);
 			}
 		    }
