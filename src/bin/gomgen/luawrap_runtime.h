@@ -268,7 +268,7 @@ namespace LuaWrap {
 	}
     };
 
-    template <int DIM, class CTYPE, class LUATYPE=CTYPE>
+    template <unsigned int DIM, class CTYPE, class LUATYPE=CTYPE>
     class ArgArray : public ArgBase {
     public:
 	ArgArray(lua_State* L, int idx) {
@@ -305,6 +305,12 @@ namespace LuaWrap {
     template <typename T, typename... Types> inline
     bool arglist_OK(const T& arg1, Types... args) {
 	return arg1.OK() && arglist_OK(args...);
+    }
+
+    inline int arglist_size() { return 0; }
+    template <typename T, typename... Types> inline
+    int arglist_size(const T& arg1, Types... args) {
+	return 1 + arglist_size(args...);
     }
 
     inline std::string arglist_missing(const std::vector<ArgBase>& args) {
