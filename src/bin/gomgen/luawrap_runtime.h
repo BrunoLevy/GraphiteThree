@@ -76,8 +76,8 @@ namespace LuaWrap {
 	static constexpr lua_Integer default_value = 0;
 	static bool check(lua_State* L, int idx) {
 	    return
-		lua_isinteger(L,idx) ||
-		lua_isboolean(L,idx) ; // we tolerate false->0 true->1 conversion
+		lua_isnumber(L,idx) ||  // we tolerate float->int conversion ...
+		lua_isboolean(L,idx) ;  // ... and false->0 true->1 conversion
 	}
 	static lua_Integer get(lua_State* L, int idx) {
 	    return lua_tointeger(L, idx);
