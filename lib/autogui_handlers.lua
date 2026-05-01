@@ -115,11 +115,12 @@ function autogui.to_display_string(name)
 end
 
 -- \brief Wrapper arround imgui.Text() that removes the underscores
+-- \details In tree mode, displays label and editor on same line
 
 function autogui.Text(name)
    imgui.Text(autogui.to_display_string(name))
    if autogui.in_tree then
-      imgui.SameLine()
+      imgui.SameLine(autogui.icon_size()*7)
    end
 end
 
