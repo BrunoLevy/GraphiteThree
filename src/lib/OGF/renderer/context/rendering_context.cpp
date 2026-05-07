@@ -473,11 +473,15 @@ namespace OGF {
                 glDisable(GL_DEPTH_TEST);
                 glClear((GLbitfield)(GL_DEPTH_BUFFER_BIT));
 
+                glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glClear((GLbitfield)(GL_COLOR_BUFFER_BIT));
+
                 glupMatrixMode(GLUP_PROJECTION_MATRIX);
                 glupLoadIdentity();
                 glupMatrixMode(GLUP_MODELVIEW_MATRIX);
                 glupLoadIdentity();
                 float z = 1.0f;
+
                 glupEnable(GLUP_VERTEX_COLORS);
                 glupBegin(GLUP_QUADS);
                 glupColor3dv(background_color().data());
@@ -636,12 +640,13 @@ namespace OGF {
 
         picking_mode_ = true;
         picked_ndc_ = ndc;
-        picked_id_ = index_t(-1);
+        picked_id_ = NO_INDEX;
     }
 
     void RenderingContext::end_picking() {
         picking_mode_ = false;
         last_frame_was_picking_ = true;
+	glupDisable(GLUP_PICKING);
         // nb_picking_locks_ is not decremented here,
         // since the frame buffer still contains a
         // picking image.
@@ -650,9 +655,7 @@ namespace OGF {
     }
 
     void RenderingContext::setup_viewport() {
-        glViewport(
-            viewport_x_, viewport_y_, viewport_width_, viewport_height_
-        );
+        glViewport(viewport_x_, viewport_y_, viewport_width_, viewport_height_);
         glDisable(GL_SCISSOR_TEST);
     }
 

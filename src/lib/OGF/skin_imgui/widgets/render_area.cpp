@@ -134,8 +134,7 @@ namespace OGF {
 	background_image_ = value;
 	if(rendering_context_ != nullptr) {
 	    if(value.length() > 0) {
-		Image_var image =
-		    ImageLibrary::instance()->load_image(value);
+		Image_var image = ImageLibrary::instance()->load_image(value);
 		rendering_context_->set_background_image(image);
 	    } else {
 		rendering_context_->set_background_image(nullptr);
@@ -215,9 +214,7 @@ namespace OGF {
 
     void RenderArea::draw_memorized_frame() {
 	SkinImGUIRenderingContext* ctxt =
-	    dynamic_cast<SkinImGUIRenderingContext*>(
-		rendering_context_.get()
-	    );
+	    dynamic_cast<SkinImGUIRenderingContext*>(rendering_context_.get());
 	if(ctxt != nullptr) {
 	    ctxt->draw_last_frame();
 	}
@@ -275,9 +272,7 @@ namespace OGF {
 	glupMakeCurrent(nullptr);
     }
 
-    void RenderArea::mouse_button_callback(
-	int button, int action, int mods
-    ) {
+    void RenderArea::mouse_button_callback(int button, int action, int mods) {
 
         // Maps GLFW button id to RenderArea symbolic constant.
         const MouseButton button_mapping[] = {
@@ -293,7 +288,6 @@ namespace OGF {
         if(size_t(button) > (sizeof(button_mapping)/sizeof(int))) {
             return;
         }
-
 
 	last_point_ndc_ = rendering_context_->screen_to_ndc(
 	    index_t(last_point_dc_.x), index_t(last_point_dc_.y)
@@ -375,7 +369,6 @@ namespace OGF {
 
     void RenderArea::scroll_callback(double xoffset, double yoffset) {
 	geo_argused(xoffset);
-
 
 	// Take into account retina display scaling
 	double sx = double(get_frame_buffer_width()) / double(get_width());
@@ -543,9 +536,7 @@ namespace OGF {
      *  from us.
      */
     static void flip_flip(
-        Memory::pointer ptr,
-        unsigned int width,
-        unsigned int height
+	Memory::pointer ptr, unsigned int width, unsigned int height
     ) {
         ogf_assert(width <= 4096);
 
@@ -598,7 +589,6 @@ namespace OGF {
         // Restore image.
         flip_flip(ptr, index_t(width), index_t(height));
     }
-
 
     void RenderArea::set_center_from_imgui_coords(int x, int y) {
 	if(rendering_context_ == nullptr) {
