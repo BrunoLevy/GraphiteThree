@@ -746,6 +746,9 @@ namespace OGF {
 	index_t c = NO_INDEX;
 	pick_facet_edge(p_ndc,f,c);
 	if(f != NO_INDEX) {
+	    // c is a global corner index, compute the local
+	    // corner index by taking the modulo (we know it
+	    // is a triangle mesh).
 	    flip_edge(*mesh_grob(),f,c%3);
 	    mesh_grob()->update();
 	}

@@ -320,6 +320,7 @@ namespace OGF {
 
     void MeshGrobSelectionsCommands::show_vertices_selection() {
         Attribute<bool> sel(mesh_grob()->vertices.attributes(),"selection");
+	show_vertices();
         show_attribute("vertices.selection");
     }
 
