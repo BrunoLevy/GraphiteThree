@@ -314,6 +314,8 @@ namespace OGF {
 	  *  make sure there is no intersection
 	  * \param[in] post_process triangulate result, remove small edges,
 	  *  make sure there is no intersection
+          * \advanced
+	  * \param[in] flags fine tuning (see geogram)
           */
         gom_arg_attribute(operation, handler, "combo_box")
         gom_arg_attribute(operation, values, "A+B;A*B;A-B;B-A")
@@ -322,7 +324,8 @@ namespace OGF {
             const NewMeshGrobName& result = "result",
             const std::string& operation = "A+B",
 	    bool pre_process=false,
-	    bool post_process=false
+	    bool post_process=false,
+	    int flags = 0
         );
 
         /**

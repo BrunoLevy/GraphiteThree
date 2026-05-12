@@ -323,6 +323,8 @@ namespace OGF {
         index_t v2_;
     };
 
+    /***********************************************************************/
+
     /**
      * \brief A tool that splits/merges facets depending on the pushed
      *  mouse button.
@@ -350,6 +352,39 @@ namespace OGF {
          */
         void reset() override;
     };
+
+    /***********************************************************************/
+
+    /**
+     * \brief A tool that flips an edge
+     */
+    gom_attribute(icon, "flip_edge")
+    gom_attribute(help, "flip edge")
+    gom_attribute(message, "flips an edge in a triangulated mesh")
+    gom_class MESH_GFX_API MeshGrobFlipFacetEdge : public MeshGrobTool {
+    public:
+
+        /**
+         * \brief MeshGrobFlipFacetEdge constructor.
+         * \param[in] parent a pointer to the ToolsManager
+         */
+        MeshGrobFlipFacetEdge(
+            ToolsManager* parent
+        ) : MeshGrobTool(parent) {
+        }
+
+        /**
+	 * \copydoc Tool::reset()
+	 */
+        void reset() override;
+
+        /**
+         * \copydoc Tool::grab()
+         */
+	void grab(const RayPick& p_ndc) override;
+    };
+
+    /****************************************************************/
 }
 
 #endif

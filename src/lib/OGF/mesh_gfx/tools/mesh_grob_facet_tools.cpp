@@ -42,6 +42,7 @@
 #include <OGF/renderer/context/rendering_context.h>
 #include <geogram/mesh/mesh_halfedges.h>
 #include <geogram/mesh/mesh_geometry.h>
+#include <geogram/mesh/mesh_local_operations.h>
 
 namespace {
     using namespace OGF;
@@ -722,4 +723,33 @@ namespace OGF {
     MeshGrobEditHole::~MeshGrobEditHole() {
     }
 
+    /************************************************************/
+
+    void MeshGrobFlipFacetEdge::reset() {
+        MeshGrobShader* shd = dynamic_cast<MeshGrobShader*>(
+            object()->get_shader()
+        );
+        if(shd != nullptr) {
+            shd->show_mesh();
+        }
+        Tool::reset();
+    }
+
+    void MeshGrobFlipFacetEdge::grab(const RayPick& p_ndc) {
+	if(!mesh_grob()->facets.are_simplices()) {
+	    Logger::err("Flip") << "Mesh is not triangulated"
+				<< std::endl;
+	    return;
+	}
+	MeshGrobTool::grab(p_ndc);
+	index_t f = NO_INDEX;
+	index_t c = NO_INDEX;
+	pick_facet_edge(p_ndc,f,c);
+	if(f != NO_INDEX) {
+	    flip_edge(*mesh_grob(),f,c%3);
+	    mesh_grob()->update();
+	}
+    }
+
+    /***********************************************************/
 }

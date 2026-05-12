@@ -58,7 +58,7 @@ namespace OGF {
     public:
 
         /**
-         * \brief MeshGrobsCreateEdge constructor.
+         * \brief MeshGrobCreateEdge constructor.
          * \param[in] parent a pointer to the ToolsManager
          */
         MeshGrobCreateEdge(
@@ -92,7 +92,7 @@ namespace OGF {
     public:
 
         /**
-         * \brief MeshGrobsCreateEdge constructor.
+         * \brief MeshGrobCreateEdge constructor.
          * \param[in] parent a pointer to the ToolsManager
          */
         MeshGrobDeleteEdge(

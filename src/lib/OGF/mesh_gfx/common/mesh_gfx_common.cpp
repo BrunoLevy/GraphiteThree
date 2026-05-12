@@ -75,6 +75,7 @@ namespace OGF {
         ogf_register_grob_tool<MeshGrob,MeshGrobGlueUnglueEdges>();
         ogf_register_grob_tool<MeshGrob,MeshGrobZipUnzipEdges>();
         ogf_register_grob_tool<MeshGrob,MeshGrobConnectDisconnectEdges>();
+        ogf_register_grob_tool<MeshGrob,MeshGrobFlipFacetEdge>();
 
         ogf_register_grob_tool<MeshGrob,MeshGrobEditCenterVertex>();
         ogf_register_grob_tool<MeshGrob,MeshGrobRemoveIncidentFacets>();

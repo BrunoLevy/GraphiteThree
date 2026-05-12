@@ -281,7 +281,8 @@ namespace OGF {
         const NewMeshGrobName& result_name,
         const std::string& operation,
         bool pre_process,
-        bool post_process
+        bool post_process,
+	int flags
     ) {
 	MeshGrob* other = MeshGrob::find(scene_graph(), other_name);
 	if(other == nullptr) {
@@ -310,7 +311,10 @@ namespace OGF {
 	    fix_mesh_for_boolean_ops(other);
 	    other->update();
 	}
-	mesh_boolean_operation(*result, *mesh_grob(), *other, operation);
+	mesh_boolean_operation(
+	    *result, *mesh_grob(), *other, operation,
+	    MeshBooleanOperationFlags(flags)
+	);
 	if(post_process) {
 	    fix_mesh_for_boolean_ops(result);
 	}
