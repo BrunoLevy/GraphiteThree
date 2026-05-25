@@ -149,6 +149,7 @@ namespace OGF {
         vertices_style_.size    = 2;
 
         vertices_filter_ = false;
+	edges_filter_ = false;
 
         vertices_selection_style_.visible = true;
         vertices_selection_style_.color   = Color(1.0,0.0,0.0);
@@ -283,6 +284,13 @@ namespace OGF {
                     ) {
                         filter.bind_if_is_defined(
                             mesh_grob()->vertices.attributes(), "filter"
+                        );
+                    } else if(
+                        attribute_subelements_ == MESH_EDGES &&
+                        edges_filter_
+                    ) {
+                        filter.bind_if_is_defined(
+                            mesh_grob()->edges.attributes(), "filter"
                         );
                     } else if(
                         attribute_subelements_ == MESH_FACETS &&
@@ -1035,6 +1043,7 @@ namespace OGF {
         amount_ = 0;
         dirty_ = false;
         set_vertices_filter(true);
+        set_edges_filter(true);
         set_facets_filter(true);
         set_cells_filter(true);
     }
@@ -1189,6 +1198,7 @@ namespace OGF {
             // sending data to the VBOs when using hardware
             // filtering.
             gfx_.set_filter(MESH_VERTICES,"filter");
+            gfx_.set_filter(MESH_EDGES,"filter");
             gfx_.set_filter(MESH_FACETS,"filter");
             gfx_.set_filter(MESH_CELLS,"filter");
 

@@ -120,6 +120,7 @@ namespace OGF {
     void MeshGrobFiltersCommands::delete_filters(const std::string& where) {
         if(where == "all") {
             delete_filters("vertices");
+            delete_filters("edges");
             delete_filters("facets");
             delete_filters("cells");
             return;
@@ -379,6 +380,9 @@ namespace OGF {
         Attribute<Numeric::uint8> vertices_filter(
             mesh->vertices.attributes(), "filter"
         );
+        Attribute<Numeric::uint8> edges_filter(
+            mesh->edges.attributes(), "filter"
+        );
         Attribute<Numeric::uint8> facets_filter(
             mesh->facets.attributes(), "filter"
         );
@@ -410,6 +414,19 @@ namespace OGF {
                     if(vertices_filter[v] == 0) {
                         cells_filter[c] = 0;
                         break;
+                    }
+                }
+            }
+        } break;
+        case MESH_EDGES: {
+            for(index_t v: mesh->vertices) {
+                vertices_filter[v] = 0;
+            }
+            for(index_t e: mesh->edges) {
+                if(edges_filter[e] != 0) {
+                    for(index_t lv=0; lv<2; ++lv) {
+                        index_t v = mesh->edges.vertex(e,lv);
+                        vertices_filter[v] = 1;
                     }
                 }
             }
@@ -473,7 +490,6 @@ namespace OGF {
             }
         } break;
 	case MESH_NONE:
-	case MESH_EDGES:
 	case MESH_ALL_ELEMENTS:
 	case MESH_FACET_CORNERS:
 	case MESH_CELL_CORNERS:

@@ -256,6 +256,12 @@ namespace OGF {
 		mesh_grob()->vertices.attributes().is_defined("filter") ;
 	}
 
+	bool get_has_edges_filter() const {
+	    return
+		mesh_grob()->edges.nb() != 0 &&
+		mesh_grob()->edges.attributes().is_defined("filter") ;
+	}
+
 	bool get_has_facets_filter() const {
 	    return
 		mesh_grob()->facets.nb() != 0 &&
@@ -1021,6 +1027,23 @@ namespace OGF {
             return vertices_filter_;
         }
 
+        /**
+         * \brief Sets edge filtering
+         * \param[in] value true if edge filtering is activated
+         */
+        gom_attribute(visible_if, "has_edges_filter")
+        void set_edges_filter(bool value) {
+            edges_filter_ = value;
+            gfx_.set_filter(
+                MESH_EDGES, value ? "filter" : ""
+            );
+            update();
+        }
+
+        bool get_edges_filter() const {
+            return edges_filter_;
+        }
+
     gom_properties:
 
         /**
@@ -1203,6 +1226,7 @@ namespace OGF {
         EdgeStyle    border_style_;
         PointStyle   vertices_style_;
         bool         vertices_filter_;
+	bool         edges_filter_;
         PointStyle   vertices_selection_style_;
         bool         animate_;
         double       time_;
