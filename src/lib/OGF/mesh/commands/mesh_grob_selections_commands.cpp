@@ -169,7 +169,7 @@ namespace OGF {
                         le<mesh_grob()->facets.nb_vertices(f); ++le
                     ) {
                         index_t g = mesh_grob()->facets.adjacent(f,le);
-                        if(g != index_t(-1) && selection[g]) {
+                        if(g != NO_INDEX && selection[g]) {
                             new_selection[f] = true;
                         }
                     }
@@ -184,7 +184,7 @@ namespace OGF {
                         index_t lf=0; lf<mesh_grob()->cells.nb_facets(c); ++lf
                     ) {
                         index_t d = mesh_grob()->cells.adjacent(c,lf);
-                        if(d != index_t(-1) && selection[d]) {
+                        if(d != NO_INDEX && selection[d]) {
                             new_selection[c] = true;
                         }
                     }
@@ -541,9 +541,9 @@ namespace OGF {
                 if(
                     !test_adjacent_facets && (
                         (mesh_grob()->
-                            facets.find_adjacent(f1,f2)       != index_t(-1)) ||
+                            facets.find_adjacent(f1,f2)       != NO_INDEX) ||
                         (mesh_grob()->
-                             facets.find_common_vertex(f1,f2) != index_t(-1))
+                             facets.find_common_vertex(f1,f2) != NO_INDEX)
                     )
                 ) {
                     return;
