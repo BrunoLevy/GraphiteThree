@@ -147,6 +147,11 @@ namespace OGF {
         void select_vertices_on_degenerate_facets();
 
         /**
+         * \menu Edges
+         */
+        void show_edges_selection();
+
+        /**
          * \menu Facets
          */
         void show_facets_selection();

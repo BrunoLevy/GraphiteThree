@@ -467,6 +467,12 @@ namespace OGF {
 	mesh_grob()->update();
     }
 
+    void MeshGrobSelectionsCommands::show_edges_selection() {
+        Attribute<bool> sel(mesh_grob()->edges.attributes(),"selection");
+        show_attribute("edges.selection");
+        hide_vertices();
+    }
+
     void MeshGrobSelectionsCommands::show_facets_selection() {
         Attribute<bool> sel(mesh_grob()->facets.attributes(),"selection");
         show_attribute("facets.selection");
