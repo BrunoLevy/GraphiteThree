@@ -28,7 +28,7 @@ jobs:
         run: cd build/Linux64-gcc-dynamic-Release; make doc
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@v4.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/Linux64-gcc-dynamic-Release/doc/doc/html
