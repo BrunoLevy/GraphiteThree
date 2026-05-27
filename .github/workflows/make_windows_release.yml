@@ -15,12 +15,12 @@ jobs:
       fail-fast: false
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
         with:
           submodules: recursive
 
       - name: Checkout exploragram
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
           repository: BrunoLevy/exploragram
           path: geogram/src/lib/exploragram
@@ -37,7 +37,7 @@ jobs:
         run: dir ./build/Windows/bin/Release
 
       - name: Make package
-        run: ./build/Windows/bin/Release/graphite.exe shell=true lib/make_windows_dist.lua 
+        run: ./build/Windows/bin/Release/graphite.exe shell=true lib/make_windows_dist.lua
 
       - name: List generated packages
         run: dir ../../GRAPHITEDIST
@@ -47,7 +47,7 @@ jobs:
             mkdir Windows
             copy ../../GRAPHITEDIST/*.zip Windows/
 
-      - 
+      -
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         name: "Deploy release files"

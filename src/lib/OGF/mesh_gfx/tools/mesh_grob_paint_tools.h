@@ -46,8 +46,9 @@
  * \brief Tools to paint attributes on meshes
  *
  * \details The tools can paint attributes of arbitrary types
- *  on mesh vertices, mesh facets or mesh cells. They also work
- *  for painting selections, implemented as Attribute<bool>.
+ *  on mesh vertices, mesh edges, mesh facets or mesh cells.
+ *  They also workfor painting selections, implemented as
+ *  Attribute<bool>.
  *  The tool systematically applies to the visible attribute
  *  selected in the current shader. If no visible attribute is
  *  selected, then the tool selects the vertices selection and
