@@ -12,14 +12,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, macos-14, windows-2022]
+        os: [ubuntu-24.04, macos-15, windows-2025-vs2026]
         config: [Debug, Release]
         include:
-          - os: macos-14
+          - os: macos-15
             name: macOS
-          - os: ubuntu-22.04
+          - os: ubuntu-24.04
             name: Linux
-          - os: windows-2022
+          - os: windows-2025-vs2026
             name: Windows
     steps:
       - name: Checkout repository
