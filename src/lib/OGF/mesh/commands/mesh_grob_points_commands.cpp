@@ -44,6 +44,7 @@
 #include <geogram/mesh/mesh_AABB.h>
 #include <geogram/mesh/mesh_fill_holes.h>
 #include <geogram/mesh/mesh_tetrahedralize.h>
+#include <geogram/mesh/mesh_convex_hull.h>
 #include <geogram/third_party/PoissonRecon/poisson_geogram.h>
 #include <geogram/voronoi/CVT.h>
 #include <geogram/basic/progress.h>
@@ -576,5 +577,23 @@ namespace OGF {
         mesh_grob()->update();
     }
 
+    /**********************************************************************/
+
+    void MeshGrobPointsCommands::convex_hull() {
+	if(mesh_grob()->vertices.nb() == 0) {
+	    return;
+	}
+	if(mesh_grob()->vertices.dimension() == 2) {
+	    compute_convex_hull_2d(*mesh_grob());
+	} else if(mesh_grob()->vertices.dimension() == 3) {
+	    compute_convex_hull_3d(*mesh_grob());
+	} else {
+	    Logger::err("Hull") << "Invalid mesh dimension"
+				<< std::endl;
+	}
+	mesh_grob()->update();
+    }
+
+    /**********************************************************************/
 
 }
