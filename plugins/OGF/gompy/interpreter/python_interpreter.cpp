@@ -490,6 +490,24 @@ namespace OGF {
     }
 
 
+    bool PythonInterpreter::is_keyword(const std::string& name) const {
+	static const char* keywords[] = {
+	    "False",      "await",      "else",       "import",     "pass",
+	    "None",       "break",      "except",     "in",         "raise",
+	    "True",       "class",      "finally",    "is",         "return",
+	    "and",        "continue",   "for",        "lambda",     "try",
+	    "as",         "def",        "from",       "nonlocal",   "while",
+	    "assert",     "del",        "global",     "not",        "with",
+	    "async",      "elif",       "if",         "or",         "yield"
+	};
+	for(index_t i=0; i<sizeof(keywords)/sizeof(const char*); ++i) {
+	    if(name == keywords[i]) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }
 
 /**

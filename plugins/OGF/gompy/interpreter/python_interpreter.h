@@ -123,6 +123,11 @@ namespace OGF {
 	     const std::string& context, std::vector<std::string>& keys
 	 ) override;
 
+	 /**
+	  * \copydoc Interpreter::is_keyword()
+	  */
+	 bool is_keyword(const std::string& name) const;
+
       private:
 	struct _object* main_module_;
 	bool use_embedded_interpreter_;

@@ -1171,4 +1171,26 @@ namespace OGF {
         globals_->search(needle,path+"globals");
     }
 
+    bool Interpreter::is_keyword(const std::string& name) const {
+	geo_argused(name);
+	return false;
+    }
+
+    bool Interpreter::name_needs_quotes(const std::string& name) const {
+	if(name.length() == 0) {
+	    return true;
+	}
+	if(is_keyword(name)) {
+	    return true;
+	}
+	bool name_does_not_need_quotes = isalpha(name[0]) || name[0] == '_';
+	for(char c: name) {
+	    name_does_not_need_quotes = name_does_not_need_quotes &&
+		(isalnum(c) || (c == '_'));
+	}
+	return !name_does_not_need_quotes;
+    }
+
+
+
 }

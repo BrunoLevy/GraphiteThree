@@ -254,8 +254,7 @@ namespace OGF {
 
 	MetaSlot* mslot = target->meta_class()->find_slot(slot_name);
 
-	cmd_funccall += ".";
-	cmd_funccall += slot_name;
+	cmd_funccall += property_access(slot_name);
 	std::string cmd_args;
 	index_t nb_cmd_args=0;
 	std::string first_arg_name = "";
@@ -351,11 +350,13 @@ namespace OGF {
 
 	// Compress multiple assignments to same property into a single
 	// assignment in history.
-	std::string command = target_name + "." + prop_name + " = " + val;
+	std::string command =
+	    target_name + property_access(prop_name) + " = " + val;
 	if(
 	    history_.size() != 0 &&
 	    String::string_starts_with(
-		*history_.rbegin(), target_name + "." + prop_name + " = "
+		*history_.rbegin(),
+		target_name + property_access(prop_name) + " = "
 	    )
 	) {
 	    *history_.rbegin() = command;
@@ -402,15 +403,19 @@ namespace OGF {
 			    (isalnum(c) || (c == '_'));
 		    }
 		    std::string haystack2_name = haystack_name;
-		    if(name_does_not_need_quotes) {
-			haystack2_name = haystack_name;
-			if(haystack2_name != "") {
-			    haystack2_name += ".";
+
+		    if(haystack_name == "") {
+			if(name_needs_quotes(name)) {
+			    Logger::warn("Lua")
+				<< "Unparsable global recorded in history "
+				<< name
+				<< std::endl;
 			}
-			haystack2_name += name;
+			haystack2_name = name;
 		    } else {
-			haystack2_name = haystack_name + "[\"" + name + "\"]";
+			haystack2_name = haystack_name + property_access(name);
 		    }
+
 		    std::string result = recursive_back_resolve(
 			haystack2, haystack2_name, needle
 		    );
@@ -439,7 +444,7 @@ namespace OGF {
 		    haystack2 != nullptr
 		) {
 		    std::string haystack2_name =
-			haystack_name + "." + mprop->name();
+			haystack_name + property_access(mprop->name());
 		    std::string result = recursive_back_resolve(
 			haystack2, haystack2_name, needle
 		    );
@@ -560,7 +565,7 @@ namespace OGF {
 	    if(ctxt == "") {
 		return "";
 	    }
-	    return ctxt + "." + request->method()->name();
+	    return ctxt + property_access(request->method()->name());
 	}
 
 	// StructPropertyRef
@@ -572,7 +577,7 @@ namespace OGF {
 	    if(ctxt == "") {
 		return "";
 	    }
-	    return ctxt + "." + struct_prop->property_name();
+	    return ctxt + property_access(struct_prop->property_name());
 	}
 
 	// Grob
@@ -745,4 +750,21 @@ namespace OGF {
     ) const {
 	return '{' + args + '}';
     }
+
+    bool LuaInterpreter::is_keyword(const std::string& name) const {
+	static const char* keywords[] = {
+	    "and",       "break",     "do",        "else",      "elseif",
+	    "end",       "false",     "for",       "function",  "if",
+	    "in",        "local",     "nil",       "not",       "or",
+	    "repeat",    "return",    "then",      "true",      "until",
+	    "while"
+	};
+	for(index_t i=0; i<sizeof(keywords)/sizeof(const char*); ++i) {
+	    if(name == keywords[i]) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }

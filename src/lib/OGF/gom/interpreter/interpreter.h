@@ -866,6 +866,25 @@ namespace OGF {
 	 */
 	virtual std::string name_value_pair_call(const std::string& args) const;
 
+	/**
+	 * \brief Tests whether a string is a keyword in the language
+	 * \param[in] name the name to be tested
+	 * \retval true if \p name is a keyword
+	 * \retval false otherwise
+	 */
+	virtual bool is_keyword(const std::string& name) const;
+
+	/**
+	 * \brief Tests whether a name needs quotes when recorded in history
+	 * \details reserved keywords or names starting with a number
+	 *  or containing special characters need quotes when recorded in
+	 *  history
+	 * \param[in] name the name to be tested
+	 * \retval true if \p name needs quotes
+	 * \retval false otherwise
+	 */
+	virtual bool name_needs_quotes(const std::string& name) const;
+
     protected:
         std::vector<std::string> history_;
 	std::string language_;

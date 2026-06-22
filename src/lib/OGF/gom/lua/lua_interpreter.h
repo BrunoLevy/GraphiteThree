@@ -195,6 +195,26 @@ namespace OGF {
 	     const std::string& args
 	 ) const override;
 
+	 /**
+	  * \copydoc Interpreter::is_keyword()
+	  */
+	 bool is_keyword(const std::string& name) const;
+
+	 /**
+	  * \brief A string that can be recorded in the history to access
+	  *  an attribute
+	  * \details Property handles attributes names that cannot be
+	  *  accessed through object.attribute_name (if they contain special
+	  *  characters or clash with a keyword for instance)
+	  * \param[in] attribute_name the name of the attribute
+	  * \return a string to be appended to object name to access the
+	  *  attribute
+	  */
+	 std::string property_access(const std::string& attribute_name) const {
+	     return name_needs_quotes(attribute_name) ?
+		 "[\"" + attribute_name + "\"]"  :
+		 "." + attribute_name;
+	 }
 
     private:
 	lua_State* lua_state_;
