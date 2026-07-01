@@ -47,6 +47,7 @@
 #include <OGF/basic/modules/modmgr.h>
 #include <geogram/image/color.h>
 #include <geogram/basic/process.h>
+#include <geogram/basic/file_system.h>
 #include <geogram/lua/lua_io.h>
 
 extern "C" {
