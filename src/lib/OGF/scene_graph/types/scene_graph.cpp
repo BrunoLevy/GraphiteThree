@@ -338,6 +338,31 @@ namespace OGF {
 #ifdef GEO_OS_WINDOWS
         FileSystem::flip_slashes(file_name);
 #endif
+
+	if(FileSystem::is_directory(file_name)) {
+	    std::vector<std::string> files;
+	    FileSystem::get_files(file_name, files, false); // false: !recursive
+	    for(const std::string& cur_file_name: files) {
+		std::string extension = FileSystem::extension(cur_file_name);
+
+		bool can_load = (
+		    extension == "graphite" || extension == "graphite_ascii" ||
+		    extension == "aln"
+		);
+		if(!can_load) {
+		    std::string class_name_str =
+			SceneGraphLibrary::instance()->file_extension_to_grob(
+			    extension
+			);
+		    can_load = (class_name_str.length() != 0);
+		}
+		if(can_load) {
+		    load_object(cur_file_name, "default", change_cwd);
+		}
+	    }
+	    return this;
+	}
+
         if(!FileSystem::is_file(file_name)) {
             Logger::err("SceneGraph")
                 << "cannot open file: " << file_name << std::endl;
