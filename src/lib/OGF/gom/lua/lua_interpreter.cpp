@@ -141,7 +141,7 @@ namespace {
 	// as escaped characters by lua, so flip them (Windows also understands
 	// slashes normally).
         if(String::string_ends_with(mtype->name(),"FileName")) {
-	    flip_slashes(value);
+	    FileSystem::flip_slashes(value);
 	}
 #endif
     }
