@@ -343,6 +343,7 @@ function preferences_window.draw_Advanced()
        'Dockable dialogs', 'gui:viewports'
    )
    imgui.Text('Monitor')
+   autogui.tooltip('Monitor where to open Graphite window, use -1 for default')
    imgui.SameLine()
    local sel
    imgui.PushItemWidth(-1)
