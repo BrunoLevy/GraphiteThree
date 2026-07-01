@@ -336,9 +336,22 @@ function preferences_window.draw_Advanced()
    preferences_window.edit_preference_boolean(
        'Keyboard navigation', 'gui:keyboard_nav'
    )
+   imgui.SameLine()
+   imgui.Text('   ')
+   imgui.SameLine()
    preferences_window.edit_preference_boolean(
        'Dockable dialogs', 'gui:viewports'
    )
+   imgui.Text('Monitor')
+   imgui.SameLine()
+   local sel
+   imgui.PushItemWidth(-1)
+   local monitor = tonumber(gom.get_environment_value('gfx:monitor'))
+   sel,monitor = imgui.InputInt('##monitor',monitor)
+   imgui.PopItemWidth()
+   if sel then
+      gom.set_environment_value('gfx:monitor',monitor)
+   end
    imgui.Text('\n')
    imgui.Separator()
    imgui.Text('   Debugging and performance tests')

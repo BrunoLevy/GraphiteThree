@@ -197,6 +197,11 @@ main.declare_preference_variable(
    'gui:shaders_selector','true','Draw shaders selector'
 )
 
+main.declare_preference_variable(
+   'gfx:monitor', -1, 
+   'monitor where to open Graphite window, use -1 for default'
+)   
+
 --==============================================================================
 
 -- Note: main.start() is directly invoked by Graphite's main.cpp
