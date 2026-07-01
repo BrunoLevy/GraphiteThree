@@ -116,6 +116,36 @@ namespace {
 	geo_debug_assert(is_quoted(s));
 	return s.substr(1,s.length()-2);
     }
+
+    /**
+     * \brief Adapts a value represented as a string depending of
+     *  its MetaType before recording it in the history
+     * \details Some values need quotes, some others need not, and
+     *  backslashes in file paths under windows need to be flipped else
+     *  they are interpreted as escape characters
+     * \param[in,out] value the value as a string
+     * \param[in] mtype a pointer to the MetaType
+     */
+    void adapt_value(std::string& value, const MetaType* mtype) {
+	if(needs_quotes(mtype)) {
+	    if(!is_quoted(value)) {
+		value = String::quote(value);
+	    }
+	} else {
+	    if(is_quoted(value)) {
+		value = unquote(value);
+	    }
+        }
+#ifdef GEO_OS_WINDOWS
+	// Backslashes in history are problematic because they are interpreted
+	// as escaped characters by lua, so flip them (Windows also understands
+	// slashes normally).
+        if(String::string_ends_with(mtype->name(),"FileName")) {
+	    flip_slashes(value);
+	}
+#endif
+    }
+
 }
 
 namespace OGF {
@@ -337,15 +367,7 @@ namespace OGF {
 	std::string val = back_parse(value,mtype);
 
 	if(mprop != nullptr) {
-	    if(needs_quotes(mprop->type())) {
-		if(!is_quoted(val)) {
-		    val = String::quote(val);
-		}
-	    } else {
-		if(is_quoted(val)) {
-		    val = unquote(val);
-		}
-	    }
+	    adapt_value(val, mprop->type());
 	}
 
 	// Compress multiple assignments to same property into a single
@@ -698,9 +720,7 @@ namespace OGF {
 
 	std::string result;
 	value.get_value(result);
-	if(needs_quotes(value.meta_type())) {
-	    result = String::quote(result);
-	}
+	adapt_value(result, value.meta_type());
 	return result;
     }
 
