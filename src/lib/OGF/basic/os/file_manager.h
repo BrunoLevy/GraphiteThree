@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 
 #ifndef H_OGF_BASIC_OS_FILE_MANAGER_H
 #define H_OGF_BASIC_OS_FILE_MANAGER_H
@@ -53,11 +53,11 @@ namespace OGF {
 
 
    /**
-    * \brief FileManager retreives the files used by 
+    * \brief FileManager retreives the files used by
     *  Graphite (icons, plugins).
-    * \details Internally, FileManager manages a 
+    * \details Internally, FileManager manages a
     *  path where to search for the files. This path
-    *  contains the main Graphite path and the path to 
+    *  contains the main Graphite path and the path to
     *  the loaded plugins.
     */
     class BASIC_API FileManager : public Environment {
@@ -84,11 +84,11 @@ namespace OGF {
 
         /**
          * \brief Finds a file.
-         * \param[in,out] file_name the name to be found. 
+         * \param[in,out] file_name the name to be found.
          *  On exit, if found, the full path to the file
-         * \param[in] verbose if true, messages are logged 
+         * \param[in] verbose if true, messages are logged
          *  on success and failure
-         * \param[in] sub_path a relative path that is prepended 
+         * \param[in] sub_path a relative path that is prepended
          *  to the file name before searching
          * \retval true if the file was found
          * \retval false otherwise
@@ -100,12 +100,12 @@ namespace OGF {
 
         /**
          * \brief Finds a binary file, such as the DLL of a plugin.
-         * \param[in,out] file_name the name to be found, 
-         *  as specified by the user (without "lib" prefix, 
-         *  without ".dll" or ".so" suffix). 
-         *  On exit, if found, the full path to the file 
+         * \param[in,out] file_name the name to be found,
+         *  as specified by the user (without "lib" prefix,
+         *  without ".dll" or ".so" suffix).
+         *  On exit, if found, the full path to the file
          *  (with "lib" prefix, with ".dll" or ".so" suffix).
-         * \param[in] verbose if true, messages are logged 
+         * \param[in] verbose if true, messages are logged
          *  on success and failure
          * \retval true if the file was found
          * \retval false otherwise
@@ -122,7 +122,7 @@ namespace OGF {
         std::string dll_prefix() const ;
 
         /**
-         * \brief Gets the extension of dynamically loadable 
+         * \brief Gets the extension of dynamically loadable
          *  libraries file names.
          * \details Under Unix, ".so", and under Windows, ".dll".
          * \return the extension of dynamically loadable libraries file names.
@@ -130,10 +130,10 @@ namespace OGF {
         std::string dll_extension() const ;
 
         /**
-         * \brief Gets the relative subdirectory where dynamic libraries are 
+         * \brief Gets the relative subdirectory where dynamic libraries are
          *  stored.
-         * \details It is different under Unix and Windows. 
-         *  Under Unix, they are in a separate "lib/" 
+         * \details It is different under Unix and Windows.
+         *  Under Unix, they are in a separate "lib/"
          *  subdirectory. Under Windows, they are in the same
          *  directory as the main executable.
          */
@@ -142,12 +142,21 @@ namespace OGF {
         /**
          * \brief Gets the OGF Path, i.e. the list of directories where files
          *  are searched.
-         * \return a const reference to an array of strings, each of which 
+         * \return a const reference to an array of strings, each of which
          *  corresponding an entry in the OGF path.
          */
         const std::vector<std::string>& ogf_path() const {
             return ogf_path_;
         }
+
+	/**
+	 * \brief Adds a path to OGF Path
+	 * \details find_file() and find_binary_file() search the OGF Path
+	 * \param[in] path the path to be added
+	 */
+	void append_to_ogf_path(const std::string& path) {
+	    ogf_path_.push_back(path);
+	}
 
         /**
          * \brief Gets Graphite project root.
@@ -176,7 +185,7 @@ namespace OGF {
         bool set_local_value(
             const std::string& name, const std::string& value
         ) override;
-        
+
     protected:
         FileManager() ;
 
@@ -191,4 +200,3 @@ namespace OGF {
 
 }
 #endif
-

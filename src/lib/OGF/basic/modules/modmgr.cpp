@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 #include <OGF/basic/modules/modmgr.h>
 #include <OGF/basic/modules/module.h>
 #include <OGF/basic/os/file_manager.h>
@@ -58,34 +58,34 @@
 namespace OGF {
 
     ModuleManager* ModuleManager::instance_ = nullptr;
-    
+
     ModuleManager* ModuleManager::instance() {
         return instance_;
     }
-    
+
     void ModuleManager::initialize() {
         ogf_assert(instance_ == nullptr);
         instance_ = new ModuleManager();
         Environment::instance()->add_environment(instance_);
     }
-    
+
     void ModuleManager::terminate() {
         // Note: instance should not be deleted, since it
         // is registered in the Environment, it will be
         // deleted by the Environment (that has ownership).
         instance_ = nullptr;
     }
-    
+
     void ModuleManager::terminate_dynamic_modules() {
         instance()-> do_terminate_modules();
     }
-    
+
     ModuleManager::ModuleManager() {
     }
-    
+
     ModuleManager::~ModuleManager() {
     }
-    
+
     bool ModuleManager::bind_module(
         const std::string& module_name, Module* module
     ) {
@@ -100,7 +100,7 @@ namespace OGF {
         Environment::notify_observers("loaded_dynamic_modules");
         return true;
     }
-    
+
     bool ModuleManager::unbind_module(const std::string& module_name) {
 	auto it = modules_.find(module_name);
         if(it == modules_.end()) {
@@ -113,7 +113,7 @@ namespace OGF {
         Environment::notify_observers("loaded_dynamic_modules");
         return true;
     }
-    
+
     Module* ModuleManager::resolve_module(const std::string& module_name) {
         auto it = modules_.find(module_name);
         if(it == modules_.end()) {
@@ -121,7 +121,7 @@ namespace OGF {
         }
         return it->second;
     }
-        
+
     bool ModuleManager::get_local_value(
         const std::string& name, std::string& value
     ) const {
@@ -159,7 +159,7 @@ namespace OGF {
     ) {
         ogf_argused(name);
         ogf_argused(value);
-        return false;        
+        return false;
     }
 
     ModuleManager::function_ptr ModuleManager::resolve_function(
@@ -168,7 +168,7 @@ namespace OGF {
 	static_assert(
 	    sizeof(void*) == sizeof(OGF::ModuleManager::function_ptr),
 	    "void* and function pointers need to have same size"
-	);	
+	);
 	void* gptr = resolve_symbol(name);
 	function_ptr result = nullptr;
 	memcpy(&result, &gptr, sizeof(void*));
@@ -201,90 +201,90 @@ namespace OGF {
         const std::string& module_name, bool quiet
     ) {
         std::string module_file_name = module_name;
-        
+
         if(! FileManager::instance()->find_binary_file(
                module_file_name
         )) {
             if(!quiet) {
-                Logger::err("ModuleMgr")  
-                    << "module \'" << module_name 
+                Logger::err("ModuleMgr")
+                    << "module \'" << module_name
                     << "\' not found" << std::endl;
             }
             return false;
         }
 
         void* module_handle = LoadLibrary(module_file_name.c_str());
-    
+
         if(module_handle == nullptr) {
             // get the error message
             LPVOID lpMsgBuf;
-            FormatMessage( 
-                FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-                FORMAT_MESSAGE_FROM_SYSTEM | 
+            FormatMessage(
+                FORMAT_MESSAGE_ALLOCATE_BUFFER |
+                FORMAT_MESSAGE_FROM_SYSTEM |
                 FORMAT_MESSAGE_IGNORE_INSERTS,
                 NULL,
                 GetLastError(),
                 MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
                 (LPTSTR) &lpMsgBuf,
                 0,
-                NULL 
+                NULL
             );
             // print the error
-            Logger::err("ModuleMgr")  
-                << "Could not open module \'" 
-                << module_name << "\'" << std::endl 
+            Logger::err("ModuleMgr")
+                << "Could not open module \'"
+                << module_name << "\'" << std::endl
                 << "                     Error opening file \'"
-                << module_file_name << "\'" << std::endl 
+                << module_file_name << "\'" << std::endl
                 << " reason: " << (LPTSTR) lpMsgBuf << std::endl;
             // free the error message
             LocalFree( lpMsgBuf );
             return  false;
         }
-        
+
         // Retreive function pointers to initialize and
         //   terminate the module.
 
         std::string project_name = "OGF";
         std::string init_func_name =
             project_name + "_" + module_name + "_initialize";
-        
+
         std::string term_func_name =
-            project_name + "_" + module_name + "_terminate";        
-        
+            project_name + "_" + module_name + "_terminate";
+
         ModuleInitFunc p_init_func =
             (ModuleInitFunc)GetProcAddress(
                 (HMODULE)module_handle, init_func_name.c_str()
             );
-        
+
         ModuleTerminateFunc p_term_func =
             (ModuleTerminateFunc)GetProcAddress(
                 (HMODULE)module_handle, term_func_name.c_str()
             );
-        
+
         // Checks whether the module has init/termination functions.
 
         if(p_init_func == nullptr || p_term_func == nullptr) {
             Logger::warn("ModuleMgr")
-                << "Could not find init/term of module \'" 
+                << "Could not find init/term of module \'"
                 << module_name << "\'" << std::endl;
         } else {
             // invoke the initialization function:
-            // No need here to call p_init_func(), it is automatically 
+            // No need here to call p_init_func(), it is automatically
             // called by ctor of objects at global scope
-            
+
             // memorize the module handle
             module_handles_.push_back(module_handle);
 
             // memorize the termination function.
             to_terminate_.push_back(p_term_func);
         }
-        
+
         Module* module_info = ModuleManager::resolve_module(module_name);
         if(module_info == nullptr) {
             module_info = new Module;
             module_info->set_name(module_name);
             ModuleManager::bind_module(module_name, module_info);
-        } 
+        }
         module_info->set_is_dynamic(true);
         return true;
     }
@@ -317,18 +317,22 @@ namespace OGF {
 	for(index_t i=0; i<modules.size(); ++i) {
 	    result = function_ptr(GetProcAddress(
                 modules[i], name.c_str()
-	    ));	    
+	    ));
 	}
 	return result;
     }
 
 
-    void ModuleManager::append_dynamic_libraries_path(const std::string& path_to_add) {
+    void ModuleManager::append_dynamic_libraries_path(
+	const std::string& path_to_add
+    ) {
 	// TODO: test AddDllDirectory() instead
-	// (maybe needs SetDefaultDllDirectories(LOAD_LIBRARY_SEARCH_USER_DIRS) as well)
+	// (maybe needs SetDefaultDllDirectories(LOAD_LIBRARY_SEARCH_USER_DIRS)
+	// as well)
 	if(!SetDllDirectoryA(path_to_add.c_str())) {
 	    DWORD err_code = GetLastError();
-	    Logger::err("ModMgr") << "SetDllDirectoryA() returned " << err_code << std::endl;
+	    Logger::err("ModMgr") << "SetDllDirectoryA() returned "
+				  << err_code << std::endl;
 	}
     }
 
@@ -337,7 +341,7 @@ namespace OGF {
 #else
 
 namespace {
-    
+
     /**
      * \brief Calls dlsym and converts the result into
      *  a function pointer.
@@ -345,7 +349,7 @@ namespace {
      *  it is illegal to directly cast a generic pointer to a
      *  function pointer.
      * \param[in] handle a pointer to a shared object, previously
-     *  obtained through dlopen(), or nullptr (lookup function in 
+     *  obtained through dlopen(), or nullptr (lookup function in
      *  all modules).
      * \param[in] symbname the name of a symbol
      * \return a function pointer to the symbol, or NULL if there is
@@ -370,7 +374,7 @@ namespace OGF {
             ModuleTerminateFunc module_terminate = to_terminate_[size_t(i)];
             module_terminate();
         }
-        
+
         int nb_modules = int(module_handles_.size());
         ogf_assert(nb_modules == nb_funcs);
         //Commented-out, generates an assertion fail in dlclose:
@@ -399,8 +403,8 @@ namespace OGF {
                module_file_name
         )) {
             if(!quiet) {
-                Logger::err("ModuleMgr")  
-                    << "module \'" << module_name 
+                Logger::err("ModuleMgr")
+                    << "module \'" << module_name
                     << "\' not found" << std::endl;
             }
             return false;
@@ -410,64 +414,64 @@ namespace OGF {
         //
         // RTLD_NOW:    I want errors to be notified as soon as possible
         // RTLD_GLOBAL: different modules may be inter-dependant.
-        
+
         void* module_handle = dlopen(
-            module_file_name.c_str(), RTLD_NOW | RTLD_GLOBAL 
+            module_file_name.c_str(), RTLD_NOW | RTLD_GLOBAL
         );
-    
+
         if(module_handle == nullptr) {
-            Logger::err("ModuleMgr")  
-                << "Could not open module \'" 
-                << module_name << "\'" << std::endl 
+            Logger::err("ModuleMgr")
+                << "Could not open module \'"
+                << module_name << "\'" << std::endl
                 << "                     Error opening file \'"
-                << module_file_name << "\'" << std::endl 
+                << module_file_name << "\'" << std::endl
                 << " reason: " << dlerror() << std::endl;
             return  false;
         }
-        
+
         // Retreive function pointers to initialize and
         //   terminate the module.
 
         std::string project_name = "OGF";
         std::string init_func_name =
             project_name + "_" + module_name + "_initialize";
-        
+
         std::string term_func_name =
-            project_name + "_" + module_name + "_terminate";        
-        
+            project_name + "_" + module_name + "_terminate";
+
         ModuleInitFunc p_init_func =
             (ModuleInitFunc)dlsym_fptr(module_handle, init_func_name.c_str());
-        
+
         ModuleTerminateFunc p_term_func =
             (ModuleTerminateFunc)dlsym_fptr(
 		module_handle, term_func_name.c_str()
 	    );
-        
+
         // Checks whether the module has init/termination functions.
 
         if(p_init_func == nullptr || p_term_func == nullptr) {
             Logger::warn("ModuleMgr")
                 << "[ModuleManager]: "
-                << "Could not find init/term of module \'" 
+                << "Could not find init/term of module \'"
                 << module_name << "\'" << std::endl;
         } else {
             // invoke the initialization function.
             // No need to call p_init_func(), automatically called
             // at DLL loading time by ctor of global objects.
-            
+
             // memorize the module handle
             module_handles_.push_back(module_handle);
 
             // memorize the termination function.
             to_terminate_.push_back(p_term_func);
         }
-        
+
         Module* module_info = ModuleManager::resolve_module(module_name);
         if(module_info == nullptr) {
             module_info = new Module;
             module_info->set_name(module_name);
             ModuleManager::bind_module(module_name, module_info);
-        } 
+        }
         module_info->set_is_dynamic(true);
         return true;
     }
@@ -485,10 +489,7 @@ namespace OGF {
 	}
 	ld_lib_path += path;
 	setenv("LD_LIBRARY_PATH", ld_lib_path.c_str(), 1);
-    }    
+    }
 }
 
 #endif
-
-
-

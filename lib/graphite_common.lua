@@ -111,9 +111,9 @@ end
 -- Auto load plugins declared in the sources
 
 function auto_load_plugins()
-   local plugins_config_file =
-       gom.get_environment_value('PROJECT_ROOT') ..
-       '/plugins/OGF/Plugins.txt'
+    local plugins_dir = 
+       gom.get_environment_value('PROJECT_ROOT') .. '/plugins/OGF/'
+   local plugins_config_file =plugins_dir .. 'Plugins.txt'
    if FileSystem.is_file(plugins_config_file) then
       gom.out("Loading plugins declared in " .. plugins_config_file)
       for line in io.lines(plugins_config_file) do
@@ -121,6 +121,7 @@ function auto_load_plugins()
 	  if line:sub(1,1) == "(" and line:sub(-1) == ")" then
 	     local module = line:sub(2,-2)
 	     gom.load_module(module)
+	     gom.append_to_ogf_path(plugins_dir .. '/' .. module)
 	  end
       end
    end

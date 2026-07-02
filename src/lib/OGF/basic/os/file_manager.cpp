@@ -25,15 +25,15 @@
  *     levy@loria.fr
  *
  *     ISA Project
- *     LORIA, INRIA Lorraine, 
+ *     LORIA, INRIA Lorraine,
  *     Campus Scientifique, BP 239
- *     54506 VANDOEUVRE LES NANCY CEDEX 
+ *     54506 VANDOEUVRE LES NANCY CEDEX
  *     FRANCE
  *
  *  Note that the GNU General Public License does not permit incorporating
- *  the Software into proprietary programs. 
+ *  the Software into proprietary programs.
  */
- 
+
 
 #include <OGF/basic/os/file_manager.h>
 #include <OGF/basic/os/text_utils.h>
@@ -53,13 +53,13 @@ namespace OGF {
 
     /****************************************************************/
 
-    
+
     FileManager* FileManager::instance_ = nullptr ;
 
     void FileManager::initialize() {
         ogf_assert(instance_ == nullptr);
         instance_ = new FileManager() ;
-        Environment::instance()->add_environment(instance_);        
+        Environment::instance()->add_environment(instance_);
     }
 
     void FileManager::terminate() {
@@ -78,12 +78,12 @@ namespace OGF {
         FileSystem::flip_slashes(path);
 
         // Linux build: binaries are in
-        //   build/Linux-gcc-dynamic-(Release|Debug)/bin        
+        //   build/Linux-gcc-dynamic-(Release|Debug)/bin
         index_t nb_path_components = 3;
-        
+
 #ifdef GEO_OS_WINDOWS
         // Windows build: binaries are in
-        //   build/Windows/(Release|Debug)/bin/        
+        //   build/Windows/(Release|Debug)/bin/
         nb_path_components = 4;
 
         // Detect a variant:
@@ -94,13 +94,13 @@ namespace OGF {
             nb_path_components = 2;
         }
 #endif
-        
+
         for(index_t i=0; i<nb_path_components; ++i) {
             if(i != 0) {
                 libraries_subdirectory_ = "/" + libraries_subdirectory_;
             }
             std::string component = FileSystem::base_name(path);
-           
+
 #ifdef GEO_OS_WINDOWS
             //   Under Windows, dynamic libraries subdirectory
             // is the same as binaries subdirectory.
@@ -114,12 +114,12 @@ namespace OGF {
                 ((component == "bin") ? "lib" : component) +
                 libraries_subdirectory_;
 #endif
-           
+
             path = FileSystem::dir_name(path);
         }
 
         libraries_subdirectory_ += "/";
-        
+
         ogf_path_.push_back(path);
 
         Logger::out("FileManager") << "   Main path=" << path << std::endl;
@@ -133,13 +133,13 @@ namespace OGF {
         if(file_name == "") {
             return false ;
         }
-       
+
         //   If is is an absolute path, do not search and
         // return it.
         if(file_name[0] == '/') {
             return true;
         }
-       
+
 #ifdef GEO_OS_WINDOWS
         //   If is is an absolute path, do not search and
         // return it (absolute path under windows stats with X:/...)
@@ -156,15 +156,15 @@ namespace OGF {
                file_name[i] = '/';
            }
        }
-       
-       
+
+
        if(sub_path != "") {
            for(index_t i=0; i<ogf_path_.size(); ++i) {
                std::string cur_file_name = ogf_path_[i]+"/"+sub_path+file_name;
                if(FileSystem::is_file(cur_file_name)) {
                    file_name = cur_file_name;
                    return true;
-               } 
+               }
            }
        }
        for(index_t i=0; i<ogf_path_.size(); ++i) {
@@ -172,13 +172,13 @@ namespace OGF {
            if(FileSystem::is_file(cur_file_name)) {
                file_name = cur_file_name;
                return true;
-           } 
+           }
        }
 
        // If we still did not find it, try in the current working directory....
        std::string try_cwd =
            FileSystem::get_current_working_directory()+"/"+file_name;
-       
+
        if(FileSystem::is_file(try_cwd)) {
            file_name = try_cwd;
            return true;
@@ -186,7 +186,7 @@ namespace OGF {
 
        // Sorry, there is nothing I can do, this file is simply not there...
        if(verbose) {
-           Logger::err("FileManager") << "did not find file:" 
+           Logger::err("FileManager") << "did not find file:"
                                       << file_name << std::endl ;
        }
        return false ;
@@ -203,7 +203,7 @@ namespace OGF {
             return true;
         }
         if(verbose) {
-            Logger::err("FileManager") << "did not find binary file:" 
+            Logger::err("FileManager") << "did not find binary file:"
                                        << file_name << std::endl ;
         }
         return false ;
@@ -232,7 +232,7 @@ namespace OGF {
     std::string FileManager::libraries_subdirectory() const {
         return libraries_subdirectory_;
     }
-    
+
     FileManager* FileManager::instance() {
         return instance_ ;
     }
@@ -281,8 +281,7 @@ namespace OGF {
 	}
         return false;
     }
-    
+
 /****************************************************************/
 
 }
-

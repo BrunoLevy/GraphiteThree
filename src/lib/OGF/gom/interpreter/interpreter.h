@@ -475,6 +475,14 @@ namespace OGF {
 	virtual void append_dynamic_libraries_path(const std::string& path);
 
 	/**
+	 * \brief Adds a path to the OGF path
+	 * \details The OGF path is where files can be found by
+	 *  FileManager::find_file()
+	 * \param[in] path the path to be added
+	 */
+	virtual void append_to_ogf_path(const std::string& path);
+
+	/**
 	 * \brief Loads a plug-in.
 	 * \param[in] module_name the name of the plug-in.
 	 * \retval true if the module was successfully loaded.

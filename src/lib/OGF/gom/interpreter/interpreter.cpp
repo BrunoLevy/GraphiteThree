@@ -403,6 +403,10 @@ namespace OGF {
 	ModuleManager::append_dynamic_libraries_path(path);
     }
 
+    void Interpreter::append_to_ogf_path(const std::string& path) {
+	FileManager::instance()->append_to_ogf_path(path);
+    }
+
     Connection* Interpreter::connect(Request* from, Callable* to) {
 	// Special case: target is a Request.
 	// We create a SlotConnection, that does not do reference counting
