@@ -205,23 +205,25 @@ namespace OGF {
     }
 
     // Using cells is probably faster (to be tested)
-    MeshCellsAABB cAABB(*surface);
+    if(signed_dist && surface->cells.nb() != 0) {
+	MeshCellsAABB cAABB(*surface);
 #ifdef _OPENMP
 #pragma omp parallel for
 #endif
-    for(index_t w=0; w<voxel_grob()->nw(); ++w) {
-	for(index_t v=0; v<voxel_grob()->nv(); ++v) {
-	    for(index_t u=0; u<voxel_grob()->nu(); ++u) {
-		double uf = su*(double(u) + 0.5);
-		double vf = sv*(double(v) + 0.5);
-		double wf = sw*(double(w) + 0.5);
-		vec3 p = voxel_grob()->origin() +
-		    uf * voxel_grob()->U() +
-		    vf * voxel_grob()->V() +
-		    wf * voxel_grob()->W() ;
-		index_t tet = cAABB.containing_tet(p);
-		if(tet != MeshCellsAABB::NO_TET) {
-		    distance[voxel_grob()->linear_index(u,v,w)]*=-1.0f;
+	for(index_t w=0; w<voxel_grob()->nw(); ++w) {
+	    for(index_t v=0; v<voxel_grob()->nv(); ++v) {
+		for(index_t u=0; u<voxel_grob()->nu(); ++u) {
+		    double uf = su*(double(u) + 0.5);
+		    double vf = sv*(double(v) + 0.5);
+		    double wf = sw*(double(w) + 0.5);
+		    vec3 p = voxel_grob()->origin() +
+			uf * voxel_grob()->U() +
+			vf * voxel_grob()->V() +
+			wf * voxel_grob()->W() ;
+		    index_t tet = cAABB.containing_tet(p);
+		    if(tet != MeshCellsAABB::NO_TET) {
+			distance[voxel_grob()->linear_index(u,v,w)]*=-1.0f;
+		    }
 		}
 	    }
 	}
