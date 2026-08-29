@@ -111,7 +111,7 @@ end
 -- Auto load plugins declared in the sources
 
 function auto_load_plugins()
-    local plugins_dir = 
+    local plugins_dir =
        gom.get_environment_value('PROJECT_ROOT') .. '/plugins/OGF/'
    local plugins_config_file =plugins_dir .. 'Plugins.txt'
    if FileSystem.is_file(plugins_config_file) then
@@ -143,7 +143,7 @@ function post_init()
 
     local arglist = gom.get_environment_value("command_line")
     local undo_bkp = gom.get_environment_value('gui:undo')
-    -- diable undo: do not record state for each loaded object !
+    -- disable undo: do not record state for each loaded object !
     gom.set_environment_value('gui:undo', 'false')
     for arg in arglist:split("!") do
       if arg:starts_with("-") or arg:find("=") then
@@ -167,7 +167,7 @@ function post_init()
     gom.set_environment_value('gui:undo', undo_bkp) -- re-enable undo
 
     -- Now that Graphite is started, enable verbose add_to_history()
-    -- so that user can see in the terminal how is interactions
+    -- so that user can see in the terminal how its interactions
     -- reflect as commands.
 
     gom.show_add_to_history = true

@@ -1,3 +1,4 @@
+-- Lua
 -- Reading notes
 --
 -- Lua
@@ -19,7 +20,7 @@
 
 GraphiteServer = {}
 GraphiteServer.debug = true
-GraphiteServer.connections = {} -- Keeps refs to active cnx, else they are GCed 
+GraphiteServer.connections = {} -- Keeps refs to active cnx, else they are GCed
 GraphiteServer.port = 7440
 
 --==============================================================================
@@ -36,11 +37,11 @@ if lgi == nil then
   package.cpath=
         package.cpath..';/usr/lib/x86_64-linux-gnu/lua/5.3/?.so'
   lgi = require('lgi')
-end 
+end
 
 -- gobject = lgi.GObject (not needed directly)
 -- gio     = lgi.Gio     (not needed directly)
-soup    = lgi.Soup -- For HTTP and WebSocket protocols
+soup    = lgi.require('Soup', 2.4) -- Soup 2.4 For HTTP and WebSocket protocols
 glib    = lgi.GLib -- For main event loops management
 require('json')    -- For marshalling / unmarshalling remote calls arguments
 
@@ -67,7 +68,7 @@ function GraphiteServer.HTTP_callback(
          a,b = iter:next()
          print('   '..tostring(a)..'='..tostring(b))
       end
-   end      
+   end
    if message.method == 'GET' then
       local buff = soup.Buffer.new(
          '<H1> Hello from Graphite HTTP server written in LUA !! </H1>'
@@ -95,11 +96,11 @@ function GraphiteServer.ws_message_callback(
 )
    if GraphiteServer.debug then
      print('==== WEBSOCKET MESSAGE ====')
-     print(connection)   
+     print(connection)
      print(type)
      print(message.data)
      print(user_data)
-   end     
+   end
 
    local args = json.decode(message.data)
 
@@ -137,16 +138,16 @@ function GraphiteServer.ws_callback(
      print('==== WEBSOCKET CONNECTION ====')
      print(connection)
    end
-   
+
    GraphiteServer.connections[connection] = true
-   
+
    connection.on_message = GraphiteServer.ws_message_callback_wrapper
-   
+
    connection.on_closed  = function(connection)
-      if GraphiteServer.debug then   
+      if GraphiteServer.debug then
          print('==== WEBSOCKET CONNECTION CLOSED ====')
          print(connection)
-      end	  
+      end
       GraphiteServer.connections[connection] = nil
    end
 
@@ -162,7 +163,7 @@ function GraphiteServer.ws_callback(
       action="notify",
       content="Server ready."
    }))
-   
+
 end
 
 function GraphiteServer.ws_callback_wrapper(
@@ -177,8 +178,8 @@ function GraphiteServer.ws_callback_wrapper(
    end
 end
 
--- Does one round of event handling 
---   Note: Standard way of launching the main server loop 
+-- Does one round of event handling
+--   Note: Standard way of launching the main server loop
 --     loop = glib.MainLoop.new()
 --     loop:run()
 --   We do not do that like that because we need to interleave
@@ -208,7 +209,7 @@ function GraphiteServer.start()
    end
 
    -- Connect server handler to graphic updates
-   gom.connect(win.redraw_request, GraphiteServer.handle_events)
+   gom.connect(main.redraw_request, GraphiteServer.handle_events)
    -- Trigger first graphic update that will in-turn
    --  trigger event handling (that will re-trigger graphic
    --  update and so on and so forth...)
@@ -217,4 +218,3 @@ end
 
 
 GraphiteServer.start()
-
