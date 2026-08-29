@@ -53,31 +53,37 @@ function toolbox_gui.draw_tools(viewer_tools)
 	    end
 
             -- Display currently selected tool
+            -- Change color a bit as compared to tool buttons
+            if gom.get_environment_value('gui:style') == 'Light' then
+   	       imgui.PushStyleColor_2(ImGuiCol_Button, 0.9, 0.9, 0.9, 1.0)
+               imgui.PushStyleColor_2(ImGuiCol_Border, 0.0, 0.0, 0.0, 1.0)
+            else
+   	       imgui.PushStyleColor_2(ImGuiCol_Button, 0.25, 0.25, 0.30, 1.0)
+               imgui.PushStyleColor_2(ImGuiCol_Border, 0.75, 0.75, 0.75, 1.0)
+            end
+            imgui.PushStyleVar(ImGuiStyleVar_FrameBorderSize,2.0)
+            imgui.PushStyleVar(ImGuiStyleVar_FrameRounding,0.0)
+	    local mclass = tools.current().meta_class
+	    local icon_name = 'tool'
+	    if mclass.has_custom_attribute('icon') then
+  	       icon_name = mclass.custom_attribute_value('icon')
+            end
+            if toolbox_gui.tool_button('toolbox_showtool', icon_name) then
+               tools.tool('OGF::GrobPan')
+            end
+            autogui.tooltip('Click to reset tool')
+            imgui.SameLine()
             if viewer_tools then
-               -- Change color a bit as compared to tool buttons
-               if gom.get_environment_value('gui:style') == 'Dark' then
-   	          imgui.PushStyleColor_2(ImGuiCol_Button, 0.25, 0.25, 0.30, 1.0)
-               else
-   	          imgui.PushStyleColor_2(ImGuiCol_Button, 0.9, 0.9, 0.9, 1.0)
-               end
-	       local mclass = tools.current().meta_class
-	       local icon_name = 'tool'
-	       if mclass.has_custom_attribute('icon') then
-  	          icon_name = mclass.custom_attribute_value('icon')
-               end
-               toolbox_gui.tool_button('toolbox_showtool', icon_name)
-               imgui.SameLine()
                imgui.Dummy(size/3.0,size)
                imgui.SameLine()
-               imgui.PopStyleColor()
             end
+            imgui.PopStyleVar(2)
+            imgui.PopStyleColor(2)
 
 	    local grob_class_name = scene_graph.current().meta_class.name
 	    local tool_class_names = gom.get_environment_value(
 	       grob_class_name .. "_tools"
 	    )
-
-            -- toolbox_gui.tool_button('test','@home')
 
             for tool_class_name in string.split(tool_class_names,";") do
                local mclass = gom.resolve_meta_type(tool_class_name)
