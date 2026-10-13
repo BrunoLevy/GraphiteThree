@@ -226,6 +226,7 @@ function autogui.properties_editor_functions(object)
       ) then
          if imgui.Button(autogui.remove_underscores(mslot.name), -1, 0) then
             object[mslot.name]()
+            gom.add_to_history(gom.back_resolve(object)..'.'..mslot.name..'()')
 	 end
 	 autogui.tooltip(autogui.help(mslot))
       end
