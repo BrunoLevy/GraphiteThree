@@ -160,6 +160,21 @@ namespace OGF {
 	    update();
 	}
 
+	/**
+	 * \copydoc AmbientOcculsionImpl::get_downscale_factor()
+	 */
+	index_t get_downscale() const {
+	    return impl_->get_downscale_factor();
+	}
+
+	/**
+	 * \copydoc AmbientOcculsionImpl::set_downscale_factor()
+	 */
+	void set_downscale(index_t x) {
+	    impl_->set_downscale_factor(x);
+	    update();
+	}
+
     private:
         AmbientOcclusionImpl_var impl_;
     };
