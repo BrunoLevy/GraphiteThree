@@ -222,9 +222,14 @@ namespace OGF {
         matrix_(3,0) = look_at_.x ;
         matrix_(3,1) = look_at_.y ;
         matrix_(3,2) = look_at_.z ;
-        matrix_ = matrix_.inverse() ;
-        matrix_(3,2) += 0.5 ;
-        matrix_(3,3) = zoom_ ;
+	mat4 inverse;
+	if(matrix_.compute_inverse(inverse)) {
+	    matrix_ = inverse;
+	    matrix_(3,2) += 0.5 ;
+	    matrix_(3,3) = zoom_ ;
+	} else {
+	    matrix_.load_identity();
+	}
 
         if(send_signal) {
             disable_slots() ;
@@ -241,7 +246,12 @@ namespace OGF {
             rotation(2,0) = w_.x ;
             rotation(2,1) = w_.y ;
             rotation(2,2) = w_.z ;
-            rotation = rotation.inverse() ;
+	    mat4 inverse;
+	    if(rotation.compute_inverse(inverse)) {
+		rotation = inverse;
+	    } else {
+		rotation.load_identity();
+	    }
 
             rotation_changed(rotation) ;
             enable_slots() ;
