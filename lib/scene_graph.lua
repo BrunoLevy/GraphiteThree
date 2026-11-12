@@ -215,6 +215,7 @@ function scene_graph_gui.about_window()
       imgui.SameLine()
       imgui.Text(
           '   With algorithms from:\n'..
+          '      ERC-SyG-101307430 MAGNET\n'..
           '      ERC-StG-205693 GoodShape\n'..
           '      ERC-PoC-334829 Vorpaline\n'..
 	  '   ... as well as new ones.'
