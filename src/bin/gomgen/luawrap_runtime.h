@@ -375,7 +375,7 @@ namespace LuaWrap {
 #define LUAWRAP_DECLARE_FUNCTION(L,F) \
     lua_pushliteral(L,#F);  \
     lua_pushcfunction(L,F); \
-    lua_settable(L,-3);
+    lua_settable(L,-3)
 
 #define LUAWRAP_CHECK_ARGS(...) \
    if(!arglist_OK(__VA_ARGS__)) {	  	             \
