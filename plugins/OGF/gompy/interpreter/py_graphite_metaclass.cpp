@@ -63,7 +63,9 @@ namespace OGF {
 	    Py_TYPE(self)->tp_free(self_in);
 	}
 
-	PyObject* graphite_MetaClass_get_name(PyObject* self, void* closure) {
+	static PyObject* graphite_MetaClass_get_name(
+	    PyObject* self, void* closure
+	) {
 	    geo_argused(closure);
 	    geo_debug_assert(PyGraphite_Check(self));
 	    Object* object = PyGraphite_GetObject(self);
@@ -80,7 +82,7 @@ namespace OGF {
 	}
 
 
-	PyGetSetDef graphite_MetaClass_getsets[] = {
+	static PyGetSetDef graphite_MetaClass_getsets[] = {
 	    {
 		const_cast<char*>("__name__"),
 		graphite_MetaClass_get_name,

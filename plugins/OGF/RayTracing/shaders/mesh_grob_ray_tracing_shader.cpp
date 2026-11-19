@@ -77,6 +77,11 @@
 #pragma GCC diagnostic ignored "-Wshadow"
 #pragma GCC diagnostic ignored "-Wdeprecated-copy-with-user-provided-dtor"
 #pragma GCC diagnostic ignored "-Wc++98-c++11-compat-binary-literal"
+#pragma GCC diagnostic ignored "-Wreserved-identifier"
+#pragma GCC diagnostic ignored "-Wreserved-macro-identifier"
+#pragma GCC diagnostic ignored "-Wnrvo"
+#pragma GCC diagnostic ignored "-Wextra-semi-stmt"
+#pragma GCC diagnostic ignored "-Wcast-align"
 #endif
 
 #endif
@@ -647,7 +652,8 @@ namespace OGF {
 		traversed_len * ext_ * length(ray.direction)
 	    ) /	bbox_diag_;
 	    geo_clamp(d, 0.0, 1.0);
-	    return vec4(d, d, d, 1.0);
+	    color = vec4(d, d, d, 1.0);
+	    return color;
 	}
 
 	MeshFacetsAABB::Intersection I;

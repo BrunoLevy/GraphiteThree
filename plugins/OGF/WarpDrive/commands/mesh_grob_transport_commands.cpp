@@ -4108,7 +4108,7 @@ namespace OGF {
             index_t f1 = copy_cell(
                 mesh_grob(), timesteps[0], i, shrink, flip, edges
             );
-            std::string name = String::format("debugCDT_%03d.geogram",i);
+            std::string name = String::format("debugCDT_%0ud.geogram",i);
             name = "";
             for(index_t timestep=1; timestep < timesteps.size(); ++timestep) {
                 MeshGrob* M = timesteps[timestep];

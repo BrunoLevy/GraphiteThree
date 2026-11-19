@@ -64,7 +64,7 @@ namespace OGF {
 	};
 
 
-	PyObject* graphite_Iterator_new(
+	static PyObject* graphite_Iterator_new(
 	    PyTypeObject *type, PyObject *args, PyObject *kwds
 	) {
 	    geo_argused(args);
@@ -77,7 +77,7 @@ namespace OGF {
 	    return (PyObject*)self;
 	}
 
-	void graphite_Iterator_dealloc(PyObject* self_in) {
+	static void graphite_Iterator_dealloc(PyObject* self_in) {
 	    graphite_Iterator* self = (graphite_Iterator*)self_in;
 	    Counted::unref(self->object);
 	    self->object = nullptr;

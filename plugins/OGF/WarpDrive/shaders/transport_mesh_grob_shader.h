@@ -182,7 +182,6 @@ namespace OGF {
         bool two_d_;
 	bool lighting_;
 	SurfaceStyle surface_style_;
-	bool convex_;
     } ;
 
 }

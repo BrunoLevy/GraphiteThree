@@ -49,7 +49,18 @@
 // We cannot forward-declare PyObject, and we cannot include Python headers,
 // because the gom compiler won't parse them, so we forward-declare the internal
 // struct name for PyObject.
+
+#ifdef GEO_COMPILER_CLANG
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-warning-option"
+#pragma GCC diagnostic ignored "-Wreserved-identifier"
+#endif
+
 struct _object;
+
+#ifdef GEO_COMPILER_CLANG
+#pragma GCC diagnostic pop
+#endif
 
 namespace OGF {
 

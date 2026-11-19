@@ -282,11 +282,13 @@ namespace OGF {
 	    line += index_t(impl()->GetSelectionStart().line);
 	}
 	impl_->AddMarker(
-	    line-1, 0xFF0000FF, 0xFF0000FF, error_message, error_message
+	    int(line)-1, 0xFF0000FF, 0xFF0000FF, error_message, error_message
 	);
 	// Move cursor position to first error so that users sees it !
 	if(first_one) {
-	    impl_->SetCursorPosition(::TextEditor::CursorPosition(int(line-1),0));
+	    impl_->SetCursorPosition(
+		::TextEditor::CursorPosition(int(line)-1,0)
+	    );
 	}
     }
 

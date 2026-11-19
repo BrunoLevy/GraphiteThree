@@ -39,8 +39,8 @@
  */
 
 
-#ifndef H__OGF_WARPDRIVE_SHADERS_COSMO_MESH_GROB_SHADER__H
-#define H__OGF_WARPDRIVE_SHADERS_COSMO_MESH_GROB_SHADER__H
+#ifndef OGF_WARPDRIVE_SHADERS_COSMO_MESH_GROB_SHADER_H
+#define OGF_WARPDRIVE_SHADERS_COSMO_MESH_GROB_SHADER_H
 
 #include <OGF/WarpDrive/common/common.h>
 #include <OGF/mesh_gfx/shaders/mesh_grob_shader.h>

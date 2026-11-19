@@ -120,7 +120,7 @@ namespace GEO {
                         "invalid FORTRAN record size"
 #else
                         String::format(
-                            "invalid FORTRAN record size:expected %d got %d",
+                            "invalid FORTRAN record size:expected %u got %u",
                             record_size_, check
                         )
 #endif
@@ -319,7 +319,7 @@ namespace GEO {
             // Write number of points if extension is ".xyz" file
             // (so that Graphite can load it faster)
             if(ext_xyz) {
-                OK = OK && (fprintf(out,"%d\n",size) != 0);
+                OK = OK && (fprintf(out,"%u\n",size) != 0);
             }
 
             for(uint32_t i=0; i<size; ++i) {
