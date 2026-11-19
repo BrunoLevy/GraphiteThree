@@ -46,6 +46,8 @@
 #pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
 #pragma GCC diagnostic ignored "-Wc++98-compat-pedantic"
 #pragma GCC diagnostic ignored "-Wms-bitfield-padding"
+#pragma GCC diagnostic ignored "-Wreserved-macro-identifier"
+#pragma GCC diagnostic ignored "-Wreserved-identifier"
 #endif
 #endif
 

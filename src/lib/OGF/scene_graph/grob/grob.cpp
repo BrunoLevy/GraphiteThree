@@ -127,7 +127,8 @@ namespace OGF {
         Box3d result;
         const mat4& M = get_obj_to_world_transform();
         if( M.is_identity() ) {
-            return lb;
+	    result = lb;
+            return result;
         }
 	vec3 bounds[2] = {
 	    vec3(lb.xyz_min),
