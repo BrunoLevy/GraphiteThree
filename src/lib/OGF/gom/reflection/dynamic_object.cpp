@@ -147,16 +147,16 @@ namespace OGF {
 		    bool invoked_from_gui = false;
 		    ArgList args_for_history; // without '_' args
 		    for(index_t i=0; i<args.nb_args(); ++i) {
-			const std::string& name = args.ith_arg_name(i);
+			const std::string& arg_name = args.ith_arg_name(i);
 			const Any& value = args.ith_arg_value(i);
-			if(name.length() > 0 && name[0] == '_') {
-			    if(name == "_invoked_from_gui" &&
+			if(arg_name.length() > 0 && arg_name[0] == '_') {
+			    if(arg_name == "_invoked_from_gui" &&
 			       value.as_string() == "true") {
 				invoked_from_gui = true;
 			    }
 			    continue;
 			}
-			args_for_history.create_arg(name, value);
+			args_for_history.create_arg(arg_name, value);
 		    }
 		    if(invoked_from_gui) {
 			Interpreter* interpreter =

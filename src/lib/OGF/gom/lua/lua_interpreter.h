@@ -198,7 +198,7 @@ namespace OGF {
 	 /**
 	  * \copydoc Interpreter::is_keyword()
 	  */
-	 bool is_keyword(const std::string& name) const;
+	 bool is_keyword(const std::string& name) const override;
 
 	 /**
 	  * \brief A string that can be recorded in the history to access

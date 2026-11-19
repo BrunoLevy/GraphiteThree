@@ -126,7 +126,7 @@ namespace OGF {
 	 /**
 	  * \copydoc Interpreter::is_keyword()
 	  */
-	 bool is_keyword(const std::string& name) const;
+	 bool is_keyword(const std::string& name) const override;
 
       private:
 	struct _object* main_module_;
