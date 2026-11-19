@@ -50,8 +50,8 @@
 
 /****************************************************************************/
 
-#ifdef GEO_COMPILER_CLANG
-#pragma GCC diagnostic ignored "Wc++98-compat-pedantic"
+#ifdef __clang__
+#pragma GCC diagnostic ignored "-Wc++98-compat-pedantic"
 #endif
 
 

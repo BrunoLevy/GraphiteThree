@@ -246,7 +246,6 @@ namespace OGF {
             rotation(2,0) = w_.x ;
             rotation(2,1) = w_.y ;
             rotation(2,2) = w_.z ;
-	    mat4 inverse;
 	    if(rotation.compute_inverse(inverse)) {
 		rotation = inverse;
 	    } else {

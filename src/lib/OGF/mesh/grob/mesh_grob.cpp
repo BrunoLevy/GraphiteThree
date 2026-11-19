@@ -289,9 +289,11 @@ namespace OGF {
         const std::string& types_in,
         const std::string& dims_in
     ) {
+	std::string result;
         std::string all_attributes = get_attributes();
         if(localisations_in == "" && types_in == "" && dims_in == "") {
-            return all_attributes;
+	    result = all_attributes;
+            return result;
         }
 
         std::vector<std::string> localisations;
@@ -306,7 +308,6 @@ namespace OGF {
 
         std::vector<std::string> attributes;
         String::split_string(all_attributes,';',attributes);
-        std::string result;
         for(const std::string& full_attribute_name: attributes) {
             MeshElementsFlags where;
             std::string attribute_name;

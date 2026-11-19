@@ -45,7 +45,17 @@
  * \brief The main class that interfaces the Python interpreter with Graphite.
  */
 
+#ifdef GEO_COMPILER_CLANG
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-warning-option"
+#pragma GCC diagnostic ignored "-Wreserved-identifier"
+#endif
+
 struct _object;
+
+#ifdef GEO_COMPILER_CLANG
+#pragma GCC diagnostic pop
+#endif
 
 namespace OGF {
 
