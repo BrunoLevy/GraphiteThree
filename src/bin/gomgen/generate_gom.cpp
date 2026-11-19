@@ -89,7 +89,7 @@ void generate_gom(
 	    out << std::endl;
 	    out << std::endl;
 
-	    out << "#ifdef GEO_COMPILER_CLANG" << std::endl;
+	    out << "#ifdef __clang__" << std::endl;
 	    out << "#pragma GCC diagnostic ignored \"-Wunknown-warning-option\""
 		<< std::endl;
 	    out << "#pragma GCC diagnostic ignored \"-Wreserved-identifier\""

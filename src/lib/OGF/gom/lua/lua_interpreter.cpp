@@ -490,27 +490,27 @@ namespace OGF {
 
 	// Tests whether an object is of a class, where class is given by name
 	auto object_is_a = [](
-	    Object* object, const std::string& class_name, bool strict = true
+	    Object* o, const std::string& class_name, bool strict = true
 	)->bool {
 	    MetaClass* mclass = Meta::instance()->resolve_meta_class(class_name);
-	    if(object == nullptr || mclass == nullptr) {
+	    if(o == nullptr || mclass == nullptr) {
 		return false;
 	    }
 	    if(strict) {
-		return object->is_a(mclass);
+		return o->is_a(mclass);
 	    }
 	    // Use object->meta_class()->is_subclass_of(xxx) rather than
 	    // object->is_a(xxx) because is_a() uses C++ dynamic type
 	    // that will not "see" commands created as DynamicObject /
 	    // DynamicMetaClass.
-	    return (object->meta_class()->is_subclass_of(mclass));
+	    return (o->meta_class()->is_subclass_of(mclass));
 	};
 
 	// Interface
 	// Not strict (see comment in object_is_a above)
 	if(object_is_a(object, "OGF::Interface", false)) {
 	    Any grob_any;
-	    Object* grob;
+	    Object* grob = nullptr;
 	    if(
 		object->get_property("grob",grob_any) &&
 		grob_any.get_value(grob) &&
@@ -565,7 +565,7 @@ namespace OGF {
 	// Shader
 	if(object_is_a(object,"OGF::Shader")) {
 	    Any grob_any;
-	    Object* grob;
+	    Object* grob = nullptr;
 	    if(
 		object->get_property("grob",grob_any) &&
 		grob_any.get_value(grob) &&
@@ -665,7 +665,7 @@ namespace OGF {
 		    );
 		    Object* scene_graph = msg->get_instance();
 		    Any scope_as_any;
-		    Scope* scope;
+		    Scope* scope = nullptr;
 		    if(
 			scene_graph != nullptr &&
 			scene_graph->get_property("objects",scope_as_any)  &&

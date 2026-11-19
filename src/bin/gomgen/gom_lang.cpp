@@ -448,12 +448,12 @@ namespace {
 	    // Converts a string to an integer, either because the string
 	    // contains the ascii representation of the integer, or as
 	    // a symbolic value in menum.
-	    auto to_int = [menum](const std::string& s, int& value)->bool {
+	    auto to_int = [menum](const std::string& s, int& val)->bool {
 		std::string t = GEO::String::trim_spaces(s);
-		bool ok = string_to_int(t, value);
+		bool ok = string_to_int(t, val);
 		if(!ok && menum->has_value(t)) {
 		    ok = true;
-		    value = menum->get_value_by_name(t);
+		    val = menum->get_value_by_name(t);
 		}
 		return ok;
 	    };

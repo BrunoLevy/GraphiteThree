@@ -50,6 +50,13 @@
 
 /****************************************************************************/
 
+#ifdef GEO_COMPILER_CLANG
+#pragma GCC diagnostic ignored "Wc++98-compat-pedantic"
+#endif
+
+
+/****************************************************************************/
+
 namespace {
     using namespace OGF;
 
@@ -410,9 +417,9 @@ namespace {
 			// keep type as is (no special pointer management
 			// mechanism).
 			type_name = OGF::String::remove_suffix(type_name, "*");
-			MetaClass* mclass =
+			MetaClass* pointed_mclass =
 			    Meta::instance()->resolve_meta_class(type_name);
-			if(mclass != nullptr) {
+			if(pointed_mclass != nullptr) {
 			    is_pointer = false;
 			    type_name = type_name + "*";
 			}
