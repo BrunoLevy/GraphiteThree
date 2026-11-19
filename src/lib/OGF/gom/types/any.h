@@ -165,7 +165,7 @@ namespace OGF {
 	template <class T> void set_value(const T& value) {
 	    MetaType* new_type = resolve_meta_type<T>();
 	    if(new_type == meta_type_) {
-		life_cycle()->assign(value_, Memory::pointer(&value));
+		life_cycle()->assign(value_, Memory::const_pointer(&value));
 		return;
 	    }
 	    destroy();
